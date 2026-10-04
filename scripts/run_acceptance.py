@@ -29,7 +29,7 @@ def run():
     real=load_records(ROOT/'evaluation/datasets/real-observations.pending.json')
     synthetic=load_records(ROOT/'evaluation/datasets/synthetic-observations.json')
     report={'final_status':'PARTIAL','before_refactor':{'tests_run':16,'passed':16,'head':'60ebaf4'},'after_refactor':{'tests_run':result.testsRun,'failures':len(result.failures),'errors':len(result.errors),'registry':validated,'generated':generated,'cli_smoke':smoke},'method_migration':dict(modules),'method_types':dict(categories),'case_counts':dict(statuses),'source_commit':r.index['source_baseline']['commit'],'source_repository_unchanged':'verified by read-only source git status and immutable snapshot hashes','evaluation_status':'pending_real_participant_validation','real_record_count':len(real),'synthetic_record_count':len(synthetic),'remaining_blockers':[f'{unfinished}项学生入口仍需逐一源绑定审阅，全部真实案例仍待核','缺完整六型盲题与旧答疑语义回归数据','没有可靠校准的自由文本语义求解后端，当前使用外部审阅接口','无真实受试者传播、First-use、Blind、效率或Signature数据']}
-    report['safety_hardening']={'option_closure':'unique own support plus reviewed elimination of every supplied rival','evidence_graph':'own method trigger, own candidate claim and current-input quote binding','spoken_symptoms':'10 requested examples tested; suggestions not semantic proof','analysis_schema_version':'1.1.0'}
+    report['safety_hardening']={'option_closure':'unique own support plus reviewed elimination of every supplied rival','evidence_graph':'own method trigger, own candidate claim and current-input quote binding','spoken_symptoms':'10 requested examples tested; suggestions not semantic proof','analysis_schema_version':'1.2.0','grammar_navigation':'explicit hint branch plus reviewed trigger paths; never infer blank POS from hint spelling'}
     report['student_entry_migration']={'static_ready':ready,'draft_remaining':unfinished,'meaning':'static copy completeness, not observed first-use success','ready_by_module':dict(Counter(m['question_type'] for m in r.methods.values() if m.get('student_ready')))}
     p=ROOT/'evaluation/reports/engineering-acceptance.json'; p.parent.mkdir(parents=True,exist_ok=True)
     p.write_text(json.dumps(report,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
@@ -77,10 +77,11 @@ First-use、Blind/Baseline、10/30/90s Safety均有记录Schema及直接可运�
 | Gate | Status | Evidence / limitation |
 |---|---|---|
 '''+ '\n'.join(f'| {gate} | {status} | {note} |' for gate,status,note in gates)+'\n\n传播先验收，实用性优先否决。名字、动作、证据、边界不能互相替代。没有真人数据，不升级成熟度或实用价值。\n'
-    md+='\n本轮安全增强：单项保留不能跳过未核验竞争项；answer_verification显式报告候选闭合；证据图绑定同一方法触发、同一候选主张与当前题面；附件10种口语卡点均有导航回归，导航不构成语义证明。Question Analysis Schema升级为1.1.0。\n'
+    md+='\n本轮安全增强：单项保留不能跳过未核验竞争项；answer_verification显式报告候选闭合；证据图绑定同一方法触发、同一候选主张与当前题面；附件10种口语卡点均有导航回归，导航不构成语义证明。Question Analysis Schema当前1.2.0。\n'
     md+='\n阅读模块17项学生入口静态齐备：13个非黄金方法从1.0.0修订为1.1.0，旧稿保存在history；判据、Stop、误用、反例示意及三短版逐项区分，未修改冻结源章节。示意反例不算真实Case，所有成熟度仍为candidate。\n'
     md+='\n七选五11项静态入口齐备：F02–F11保留旧稿后逐项完善，区分reduce/interpret/verify/decide；正文闭环不由形式、同词、时态、占用或剩余定案，示意反例不算真实Case。\n'
     md+='\n完形9项静态入口齐备：保留两个核心入口与七个子动作；线索、框架与核验不自动定案，C01二阶段decider必须显式声明。C01/C02的原空号两遍规则补充直接源引用，示意反例与真人结果仍未验证。\n'
+    md+='\n语法19项静态入口齐备：18个非黄金节点保留旧稿后逐项源核，机器导航只确认有无提示词及已审阅功能；提示词原词性不决定空位词性，树不独立定案。三个语法源风险绑定原话与章节并自动校验，保留原资料、不机械执行简化口诀或全称清单。\n'
     (ROOT/'docs/final-acceptance.md').write_text(md,encoding='utf-8')
     return report
 

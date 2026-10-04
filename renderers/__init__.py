@@ -10,9 +10,14 @@ def render(analysis,kind='structured',registry=None):
     if kind=='structured': return json.dumps(analysis,ensure_ascii=False,indent=2)
     if kind=='content-export':
         assets = [{'method_id':x['method_id'],'method_version':r.methods[x['method_id']]['version'],'role':x['role'],'action':x['action'],'stop_rule':x['stop_rule'],'visual_formula':r.methods[x['method_id']]['visual_formula'],'compact':r.methods[x['method_id']]['compact'],'anti_rule':r.methods[x['method_id']]['anti_rule']} for x in analysis['method_chain']]
-        return json.dumps({'export_schema_version':'1.1.0','question_id':analysis['question_id'],'answer':analysis['answer'],'answer_verification':analysis['answer_verification'],'evidence_graph':analysis['evidence_graph'],'methods':assets,'eligible_for_review':analysis['content_eligible'],'safe_for_release':'untested','limitations':analysis['limitations']},ensure_ascii=False,indent=2)
+        return json.dumps({'export_schema_version':'1.2.0','question_id':analysis['question_id'],'answer':analysis['answer'],'answer_verification':analysis['answer_verification'],'grammar_navigation':analysis['grammar_navigation'],'evidence_graph':analysis['evidence_graph'],'methods':assets,'eligible_for_review':analysis['content_eligible'],'safe_for_release':'untested','limitations':analysis['limitations']},ensure_ascii=False,indent=2)
     if kind not in {'student','legacy-wechat'}: raise ValueError('Unknown renderer')
     parts = []
+    nav=analysis['grammar_navigation']
+    if nav:
+        if nav['status']=='needs_hint_confirmation': parts.append('先确认这个空有无提示词，不能跳过空位功能直接变词。')
+        elif nav['status']=='needs_function_confirmation': parts.append('有提示词，先圈空位所需成分或词性；提示词原词性不是答案词性。' if nav['hint_branch']=='with_hint' else '无提示词，先圈空位的限定、介词、指代、连接或句间逻辑功能；不把候选锁死为四类。')
+        else: parts.append('按题面触发审阅记录进入知识节点；树只导航，词形仍须独立核验。')
     if analysis['student_symptoms']: parts.append('先解决你卡住的这一处：'+analysis['student_symptoms'][0]+'。')
     for step in analysis['method_chain']:
         m = r.methods[step['method_id']]

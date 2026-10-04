@@ -2,11 +2,13 @@
 
 Registry索引六题型方法文件。method_type区分框架、方法、子动作、内部规则、分类与复核；primary_role只有一个，secondary_roles显式登记。source_name/source_alias保留原名；W03学生主名为剧情四格，PTSD只作源别名。
 
-82项不等于82个品牌：包括定位子动作、语法节点、训练框架与评分规则。阅读17项、七选五11项、完形9项及G01共38项有独立首次接触稿，其余44项仍为结构迁移、完整源章节与动作草稿，student_ready=false。student_ready=true只证明入口静态齐备，并不证明First-use、传播或迁移效果；所有方法仍为Useful+candidate。阅读13项、七选五10项与完形9项后续修订以source_bound_editorial_review记录源绑定，真实案例和受试验证仍缺。
+82项不等于82个品牌：包括定位子动作、语法节点、训练框架与评分规则。阅读17项、七选五11项、完形9项及语法19项共56项有独立首次接触稿，其余26项写作节点仍为结构迁移、完整源章节与动作草稿，student_ready=false。student_ready=true只证明入口静态齐备，并不证明First-use、传播或迁移效果；所有方法仍为Useful+candidate。后续修订以source_bound_editorial_review记录源绑定，真实案例和受试验证仍缺。
 
 职责：locator→locate、interpreter/framework→interpret（G01路线为reduce）、reducer→reduce、decider→decide、verifier→verify。C01框架与decider为同一课程方法两种显式阶段，首次接触只突出主要职责；F01无decider副职责。
 
 Compact与full同卡。G01.full.decision_tree保留有无提示词、功能/词性、动词谓语/非谓语树，知识节点引用源章节。R09仅产对象+核心判断+全文任务骨架；首尾、段首与重复词是取证入口，不是机械三步。
+
+grammar-tree.yaml只维护节点依赖与方法引用，不另写判据；可调用导航先核given_word是否明确标注，再以题面跨度和已审阅触发进入功能节点。提示词原词性不选叶节点；多条路径不自动裁决。G17用于先拆句，G18/G19用于整篇反查，均不代替本句证据。源快速口诀与全称清单的使用风险单独绑定原话，不擅自删改原课程。
 
 更新时先保存history/ID/VERSION.yaml，再修改Registry并增version、change_reason、affected_cases及索引，运行生成与测试，登记regression_result。初次迁移脚本默认拒绝覆盖2.0 Registry；--rebuild仅为显式重建。
 

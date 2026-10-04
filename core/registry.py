@@ -20,6 +20,7 @@ class Registry:
         self.sources = load(self.index['source_sections'])
         self.risks = load('method-registry/source-risks.yaml')['risks']
         self.symptom_cues = load('method-registry/symptom-cues.yaml')['routes']
+        self.grammar_tree = load('method-registry/grammar-tree.yaml')
         self.methods = {}
         for path in self.index['method_files']:
             for method in load(path)['methods']:
@@ -37,6 +38,32 @@ class Registry:
         return ''.join(self.sources['sections'][sid]['content'] for sid in doc['sections'])
 
     def validate(self):
+        risk_ids=set()
+        for risk in self.risks:
+            if risk['risk_id'] in risk_ids: raise ValueError('Duplicate source risk')
+            risk_ids.add(risk['risk_id'])
+            if not risk['affected_methods'] or any(mid not in self.methods for mid in risk['affected_methods']):
+                raise ValueError('Invalid risk method dependency')
+            if 'section_id' in risk:
+                sid=risk['section_id']
+                if sid not in self.sources['sections'] or not risk.get('source_quote') or risk['source_quote'] not in self.sources['sections'][sid]['content']:
+                    raise ValueError('Source risk quote mismatch')
+            elif not any(d['path']==risk.get('source_path') for d in self.sources['documents']):
+                raise ValueError('Missing risk source document')
+        tree=self.grammar_tree; nodes=tree['nodes']; visited=set()
+        def check_node(nid,ancestors):
+            if nid not in nodes: raise ValueError('Unknown grammar tree node')
+            if nid in ancestors: raise ValueError('Circular grammar tree')
+            visited.add(nid)
+            for mid in nodes[nid]['methods']:
+                if mid not in self.methods or self.methods[mid]['question_type']!='语法填空': raise ValueError('Invalid grammar method dependency')
+            for child in nodes[nid]['children']: check_node(child,ancestors|{nid})
+        check_node(tree['root'],set())
+        if visited!=set(nodes): raise ValueError('Unreachable grammar tree node')
+        covered={mid for n in nodes.values() for mid in n['methods']}|set(tree['preparatory_methods'])|set(tree['postcheck_methods'])
+        if covered!={mid for mid,m in self.methods.items() if m['question_type']=='语法填空'}: raise ValueError('Grammar dependency coverage gap')
+        for sid in tree['source_sections']:
+            if sid not in self.sources['sections']: raise ValueError('Missing grammar tree source')
         cue_ids=set()
         for route in self.symptom_cues:
             if set(route) != {'method_id','phrases'} or route['method_id'] not in self.methods:

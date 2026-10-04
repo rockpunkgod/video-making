@@ -21,6 +21,16 @@ def build():
         symptoms['routes'].append({'question_type':m['question_type'],'symptoms':m['student_symptoms'],'spoken_aliases':aliases,'method_id':m['method_id'],'role':m['primary_role'],'first_action':m['core_action'],'stop_rule':m['stop_rule']})
     assets['references/student-symptoms.yaml'] = yaml.safe_dump(symptoms,allow_unicode=True,sort_keys=False)
     assets['references/student-symptoms.md'] = '# 学生卡点导航（自动生成）\n\n'+'\n\n'.join(f'{x["question_type"]}：{x["symptoms"][0]} → {x["method_id"]}；第一刀：{x["first_action"]}；停止：{x["stop_rule"]}' for x in symptoms['routes'])+'\n'
+    tree=r.grammar_tree
+    tree_copy='# 语法知识节点导航（自动生成）\n\n有无提示词只决定入口；空位功能必须从未填句取证。树不直接报答案。\n\n'
+    tree_copy+='```text\n'+r.methods['G01']['visual_formula']+'\n```\n\n'
+    def node_name(nid):
+        names=[r.methods[mid]['brand_name'] for mid in tree['nodes'][nid]['methods']]
+        return ' / '.join(names) if names else {'without_hint':'无提示词：判功能','hint':'有无提示词','with_hint':'有提示词：判空位成分'}.get(nid,'待题面确认功能')
+    tree_copy+='\n\n'.join(f'{node_name(nid)} → {"、".join(node_name(child) for child in n["children"]) or "按本节点规则核验"}；方法：{", ".join(n["methods"]) or "待题面确认功能"}' for nid,n in tree['nodes'].items())
+    tree_copy+='\n\n先拆句：'+', '.join(tree['preparatory_methods'])+'；整篇复查：'+', '.join(tree['postcheck_methods'])+'。都不能代替独立答案证据。\n'
+    assets['references/grammar-navigation.md']=tree_copy
+    assets['gaokao-grammar-fill/references/grammar-navigation.md']=tree_copy
     anti = load('method-registry/anti-rules.yaml')['rules']
     assets['references/anti-rules.yaml'] = yaml.safe_dump({'rules':anti},allow_unicode=True,sort_keys=False)
     assets['references/anti-rules.md'] = '# Anti-Rule Registry（自动生成）\n\n'+'\n\n'.join(f'## {x["anti_rule_id"]} {x["rule"]}\n\n绑定：{", ".join(x["related_methods"])}。反例与边界：{x["boundary"]}。依据：{", ".join(x["source_evidence"])}。仅源模式，不是真题验证。' for x in anti)+'\n'
@@ -30,6 +40,8 @@ def build():
         front_end = original.split('---',2)[2].lstrip()
         description = '高考英语'+ '、'.join(types)+'答疑；经注册表、证据核验与独立输出适配。'
         assets[f'{name}/SKILL.md'] = f'---\nname: {name}\ndescription: {description}\n---\n\n# 统一引擎适配入口\n\n先读取本目录 [generated-contract.md](generated-contract.md)，再按题型读取其中链接的 references，保留原先题型、顺序与证据边界。课程原名和品牌名是同一方法的别名，不产生新判据。学生动作入口允许注册品牌名，方法问答同时兼容课程原名。源契约中的逆推只能用于独立核验，不得把已知答案当证据或在 First-use 先猜后贴方法。\n\n方法查询：在项目根执行 `python -m answer_engine method METHOD_ID`；单题：`python -m answer_engine analyze INPUT.json --renderer legacy-wechat`；整卷：`python -m answer_engine paper INPUT.json`。宿主模型按完整契约作语义分析，再提交有原文跨度、判据、刹车、回填和审阅者的 relations；核心不把宿主猜测当自动验证。缺题面或语义证据必须暂留，不填答案。写作完整批改仍由宿主按15/25分独立契约完成，不由本地程序伪评分。\n\n单独安装 Skill 文件夹时，生成资源可自包含调用，完整核心命令需整个仓库及依赖；不要假定安装 Skill 等于安装核心。不能执行程序时按题型查询 [generated-methods.yaml](generated-methods.yaml)，完成相同证据动作；明确标记宿主分析未经核心检查。不要绕开停用边界。\n'
+        if name=='gaokao-grammar-fill':
+            assets[f'{name}/SKILL.md']+='\n语法知识路由读取 [grammar-navigation.md](references/grammar-navigation.md)。先确认有无提示词，再按未填句功能进入节点；树路径只是知识调用计划，不能代替句法、搭配与词形核验。\n'
         assets[f'{name}/generated-contract.md'] = '<!-- Generated from Registry; DO NOT EDIT. -->\n\n'+front_end
         assets[f'{name}/generated-methods.yaml'] = yaml.safe_dump({'methods':[m for m in r.methods.values() if m['question_type'] in types]},allow_unicode=True,sort_keys=False)
         for doc in r.sources['documents']:

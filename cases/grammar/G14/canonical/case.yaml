@@ -13,7 +13,7 @@ evidence: []
 method_role: verifier
 expected_action: 划开插入和修饰，圈真正主语中心词，核谓语一致，保留否定条件
 expected_output: verify
-stop_rule: 不能以本动作代替完整题面关系核验；题面缺失、关键词义不明或出现反证就停止定案。具体边界见源章节。
+stop_rule: 最近名词不一定主语，集合或数量结构须回完整节点；状态性过去分词与被动动作需另核，不能执行有be/无be口诀。
 case_type: canonical
 status: evidence_gap
 notes: 源方法可核；尚未逐题核验案例，不可当成功样例

@@ -496,6 +496,70 @@
               "closed"
             ],
             "additionalProperties": false
+          },
+          "grammar_navigation": {
+            "anyOf": [
+              {
+                "type": "null"
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "hint_branch": {
+                    "enum": [
+                      "unknown",
+                      "with_hint",
+                      "without_hint"
+                    ]
+                  },
+                  "status": {
+                    "enum": [
+                      "needs_hint_confirmation",
+                      "needs_function_confirmation",
+                      "navigation_planned"
+                    ]
+                  },
+                  "paths": {
+                    "type": "array",
+                    "items": {
+                      "type": "array",
+                      "items": {
+                        "type": "string",
+                        "minLength": 1
+                      },
+                      "minItems": 1
+                    },
+                    "minItems": 0
+                  },
+                  "next_node": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "review_basis": {
+                    "enum": [
+                      "reviewed_trigger_routing_only"
+                    ]
+                  },
+                  "limitations": {
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "minItems": 1
+                  }
+                },
+                "required": [
+                  "hint_branch",
+                  "status",
+                  "paths",
+                  "next_node",
+                  "review_basis",
+                  "limitations"
+                ],
+                "additionalProperties": false
+              }
+            ]
           }
         },
         "required": [
@@ -520,7 +584,8 @@
           "method_versions",
           "content_eligible",
           "difficulty",
-          "answer_verification"
+          "answer_verification",
+          "grammar_navigation"
         ],
         "additionalProperties": false
       },

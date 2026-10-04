@@ -13,7 +13,7 @@ evidence: []
 method_role: verifier
 expected_action: 对照原提示词与空位成分记录变形路线，一般一次只是回查提示，不凭次数选答案
 expected_output: verify
-stop_rule: 不能以本动作代替完整题面关系核验；题面缺失、关键词义不明或出现反证就停止定案。具体边界见源章节。
+stop_rule: 一般一次不排除本句支持的更复杂形式；提示词原词性也可能与答案相同。结构未核前不因次数撤销原答案或强制换词类。
 case_type: canonical
 status: evidence_gap
 notes: 源方法可核；尚未逐题核验案例，不可当成功样例

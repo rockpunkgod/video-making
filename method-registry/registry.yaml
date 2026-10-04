@@ -205,92 +205,92 @@ methods:
   G02:
     brand_name: 双路分流
     status: candidate
-    version: 1.0.0
+    version: 1.1.0
     file: method-registry/grammar.yaml
   G03:
     brand_name: 限定词落位
     status: candidate
-    version: 1.0.0
+    version: 1.1.0
     file: method-registry/grammar.yaml
   G04:
     brand_name: 指代落位
     status: candidate
-    version: 1.0.0
+    version: 1.1.0
     file: method-registry/grammar.yaml
   G05:
     brand_name: 介词看场景
     status: candidate
-    version: 1.0.0
+    version: 1.1.0
     file: method-registry/grammar.yaml
   G06:
     brand_name: 从句找缺口
     status: candidate
-    version: 1.0.0
+    version: 1.1.0
     file: method-registry/grammar.yaml
   G07:
     brand_name: 句间搭桥
     status: candidate
-    version: 1.0.0
+    version: 1.1.0
     file: method-registry/grammar.yaml
   G08:
     brand_name: 词性落位
     status: candidate
-    version: 1.0.0
+    version: 1.1.0
     file: method-registry/grammar.yaml
   G09:
     brand_name: 名词节点
     status: candidate
-    version: 1.0.0
+    version: 1.1.0
     file: method-registry/grammar.yaml
   G10:
     brand_name: 形副节点
     status: candidate
-    version: 1.0.0
+    version: 1.1.0
     file: method-registry/grammar.yaml
   G11:
     brand_name: 数词节点
     status: candidate
-    version: 1.0.0
+    version: 1.1.0
     file: method-registry/grammar.yaml
   G12:
     brand_name: 动词二分
     status: candidate
-    version: 1.0.0
+    version: 1.1.0
     file: method-registry/grammar.yaml
   G13:
     brand_name: 时态三查
     status: candidate
-    version: 1.0.0
+    version: 1.1.0
     file: method-registry/grammar.yaml
   G14:
     brand_name: 找真主语
     status: candidate
-    version: 1.0.0
+    version: 1.1.0
     file: method-registry/grammar.yaml
   G15:
     brand_name: 非谓语三轴
     status: candidate
-    version: 1.0.0
+    version: 1.1.0
     file: method-registry/grammar.yaml
   G16:
     brand_name: 找动作主人
     status: candidate
-    version: 1.0.0
+    version: 1.1.0
     file: method-registry/grammar.yaml
   G17:
     brand_name: 长句脱壳
     status: candidate
-    version: 1.0.0
+    version: 1.1.0
     file: method-registry/grammar.yaml
   G18:
     brand_name: 考点重复反查
     status: candidate
-    version: 1.0.0
+    version: 1.1.0
     file: method-registry/grammar.yaml
   G19:
     brand_name: 变形次数反查
     status: candidate
-    version: 1.0.0
+    version: 1.1.0
     file: method-registry/grammar.yaml
   A01:
     brand_name: 作文五检

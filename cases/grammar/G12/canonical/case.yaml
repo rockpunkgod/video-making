@@ -13,7 +13,7 @@ evidence: []
 method_role: reducer
 expected_action: 圈句内已有谓语与连接词，核空位是否承担谓语，再分谓语/非谓语
 expected_output: reduce
-stop_rule: 本步骤只产生缩小范围，不能自动定案。不能以本动作代替完整题面关系核验；题面缺失、关键词义不明或出现反证就停止定案。具体边界见源章节。
+stop_rule: 未判空位功能先停；总句有谓语不等于本分句不需谓语，并列谓语或另起从句须另核。不能只数全句动词或按词尾二分。
 case_type: canonical
 status: evidence_gap
 notes: 源方法可核；尚未逐题核验案例，不可当成功样例

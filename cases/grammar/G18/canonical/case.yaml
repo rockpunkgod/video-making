@@ -13,7 +13,7 @@ evidence: []
 method_role: verifier
 expected_action: 列每空实际考点，发现重复只触发回查，不能推翻该空独立句法语义证据
 expected_output: verify
-stop_rule: 不能以本动作代替完整题面关系核验；题面缺失、关键词义不明或出现反证就停止定案。具体边界见源章节。
+stop_rule: 一般不重复不是禁止重复；未核当前空独立证据前不得改词，不能为了凑分布把两个已成立结构拆成不同考点。
 case_type: canonical
 status: evidence_gap
 notes: 源方法可核；尚未逐题核验案例，不可当成功样例

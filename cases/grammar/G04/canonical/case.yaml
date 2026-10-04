@@ -13,7 +13,7 @@ evidence: []
 method_role: decider
 expected_action: 标空位作主语/宾语/限定/反身功能，回指实际对象再用节点规则
 expected_output: decide
-stop_rule: 不能以本动作代替完整题面关系核验；题面缺失、关键词义不明或出现反证就停止定案。具体边界见源章节。
+stop_rule: 代词所指或省略内容不清先停回指；介词后不必然宾格，it可能是形式主/宾语，反身需动作回到主体或具体结构支持。
 case_type: canonical
 status: evidence_gap
 notes: 源方法可核；尚未逐题核验案例，不可当成功样例
