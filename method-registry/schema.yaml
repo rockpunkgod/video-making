@@ -77,7 +77,7 @@ status_gate:
 usefulness_gate:
   Useful: 有证据支持其能解决真实题面中的明确问题。
   Efficient: 在 Useful 基础上，盲测显示步骤、阅读范围、候选或犹豫至少一项明显下降。
-  Signature: 同时通过正确、触发、执行、迁移、记忆、可视化和传播验收。
+  Signature: Efficient 基础上，Trigger、Action、Transfer、Stop、Boundary Accuracy、Method Role Correctness、Visual Formula、学生记忆与口语化、Short-version Safety 全部通过。
 invariants:
   - compact 不得产生与 full 冲突的结论。
   - locator 和 reducer 不得将缩小范围写成直接定案。
@@ -87,3 +87,5 @@ invariants:
   - primary_role 必须与 role 相同，学生首次接触版只强调该职责。
   - validated 或 stable 必须通过 Practicality Gate 和 First-use Test。
   - Signature 必须有完整 Blind Evaluation 和 Baseline 对照，不得由内部自评产生。
+  - Method Role Correctness 不匹配或发现能力宣传越界时，不得进入 validated 或 stable。
+  - Signature 的实际对外短版必须通过独立压缩安全测试；未测值为 null，不得认定通过。
