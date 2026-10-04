@@ -13,7 +13,7 @@ evidence: []
 method_role: framework
 expected_action: 先圈全文/段落范围，再写对象与核心判断，回各关键段检查覆盖
 expected_output: interpret
-stop_rule: 本步骤只产生框架，不能自动定案。不能以本动作代替完整题面关系核验；题面缺失、关键词义不明或出现反证就停止定案。具体边界见源章节。
+stop_rule: 段落主题已清时不机械压全文；局部事实、一般推断或人物品质题不直接套主旨。共同词、抽象程度和首尾结构不独立证明概括。
 case_type: canonical
 status: evidence_gap
 notes: 源方法可核；尚未逐题核验案例，不可当成功样例

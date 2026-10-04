@@ -149,7 +149,7 @@ class RegistryTest(unittest.TestCase):
 
     def test_student_first_contact_guides_exist(self):
         guides = list((ROOT / "student-guides").glob("*.md"))
-        self.assertEqual(len(guides), 6)
+        self.assertGreaterEqual(len(guides), 6)
         for method_id, method in self.methods.items():
             matches = [path for path in guides if path.name.startswith(method_id + "-")]
             self.assertEqual(len(matches), 1, method_id)

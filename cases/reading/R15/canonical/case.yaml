@@ -13,7 +13,7 @@ evidence: []
 method_role: interpreter
 expected_action: 圈题干动词，配回主体和对象，与定位句的完整谓语比较
 expected_output: interpret
-stop_rule: 本步骤只产生语义结构，不能自动定案。不能以本动作代替完整题面关系核验；题面缺失、关键词义不明或出现反证就停止定案。具体边界见源章节。
+stop_rule: 只命中动词而主体或对象不同，或动作词义尚不明时停止关系等同；定位句缺原因指代时转补证。
 case_type: canonical
 status: evidence_gap
 notes: 源方法可核；尚未逐题核验案例，不可当成功样例

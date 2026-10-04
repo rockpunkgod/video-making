@@ -13,7 +13,7 @@ evidence: []
 method_role: locator
 expected_action: 标相邻已定位题的出处，作为当前题查找区间，发现倒叙或偏离就取消区间
 expected_output: locate
-stop_rule: 本步骤只产生位置，不能自动定案。不能以本动作代替完整题面关系核验；题面缺失、关键词义不明或出现反证就停止定案。具体边界见源章节。
+stop_rule: 插叙、回叙、跨段综合、猜词共享出处或当前证据落区间外时取消顺序限制，回全篇定位；已定位不得等同已答对。
 case_type: canonical
 status: evidence_gap
 notes: 源方法可核；尚未逐题核验案例，不可当成功样例

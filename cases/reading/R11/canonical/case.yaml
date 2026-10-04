@@ -13,7 +13,7 @@ evidence: []
 method_role: interpreter
 expected_action: 圈谓语和对应主体，划开修饰枝叶，但保留否定、条件、范围和比较
 expected_output: interpret
-stop_rule: 本步骤只产生语义结构，不能自动定案。不能以本动作代替完整题面关系核验；题面缺失、关键词义不明或出现反证就停止定案。具体边界见源章节。
+stop_rule: 枝叶中含改变结论的否定、条件、范围或比较时必须恢复；不能将目标当现状、多个动作当已证过程或转折后当答案。
 case_type: canonical
 status: evidence_gap
 notes: 源方法可核；尚未逐题核验案例，不可当成功样例

@@ -46,6 +46,15 @@ class Registry:
             cue_ids.add(route['method_id'])
         for mid, m in self.methods.items():
             validate_schema('method-card',m)
+            if m.get('student_ready'):
+                if not m.get('entry_copy') or not m['counterexamples']:
+                    raise ValueError('Student entry lacks first-use copy or boundary: '+mid)
+                copies=[m['decision_rule'],m['stop_rule'],*m['compact'].values(),*m['four_step_card'].values()]
+                placeholders=['逐条核源章节判据','具体边界见源章节','完整规则必须读取对应源章节']
+                if any(marker in text for text in copies for marker in placeholders):
+                    raise ValueError('Student-ready copy still delegates concrete action to source: '+mid)
+            if m.get('static_design_review') and m['static_design_review']['source_section_ids']!=m['section_ids']:
+                raise ValueError('Editorial review source mismatch: '+mid)
             if m['role'] != m['primary_role'] or m['status'] != m['maturity_status'] or m['practical_value'] != m['usefulness_level']:
                 raise ValueError('Legacy alias mismatch: '+mid)
             if m['primary_role'] in {'locator','reducer'} and m['output_type']=='decide':

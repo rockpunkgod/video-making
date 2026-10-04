@@ -357,6 +357,47 @@
     },
     "evaluation": {
       "type": "object"
+    },
+    "student_ready": {
+      "type": "boolean"
+    },
+    "entry_copy": {
+      "type": "string",
+      "minLength": 1
+    },
+    "static_design_review": {
+      "type": "object",
+      "properties": {
+        "status": {
+          "enum": [
+            "source_bound_editorial_review"
+          ]
+        },
+        "source_section_ids": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "minItems": 1
+        },
+        "participant_validation": {
+          "enum": [
+            "pending_real_participant_validation"
+          ]
+        },
+        "example_scope": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "status",
+        "source_section_ids",
+        "participant_validation",
+        "example_scope"
+      ],
+      "additionalProperties": false
     }
   },
   "required": [
@@ -408,5 +449,24 @@
     "first_use_test",
     "evaluation"
   ],
-  "additionalProperties": true
+  "additionalProperties": true,
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "student_ready": {
+            "const": true
+          }
+        },
+        "required": [
+          "student_ready"
+        ]
+      },
+      "then": {
+        "required": [
+          "entry_copy"
+        ]
+      }
+    }
+  ]
 }

@@ -6,13 +6,14 @@ from core.registry import ROOT, Registry, load
 def build():
     r = Registry()
     assets = {}
-    for mid in r.index['golden_methods']:
-        m = r.methods[mid]
+    for mid,m in r.methods.items():
+        if not m.get('student_ready'): continue
         parts = [f'# {mid} {m["brand_name"]}：学生首次接触版', m['entry_copy'], '## 四步实战卡']
         parts += [f'{i}. {label}：{m["four_step_card"][key]}' for i,(key,label) in enumerate([('start','启动'),('first_cut','第一刀'),('judge','判断'),('stop','停止')],1)]
+        parts += ['Stop Rule：'+m['stop_rule']]
         for duration in ['10','30','90']:
             parts += [f'## {duration} 秒版',m['compact'][duration+'s']]
-        parts += ['## 一屏视觉式','```text\n'+m['visual_formula']+'\n```','反口诀：'+m['anti_rule'],f'生成来源：Registry {mid}@{m["version"]}。真人验收待运行。']
+        parts += ['## 一屏视觉式','```text\n'+m['visual_formula']+'\n```','反口诀：'+m['anti_rule'],'## 为什么容易错',m['common_wrong_instinct'],'## 反例与挑战','反例/边界示意（不等于已核验真题）：'+'；'.join(m['counterexamples']),m['challenge_prompt'],f'生成来源：Registry {mid}@{m["version"]}。student_ready仅表示静态学生入口齐备，真人验收待运行。']
         assets[f'student-guides/{mid}-{m["brand_name"]}.md'] = '\n\n'.join(parts)+'\n'
     symptoms = {'routes':[]}
     for m in r.methods.values():

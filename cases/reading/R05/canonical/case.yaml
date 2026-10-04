@@ -13,7 +13,7 @@ evidence: []
 method_role: decider
 expected_action: 先圈题干问原因还是结果，再写出原文支持的原因→结果，比较候选落点
 expected_output: decide
-stop_rule: 不能以本动作代替完整题面关系核验；题面缺失、关键词义不明或出现反证就停止定案。具体边界见源章节。
+stop_rule: 候选未各自得到支持、因果桥无原文证据、只是先后或并列时停止；问 why/reason/cause 时停止套选果偏好。
 case_type: canonical
 status: evidence_gap
 notes: 源方法可核；尚未逐题核验案例，不可当成功样例

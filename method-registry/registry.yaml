@@ -35,67 +35,67 @@ methods:
   R03:
     brand_name: 换词不换义
     status: candidate
-    version: 1.0.0
+    version: 1.1.0
     file: method-registry/reading.yaml
   R04:
     brand_name: 比较别偷换
     status: candidate
-    version: 1.0.0
+    version: 1.1.0
     file: method-registry/reading.yaml
   R05:
     brand_name: 因果别选反
     status: candidate
-    version: 1.0.0
+    version: 1.1.0
     file: method-registry/reading.yaml
   R07:
     brand_name: 并列打包
     status: candidate
-    version: 1.0.0
+    version: 1.1.0
     file: method-registry/reading.yaml
   R08:
     brand_name: 例子只作证
     status: candidate
-    version: 1.0.0
+    version: 1.1.0
     file: method-registry/reading.yaml
   R10:
     brand_name: 代词回填
     status: candidate
-    version: 1.0.0
+    version: 1.1.0
     file: method-registry/reading.yaml
   R11:
     brand_name: 长句拆骨
     status: candidate
-    version: 1.0.0
+    version: 1.1.0
     file: method-registry/reading.yaml
   R12:
     brand_name: 关键词追踪
     status: candidate
-    version: 1.0.0
+    version: 1.1.0
     file: method-registry/reading.yaml
   R13:
     brand_name: 名词追踪
     status: candidate
-    version: 1.0.0
+    version: 1.1.0
     file: method-registry/reading.yaml
   R14:
     brand_name: 顺序锁区
     status: candidate
-    version: 1.0.0
+    version: 1.1.0
     file: method-registry/reading.yaml
   R15:
     brand_name: 动词定关系
     status: candidate
-    version: 1.0.0
+    version: 1.1.0
     file: method-registry/reading.yaml
   R16:
     brand_name: 主题锁定
     status: candidate
-    version: 1.0.0
+    version: 1.1.0
     file: method-registry/reading.yaml
   R17:
     brand_name: 前后补证
     status: candidate
-    version: 1.0.0
+    version: 1.1.0
     file: method-registry/reading.yaml
   F01:
     brand_name: 选项三分
