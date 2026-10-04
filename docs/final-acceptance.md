@@ -24,7 +24,7 @@ Registry（源章节+方法）→Matcher/Composer→Question/Paper Analyzer→Ev
 | 9 | PARTIAL | 整卷结构扫描、方法/难度/证据/Demo排序可运行；无完整真实卷语义回归 |
 | 10 | PARTIAL | 四Renderer与兼容Skill/脚本接入；完整旧答疑行为尚未认证 |
 | 11 | PASS | 真人记录导入、统计、冻结计划及短版安全；真人数据未运行 |
-| 12 | PASS | 251项自动Regression及CLI烟测通过 |
+| 12 | PASS | 257项自动Regression及CLI烟测通过 |
 | 13 | PASS | README及架构/维护/评估/迁移文档 |
 | 14 | PASS | 逐Gate如实验收，最终PARTIAL，不宣布工程全完成 |
 
@@ -43,7 +43,7 @@ Registry（源章节+方法）→Matcher/Composer→Question/Paper Analyzer→Ev
 
 ## 5. Tests
 
-Before：16/16；After：251/251。覆盖baseline、全量Registry/Case/标准Schema、Analyzer证据/角色/拒答、Paper推荐门禁、Renderer事实保留、Legacy资源/脚本、Evaluation公式/空数据/重复/污染/不可伪升级。四Skill通过skill-creator quick_validate（Windows使用UTF-8模式）；editable安装通过。CLI 16种烟测通过，写作示例为synthetic程序输送记录，不是实际英语题或真人评分。详细机器记录：evaluation/reports/engineering-acceptance.json。未声称旧题库正确率或宿主语义回归已通过。
+Before：16/16；After：257/257。覆盖baseline、全量Registry/Case/标准Schema、Analyzer证据/角色/拒答、Paper推荐门禁、Renderer事实保留、Legacy资源/脚本、Evaluation公式/空数据/重复/污染/不可伪升级。四Skill通过skill-creator quick_validate（Windows使用UTF-8模式）；editable安装通过。CLI 17种烟测通过，写作示例为synthetic程序输送记录，不是实际英语题或真人评分。详细机器记录：evaluation/reports/engineering-acceptance.json。未声称旧题库正确率或宿主语义回归已通过。
 
 ## 6. Evaluation Readiness
 
@@ -63,14 +63,14 @@ First-use、Blind/Baseline、10/30/90s Safety均有记录Schema及直接可运�
 | G4 | PASS | 82项结构迁移；82项静态入口，0项草稿，真实案例缺口明示 |
 | G5 | PASS | 症状导航返回动作与Stop |
 | G6 | PASS | 9条Anti-Rule有绑定/边界/源章节 |
-| G7 | PASS | 106条记录，7个可核短片段；不是完整题集 |
+| G7 | PARTIAL | 106条登记记录，7个可核短片段；核心方法/框架仍有144个类型槽未登记，不能视为案例齐全 |
 | G8 | PARTIAL | 图可生成并校验路径，语义关系仍外部审阅 |
 | G9 | PASS | 角色/版本/类型化产物/依赖可执行，未审阅或停止不续用 |
 | G10 | PARTIAL | 单题稳定Schema，决定性语义判断非自动完成 |
 | G11 | PARTIAL | 整卷接口可执行；真实完整卷回归缺数据 |
 | G12 | PASS | Core不含交付模板，Renderer不改变答案事实 |
 | G13 | PARTIAL | 入口/脚本/契约兼容通过，完整旧题库宿主语义表现未验 |
-| G14 | PASS | 16 baseline保留，当前251项通过 |
+| G14 | PASS | 16 baseline保留，当前257项通过 |
 | G15 | PASS | JSON/JSONL导入、12类指标/差值、三短版安全可运行；统计显著性需审阅 |
 | G16 | PASS | 真人未测为pending_real_participant_validation；零升级虚报 |
 
@@ -101,3 +101,52 @@ First-use、Blind/Baseline、10/30/90s Safety均有记录Schema及直接可运�
 整篇交付接口：lesson复用单题核心，显式保留原题号、共享原文和审阅顺序。阅读中心任务先于细节/猜词、完形暂留后原空号回收、语法无提示词优先及七选五一次分组先于突破说明均有工程检查；最后按原题号汇总，缺某题口播时指出该题并扣留整篇消息。接口可运行不等于真实材料完整、自由文字语义或旧宿主表现已认证；相应真实回归仍缺。
 
 评分边界：定档区间直接解析冻结源评分表，无调整依据的档/分冲突不接受；词数调整需1.2.0外部审阅、完整学生稿证据、原附加规则和准确前后记账。词数与原图调整独立，纯文本评分也绑定自身图路径及载荷，四Renderer拒绝事后换分或断证。程序测试不认证计词、定档、英语评分或真人效果。
+
+## 案例类型逐方法审计
+
+登记记录仍为106条，没有为补数新建题目或占位案例。全部82项五类槽中304槽未登记；30个正式method中26项共有104个未登记槽。保守纳入method和framework共42项核心节点，其中144个槽未登记。registered + evidence_gap与unregistered + evidence_gap是两种不同缺口；已登记例子也不认证完整真题或教学效果。可运行python -m answer_engine case-coverage读取完整矩阵。
+
+| 方法 | 类型 | canonical | counterexample | boundary | transfer | hard |
+|---|---|---|---|---|---|---|
+| R01 | method | 已登记/evidence_gap | 已登记/source_pattern_only | 已登记/evidence_gap | 已登记/evidence_gap | 已登记/evidence_gap |
+| R02 | method | 已登记/source_pattern_only | 已登记/source_pattern_only | 已登记/evidence_gap | 已登记/evidence_gap | 已登记/evidence_gap |
+| R06 | method | 已登记/source_pattern_only | 已登记/evidence_gap | 已登记/source_pattern_only | 已登记/evidence_gap | 已登记/evidence_gap |
+| R09 | framework | 已登记/source_pattern_only | 已登记/source_pattern_only | 已登记/source_pattern_only | 已登记/evidence_gap | 已登记/evidence_gap |
+| R03 | method | 已登记/evidence_gap | 未登记/evidence_gap | 未登记/evidence_gap | 未登记/evidence_gap | 未登记/evidence_gap |
+| R04 | method | 已登记/evidence_gap | 未登记/evidence_gap | 未登记/evidence_gap | 未登记/evidence_gap | 未登记/evidence_gap |
+| R05 | method | 已登记/evidence_gap | 未登记/evidence_gap | 未登记/evidence_gap | 未登记/evidence_gap | 未登记/evidence_gap |
+| R07 | method | 已登记/evidence_gap | 未登记/evidence_gap | 未登记/evidence_gap | 未登记/evidence_gap | 未登记/evidence_gap |
+| R08 | method | 已登记/evidence_gap | 未登记/evidence_gap | 未登记/evidence_gap | 未登记/evidence_gap | 未登记/evidence_gap |
+| R10 | method | 已登记/evidence_gap | 未登记/evidence_gap | 未登记/evidence_gap | 未登记/evidence_gap | 未登记/evidence_gap |
+| R11 | method | 已登记/evidence_gap | 未登记/evidence_gap | 未登记/evidence_gap | 未登记/evidence_gap | 未登记/evidence_gap |
+| R12 | method | 已登记/evidence_gap | 未登记/evidence_gap | 未登记/evidence_gap | 未登记/evidence_gap | 未登记/evidence_gap |
+| R16 | framework | 已登记/evidence_gap | 未登记/evidence_gap | 未登记/evidence_gap | 未登记/evidence_gap | 未登记/evidence_gap |
+| R17 | method | 已登记/evidence_gap | 未登记/evidence_gap | 未登记/evidence_gap | 未登记/evidence_gap | 未登记/evidence_gap |
+| F01 | method | 已登记/verified_course_example | 已登记/source_pattern_only | 已登记/verified_course_example | 已登记/verified_course_example | 已登记/evidence_gap |
+| F05 | method | 已登记/evidence_gap | 未登记/evidence_gap | 未登记/evidence_gap | 未登记/evidence_gap | 未登记/evidence_gap |
+| F06 | method | 已登记/evidence_gap | 未登记/evidence_gap | 未登记/evidence_gap | 未登记/evidence_gap | 未登记/evidence_gap |
+| F07 | method | 已登记/evidence_gap | 未登记/evidence_gap | 未登记/evidence_gap | 未登记/evidence_gap | 未登记/evidence_gap |
+| C01 | framework | 已登记/evidence_gap | 未登记/evidence_gap | 未登记/evidence_gap | 未登记/evidence_gap | 未登记/evidence_gap |
+| C02 | method | 已登记/evidence_gap | 未登记/evidence_gap | 未登记/evidence_gap | 未登记/evidence_gap | 未登记/evidence_gap |
+| G01 | framework | 已登记/verified_course_example | 已登记/verified_course_example | 已登记/verified_course_example | 已登记/verified_course_example | 已登记/evidence_gap |
+| G05 | method | 已登记/evidence_gap | 未登记/evidence_gap | 未登记/evidence_gap | 未登记/evidence_gap | 未登记/evidence_gap |
+| G06 | method | 已登记/evidence_gap | 未登记/evidence_gap | 未登记/evidence_gap | 未登记/evidence_gap | 未登记/evidence_gap |
+| G07 | method | 已登记/evidence_gap | 未登记/evidence_gap | 未登记/evidence_gap | 未登记/evidence_gap | 未登记/evidence_gap |
+| G08 | method | 已登记/evidence_gap | 未登记/evidence_gap | 未登记/evidence_gap | 未登记/evidence_gap | 未登记/evidence_gap |
+| G12 | method | 已登记/evidence_gap | 未登记/evidence_gap | 未登记/evidence_gap | 未登记/evidence_gap | 未登记/evidence_gap |
+| G15 | method | 已登记/evidence_gap | 未登记/evidence_gap | 未登记/evidence_gap | 未登记/evidence_gap | 未登记/evidence_gap |
+| A01 | framework | 已登记/evidence_gap | 未登记/evidence_gap | 未登记/evidence_gap | 未登记/evidence_gap | 未登记/evidence_gap |
+| A02 | framework | 已登记/evidence_gap | 未登记/evidence_gap | 未登记/evidence_gap | 未登记/evidence_gap | 未登记/evidence_gap |
+| A03 | method | 已登记/evidence_gap | 未登记/evidence_gap | 未登记/evidence_gap | 未登记/evidence_gap | 未登记/evidence_gap |
+| A04 | method | 已登记/evidence_gap | 未登记/evidence_gap | 未登记/evidence_gap | 未登记/evidence_gap | 未登记/evidence_gap |
+| A05 | method | 已登记/evidence_gap | 未登记/evidence_gap | 未登记/evidence_gap | 未登记/evidence_gap | 未登记/evidence_gap |
+| A06 | framework | 已登记/evidence_gap | 未登记/evidence_gap | 未登记/evidence_gap | 未登记/evidence_gap | 未登记/evidence_gap |
+| A07 | method | 已登记/evidence_gap | 未登记/evidence_gap | 未登记/evidence_gap | 未登记/evidence_gap | 未登记/evidence_gap |
+| A10 | framework | 已登记/evidence_gap | 未登记/evidence_gap | 未登记/evidence_gap | 未登记/evidence_gap | 未登记/evidence_gap |
+| W01 | framework | 已登记/evidence_gap | 未登记/evidence_gap | 未登记/evidence_gap | 未登记/evidence_gap | 未登记/evidence_gap |
+| W02 | framework | 已登记/evidence_gap | 未登记/evidence_gap | 未登记/evidence_gap | 未登记/evidence_gap | 未登记/evidence_gap |
+| W03 | framework | 已登记/evidence_gap | 未登记/evidence_gap | 未登记/evidence_gap | 未登记/evidence_gap | 未登记/evidence_gap |
+| W04 | method | 已登记/evidence_gap | 未登记/evidence_gap | 未登记/evidence_gap | 未登记/evidence_gap | 未登记/evidence_gap |
+| W05 | method | 已登记/evidence_gap | 未登记/evidence_gap | 未登记/evidence_gap | 未登记/evidence_gap | 未登记/evidence_gap |
+| W13 | method | 已登记/evidence_gap | 未登记/evidence_gap | 未登记/evidence_gap | 未登记/evidence_gap | 未登记/evidence_gap |
+| W16 | framework | 已登记/evidence_gap | 未登记/evidence_gap | 未登记/evidence_gap | 未登记/evidence_gap | 未登记/evidence_gap |

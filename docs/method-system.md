@@ -22,8 +22,11 @@ grammar-tree.yaml只维护节点依赖与方法引用，不另写判据；可调
 python -m scripts.generate_assets
 python -m unittest discover -s tests -v
 python -m answer_engine validate
+python -m answer_engine case-coverage
 ```
 
 Case唯一事实源是cases记录，registry.yaml为索引。真实完整题、短片段、源反例模式须区分；source_pattern_only/evidence_gap不计验证通过。困难题缺题面就留空。Anti-Rule唯一源为method-registry/anti-rules.yaml，导航为生成投影。
+
+case-coverage逐方法审计canonical、counterexample、boundary、transfer、hard五类槽，未登记槽只输出缺口，不生成虚构Case。validate同时检查索引与方法槽完全对应、路径与case_id唯一，以及实际Case的方法、类型、题型、职责和输出与槽一致。已登记但证据不足与未登记分别统计；该审计只证明登记及记录的来源状态，不认证完整题、语义正确性或学生效果。核心方法/框架缺少类型时，最终案例齐全度维持PARTIAL。
 
 所有项candidate+Useful，后者只指课程用途依据。自动检查不得升级validated/stable/Efficient/Signature；正式升级要有另存的课程与真人审阅释放记录，按协议人工确认。

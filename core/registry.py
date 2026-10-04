@@ -5,6 +5,7 @@ import yaml
 from jsonschema import Draft202012Validator
 
 ROOT = Path(__file__).resolve().parents[1]
+CASE_TYPES = ('canonical','counterexample','boundary','transfer','hard')
 
 def load(path):
     return yaml.safe_load((ROOT/path).read_text(encoding='utf-8'))
@@ -37,7 +38,58 @@ class Registry:
         doc = next(d for d in self.sources['documents'] if d['path']==path)
         return ''.join(self.sources['sections'][sid]['content'] for sid in doc['sections'])
 
+    def case_inventory(self):
+        """Bind the case index, method slots and actual case identities once."""
+        indexed=load('cases/registry.yaml')['case_files']
+        if not isinstance(indexed,list) or any(not isinstance(p,str) or not p.strip() for p in indexed) or len(indexed)!=len(set(indexed)):
+            raise ValueError('Duplicate or invalid case index')
+        records={}; ids=set()
+        for mid,m in self.methods.items():
+            if set(m['cases'])-set(CASE_TYPES): raise ValueError('Unknown case type slot: '+mid)
+            for kind,path in m['cases'].items():
+                if path in records: raise ValueError('Case path reused by method slots: '+path)
+                try: case=load(path)
+                except OSError as exc: raise ValueError('Missing or unreadable case: '+path) from exc
+                validate_schema('case',case)
+                if case['case_id'] in ids: raise ValueError('Duplicate case ID: '+case['case_id'])
+                ids.add(case['case_id'])
+                if (case['method_id'],case['case_type'],case['question_type'],case['method_role'],case['expected_output'])!=(mid,kind,m['question_type'],m['primary_role'],m['output_type']):
+                    raise ValueError('Case slot identity/type/role/output mismatch: '+path)
+                if case['status']=='verified_course_example' and not case['question']:
+                    raise ValueError('Verified case without question')
+                records[path]=case
+        if set(indexed)!=set(records):
+            raise ValueError('Case index and method slots disagree')
+        return records
+
+    def case_coverage(self):
+        """Report missing slots as gaps, never manufacture case records."""
+        records=self.case_inventory(); methods=[]
+        for mid,m in self.methods.items():
+            slots=[]
+            for kind in CASE_TYPES:
+                path=m['cases'].get(kind); case=records.get(path)
+                slots.append({'case_type':kind,'registration':'registered' if case else 'unregistered',
+                              'evidence_status':case['status'] if case else 'evidence_gap',
+                              'path':path,'case_id':case['case_id'] if case else None,
+                              'reason':case['notes'] if case else '没有已登记、可合法使用并核验的该类题目；登记缺口不计作案例或通过。'})
+            methods.append({'method_id':mid,'method_version':m['version'],'question_type':m['question_type'],
+                            'method_type':m['method_type'],'core_required':m['method_type'] in {'method','framework'},
+                            'source_section_ids':list(m['section_ids']),'slots':slots,
+                            'registration_complete':all(s['registration']=='registered' for s in slots),
+                            'registered_examples_complete':all(s['registration']=='registered' and s['evidence_status']=='verified_course_example' for s in slots)})
+        core=[m for m in methods if m['core_required']]
+        formal=[m for m in methods if m['method_type']=='method']
+        missing=lambda subset:sum(s['registration']=='unregistered' for m in subset for s in m['slots'])
+        return {'scope':'registration and recorded provenance status only; no full-question, semantic or learner validation certification',
+                'required_case_types':list(CASE_TYPES),'method_count':len(methods),'registered_case_count':len(records),
+                'unregistered_slot_count':missing(methods),'core_method_count':len(core),'core_unregistered_slot_count':missing(core),
+                'formal_method_count':len(formal),'formal_unregistered_slot_count':missing(formal),
+                'formal_methods_with_missing_slots':sum(not m['registration_complete'] for m in formal),
+                'registration_complete':all(m['registration_complete'] for m in core),'methods':methods}
+
     def validate(self):
+        self.case_inventory()
         risk_ids=set()
         for risk in self.risks:
             if risk['risk_id'] in risk_ids: raise ValueError('Duplicate source risk')
@@ -99,13 +151,6 @@ class Registry:
                     raise ValueError('Source version mismatch')
                 if not (ROOT/'provenance/ANSWER'/ref['path']).is_file():
                     raise ValueError('Unresolved source path: '+ref['path'])
-            for path in m['cases'].values():
-                case = load(path)
-                validate_schema('case',case)
-                if case['method_id'] != mid or case['method_role'] != m['primary_role']:
-                    raise ValueError('Case mismatch: '+path)
-                if case['status']=='verified_course_example' and not case['question']:
-                    raise ValueError('Verified case without question')
             if m['maturity_status'] in {'validated','stable'} or m['practical_value'] != 'Useful':
                 # Mechanical validation cannot authenticate people or validate teaching semantics.
                 raise ValueError('Human promotion requires separately reviewed release artifact: '+mid)

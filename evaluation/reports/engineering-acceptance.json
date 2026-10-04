@@ -6,7 +6,7 @@
     "head": "60ebaf4"
   },
   "after_refactor": {
-    "tests_run": 251,
+    "tests_run": 257,
     "failures": 0,
     "errors": 0,
     "registry": {
@@ -18,6 +18,10 @@
       "generated_assets": "PASS"
     },
     "cli_smoke": [
+      {
+        "command": "python -m answer_engine case-coverage",
+        "exit_code": 0
+      },
       {
         "command": "python -m answer_engine analyze examples/writing-word-count.synthetic.json --renderer legacy-wechat",
         "exit_code": 0
@@ -123,6 +127,4524 @@
     "analysis_schema_version": "1.7.0",
     "grammar_navigation": "explicit hint branch plus reviewed trigger paths; never infer blank POS from hint spelling",
     "writing_feedback": "external review transport with independent trigger, draft coverage, module-specific order and real withholding of unsupported sections; no automatic grading certification"
+  },
+  "case_coverage": {
+    "scope": "registration and recorded provenance status only; no full-question, semantic or learner validation certification",
+    "required_case_types": [
+      "canonical",
+      "counterexample",
+      "boundary",
+      "transfer",
+      "hard"
+    ],
+    "method_count": 82,
+    "registered_case_count": 106,
+    "unregistered_slot_count": 304,
+    "core_method_count": 42,
+    "core_unregistered_slot_count": 144,
+    "formal_method_count": 30,
+    "formal_unregistered_slot_count": 104,
+    "formal_methods_with_missing_slots": 26,
+    "registration_complete": false,
+    "methods": [
+      {
+        "method_id": "R01",
+        "method_version": "1.1.0",
+        "question_type": "阅读理解",
+        "method_type": "method",
+        "core_required": true,
+        "source_section_ids": [
+          "044ac82fa0d47a9d"
+        ],
+        "slots": [
+          {
+            "case_type": "canonical",
+            "registration": "registered",
+            "evidence_status": "evidence_gap",
+            "path": "cases/R01/canonical/case.yaml",
+            "case_id": "R01-canonical",
+            "reason": "ANSWER 运行层只发布抽象操作与视频时间窗，未发布可重用的完整题面与选项。"
+          },
+          {
+            "case_type": "counterexample",
+            "registration": "registered",
+            "evidence_status": "source_pattern_only",
+            "path": "cases/R01/counterexamples/case.yaml",
+            "case_id": "R01-counterexample",
+            "reason": "有证据模式，但源运行层未发布完整可盲测题面。"
+          },
+          {
+            "case_type": "boundary",
+            "registration": "registered",
+            "evidence_status": "evidence_gap",
+            "path": "cases/R01/boundary/case.yaml",
+            "case_id": "R01-boundary",
+            "reason": "待从课程原例中获得完整题面和原答案链。"
+          },
+          {
+            "case_type": "transfer",
+            "registration": "registered",
+            "evidence_status": "evidence_gap",
+            "path": "cases/R01/transfer/case.yaml",
+            "case_id": "R01-transfer",
+            "reason": "需要一道题材不同的冻结盲题。"
+          },
+          {
+            "case_type": "hard",
+            "registration": "registered",
+            "evidence_status": "evidence_gap",
+            "path": "cases/R01/hard/case.yaml",
+            "case_id": "R01-hard",
+            "reason": "缺少经核验完整困难题，不造题补数"
+          }
+        ],
+        "registration_complete": true,
+        "registered_examples_complete": false
+      },
+      {
+        "method_id": "R02",
+        "method_version": "1.1.0",
+        "question_type": "阅读理解",
+        "method_type": "method",
+        "core_required": true,
+        "source_section_ids": [
+          "eabe3dd37fa4d962"
+        ],
+        "slots": [
+          {
+            "case_type": "canonical",
+            "registration": "registered",
+            "evidence_status": "source_pattern_only",
+            "path": "cases/R02/canonical/case.yaml",
+            "case_id": "R02-canonical",
+            "reason": "完整题面与选项未在 ANSWER 运行层发布。"
+          },
+          {
+            "case_type": "counterexample",
+            "registration": "registered",
+            "evidence_status": "source_pattern_only",
+            "path": "cases/R02/counterexamples/case.yaml",
+            "case_id": "R02-counterexample",
+            "reason": "尚未真人验收"
+          },
+          {
+            "case_type": "boundary",
+            "registration": "registered",
+            "evidence_status": "evidence_gap",
+            "path": "cases/R02/boundary/case.yaml",
+            "case_id": "R02-boundary",
+            "reason": "需要三槽对齐但其他限定错误的完整课程题。"
+          },
+          {
+            "case_type": "transfer",
+            "registration": "registered",
+            "evidence_status": "evidence_gap",
+            "path": "cases/R02/transfer/case.yaml",
+            "case_id": "R02-transfer",
+            "reason": "需要冻结的跨题材盲题。"
+          },
+          {
+            "case_type": "hard",
+            "registration": "registered",
+            "evidence_status": "evidence_gap",
+            "path": "cases/R02/hard/case.yaml",
+            "case_id": "R02-hard",
+            "reason": "缺少经核验完整困难题，不造题补数"
+          }
+        ],
+        "registration_complete": true,
+        "registered_examples_complete": false
+      },
+      {
+        "method_id": "R06",
+        "method_version": "1.1.0",
+        "question_type": "阅读理解",
+        "method_type": "method",
+        "core_required": true,
+        "source_section_ids": [
+          "30dc89c0d75b4e5e"
+        ],
+        "slots": [
+          {
+            "case_type": "canonical",
+            "registration": "registered",
+            "evidence_status": "source_pattern_only",
+            "path": "cases/R06/canonical/case.yaml",
+            "case_id": "R06-canonical",
+            "reason": "课程证据记录局部操作，未发布可重用完整全文和候选。"
+          },
+          {
+            "case_type": "counterexample",
+            "registration": "registered",
+            "evidence_status": "evidence_gap",
+            "path": "cases/R06/counterexamples/case.yaml",
+            "case_id": "R06-counterexample",
+            "reason": "需要包含完整错关系候选的课程题面。"
+          },
+          {
+            "case_type": "boundary",
+            "registration": "registered",
+            "evidence_status": "source_pattern_only",
+            "path": "cases/R06/boundary/case.yaml",
+            "case_id": "R06-boundary",
+            "reason": "尚未真人验收"
+          },
+          {
+            "case_type": "transfer",
+            "registration": "registered",
+            "evidence_status": "evidence_gap",
+            "path": "cases/R06/transfer/case.yaml",
+            "case_id": "R06-transfer",
+            "reason": "需要题材和结构都不同的冻结盲题。"
+          },
+          {
+            "case_type": "hard",
+            "registration": "registered",
+            "evidence_status": "evidence_gap",
+            "path": "cases/R06/hard/case.yaml",
+            "case_id": "R06-hard",
+            "reason": "缺少经核验完整困难题，不造题补数"
+          }
+        ],
+        "registration_complete": true,
+        "registered_examples_complete": false
+      },
+      {
+        "method_id": "R09",
+        "method_version": "1.1.0",
+        "question_type": "阅读理解",
+        "method_type": "framework",
+        "core_required": true,
+        "source_section_ids": [
+          "4311f90fc985aca0"
+        ],
+        "slots": [
+          {
+            "case_type": "canonical",
+            "registration": "registered",
+            "evidence_status": "source_pattern_only",
+            "path": "cases/R09/canonical/case.yaml",
+            "case_id": "R09-canonical",
+            "reason": "完整材料未在 ANSWER 运行层发布。"
+          },
+          {
+            "case_type": "counterexample",
+            "registration": "registered",
+            "evidence_status": "source_pattern_only",
+            "path": "cases/R09/counterexamples/case.yaml",
+            "case_id": "R09-counterexample",
+            "reason": "尚未真人验收"
+          },
+          {
+            "case_type": "boundary",
+            "registration": "registered",
+            "evidence_status": "source_pattern_only",
+            "path": "cases/R09/boundary/case.yaml",
+            "case_id": "R09-boundary",
+            "reason": "尚未真人验收"
+          },
+          {
+            "case_type": "transfer",
+            "registration": "registered",
+            "evidence_status": "evidence_gap",
+            "path": "cases/R09/transfer/case.yaml",
+            "case_id": "R09-transfer",
+            "reason": "需要与教学示例结构不同的冻结盲题。"
+          },
+          {
+            "case_type": "hard",
+            "registration": "registered",
+            "evidence_status": "evidence_gap",
+            "path": "cases/R09/hard/case.yaml",
+            "case_id": "R09-hard",
+            "reason": "缺少经核验完整困难题，不造题补数"
+          }
+        ],
+        "registration_complete": true,
+        "registered_examples_complete": false
+      },
+      {
+        "method_id": "R03",
+        "method_version": "1.1.0",
+        "question_type": "阅读理解",
+        "method_type": "method",
+        "core_required": true,
+        "source_section_ids": [
+          "6666ada9f1f24eb8"
+        ],
+        "slots": [
+          {
+            "case_type": "canonical",
+            "registration": "registered",
+            "evidence_status": "evidence_gap",
+            "path": "cases/reading/R03/canonical/case.yaml",
+            "case_id": "R03-canonical",
+            "reason": "源方法可核；尚未逐题核验案例，不可当成功样例"
+          },
+          {
+            "case_type": "counterexample",
+            "registration": "unregistered",
+            "evidence_status": "evidence_gap",
+            "path": null,
+            "case_id": null,
+            "reason": "没有已登记、可合法使用并核验的该类题目；登记缺口不计作案例或通过。"
+          },
+          {
+            "case_type": "boundary",
+            "registration": "unregistered",
+            "evidence_status": "evidence_gap",
+            "path": null,
+            "case_id": null,
+            "reason": "没有已登记、可合法使用并核验的该类题目；登记缺口不计作案例或通过。"
+          },
+          {
+            "case_type": "transfer",
+            "registration": "unregistered",
+            "evidence_status": "evidence_gap",
+            "path": null,
+            "case_id": null,
+            "reason": "没有已登记、可合法使用并核验的该类题目；登记缺口不计作案例或通过。"
+          },
+          {
+            "case_type": "hard",
+            "registration": "unregistered",
+            "evidence_status": "evidence_gap",
+            "path": null,
+            "case_id": null,
+            "reason": "没有已登记、可合法使用并核验的该类题目；登记缺口不计作案例或通过。"
+          }
+        ],
+        "registration_complete": false,
+        "registered_examples_complete": false
+      },
+      {
+        "method_id": "R04",
+        "method_version": "1.1.0",
+        "question_type": "阅读理解",
+        "method_type": "method",
+        "core_required": true,
+        "source_section_ids": [
+          "0286ea8d84554809"
+        ],
+        "slots": [
+          {
+            "case_type": "canonical",
+            "registration": "registered",
+            "evidence_status": "evidence_gap",
+            "path": "cases/reading/R04/canonical/case.yaml",
+            "case_id": "R04-canonical",
+            "reason": "源方法可核；尚未逐题核验案例，不可当成功样例"
+          },
+          {
+            "case_type": "counterexample",
+            "registration": "unregistered",
+            "evidence_status": "evidence_gap",
+            "path": null,
+            "case_id": null,
+            "reason": "没有已登记、可合法使用并核验的该类题目；登记缺口不计作案例或通过。"
+          },
+          {
+            "case_type": "boundary",
+            "registration": "unregistered",
+            "evidence_status": "evidence_gap",
+            "path": null,
+            "case_id": null,
+            "reason": "没有已登记、可合法使用并核验的该类题目；登记缺口不计作案例或通过。"
+          },
+          {
+            "case_type": "transfer",
+            "registration": "unregistered",
+            "evidence_status": "evidence_gap",
+            "path": null,
+            "case_id": null,
+            "reason": "没有已登记、可合法使用并核验的该类题目；登记缺口不计作案例或通过。"
+          },
+          {
+            "case_type": "hard",
+            "registration": "unregistered",
+            "evidence_status": "evidence_gap",
+            "path": null,
+            "case_id": null,
+            "reason": "没有已登记、可合法使用并核验的该类题目；登记缺口不计作案例或通过。"
+          }
+        ],
+        "registration_complete": false,
+        "registered_examples_complete": false
+      },
+      {
+        "method_id": "R05",
+        "method_version": "1.1.0",
+        "question_type": "阅读理解",
+        "method_type": "method",
+        "core_required": true,
+        "source_section_ids": [
+          "15040a878068eea0"
+        ],
+        "slots": [
+          {
+            "case_type": "canonical",
+            "registration": "registered",
+            "evidence_status": "evidence_gap",
+            "path": "cases/reading/R05/canonical/case.yaml",
+            "case_id": "R05-canonical",
+            "reason": "源方法可核；尚未逐题核验案例，不可当成功样例"
+          },
+          {
+            "case_type": "counterexample",
+            "registration": "unregistered",
+            "evidence_status": "evidence_gap",
+            "path": null,
+            "case_id": null,
+            "reason": "没有已登记、可合法使用并核验的该类题目；登记缺口不计作案例或通过。"
+          },
+          {
+            "case_type": "boundary",
+            "registration": "unregistered",
+            "evidence_status": "evidence_gap",
+            "path": null,
+            "case_id": null,
+            "reason": "没有已登记、可合法使用并核验的该类题目；登记缺口不计作案例或通过。"
+          },
+          {
+            "case_type": "transfer",
+            "registration": "unregistered",
+            "evidence_status": "evidence_gap",
+            "path": null,
+            "case_id": null,
+            "reason": "没有已登记、可合法使用并核验的该类题目；登记缺口不计作案例或通过。"
+          },
+          {
+            "case_type": "hard",
+            "registration": "unregistered",
+            "evidence_status": "evidence_gap",
+            "path": null,
+            "case_id": null,
+            "reason": "没有已登记、可合法使用并核验的该类题目；登记缺口不计作案例或通过。"
+          }
+        ],
+        "registration_complete": false,
+        "registered_examples_complete": false
+      },
+      {
+        "method_id": "R07",
+        "method_version": "1.1.0",
+        "question_type": "阅读理解",
+        "method_type": "method",
+        "core_required": true,
+        "source_section_ids": [
+          "1e472a9b9651a5a0"
+        ],
+        "slots": [
+          {
+            "case_type": "canonical",
+            "registration": "registered",
+            "evidence_status": "evidence_gap",
+            "path": "cases/reading/R07/canonical/case.yaml",
+            "case_id": "R07-canonical",
+            "reason": "源方法可核；尚未逐题核验案例，不可当成功样例"
+          },
+          {
+            "case_type": "counterexample",
+            "registration": "unregistered",
+            "evidence_status": "evidence_gap",
+            "path": null,
+            "case_id": null,
+            "reason": "没有已登记、可合法使用并核验的该类题目；登记缺口不计作案例或通过。"
+          },
+          {
+            "case_type": "boundary",
+            "registration": "unregistered",
+            "evidence_status": "evidence_gap",
+            "path": null,
+            "case_id": null,
+            "reason": "没有已登记、可合法使用并核验的该类题目；登记缺口不计作案例或通过。"
+          },
+          {
+            "case_type": "transfer",
+            "registration": "unregistered",
+            "evidence_status": "evidence_gap",
+            "path": null,
+            "case_id": null,
+            "reason": "没有已登记、可合法使用并核验的该类题目；登记缺口不计作案例或通过。"
+          },
+          {
+            "case_type": "hard",
+            "registration": "unregistered",
+            "evidence_status": "evidence_gap",
+            "path": null,
+            "case_id": null,
+            "reason": "没有已登记、可合法使用并核验的该类题目；登记缺口不计作案例或通过。"
+          }
+        ],
+        "registration_complete": false,
+        "registered_examples_complete": false
+      },
+      {
+        "method_id": "R08",
+        "method_version": "1.1.0",
+        "question_type": "阅读理解",
+        "method_type": "method",
+        "core_required": true,
+        "source_section_ids": [
+          "9ad7dfba5f2dff1d"
+        ],
+        "slots": [
+          {
+            "case_type": "canonical",
+            "registration": "registered",
+            "evidence_status": "evidence_gap",
+            "path": "cases/reading/R08/canonical/case.yaml",
+            "case_id": "R08-canonical",
+            "reason": "源方法可核；尚未逐题核验案例，不可当成功样例"
+          },
+          {
+            "case_type": "counterexample",
+            "registration": "unregistered",
+            "evidence_status": "evidence_gap",
+            "path": null,
+            "case_id": null,
+            "reason": "没有已登记、可合法使用并核验的该类题目；登记缺口不计作案例或通过。"
+          },
+          {
+            "case_type": "boundary",
+            "registration": "unregistered",
+            "evidence_status": "evidence_gap",
+            "path": null,
+            "case_id": null,
+            "reason": "没有已登记、可合法使用并核验的该类题目；登记缺口不计作案例或通过。"
+          },
+          {
+            "case_type": "transfer",
+            "registration": "unregistered",
+            "evidence_status": "evidence_gap",
+            "path": null,
+            "case_id": null,
+            "reason": "没有已登记、可合法使用并核验的该类题目；登记缺口不计作案例或通过。"
+          },
+          {
+            "case_type": "hard",
+            "registration": "unregistered",
+            "evidence_status": "evidence_gap",
+            "path": null,
+            "case_id": null,
+            "reason": "没有已登记、可合法使用并核验的该类题目；登记缺口不计作案例或通过。"
+          }
+        ],
+        "registration_complete": false,
+        "registered_examples_complete": false
+      },
+      {
+        "method_id": "R10",
+        "method_version": "1.1.0",
+        "question_type": "阅读理解",
+        "method_type": "method",
+        "core_required": true,
+        "source_section_ids": [
+          "dfb7dd8dc0c2e8a1"
+        ],
+        "slots": [
+          {
+            "case_type": "canonical",
+            "registration": "registered",
+            "evidence_status": "evidence_gap",
+            "path": "cases/reading/R10/canonical/case.yaml",
+            "case_id": "R10-canonical",
+            "reason": "源方法可核；尚未逐题核验案例，不可当成功样例"
+          },
+          {
+            "case_type": "counterexample",
+            "registration": "unregistered",
+            "evidence_status": "evidence_gap",
+            "path": null,
+            "case_id": null,
+            "reason": "没有已登记、可合法使用并核验的该类题目；登记缺口不计作案例或通过。"
+          },
+          {
+            "case_type": "boundary",
+            "registration": "unregistered",
+            "evidence_status": "evidence_gap",
+            "path": null,
+            "case_id": null,
+            "reason": "没有已登记、可合法使用并核验的该类题目；登记缺口不计作案例或通过。"
+          },
+          {
+            "case_type": "transfer",
+            "registration": "unregistered",
+            "evidence_status": "evidence_gap",
+            "path": null,
+            "case_id": null,
+            "reason": "没有已登记、可合法使用并核验的该类题目；登记缺口不计作案例或通过。"
+          },
+          {
+            "case_type": "hard",
+            "registration": "unregistered",
+            "evidence_status": "evidence_gap",
+            "path": null,
+            "case_id": null,
+            "reason": "没有已登记、可合法使用并核验的该类题目；登记缺口不计作案例或通过。"
+          }
+        ],
+        "registration_complete": false,
+        "registered_examples_complete": false
+      },
+      {
+        "method_id": "R11",
+        "method_version": "1.1.0",
+        "question_type": "阅读理解",
+        "method_type": "method",
+        "core_required": true,
+        "source_section_ids": [
+          "50c776e095b0086b"
+        ],
+        "slots": [
+          {
+            "case_type": "canonical",
+            "registration": "registered",
+            "evidence_status": "evidence_gap",
+            "path": "cases/reading/R11/canonical/case.yaml",
+            "case_id": "R11-canonical",
+            "reason": "源方法可核；尚未逐题核验案例，不可当成功样例"
+          },
+          {
+            "case_type": "counterexample",
+            "registration": "unregistered",
+            "evidence_status": "evidence_gap",
+            "path": null,
+            "case_id": null,
+            "reason": "没有已登记、可合法使用并核验的该类题目；登记缺口不计作案例或通过。"
+          },
+          {
+            "case_type": "boundary",
+            "registration": "unregistered",
+            "evidence_status": "evidence_gap",
+            "path": null,
+            "case_id": null,
+            "reason": "没有已登记、可合法使用并核验的该类题目；登记缺口不计作案例或通过。"
+          },
+          {
+            "case_type": "transfer",
+            "registration": "unregistered",
+            "evidence_status": "evidence_gap",
+            "path": null,
+            "case_id": null,
+            "reason": "没有已登记、可合法使用并核验的该类题目；登记缺口不计作案例或通过。"
+          },
+          {
+            "case_type": "hard",
+            "registration": "unregistered",
+            "evidence_status": "evidence_gap",
+            "path": null,
+            "case_id": null,
+            "reason": "没有已登记、可合法使用并核验的该类题目；登记缺口不计作案例或通过。"
+          }
+        ],
+        "registration_complete": false,
+        "registered_examples_complete": false
+      },
+      {
+        "method_id": "R12",
+        "method_version": "1.1.0",
+        "question_type": "阅读理解",
+        "method_type": "method",
+        "core_required": true,
+        "source_section_ids": [
+          "7a963f5609d19db8"
+        ],
+        "slots": [
+          {
+            "case_type": "canonical",
+            "registration": "registered",
+            "evidence_status": "evidence_gap",
+            "path": "cases/reading/R12/canonical/case.yaml",
+            "case_id": "R12-canonical",
+            "reason": "源方法可核；尚未逐题核验案例，不可当成功样例"
+          },
+          {
+            "case_type": "counterexample",
+            "registration": "unregistered",
+            "evidence_status": "evidence_gap",
+            "path": null,
+            "case_id": null,
+            "reason": "没有已登记、可合法使用并核验的该类题目；登记缺口不计作案例或通过。"
+          },
+          {
+            "case_type": "boundary",
+            "registration": "unregistered",
+            "evidence_status": "evidence_gap",
+            "path": null,
+            "case_id": null,
+            "reason": "没有已登记、可合法使用并核验的该类题目；登记缺口不计作案例或通过。"
+          },
+          {
+            "case_type": "transfer",
+            "registration": "unregistered",
+            "evidence_status": "evidence_gap",
+            "path": null,
+            "case_id": null,
+            "reason": "没有已登记、可合法使用并核验的该类题目；登记缺口不计作案例或通过。"
+          },
+          {
+            "case_type": "hard",
+            "registration": "unregistered",
+            "evidence_status": "evidence_gap",
+            "path": null,
+            "case_id": null,
+            "reason": "没有已登记、可合法使用并核验的该类题目；登记缺口不计作案例或通过。"
+          }
+        ],
+        "registration_complete": false,
+        "registered_examples_complete": false
+      },
+      {
+        "method_id": "R13",
+        "method_version": "1.1.0",
+        "question_type": "阅读理解",
+        "method_type": "sub_action",
+        "core_required": false,
+        "source_section_ids": [
+          "c51d31bdcc7d5e16"
+        ],
+        "slots": [
+          {
+            "case_type": "canonical",
+            "registration": "registered",
+            "evidence_status": "evidence_gap",
+            "path": "cases/reading/R13/canonical/case.yaml",
+            "case_id": "R13-canonical",
+            "reason": "源方法可核；尚未逐题核验案例，不可当成功样例"
+          },
+          {
+            "case_type": "counterexample",
+            "registration": "unregistered",
+            "evidence_status": "evidence_gap",
+            "path": null,
+            "case_id": null,
+            "reason": "没有已登记、可合法使用并核验的该类题目；登记缺口不计作案例或通过。"
+          },
+          {
+            "case_type": "boundary",
+            "registration": "unregistered",
+            "evidence_status": "evidence_gap",
+            "path": null,
+            "case_id": null,
+            "reason": "没有已登记、可合法使用并核验的该类题目；登记缺口不计作案例或通过。"
+          },
+          {
+            "case_type": "transfer",
+            "registration": "unregistered",
+            "evidence_status": "evidence_gap",
+            "path": null,
+            "case_id": null,
+            "reason": "没有已登记、可合法使用并核验的该类题目；登记缺口不计作案例或通过。"
+          },
+          {
+            "case_type": "hard",
+            "registration": "unregistered",
+            "evidence_status": "evidence_gap",
+            "path": null,
+            "case_id": null,
+            "reason": "没有已登记、可合法使用并核验的该类题目；登记缺口不计作案例或通过。"
+          }
+        ],
+        "registration_complete": false,
+        "registered_examples_complete": false
+      },
+      {
+        "method_id": "R14",
+        "method_version": "1.1.0",
+        "question_type": "阅读理解",
+        "method_type": "sub_action",
+        "core_required": false,
+        "source_section_ids": [
+          "c51d31bdcc7d5e16"
+        ],
+        "slots": [
+          {
+            "case_type": "canonical",
+            "registration": "registered",
+            "evidence_status": "evidence_gap",
+            "path": "cases/reading/R14/canonical/case.yaml",
+            "case_id": "R14-canonical",
+            "reason": "源方法可核；尚未逐题核验案例，不可当成功样例"
+          },
+          {
+            "case_type": "counterexample",
+            "registration": "unregistered",
+            "evidence_status": "evidence_gap",
+            "path": null,
+            "case_id": null,
+            "reason": "没有已登记、可合法使用并核验的该类题目；登记缺口不计作案例或通过。"
+          },
+          {
+            "case_type": "boundary",
+            "registration": "unregistered",
+            "evidence_status": "evidence_gap",
+            "path": null,
+            "case_id": null,
+            "reason": "没有已登记、可合法使用并核验的该类题目；登记缺口不计作案例或通过。"
+          },
+          {
+            "case_type": "transfer",
+            "registration": "unregistered",
+            "evidence_status": "evidence_gap",
+            "path": null,
+            "case_id": null,
+            "reason": "没有已登记、可合法使用并核验的该类题目；登记缺口不计作案例或通过。"
+          },
+          {
+            "case_type": "hard",
+            "registration": "unregistered",
+            "evidence_status": "evidence_gap",
+            "path": null,
+            "case_id": null,
+            "reason": "没有已登记、可合法使用并核验的该类题目；登记缺口不计作案例或通过。"
+          }
+        ],
+        "registration_complete": false,
+        "registered_examples_complete": false
+      },
+      {
+        "method_id": "R15",
+        "method_version": "1.1.0",
+        "question_type": "阅读理解",
+        "method_type": "sub_action",
+        "core_required": false,
+        "source_section_ids": [
+          "c51d31bdcc7d5e16"
+        ],
+        "slots": [
+          {
+            "case_type": "canonical",
+            "registration": "registered",
+            "evidence_status": "evidence_gap",
+            "path": "cases/reading/R15/canonical/case.yaml",
+            "case_id": "R15-canonical",
+            "reason": "源方法可核；尚未逐题核验案例，不可当成功样例"
+          },
+          {
+            "case_type": "counterexample",
+            "registration": "unregistered",
+            "evidence_status": "evidence_gap",
+            "path": null,
+            "case_id": null,
+            "reason": "没有已登记、可合法使用并核验的该类题目；登记缺口不计作案例或通过。"
+          },
+          {
+            "case_type": "boundary",
+            "registration": "unregistered",
+            "evidence_status": "evidence_gap",
+            "path": null,
+            "case_id": null,
+            "reason": "没有已登记、可合法使用并核验的该类题目；登记缺口不计作案例或通过。"
+          },
+          {
+            "case_type": "transfer",
+            "registration": "unregistered",
+            "evidence_status": "evidence_gap",
+            "path": null,
+            "case_id": null,
+            "reason": "没有已登记、可合法使用并核验的该类题目；登记缺口不计作案例或通过。"
+          },
+          {
+            "case_type": "hard",
+            "registration": "unregistered",
+            "evidence_status": "evidence_gap",
+            "path": null,
+            "case_id": null,
+            "reason": "没有已登记、可合法使用并核验的该类题目；登记缺口不计作案例或通过。"
+          }
+        ],
+        "registration_complete": false,
+        "registered_examples_complete": false
+      },
+      {
+        "method_id": "R16",
+        "method_version": "1.1.0",
+        "question_type": "阅读理解",
+        "method_type": "framework",
+        "core_required": true,
+        "source_section_ids": [
+          "e86b48de8f954f83"
+        ],
+        "slots": [
+          {
+            "case_type": "canonical",
+            "registration": "registered",
+            "evidence_status": "evidence_gap",
+            "path": "cases/reading/R16/canonical/case.yaml",
+            "case_id": "R16-canonical",
+            "reason": "源方法可核；尚未逐题核验案例，不可当成功样例"
+          },
+          {
+            "case_type": "counterexample",
+            "registration": "unregistered",
+            "evidence_status": "evidence_gap",
+            "path": null,
+            "case_id": null,
+            "reason": "没有已登记、可合法使用并核验的该类题目；登记缺口不计作案例或通过。"
+          },
+          {
+            "case_type": "boundary",
+            "registration": "unregistered",
+            "evidence_status": "evidence_gap",
+            "path": null,
+            "case_id": null,
+            "reason": "没有已登记、可合法使用并核验的该类题目；登记缺口不计作案例或通过。"
+          },
+          {
+            "case_type": "transfer",
+            "registration": "unregistered",
+            "evidence_status": "evidence_gap",
+            "path": null,
+            "case_id": null,
+            "reason": "没有已登记、可合法使用并核验的该类题目；登记缺口不计作案例或通过。"
+          },
+          {
+            "case_type": "hard",
+            "registration": "unregistered",
+            "evidence_status": "evidence_gap",
+            "path": null,
+            "case_id": null,
+            "reason": "没有已登记、可合法使用并核验的该类题目；登记缺口不计作案例或通过。"
+          }
+        ],
+        "registration_complete": false,
+        "registered_examples_complete": false
+      },
+      {
+        "method_id": "R17",
+        "method_version": "1.1.0",
+        "question_type": "阅读理解",
+        "method_type": "method",
+        "core_required": true,
+        "source_section_ids": [
+          "9f5952ba46e2e61c"
+        ],
+        "slots": [
+          {
+            "case_type": "canonical",
+            "registration": "registered",
+            "evidence_status": "evidence_gap",
+            "path": "cases/reading/R17/canonical/case.yaml",
+            "case_id": "R17-canonical",
+            "reason": "源方法可核；尚未逐题核验案例，不可当成功样例"
+          },
+          {
+            "case_type": "counterexample",
+            "registration": "unregistered",
+            "evidence_status": "evidence_gap",
+            "path": null,
+            "case_id": null,
+            "reason": "没有已登记、可合法使用并核验的该类题目；登记缺口不计作案例或通过。"
+          },
+          {
+            "case_type": "boundary",
+            "registration": "unregistered",
+            "evidence_status": "evidence_gap",
+            "path": null,
+            "case_id": null,
+            "reason": "没有已登记、可合法使用并核验的该类题目；登记缺口不计作案例或通过。"
+          },
+          {
+            "case_type": "transfer",
+            "registration": "unregistered",
+            "evidence_status": "evidence_gap",
+            "path": null,
+            "case_id": null,
+            "reason": "没有已登记、可合法使用并核验的该类题目；登记缺口不计作案例或通过。"
+          },
+          {
+            "case_type": "hard",
+            "registration": "unregistered",
+            "evidence_status": "evidence_gap",
+            "path": null,
+            "case_id": null,
+            "reason": "没有已登记、可合法使用并核验的该类题目；登记缺口不计作案例或通过。"
+          }
+        ],
+        "registration_complete": false,
+        "registered_examples_complete": false
+      },
+      {
+        "method_id": "F01",
+        "method_version": "1.1.0",
+        "question_type": "七选五",
+        "method_type": "method",
+        "core_required": true,
+        "source_section_ids": [
+          "a8f0c4ae44ae61ff",
+          "7c0a77869754a1dc",
+          "4a9de82ef9741f92"
+        ],
+        "slots": [
+          {
+            "case_type": "canonical",
+            "registration": "registered",
+            "evidence_status": "verified_course_example",
+            "path": "cases/F01/canonical/case.yaml",
+            "case_id": "F01-canonical",
+            "reason": "尚未真人验收"
+          },
+          {
+            "case_type": "counterexample",
+            "registration": "registered",
+            "evidence_status": "source_pattern_only",
+            "path": "cases/F01/counterexamples/case.yaml",
+            "case_id": "F01-counterexample",
+            "reason": "源运行层保留视频操作记录，未发布完整可盲测题面。"
+          },
+          {
+            "case_type": "boundary",
+            "registration": "registered",
+            "evidence_status": "verified_course_example",
+            "path": "cases/F01/boundary/case.yaml",
+            "case_id": "F01-boundary",
+            "reason": "尚未真人验收"
+          },
+          {
+            "case_type": "transfer",
+            "registration": "registered",
+            "evidence_status": "verified_course_example",
+            "path": "cases/F01/transfer/case.yaml",
+            "case_id": "F01-transfer",
+            "reason": "尚未真人验收"
+          },
+          {
+            "case_type": "hard",
+            "registration": "registered",
+            "evidence_status": "evidence_gap",
+            "path": "cases/F01/hard/case.yaml",
+            "case_id": "F01-hard",
+            "reason": "缺少经核验完整困难题，不造题补数"
+          }
+        ],
+        "registration_complete": true,
+        "registered_examples_complete": false
+      },
+      {
+        "method_id": "F02",
+        "method_version": "1.1.0",
+        "question_type": "七选五",
+        "method_type": "sub_action",
+        "core_required": false,
+        "source_section_ids": [
+          "a8f0c4ae44ae61ff"
+        ],
+        "slots": [
+          {
+            "case_type": "canonical",
+            "registration": "registered",
+            "evidence_status": "evidence_gap",
+            "path": "cases/seven-five/F02/canonical/case.yaml",
+            "case_id": "F02-canonical",
+            "reason": "源方法可核；尚未逐题核验案例，不可当成功样例"
+          },
+          {
+            "case_type": "counterexample",
+            "registration": "unregistered",
+            "evidence_status": "evidence_gap",
+            "path": null,
+            "case_id": null,
+            "reason": "没有已登记、可合法使用并核验的该类题目；登记缺口不计作案例或通过。"
+          },
+          {
+            "case_type": "boundary",
+            "registration": "unregistered",
+            "evidence_status": "evidence_gap",
+            "path": null,
+            "case_id": null,
+            "reason": "没有已登记、可合法使用并核验的该类题目；登记缺口不计作案例或通过。"
+          },
+          {
+            "case_type": "transfer",
+            "registration": "unregistered",
+            "evidence_status": "evidence_gap",
+            "path": null,
+            "case_id": null,
+            "reason": "没有已登记、可合法使用并核验的该类题目；登记缺口不计作案例或通过。"
+          },
+          {
+            "case_type": "hard",
+            "registration": "unregistered",
+            "evidence_status": "evidence_gap",
+            "path": null,
+            "case_id": null,
+            "reason": "没有已登记、可合法使用并核验的该类题目；登记缺口不计作案例或通过。"
+          }
+        ],
+        "registration_complete": false,
+        "registered_examples_complete": false
+      },
+      {
+        "method_id": "F03",
+        "method_version": "1.1.0",
+        "question_type": "七选五",
+        "method_type": "sub_action",
+        "core_required": false,
+        "source_section_ids": [
+          "7c0a77869754a1dc"
+        ],
+        "slots": [
+          {
+            "case_type": "canonical",
+            "registration": "registered",
+            "evidence_status": "evidence_gap",
+            "path": "cases/seven-five/F03/canonical/case.yaml",
+            "case_id": "F03-canonical",
+            "reason": "源方法可核；尚未逐题核验案例，不可当成功样例"
+          },
+          {
+            "case_type": "counterexample",
+            "registration": "unregistered",
+            "evidence_status": "evidence_gap",
+            "path": null,
+            "case_id": null,
+            "reason": "没有已登记、可合法使用并核验的该类题目；登记缺口不计作案例或通过。"
+          },
+          {
+            "case_type": "boundary",
+            "registration": "unregistered",
+            "evidence_status": "evidence_gap",
+            "path": null,
+            "case_id": null,
+            "reason": "没有已登记、可合法使用并核验的该类题目；登记缺口不计作案例或通过。"
+          },
+          {
+            "case_type": "transfer",
+            "registration": "unregistered",
+            "evidence_status": "evidence_gap",
+            "path": null,
+            "case_id": null,
+            "reason": "没有已登记、可合法使用并核验的该类题目；登记缺口不计作案例或通过。"
+          },
+          {
+            "case_type": "hard",
+            "registration": "unregistered",
+            "evidence_status": "evidence_gap",
+            "path": null,
+            "case_id": null,
+            "reason": "没有已登记、可合法使用并核验的该类题目；登记缺口不计作案例或通过。"
+          }
+        ],
+        "registration_complete": false,
+        "registered_examples_complete": false
+      },
+      {
+        "method_id": "F04",
+        "method_version": "1.1.0",
+        "question_type": "七选五",
+        "method_type": "sub_action",
+        "core_required": false,
+        "source_section_ids": [
+          "4a9de82ef9741f92"
+        ],
+        "slots": [
+          {
+            "case_type": "canonical",
+            "registration": "registered",
+            "evidence_status": "evidence_gap",
+            "path": "cases/seven-five/F04/canonical/case.yaml",
+            "case_id": "F04-canonical",
+            "reason": "源方法可核；尚未逐题核验案例，不可当成功样例"
+          },
+          {
+            "case_type": "counterexample",
+            "registration": "unregistered",
+            "evidence_status": "evidence_gap",
+            "path": null,
+            "case_id": null,
+            "reason": "没有已登记、可合法使用并核验的该类题目；登记缺口不计作案例或通过。"
+          },
+          {
+            "case_type": "boundary",
+            "registration": "unregistered",
+            "evidence_status": "evidence_gap",
+            "path": null,
+            "case_id": null,
+            "reason": "没有已登记、可合法使用并核验的该类题目；登记缺口不计作案例或通过。"
+          },
+          {
+            "case_type": "transfer",
+            "registration": "unregistered",
+            "evidence_status": "evidence_gap",
+            "path": null,
+            "case_id": null,
+            "reason": "没有已登记、可合法使用并核验的该类题目；登记缺口不计作案例或通过。"
+          },
+          {
+            "case_type": "hard",
+            "registration": "unregistered",
+            "evidence_status": "evidence_gap",
+            "path": null,
+            "case_id": null,
+            "reason": "没有已登记、可合法使用并核验的该类题目；登记缺口不计作案例或通过。"
+          }
+        ],
+        "registration_complete": false,
+        "registered_examples_complete": false
+      },
+      {
+        "method_id": "F05",
+        "method_version": "1.1.0",
+        "question_type": "七选五",
+        "method_type": "method",
+        "core_required": true,
+        "source_section_ids": [
+          "1fcc9966ce085922"
+        ],
+        "slots": [
+          {
+            "case_type": "canonical",
+            "registration": "registered",
+            "evidence_status": "evidence_gap",
+            "path": "cases/seven-five/F05/canonical/case.yaml",
+            "case_id": "F05-canonical",
+            "reason": "源方法可核；尚未逐题核验案例，不可当成功样例"
+          },
+          {
+            "case_type": "counterexample",
+            "registration": "unregistered",
+            "evidence_status": "evidence_gap",
+            "path": null,
+            "case_id": null,
+            "reason": "没有已登记、可合法使用并核验的该类题目；登记缺口不计作案例或通过。"
+          },
+          {
+            "case_type": "boundary",
+            "registration": "unregistered",
+            "evidence_status": "evidence_gap",
+            "path": null,
+            "case_id": null,
+            "reason": "没有已登记、可合法使用并核验的该类题目；登记缺口不计作案例或通过。"
+          },
+          {
+            "case_type": "transfer",
+            "registration": "unregistered",
+            "evidence_status": "evidence_gap",
+            "path": null,
+            "case_id": null,
+            "reason": "没有已登记、可合法使用并核验的该类题目；登记缺口不计作案例或通过。"
+          },
+          {
+            "case_type": "hard",
+            "registration": "unregistered",
+            "evidence_status": "evidence_gap",
+            "path": null,
+            "case_id": null,
+            "reason": "没有已登记、可合法使用并核验的该类题目；登记缺口不计作案例或通过。"
+          }
+        ],
+        "registration_complete": false,
+        "registered_examples_complete": false
+      },
+      {
+        "method_id": "F06",
+        "method_version": "1.1.0",
+        "question_type": "七选五",
+        "method_type": "method",
+        "core_required": true,
+        "source_section_ids": [
+          "92ec24e9e7003cba"
+        ],
+        "slots": [
+          {
+            "case_type": "canonical",
+            "registration": "registered",
+            "evidence_status": "evidence_gap",
+            "path": "cases/seven-five/F06/canonical/case.yaml",
+            "case_id": "F06-canonical",
+            "reason": "源方法可核；尚未逐题核验案例，不可当成功样例"
+          },
+          {
+            "case_type": "counterexample",
+            "registration": "unregistered",
+            "evidence_status": "evidence_gap",
+            "path": null,
+            "case_id": null,
+            "reason": "没有已登记、可合法使用并核验的该类题目；登记缺口不计作案例或通过。"
+          },
+          {
+            "case_type": "boundary",
+            "registration": "unregistered",
+            "evidence_status": "evidence_gap",
+            "path": null,
+            "case_id": null,
+            "reason": "没有已登记、可合法使用并核验的该类题目；登记缺口不计作案例或通过。"
+          },
+          {
+            "case_type": "transfer",
+            "registration": "unregistered",
+            "evidence_status": "evidence_gap",
+            "path": null,
+            "case_id": null,
+            "reason": "没有已登记、可合法使用并核验的该类题目；登记缺口不计作案例或通过。"
+          },
+          {
+            "case_type": "hard",
+            "registration": "unregistered",
+            "evidence_status": "evidence_gap",
+            "path": null,
+            "case_id": null,
+            "reason": "没有已登记、可合法使用并核验的该类题目；登记缺口不计作案例或通过。"
+          }
+        ],
+        "registration_complete": false,
+        "registered_examples_complete": false
+      },
+      {
+        "method_id": "F07",
+        "method_version": "1.1.0",
+        "question_type": "七选五",
+        "method_type": "method",
+        "core_required": true,
+        "source_section_ids": [
+          "03214bbc4e91eae2"
+        ],
+        "slots": [
+          {
+            "case_type": "canonical",
+            "registration": "registered",
+            "evidence_status": "evidence_gap",
+            "path": "cases/seven-five/F07/canonical/case.yaml",
+            "case_id": "F07-canonical",
+            "reason": "源方法可核；尚未逐题核验案例，不可当成功样例"
+          },
+          {
+            "case_type": "counterexample",
+            "registration": "unregistered",
+            "evidence_status": "evidence_gap",
+            "path": null,
+            "case_id": null,
+            "reason": "没有已登记、可合法使用并核验的该类题目；登记缺口不计作案例或通过。"
+          },
+          {
+            "case_type": "boundary",
+            "registration": "unregistered",
+            "evidence_status": "evidence_gap",
+            "path": null,
+            "case_id": null,
+            "reason": "没有已登记、可合法使用并核验的该类题目；登记缺口不计作案例或通过。"
+          },
+          {
+            "case_type": "transfer",
+            "registration": "unregistered",
+            "evidence_status": "evidence_gap",
+            "path": null,
+            "case_id": null,
+            "reason": "没有已登记、可合法使用并核验的该类题目；登记缺口不计作案例或通过。"
+          },
+          {
+            "case_type": "hard",
+            "registration": "unregistered",
+            "evidence_status": "evidence_gap",
+            "path": null,
+            "case_id": null,
+            "reason": "没有已登记、可合法使用并核验的该类题目；登记缺口不计作案例或通过。"
+          }
+        ],
+        "registration_complete": false,
+        "registered_examples_complete": false
+      },
+      {
+        "method_id": "F08",
+        "method_version": "1.1.0",
+        "question_type": "七选五",
+        "method_type": "sub_action",
+        "core_required": false,
+        "source_section_ids": [
+          "3d13a787824e210c"
+        ],
+        "slots": [
+          {
+            "case_type": "canonical",
+            "registration": "registered",
+            "evidence_status": "evidence_gap",
+            "path": "cases/seven-five/F08/canonical/case.yaml",
+            "case_id": "F08-canonical",
+            "reason": "源方法可核；尚未逐题核验案例，不可当成功样例"
+          },
+          {
+            "case_type": "counterexample",
+            "registration": "unregistered",
+            "evidence_status": "evidence_gap",
+            "path": null,
+            "case_id": null,
+            "reason": "没有已登记、可合法使用并核验的该类题目；登记缺口不计作案例或通过。"
+          },
+          {
+            "case_type": "boundary",
+            "registration": "unregistered",
+            "evidence_status": "evidence_gap",
+            "path": null,
+            "case_id": null,
+            "reason": "没有已登记、可合法使用并核验的该类题目；登记缺口不计作案例或通过。"
+          },
+          {
+            "case_type": "transfer",
+            "registration": "unregistered",
+            "evidence_status": "evidence_gap",
+            "path": null,
+            "case_id": null,
+            "reason": "没有已登记、可合法使用并核验的该类题目；登记缺口不计作案例或通过。"
+          },
+          {
+            "case_type": "hard",
+            "registration": "unregistered",
+            "evidence_status": "evidence_gap",
+            "path": null,
+            "case_id": null,
+            "reason": "没有已登记、可合法使用并核验的该类题目；登记缺口不计作案例或通过。"
+          }
+        ],
+        "registration_complete": false,
+        "registered_examples_complete": false
+      },
+      {
+        "method_id": "F09",
+        "method_version": "1.1.0",
+        "question_type": "七选五",
+        "method_type": "sub_action",
+        "core_required": false,
+        "source_section_ids": [
+          "a8f0c4ae44ae61ff"
+        ],
+        "slots": [
+          {
+            "case_type": "canonical",
+            "registration": "registered",
+            "evidence_status": "evidence_gap",
+            "path": "cases/seven-five/F09/canonical/case.yaml",
+            "case_id": "F09-canonical",
+            "reason": "源方法可核；尚未逐题核验案例，不可当成功样例"
+          },
+          {
+            "case_type": "counterexample",
+            "registration": "unregistered",
+            "evidence_status": "evidence_gap",
+            "path": null,
+            "case_id": null,
+            "reason": "没有已登记、可合法使用并核验的该类题目；登记缺口不计作案例或通过。"
+          },
+          {
+            "case_type": "boundary",
+            "registration": "unregistered",
+            "evidence_status": "evidence_gap",
+            "path": null,
+            "case_id": null,
+            "reason": "没有已登记、可合法使用并核验的该类题目；登记缺口不计作案例或通过。"
+          },
+          {
+            "case_type": "transfer",
+            "registration": "unregistered",
+            "evidence_status": "evidence_gap",
+            "path": null,
+            "case_id": null,
+            "reason": "没有已登记、可合法使用并核验的该类题目；登记缺口不计作案例或通过。"
+          },
+          {
+            "case_type": "hard",
+            "registration": "unregistered",
+            "evidence_status": "evidence_gap",
+            "path": null,
+            "case_id": null,
+            "reason": "没有已登记、可合法使用并核验的该类题目；登记缺口不计作案例或通过。"
+          }
+        ],
+        "registration_complete": false,
+        "registered_examples_complete": false
+      },
+      {
+        "method_id": "F10",
+        "method_version": "1.1.0",
+        "question_type": "七选五",
+        "method_type": "verification_rule",
+        "core_required": false,
+        "source_section_ids": [
+          "d815465ca190a14f"
+        ],
+        "slots": [
+          {
+            "case_type": "canonical",
+            "registration": "registered",
+            "evidence_status": "evidence_gap",
+            "path": "cases/seven-five/F10/canonical/case.yaml",
+            "case_id": "F10-canonical",
+            "reason": "源方法可核；尚未逐题核验案例，不可当成功样例"
+          },
+          {
+            "case_type": "counterexample",
+            "registration": "unregistered",
+            "evidence_status": "evidence_gap",
+            "path": null,
+            "case_id": null,
+            "reason": "没有已登记、可合法使用并核验的该类题目；登记缺口不计作案例或通过。"
+          },
+          {
+            "case_type": "boundary",
+            "registration": "unregistered",
+            "evidence_status": "evidence_gap",
+            "path": null,
+            "case_id": null,
+            "reason": "没有已登记、可合法使用并核验的该类题目；登记缺口不计作案例或通过。"
+          },
+          {
+            "case_type": "transfer",
+            "registration": "unregistered",
+            "evidence_status": "evidence_gap",
+            "path": null,
+            "case_id": null,
+            "reason": "没有已登记、可合法使用并核验的该类题目；登记缺口不计作案例或通过。"
+          },
+          {
+            "case_type": "hard",
+            "registration": "unregistered",
+            "evidence_status": "evidence_gap",
+            "path": null,
+            "case_id": null,
+            "reason": "没有已登记、可合法使用并核验的该类题目；登记缺口不计作案例或通过。"
+          }
+        ],
+        "registration_complete": false,
+        "registered_examples_complete": false
+      },
+      {
+        "method_id": "F11",
+        "method_version": "1.1.0",
+        "question_type": "七选五",
+        "method_type": "internal_rule",
+        "core_required": false,
+        "source_section_ids": [
+          "d815465ca190a14f"
+        ],
+        "slots": [
+          {
+            "case_type": "canonical",
+            "registration": "registered",
+            "evidence_status": "evidence_gap",
+            "path": "cases/seven-five/F11/canonical/case.yaml",
+            "case_id": "F11-canonical",
+            "reason": "源方法可核；尚未逐题核验案例，不可当成功样例"
+          },
+          {
+            "case_type": "counterexample",
+            "registration": "unregistered",
+            "evidence_status": "evidence_gap",
+            "path": null,
+            "case_id": null,
+            "reason": "没有已登记、可合法使用并核验的该类题目；登记缺口不计作案例或通过。"
+          },
+          {
+            "case_type": "boundary",
+            "registration": "unregistered",
+            "evidence_status": "evidence_gap",
+            "path": null,
+            "case_id": null,
+            "reason": "没有已登记、可合法使用并核验的该类题目；登记缺口不计作案例或通过。"
+          },
+          {
+            "case_type": "transfer",
+            "registration": "unregistered",
+            "evidence_status": "evidence_gap",
+            "path": null,
+            "case_id": null,
+            "reason": "没有已登记、可合法使用并核验的该类题目；登记缺口不计作案例或通过。"
+          },
+          {
+            "case_type": "hard",
+            "registration": "unregistered",
+            "evidence_status": "evidence_gap",
+            "path": null,
+            "case_id": null,
+            "reason": "没有已登记、可合法使用并核验的该类题目；登记缺口不计作案例或通过。"
+          }
+        ],
+        "registration_complete": false,
+        "registered_examples_complete": false
+      },
+      {
+        "method_id": "C01",
+        "method_version": "1.1.0",
+        "question_type": "完形填空",
+        "method_type": "framework",
+        "core_required": true,
+        "source_section_ids": [
+          "9b9a8cf18e4a40a5",
+          "3f36ea92a4769ee5"
+        ],
+        "slots": [
+          {
+            "case_type": "canonical",
+            "registration": "registered",
+            "evidence_status": "evidence_gap",
+            "path": "cases/cloze/C01/canonical/case.yaml",
+            "case_id": "C01-canonical",
+            "reason": "源方法可核；尚未逐题核验案例，不可当成功样例"
+          },
+          {
+            "case_type": "counterexample",
+            "registration": "unregistered",
+            "evidence_status": "evidence_gap",
+            "path": null,
+            "case_id": null,
+            "reason": "没有已登记、可合法使用并核验的该类题目；登记缺口不计作案例或通过。"
+          },
+          {
+            "case_type": "boundary",
+            "registration": "unregistered",
+            "evidence_status": "evidence_gap",
+            "path": null,
+            "case_id": null,
+            "reason": "没有已登记、可合法使用并核验的该类题目；登记缺口不计作案例或通过。"
+          },
+          {
+            "case_type": "transfer",
+            "registration": "unregistered",
+            "evidence_status": "evidence_gap",
+            "path": null,
+            "case_id": null,
+            "reason": "没有已登记、可合法使用并核验的该类题目；登记缺口不计作案例或通过。"
+          },
+          {
+            "case_type": "hard",
+            "registration": "unregistered",
+            "evidence_status": "evidence_gap",
+            "path": null,
+            "case_id": null,
+            "reason": "没有已登记、可合法使用并核验的该类题目；登记缺口不计作案例或通过。"
+          }
+        ],
+        "registration_complete": false,
+        "registered_examples_complete": false
+      },
+      {
+        "method_id": "C02",
+        "method_version": "1.1.0",
+        "question_type": "完形填空",
+        "method_type": "method",
+        "core_required": true,
+        "source_section_ids": [
+          "3070bb7253b5d49e",
+          "3f36ea92a4769ee5"
+        ],
+        "slots": [
+          {
+            "case_type": "canonical",
+            "registration": "registered",
+            "evidence_status": "evidence_gap",
+            "path": "cases/cloze/C02/canonical/case.yaml",
+            "case_id": "C02-canonical",
+            "reason": "源方法可核；尚未逐题核验案例，不可当成功样例"
+          },
+          {
+            "case_type": "counterexample",
+            "registration": "unregistered",
+            "evidence_status": "evidence_gap",
+            "path": null,
+            "case_id": null,
+            "reason": "没有已登记、可合法使用并核验的该类题目；登记缺口不计作案例或通过。"
+          },
+          {
+            "case_type": "boundary",
+            "registration": "unregistered",
+            "evidence_status": "evidence_gap",
+            "path": null,
+            "case_id": null,
+            "reason": "没有已登记、可合法使用并核验的该类题目；登记缺口不计作案例或通过。"
+          },
+          {
+            "case_type": "transfer",
+            "registration": "unregistered",
+            "evidence_status": "evidence_gap",
+            "path": null,
+            "case_id": null,
+            "reason": "没有已登记、可合法使用并核验的该类题目；登记缺口不计作案例或通过。"
+          },
+          {
+            "case_type": "hard",
+            "registration": "unregistered",
+            "evidence_status": "evidence_gap",
+            "path": null,
+            "case_id": null,
+            "reason": "没有已登记、可合法使用并核验的该类题目；登记缺口不计作案例或通过。"
+          }
+        ],
+        "registration_complete": false,
+        "registered_examples_complete": false
+      },
+      {
+        "method_id": "C03",
+        "method_version": "1.1.0",
+        "question_type": "完形填空",
+        "method_type": "sub_action",
+        "core_required": false,
+        "source_section_ids": [
+          "9b9a8cf18e4a40a5"
+        ],
+        "slots": [
+          {
+            "case_type": "canonical",
+            "registration": "registered",
+            "evidence_status": "evidence_gap",
+            "path": "cases/cloze/C03/canonical/case.yaml",
+            "case_id": "C03-canonical",
+            "reason": "源方法可核；尚未逐题核验案例，不可当成功样例"
+          },
+          {
+            "case_type": "counterexample",
+            "registration": "unregistered",
+            "evidence_status": "evidence_gap",
+            "path": null,
+            "case_id": null,
+            "reason": "没有已登记、可合法使用并核验的该类题目；登记缺口不计作案例或通过。"
+          },
+          {
+            "case_type": "boundary",
+            "registration": "unregistered",
+            "evidence_status": "evidence_gap",
+            "path": null,
+            "case_id": null,
+            "reason": "没有已登记、可合法使用并核验的该类题目；登记缺口不计作案例或通过。"
+          },
+          {
+            "case_type": "transfer",
+            "registration": "unregistered",
+            "evidence_status": "evidence_gap",
+            "path": null,
+            "case_id": null,
+            "reason": "没有已登记、可合法使用并核验的该类题目；登记缺口不计作案例或通过。"
+          },
+          {
+            "case_type": "hard",
+            "registration": "unregistered",
+            "evidence_status": "evidence_gap",
+            "path": null,
+            "case_id": null,
+            "reason": "没有已登记、可合法使用并核验的该类题目；登记缺口不计作案例或通过。"
+          }
+        ],
+        "registration_complete": false,
+        "registered_examples_complete": false
+      },
+      {
+        "method_id": "C04",
+        "method_version": "1.1.0",
+        "question_type": "完形填空",
+        "method_type": "sub_action",
+        "core_required": false,
+        "source_section_ids": [
+          "b50b911407b9faa9"
+        ],
+        "slots": [
+          {
+            "case_type": "canonical",
+            "registration": "registered",
+            "evidence_status": "evidence_gap",
+            "path": "cases/cloze/C04/canonical/case.yaml",
+            "case_id": "C04-canonical",
+            "reason": "源方法可核；尚未逐题核验案例，不可当成功样例"
+          },
+          {
+            "case_type": "counterexample",
+            "registration": "unregistered",
+            "evidence_status": "evidence_gap",
+            "path": null,
+            "case_id": null,
+            "reason": "没有已登记、可合法使用并核验的该类题目；登记缺口不计作案例或通过。"
+          },
+          {
+            "case_type": "boundary",
+            "registration": "unregistered",
+            "evidence_status": "evidence_gap",
+            "path": null,
+            "case_id": null,
+            "reason": "没有已登记、可合法使用并核验的该类题目；登记缺口不计作案例或通过。"
+          },
+          {
+            "case_type": "transfer",
+            "registration": "unregistered",
+            "evidence_status": "evidence_gap",
+            "path": null,
+            "case_id": null,
+            "reason": "没有已登记、可合法使用并核验的该类题目；登记缺口不计作案例或通过。"
+          },
+          {
+            "case_type": "hard",
+            "registration": "unregistered",
+            "evidence_status": "evidence_gap",
+            "path": null,
+            "case_id": null,
+            "reason": "没有已登记、可合法使用并核验的该类题目；登记缺口不计作案例或通过。"
+          }
+        ],
+        "registration_complete": false,
+        "registered_examples_complete": false
+      },
+      {
+        "method_id": "C05",
+        "method_version": "1.1.0",
+        "question_type": "完形填空",
+        "method_type": "sub_action",
+        "core_required": false,
+        "source_section_ids": [
+          "b5945ee8f990f448"
+        ],
+        "slots": [
+          {
+            "case_type": "canonical",
+            "registration": "registered",
+            "evidence_status": "evidence_gap",
+            "path": "cases/cloze/C05/canonical/case.yaml",
+            "case_id": "C05-canonical",
+            "reason": "源方法可核；尚未逐题核验案例，不可当成功样例"
+          },
+          {
+            "case_type": "counterexample",
+            "registration": "unregistered",
+            "evidence_status": "evidence_gap",
+            "path": null,
+            "case_id": null,
+            "reason": "没有已登记、可合法使用并核验的该类题目；登记缺口不计作案例或通过。"
+          },
+          {
+            "case_type": "boundary",
+            "registration": "unregistered",
+            "evidence_status": "evidence_gap",
+            "path": null,
+            "case_id": null,
+            "reason": "没有已登记、可合法使用并核验的该类题目；登记缺口不计作案例或通过。"
+          },
+          {
+            "case_type": "transfer",
+            "registration": "unregistered",
+            "evidence_status": "evidence_gap",
+            "path": null,
+            "case_id": null,
+            "reason": "没有已登记、可合法使用并核验的该类题目；登记缺口不计作案例或通过。"
+          },
+          {
+            "case_type": "hard",
+            "registration": "unregistered",
+            "evidence_status": "evidence_gap",
+            "path": null,
+            "case_id": null,
+            "reason": "没有已登记、可合法使用并核验的该类题目；登记缺口不计作案例或通过。"
+          }
+        ],
+        "registration_complete": false,
+        "registered_examples_complete": false
+      },
+      {
+        "method_id": "C06",
+        "method_version": "1.1.0",
+        "question_type": "完形填空",
+        "method_type": "sub_action",
+        "core_required": false,
+        "source_section_ids": [
+          "a68178b2feeba3e5"
+        ],
+        "slots": [
+          {
+            "case_type": "canonical",
+            "registration": "registered",
+            "evidence_status": "evidence_gap",
+            "path": "cases/cloze/C06/canonical/case.yaml",
+            "case_id": "C06-canonical",
+            "reason": "源方法可核；尚未逐题核验案例，不可当成功样例"
+          },
+          {
+            "case_type": "counterexample",
+            "registration": "unregistered",
+            "evidence_status": "evidence_gap",
+            "path": null,
+            "case_id": null,
+            "reason": "没有已登记、可合法使用并核验的该类题目；登记缺口不计作案例或通过。"
+          },
+          {
+            "case_type": "boundary",
+            "registration": "unregistered",
+            "evidence_status": "evidence_gap",
+            "path": null,
+            "case_id": null,
+            "reason": "没有已登记、可合法使用并核验的该类题目；登记缺口不计作案例或通过。"
+          },
+          {
+            "case_type": "transfer",
+            "registration": "unregistered",
+            "evidence_status": "evidence_gap",
+            "path": null,
+            "case_id": null,
+            "reason": "没有已登记、可合法使用并核验的该类题目；登记缺口不计作案例或通过。"
+          },
+          {
+            "case_type": "hard",
+            "registration": "unregistered",
+            "evidence_status": "evidence_gap",
+            "path": null,
+            "case_id": null,
+            "reason": "没有已登记、可合法使用并核验的该类题目；登记缺口不计作案例或通过。"
+          }
+        ],
+        "registration_complete": false,
+        "registered_examples_complete": false
+      },
+      {
+        "method_id": "C07",
+        "method_version": "1.1.0",
+        "question_type": "完形填空",
+        "method_type": "sub_action",
+        "core_required": false,
+        "source_section_ids": [
+          "b0b1e691060b321a"
+        ],
+        "slots": [
+          {
+            "case_type": "canonical",
+            "registration": "registered",
+            "evidence_status": "evidence_gap",
+            "path": "cases/cloze/C07/canonical/case.yaml",
+            "case_id": "C07-canonical",
+            "reason": "源方法可核；尚未逐题核验案例，不可当成功样例"
+          },
+          {
+            "case_type": "counterexample",
+            "registration": "unregistered",
+            "evidence_status": "evidence_gap",
+            "path": null,
+            "case_id": null,
+            "reason": "没有已登记、可合法使用并核验的该类题目；登记缺口不计作案例或通过。"
+          },
+          {
+            "case_type": "boundary",
+            "registration": "unregistered",
+            "evidence_status": "evidence_gap",
+            "path": null,
+            "case_id": null,
+            "reason": "没有已登记、可合法使用并核验的该类题目；登记缺口不计作案例或通过。"
+          },
+          {
+            "case_type": "transfer",
+            "registration": "unregistered",
+            "evidence_status": "evidence_gap",
+            "path": null,
+            "case_id": null,
+            "reason": "没有已登记、可合法使用并核验的该类题目；登记缺口不计作案例或通过。"
+          },
+          {
+            "case_type": "hard",
+            "registration": "unregistered",
+            "evidence_status": "evidence_gap",
+            "path": null,
+            "case_id": null,
+            "reason": "没有已登记、可合法使用并核验的该类题目；登记缺口不计作案例或通过。"
+          }
+        ],
+        "registration_complete": false,
+        "registered_examples_complete": false
+      },
+      {
+        "method_id": "C08",
+        "method_version": "1.1.0",
+        "question_type": "完形填空",
+        "method_type": "sub_action",
+        "core_required": false,
+        "source_section_ids": [
+          "06810b964c0a3ca2"
+        ],
+        "slots": [
+          {
+            "case_type": "canonical",
+            "registration": "registered",
+            "evidence_status": "evidence_gap",
+            "path": "cases/cloze/C08/canonical/case.yaml",
+            "case_id": "C08-canonical",
+            "reason": "源方法可核；尚未逐题核验案例，不可当成功样例"
+          },
+          {
+            "case_type": "counterexample",
+            "registration": "unregistered",
+            "evidence_status": "evidence_gap",
+            "path": null,
+            "case_id": null,
+            "reason": "没有已登记、可合法使用并核验的该类题目；登记缺口不计作案例或通过。"
+          },
+          {
+            "case_type": "boundary",
+            "registration": "unregistered",
+            "evidence_status": "evidence_gap",
+            "path": null,
+            "case_id": null,
+            "reason": "没有已登记、可合法使用并核验的该类题目；登记缺口不计作案例或通过。"
+          },
+          {
+            "case_type": "transfer",
+            "registration": "unregistered",
+            "evidence_status": "evidence_gap",
+            "path": null,
+            "case_id": null,
+            "reason": "没有已登记、可合法使用并核验的该类题目；登记缺口不计作案例或通过。"
+          },
+          {
+            "case_type": "hard",
+            "registration": "unregistered",
+            "evidence_status": "evidence_gap",
+            "path": null,
+            "case_id": null,
+            "reason": "没有已登记、可合法使用并核验的该类题目；登记缺口不计作案例或通过。"
+          }
+        ],
+        "registration_complete": false,
+        "registered_examples_complete": false
+      },
+      {
+        "method_id": "C09",
+        "method_version": "1.1.0",
+        "question_type": "完形填空",
+        "method_type": "sub_action",
+        "core_required": false,
+        "source_section_ids": [
+          "06810b964c0a3ca2"
+        ],
+        "slots": [
+          {
+            "case_type": "canonical",
+            "registration": "registered",
+            "evidence_status": "evidence_gap",
+            "path": "cases/cloze/C09/canonical/case.yaml",
+            "case_id": "C09-canonical",
+            "reason": "源方法可核；尚未逐题核验案例，不可当成功样例"
+          },
+          {
+            "case_type": "counterexample",
+            "registration": "unregistered",
+            "evidence_status": "evidence_gap",
+            "path": null,
+            "case_id": null,
+            "reason": "没有已登记、可合法使用并核验的该类题目；登记缺口不计作案例或通过。"
+          },
+          {
+            "case_type": "boundary",
+            "registration": "unregistered",
+            "evidence_status": "evidence_gap",
+            "path": null,
+            "case_id": null,
+            "reason": "没有已登记、可合法使用并核验的该类题目；登记缺口不计作案例或通过。"
+          },
+          {
+            "case_type": "transfer",
+            "registration": "unregistered",
+            "evidence_status": "evidence_gap",
+            "path": null,
+            "case_id": null,
+            "reason": "没有已登记、可合法使用并核验的该类题目；登记缺口不计作案例或通过。"
+          },
+          {
+            "case_type": "hard",
+            "registration": "unregistered",
+            "evidence_status": "evidence_gap",
+            "path": null,
+            "case_id": null,
+            "reason": "没有已登记、可合法使用并核验的该类题目；登记缺口不计作案例或通过。"
+          }
+        ],
+        "registration_complete": false,
+        "registered_examples_complete": false
+      },
+      {
+        "method_id": "G01",
+        "method_version": "1.1.0",
+        "question_type": "语法填空",
+        "method_type": "framework",
+        "core_required": true,
+        "source_section_ids": [
+          "341ae7535f7d9ce7",
+          "3527a85c4fe668d9",
+          "781c4478d621bf5c",
+          "8c050016facc6479",
+          "98a55752856ca984",
+          "92af20a0997f0b48",
+          "bdec04e2ce032b40",
+          "9b496b1572cdf49b",
+          "32c08d6c85a150ea",
+          "a166ae34f9256ee9",
+          "ab95cd79ca0709e2",
+          "9b610bdb9f63227e",
+          "a26dc83760c12ebb",
+          "28cb2fee202458a5",
+          "5131f97d0dc78441",
+          "a0bcc74f05b00671",
+          "f77de6ec724f8e88",
+          "7c16410a7f1b8e4f",
+          "62e443a0a04865bf",
+          "7ae166ccec059b00"
+        ],
+        "slots": [
+          {
+            "case_type": "canonical",
+            "registration": "registered",
+            "evidence_status": "verified_course_example",
+            "path": "cases/G01/canonical/case.yaml",
+            "case_id": "G01-canonical",
+            "reason": "尚未真人验收"
+          },
+          {
+            "case_type": "counterexample",
+            "registration": "registered",
+            "evidence_status": "verified_course_example",
+            "path": "cases/G01/counterexamples/case.yaml",
+            "case_id": "G01-counterexample",
+            "reason": "尚未真人验收"
+          },
+          {
+            "case_type": "boundary",
+            "registration": "registered",
+            "evidence_status": "verified_course_example",
+            "path": "cases/G01/boundary/case.yaml",
+            "case_id": "G01-boundary",
+            "reason": "尚未真人验收"
+          },
+          {
+            "case_type": "transfer",
+            "registration": "registered",
+            "evidence_status": "verified_course_example",
+            "path": "cases/G01/transfer/case.yaml",
+            "case_id": "G01-transfer",
+            "reason": "尚未真人验收"
+          },
+          {
+            "case_type": "hard",
+            "registration": "registered",
+            "evidence_status": "evidence_gap",
+            "path": "cases/G01/hard/case.yaml",
+            "case_id": "G01-hard",
+            "reason": "缺少经核验完整困难题，不造题补数"
+          }
+        ],
+        "registration_complete": true,
+        "registered_examples_complete": false
+      },
+      {
+        "method_id": "G02",
+        "method_version": "1.1.0",
+        "question_type": "语法填空",
+        "method_type": "sub_action",
+        "core_required": false,
+        "source_section_ids": [
+          "781c4478d621bf5c"
+        ],
+        "slots": [
+          {
+            "case_type": "canonical",
+            "registration": "registered",
+            "evidence_status": "evidence_gap",
+            "path": "cases/grammar/G02/canonical/case.yaml",
+            "case_id": "G02-canonical",
+            "reason": "源方法可核；尚未逐题核验案例，不可当成功样例"
+          },
+          {
+            "case_type": "counterexample",
+            "registration": "unregistered",
+            "evidence_status": "evidence_gap",
+            "path": null,
+            "case_id": null,
+            "reason": "没有已登记、可合法使用并核验的该类题目；登记缺口不计作案例或通过。"
+          },
+          {
+            "case_type": "boundary",
+            "registration": "unregistered",
+            "evidence_status": "evidence_gap",
+            "path": null,
+            "case_id": null,
+            "reason": "没有已登记、可合法使用并核验的该类题目；登记缺口不计作案例或通过。"
+          },
+          {
+            "case_type": "transfer",
+            "registration": "unregistered",
+            "evidence_status": "evidence_gap",
+            "path": null,
+            "case_id": null,
+            "reason": "没有已登记、可合法使用并核验的该类题目；登记缺口不计作案例或通过。"
+          },
+          {
+            "case_type": "hard",
+            "registration": "unregistered",
+            "evidence_status": "evidence_gap",
+            "path": null,
+            "case_id": null,
+            "reason": "没有已登记、可合法使用并核验的该类题目；登记缺口不计作案例或通过。"
+          }
+        ],
+        "registration_complete": false,
+        "registered_examples_complete": false
+      },
+      {
+        "method_id": "G03",
+        "method_version": "1.1.0",
+        "question_type": "语法填空",
+        "method_type": "internal_rule",
+        "core_required": false,
+        "source_section_ids": [
+          "98a55752856ca984"
+        ],
+        "slots": [
+          {
+            "case_type": "canonical",
+            "registration": "registered",
+            "evidence_status": "evidence_gap",
+            "path": "cases/grammar/G03/canonical/case.yaml",
+            "case_id": "G03-canonical",
+            "reason": "源方法可核；尚未逐题核验案例，不可当成功样例"
+          },
+          {
+            "case_type": "counterexample",
+            "registration": "unregistered",
+            "evidence_status": "evidence_gap",
+            "path": null,
+            "case_id": null,
+            "reason": "没有已登记、可合法使用并核验的该类题目；登记缺口不计作案例或通过。"
+          },
+          {
+            "case_type": "boundary",
+            "registration": "unregistered",
+            "evidence_status": "evidence_gap",
+            "path": null,
+            "case_id": null,
+            "reason": "没有已登记、可合法使用并核验的该类题目；登记缺口不计作案例或通过。"
+          },
+          {
+            "case_type": "transfer",
+            "registration": "unregistered",
+            "evidence_status": "evidence_gap",
+            "path": null,
+            "case_id": null,
+            "reason": "没有已登记、可合法使用并核验的该类题目；登记缺口不计作案例或通过。"
+          },
+          {
+            "case_type": "hard",
+            "registration": "unregistered",
+            "evidence_status": "evidence_gap",
+            "path": null,
+            "case_id": null,
+            "reason": "没有已登记、可合法使用并核验的该类题目；登记缺口不计作案例或通过。"
+          }
+        ],
+        "registration_complete": false,
+        "registered_examples_complete": false
+      },
+      {
+        "method_id": "G04",
+        "method_version": "1.1.0",
+        "question_type": "语法填空",
+        "method_type": "internal_rule",
+        "core_required": false,
+        "source_section_ids": [
+          "92af20a0997f0b48"
+        ],
+        "slots": [
+          {
+            "case_type": "canonical",
+            "registration": "registered",
+            "evidence_status": "evidence_gap",
+            "path": "cases/grammar/G04/canonical/case.yaml",
+            "case_id": "G04-canonical",
+            "reason": "源方法可核；尚未逐题核验案例，不可当成功样例"
+          },
+          {
+            "case_type": "counterexample",
+            "registration": "unregistered",
+            "evidence_status": "evidence_gap",
+            "path": null,
+            "case_id": null,
+            "reason": "没有已登记、可合法使用并核验的该类题目；登记缺口不计作案例或通过。"
+          },
+          {
+            "case_type": "boundary",
+            "registration": "unregistered",
+            "evidence_status": "evidence_gap",
+            "path": null,
+            "case_id": null,
+            "reason": "没有已登记、可合法使用并核验的该类题目；登记缺口不计作案例或通过。"
+          },
+          {
+            "case_type": "transfer",
+            "registration": "unregistered",
+            "evidence_status": "evidence_gap",
+            "path": null,
+            "case_id": null,
+            "reason": "没有已登记、可合法使用并核验的该类题目；登记缺口不计作案例或通过。"
+          },
+          {
+            "case_type": "hard",
+            "registration": "unregistered",
+            "evidence_status": "evidence_gap",
+            "path": null,
+            "case_id": null,
+            "reason": "没有已登记、可合法使用并核验的该类题目；登记缺口不计作案例或通过。"
+          }
+        ],
+        "registration_complete": false,
+        "registered_examples_complete": false
+      },
+      {
+        "method_id": "G05",
+        "method_version": "1.1.0",
+        "question_type": "语法填空",
+        "method_type": "method",
+        "core_required": true,
+        "source_section_ids": [
+          "bdec04e2ce032b40"
+        ],
+        "slots": [
+          {
+            "case_type": "canonical",
+            "registration": "registered",
+            "evidence_status": "evidence_gap",
+            "path": "cases/grammar/G05/canonical/case.yaml",
+            "case_id": "G05-canonical",
+            "reason": "源方法可核；尚未逐题核验案例，不可当成功样例"
+          },
+          {
+            "case_type": "counterexample",
+            "registration": "unregistered",
+            "evidence_status": "evidence_gap",
+            "path": null,
+            "case_id": null,
+            "reason": "没有已登记、可合法使用并核验的该类题目；登记缺口不计作案例或通过。"
+          },
+          {
+            "case_type": "boundary",
+            "registration": "unregistered",
+            "evidence_status": "evidence_gap",
+            "path": null,
+            "case_id": null,
+            "reason": "没有已登记、可合法使用并核验的该类题目；登记缺口不计作案例或通过。"
+          },
+          {
+            "case_type": "transfer",
+            "registration": "unregistered",
+            "evidence_status": "evidence_gap",
+            "path": null,
+            "case_id": null,
+            "reason": "没有已登记、可合法使用并核验的该类题目；登记缺口不计作案例或通过。"
+          },
+          {
+            "case_type": "hard",
+            "registration": "unregistered",
+            "evidence_status": "evidence_gap",
+            "path": null,
+            "case_id": null,
+            "reason": "没有已登记、可合法使用并核验的该类题目；登记缺口不计作案例或通过。"
+          }
+        ],
+        "registration_complete": false,
+        "registered_examples_complete": false
+      },
+      {
+        "method_id": "G06",
+        "method_version": "1.1.0",
+        "question_type": "语法填空",
+        "method_type": "method",
+        "core_required": true,
+        "source_section_ids": [
+          "9b496b1572cdf49b"
+        ],
+        "slots": [
+          {
+            "case_type": "canonical",
+            "registration": "registered",
+            "evidence_status": "evidence_gap",
+            "path": "cases/grammar/G06/canonical/case.yaml",
+            "case_id": "G06-canonical",
+            "reason": "源方法可核；尚未逐题核验案例，不可当成功样例"
+          },
+          {
+            "case_type": "counterexample",
+            "registration": "unregistered",
+            "evidence_status": "evidence_gap",
+            "path": null,
+            "case_id": null,
+            "reason": "没有已登记、可合法使用并核验的该类题目；登记缺口不计作案例或通过。"
+          },
+          {
+            "case_type": "boundary",
+            "registration": "unregistered",
+            "evidence_status": "evidence_gap",
+            "path": null,
+            "case_id": null,
+            "reason": "没有已登记、可合法使用并核验的该类题目；登记缺口不计作案例或通过。"
+          },
+          {
+            "case_type": "transfer",
+            "registration": "unregistered",
+            "evidence_status": "evidence_gap",
+            "path": null,
+            "case_id": null,
+            "reason": "没有已登记、可合法使用并核验的该类题目；登记缺口不计作案例或通过。"
+          },
+          {
+            "case_type": "hard",
+            "registration": "unregistered",
+            "evidence_status": "evidence_gap",
+            "path": null,
+            "case_id": null,
+            "reason": "没有已登记、可合法使用并核验的该类题目；登记缺口不计作案例或通过。"
+          }
+        ],
+        "registration_complete": false,
+        "registered_examples_complete": false
+      },
+      {
+        "method_id": "G07",
+        "method_version": "1.1.0",
+        "question_type": "语法填空",
+        "method_type": "method",
+        "core_required": true,
+        "source_section_ids": [
+          "32c08d6c85a150ea"
+        ],
+        "slots": [
+          {
+            "case_type": "canonical",
+            "registration": "registered",
+            "evidence_status": "evidence_gap",
+            "path": "cases/grammar/G07/canonical/case.yaml",
+            "case_id": "G07-canonical",
+            "reason": "源方法可核；尚未逐题核验案例，不可当成功样例"
+          },
+          {
+            "case_type": "counterexample",
+            "registration": "unregistered",
+            "evidence_status": "evidence_gap",
+            "path": null,
+            "case_id": null,
+            "reason": "没有已登记、可合法使用并核验的该类题目；登记缺口不计作案例或通过。"
+          },
+          {
+            "case_type": "boundary",
+            "registration": "unregistered",
+            "evidence_status": "evidence_gap",
+            "path": null,
+            "case_id": null,
+            "reason": "没有已登记、可合法使用并核验的该类题目；登记缺口不计作案例或通过。"
+          },
+          {
+            "case_type": "transfer",
+            "registration": "unregistered",
+            "evidence_status": "evidence_gap",
+            "path": null,
+            "case_id": null,
+            "reason": "没有已登记、可合法使用并核验的该类题目；登记缺口不计作案例或通过。"
+          },
+          {
+            "case_type": "hard",
+            "registration": "unregistered",
+            "evidence_status": "evidence_gap",
+            "path": null,
+            "case_id": null,
+            "reason": "没有已登记、可合法使用并核验的该类题目；登记缺口不计作案例或通过。"
+          }
+        ],
+        "registration_complete": false,
+        "registered_examples_complete": false
+      },
+      {
+        "method_id": "G08",
+        "method_version": "1.1.0",
+        "question_type": "语法填空",
+        "method_type": "method",
+        "core_required": true,
+        "source_section_ids": [
+          "a166ae34f9256ee9"
+        ],
+        "slots": [
+          {
+            "case_type": "canonical",
+            "registration": "registered",
+            "evidence_status": "evidence_gap",
+            "path": "cases/grammar/G08/canonical/case.yaml",
+            "case_id": "G08-canonical",
+            "reason": "源方法可核；尚未逐题核验案例，不可当成功样例"
+          },
+          {
+            "case_type": "counterexample",
+            "registration": "unregistered",
+            "evidence_status": "evidence_gap",
+            "path": null,
+            "case_id": null,
+            "reason": "没有已登记、可合法使用并核验的该类题目；登记缺口不计作案例或通过。"
+          },
+          {
+            "case_type": "boundary",
+            "registration": "unregistered",
+            "evidence_status": "evidence_gap",
+            "path": null,
+            "case_id": null,
+            "reason": "没有已登记、可合法使用并核验的该类题目；登记缺口不计作案例或通过。"
+          },
+          {
+            "case_type": "transfer",
+            "registration": "unregistered",
+            "evidence_status": "evidence_gap",
+            "path": null,
+            "case_id": null,
+            "reason": "没有已登记、可合法使用并核验的该类题目；登记缺口不计作案例或通过。"
+          },
+          {
+            "case_type": "hard",
+            "registration": "unregistered",
+            "evidence_status": "evidence_gap",
+            "path": null,
+            "case_id": null,
+            "reason": "没有已登记、可合法使用并核验的该类题目；登记缺口不计作案例或通过。"
+          }
+        ],
+        "registration_complete": false,
+        "registered_examples_complete": false
+      },
+      {
+        "method_id": "G09",
+        "method_version": "1.1.0",
+        "question_type": "语法填空",
+        "method_type": "internal_rule",
+        "core_required": false,
+        "source_section_ids": [
+          "ab95cd79ca0709e2"
+        ],
+        "slots": [
+          {
+            "case_type": "canonical",
+            "registration": "registered",
+            "evidence_status": "evidence_gap",
+            "path": "cases/grammar/G09/canonical/case.yaml",
+            "case_id": "G09-canonical",
+            "reason": "源方法可核；尚未逐题核验案例，不可当成功样例"
+          },
+          {
+            "case_type": "counterexample",
+            "registration": "unregistered",
+            "evidence_status": "evidence_gap",
+            "path": null,
+            "case_id": null,
+            "reason": "没有已登记、可合法使用并核验的该类题目；登记缺口不计作案例或通过。"
+          },
+          {
+            "case_type": "boundary",
+            "registration": "unregistered",
+            "evidence_status": "evidence_gap",
+            "path": null,
+            "case_id": null,
+            "reason": "没有已登记、可合法使用并核验的该类题目；登记缺口不计作案例或通过。"
+          },
+          {
+            "case_type": "transfer",
+            "registration": "unregistered",
+            "evidence_status": "evidence_gap",
+            "path": null,
+            "case_id": null,
+            "reason": "没有已登记、可合法使用并核验的该类题目；登记缺口不计作案例或通过。"
+          },
+          {
+            "case_type": "hard",
+            "registration": "unregistered",
+            "evidence_status": "evidence_gap",
+            "path": null,
+            "case_id": null,
+            "reason": "没有已登记、可合法使用并核验的该类题目；登记缺口不计作案例或通过。"
+          }
+        ],
+        "registration_complete": false,
+        "registered_examples_complete": false
+      },
+      {
+        "method_id": "G10",
+        "method_version": "1.1.0",
+        "question_type": "语法填空",
+        "method_type": "internal_rule",
+        "core_required": false,
+        "source_section_ids": [
+          "9b610bdb9f63227e"
+        ],
+        "slots": [
+          {
+            "case_type": "canonical",
+            "registration": "registered",
+            "evidence_status": "evidence_gap",
+            "path": "cases/grammar/G10/canonical/case.yaml",
+            "case_id": "G10-canonical",
+            "reason": "源方法可核；尚未逐题核验案例，不可当成功样例"
+          },
+          {
+            "case_type": "counterexample",
+            "registration": "unregistered",
+            "evidence_status": "evidence_gap",
+            "path": null,
+            "case_id": null,
+            "reason": "没有已登记、可合法使用并核验的该类题目；登记缺口不计作案例或通过。"
+          },
+          {
+            "case_type": "boundary",
+            "registration": "unregistered",
+            "evidence_status": "evidence_gap",
+            "path": null,
+            "case_id": null,
+            "reason": "没有已登记、可合法使用并核验的该类题目；登记缺口不计作案例或通过。"
+          },
+          {
+            "case_type": "transfer",
+            "registration": "unregistered",
+            "evidence_status": "evidence_gap",
+            "path": null,
+            "case_id": null,
+            "reason": "没有已登记、可合法使用并核验的该类题目；登记缺口不计作案例或通过。"
+          },
+          {
+            "case_type": "hard",
+            "registration": "unregistered",
+            "evidence_status": "evidence_gap",
+            "path": null,
+            "case_id": null,
+            "reason": "没有已登记、可合法使用并核验的该类题目；登记缺口不计作案例或通过。"
+          }
+        ],
+        "registration_complete": false,
+        "registered_examples_complete": false
+      },
+      {
+        "method_id": "G11",
+        "method_version": "1.1.0",
+        "question_type": "语法填空",
+        "method_type": "internal_rule",
+        "core_required": false,
+        "source_section_ids": [
+          "a26dc83760c12ebb"
+        ],
+        "slots": [
+          {
+            "case_type": "canonical",
+            "registration": "registered",
+            "evidence_status": "evidence_gap",
+            "path": "cases/grammar/G11/canonical/case.yaml",
+            "case_id": "G11-canonical",
+            "reason": "源方法可核；尚未逐题核验案例，不可当成功样例"
+          },
+          {
+            "case_type": "counterexample",
+            "registration": "unregistered",
+            "evidence_status": "evidence_gap",
+            "path": null,
+            "case_id": null,
+            "reason": "没有已登记、可合法使用并核验的该类题目；登记缺口不计作案例或通过。"
+          },
+          {
+            "case_type": "boundary",
+            "registration": "unregistered",
+            "evidence_status": "evidence_gap",
+            "path": null,
+            "case_id": null,
+            "reason": "没有已登记、可合法使用并核验的该类题目；登记缺口不计作案例或通过。"
+          },
+          {
+            "case_type": "transfer",
+            "registration": "unregistered",
+            "evidence_status": "evidence_gap",
+            "path": null,
+            "case_id": null,
+            "reason": "没有已登记、可合法使用并核验的该类题目；登记缺口不计作案例或通过。"
+          },
+          {
+            "case_type": "hard",
+            "registration": "unregistered",
+            "evidence_status": "evidence_gap",
+            "path": null,
+            "case_id": null,
+            "reason": "没有已登记、可合法使用并核验的该类题目；登记缺口不计作案例或通过。"
+          }
+        ],
+        "registration_complete": false,
+        "registered_examples_complete": false
+      },
+      {
+        "method_id": "G12",
+        "method_version": "1.1.0",
+        "question_type": "语法填空",
+        "method_type": "method",
+        "core_required": true,
+        "source_section_ids": [
+          "5131f97d0dc78441"
+        ],
+        "slots": [
+          {
+            "case_type": "canonical",
+            "registration": "registered",
+            "evidence_status": "evidence_gap",
+            "path": "cases/grammar/G12/canonical/case.yaml",
+            "case_id": "G12-canonical",
+            "reason": "源方法可核；尚未逐题核验案例，不可当成功样例"
+          },
+          {
+            "case_type": "counterexample",
+            "registration": "unregistered",
+            "evidence_status": "evidence_gap",
+            "path": null,
+            "case_id": null,
+            "reason": "没有已登记、可合法使用并核验的该类题目；登记缺口不计作案例或通过。"
+          },
+          {
+            "case_type": "boundary",
+            "registration": "unregistered",
+            "evidence_status": "evidence_gap",
+            "path": null,
+            "case_id": null,
+            "reason": "没有已登记、可合法使用并核验的该类题目；登记缺口不计作案例或通过。"
+          },
+          {
+            "case_type": "transfer",
+            "registration": "unregistered",
+            "evidence_status": "evidence_gap",
+            "path": null,
+            "case_id": null,
+            "reason": "没有已登记、可合法使用并核验的该类题目；登记缺口不计作案例或通过。"
+          },
+          {
+            "case_type": "hard",
+            "registration": "unregistered",
+            "evidence_status": "evidence_gap",
+            "path": null,
+            "case_id": null,
+            "reason": "没有已登记、可合法使用并核验的该类题目；登记缺口不计作案例或通过。"
+          }
+        ],
+        "registration_complete": false,
+        "registered_examples_complete": false
+      },
+      {
+        "method_id": "G13",
+        "method_version": "1.1.0",
+        "question_type": "语法填空",
+        "method_type": "sub_action",
+        "core_required": false,
+        "source_section_ids": [
+          "a0bcc74f05b00671"
+        ],
+        "slots": [
+          {
+            "case_type": "canonical",
+            "registration": "registered",
+            "evidence_status": "evidence_gap",
+            "path": "cases/grammar/G13/canonical/case.yaml",
+            "case_id": "G13-canonical",
+            "reason": "源方法可核；尚未逐题核验案例，不可当成功样例"
+          },
+          {
+            "case_type": "counterexample",
+            "registration": "unregistered",
+            "evidence_status": "evidence_gap",
+            "path": null,
+            "case_id": null,
+            "reason": "没有已登记、可合法使用并核验的该类题目；登记缺口不计作案例或通过。"
+          },
+          {
+            "case_type": "boundary",
+            "registration": "unregistered",
+            "evidence_status": "evidence_gap",
+            "path": null,
+            "case_id": null,
+            "reason": "没有已登记、可合法使用并核验的该类题目；登记缺口不计作案例或通过。"
+          },
+          {
+            "case_type": "transfer",
+            "registration": "unregistered",
+            "evidence_status": "evidence_gap",
+            "path": null,
+            "case_id": null,
+            "reason": "没有已登记、可合法使用并核验的该类题目；登记缺口不计作案例或通过。"
+          },
+          {
+            "case_type": "hard",
+            "registration": "unregistered",
+            "evidence_status": "evidence_gap",
+            "path": null,
+            "case_id": null,
+            "reason": "没有已登记、可合法使用并核验的该类题目；登记缺口不计作案例或通过。"
+          }
+        ],
+        "registration_complete": false,
+        "registered_examples_complete": false
+      },
+      {
+        "method_id": "G14",
+        "method_version": "1.1.0",
+        "question_type": "语法填空",
+        "method_type": "sub_action",
+        "core_required": false,
+        "source_section_ids": [
+          "a0bcc74f05b00671"
+        ],
+        "slots": [
+          {
+            "case_type": "canonical",
+            "registration": "registered",
+            "evidence_status": "evidence_gap",
+            "path": "cases/grammar/G14/canonical/case.yaml",
+            "case_id": "G14-canonical",
+            "reason": "源方法可核；尚未逐题核验案例，不可当成功样例"
+          },
+          {
+            "case_type": "counterexample",
+            "registration": "unregistered",
+            "evidence_status": "evidence_gap",
+            "path": null,
+            "case_id": null,
+            "reason": "没有已登记、可合法使用并核验的该类题目；登记缺口不计作案例或通过。"
+          },
+          {
+            "case_type": "boundary",
+            "registration": "unregistered",
+            "evidence_status": "evidence_gap",
+            "path": null,
+            "case_id": null,
+            "reason": "没有已登记、可合法使用并核验的该类题目；登记缺口不计作案例或通过。"
+          },
+          {
+            "case_type": "transfer",
+            "registration": "unregistered",
+            "evidence_status": "evidence_gap",
+            "path": null,
+            "case_id": null,
+            "reason": "没有已登记、可合法使用并核验的该类题目；登记缺口不计作案例或通过。"
+          },
+          {
+            "case_type": "hard",
+            "registration": "unregistered",
+            "evidence_status": "evidence_gap",
+            "path": null,
+            "case_id": null,
+            "reason": "没有已登记、可合法使用并核验的该类题目；登记缺口不计作案例或通过。"
+          }
+        ],
+        "registration_complete": false,
+        "registered_examples_complete": false
+      },
+      {
+        "method_id": "G15",
+        "method_version": "1.1.0",
+        "question_type": "语法填空",
+        "method_type": "method",
+        "core_required": true,
+        "source_section_ids": [
+          "f77de6ec724f8e88"
+        ],
+        "slots": [
+          {
+            "case_type": "canonical",
+            "registration": "registered",
+            "evidence_status": "evidence_gap",
+            "path": "cases/grammar/G15/canonical/case.yaml",
+            "case_id": "G15-canonical",
+            "reason": "源方法可核；尚未逐题核验案例，不可当成功样例"
+          },
+          {
+            "case_type": "counterexample",
+            "registration": "unregistered",
+            "evidence_status": "evidence_gap",
+            "path": null,
+            "case_id": null,
+            "reason": "没有已登记、可合法使用并核验的该类题目；登记缺口不计作案例或通过。"
+          },
+          {
+            "case_type": "boundary",
+            "registration": "unregistered",
+            "evidence_status": "evidence_gap",
+            "path": null,
+            "case_id": null,
+            "reason": "没有已登记、可合法使用并核验的该类题目；登记缺口不计作案例或通过。"
+          },
+          {
+            "case_type": "transfer",
+            "registration": "unregistered",
+            "evidence_status": "evidence_gap",
+            "path": null,
+            "case_id": null,
+            "reason": "没有已登记、可合法使用并核验的该类题目；登记缺口不计作案例或通过。"
+          },
+          {
+            "case_type": "hard",
+            "registration": "unregistered",
+            "evidence_status": "evidence_gap",
+            "path": null,
+            "case_id": null,
+            "reason": "没有已登记、可合法使用并核验的该类题目；登记缺口不计作案例或通过。"
+          }
+        ],
+        "registration_complete": false,
+        "registered_examples_complete": false
+      },
+      {
+        "method_id": "G16",
+        "method_version": "1.1.0",
+        "question_type": "语法填空",
+        "method_type": "sub_action",
+        "core_required": false,
+        "source_section_ids": [
+          "7c16410a7f1b8e4f"
+        ],
+        "slots": [
+          {
+            "case_type": "canonical",
+            "registration": "registered",
+            "evidence_status": "evidence_gap",
+            "path": "cases/grammar/G16/canonical/case.yaml",
+            "case_id": "G16-canonical",
+            "reason": "源方法可核；尚未逐题核验案例，不可当成功样例"
+          },
+          {
+            "case_type": "counterexample",
+            "registration": "unregistered",
+            "evidence_status": "evidence_gap",
+            "path": null,
+            "case_id": null,
+            "reason": "没有已登记、可合法使用并核验的该类题目；登记缺口不计作案例或通过。"
+          },
+          {
+            "case_type": "boundary",
+            "registration": "unregistered",
+            "evidence_status": "evidence_gap",
+            "path": null,
+            "case_id": null,
+            "reason": "没有已登记、可合法使用并核验的该类题目；登记缺口不计作案例或通过。"
+          },
+          {
+            "case_type": "transfer",
+            "registration": "unregistered",
+            "evidence_status": "evidence_gap",
+            "path": null,
+            "case_id": null,
+            "reason": "没有已登记、可合法使用并核验的该类题目；登记缺口不计作案例或通过。"
+          },
+          {
+            "case_type": "hard",
+            "registration": "unregistered",
+            "evidence_status": "evidence_gap",
+            "path": null,
+            "case_id": null,
+            "reason": "没有已登记、可合法使用并核验的该类题目；登记缺口不计作案例或通过。"
+          }
+        ],
+        "registration_complete": false,
+        "registered_examples_complete": false
+      },
+      {
+        "method_id": "G17",
+        "method_version": "1.1.0",
+        "question_type": "语法填空",
+        "method_type": "sub_action",
+        "core_required": false,
+        "source_section_ids": [
+          "781c4478d621bf5c"
+        ],
+        "slots": [
+          {
+            "case_type": "canonical",
+            "registration": "registered",
+            "evidence_status": "evidence_gap",
+            "path": "cases/grammar/G17/canonical/case.yaml",
+            "case_id": "G17-canonical",
+            "reason": "源方法可核；尚未逐题核验案例，不可当成功样例"
+          },
+          {
+            "case_type": "counterexample",
+            "registration": "unregistered",
+            "evidence_status": "evidence_gap",
+            "path": null,
+            "case_id": null,
+            "reason": "没有已登记、可合法使用并核验的该类题目；登记缺口不计作案例或通过。"
+          },
+          {
+            "case_type": "boundary",
+            "registration": "unregistered",
+            "evidence_status": "evidence_gap",
+            "path": null,
+            "case_id": null,
+            "reason": "没有已登记、可合法使用并核验的该类题目；登记缺口不计作案例或通过。"
+          },
+          {
+            "case_type": "transfer",
+            "registration": "unregistered",
+            "evidence_status": "evidence_gap",
+            "path": null,
+            "case_id": null,
+            "reason": "没有已登记、可合法使用并核验的该类题目；登记缺口不计作案例或通过。"
+          },
+          {
+            "case_type": "hard",
+            "registration": "unregistered",
+            "evidence_status": "evidence_gap",
+            "path": null,
+            "case_id": null,
+            "reason": "没有已登记、可合法使用并核验的该类题目；登记缺口不计作案例或通过。"
+          }
+        ],
+        "registration_complete": false,
+        "registered_examples_complete": false
+      },
+      {
+        "method_id": "G18",
+        "method_version": "1.1.0",
+        "question_type": "语法填空",
+        "method_type": "verification_rule",
+        "core_required": false,
+        "source_section_ids": [
+          "781c4478d621bf5c"
+        ],
+        "slots": [
+          {
+            "case_type": "canonical",
+            "registration": "registered",
+            "evidence_status": "evidence_gap",
+            "path": "cases/grammar/G18/canonical/case.yaml",
+            "case_id": "G18-canonical",
+            "reason": "源方法可核；尚未逐题核验案例，不可当成功样例"
+          },
+          {
+            "case_type": "counterexample",
+            "registration": "unregistered",
+            "evidence_status": "evidence_gap",
+            "path": null,
+            "case_id": null,
+            "reason": "没有已登记、可合法使用并核验的该类题目；登记缺口不计作案例或通过。"
+          },
+          {
+            "case_type": "boundary",
+            "registration": "unregistered",
+            "evidence_status": "evidence_gap",
+            "path": null,
+            "case_id": null,
+            "reason": "没有已登记、可合法使用并核验的该类题目；登记缺口不计作案例或通过。"
+          },
+          {
+            "case_type": "transfer",
+            "registration": "unregistered",
+            "evidence_status": "evidence_gap",
+            "path": null,
+            "case_id": null,
+            "reason": "没有已登记、可合法使用并核验的该类题目；登记缺口不计作案例或通过。"
+          },
+          {
+            "case_type": "hard",
+            "registration": "unregistered",
+            "evidence_status": "evidence_gap",
+            "path": null,
+            "case_id": null,
+            "reason": "没有已登记、可合法使用并核验的该类题目；登记缺口不计作案例或通过。"
+          }
+        ],
+        "registration_complete": false,
+        "registered_examples_complete": false
+      },
+      {
+        "method_id": "G19",
+        "method_version": "1.1.0",
+        "question_type": "语法填空",
+        "method_type": "verification_rule",
+        "core_required": false,
+        "source_section_ids": [
+          "781c4478d621bf5c"
+        ],
+        "slots": [
+          {
+            "case_type": "canonical",
+            "registration": "registered",
+            "evidence_status": "evidence_gap",
+            "path": "cases/grammar/G19/canonical/case.yaml",
+            "case_id": "G19-canonical",
+            "reason": "源方法可核；尚未逐题核验案例，不可当成功样例"
+          },
+          {
+            "case_type": "counterexample",
+            "registration": "unregistered",
+            "evidence_status": "evidence_gap",
+            "path": null,
+            "case_id": null,
+            "reason": "没有已登记、可合法使用并核验的该类题目；登记缺口不计作案例或通过。"
+          },
+          {
+            "case_type": "boundary",
+            "registration": "unregistered",
+            "evidence_status": "evidence_gap",
+            "path": null,
+            "case_id": null,
+            "reason": "没有已登记、可合法使用并核验的该类题目；登记缺口不计作案例或通过。"
+          },
+          {
+            "case_type": "transfer",
+            "registration": "unregistered",
+            "evidence_status": "evidence_gap",
+            "path": null,
+            "case_id": null,
+            "reason": "没有已登记、可合法使用并核验的该类题目；登记缺口不计作案例或通过。"
+          },
+          {
+            "case_type": "hard",
+            "registration": "unregistered",
+            "evidence_status": "evidence_gap",
+            "path": null,
+            "case_id": null,
+            "reason": "没有已登记、可合法使用并核验的该类题目；登记缺口不计作案例或通过。"
+          }
+        ],
+        "registration_complete": false,
+        "registered_examples_complete": false
+      },
+      {
+        "method_id": "A01",
+        "method_version": "1.1.0",
+        "question_type": "应用文",
+        "method_type": "framework",
+        "core_required": true,
+        "source_section_ids": [
+          "dac147e9a947370c",
+          "f8cfb194a81aad6e",
+          "ed19bd45d6bc3762"
+        ],
+        "slots": [
+          {
+            "case_type": "canonical",
+            "registration": "registered",
+            "evidence_status": "evidence_gap",
+            "path": "cases/application-writing/A01/canonical/case.yaml",
+            "case_id": "A01-canonical",
+            "reason": "源方法可核；尚未逐题核验案例，不可当成功样例"
+          },
+          {
+            "case_type": "counterexample",
+            "registration": "unregistered",
+            "evidence_status": "evidence_gap",
+            "path": null,
+            "case_id": null,
+            "reason": "没有已登记、可合法使用并核验的该类题目；登记缺口不计作案例或通过。"
+          },
+          {
+            "case_type": "boundary",
+            "registration": "unregistered",
+            "evidence_status": "evidence_gap",
+            "path": null,
+            "case_id": null,
+            "reason": "没有已登记、可合法使用并核验的该类题目；登记缺口不计作案例或通过。"
+          },
+          {
+            "case_type": "transfer",
+            "registration": "unregistered",
+            "evidence_status": "evidence_gap",
+            "path": null,
+            "case_id": null,
+            "reason": "没有已登记、可合法使用并核验的该类题目；登记缺口不计作案例或通过。"
+          },
+          {
+            "case_type": "hard",
+            "registration": "unregistered",
+            "evidence_status": "evidence_gap",
+            "path": null,
+            "case_id": null,
+            "reason": "没有已登记、可合法使用并核验的该类题目；登记缺口不计作案例或通过。"
+          }
+        ],
+        "registration_complete": false,
+        "registered_examples_complete": false
+      },
+      {
+        "method_id": "A02",
+        "method_version": "1.1.0",
+        "question_type": "应用文",
+        "method_type": "framework",
+        "core_required": true,
+        "source_section_ids": [
+          "0a6f5b5594a41dd6"
+        ],
+        "slots": [
+          {
+            "case_type": "canonical",
+            "registration": "registered",
+            "evidence_status": "evidence_gap",
+            "path": "cases/application-writing/A02/canonical/case.yaml",
+            "case_id": "A02-canonical",
+            "reason": "源方法可核；尚未逐题核验案例，不可当成功样例"
+          },
+          {
+            "case_type": "counterexample",
+            "registration": "unregistered",
+            "evidence_status": "evidence_gap",
+            "path": null,
+            "case_id": null,
+            "reason": "没有已登记、可合法使用并核验的该类题目；登记缺口不计作案例或通过。"
+          },
+          {
+            "case_type": "boundary",
+            "registration": "unregistered",
+            "evidence_status": "evidence_gap",
+            "path": null,
+            "case_id": null,
+            "reason": "没有已登记、可合法使用并核验的该类题目；登记缺口不计作案例或通过。"
+          },
+          {
+            "case_type": "transfer",
+            "registration": "unregistered",
+            "evidence_status": "evidence_gap",
+            "path": null,
+            "case_id": null,
+            "reason": "没有已登记、可合法使用并核验的该类题目；登记缺口不计作案例或通过。"
+          },
+          {
+            "case_type": "hard",
+            "registration": "unregistered",
+            "evidence_status": "evidence_gap",
+            "path": null,
+            "case_id": null,
+            "reason": "没有已登记、可合法使用并核验的该类题目；登记缺口不计作案例或通过。"
+          }
+        ],
+        "registration_complete": false,
+        "registered_examples_complete": false
+      },
+      {
+        "method_id": "A03",
+        "method_version": "1.1.0",
+        "question_type": "应用文",
+        "method_type": "method",
+        "core_required": true,
+        "source_section_ids": [
+          "15e18423e3364f72",
+          "8cc4571377b8183a"
+        ],
+        "slots": [
+          {
+            "case_type": "canonical",
+            "registration": "registered",
+            "evidence_status": "evidence_gap",
+            "path": "cases/application-writing/A03/canonical/case.yaml",
+            "case_id": "A03-canonical",
+            "reason": "源方法可核；尚未逐题核验案例，不可当成功样例"
+          },
+          {
+            "case_type": "counterexample",
+            "registration": "unregistered",
+            "evidence_status": "evidence_gap",
+            "path": null,
+            "case_id": null,
+            "reason": "没有已登记、可合法使用并核验的该类题目；登记缺口不计作案例或通过。"
+          },
+          {
+            "case_type": "boundary",
+            "registration": "unregistered",
+            "evidence_status": "evidence_gap",
+            "path": null,
+            "case_id": null,
+            "reason": "没有已登记、可合法使用并核验的该类题目；登记缺口不计作案例或通过。"
+          },
+          {
+            "case_type": "transfer",
+            "registration": "unregistered",
+            "evidence_status": "evidence_gap",
+            "path": null,
+            "case_id": null,
+            "reason": "没有已登记、可合法使用并核验的该类题目；登记缺口不计作案例或通过。"
+          },
+          {
+            "case_type": "hard",
+            "registration": "unregistered",
+            "evidence_status": "evidence_gap",
+            "path": null,
+            "case_id": null,
+            "reason": "没有已登记、可合法使用并核验的该类题目；登记缺口不计作案例或通过。"
+          }
+        ],
+        "registration_complete": false,
+        "registered_examples_complete": false
+      },
+      {
+        "method_id": "A04",
+        "method_version": "1.1.0",
+        "question_type": "应用文",
+        "method_type": "method",
+        "core_required": true,
+        "source_section_ids": [
+          "15e18423e3364f72",
+          "8cc4571377b8183a"
+        ],
+        "slots": [
+          {
+            "case_type": "canonical",
+            "registration": "registered",
+            "evidence_status": "evidence_gap",
+            "path": "cases/application-writing/A04/canonical/case.yaml",
+            "case_id": "A04-canonical",
+            "reason": "源方法可核；尚未逐题核验案例，不可当成功样例"
+          },
+          {
+            "case_type": "counterexample",
+            "registration": "unregistered",
+            "evidence_status": "evidence_gap",
+            "path": null,
+            "case_id": null,
+            "reason": "没有已登记、可合法使用并核验的该类题目；登记缺口不计作案例或通过。"
+          },
+          {
+            "case_type": "boundary",
+            "registration": "unregistered",
+            "evidence_status": "evidence_gap",
+            "path": null,
+            "case_id": null,
+            "reason": "没有已登记、可合法使用并核验的该类题目；登记缺口不计作案例或通过。"
+          },
+          {
+            "case_type": "transfer",
+            "registration": "unregistered",
+            "evidence_status": "evidence_gap",
+            "path": null,
+            "case_id": null,
+            "reason": "没有已登记、可合法使用并核验的该类题目；登记缺口不计作案例或通过。"
+          },
+          {
+            "case_type": "hard",
+            "registration": "unregistered",
+            "evidence_status": "evidence_gap",
+            "path": null,
+            "case_id": null,
+            "reason": "没有已登记、可合法使用并核验的该类题目；登记缺口不计作案例或通过。"
+          }
+        ],
+        "registration_complete": false,
+        "registered_examples_complete": false
+      },
+      {
+        "method_id": "A05",
+        "method_version": "1.1.0",
+        "question_type": "应用文",
+        "method_type": "method",
+        "core_required": true,
+        "source_section_ids": [
+          "15e18423e3364f72",
+          "8cc4571377b8183a"
+        ],
+        "slots": [
+          {
+            "case_type": "canonical",
+            "registration": "registered",
+            "evidence_status": "evidence_gap",
+            "path": "cases/application-writing/A05/canonical/case.yaml",
+            "case_id": "A05-canonical",
+            "reason": "源方法可核；尚未逐题核验案例，不可当成功样例"
+          },
+          {
+            "case_type": "counterexample",
+            "registration": "unregistered",
+            "evidence_status": "evidence_gap",
+            "path": null,
+            "case_id": null,
+            "reason": "没有已登记、可合法使用并核验的该类题目；登记缺口不计作案例或通过。"
+          },
+          {
+            "case_type": "boundary",
+            "registration": "unregistered",
+            "evidence_status": "evidence_gap",
+            "path": null,
+            "case_id": null,
+            "reason": "没有已登记、可合法使用并核验的该类题目；登记缺口不计作案例或通过。"
+          },
+          {
+            "case_type": "transfer",
+            "registration": "unregistered",
+            "evidence_status": "evidence_gap",
+            "path": null,
+            "case_id": null,
+            "reason": "没有已登记、可合法使用并核验的该类题目；登记缺口不计作案例或通过。"
+          },
+          {
+            "case_type": "hard",
+            "registration": "unregistered",
+            "evidence_status": "evidence_gap",
+            "path": null,
+            "case_id": null,
+            "reason": "没有已登记、可合法使用并核验的该类题目；登记缺口不计作案例或通过。"
+          }
+        ],
+        "registration_complete": false,
+        "registered_examples_complete": false
+      },
+      {
+        "method_id": "A06",
+        "method_version": "1.1.0",
+        "question_type": "应用文",
+        "method_type": "framework",
+        "core_required": true,
+        "source_section_ids": [
+          "27cf55e8f2cf7c93",
+          "1b1197e2fa02ee07"
+        ],
+        "slots": [
+          {
+            "case_type": "canonical",
+            "registration": "registered",
+            "evidence_status": "evidence_gap",
+            "path": "cases/application-writing/A06/canonical/case.yaml",
+            "case_id": "A06-canonical",
+            "reason": "源方法可核；尚未逐题核验案例，不可当成功样例"
+          },
+          {
+            "case_type": "counterexample",
+            "registration": "unregistered",
+            "evidence_status": "evidence_gap",
+            "path": null,
+            "case_id": null,
+            "reason": "没有已登记、可合法使用并核验的该类题目；登记缺口不计作案例或通过。"
+          },
+          {
+            "case_type": "boundary",
+            "registration": "unregistered",
+            "evidence_status": "evidence_gap",
+            "path": null,
+            "case_id": null,
+            "reason": "没有已登记、可合法使用并核验的该类题目；登记缺口不计作案例或通过。"
+          },
+          {
+            "case_type": "transfer",
+            "registration": "unregistered",
+            "evidence_status": "evidence_gap",
+            "path": null,
+            "case_id": null,
+            "reason": "没有已登记、可合法使用并核验的该类题目；登记缺口不计作案例或通过。"
+          },
+          {
+            "case_type": "hard",
+            "registration": "unregistered",
+            "evidence_status": "evidence_gap",
+            "path": null,
+            "case_id": null,
+            "reason": "没有已登记、可合法使用并核验的该类题目；登记缺口不计作案例或通过。"
+          }
+        ],
+        "registration_complete": false,
+        "registered_examples_complete": false
+      },
+      {
+        "method_id": "A07",
+        "method_version": "1.1.0",
+        "question_type": "应用文",
+        "method_type": "method",
+        "core_required": true,
+        "source_section_ids": [
+          "4dde2ad49f107ae2",
+          "3f39d3b03e8baef0"
+        ],
+        "slots": [
+          {
+            "case_type": "canonical",
+            "registration": "registered",
+            "evidence_status": "evidence_gap",
+            "path": "cases/application-writing/A07/canonical/case.yaml",
+            "case_id": "A07-canonical",
+            "reason": "源方法可核；尚未逐题核验案例，不可当成功样例"
+          },
+          {
+            "case_type": "counterexample",
+            "registration": "unregistered",
+            "evidence_status": "evidence_gap",
+            "path": null,
+            "case_id": null,
+            "reason": "没有已登记、可合法使用并核验的该类题目；登记缺口不计作案例或通过。"
+          },
+          {
+            "case_type": "boundary",
+            "registration": "unregistered",
+            "evidence_status": "evidence_gap",
+            "path": null,
+            "case_id": null,
+            "reason": "没有已登记、可合法使用并核验的该类题目；登记缺口不计作案例或通过。"
+          },
+          {
+            "case_type": "transfer",
+            "registration": "unregistered",
+            "evidence_status": "evidence_gap",
+            "path": null,
+            "case_id": null,
+            "reason": "没有已登记、可合法使用并核验的该类题目；登记缺口不计作案例或通过。"
+          },
+          {
+            "case_type": "hard",
+            "registration": "unregistered",
+            "evidence_status": "evidence_gap",
+            "path": null,
+            "case_id": null,
+            "reason": "没有已登记、可合法使用并核验的该类题目；登记缺口不计作案例或通过。"
+          }
+        ],
+        "registration_complete": false,
+        "registered_examples_complete": false
+      },
+      {
+        "method_id": "A08",
+        "method_version": "1.1.0",
+        "question_type": "应用文",
+        "method_type": "category",
+        "core_required": false,
+        "source_section_ids": [
+          "cfc5531cda2a9b91",
+          "e68392b5352c1bc7"
+        ],
+        "slots": [
+          {
+            "case_type": "canonical",
+            "registration": "registered",
+            "evidence_status": "evidence_gap",
+            "path": "cases/application-writing/A08/canonical/case.yaml",
+            "case_id": "A08-canonical",
+            "reason": "源方法可核；尚未逐题核验案例，不可当成功样例"
+          },
+          {
+            "case_type": "counterexample",
+            "registration": "unregistered",
+            "evidence_status": "evidence_gap",
+            "path": null,
+            "case_id": null,
+            "reason": "没有已登记、可合法使用并核验的该类题目；登记缺口不计作案例或通过。"
+          },
+          {
+            "case_type": "boundary",
+            "registration": "unregistered",
+            "evidence_status": "evidence_gap",
+            "path": null,
+            "case_id": null,
+            "reason": "没有已登记、可合法使用并核验的该类题目；登记缺口不计作案例或通过。"
+          },
+          {
+            "case_type": "transfer",
+            "registration": "unregistered",
+            "evidence_status": "evidence_gap",
+            "path": null,
+            "case_id": null,
+            "reason": "没有已登记、可合法使用并核验的该类题目；登记缺口不计作案例或通过。"
+          },
+          {
+            "case_type": "hard",
+            "registration": "unregistered",
+            "evidence_status": "evidence_gap",
+            "path": null,
+            "case_id": null,
+            "reason": "没有已登记、可合法使用并核验的该类题目；登记缺口不计作案例或通过。"
+          }
+        ],
+        "registration_complete": false,
+        "registered_examples_complete": false
+      },
+      {
+        "method_id": "A09",
+        "method_version": "1.1.0",
+        "question_type": "应用文",
+        "method_type": "internal_rule",
+        "core_required": false,
+        "source_section_ids": [
+          "254fa3adfb42db4e",
+          "f8cfb194a81aad6e",
+          "ed19bd45d6bc3762"
+        ],
+        "slots": [
+          {
+            "case_type": "canonical",
+            "registration": "registered",
+            "evidence_status": "evidence_gap",
+            "path": "cases/application-writing/A09/canonical/case.yaml",
+            "case_id": "A09-canonical",
+            "reason": "源方法可核；尚未逐题核验案例，不可当成功样例"
+          },
+          {
+            "case_type": "counterexample",
+            "registration": "unregistered",
+            "evidence_status": "evidence_gap",
+            "path": null,
+            "case_id": null,
+            "reason": "没有已登记、可合法使用并核验的该类题目；登记缺口不计作案例或通过。"
+          },
+          {
+            "case_type": "boundary",
+            "registration": "unregistered",
+            "evidence_status": "evidence_gap",
+            "path": null,
+            "case_id": null,
+            "reason": "没有已登记、可合法使用并核验的该类题目；登记缺口不计作案例或通过。"
+          },
+          {
+            "case_type": "transfer",
+            "registration": "unregistered",
+            "evidence_status": "evidence_gap",
+            "path": null,
+            "case_id": null,
+            "reason": "没有已登记、可合法使用并核验的该类题目；登记缺口不计作案例或通过。"
+          },
+          {
+            "case_type": "hard",
+            "registration": "unregistered",
+            "evidence_status": "evidence_gap",
+            "path": null,
+            "case_id": null,
+            "reason": "没有已登记、可合法使用并核验的该类题目；登记缺口不计作案例或通过。"
+          }
+        ],
+        "registration_complete": false,
+        "registered_examples_complete": false
+      },
+      {
+        "method_id": "A10",
+        "method_version": "1.1.0",
+        "question_type": "应用文",
+        "method_type": "framework",
+        "core_required": true,
+        "source_section_ids": [
+          "c827be84f7798683",
+          "0a6f5b5594a41dd6"
+        ],
+        "slots": [
+          {
+            "case_type": "canonical",
+            "registration": "registered",
+            "evidence_status": "evidence_gap",
+            "path": "cases/application-writing/A10/canonical/case.yaml",
+            "case_id": "A10-canonical",
+            "reason": "源方法可核；尚未逐题核验案例，不可当成功样例"
+          },
+          {
+            "case_type": "counterexample",
+            "registration": "unregistered",
+            "evidence_status": "evidence_gap",
+            "path": null,
+            "case_id": null,
+            "reason": "没有已登记、可合法使用并核验的该类题目；登记缺口不计作案例或通过。"
+          },
+          {
+            "case_type": "boundary",
+            "registration": "unregistered",
+            "evidence_status": "evidence_gap",
+            "path": null,
+            "case_id": null,
+            "reason": "没有已登记、可合法使用并核验的该类题目；登记缺口不计作案例或通过。"
+          },
+          {
+            "case_type": "transfer",
+            "registration": "unregistered",
+            "evidence_status": "evidence_gap",
+            "path": null,
+            "case_id": null,
+            "reason": "没有已登记、可合法使用并核验的该类题目；登记缺口不计作案例或通过。"
+          },
+          {
+            "case_type": "hard",
+            "registration": "unregistered",
+            "evidence_status": "evidence_gap",
+            "path": null,
+            "case_id": null,
+            "reason": "没有已登记、可合法使用并核验的该类题目；登记缺口不计作案例或通过。"
+          }
+        ],
+        "registration_complete": false,
+        "registered_examples_complete": false
+      },
+      {
+        "method_id": "W01",
+        "method_version": "1.1.0",
+        "question_type": "读后续写",
+        "method_type": "framework",
+        "core_required": true,
+        "source_section_ids": [
+          "6c1ef222ac95b054",
+          "40089c4aea5930c9",
+          "81f56745e0f0ef4f",
+          "2f8f6bf8b2c518b4",
+          "b7f00dc50a26467d",
+          "d6a05f90dcbf2050",
+          "7b4c299267a685c2",
+          "540b6fb2783f6027"
+        ],
+        "slots": [
+          {
+            "case_type": "canonical",
+            "registration": "registered",
+            "evidence_status": "evidence_gap",
+            "path": "cases/continuation-writing/W01/canonical/case.yaml",
+            "case_id": "W01-canonical",
+            "reason": "源方法可核；尚未逐题核验案例，不可当成功样例"
+          },
+          {
+            "case_type": "counterexample",
+            "registration": "unregistered",
+            "evidence_status": "evidence_gap",
+            "path": null,
+            "case_id": null,
+            "reason": "没有已登记、可合法使用并核验的该类题目；登记缺口不计作案例或通过。"
+          },
+          {
+            "case_type": "boundary",
+            "registration": "unregistered",
+            "evidence_status": "evidence_gap",
+            "path": null,
+            "case_id": null,
+            "reason": "没有已登记、可合法使用并核验的该类题目；登记缺口不计作案例或通过。"
+          },
+          {
+            "case_type": "transfer",
+            "registration": "unregistered",
+            "evidence_status": "evidence_gap",
+            "path": null,
+            "case_id": null,
+            "reason": "没有已登记、可合法使用并核验的该类题目；登记缺口不计作案例或通过。"
+          },
+          {
+            "case_type": "hard",
+            "registration": "unregistered",
+            "evidence_status": "evidence_gap",
+            "path": null,
+            "case_id": null,
+            "reason": "没有已登记、可合法使用并核验的该类题目；登记缺口不计作案例或通过。"
+          }
+        ],
+        "registration_complete": false,
+        "registered_examples_complete": false
+      },
+      {
+        "method_id": "W02",
+        "method_version": "1.1.0",
+        "question_type": "读后续写",
+        "method_type": "framework",
+        "core_required": true,
+        "source_section_ids": [
+          "de128566b475de5e",
+          "b096635f1943a034",
+          "7b4c299267a685c2",
+          "540b6fb2783f6027"
+        ],
+        "slots": [
+          {
+            "case_type": "canonical",
+            "registration": "registered",
+            "evidence_status": "evidence_gap",
+            "path": "cases/continuation-writing/W02/canonical/case.yaml",
+            "case_id": "W02-canonical",
+            "reason": "源方法可核；尚未逐题核验案例，不可当成功样例"
+          },
+          {
+            "case_type": "counterexample",
+            "registration": "unregistered",
+            "evidence_status": "evidence_gap",
+            "path": null,
+            "case_id": null,
+            "reason": "没有已登记、可合法使用并核验的该类题目；登记缺口不计作案例或通过。"
+          },
+          {
+            "case_type": "boundary",
+            "registration": "unregistered",
+            "evidence_status": "evidence_gap",
+            "path": null,
+            "case_id": null,
+            "reason": "没有已登记、可合法使用并核验的该类题目；登记缺口不计作案例或通过。"
+          },
+          {
+            "case_type": "transfer",
+            "registration": "unregistered",
+            "evidence_status": "evidence_gap",
+            "path": null,
+            "case_id": null,
+            "reason": "没有已登记、可合法使用并核验的该类题目；登记缺口不计作案例或通过。"
+          },
+          {
+            "case_type": "hard",
+            "registration": "unregistered",
+            "evidence_status": "evidence_gap",
+            "path": null,
+            "case_id": null,
+            "reason": "没有已登记、可合法使用并核验的该类题目；登记缺口不计作案例或通过。"
+          }
+        ],
+        "registration_complete": false,
+        "registered_examples_complete": false
+      },
+      {
+        "method_id": "W03",
+        "method_version": "1.1.0",
+        "question_type": "读后续写",
+        "method_type": "framework",
+        "core_required": true,
+        "source_section_ids": [
+          "3f0307af95397320",
+          "f1e81a5163eb6580",
+          "363d35dec7fda958"
+        ],
+        "slots": [
+          {
+            "case_type": "canonical",
+            "registration": "registered",
+            "evidence_status": "evidence_gap",
+            "path": "cases/continuation-writing/W03/canonical/case.yaml",
+            "case_id": "W03-canonical",
+            "reason": "源方法可核；尚未逐题核验案例，不可当成功样例"
+          },
+          {
+            "case_type": "counterexample",
+            "registration": "unregistered",
+            "evidence_status": "evidence_gap",
+            "path": null,
+            "case_id": null,
+            "reason": "没有已登记、可合法使用并核验的该类题目；登记缺口不计作案例或通过。"
+          },
+          {
+            "case_type": "boundary",
+            "registration": "unregistered",
+            "evidence_status": "evidence_gap",
+            "path": null,
+            "case_id": null,
+            "reason": "没有已登记、可合法使用并核验的该类题目；登记缺口不计作案例或通过。"
+          },
+          {
+            "case_type": "transfer",
+            "registration": "unregistered",
+            "evidence_status": "evidence_gap",
+            "path": null,
+            "case_id": null,
+            "reason": "没有已登记、可合法使用并核验的该类题目；登记缺口不计作案例或通过。"
+          },
+          {
+            "case_type": "hard",
+            "registration": "unregistered",
+            "evidence_status": "evidence_gap",
+            "path": null,
+            "case_id": null,
+            "reason": "没有已登记、可合法使用并核验的该类题目；登记缺口不计作案例或通过。"
+          }
+        ],
+        "registration_complete": false,
+        "registered_examples_complete": false
+      },
+      {
+        "method_id": "W04",
+        "method_version": "1.1.0",
+        "question_type": "读后续写",
+        "method_type": "method",
+        "core_required": true,
+        "source_section_ids": [
+          "0704baa69272c2a5",
+          "f1e81a5163eb6580",
+          "7b4c299267a685c2"
+        ],
+        "slots": [
+          {
+            "case_type": "canonical",
+            "registration": "registered",
+            "evidence_status": "evidence_gap",
+            "path": "cases/continuation-writing/W04/canonical/case.yaml",
+            "case_id": "W04-canonical",
+            "reason": "源方法可核；尚未逐题核验案例，不可当成功样例"
+          },
+          {
+            "case_type": "counterexample",
+            "registration": "unregistered",
+            "evidence_status": "evidence_gap",
+            "path": null,
+            "case_id": null,
+            "reason": "没有已登记、可合法使用并核验的该类题目；登记缺口不计作案例或通过。"
+          },
+          {
+            "case_type": "boundary",
+            "registration": "unregistered",
+            "evidence_status": "evidence_gap",
+            "path": null,
+            "case_id": null,
+            "reason": "没有已登记、可合法使用并核验的该类题目；登记缺口不计作案例或通过。"
+          },
+          {
+            "case_type": "transfer",
+            "registration": "unregistered",
+            "evidence_status": "evidence_gap",
+            "path": null,
+            "case_id": null,
+            "reason": "没有已登记、可合法使用并核验的该类题目；登记缺口不计作案例或通过。"
+          },
+          {
+            "case_type": "hard",
+            "registration": "unregistered",
+            "evidence_status": "evidence_gap",
+            "path": null,
+            "case_id": null,
+            "reason": "没有已登记、可合法使用并核验的该类题目；登记缺口不计作案例或通过。"
+          }
+        ],
+        "registration_complete": false,
+        "registered_examples_complete": false
+      },
+      {
+        "method_id": "W05",
+        "method_version": "1.1.0",
+        "question_type": "读后续写",
+        "method_type": "method",
+        "core_required": true,
+        "source_section_ids": [
+          "c07ba63b18c4746d",
+          "2be649e0f5a88344"
+        ],
+        "slots": [
+          {
+            "case_type": "canonical",
+            "registration": "registered",
+            "evidence_status": "evidence_gap",
+            "path": "cases/continuation-writing/W05/canonical/case.yaml",
+            "case_id": "W05-canonical",
+            "reason": "源方法可核；尚未逐题核验案例，不可当成功样例"
+          },
+          {
+            "case_type": "counterexample",
+            "registration": "unregistered",
+            "evidence_status": "evidence_gap",
+            "path": null,
+            "case_id": null,
+            "reason": "没有已登记、可合法使用并核验的该类题目；登记缺口不计作案例或通过。"
+          },
+          {
+            "case_type": "boundary",
+            "registration": "unregistered",
+            "evidence_status": "evidence_gap",
+            "path": null,
+            "case_id": null,
+            "reason": "没有已登记、可合法使用并核验的该类题目；登记缺口不计作案例或通过。"
+          },
+          {
+            "case_type": "transfer",
+            "registration": "unregistered",
+            "evidence_status": "evidence_gap",
+            "path": null,
+            "case_id": null,
+            "reason": "没有已登记、可合法使用并核验的该类题目；登记缺口不计作案例或通过。"
+          },
+          {
+            "case_type": "hard",
+            "registration": "unregistered",
+            "evidence_status": "evidence_gap",
+            "path": null,
+            "case_id": null,
+            "reason": "没有已登记、可合法使用并核验的该类题目；登记缺口不计作案例或通过。"
+          }
+        ],
+        "registration_complete": false,
+        "registered_examples_complete": false
+      },
+      {
+        "method_id": "W06",
+        "method_version": "1.1.0",
+        "question_type": "读后续写",
+        "method_type": "sub_action",
+        "core_required": false,
+        "source_section_ids": [
+          "da71883c7cd6b2bc",
+          "f1e81a5163eb6580"
+        ],
+        "slots": [
+          {
+            "case_type": "canonical",
+            "registration": "registered",
+            "evidence_status": "evidence_gap",
+            "path": "cases/continuation-writing/W06/canonical/case.yaml",
+            "case_id": "W06-canonical",
+            "reason": "源方法可核；尚未逐题核验案例，不可当成功样例"
+          },
+          {
+            "case_type": "counterexample",
+            "registration": "unregistered",
+            "evidence_status": "evidence_gap",
+            "path": null,
+            "case_id": null,
+            "reason": "没有已登记、可合法使用并核验的该类题目；登记缺口不计作案例或通过。"
+          },
+          {
+            "case_type": "boundary",
+            "registration": "unregistered",
+            "evidence_status": "evidence_gap",
+            "path": null,
+            "case_id": null,
+            "reason": "没有已登记、可合法使用并核验的该类题目；登记缺口不计作案例或通过。"
+          },
+          {
+            "case_type": "transfer",
+            "registration": "unregistered",
+            "evidence_status": "evidence_gap",
+            "path": null,
+            "case_id": null,
+            "reason": "没有已登记、可合法使用并核验的该类题目；登记缺口不计作案例或通过。"
+          },
+          {
+            "case_type": "hard",
+            "registration": "unregistered",
+            "evidence_status": "evidence_gap",
+            "path": null,
+            "case_id": null,
+            "reason": "没有已登记、可合法使用并核验的该类题目；登记缺口不计作案例或通过。"
+          }
+        ],
+        "registration_complete": false,
+        "registered_examples_complete": false
+      },
+      {
+        "method_id": "W07",
+        "method_version": "1.1.0",
+        "question_type": "读后续写",
+        "method_type": "sub_action",
+        "core_required": false,
+        "source_section_ids": [
+          "da71883c7cd6b2bc",
+          "363d35dec7fda958",
+          "f1e81a5163eb6580"
+        ],
+        "slots": [
+          {
+            "case_type": "canonical",
+            "registration": "registered",
+            "evidence_status": "evidence_gap",
+            "path": "cases/continuation-writing/W07/canonical/case.yaml",
+            "case_id": "W07-canonical",
+            "reason": "源方法可核；尚未逐题核验案例，不可当成功样例"
+          },
+          {
+            "case_type": "counterexample",
+            "registration": "unregistered",
+            "evidence_status": "evidence_gap",
+            "path": null,
+            "case_id": null,
+            "reason": "没有已登记、可合法使用并核验的该类题目；登记缺口不计作案例或通过。"
+          },
+          {
+            "case_type": "boundary",
+            "registration": "unregistered",
+            "evidence_status": "evidence_gap",
+            "path": null,
+            "case_id": null,
+            "reason": "没有已登记、可合法使用并核验的该类题目；登记缺口不计作案例或通过。"
+          },
+          {
+            "case_type": "transfer",
+            "registration": "unregistered",
+            "evidence_status": "evidence_gap",
+            "path": null,
+            "case_id": null,
+            "reason": "没有已登记、可合法使用并核验的该类题目；登记缺口不计作案例或通过。"
+          },
+          {
+            "case_type": "hard",
+            "registration": "unregistered",
+            "evidence_status": "evidence_gap",
+            "path": null,
+            "case_id": null,
+            "reason": "没有已登记、可合法使用并核验的该类题目；登记缺口不计作案例或通过。"
+          }
+        ],
+        "registration_complete": false,
+        "registered_examples_complete": false
+      },
+      {
+        "method_id": "W08",
+        "method_version": "1.1.0",
+        "question_type": "读后续写",
+        "method_type": "sub_action",
+        "core_required": false,
+        "source_section_ids": [
+          "da71883c7cd6b2bc",
+          "f1e81a5163eb6580"
+        ],
+        "slots": [
+          {
+            "case_type": "canonical",
+            "registration": "registered",
+            "evidence_status": "evidence_gap",
+            "path": "cases/continuation-writing/W08/canonical/case.yaml",
+            "case_id": "W08-canonical",
+            "reason": "源方法可核；尚未逐题核验案例，不可当成功样例"
+          },
+          {
+            "case_type": "counterexample",
+            "registration": "unregistered",
+            "evidence_status": "evidence_gap",
+            "path": null,
+            "case_id": null,
+            "reason": "没有已登记、可合法使用并核验的该类题目；登记缺口不计作案例或通过。"
+          },
+          {
+            "case_type": "boundary",
+            "registration": "unregistered",
+            "evidence_status": "evidence_gap",
+            "path": null,
+            "case_id": null,
+            "reason": "没有已登记、可合法使用并核验的该类题目；登记缺口不计作案例或通过。"
+          },
+          {
+            "case_type": "transfer",
+            "registration": "unregistered",
+            "evidence_status": "evidence_gap",
+            "path": null,
+            "case_id": null,
+            "reason": "没有已登记、可合法使用并核验的该类题目；登记缺口不计作案例或通过。"
+          },
+          {
+            "case_type": "hard",
+            "registration": "unregistered",
+            "evidence_status": "evidence_gap",
+            "path": null,
+            "case_id": null,
+            "reason": "没有已登记、可合法使用并核验的该类题目；登记缺口不计作案例或通过。"
+          }
+        ],
+        "registration_complete": false,
+        "registered_examples_complete": false
+      },
+      {
+        "method_id": "W09",
+        "method_version": "1.1.0",
+        "question_type": "读后续写",
+        "method_type": "sub_action",
+        "core_required": false,
+        "source_section_ids": [
+          "da71883c7cd6b2bc",
+          "2be649e0f5a88344",
+          "363d35dec7fda958"
+        ],
+        "slots": [
+          {
+            "case_type": "canonical",
+            "registration": "registered",
+            "evidence_status": "evidence_gap",
+            "path": "cases/continuation-writing/W09/canonical/case.yaml",
+            "case_id": "W09-canonical",
+            "reason": "源方法可核；尚未逐题核验案例，不可当成功样例"
+          },
+          {
+            "case_type": "counterexample",
+            "registration": "unregistered",
+            "evidence_status": "evidence_gap",
+            "path": null,
+            "case_id": null,
+            "reason": "没有已登记、可合法使用并核验的该类题目；登记缺口不计作案例或通过。"
+          },
+          {
+            "case_type": "boundary",
+            "registration": "unregistered",
+            "evidence_status": "evidence_gap",
+            "path": null,
+            "case_id": null,
+            "reason": "没有已登记、可合法使用并核验的该类题目；登记缺口不计作案例或通过。"
+          },
+          {
+            "case_type": "transfer",
+            "registration": "unregistered",
+            "evidence_status": "evidence_gap",
+            "path": null,
+            "case_id": null,
+            "reason": "没有已登记、可合法使用并核验的该类题目；登记缺口不计作案例或通过。"
+          },
+          {
+            "case_type": "hard",
+            "registration": "unregistered",
+            "evidence_status": "evidence_gap",
+            "path": null,
+            "case_id": null,
+            "reason": "没有已登记、可合法使用并核验的该类题目；登记缺口不计作案例或通过。"
+          }
+        ],
+        "registration_complete": false,
+        "registered_examples_complete": false
+      },
+      {
+        "method_id": "W10",
+        "method_version": "1.1.0",
+        "question_type": "读后续写",
+        "method_type": "sub_action",
+        "core_required": false,
+        "source_section_ids": [
+          "da71883c7cd6b2bc"
+        ],
+        "slots": [
+          {
+            "case_type": "canonical",
+            "registration": "registered",
+            "evidence_status": "evidence_gap",
+            "path": "cases/continuation-writing/W10/canonical/case.yaml",
+            "case_id": "W10-canonical",
+            "reason": "源方法可核；尚未逐题核验案例，不可当成功样例"
+          },
+          {
+            "case_type": "counterexample",
+            "registration": "unregistered",
+            "evidence_status": "evidence_gap",
+            "path": null,
+            "case_id": null,
+            "reason": "没有已登记、可合法使用并核验的该类题目；登记缺口不计作案例或通过。"
+          },
+          {
+            "case_type": "boundary",
+            "registration": "unregistered",
+            "evidence_status": "evidence_gap",
+            "path": null,
+            "case_id": null,
+            "reason": "没有已登记、可合法使用并核验的该类题目；登记缺口不计作案例或通过。"
+          },
+          {
+            "case_type": "transfer",
+            "registration": "unregistered",
+            "evidence_status": "evidence_gap",
+            "path": null,
+            "case_id": null,
+            "reason": "没有已登记、可合法使用并核验的该类题目；登记缺口不计作案例或通过。"
+          },
+          {
+            "case_type": "hard",
+            "registration": "unregistered",
+            "evidence_status": "evidence_gap",
+            "path": null,
+            "case_id": null,
+            "reason": "没有已登记、可合法使用并核验的该类题目；登记缺口不计作案例或通过。"
+          }
+        ],
+        "registration_complete": false,
+        "registered_examples_complete": false
+      },
+      {
+        "method_id": "W11",
+        "method_version": "1.1.0",
+        "question_type": "读后续写",
+        "method_type": "sub_action",
+        "core_required": false,
+        "source_section_ids": [
+          "da71883c7cd6b2bc",
+          "d9120aa3501ea2ec",
+          "f1e81a5163eb6580",
+          "363d35dec7fda958"
+        ],
+        "slots": [
+          {
+            "case_type": "canonical",
+            "registration": "registered",
+            "evidence_status": "evidence_gap",
+            "path": "cases/continuation-writing/W11/canonical/case.yaml",
+            "case_id": "W11-canonical",
+            "reason": "源方法可核；尚未逐题核验案例，不可当成功样例"
+          },
+          {
+            "case_type": "counterexample",
+            "registration": "unregistered",
+            "evidence_status": "evidence_gap",
+            "path": null,
+            "case_id": null,
+            "reason": "没有已登记、可合法使用并核验的该类题目；登记缺口不计作案例或通过。"
+          },
+          {
+            "case_type": "boundary",
+            "registration": "unregistered",
+            "evidence_status": "evidence_gap",
+            "path": null,
+            "case_id": null,
+            "reason": "没有已登记、可合法使用并核验的该类题目；登记缺口不计作案例或通过。"
+          },
+          {
+            "case_type": "transfer",
+            "registration": "unregistered",
+            "evidence_status": "evidence_gap",
+            "path": null,
+            "case_id": null,
+            "reason": "没有已登记、可合法使用并核验的该类题目；登记缺口不计作案例或通过。"
+          },
+          {
+            "case_type": "hard",
+            "registration": "unregistered",
+            "evidence_status": "evidence_gap",
+            "path": null,
+            "case_id": null,
+            "reason": "没有已登记、可合法使用并核验的该类题目；登记缺口不计作案例或通过。"
+          }
+        ],
+        "registration_complete": false,
+        "registered_examples_complete": false
+      },
+      {
+        "method_id": "W12",
+        "method_version": "1.1.0",
+        "question_type": "读后续写",
+        "method_type": "sub_action",
+        "core_required": false,
+        "source_section_ids": [
+          "da71883c7cd6b2bc",
+          "674c3cedbc56722a"
+        ],
+        "slots": [
+          {
+            "case_type": "canonical",
+            "registration": "registered",
+            "evidence_status": "evidence_gap",
+            "path": "cases/continuation-writing/W12/canonical/case.yaml",
+            "case_id": "W12-canonical",
+            "reason": "源方法可核；尚未逐题核验案例，不可当成功样例"
+          },
+          {
+            "case_type": "counterexample",
+            "registration": "unregistered",
+            "evidence_status": "evidence_gap",
+            "path": null,
+            "case_id": null,
+            "reason": "没有已登记、可合法使用并核验的该类题目；登记缺口不计作案例或通过。"
+          },
+          {
+            "case_type": "boundary",
+            "registration": "unregistered",
+            "evidence_status": "evidence_gap",
+            "path": null,
+            "case_id": null,
+            "reason": "没有已登记、可合法使用并核验的该类题目；登记缺口不计作案例或通过。"
+          },
+          {
+            "case_type": "transfer",
+            "registration": "unregistered",
+            "evidence_status": "evidence_gap",
+            "path": null,
+            "case_id": null,
+            "reason": "没有已登记、可合法使用并核验的该类题目；登记缺口不计作案例或通过。"
+          },
+          {
+            "case_type": "hard",
+            "registration": "unregistered",
+            "evidence_status": "evidence_gap",
+            "path": null,
+            "case_id": null,
+            "reason": "没有已登记、可合法使用并核验的该类题目；登记缺口不计作案例或通过。"
+          }
+        ],
+        "registration_complete": false,
+        "registered_examples_complete": false
+      },
+      {
+        "method_id": "W13",
+        "method_version": "1.1.0",
+        "question_type": "读后续写",
+        "method_type": "method",
+        "core_required": true,
+        "source_section_ids": [
+          "540b6fb2783f6027",
+          "d6a05f90dcbf2050",
+          "363d35dec7fda958",
+          "f1e81a5163eb6580"
+        ],
+        "slots": [
+          {
+            "case_type": "canonical",
+            "registration": "registered",
+            "evidence_status": "evidence_gap",
+            "path": "cases/continuation-writing/W13/canonical/case.yaml",
+            "case_id": "W13-canonical",
+            "reason": "源方法可核；尚未逐题核验案例，不可当成功样例"
+          },
+          {
+            "case_type": "counterexample",
+            "registration": "unregistered",
+            "evidence_status": "evidence_gap",
+            "path": null,
+            "case_id": null,
+            "reason": "没有已登记、可合法使用并核验的该类题目；登记缺口不计作案例或通过。"
+          },
+          {
+            "case_type": "boundary",
+            "registration": "unregistered",
+            "evidence_status": "evidence_gap",
+            "path": null,
+            "case_id": null,
+            "reason": "没有已登记、可合法使用并核验的该类题目；登记缺口不计作案例或通过。"
+          },
+          {
+            "case_type": "transfer",
+            "registration": "unregistered",
+            "evidence_status": "evidence_gap",
+            "path": null,
+            "case_id": null,
+            "reason": "没有已登记、可合法使用并核验的该类题目；登记缺口不计作案例或通过。"
+          },
+          {
+            "case_type": "hard",
+            "registration": "unregistered",
+            "evidence_status": "evidence_gap",
+            "path": null,
+            "case_id": null,
+            "reason": "没有已登记、可合法使用并核验的该类题目；登记缺口不计作案例或通过。"
+          }
+        ],
+        "registration_complete": false,
+        "registered_examples_complete": false
+      },
+      {
+        "method_id": "W14",
+        "method_version": "1.1.0",
+        "question_type": "读后续写",
+        "method_type": "category",
+        "core_required": false,
+        "source_section_ids": [
+          "8de2c93d899d552b",
+          "de128566b475de5e",
+          "363d35dec7fda958",
+          "f1e81a5163eb6580"
+        ],
+        "slots": [
+          {
+            "case_type": "canonical",
+            "registration": "registered",
+            "evidence_status": "evidence_gap",
+            "path": "cases/continuation-writing/W14/canonical/case.yaml",
+            "case_id": "W14-canonical",
+            "reason": "源方法可核；尚未逐题核验案例，不可当成功样例"
+          },
+          {
+            "case_type": "counterexample",
+            "registration": "unregistered",
+            "evidence_status": "evidence_gap",
+            "path": null,
+            "case_id": null,
+            "reason": "没有已登记、可合法使用并核验的该类题目；登记缺口不计作案例或通过。"
+          },
+          {
+            "case_type": "boundary",
+            "registration": "unregistered",
+            "evidence_status": "evidence_gap",
+            "path": null,
+            "case_id": null,
+            "reason": "没有已登记、可合法使用并核验的该类题目；登记缺口不计作案例或通过。"
+          },
+          {
+            "case_type": "transfer",
+            "registration": "unregistered",
+            "evidence_status": "evidence_gap",
+            "path": null,
+            "case_id": null,
+            "reason": "没有已登记、可合法使用并核验的该类题目；登记缺口不计作案例或通过。"
+          },
+          {
+            "case_type": "hard",
+            "registration": "unregistered",
+            "evidence_status": "evidence_gap",
+            "path": null,
+            "case_id": null,
+            "reason": "没有已登记、可合法使用并核验的该类题目；登记缺口不计作案例或通过。"
+          }
+        ],
+        "registration_complete": false,
+        "registered_examples_complete": false
+      },
+      {
+        "method_id": "W15",
+        "method_version": "1.1.0",
+        "question_type": "读后续写",
+        "method_type": "internal_rule",
+        "core_required": false,
+        "source_section_ids": [
+          "d2dc77b78b7ce906",
+          "7b4c299267a685c2",
+          "529088be97f3f185",
+          "540b6fb2783f6027"
+        ],
+        "slots": [
+          {
+            "case_type": "canonical",
+            "registration": "registered",
+            "evidence_status": "evidence_gap",
+            "path": "cases/continuation-writing/W15/canonical/case.yaml",
+            "case_id": "W15-canonical",
+            "reason": "源方法可核；尚未逐题核验案例，不可当成功样例"
+          },
+          {
+            "case_type": "counterexample",
+            "registration": "unregistered",
+            "evidence_status": "evidence_gap",
+            "path": null,
+            "case_id": null,
+            "reason": "没有已登记、可合法使用并核验的该类题目；登记缺口不计作案例或通过。"
+          },
+          {
+            "case_type": "boundary",
+            "registration": "unregistered",
+            "evidence_status": "evidence_gap",
+            "path": null,
+            "case_id": null,
+            "reason": "没有已登记、可合法使用并核验的该类题目；登记缺口不计作案例或通过。"
+          },
+          {
+            "case_type": "transfer",
+            "registration": "unregistered",
+            "evidence_status": "evidence_gap",
+            "path": null,
+            "case_id": null,
+            "reason": "没有已登记、可合法使用并核验的该类题目；登记缺口不计作案例或通过。"
+          },
+          {
+            "case_type": "hard",
+            "registration": "unregistered",
+            "evidence_status": "evidence_gap",
+            "path": null,
+            "case_id": null,
+            "reason": "没有已登记、可合法使用并核验的该类题目；登记缺口不计作案例或通过。"
+          }
+        ],
+        "registration_complete": false,
+        "registered_examples_complete": false
+      },
+      {
+        "method_id": "W16",
+        "method_version": "1.1.0",
+        "question_type": "读后续写",
+        "method_type": "framework",
+        "core_required": true,
+        "source_section_ids": [
+          "da71883c7cd6b2bc",
+          "7b4c299267a685c2"
+        ],
+        "slots": [
+          {
+            "case_type": "canonical",
+            "registration": "registered",
+            "evidence_status": "evidence_gap",
+            "path": "cases/continuation-writing/W16/canonical/case.yaml",
+            "case_id": "W16-canonical",
+            "reason": "源方法可核；尚未逐题核验案例，不可当成功样例"
+          },
+          {
+            "case_type": "counterexample",
+            "registration": "unregistered",
+            "evidence_status": "evidence_gap",
+            "path": null,
+            "case_id": null,
+            "reason": "没有已登记、可合法使用并核验的该类题目；登记缺口不计作案例或通过。"
+          },
+          {
+            "case_type": "boundary",
+            "registration": "unregistered",
+            "evidence_status": "evidence_gap",
+            "path": null,
+            "case_id": null,
+            "reason": "没有已登记、可合法使用并核验的该类题目；登记缺口不计作案例或通过。"
+          },
+          {
+            "case_type": "transfer",
+            "registration": "unregistered",
+            "evidence_status": "evidence_gap",
+            "path": null,
+            "case_id": null,
+            "reason": "没有已登记、可合法使用并核验的该类题目；登记缺口不计作案例或通过。"
+          },
+          {
+            "case_type": "hard",
+            "registration": "unregistered",
+            "evidence_status": "evidence_gap",
+            "path": null,
+            "case_id": null,
+            "reason": "没有已登记、可合法使用并核验的该类题目；登记缺口不计作案例或通过。"
+          }
+        ],
+        "registration_complete": false,
+        "registered_examples_complete": false
+      }
+    ]
   },
   "student_entry_migration": {
     "static_ready": 82,

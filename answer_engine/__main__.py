@@ -21,11 +21,13 @@ def main():
     sub=commands.add_parser('symptom'); sub.add_argument('question_type'); sub.add_argument('symptom')
     sub=commands.add_parser('evaluate'); sub.add_argument('input'); sub.add_argument('--plan')
     commands.add_parser('validate')
+    commands.add_parser('case-coverage')
     args=parser.parse_args()
     r=Registry()
     if args.command=='validate':
         from scripts.generate_assets import generate
         result = r.validate(); result.update(generate(check=True))
+    elif args.command=='case-coverage': result=r.case_coverage()
     elif args.command=='method': result={'card':r.methods[args.method_id],'full_source':r.full(args.method_id)}
     elif args.command=='symptom': result=symptom_route(args.question_type,args.symptom,r)
     elif args.command=='evaluate': result=evaluate(load_records(args.input),json.loads(Path(args.plan).read_text(encoding='utf-8')) if args.plan else None)

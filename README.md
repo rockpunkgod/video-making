@@ -15,6 +15,7 @@ ANSWER is an evidence-grounded Gaokao English method and question-analysis syste
 ```powershell
 python -m pip install -r requirements-dev.txt
 python -m answer_engine validate
+python -m answer_engine case-coverage
 python -m answer_engine symptom 语法填空 "有提示词但不确定空位需要什么"
 python -m answer_engine method R01
 python -m answer_engine analyze examples/question-course.json --renderer student
