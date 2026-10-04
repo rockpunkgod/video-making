@@ -13,7 +13,7 @@ evidence: []
 method_role: interpreter
 expected_action: 从首句记录人物、背景、主题、视角和暂定基调，不据此预编后续情节
 expected_output: interpret
-stop_rule: 本步骤只产生语义结构，不能自动定案。不能以本动作代替完整题面关系核验；题面缺失、关键词义不明或出现反证就停止定案。具体边界见源章节。
+stop_rule: 首句没有的信息不能预编；人物态度、外在表现和实际遭遇须分开。当前空能局部闭合就不机械复述首句，框架不选词。
 case_type: canonical
 status: evidence_gap
 notes: 源方法可核；尚未逐题核验案例，不可当成功样例

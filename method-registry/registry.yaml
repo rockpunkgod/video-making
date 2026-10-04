@@ -155,47 +155,47 @@ methods:
   C01:
     brand_name: 语篇线索链
     status: candidate
-    version: 1.0.0
+    version: 1.1.0
     file: method-registry/cloze.yaml
   C02:
     brand_name: 前后夹击
     status: candidate
-    version: 1.0.0
+    version: 1.1.0
     file: method-registry/cloze.yaml
   C03:
     brand_name: 首句定调
     status: candidate
-    version: 1.0.0
+    version: 1.1.0
     file: method-registry/cloze.yaml
   C04:
     brand_name: 词性导航
     status: candidate
-    version: 1.0.0
+    version: 1.1.0
     file: method-registry/cloze.yaml
   C05:
     brand_name: 近义落地
     status: candidate
-    version: 1.0.0
+    version: 1.1.0
     file: method-registry/cloze.yaml
   C06:
     brand_name: 时间线复原
     status: candidate
-    version: 1.0.0
+    version: 1.1.0
     file: method-registry/cloze.yaml
   C07:
     brand_name: 名词回声
     status: candidate
-    version: 1.0.0
+    version: 1.1.0
     file: method-registry/cloze.yaml
   C08:
     brand_name: 结果反推
     status: candidate
-    version: 1.0.0
+    version: 1.1.0
     file: method-registry/cloze.yaml
   C09:
     brand_name: 动作串联
     status: candidate
-    version: 1.0.0
+    version: 1.1.0
     file: method-registry/cloze.yaml
   G01:
     brand_name: 先判空位
