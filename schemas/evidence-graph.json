@@ -20,7 +20,8 @@
               "relation",
               "method_action",
               "decision",
-              "verification"
+              "verification",
+              "action_artifact"
             ]
           },
           "label": {
@@ -65,6 +66,26 @@
           },
           "reviewed": {
             "type": "boolean"
+          },
+          "execution_id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "artifact_kind": {
+            "enum": [
+              "candidate_decision",
+              "candidate_partition",
+              "framework_card",
+              "interpretation",
+              "located_evidence",
+              "route_selection",
+              "text_groups",
+              "verification_result"
+            ]
+          },
+          "artifact_fingerprint": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{64}$"
           }
         },
         "required": [

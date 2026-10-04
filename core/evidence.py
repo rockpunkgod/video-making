@@ -54,6 +54,19 @@ def validate_graph(graph, question=None):
         if node['type']=='question_signal' and node.get('reviewed'):
             if not node.get('method_id') or not any(n['type']=='source_evidence' and n.get('span') for n in ancestors(nid)):
                 raise ValueError('Reviewed trigger without its own source evidence')
+        if node['type']=='action_artifact':
+            upstream=ancestors(nid)
+            if not node.get('reviewed') or not node.get('execution_id') or not node.get('method_id') or not node.get('artifact_fingerprint') or node.get('artifact_kind')!=node['label']:
+                raise ValueError('Action artifact must identify its reviewed typed execution')
+            actions=[n for n in upstream if n['type']=='method_action' and n.get('execution_id')==node['execution_id'] and n.get('method_id')==node['method_id'] and n.get('reviewed')]
+            if not actions: raise ValueError('Action artifact without its own reviewed action')
+            own_upstream=ancestors(actions[0]['id'])
+            if not any(n['type']=='question_signal' and n.get('reviewed') and n.get('method_id')==node['method_id'] for n in own_upstream):
+                raise ValueError('Action artifact without independently reviewed method trigger')
+            if not any(n['type']=='source_evidence' and n.get('span') for n in own_upstream):
+                raise ValueError('Action artifact without source evidence')
+            if node['artifact_kind']=='candidate_decision' and (not node.get('candidate') or not any(n['type']=='relation' and n.get('reviewed') and n.get('method_id')==node['method_id'] and n.get('candidate')==node['candidate'] for n in own_upstream)):
+                raise ValueError('Decision artifact without its own reviewed candidate relation')
         if node['type'] in {'decision','verification'}:
             if not node.get('method_id') or not node.get('candidate'):
                 raise ValueError('Conclusion must identify method and candidate')

@@ -6,6 +6,8 @@ Registry索引六题型方法文件。method_type区分框架、方法、子动�
 
 职责：locator→locate、interpreter/framework→interpret（G01路线为reduce）、reducer→reduce、decider→decide、verifier→verify。C01框架与decider为同一课程方法两种显式阶段，首次接触只突出主要职责；F01无decider副职责。
 
+Composer不再仅传“上一方法的输出”文本：method_chain公开角色产物类型和execution_ids，action_executions提交具体动作及类型化输出，execution_trace只将可用产物传递。未提交动作不伪造执行；副职责单列，停止产物不续用。八类结构化产物及职责/依赖/图绑定约束见method-execution.md。
+
 Compact与full同卡。G01.full.decision_tree保留有无提示词、功能/词性、动词谓语/非谓语树，知识节点引用源章节。R09仅产对象+核心判断+全文任务骨架；首尾、段首与重复词是取证入口，不是机械三步。
 
 grammar-tree.yaml只维护节点依赖与方法引用，不另写判据；可调用导航先核given_word是否明确标注，再以题面跨度和已审阅触发进入功能节点。提示词原词性不选叶节点；多条路径不自动裁决。G17用于先拆句，G18/G19用于整篇反查，均不代替本句证据。源快速口诀与全称清单的使用风险单独绑定原话，不擅自删改原课程。

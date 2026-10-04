@@ -1,7 +1,8 @@
 from copy import deepcopy
 from .registry import Registry, validate_schema
 from .matcher import match_methods
-from .composer import compose
+from .composer import compose, bind_contract
+from .execution import execute_actions, validate_execution_trace
 from .evidence import EvidenceGraph, check_span
 from .grammar_navigation import navigate_grammar
 from .writing_feedback import writing_feedback
@@ -42,6 +43,7 @@ class QuestionAnalyzer:
         source_risks = [x for x in self.registry.risks if matched_ids.intersection(x['affected_methods'])]
         limitations += ['课程风险 '+x['risk_id']+'：'+x['action'] for x in source_risks]
         complete = True
+        relation_nodes = []
         if q['question_type'] in {'阅读理解','七选五','完形填空'}:
             complete = bool(q.get('passage') and q['stem'] and q.get('options'))
         elif q['question_type']=='语法填空':
@@ -72,7 +74,8 @@ class QuestionAnalyzer:
                 limitations.append('未审阅或题面不全的关系不定案。')
             evidence_ids = []
             claim = graph.node('candidate_claim',rel['claim'],candidate=rel['candidate'])
-            relation = graph.node('relation',rel['decision_rule_check'],method_id=mid,reviewed=reviewed)
+            relation = graph.node('relation',rel['decision_rule_check'],method_id=mid,candidate=rel['candidate'],reviewed=reviewed)
+            relation_nodes.append(relation)
             for signal in trigger_nodes.get(mid,[]):
                 graph.edge(signal,relation,'supports')
             action = graph.node('method_action',method['core_action'],method_id=mid)
@@ -92,7 +95,7 @@ class QuestionAnalyzer:
                 for step in chain:
                     if step['method_id']==mid: step['state']='reviewed'
                 if execution_role != method['primary_role'] and not any(x['method_id']==mid and x['role']==execution_role for x in chain):
-                    chain.append({'method_id':mid,'role':execution_role,'input':'当前空具体候选差异与独立关系证据；不是框架本身','output':'decide','action':'逐项核具体词义与当前空决定性关系，再回填闭合；'+method['secondary_role_gate'],'stop_rule':method['stop_rule'],'state':'reviewed'})
+                    chain.append(bind_contract({'method_id':mid,'role':execution_role,'input':'当前空具体候选差异与独立关系证据；不是框架本身','output':'decide','action':'逐项核具体词义与当前空决定性关系，再回填闭合；'+method['secondary_role_gate'],'stop_rule':method['stop_rule'],'state':'reviewed'}))
             candidate_analysis.append({'candidate':rel['candidate'],'effect':effect,'claim':rel['claim'],'method_id':mid,'reviewer':rel['reviewer'],'evidence_ids':evidence_ids})
         if retained & eliminated: raise ValueError('Contradictory reviewed candidate effects')
         # A supported candidate is not automatically the best/only answer. With
@@ -110,8 +113,21 @@ class QuestionAnalyzer:
             status = 'needs_evidence' if complete else 'incomplete_input'
             limitations.append('写作入口提供课程约束与动作；完整批改和评分由宿主依独立评分契约完成，本核心不虚构改稿或分数。')
         demo = self.demonstration(matches,candidate_analysis,chain)
-        result = {'schema_version':'1.3.0','question_id':q['question_id'],'question_type':q['question_type'],'task_type':q.get('task_type','unknown'),'method_matches':matches,'method_chain':chain,'trigger_evidence':triggers,'evidence_graph':graph.result(q),'candidate_analysis':candidate_analysis,'answer':answer,'answer_confidence':'medium' if answer else 'low','student_symptoms':q.get('student_symptoms',[]),'demonstration':demo,'status':status,'limitations':limitations,'next_action':chain[0]['action'] if chain else '补齐题面并确认受支持题型；不猜答案。','stop_rule':chain[0]['stop_rule'] if chain else '未覆盖题型停止推断。','review_scope':'external_semantic_review' if answer else 'mechanical_structure_only','method_versions':{x['method_id']:self.registry.methods[x['method_id']]['version'] for x in matches},'content_eligible':bool(answer and complete),'difficulty':q.get('difficulty','unknown'),'answer_verification':{'retained_candidates':sorted(retained),'eliminated_candidates':sorted(eliminated),'unresolved_candidates':unresolved,'candidate_coverage_complete':candidate_coverage,'unique_supported_candidate':len(retained)==1,'closed':bool(answer)}}
+        result = {'schema_version':'1.4.0','question_id':q['question_id'],'question_type':q['question_type'],'task_type':q.get('task_type','unknown'),'method_matches':matches,'method_chain':chain,'trigger_evidence':triggers,'evidence_graph':graph.result(q),'candidate_analysis':candidate_analysis,'answer':answer,'answer_confidence':'medium' if answer else 'low','student_symptoms':q.get('student_symptoms',[]),'demonstration':demo,'status':status,'limitations':limitations,'next_action':chain[0]['action'] if chain else '补齐题面并确认受支持题型；不猜答案。','stop_rule':chain[0]['stop_rule'] if chain else '未覆盖题型停止推断。','review_scope':'external_semantic_review' if answer else 'mechanical_structure_only','method_versions':{x['method_id']:self.registry.methods[x['method_id']]['version'] for x in matches},'content_eligible':bool(answer and complete),'difficulty':q.get('difficulty','unknown'),'answer_verification':{'retained_candidates':sorted(retained),'eliminated_candidates':sorted(eliminated),'unresolved_candidates':unresolved,'candidate_coverage_complete':candidate_coverage,'unique_supported_candidate':len(retained)==1,'closed':bool(answer)}}
         result['grammar_navigation']=navigate_grammar(q,self.registry)
+        result['execution_trace']=execute_actions(q,chain,matches,self.registry,graph,trigger_nodes,complete,relation_nodes)
+        result['demonstration']=self.demonstration(matches,candidate_analysis,chain)
+        if result['execution_trace']:
+            pending=next((s for s in chain if s['state'] not in {'executed','stopped'}),None)
+            last=result['execution_trace'][-1]
+            result['next_action']='当前方法已刹车：'+last['stop_rule_check']+'；先解决这个缺口，不消费该步输出。' if last['state']=='stopped' else pending['action'] if pending else '各已提交动作已有产物；继续核所有竞争候选及回填验证，不由分组或剩余项自动定案。'
+            result['limitations'].append('动作与产物来自外部审阅；类型、依赖和引文一致不认证真实执行或语义正确。')
+            if result['review_scope']=='mechanical_structure_only' and any(x['state']=='produced' for x in result['execution_trace']):
+                result['review_scope']='external_action_review'
+        if any(x['state']=='produced' and x['output']['kind']=='verification_result' and x['output']['verdict']!='supports' for x in result['execution_trace']):
+            result.update(answer=None,answer_confidence='low',content_eligible=False,status='needs_evidence',review_scope='external_action_review')
+            result['answer_verification']['closed']=False
+            result['limitations'].append('显式回填核验未通过；先解决验证冲突，不沿用此前候选结论。')
         result['writing_feedback']=writing_feedback(q,self.registry,graph,trigger_nodes)
         result['evidence_graph']=graph.result(q)
         if result['writing_feedback']:
@@ -119,6 +135,7 @@ class QuestionAnalyzer:
             if result['writing_feedback']['scope']!='unreviewed': result['review_scope']='external_writing_review'
             if result['writing_feedback']['scope']=='full_correction': result['status']='reviewed'
         validate_schema('question-analysis',result)
+        validate_execution_trace(result,self.registry)
         return result
 
     def demonstration(self,matches,candidates,chain):

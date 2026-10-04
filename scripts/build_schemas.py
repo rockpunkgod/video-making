@@ -1,6 +1,7 @@
 """Build the checked-in Draft 2020-12 contracts (not a custom schema dialect)."""
 from pathlib import Path
 import json
+from core.composer import ROLE_ARTIFACTS
 
 ROOT = Path(__file__).resolve().parents[1]
 STR = {'type':'string', 'minLength':1}
@@ -35,18 +36,34 @@ def build():
     span = obj({'field':STR,'start':{'type':'integer','minimum':0},'end':{'type':'integer','minimum':1},'quote':STR})
     relation = obj({'method_id':STR,'candidate':STR,'effect':enum(['retain','eliminate','undetermined']),'claim':STR,'evidence':array(span,1),'decision_rule_check':STR,'stop_rule_check':STR,'verification':STR,'reviewer':STR,'review_status':enum(['reviewed','unreviewed'])})
     relation['properties']['execution_role'] = enum(ROLES)
+    grounded_text=obj({'name':STR,'value':STR,'evidence':array(span,1)})
+    artifacts=[
+        obj({'kind':enum(['located_evidence']),'spans':array(span,1)}),
+        obj({'kind':enum(['interpretation']),'parts':array(grounded_text,1)}),
+        obj({'kind':enum(['candidate_partition']),'axis':STR,'groups':array(obj({'label':STR,'candidates':array(STR,1)}),1)}),
+        obj({'kind':enum(['text_groups']),'groups':array(obj({'label':STR,'spans':array(span,1)}),1)}),
+        obj({'kind':enum(['route_selection']),'node_ids':array(STR,1)}),
+        obj({'kind':enum(['framework_card']),'fields':array(grounded_text,1)}),
+        obj({'kind':enum(['candidate_decision']),'candidate':STR,'effect':enum(['retain','eliminate','undetermined']),'relation_index':{'type':'integer','minimum':0}}),
+        obj({'kind':enum(['verification_result']),'candidate':STR,'target_execution_ids':array(STR,1),'verdict':enum(['supports','rejects','unresolved'])}),
+    ]
+    artifact={'oneOf':artifacts}
+    write('action-artifact',artifact)
+    execution=obj({'execution_id':STR,'method_id':STR,'method_version':{'type':'string','pattern':r'^\d+\.\d+\.\d+$'},'role':enum(ROLES),'input_artifact_ids':array(STR),'concrete_action':STR,'evidence':array(span,1),'decision_rule_check':STR,'stop_rule_check':STR,'stop_applied':BOOL,'reviewer':STR,'review_status':enum(['reviewed','unreviewed']),'output':{'anyOf':[{'type':'null'},artifact]}})
+    write('method-execution',execution)
     writing_section=obj({'key':enum(['overall','diagnostics','anchors','emotion','outline','revised_text','practice','materials']),'text':STR,'evidence':array(span,1)})
     correction=obj({'original':span,'replacement':STR,'reason':STR,'kind':enum(['error','optional'])})
     proposed_score=obj({'scale':enum([15,25]),'lower':{'type':'integer','minimum':0,'maximum':25},'upper':{'type':'integer','minimum':0,'maximum':25},'band':STR,'rationale':STR,'evidence':array(span,1),'source_section_id':STR,'handwriting_applied':BOOL,'original_handwriting_reference':NULLSTR})
     writing_review=obj({'schema_version':enum(['1.0.0']),'question_type':enum(['应用文','读后续写']),'kind':enum(['guidance','correction']),'reviewer':STR,'review_status':enum(['reviewed','unreviewed']),'source_section_ids':array(STR,1),'student_text_complete':BOOL,'student_text_excludes_given_starters':BOOL,'sections':array(writing_section),'corrections':array(correction),'reviewed_student_spans':array(span),'proposed_score':{'anyOf':[{'type':'null'},proposed_score]}})
     write('writing-review',writing_review)
-    write('question-input',obj({'question_id':STR,'question_type':enum(TYPES+['未知']),'task_type':STR,'passage':{'type':'string'},'stem':{'type':'string'},'options':{'type':'object','additionalProperties':STR},'student_symptoms':array(STR),'observations':array(obj({'method_id':STR,'evidence':array(span,1),'reviewed':BOOL})),'relations':array(relation),'given_word':{'type':['string','null']},'student_text':{'type':'string'},'continuation_starters':array(STR),'requested_chain':array(STR),'difficulty':enum(['easy','medium','hard','unknown']),'writing_review':writing_review},required=['question_id','question_type','stem'],extra=False))
-    node = obj({'id':STR,'type':enum(['question_signal','source_evidence','candidate_claim','relation','method_action','decision','verification']),'label':STR,'span':span,'method_id':STR,'candidate':STR,'reviewed':BOOL},required=['id','type','label'],extra=False)
+    write('question-input',obj({'question_id':STR,'question_type':enum(TYPES+['未知']),'task_type':STR,'passage':{'type':'string'},'stem':{'type':'string'},'options':{'type':'object','additionalProperties':STR},'student_symptoms':array(STR),'observations':array(obj({'method_id':STR,'evidence':array(span,1),'reviewed':BOOL})),'relations':array(relation),'given_word':{'type':['string','null']},'student_text':{'type':'string'},'continuation_starters':array(STR),'requested_chain':array(STR),'difficulty':enum(['easy','medium','hard','unknown']),'writing_review':writing_review,'action_executions':array(execution)},required=['question_id','question_type','stem'],extra=False))
+    artifact_kinds=sorted({kind for kinds in ROLE_ARTIFACTS.values() for kind in kinds})
+    node = obj({'id':STR,'type':enum(['question_signal','source_evidence','candidate_claim','relation','method_action','decision','verification','action_artifact']),'label':STR,'span':span,'method_id':STR,'candidate':STR,'reviewed':BOOL,'execution_id':STR,'artifact_kind':enum(artifact_kinds),'artifact_fingerprint':{'type':'string','pattern':'^[0-9a-f]{64}$'}},required=['id','type','label'],extra=False)
     edge = obj({'from':STR,'to':STR,'type':enum(['supports','contradicts','locates','expands','narrows','eliminates','verifies'])})
     graph = obj({'nodes':array(node),'edges':array(edge)})
     write('evidence-graph',graph)
     match = obj({'method_id':STR,'role':enum(ROLES),'confidence':enum(['low','medium','high']),'reason':STR,'trigger_verified':BOOL})
-    chain = obj({'method_id':STR,'role':enum(ROLES),'input':STR,'output':enum(OUTPUTS),'action':STR,'stop_rule':STR,'state':enum(['planned','reviewed'])})
+    chain = obj({'method_id':STR,'role':enum(ROLES),'input':STR,'output':enum(OUTPUTS),'action':STR,'stop_rule':STR,'state':enum(['planned','reviewed','executed','stopped']),'input_artifact_types':array(enum(artifact_kinds)),'output_artifact_types':array(enum(artifact_kinds),1),'execution_ids':array(STR)})
     demo = obj({key:NUMBER for key in ['method_clarity','contrast','visuality','transferability','trigger_clarity','evidence_visibility','compression','score']})
     analysis = obj({'schema_version':STR,'question_id':STR,'question_type':STR,'task_type':STR,'method_matches':array(match),'method_chain':array(chain),'trigger_evidence':array(span),'evidence_graph':graph,'candidate_analysis':array(obj({'candidate':STR,'effect':enum(['retain','eliminate','undetermined']),'claim':STR,'method_id':STR,'reviewer':STR,'evidence_ids':array(STR)})),'answer':NULLSTR,'answer_confidence':enum(['low','medium','high']),'student_symptoms':array(STR),'demonstration':demo,'status':enum(['needs_evidence','reviewed','unsupported_type','incomplete_input']),'limitations':array(STR),'next_action':STR,'stop_rule':STR,'review_scope':STR,'method_versions':{'type':'object','additionalProperties':STR},'content_eligible':BOOL,'difficulty':enum(['easy','medium','hard','unknown'])})
     analysis['properties']['answer_verification'] = obj({'retained_candidates':array(STR),'eliminated_candidates':array(STR),'unresolved_candidates':array(STR),'candidate_coverage_complete':BOOL,'unique_supported_candidate':BOOL,'closed':BOOL})
@@ -57,6 +74,9 @@ def build():
     feedback=obj({'review':writing_review,'scope':enum(['guidance','full_correction','partial_feedback','unreviewed']),'score_status':enum(['external_proposal_not_certified','withheld','not_requested']),'source_document':STR,'section_order':array(STR,1),'evidence_ids':array(STR),'limitations':array(STR,1)})
     analysis['properties']['writing_feedback']={'anyOf':[{'type':'null'},feedback]}
     analysis['required'].append('writing_feedback')
+    executed=obj({**execution['properties'],'state':enum(['produced','stopped','unreviewed','incomplete_input']),'evidence_ids':array(STR),'action_node_id':NULLSTR,'artifact_node_id':NULLSTR,'scope':enum(['external_action_review_not_semantic_certification'])})
+    analysis['properties']['execution_trace']=array(executed)
+    analysis['required'].append('execution_trace')
     write('question-analysis',analysis)
     write('paper-analysis',obj({'schema_version':STR,'paper_id':STR,'questions':array(analysis),'recommendations':array(STR),'method_counts':{'type':'object','additionalProperties':{'type':'integer','minimum':0}},'difficulty_counts':{'type':'object'},'evidence_complete_count':{'type':'integer','minimum':0},'case_candidates':array(STR),'limitations':array(STR)}))
     measurement = obj({'accuracy':BOOL,'time_seconds':NUMBER,'candidates_remaining':NUMBER,'evidence_span':NUMBER,'hesitation_count':NUMBER,'unresolved':BOOL})

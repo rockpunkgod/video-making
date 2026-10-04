@@ -69,7 +69,7 @@ class GrammarMigrationTest(unittest.TestCase):
 
     def test_hint_spelling_never_selects_verb_route_or_answer(self):
         out=QuestionAnalyzer(self.r).analyze(fixture())
-        self.assertIsNone(out['answer']); self.assertEqual(out['schema_version'],'1.3.0')
+        self.assertIsNone(out['answer']); self.assertEqual(out['schema_version'],'1.4.0')
         self.assertEqual(out['grammar_navigation']['hint_branch'],'with_hint')
         self.assertEqual(out['grammar_navigation']['status'],'needs_function_confirmation')
         self.assertEqual(out['grammar_navigation']['paths'],[])

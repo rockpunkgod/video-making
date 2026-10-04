@@ -19,6 +19,7 @@ python -m answer_engine symptom 语法填空 "有提示词但不确定空位需�
 python -m answer_engine method R01
 python -m answer_engine analyze examples/question-course.json --renderer student
 python -m answer_engine analyze examples/question-reviewed-course.json --renderer structured
+python -m answer_engine analyze examples/question-action-course.json --renderer student
 python -m answer_engine paper examples/paper-course.json
 python -m answer_engine evaluate evaluation/datasets/real-observations.pending.json
 python -m unittest discover -s tests -v
@@ -29,6 +30,8 @@ python -m unittest discover -s tests -v
 Python API：`from answer_engine import QuestionAnalyzer, PaperAnalyzer`；`analyze(dict)` 返回受JSON Schema约束的结果。review_provider可接宿主语义分析器；没有内置外部模型、抓取或发布服务。
 
 写作审阅输入、原稿引用及完整/局部交付边界见[写作审阅通道](docs/writing-review.md)。缺原文或首句时实际扣留剧情诊断、整篇修改稿及完整分数，不只添加免责声明。
+
+方法组合可通过action_executions提交具体动作与类型化产物，execution_trace明确记录本步消费哪一步的定位、拆句、分组或骨架；停止/未审阅结果不能继续传递。计划不冒充已执行，核验失败撤回答案。见[可执行方法编排](docs/method-execution.md)；外部语义审阅仍不等于程序自动证明。
 
 ## 目录与兼容
 

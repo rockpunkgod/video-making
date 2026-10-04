@@ -19,12 +19,12 @@ Registry（源章节+方法）→Matcher/Composer→Question/Paper Analyzer→Ev
 | 4 | PARTIAL | 六卡自动门禁通过；原宿主独立语义行为未测 |
 | 5 | PASS | 六模块82项结构迁移与全部源契约保留；82项静态入口齐备，0项草稿；真实案例待核 |
 | 6 | PASS | 症状Router和9条有源Anti-Rule |
-| 7 | PASS | EvidenceGraph路径/跨度/循环/冲突检查，明确Composer输入输出 |
+| 7 | PASS | EvidenceGraph路径/跨度/循环/冲突检查，类型化Composer动作/产物衔接与刹车控制 |
 | 8 | PARTIAL | 稳定单题接口、外部审阅及正确拒答；非自由题面自动语义求解器 |
 | 9 | PARTIAL | 整卷结构扫描、方法/难度/证据/Demo排序可运行；无完整真实卷语义回归 |
 | 10 | PARTIAL | 四Renderer与兼容Skill/脚本接入；完整旧答疑行为尚未认证 |
 | 11 | PASS | 真人记录导入、统计、冻结计划及短版安全；真人数据未运行 |
-| 12 | PASS | 177项自动Regression及CLI烟测通过 |
+| 12 | PASS | 199项自动Regression及CLI烟测通过 |
 | 13 | PASS | README及架构/维护/评估/迁移文档 |
 | 14 | PASS | 逐Gate如实验收，最终PARTIAL，不宣布工程全完成 |
 
@@ -43,7 +43,7 @@ Registry（源章节+方法）→Matcher/Composer→Question/Paper Analyzer→Ev
 
 ## 5. Tests
 
-Before：16/16；After：177/177。覆盖baseline、全量Registry/Case/标准Schema、Analyzer证据/角色/拒答、Paper推荐门禁、Renderer事实保留、Legacy资源/脚本、Evaluation公式/空数据/重复/污染/不可伪升级。四Skill通过skill-creator quick_validate（Windows使用UTF-8模式）；editable安装通过。CLI 8种烟测通过，写作示例为synthetic程序输送记录，不是实际英语题或真人评分。详细机器记录：evaluation/reports/engineering-acceptance.json。未声称旧题库正确率或宿主语义回归已通过。
+Before：16/16；After：199/199。覆盖baseline、全量Registry/Case/标准Schema、Analyzer证据/角色/拒答、Paper推荐门禁、Renderer事实保留、Legacy资源/脚本、Evaluation公式/空数据/重复/污染/不可伪升级。四Skill通过skill-creator quick_validate（Windows使用UTF-8模式）；editable安装通过。CLI 9种烟测通过，写作示例为synthetic程序输送记录，不是实际英语题或真人评分。详细机器记录：evaluation/reports/engineering-acceptance.json。未声称旧题库正确率或宿主语义回归已通过。
 
 ## 6. Evaluation Readiness
 
@@ -65,18 +65,18 @@ First-use、Blind/Baseline、10/30/90s Safety均有记录Schema及直接可运�
 | G6 | PASS | 9条Anti-Rule有绑定/边界/源章节 |
 | G7 | PASS | 106条记录，7个可核短片段；不是完整题集 |
 | G8 | PARTIAL | 图可生成并校验路径，语义关系仍外部审阅 |
-| G9 | PASS | 组合职责/输入/产物显式，无混题型和无匹配调用 |
+| G9 | PASS | 角色/版本/类型化产物/依赖可执行，未审阅或停止不续用 |
 | G10 | PARTIAL | 单题稳定Schema，决定性语义判断非自动完成 |
 | G11 | PARTIAL | 整卷接口可执行；真实完整卷回归缺数据 |
 | G12 | PASS | Core不含交付模板，Renderer不改变答案事实 |
 | G13 | PARTIAL | 入口/脚本/契约兼容通过，完整旧题库宿主语义表现未验 |
-| G14 | PASS | 16 baseline保留，当前177项通过 |
+| G14 | PASS | 16 baseline保留，当前199项通过 |
 | G15 | PASS | JSON/JSONL导入、12类指标/差值、三短版安全可运行；统计显著性需审阅 |
 | G16 | PASS | 真人未测为pending_real_participant_validation；零升级虚报 |
 
 传播先验收，实用性优先否决。名字、动作、证据、边界不能互相替代。没有真人数据，不升级成熟度或实用价值。
 
-本轮安全增强：单项保留不能跳过未核验竞争项；answer_verification显式报告候选闭合；证据图绑定同一方法触发、同一候选主张与当前题面；附件10种口语卡点均有导航回归，导航不构成语义证明。Question Analysis Schema当前1.3.0。
+本轮安全增强：单项保留不能跳过未核验竞争项；answer_verification显式报告候选闭合；证据图绑定同一方法触发、同一候选主张与当前题面；附件10种口语卡点均有导航回归，导航不构成语义证明。Question Analysis Schema当前1.4.0。
 
 阅读模块17项学生入口静态齐备：13个非黄金方法从1.0.0修订为1.1.0，旧稿保存在history；判据、Stop、误用、反例示意及三短版逐项区分，未修改冻结源章节。示意反例不算真实Case，所有成熟度仍为candidate。
 
@@ -93,3 +93,5 @@ First-use、Blind/Baseline、10/30/90s Safety均有记录Schema及直接可运�
 写作审阅通道：宿主完整语义意见经writing_review进入统一结构、证据图与两模块原交付顺序；逐处纠错/可选润色不设数量上限，缺原文或首句实际扣留剧情诊断、完整稿与分数。分数只为外部建议，身份、语义与改写保真未认证；手写原图评价的核心适配尚未完成。程序输送测试不能替代旧题库宿主语义回归。
 
 真实验收链增强：结果Schema 1.1.0按方法/版本/题组/传播冻结稿隔离，workflow核阶段顺序、传播观察绑定、陌生题与跨阶段学习控制。缺链条不授予释放或效率审阅建议；压缩版另比较动作/证据失败，猜中不充当方法成功。时间、身份与审阅结论仍为外部声明，程序不能认证真人数据；所有新增测试均为程序控制测试。
+
+方法编排执行通道：action_executions传入具体动作与八类产物，execution_trace按ID消费更早已审阅、完整、未刹车的兼容产物。R09三字段骨架、候选全覆盖分组、角色/版本/独立触发、对应候选关系和语法节点路径均有运行门禁；核验不支持时实际撤回答案与整卷推荐。产物指纹与执行链/图联合校验，Renderer显示实际动作和停止原因。此为外部动作结果的运行控制，不认证自由题面语义求解、真实动作或宿主审阅身份。

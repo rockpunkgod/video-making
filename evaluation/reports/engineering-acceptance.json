@@ -6,7 +6,7 @@
     "head": "60ebaf4"
   },
   "after_refactor": {
-    "tests_run": 177,
+    "tests_run": 199,
     "failures": 0,
     "errors": 0,
     "registry": {
@@ -20,6 +20,10 @@
     "cli_smoke": [
       {
         "command": "python -m answer_engine validate",
+        "exit_code": 0
+      },
+      {
+        "command": "python -m answer_engine analyze examples/question-action-course.json --renderer content-export",
         "exit_code": 0
       },
       {
@@ -88,7 +92,7 @@
     "option_closure": "unique own support plus reviewed elimination of every supplied rival",
     "evidence_graph": "own method trigger, own candidate claim and current-input quote binding",
     "spoken_symptoms": "10 requested examples tested; suggestions not semantic proof",
-    "analysis_schema_version": "1.3.0",
+    "analysis_schema_version": "1.4.0",
     "grammar_navigation": "explicit hint branch plus reviewed trigger paths; never infer blank POS from hint spelling",
     "writing_feedback": "external review transport with independent trigger, draft coverage, module-specific order and real withholding of unsupported sections; no automatic grading certification"
   },
@@ -116,5 +120,13 @@
     "workflow": "declared study freeze / communication freeze / practicality / first-use / blind sequence, not authenticated dates",
     "short_safety": "action and evidence failure deltas plus existing boundary/role/stop metrics",
     "release": "missing workflow blocks all release and efficiency/signature review hints; no automatic Registry promotion"
+  },
+  "method_execution": {
+    "schema_version": "1.4.0",
+    "typed_artifact_count": 8,
+    "scope": "external reviewed action results, not an automatic English semantic executor",
+    "dependency_gate": "earlier reviewed complete non-stopped compatible artifacts only",
+    "binding": "current input spans, role/version, named decisions and graph payload fingerprint",
+    "failed_verification": "answer and recommendation actually withheld"
   }
 }
