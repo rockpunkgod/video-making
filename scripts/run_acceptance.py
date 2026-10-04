@@ -27,6 +27,7 @@ def run():
     real=load_records(ROOT/'evaluation/datasets/real-observations.pending.json')
     synthetic=load_records(ROOT/'evaluation/datasets/synthetic-observations.json')
     report={'final_status':'PARTIAL','before_refactor':{'tests_run':16,'passed':16,'head':'60ebaf4'},'after_refactor':{'tests_run':result.testsRun,'failures':len(result.failures),'errors':len(result.errors),'registry':validated,'generated':generated,'cli_smoke':smoke},'method_migration':dict(modules),'method_types':dict(categories),'case_counts':dict(statuses),'source_commit':r.index['source_baseline']['commit'],'source_repository_unchanged':'verified by read-only source git status and immutable snapshot hashes','evaluation_status':'pending_real_participant_validation','real_record_count':len(real),'synthetic_record_count':len(synthetic),'remaining_blockers':['非黄金方法短版仍需逐一教学审阅及真实案例','缺完整六型盲题与旧答疑语义回归数据','没有可靠校准的自由文本语义求解后端，当前使用外部审阅接口','无真实受试者传播、First-use、Blind、效率或Signature数据']}
+    report['safety_hardening']={'option_closure':'unique own support plus reviewed elimination of every supplied rival','evidence_graph':'own method trigger, own candidate claim and current-input quote binding','spoken_symptoms':'10 requested examples tested; suggestions not semantic proof','analysis_schema_version':'1.1.0'}
     p=ROOT/'evaluation/reports/engineering-acceptance.json'; p.parent.mkdir(parents=True,exist_ok=True)
     p.write_text(json.dumps(report,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
     table='\n'.join(f'| {kind} | {count} | {count} | {count} | 0 | 0 |' for kind,count in modules.items())
@@ -73,6 +74,7 @@ First-use、Blind/Baseline、10/30/90s Safety均有记录Schema及直接可运�
 | Gate | Status | Evidence / limitation |
 |---|---|---|
 '''+ '\n'.join(f'| {gate} | {status} | {note} |' for gate,status,note in gates)+'\n\n传播先验收，实用性优先否决。名字、动作、证据、边界不能互相替代。没有真人数据，不升级成熟度或实用价值。\n'
+    md+='\n本轮安全增强：单项保留不能跳过未核验竞争项；answer_verification显式报告候选闭合；证据图绑定同一方法触发、同一候选主张与当前题面；附件10种口语卡点均有导航回归，导航不构成语义证明。Question Analysis Schema升级为1.1.0。\n'
     (ROOT/'docs/final-acceptance.md').write_text(md,encoding='utf-8')
     return report
 

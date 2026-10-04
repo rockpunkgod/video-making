@@ -16,7 +16,7 @@ def check_span(question, span):
         raise ValueError('Invalid evidence span or fabricated quote')
     return span
 
-def validate_graph(graph):
+def validate_graph(graph, question=None):
     validate_schema('evidence-graph',graph)
     nodes = {n['id']:n for n in graph['nodes']}
     if len(nodes) != len(graph['nodes']):
@@ -46,12 +46,26 @@ def validate_graph(graph):
                 work.extend(incoming[x])
         return [nodes[x] for x in found]
     for nid, node in nodes.items():
+        if node['type']=='source_evidence':
+            if not node.get('span') or node['label'] != node['span']['quote']:
+                raise ValueError('Source evidence must carry its exact quoted span')
+            if question is not None:
+                check_span(question,node['span'])
+        if node['type']=='question_signal' and node.get('reviewed'):
+            if not node.get('method_id') or not any(n['type']=='source_evidence' and n.get('span') for n in ancestors(nid)):
+                raise ValueError('Reviewed trigger without its own source evidence')
         if node['type'] in {'decision','verification'}:
+            if not node.get('method_id') or not node.get('candidate'):
+                raise ValueError('Conclusion must identify method and candidate')
             upstream = ancestors(nid)
             if not any(n['type']=='source_evidence' and n.get('span') for n in upstream):
                 raise ValueError('Conclusion without source evidence path')
-            if not any(n['type']=='relation' and n.get('reviewed') for n in upstream):
+            if not any(n['type']=='relation' and n.get('reviewed') and n.get('method_id')==node.get('method_id') for n in upstream):
                 raise ValueError('Conclusion without reviewed semantic relation')
+            if not any(n['type']=='question_signal' and n.get('reviewed') and n.get('method_id')==node.get('method_id') for n in upstream):
+                raise ValueError('Conclusion without independently reviewed method trigger')
+            if not any(n['type']=='candidate_claim' and n.get('candidate')==node.get('candidate') for n in upstream):
+                raise ValueError('Conclusion without its own candidate claim')
     return graph
 
 class EvidenceGraph:
@@ -63,4 +77,4 @@ class EvidenceGraph:
         return nid
     def edge(self,left,right,kind):
         self.graph['edges'].append({'from':left,'to':right,'type':kind})
-    def result(self): return validate_graph(self.graph)
+    def result(self,question=None): return validate_graph(self.graph,question)

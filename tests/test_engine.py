@@ -116,6 +116,41 @@ class AnalyzerTest(unittest.TestCase):
     def test_multiple_retained_items_abstain(self):
         q=grammar_review(); r=deepcopy(q['relations'][0]); r['candidate']='other'; q['relations'].append(r)
         self.assertIsNone(self.a.analyze(q)['answer'])
+    def test_one_supported_option_does_not_close_unreviewed_rival(self):
+        q=grammar_review(); q['options']={'protection':'protection','protect':'protect'}
+        out=self.a.analyze(q)
+        self.assertIsNone(out['answer']); self.assertFalse(out['content_eligible'])
+        self.assertEqual(out['answer_verification']['unresolved_candidates'],['protect'])
+    def test_all_rivals_reviewed_and_own_support_can_close(self):
+        q=grammar_review(); q['options']={'protection':'protection','protect':'protect'}
+        r=deepcopy(q['relations'][0]); r.update(candidate='protect',effect='eliminate')
+        q['relations'].append(r)
+        out=self.a.analyze(q)
+        self.assertEqual(out['answer'],'protection'); self.assertTrue(out['answer_verification']['closed'])
+    def test_unreviewed_rival_elimination_does_not_close(self):
+        q=grammar_review(); q['options']={'protection':'protection','protect':'protect'}
+        r=deepcopy(q['relations'][0]); r.update(candidate='protect',effect='eliminate',review_status='unreviewed')
+        q['relations'].append(r)
+        self.assertIsNone(self.a.analyze(q)['answer'])
+    def test_graph_rechecks_spans_against_current_question(self):
+        q=grammar_review(); g=self.a.analyze(q)['evidence_graph']
+        q['stem']='different input'
+        with self.assertRaises(ValueError): validate_graph(g,q)
+    def test_graph_cannot_borrow_other_method_trigger(self):
+        g=self.a.analyze(grammar_review())['evidence_graph']
+        for n in g['nodes']:
+            if n['type']=='question_signal' and n.get('reviewed'): n['method_id']='G01'
+        with self.assertRaisesRegex(ValueError,'trigger'): validate_graph(g)
+    def test_graph_cannot_borrow_other_candidate_claim(self):
+        g=self.a.analyze(grammar_review())['evidence_graph']
+        for n in g['nodes']:
+            if n['type']=='candidate_claim': n['candidate']='other'
+        with self.assertRaisesRegex(ValueError,'candidate claim'): validate_graph(g)
+    def test_graph_cannot_relabel_source_quote(self):
+        g=self.a.analyze(grammar_review())['evidence_graph']
+        for n in g['nodes']:
+            if n['type']=='source_evidence': n['label']='invented'
+        with self.assertRaisesRegex(ValueError,'quoted span'): validate_graph(g)
     def test_main_idea_method_not_on_detail_task(self):
         q={'question_id':'q','question_type':'阅读理解','stem':'detail','task_type':'detail','observations':[{'method_id':'R06','evidence':[span('stem','detail')],'reviewed':True}]}
         with self.assertRaises(ValueError): self.a.analyze(q)
@@ -143,6 +178,33 @@ class AnalyzerTest(unittest.TestCase):
     def test_symptom_router_returns_action_not_only_name(self):
         out=symptom_route('语法填空','有提示词但不确定空位需要什么',self.r)
         self.assertIn('G08',[x['method_id'] for x in out]); self.assertTrue(all(x['action'] and x['stop_rule'] for x in out))
+    def test_requested_everyday_symptoms_route_to_specific_action(self):
+        examples=[('阅读理解','找不到原文',['R12']),('阅读理解','原文找到了但句子看不懂',['R11']),('阅读理解','两个选项都像对',['R01']),('阅读理解','主旨二选一',['R09','R06']),('语法填空','有提示词不知道怎么变',['G01']),('语法填空','不知道谓语还是非谓语',['G12']),('语法填空','长句看不出空位成分',['G17']),('七选五','七个选项感觉全能放',['F01']),('七选五','段首不会',['F05']),('七选五','看到重复词就想选',['F06'])]
+        for kind,symptom,expected in examples:
+            with self.subTest(symptom=symptom):
+                out=symptom_route(kind,symptom,self.r)
+                self.assertEqual([x['method_id'] for x in out],expected)
+                self.assertTrue(all(x['action'] and x['stop_rule'] and x['confidence']=='low' for x in out))
+    def test_spoken_alias_is_not_reviewed_trigger(self):
+        q={'question_id':'symptom-only','question_type':'语法填空','stem':'not a complete question','student_symptoms':['不知道谓语还是非谓语']}
+        out=self.a.analyze(q)
+        self.assertTrue(all(not x['trigger_verified'] for x in out['method_matches']))
+        self.assertIsNone(out['answer']); self.assertFalse(out['content_eligible'])
+    def test_punctuation_does_not_break_spoken_symptom(self):
+        self.assertEqual([x['method_id'] for x in symptom_route('语法填空','不知道，谓语还是非谓语？',self.r)],['G12'])
+    def test_paragraph_symptom_never_claims_whole_text_coverage(self):
+        self.assertNotIn('R06',[x['method_id'] for x in symptom_route('阅读理解','这段主旨二选一',self.r)])
+    def test_specific_symptom_not_preempted_by_generic_entry(self):
+        out=self.a.analyze({'question_id':'specific','question_type':'阅读理解','stem':'','student_symptoms':['定位句看不懂']})
+        self.assertEqual(out['method_chain'][0]['method_id'],'R11')
+        self.assertNotIn('R12',[x['method_id'] for x in out['method_matches']])
+    def test_empty_punctuation_symptom_does_not_match_every_method(self):
+        self.assertEqual([x['method_id'] for x in symptom_route('语法填空','？ ，',self.r)],['G01'])
+    def test_reviewed_trigger_requires_independent_source_path(self):
+        g=self.a.analyze(grammar_review())['evidence_graph']
+        signals={n['id'] for n in g['nodes'] if n['type']=='question_signal' and n.get('reviewed')}
+        g['edges']=[e for e in g['edges'] if e['to'] not in signals]
+        with self.assertRaisesRegex(ValueError,'own source'): validate_graph(g)
     def test_paper_correctness_gates_demo_recommendation(self):
         raw=grammar_review(); raw['question_id']='unreviewed'; raw.pop('relations'); raw.pop('observations')
         p=PaperAnalyzer(self.a).analyze({'paper_id':'course-fixture','questions':[grammar_review(),raw]})

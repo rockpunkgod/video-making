@@ -3,6 +3,9 @@ from .evidence import check_span
 
 MAIN_TASKS = {'main_idea','purpose','title','paragraph_main_idea'}
 
+def normalize_symptom(text):
+    return re.sub(r'[\s，。？！、；：,.!?;:]+','',text).casefold()
+
 def match_methods(question,registry):
     qtype = question['question_type']
     task = question.get('task_type','unknown')
@@ -23,13 +26,22 @@ def match_methods(question,registry):
         found.pop('R12',None)
         add('R09','主旨任务先生成全文骨架，不把取证入口当答案')
         if task!='paragraph_main_idea': add('R06','骨架形成后检查覆盖与错误关系')
+    symptom_ids = set()
     for symptom in question.get('student_symptoms',[]):
+        normalized = normalize_symptom(symptom)
+        if not normalized: continue
         for m in registry.methods.values():
             if m['question_type'] != qtype: continue
             if m['method_id'] in {'R06','R09','R16'} and task not in MAIN_TASKS: continue
             if m['method_id']=='R06' and task=='paragraph_main_idea': continue
-            if symptom in m['student_symptoms'] or any(symptom in s or s in symptom for s in m['student_symptoms']):
+            aliases = next((r['phrases'] for r in registry.symptom_cues if r['method_id']==m['method_id']),[])
+            if any(normalized in normalize_symptom(s) or normalize_symptom(s) in normalized for s in m['student_symptoms']+aliases):
                 add(m['method_id'],'学生自述卡点，仅作为可能入口')
+                symptom_ids.add(m['method_id'])
+    # A specific student obstacle takes priority over an unrelated generic entry.
+    # Observations below can independently restore any reviewed structural method.
+    if symptom_ids:
+        found = {mid:value for mid,value in found.items() if mid in symptom_ids}
     for observation in question.get('observations',[]):
         mid = observation['method_id']
         if mid not in registry.methods: raise ValueError('Unknown method id')
@@ -40,6 +52,7 @@ def match_methods(question,registry):
 def symptom_route(question_type,symptom,registry):
     q = {'question_id':'symptom-query','question_type':question_type,'stem':'','student_symptoms':[symptom]}
     # Main-idea route requires the caller to establish task scope separately.
-    if any(x in symptom for x in ['主旨','主题','标题']): q['task_type']='main_idea'
+    if any(x in symptom for x in ['主旨','主题','标题']):
+        q['task_type']='paragraph_main_idea' if any(x in symptom for x in ['段落','这段','本段']) else 'main_idea'
     matches = match_methods(q,registry)
     return [{'method_id':x['method_id'],'role':x['role'],'action':registry.methods[x['method_id']]['core_action'],'stop_rule':registry.methods[x['method_id']]['stop_rule'],'confidence':x['confidence']} for x in matches]

@@ -24,7 +24,7 @@ Registry（源章节+方法）→Matcher/Composer→Question/Paper Analyzer→Ev
 | 9 | PARTIAL | 整卷结构扫描、方法/难度/证据/Demo排序可运行；无完整真实卷语义回归 |
 | 10 | PARTIAL | 四Renderer与兼容Skill/脚本接入；完整旧答疑行为尚未认证 |
 | 11 | PASS | 真人记录导入、统计、冻结计划及短版安全；真人数据未运行 |
-| 12 | PASS | 79项自动Regression及CLI烟测通过 |
+| 12 | PASS | 93项自动Regression及CLI烟测通过 |
 | 13 | PASS | README及架构/维护/评估/迁移文档 |
 | 14 | PASS | 逐Gate如实验收，最终PARTIAL，不宣布工程全完成 |
 
@@ -43,7 +43,7 @@ Registry（源章节+方法）→Matcher/Composer→Question/Paper Analyzer→Ev
 
 ## 5. Tests
 
-Before：16/16；After：79/79。覆盖baseline、全量Registry/Case/标准Schema、Analyzer证据/角色/拒答、Paper推荐门禁、Renderer事实保留、Legacy资源/脚本、Evaluation公式/空数据/重复/污染/不可伪升级。四Skill通过skill-creator quick_validate（Windows使用UTF-8模式）；editable安装通过。CLI六种烟测通过。详细机器记录：evaluation/reports/engineering-acceptance.json。未声称旧题库正确率或宿主语义回归已通过。
+Before：16/16；After：93/93。覆盖baseline、全量Registry/Case/标准Schema、Analyzer证据/角色/拒答、Paper推荐门禁、Renderer事实保留、Legacy资源/脚本、Evaluation公式/空数据/重复/污染/不可伪升级。四Skill通过skill-creator quick_validate（Windows使用UTF-8模式）；editable安装通过。CLI六种烟测通过。详细机器记录：evaluation/reports/engineering-acceptance.json。未声称旧题库正确率或宿主语义回归已通过。
 
 ## 6. Evaluation Readiness
 
@@ -70,8 +70,10 @@ First-use、Blind/Baseline、10/30/90s Safety均有记录Schema及直接可运�
 | G11 | PARTIAL | 整卷接口可执行；真实完整卷回归缺数据 |
 | G12 | PASS | Core不含交付模板，Renderer不改变答案事实 |
 | G13 | PARTIAL | 入口/脚本/契约兼容通过，完整旧题库宿主语义表现未验 |
-| G14 | PASS | 16 baseline保留，当前79项通过 |
+| G14 | PASS | 16 baseline保留，当前93项通过 |
 | G15 | PASS | JSON/JSONL导入、12类指标/差值、三短版安全可运行；统计显著性需审阅 |
 | G16 | PASS | 真人未测为pending_real_participant_validation；零升级虚报 |
 
 传播先验收，实用性优先否决。名字、动作、证据、边界不能互相替代。没有真人数据，不升级成熟度或实用价值。
+
+本轮安全增强：单项保留不能跳过未核验竞争项；answer_verification显式报告候选闭合；证据图绑定同一方法触发、同一候选主张与当前题面；附件10种口语卡点均有导航回归，导航不构成语义证明。Question Analysis Schema升级为1.1.0。

@@ -21,6 +21,7 @@ class QuestionAnalyzer:
         graph = EvidenceGraph()
         graph.node('question_signal',q['stem'] or '空题干；只允许结构路由')
         triggers = []
+        trigger_nodes = {}
         for obs in q.get('observations',[]):
             for span in obs['evidence']:
                 span = check_span(q,span)
@@ -28,6 +29,8 @@ class QuestionAnalyzer:
                 source = graph.node('source_evidence',span['quote'],span=span)
                 signal = graph.node('question_signal','方法触发观察',method_id=obs['method_id'],reviewed=obs['reviewed'])
                 graph.edge(source,signal,'supports')
+                if obs['reviewed']:
+                    trigger_nodes.setdefault(obs['method_id'],[]).append(signal)
         candidate_analysis = []
         retained = set()
         eliminated = set()
@@ -68,6 +71,8 @@ class QuestionAnalyzer:
             evidence_ids = []
             claim = graph.node('candidate_claim',rel['claim'],candidate=rel['candidate'])
             relation = graph.node('relation',rel['decision_rule_check'],method_id=mid,reviewed=reviewed)
+            for signal in trigger_nodes.get(mid,[]):
+                graph.edge(signal,relation,'supports')
             action = graph.node('method_action',method['core_action'],method_id=mid)
             for span in spans:
                 nid = graph.node('source_evidence',span['quote'],span=span)
@@ -88,7 +93,13 @@ class QuestionAnalyzer:
                     chain.append({'method_id':mid,'role':execution_role,'input':'当前空具体候选差异与独立关系证据；不是框架本身','output':'decide','action':'逐项核具体词义与当前空决定性关系，再回填闭合；'+method['secondary_role_gate'],'stop_rule':method['stop_rule'],'state':'reviewed'})
             candidate_analysis.append({'candidate':rel['candidate'],'effect':effect,'claim':rel['claim'],'method_id':mid,'reviewer':rel['reviewer'],'evidence_ids':evidence_ids})
         if retained & eliminated: raise ValueError('Contradictory reviewed candidate effects')
-        answer = next(iter(retained)) if len(retained)==1 else None
+        # A supported candidate is not automatically the best/only answer. With
+        # supplied alternatives each rival needs its own reviewed elimination.
+        unresolved = sorted(set(q.get('options',{})) - retained - eliminated)
+        candidate_coverage = not unresolved
+        answer = next(iter(retained)) if len(retained)==1 and candidate_coverage else None
+        if unresolved:
+            limitations.append('仍有未完成决定性核验的候选：'+', '.join(unresolved)+'；保留一个候选不等于唯一答案。')
         if len(retained)>1: limitations.append('多个候选获得保留证据，不能独立定案。')
         if answer is None: limitations.append('缺少唯一候选自身的审阅证据；不由排除或剩余项自动定案。')
         status = 'unsupported_type' if not matches else 'incomplete_input' if not complete else 'reviewed' if answer else 'needs_evidence'
@@ -97,7 +108,7 @@ class QuestionAnalyzer:
             status = 'needs_evidence' if complete else 'incomplete_input'
             limitations.append('写作入口提供课程约束与动作；完整批改和评分由宿主依独立评分契约完成，本核心不虚构改稿或分数。')
         demo = self.demonstration(matches,candidate_analysis,chain)
-        result = {'schema_version':'1.0.0','question_id':q['question_id'],'question_type':q['question_type'],'task_type':q.get('task_type','unknown'),'method_matches':matches,'method_chain':chain,'trigger_evidence':triggers,'evidence_graph':graph.result(),'candidate_analysis':candidate_analysis,'answer':answer,'answer_confidence':'medium' if answer else 'low','student_symptoms':q.get('student_symptoms',[]),'demonstration':demo,'status':status,'limitations':limitations,'next_action':chain[0]['action'] if chain else '补齐题面并确认受支持题型；不猜答案。','stop_rule':chain[0]['stop_rule'] if chain else '未覆盖题型停止推断。','review_scope':'external_semantic_review' if answer else 'mechanical_structure_only','method_versions':{x['method_id']:self.registry.methods[x['method_id']]['version'] for x in matches},'content_eligible':bool(answer and complete),'difficulty':q.get('difficulty','unknown')}
+        result = {'schema_version':'1.1.0','question_id':q['question_id'],'question_type':q['question_type'],'task_type':q.get('task_type','unknown'),'method_matches':matches,'method_chain':chain,'trigger_evidence':triggers,'evidence_graph':graph.result(q),'candidate_analysis':candidate_analysis,'answer':answer,'answer_confidence':'medium' if answer else 'low','student_symptoms':q.get('student_symptoms',[]),'demonstration':demo,'status':status,'limitations':limitations,'next_action':chain[0]['action'] if chain else '补齐题面并确认受支持题型；不猜答案。','stop_rule':chain[0]['stop_rule'] if chain else '未覆盖题型停止推断。','review_scope':'external_semantic_review' if answer else 'mechanical_structure_only','method_versions':{x['method_id']:self.registry.methods[x['method_id']]['version'] for x in matches},'content_eligible':bool(answer and complete),'difficulty':q.get('difficulty','unknown'),'answer_verification':{'retained_candidates':sorted(retained),'eliminated_candidates':sorted(eliminated),'unresolved_candidates':unresolved,'candidate_coverage_complete':candidate_coverage,'unique_supported_candidate':len(retained)==1,'closed':bool(answer)}}
         validate_schema('question-analysis',result)
         return result
 

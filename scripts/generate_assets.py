@@ -16,7 +16,8 @@ def build():
         assets[f'student-guides/{mid}-{m["brand_name"]}.md'] = '\n\n'.join(parts)+'\n'
     symptoms = {'routes':[]}
     for m in r.methods.values():
-        symptoms['routes'].append({'question_type':m['question_type'],'symptoms':m['student_symptoms'],'method_id':m['method_id'],'role':m['primary_role'],'first_action':m['core_action'],'stop_rule':m['stop_rule']})
+        aliases=next((x['phrases'] for x in r.symptom_cues if x['method_id']==m['method_id']),[])
+        symptoms['routes'].append({'question_type':m['question_type'],'symptoms':m['student_symptoms'],'spoken_aliases':aliases,'method_id':m['method_id'],'role':m['primary_role'],'first_action':m['core_action'],'stop_rule':m['stop_rule']})
     assets['references/student-symptoms.yaml'] = yaml.safe_dump(symptoms,allow_unicode=True,sort_keys=False)
     assets['references/student-symptoms.md'] = '# 学生卡点导航（自动生成）\n\n'+'\n\n'.join(f'{x["question_type"]}：{x["symptoms"][0]} → {x["method_id"]}；第一刀：{x["first_action"]}；停止：{x["stop_rule"]}' for x in symptoms['routes'])+'\n'
     anti = load('method-registry/anti-rules.yaml')['rules']

@@ -19,6 +19,7 @@ class Registry:
         self.index = load('method-registry/registry.yaml')
         self.sources = load(self.index['source_sections'])
         self.risks = load('method-registry/source-risks.yaml')['risks']
+        self.symptom_cues = load('method-registry/symptom-cues.yaml')['routes']
         self.methods = {}
         for path in self.index['method_files']:
             for method in load(path)['methods']:
@@ -36,6 +37,13 @@ class Registry:
         return ''.join(self.sources['sections'][sid]['content'] for sid in doc['sections'])
 
     def validate(self):
+        cue_ids=set()
+        for route in self.symptom_cues:
+            if set(route) != {'method_id','phrases'} or route['method_id'] not in self.methods:
+                raise ValueError('Invalid symptom route')
+            if route['method_id'] in cue_ids or not isinstance(route['phrases'],list) or not route['phrases'] or any(not isinstance(p,str) or not p.strip() for p in route['phrases']):
+                raise ValueError('Invalid or duplicated symptom cue')
+            cue_ids.add(route['method_id'])
         for mid, m in self.methods.items():
             validate_schema('method-card',m)
             if m['role'] != m['primary_role'] or m['status'] != m['maturity_status'] or m['practical_value'] != m['usefulness_level']:

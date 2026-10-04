@@ -1,0 +1,25 @@
+schema_version: 1.0.0
+scope: 学生口语入口别名；仅建议动作，不构成题面触发证明或定案证据。
+routes:
+  - method_id: R12
+    phrases: [找不到原文, 找不到定位句, 不知道去哪找证据]
+  - method_id: R11
+    phrases: [原文找到了但句子看不懂, 定位句看不懂, 长句读不懂, 长句看不懂]
+  - method_id: R01
+    phrases: [两个选项都像对, 两个选项都像原文, 两个选项都对得上]
+  - method_id: R09
+    phrases: [主旨二选一, 主旨题二选一, 读完不知道文章说什么]
+  - method_id: R06
+    phrases: [主旨二选一, 主旨题二选一]
+  - method_id: G01
+    phrases: [有提示词不知道怎么变, 括号里的词怎么变]
+  - method_id: G12
+    phrases: [不知道谓语还是非谓语, 分不清谓语和非谓语]
+  - method_id: G17
+    phrases: [长句看不出空位成分, 长句找不到空位成分]
+  - method_id: F01
+    phrases: [七个选项感觉全能放, 七个选项都能放, 七选五凭感觉乱填]
+  - method_id: F05
+    phrases: [段首不会, 段首空不知道怎么填]
+  - method_id: F06
+    phrases: [看到重复词就想选, 同词就想选]

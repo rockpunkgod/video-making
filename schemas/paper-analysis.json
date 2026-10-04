@@ -449,6 +449,53 @@
               "hard",
               "unknown"
             ]
+          },
+          "answer_verification": {
+            "type": "object",
+            "properties": {
+              "retained_candidates": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "minItems": 0
+              },
+              "eliminated_candidates": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "minItems": 0
+              },
+              "unresolved_candidates": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "minItems": 0
+              },
+              "candidate_coverage_complete": {
+                "type": "boolean"
+              },
+              "unique_supported_candidate": {
+                "type": "boolean"
+              },
+              "closed": {
+                "type": "boolean"
+              }
+            },
+            "required": [
+              "retained_candidates",
+              "eliminated_candidates",
+              "unresolved_candidates",
+              "candidate_coverage_complete",
+              "unique_supported_candidate",
+              "closed"
+            ],
+            "additionalProperties": false
           }
         },
         "required": [
@@ -472,7 +519,8 @@
           "review_scope",
           "method_versions",
           "content_eligible",
-          "difficulty"
+          "difficulty",
+          "answer_verification"
         ],
         "additionalProperties": false
       },
