@@ -1,0 +1,9 @@
+method_id: R02
+case_type: counterexample
+status: source_pattern_only
+objective: 防止主体未在候选重复时机械判错。
+prompt_excerpt: null
+documented_pattern: 题干已明示所有候选的共同对象，候选未再写主体不构成缺失。
+expected_action: 先从题干回填共同主体，再比较完整动作与修饰关系。
+pass_condition: 不以候选没复写主体为由排除。
+source_reference: ANSWER@b04ebc26:gaokao-english/references/course-evidence.md#证据门禁

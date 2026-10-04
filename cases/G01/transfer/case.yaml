@@ -1,0 +1,10 @@
+method_id: G01
+case_type: transfer
+status: verified_course_example
+objective: 将先判空位从 protect 迁移到另一动词词根的名词派生。
+source_item: 2021全国高考乙卷语法填空，课程讲义 PDF 第4页。
+prompt_excerpt: benefits the ___ (develop) of the local areas
+expected_action: 根据 the + 空位 + of 结构判定名词中心，再将 develop 派生为名词。
+expected_result: development
+pass_condition: 不依赖 protect/protection 的记忆，能由新句的位置重复执行。
+source_reference: ANSWER@b04ebc26:kaiming-english-qa/references/corpus/24c4e1bcbc7f.txt#PDF第4页

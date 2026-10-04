@@ -1,0 +1,10 @@
+method_id: F01
+case_type: counterexample
+status: source_pattern_only
+objective: 防止把唯一同时态或同主体项直接当答案。
+prompt_excerpt: null
+documented_pattern: 课程例中过去研究只是支持一般观点的例子；当前空不属于该过去事件时，不能因段中有过去时就留过去时组。
+expected_action: 先判当前空的局部时间线和段落功能，再决定时间组是否有效。
+pass_condition: 正确撤回误触发的时态缩减。
+gap: 源运行层保留视频操作记录，未发布完整可盲测题面。
+source_reference: ANSWER@b04ebc26:gaokao-english/references/course-evidence.md#七选五时态一致

@@ -1,0 +1,9 @@
+method_id: R09
+case_type: transfer
+status: evidence_gap
+objective: 将三格骨架卡从一种全文结构迁移到另一种结构。
+prompt_excerpt: null
+expected_action: 在解释、对比、问题—答案、变化、论证或分类中正确标记实际结构任务。
+pass_condition: 对象、核心判断和结构任务均能回文验证。
+gap: 需要与教学示例结构不同的冻结盲题。
+source_reference: ANSWER@b04ebc26:gaokao-english/references/reading-comprehension.md#三化法

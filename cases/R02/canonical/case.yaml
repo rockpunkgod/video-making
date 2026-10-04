@@ -1,0 +1,10 @@
+method_id: R02
+case_type: canonical
+status: source_pattern_only
+objective: 区分愿望与已发生事实，或能力与意愿。
+prompt_excerpt: null
+documented_pattern: 课程例题包含愿望/客观事实状态的对照，以及能力/意愿、具体动作和主体归属核对。
+expected_action: 把原文和候选分别填入谁→做什么→对谁，并标实际/愿望/能力。
+pass_condition: 只在关系无依据换位时排除。
+gap: 完整题面与选项未在 ANSWER 运行层发布。
+source_reference: ANSWER@b04ebc26:gaokao-english/references/course-evidence.md#主客一致

@@ -1,0 +1,44 @@
+registry_version: 1.0.0
+source_baseline:
+  repository: https://github.com/rockpunkgod/ANSWER.git
+  commit: b04ebc26d7fa096404111a0bb12f6c77cc8525b9
+  captured_at: 2026-10-05
+schema: method-registry/schema.yaml
+method_files:
+  - method-registry/reading.yaml
+  - method-registry/seven-five.yaml
+  - method-registry/grammar.yaml
+methods:
+  R01:
+    brand_name: 选项加戏
+    file: method-registry/reading.yaml
+    status: candidate
+    version: 1.0.0
+  R02:
+    brand_name: 谁干的陷阱
+    file: method-registry/reading.yaml
+    status: candidate
+    version: 1.0.0
+  R06:
+    brand_name: 主旨缺块
+    file: method-registry/reading.yaml
+    status: candidate
+    version: 1.0.0
+  R09:
+    brand_name: 三步压文
+    file: method-registry/reading.yaml
+    status: candidate
+    version: 1.0.0
+  F01:
+    brand_name: 选项三分
+    file: method-registry/seven-five.yaml
+    status: candidate
+    version: 1.0.0
+  G01:
+    brand_name: 先判空位
+    file: method-registry/grammar.yaml
+    status: candidate
+    version: 1.0.0
+version_policy:
+  rule: 任何语义、触发、判据或边界改动都新增版本记录，不静默覆盖。
+  history_location: method-registry/history/

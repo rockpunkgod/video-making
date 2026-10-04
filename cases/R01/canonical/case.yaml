@@ -1,0 +1,10 @@
+method_id: R01
+case_type: canonical
+status: evidence_gap
+objective: 验证学生能否把共同核心 A 与无依据新增 B 分开。
+prompt_excerpt: null
+expected_action: 圈 A，划 B，只对 B 回文求证。
+pass_condition: 能指出 B 对象、目的、范围、时间、因果或确定性中的具体新增，且无直接/间接支持。
+stop_check: 不以没有原词代替无依据判定。
+gap: ANSWER 运行层只发布抽象操作与视频时间窗，未发布可重用的完整题面与选项。
+source_reference: ANSWER@b04ebc26:gaokao-english/references/course-evidence.md#其他已激活阅读方法

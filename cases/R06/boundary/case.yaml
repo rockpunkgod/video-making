@@ -1,0 +1,9 @@
+method_id: R06
+case_type: boundary
+status: source_pattern_only
+objective: 区分全文主旨与明确单段题。
+prompt_excerpt: null
+documented_pattern: 课程短段观点题与全文主旨流程并列保留；不对明确某段题调用全文拼图。
+expected_action: 先核题干所问范围；若是单段，停止 R06。
+pass_condition: 正确拒绝触发。
+source_reference: ANSWER@b04ebc26:gaokao-english/references/course-evidence.md#其他已激活阅读方法

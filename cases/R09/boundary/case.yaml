@@ -1,0 +1,9 @@
+method_id: R09
+case_type: boundary
+status: source_pattern_only
+objective: 识别局部事实、单段或主要段落缺失的停止场景。
+prompt_excerpt: null
+documented_pattern: 课程证据要求三化法只用于主要段落齐备的全文主旨、标题、态度或框架任务。
+expected_action: 检查任务范围与材料完整度，不符则拒绝启动。
+pass_condition: 不补造未展示段落。
+source_reference: ANSWER@b04ebc26:gaokao-english/references/reading-comprehension.md#三化法

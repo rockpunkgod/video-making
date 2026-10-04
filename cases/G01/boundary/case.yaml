@@ -1,0 +1,10 @@
+method_id: G01
+case_type: boundary
+status: verified_course_example
+objective: 验证代词提示需回代词节点，不能只按原词性不变处理。
+source_item: 7.11课程讲义语法填空例。
+prompt_excerpt: opening ___ (it) first exhibition
+expected_action: 识别空后有名词 exhibition，空位需要表所属的形容词性物主代词。
+expected_result: its
+pass_condition: 还原指代，并用空后名词说明形式选择。
+source_reference: ANSWER@b04ebc26:gaokao-grammar-fill/references/course-evidence.md#语法填空
