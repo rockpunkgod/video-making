@@ -6,7 +6,7 @@
     "head": "60ebaf4"
   },
   "after_refactor": {
-    "tests_run": 147,
+    "tests_run": 159,
     "failures": 0,
     "errors": 0,
     "registry": {
@@ -28,6 +28,14 @@
       },
       {
         "command": "python -m answer_engine analyze examples/question-reviewed-course.json --renderer content-export",
+        "exit_code": 0
+      },
+      {
+        "command": "python -m answer_engine analyze examples/writing-review.synthetic.json --renderer legacy-wechat",
+        "exit_code": 0
+      },
+      {
+        "command": "python -m answer_engine analyze examples/writing-review.synthetic.json --renderer content-export",
         "exit_code": 0
       },
       {
@@ -80,8 +88,9 @@
     "option_closure": "unique own support plus reviewed elimination of every supplied rival",
     "evidence_graph": "own method trigger, own candidate claim and current-input quote binding",
     "spoken_symptoms": "10 requested examples tested; suggestions not semantic proof",
-    "analysis_schema_version": "1.2.0",
-    "grammar_navigation": "explicit hint branch plus reviewed trigger paths; never infer blank POS from hint spelling"
+    "analysis_schema_version": "1.3.0",
+    "grammar_navigation": "explicit hint branch plus reviewed trigger paths; never infer blank POS from hint spelling",
+    "writing_feedback": "external review transport with independent trigger, draft coverage, module-specific order and real withholding of unsupported sections; no automatic grading certification"
   },
   "student_entry_migration": {
     "static_ready": 82,

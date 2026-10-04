@@ -560,6 +560,378 @@
                 "additionalProperties": false
               }
             ]
+          },
+          "writing_feedback": {
+            "anyOf": [
+              {
+                "type": "null"
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "review": {
+                    "type": "object",
+                    "properties": {
+                      "schema_version": {
+                        "enum": [
+                          "1.0.0"
+                        ]
+                      },
+                      "question_type": {
+                        "enum": [
+                          "应用文",
+                          "读后续写"
+                        ]
+                      },
+                      "kind": {
+                        "enum": [
+                          "guidance",
+                          "correction"
+                        ]
+                      },
+                      "reviewer": {
+                        "type": "string",
+                        "minLength": 1
+                      },
+                      "review_status": {
+                        "enum": [
+                          "reviewed",
+                          "unreviewed"
+                        ]
+                      },
+                      "source_section_ids": {
+                        "type": "array",
+                        "items": {
+                          "type": "string",
+                          "minLength": 1
+                        },
+                        "minItems": 1
+                      },
+                      "student_text_complete": {
+                        "type": "boolean"
+                      },
+                      "student_text_excludes_given_starters": {
+                        "type": "boolean"
+                      },
+                      "sections": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "key": {
+                              "enum": [
+                                "overall",
+                                "diagnostics",
+                                "anchors",
+                                "emotion",
+                                "outline",
+                                "revised_text",
+                                "practice",
+                                "materials"
+                              ]
+                            },
+                            "text": {
+                              "type": "string",
+                              "minLength": 1
+                            },
+                            "evidence": {
+                              "type": "array",
+                              "items": {
+                                "type": "object",
+                                "properties": {
+                                  "field": {
+                                    "type": "string",
+                                    "minLength": 1
+                                  },
+                                  "start": {
+                                    "type": "integer",
+                                    "minimum": 0
+                                  },
+                                  "end": {
+                                    "type": "integer",
+                                    "minimum": 1
+                                  },
+                                  "quote": {
+                                    "type": "string",
+                                    "minLength": 1
+                                  }
+                                },
+                                "required": [
+                                  "field",
+                                  "start",
+                                  "end",
+                                  "quote"
+                                ],
+                                "additionalProperties": false
+                              },
+                              "minItems": 1
+                            }
+                          },
+                          "required": [
+                            "key",
+                            "text",
+                            "evidence"
+                          ],
+                          "additionalProperties": false
+                        },
+                        "minItems": 0
+                      },
+                      "corrections": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "original": {
+                              "type": "object",
+                              "properties": {
+                                "field": {
+                                  "type": "string",
+                                  "minLength": 1
+                                },
+                                "start": {
+                                  "type": "integer",
+                                  "minimum": 0
+                                },
+                                "end": {
+                                  "type": "integer",
+                                  "minimum": 1
+                                },
+                                "quote": {
+                                  "type": "string",
+                                  "minLength": 1
+                                }
+                              },
+                              "required": [
+                                "field",
+                                "start",
+                                "end",
+                                "quote"
+                              ],
+                              "additionalProperties": false
+                            },
+                            "replacement": {
+                              "type": "string",
+                              "minLength": 1
+                            },
+                            "reason": {
+                              "type": "string",
+                              "minLength": 1
+                            },
+                            "kind": {
+                              "enum": [
+                                "error",
+                                "optional"
+                              ]
+                            }
+                          },
+                          "required": [
+                            "original",
+                            "replacement",
+                            "reason",
+                            "kind"
+                          ],
+                          "additionalProperties": false
+                        },
+                        "minItems": 0
+                      },
+                      "reviewed_student_spans": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "field": {
+                              "type": "string",
+                              "minLength": 1
+                            },
+                            "start": {
+                              "type": "integer",
+                              "minimum": 0
+                            },
+                            "end": {
+                              "type": "integer",
+                              "minimum": 1
+                            },
+                            "quote": {
+                              "type": "string",
+                              "minLength": 1
+                            }
+                          },
+                          "required": [
+                            "field",
+                            "start",
+                            "end",
+                            "quote"
+                          ],
+                          "additionalProperties": false
+                        },
+                        "minItems": 0
+                      },
+                      "proposed_score": {
+                        "anyOf": [
+                          {
+                            "type": "null"
+                          },
+                          {
+                            "type": "object",
+                            "properties": {
+                              "scale": {
+                                "enum": [
+                                  15,
+                                  25
+                                ]
+                              },
+                              "lower": {
+                                "type": "integer",
+                                "minimum": 0,
+                                "maximum": 25
+                              },
+                              "upper": {
+                                "type": "integer",
+                                "minimum": 0,
+                                "maximum": 25
+                              },
+                              "band": {
+                                "type": "string",
+                                "minLength": 1
+                              },
+                              "rationale": {
+                                "type": "string",
+                                "minLength": 1
+                              },
+                              "evidence": {
+                                "type": "array",
+                                "items": {
+                                  "type": "object",
+                                  "properties": {
+                                    "field": {
+                                      "type": "string",
+                                      "minLength": 1
+                                    },
+                                    "start": {
+                                      "type": "integer",
+                                      "minimum": 0
+                                    },
+                                    "end": {
+                                      "type": "integer",
+                                      "minimum": 1
+                                    },
+                                    "quote": {
+                                      "type": "string",
+                                      "minLength": 1
+                                    }
+                                  },
+                                  "required": [
+                                    "field",
+                                    "start",
+                                    "end",
+                                    "quote"
+                                  ],
+                                  "additionalProperties": false
+                                },
+                                "minItems": 1
+                              },
+                              "source_section_id": {
+                                "type": "string",
+                                "minLength": 1
+                              },
+                              "handwriting_applied": {
+                                "type": "boolean"
+                              },
+                              "original_handwriting_reference": {
+                                "type": [
+                                  "string",
+                                  "null"
+                                ]
+                              }
+                            },
+                            "required": [
+                              "scale",
+                              "lower",
+                              "upper",
+                              "band",
+                              "rationale",
+                              "evidence",
+                              "source_section_id",
+                              "handwriting_applied",
+                              "original_handwriting_reference"
+                            ],
+                            "additionalProperties": false
+                          }
+                        ]
+                      }
+                    },
+                    "required": [
+                      "schema_version",
+                      "question_type",
+                      "kind",
+                      "reviewer",
+                      "review_status",
+                      "source_section_ids",
+                      "student_text_complete",
+                      "student_text_excludes_given_starters",
+                      "sections",
+                      "corrections",
+                      "reviewed_student_spans",
+                      "proposed_score"
+                    ],
+                    "additionalProperties": false
+                  },
+                  "scope": {
+                    "enum": [
+                      "guidance",
+                      "full_correction",
+                      "partial_feedback",
+                      "unreviewed"
+                    ]
+                  },
+                  "score_status": {
+                    "enum": [
+                      "external_proposal_not_certified",
+                      "withheld",
+                      "not_requested"
+                    ]
+                  },
+                  "source_document": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "section_order": {
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "minItems": 1
+                  },
+                  "evidence_ids": {
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "minItems": 0
+                  },
+                  "limitations": {
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "minItems": 1
+                  }
+                },
+                "required": [
+                  "review",
+                  "scope",
+                  "score_status",
+                  "source_document",
+                  "section_order",
+                  "evidence_ids",
+                  "limitations"
+                ],
+                "additionalProperties": false
+              }
+            ]
           }
         },
         "required": [
@@ -585,7 +957,8 @@
           "content_eligible",
           "difficulty",
           "answer_verification",
-          "grammar_navigation"
+          "grammar_navigation",
+          "writing_feedback"
         ],
         "additionalProperties": false
       },

@@ -6,7 +6,7 @@ ANSWER is an evidence-grounded Gaokao English method and question-analysis syste
 
 支持六题型注册、学生卡点导航、方法组合、原文跨度证据图、单题/整卷结构化分析、学生/微信/机器/内容导出、真实观察数据评估。82项包含子动作、内部规则与训练框架，不是82个核心品牌。六个黄金方法有完整独立首次接触稿；所有项保持 candidate+Useful。
 
-当前是可运行的证据与流程约束核心，不是自由文本自动解题器：无外部语义审阅时不猜答案；审阅记录会检查跨度、角色、路径与冲突，但不把结构检查冒充语义证明。完整作文批改/评分仍由兼容Skill宿主执行。未验证提速、传播效果或Signature。
+当前是可运行的证据与流程约束核心，不是自由文本自动解题器：无外部语义审阅时不猜答案；审阅记录会检查跨度、角色、路径与冲突，但不把结构检查冒充语义证明。完整作文语义批改/评分仍由兼容Skill宿主执行，可通过writing_review进入统一结构与原顺序输出，分数仅为外部建议。未验证提速、传播效果或Signature。
 
 ## 使用
 
@@ -27,6 +27,8 @@ python -m unittest discover -s tests -v
 示例来自已有课程片段，reviewed示例是工程取证记录，不是真人测试或自动推理成果。Paper示例为两条同源记录，不冒充完整试卷；接口接受完整questions数组。JSON/JSONL评估使用 `--plan` 指定采集前冻结计划。
 
 Python API：`from answer_engine import QuestionAnalyzer, PaperAnalyzer`；`analyze(dict)` 返回受JSON Schema约束的结果。review_provider可接宿主语义分析器；没有内置外部模型、抓取或发布服务。
+
+写作审阅输入、原稿引用及完整/局部交付边界见[写作审阅通道](docs/writing-review.md)。缺原文或首句时实际扣留剧情诊断、整篇修改稿及完整分数，不只添加免责声明。
 
 ## 目录与兼容
 

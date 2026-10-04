@@ -23,4 +23,6 @@ method-registry/symptom-cues.yaml保存口语导航别名，不复制方法判�
 
 接口：QuestionAnalyzer.analyze(dict)、PaperAnalyzer.analyze(dict)、CLI；契约为Draft 2020-12 JSON Schema。当前部署为完整仓库+Python3.10+，源码或editable安装。单独Skill文件夹仅自包含宿主答疑，不自动安装核心。未建抓取/视频/AE/支付/发布服务。
 
-Question Analysis与content-export当前版本1.2.0，新增grammar_navigation：非语法为null；语法包含hint_branch、status、paths、next_node、review_basis和limitations。导航只接受显式有无提示词及外部审阅触发；缺标注先确认入口，未核空位功能不进入叶节点。知识路由不产生新关系或答案，仍须按同一证据闭合机制验证。Paper内嵌单题同步采用此契约。
+Question Analysis与content-export当前版本1.3.0，grammar_navigation：非语法为null；语法包含hint_branch、status、paths、next_node、review_basis和limitations。导航只接受显式有无提示词及外部审阅触发；缺标注先确认入口，未核空位功能不进入叶节点。知识路由不产生新关系或答案，仍须按同一证据闭合机制验证。Paper内嵌单题同步采用此契约。
+
+writing_review输入经单独文本审阅适配进入writing_feedback；两类写作各自的功能顺序、纠错与改稿保留，缺材料实际扣留不支持的诊断/完整稿/分数。审阅结果在EvidenceGraph绑定当前原稿及独立触发；图仍不认证语义、评分或身份。手写原图评价尚无核心证据适配，不能靠图片名或转写文本授权书写扣分。详见writing-review.md。

@@ -35,7 +35,12 @@ def build():
     span = obj({'field':STR,'start':{'type':'integer','minimum':0},'end':{'type':'integer','minimum':1},'quote':STR})
     relation = obj({'method_id':STR,'candidate':STR,'effect':enum(['retain','eliminate','undetermined']),'claim':STR,'evidence':array(span,1),'decision_rule_check':STR,'stop_rule_check':STR,'verification':STR,'reviewer':STR,'review_status':enum(['reviewed','unreviewed'])})
     relation['properties']['execution_role'] = enum(ROLES)
-    write('question-input',obj({'question_id':STR,'question_type':enum(TYPES+['未知']),'task_type':STR,'passage':{'type':'string'},'stem':{'type':'string'},'options':{'type':'object','additionalProperties':STR},'student_symptoms':array(STR),'observations':array(obj({'method_id':STR,'evidence':array(span,1),'reviewed':BOOL})),'relations':array(relation),'given_word':{'type':['string','null']},'student_text':{'type':'string'},'continuation_starters':array(STR),'requested_chain':array(STR),'difficulty':enum(['easy','medium','hard','unknown'])},required=['question_id','question_type','stem'],extra=False))
+    writing_section=obj({'key':enum(['overall','diagnostics','anchors','emotion','outline','revised_text','practice','materials']),'text':STR,'evidence':array(span,1)})
+    correction=obj({'original':span,'replacement':STR,'reason':STR,'kind':enum(['error','optional'])})
+    proposed_score=obj({'scale':enum([15,25]),'lower':{'type':'integer','minimum':0,'maximum':25},'upper':{'type':'integer','minimum':0,'maximum':25},'band':STR,'rationale':STR,'evidence':array(span,1),'source_section_id':STR,'handwriting_applied':BOOL,'original_handwriting_reference':NULLSTR})
+    writing_review=obj({'schema_version':enum(['1.0.0']),'question_type':enum(['应用文','读后续写']),'kind':enum(['guidance','correction']),'reviewer':STR,'review_status':enum(['reviewed','unreviewed']),'source_section_ids':array(STR,1),'student_text_complete':BOOL,'student_text_excludes_given_starters':BOOL,'sections':array(writing_section),'corrections':array(correction),'reviewed_student_spans':array(span),'proposed_score':{'anyOf':[{'type':'null'},proposed_score]}})
+    write('writing-review',writing_review)
+    write('question-input',obj({'question_id':STR,'question_type':enum(TYPES+['未知']),'task_type':STR,'passage':{'type':'string'},'stem':{'type':'string'},'options':{'type':'object','additionalProperties':STR},'student_symptoms':array(STR),'observations':array(obj({'method_id':STR,'evidence':array(span,1),'reviewed':BOOL})),'relations':array(relation),'given_word':{'type':['string','null']},'student_text':{'type':'string'},'continuation_starters':array(STR),'requested_chain':array(STR),'difficulty':enum(['easy','medium','hard','unknown']),'writing_review':writing_review},required=['question_id','question_type','stem'],extra=False))
     node = obj({'id':STR,'type':enum(['question_signal','source_evidence','candidate_claim','relation','method_action','decision','verification']),'label':STR,'span':span,'method_id':STR,'candidate':STR,'reviewed':BOOL},required=['id','type','label'],extra=False)
     edge = obj({'from':STR,'to':STR,'type':enum(['supports','contradicts','locates','expands','narrows','eliminates','verifies'])})
     graph = obj({'nodes':array(node),'edges':array(edge)})
@@ -49,6 +54,9 @@ def build():
     navigation=obj({'hint_branch':enum(['unknown','with_hint','without_hint']),'status':enum(['needs_hint_confirmation','needs_function_confirmation','navigation_planned']),'paths':array(array(STR,1)),'next_node':STR,'review_basis':enum(['reviewed_trigger_routing_only']),'limitations':array(STR,1)})
     analysis['properties']['grammar_navigation']={'anyOf':[{'type':'null'},navigation]}
     analysis['required'].append('grammar_navigation')
+    feedback=obj({'review':writing_review,'scope':enum(['guidance','full_correction','partial_feedback','unreviewed']),'score_status':enum(['external_proposal_not_certified','withheld','not_requested']),'source_document':STR,'section_order':array(STR,1),'evidence_ids':array(STR),'limitations':array(STR,1)})
+    analysis['properties']['writing_feedback']={'anyOf':[{'type':'null'},feedback]}
+    analysis['required'].append('writing_feedback')
     write('question-analysis',analysis)
     write('paper-analysis',obj({'schema_version':STR,'paper_id':STR,'questions':array(analysis),'recommendations':array(STR),'method_counts':{'type':'object','additionalProperties':{'type':'integer','minimum':0}},'difficulty_counts':{'type':'object'},'evidence_complete_count':{'type':'integer','minimum':0},'case_candidates':array(STR),'limitations':array(STR)}))
     measurement = obj({'accuracy':BOOL,'time_seconds':NUMBER,'candidates_remaining':NUMBER,'evidence_span':NUMBER,'hesitation_count':NUMBER,'unresolved':BOOL})

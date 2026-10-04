@@ -16,7 +16,7 @@ def run():
     if not result.wasSuccessful(): raise SystemExit('Regression failed; no PASS report generated')
     r=Registry(); validated=r.validate(); generated=generate(check=True)
     smoke=[]
-    for args in [['validate'],['analyze','examples/question-course.json','--renderer','student'],['analyze','examples/question-reviewed-course.json','--renderer','content-export'],['paper','examples/paper-course.json'],['evaluate','evaluation/datasets/synthetic-observations.json'],['evaluate','evaluation/datasets/real-observations.pending.json']]:
+    for args in [['validate'],['analyze','examples/question-course.json','--renderer','student'],['analyze','examples/question-reviewed-course.json','--renderer','content-export'],['analyze','examples/writing-review.synthetic.json','--renderer','legacy-wechat'],['analyze','examples/writing-review.synthetic.json','--renderer','content-export'],['paper','examples/paper-course.json'],['evaluate','evaluation/datasets/synthetic-observations.json'],['evaluate','evaluation/datasets/real-observations.pending.json']]:
         proc=subprocess.run([sys.executable,'-m','answer_engine',*args],cwd=ROOT,capture_output=True,encoding='utf-8')
         if proc.returncode: raise RuntimeError(proc.stderr)
         smoke.append({'command':'python -m answer_engine '+' '.join(args),'exit_code':proc.returncode})
@@ -30,7 +30,7 @@ def run():
     synthetic=load_records(ROOT/'evaluation/datasets/synthetic-observations.json')
     entry_gap=f'{unfinished}项学生入口仍需逐一源绑定审阅；' if unfinished else ''
     report={'final_status':'PARTIAL','before_refactor':{'tests_run':16,'passed':16,'head':'60ebaf4'},'after_refactor':{'tests_run':result.testsRun,'failures':len(result.failures),'errors':len(result.errors),'registry':validated,'generated':generated,'cli_smoke':smoke},'method_migration':dict(modules),'method_types':dict(categories),'case_counts':dict(statuses),'source_commit':r.index['source_baseline']['commit'],'source_repository_unchanged':'verified by read-only source git status and immutable snapshot hashes','evaluation_status':'pending_real_participant_validation','real_record_count':len(real),'synthetic_record_count':len(synthetic),'remaining_blockers':[entry_gap+'全量真实完整案例仍待核','缺完整六型盲题与旧答疑语义回归数据','没有可靠校准的自由文本语义求解后端，当前使用外部审阅接口','无真实受试者传播、First-use、Blind、效率或Signature数据']}
-    report['safety_hardening']={'option_closure':'unique own support plus reviewed elimination of every supplied rival','evidence_graph':'own method trigger, own candidate claim and current-input quote binding','spoken_symptoms':'10 requested examples tested; suggestions not semantic proof','analysis_schema_version':'1.2.0','grammar_navigation':'explicit hint branch plus reviewed trigger paths; never infer blank POS from hint spelling'}
+    report['safety_hardening']={'option_closure':'unique own support plus reviewed elimination of every supplied rival','evidence_graph':'own method trigger, own candidate claim and current-input quote binding','spoken_symptoms':'10 requested examples tested; suggestions not semantic proof','analysis_schema_version':'1.3.0','grammar_navigation':'explicit hint branch plus reviewed trigger paths; never infer blank POS from hint spelling','writing_feedback':'external review transport with independent trigger, draft coverage, module-specific order and real withholding of unsupported sections; no automatic grading certification'}
     report['student_entry_migration']={'static_ready':ready,'draft_remaining':unfinished,'meaning':'static copy completeness, not observed first-use success','ready_by_module':dict(Counter(m['question_type'] for m in r.methods.values() if m.get('student_ready')))}
     p=ROOT/'evaluation/reports/engineering-acceptance.json'; p.parent.mkdir(parents=True,exist_ok=True)
     p.write_text(json.dumps(report,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
@@ -63,7 +63,7 @@ Registry（源章节+方法）→Matcher/Composer→Question/Paper Analyzer→Ev
 
 ## 5. Tests
 
-Before：16/16；After：{result.testsRun}/{result.testsRun}。覆盖baseline、全量Registry/Case/标准Schema、Analyzer证据/角色/拒答、Paper推荐门禁、Renderer事实保留、Legacy资源/脚本、Evaluation公式/空数据/重复/污染/不可伪升级。四Skill通过skill-creator quick_validate（Windows使用UTF-8模式）；editable安装通过。CLI六种烟测通过。详细机器记录：evaluation/reports/engineering-acceptance.json。未声称旧题库正确率或宿主语义回归已通过。
+Before：16/16；After：{result.testsRun}/{result.testsRun}。覆盖baseline、全量Registry/Case/标准Schema、Analyzer证据/角色/拒答、Paper推荐门禁、Renderer事实保留、Legacy资源/脚本、Evaluation公式/空数据/重复/污染/不可伪升级。四Skill通过skill-creator quick_validate（Windows使用UTF-8模式）；editable安装通过。CLI {len(smoke)}种烟测通过，写作示例为synthetic程序输送记录，不是实际英语题或真人评分。详细机器记录：evaluation/reports/engineering-acceptance.json。未声称旧题库正确率或宿主语义回归已通过。
 
 ## 6. Evaluation Readiness
 
@@ -78,13 +78,14 @@ First-use、Blind/Baseline、10/30/90s Safety均有记录Schema及直接可运�
 | Gate | Status | Evidence / limitation |
 |---|---|---|
 '''+ '\n'.join(f'| {gate} | {status} | {note} |' for gate,status,note in gates)+'\n\n传播先验收，实用性优先否决。名字、动作、证据、边界不能互相替代。没有真人数据，不升级成熟度或实用价值。\n'
-    md+='\n本轮安全增强：单项保留不能跳过未核验竞争项；answer_verification显式报告候选闭合；证据图绑定同一方法触发、同一候选主张与当前题面；附件10种口语卡点均有导航回归，导航不构成语义证明。Question Analysis Schema当前1.2.0。\n'
+    md+='\n本轮安全增强：单项保留不能跳过未核验竞争项；answer_verification显式报告候选闭合；证据图绑定同一方法触发、同一候选主张与当前题面；附件10种口语卡点均有导航回归，导航不构成语义证明。Question Analysis Schema当前1.3.0。\n'
     md+='\n阅读模块17项学生入口静态齐备：13个非黄金方法从1.0.0修订为1.1.0，旧稿保存在history；判据、Stop、误用、反例示意及三短版逐项区分，未修改冻结源章节。示意反例不算真实Case，所有成熟度仍为candidate。\n'
     md+='\n七选五11项静态入口齐备：F02–F11保留旧稿后逐项完善，区分reduce/interpret/verify/decide；正文闭环不由形式、同词、时态、占用或剩余定案，示意反例不算真实Case。\n'
     md+='\n完形9项静态入口齐备：保留两个核心入口与七个子动作；线索、框架与核验不自动定案，C01二阶段decider必须显式声明。C01/C02的原空号两遍规则补充直接源引用，示意反例与真人结果仍未验证。\n'
     md+='\n语法19项静态入口齐备：18个非黄金节点保留旧稿后逐项源核，机器导航只确认有无提示词及已审阅功能；提示词原词性不决定空位词性，树不独立定案。三个语法源风险绑定原话与章节并自动校验，保留原资料、不机械执行简化口诀或全称清单。\n'
     md+='\n应用文10项静态入口齐备：先任务、后准确句、再升级；文体/评分/课后训练保持原类型。评分材料、书写及仿写循环直接源绑定，训练字数策略不覆盖题面与评分限制。示意反例不是真实Case，不据文案升级实用等级。\n'
     md+='\n续写16项静态入口齐备：五步法引用具体子章节，首句约束、功能支架、细节/转折与回扣逐项区分；给定首句不计学生句数、不抄正常，十句和独立升华句不作机械扣分项。PTSD只作源别名，类别与评分/训练不升格；原课程版本张力继续保留。\n'
+    md+='\n写作审阅通道：宿主完整语义意见经writing_review进入统一结构、证据图与两模块原交付顺序；逐处纠错/可选润色不设数量上限，缺原文或首句实际扣留剧情诊断、完整稿与分数。分数只为外部建议，身份、语义与改写保真未认证；手写原图评价的核心适配尚未完成。程序输送测试不能替代旧题库宿主语义回归。\n'
     (ROOT/'docs/final-acceptance.md').write_text(md,encoding='utf-8')
     return report
 

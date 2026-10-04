@@ -10,8 +10,14 @@ def render(analysis,kind='structured',registry=None):
     if kind=='structured': return json.dumps(analysis,ensure_ascii=False,indent=2)
     if kind=='content-export':
         assets = [{'method_id':x['method_id'],'method_version':r.methods[x['method_id']]['version'],'role':x['role'],'action':x['action'],'stop_rule':x['stop_rule'],'visual_formula':r.methods[x['method_id']]['visual_formula'],'compact':r.methods[x['method_id']]['compact'],'anti_rule':r.methods[x['method_id']]['anti_rule']} for x in analysis['method_chain']]
-        return json.dumps({'export_schema_version':'1.2.0','question_id':analysis['question_id'],'answer':analysis['answer'],'answer_verification':analysis['answer_verification'],'grammar_navigation':analysis['grammar_navigation'],'evidence_graph':analysis['evidence_graph'],'methods':assets,'eligible_for_review':analysis['content_eligible'],'safe_for_release':'untested','limitations':analysis['limitations']},ensure_ascii=False,indent=2)
+        return json.dumps({'export_schema_version':'1.3.0','question_id':analysis['question_id'],'answer':analysis['answer'],'answer_verification':analysis['answer_verification'],'grammar_navigation':analysis['grammar_navigation'],'writing_feedback':analysis['writing_feedback'],'evidence_graph':analysis['evidence_graph'],'methods':assets,'eligible_for_review':analysis['content_eligible'],'safe_for_release':'untested','limitations':analysis['limitations']},ensure_ascii=False,indent=2)
     if kind not in {'student','legacy-wechat'}: raise ValueError('Unknown renderer')
+    feedback=analysis['writing_feedback']
+    if feedback and feedback['scope']!='unreviewed':
+        body=render_writing(feedback)
+        if not feedback['review']['sections'] and not feedback['review']['corrections']:
+            body+='\n\n请补题目和学生原稿后再做完整反馈。' if analysis['question_type']=='应用文' else '\n\n请补原文、两段开头语和学生自写部分后再做完整反馈。'
+        return ('同学你好，咱们先看任务和框架，再逐处看语言。\n\n'+body) if kind=='legacy-wechat' else body
     parts = []
     nav=analysis['grammar_navigation']
     if nav:
@@ -37,3 +43,20 @@ def render(analysis,kind='structured',registry=None):
     if not parts: parts=['题面或证据不足，请补齐后再判断。']
     body = '\n\n'.join(parts)
     return ('同学你好，咱们先把下一步做清楚。\n\n'+body) if kind=='legacy-wechat' else body
+
+def render_writing(feedback):
+    """Original delivery order, natural paragraphs, no limit on corrections."""
+    review=feedback['review']; sections={s['key']:s for s in review['sections']}
+    parts=[]
+    if feedback['scope']=='partial_feedback': parts.append('材料或审阅覆盖还不完整，下面只反馈目前有依据的部分，暂不作完整评分。')
+    for key in feedback['section_order']:
+        if key=='corrections':
+            for c in review['corrections']:
+                prefix='这一处是可选润色，不算确定错误。' if c['kind']=='optional' else '这里有一处需要改。'
+                parts.append(prefix+'原文这里写的是 '+c['original']['quote']+' 建议改为 '+c['replacement']+'。'+c['reason'])
+        elif key in sections:
+            parts.append(sections[key]['text'])
+        if key=='overall' and review['proposed_score'] is not None:
+            s=review['proposed_score']
+            parts.append('外部审阅建议：'+str(s['lower'])+'—'+str(s['upper'])+' / '+str(s['scale'])+'，'+s['band']+'。'+s['rationale']+' 这是外部建议，不是程序自动评分认证。')
+    return '\n\n'.join(parts)
