@@ -1,0 +1,241 @@
+{
+  "question_id": "synthetic-review-transport-A09",
+  "question_type": "应用文",
+  "stem": "synthetic program task; no real exam or student",
+  "student_text": "synthetic program first. synthetic program second.",
+  "writing_review": {
+    "schema_version": "1.1.0",
+    "question_type": "应用文",
+    "kind": "correction",
+    "reviewer": "synthetic-program-fixture-not-teacher-study",
+    "review_status": "reviewed",
+    "source_section_ids": [
+      "254fa3adfb42db4e",
+      "f8cfb194a81aad6e"
+    ],
+    "student_text_complete": true,
+    "student_text_excludes_given_starters": true,
+    "sections": [
+      {
+        "key": "overall",
+        "text": "synthetic section overall",
+        "evidence": [
+          {
+            "field": "student_text",
+            "start": 0,
+            "end": 50,
+            "quote": "synthetic program first. synthetic program second."
+          },
+          {
+            "field": "stem",
+            "start": 0,
+            "end": 47,
+            "quote": "synthetic program task; no real exam or student"
+          }
+        ]
+      },
+      {
+        "key": "diagnostics",
+        "text": "synthetic section diagnostics",
+        "evidence": [
+          {
+            "field": "student_text",
+            "start": 0,
+            "end": 50,
+            "quote": "synthetic program first. synthetic program second."
+          },
+          {
+            "field": "stem",
+            "start": 0,
+            "end": 47,
+            "quote": "synthetic program task; no real exam or student"
+          }
+        ]
+      },
+      {
+        "key": "outline",
+        "text": "synthetic section outline",
+        "evidence": [
+          {
+            "field": "student_text",
+            "start": 0,
+            "end": 50,
+            "quote": "synthetic program first. synthetic program second."
+          },
+          {
+            "field": "stem",
+            "start": 0,
+            "end": 47,
+            "quote": "synthetic program task; no real exam or student"
+          }
+        ]
+      },
+      {
+        "key": "revised_text",
+        "text": "synthetic section revised_text",
+        "evidence": [
+          {
+            "field": "student_text",
+            "start": 0,
+            "end": 50,
+            "quote": "synthetic program first. synthetic program second."
+          },
+          {
+            "field": "stem",
+            "start": 0,
+            "end": 47,
+            "quote": "synthetic program task; no real exam or student"
+          }
+        ]
+      },
+      {
+        "key": "practice",
+        "text": "synthetic section practice",
+        "evidence": [
+          {
+            "field": "student_text",
+            "start": 0,
+            "end": 50,
+            "quote": "synthetic program first. synthetic program second."
+          },
+          {
+            "field": "stem",
+            "start": 0,
+            "end": 47,
+            "quote": "synthetic program task; no real exam or student"
+          }
+        ]
+      },
+      {
+        "key": "materials",
+        "text": "synthetic section materials",
+        "evidence": [
+          {
+            "field": "student_text",
+            "start": 0,
+            "end": 50,
+            "quote": "synthetic program first. synthetic program second."
+          },
+          {
+            "field": "stem",
+            "start": 0,
+            "end": 47,
+            "quote": "synthetic program task; no real exam or student"
+          }
+        ]
+      }
+    ],
+    "corrections": [
+      {
+        "original": {
+          "field": "student_text",
+          "start": 0,
+          "end": 23,
+          "quote": "synthetic program first"
+        },
+        "replacement": "synthetic replacement first",
+        "reason": "synthetic transport assertion",
+        "kind": "error"
+      },
+      {
+        "original": {
+          "field": "student_text",
+          "start": 25,
+          "end": 50,
+          "quote": "synthetic program second."
+        },
+        "replacement": "synthetic replacement second",
+        "reason": "synthetic optional assertion",
+        "kind": "optional"
+      }
+    ],
+    "reviewed_student_spans": [
+      {
+        "field": "student_text",
+        "start": 0,
+        "end": 50,
+        "quote": "synthetic program first. synthetic program second."
+      }
+    ],
+    "proposed_score": {
+      "scale": 15,
+      "lower": 10,
+      "upper": 12,
+      "band": "第四档",
+      "rationale": "synthetic program grade range, NOT observed real scoring",
+      "evidence": [
+        {
+          "field": "student_text",
+          "start": 0,
+          "end": 50,
+          "quote": "synthetic program first. synthetic program second."
+        },
+        {
+          "field": "stem",
+          "start": 0,
+          "end": 47,
+          "quote": "synthetic program task; no real exam or student"
+        }
+      ],
+      "source_section_id": "254fa3adfb42db4e",
+      "handwriting_applied": true,
+      "original_handwriting_reference": "synthetic-image-NOT-handwriting"
+    },
+    "handwriting_review": {
+      "reviewer": "synthetic-external-visual-transport",
+      "review_status": "reviewed",
+      "original_handwriting": true,
+      "clear_image": true,
+      "affects_communication": true,
+      "rationale": "synthetic assertion, NOT a real image judgement",
+      "source_section_id": "254fa3adfb42db4e",
+      "regions": [
+        {
+          "image_id": "synthetic-image-NOT-handwriting",
+          "sha256": "44d4cbd4ba9c1cd2577b3804f7504e751d9c113247d926b56c7b56abf773fe32",
+          "box": [
+            0,
+            0,
+            10,
+            10
+          ],
+          "observed": "synthetic observed region",
+          "communication_impact": "synthetic communication impact"
+        }
+      ],
+      "adjustment_kind": "lower_one_band",
+      "band_before": "第五档",
+      "deduction_points": null,
+      "score_before": null,
+      "student_text_sha256": "d05612ef0397926d19746f4ff6751022ec987637e4829e882406cad30c7f7adc"
+    }
+  },
+  "observations": [
+    {
+      "method_id": "A09",
+      "reviewed": true,
+      "evidence": [
+        {
+          "field": "student_text",
+          "start": 0,
+          "end": 50,
+          "quote": "synthetic program first. synthetic program second."
+        },
+        {
+          "field": "stem",
+          "start": 0,
+          "end": 47,
+          "quote": "synthetic program task; no real exam or student"
+        }
+      ]
+    }
+  ],
+  "original_images": [
+    {
+      "image_id": "synthetic-image-NOT-handwriting",
+      "sha256": "44d4cbd4ba9c1cd2577b3804f7504e751d9c113247d926b56c7b56abf773fe32",
+      "mime_type": "image/png",
+      "data_base64": "iVBORw0KGgoAAAANSUhEUgAAABQAAAAeCAIAAACjcKk8AAAAMUlEQVR4nO3LIQIAIAwDsdL//7lIZm+Wxuck0ZbXU82YeXmaIdMwNUOmYWqGTIM+zxc1eAM5mRu71wAAAABJRU5ErkJggg=="
+    }
+  ]
+}

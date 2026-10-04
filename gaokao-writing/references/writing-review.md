@@ -24,7 +24,19 @@ full_correction仅表示材料、交付功能、引用及声称的语言审阅�
 
 缺题目、原文或首句：扣留完整分数、剧情/任务诊断和整篇修改稿，只交付逐处现有语言修改。缺原稿覆盖、功能块或独立触发：partial_feedback，扣留分数与整篇修改稿。unreviewed：数据可保留作审计，但学生Renderer不交付其诊断、改稿或分数。guidance不能虚构学生纠错和分数。
 
-当前通道只处理文本证据。handwriting_applied=true被拒绝；一个文件名、转写稿或键入文本不能证明原手写已经影响交际。清晰原稿的书写评价仍可由宿主按原契约完成，但需另建原图独立审阅证据适配，不能冒充已通过核心检查。
+## 原手写图片的独立证据入口
+
+Question Analysis和content-export从1.6.0支持原图证据。原有writing_review 1.0.0文字批改仍可运行。图片审阅须使用writing_review 1.1.0，不能只提供一个文件名或转写稿：
+
+- 单题输入original_images：image_id、sha256（原始字节的SHA-256）、mime_type、data_base64。仅PNG/JPEG单帧，单图最多10 MiB、2000万像素；核心不读取路径、不下载URL、不做OCR。原图字节解码和尺寸可核不代表原稿身份可核。
+- writing_review.handwriting_review：reviewer、review_status、original_handwriting、clear_image、affects_communication（不确定为null）、rationale、该模块评分章节source_section_id，以及student_text_sha256（当前转写稿UTF-8的SHA-256）。转写与原图对应仍须宿主实际核对，哈希只防换稿。
+- regions：image_id、sha256、box（原图未旋转的像素坐标[x1,y1,x2,y2]，右/下界不含）、observed（具体看不清什么）、communication_impact（为什么影响读者辨认）。宿主在原图查看区域后填写，不凭字迹美观断言交际影响。
+- proposed_score.handwriting_applied只有在完整批改、独立评分触发、清晰原手写、已审阅且affects_communication=true时才允许。original_handwriting_reference必须为已引用image_id。
+- 应用文adjustment_kind=lower_one_band，band_before到建议band必须恰好下降一档；deduction_points、score_before为null。不把它改写成固定扣几分。
+- 续写adjustment_kind=discretionary_deduction，deduction_points是外部明确的正整数，score_before含lower/upper且减后对应建议区间，band_before为null。程序不替宿主选扣分值。
+- 不处理书写时adjustment_kind=none，band_before、deduction_points、score_before均为null。看不清可以记录clear_image=false、affects_communication=null，但不能应用书写降档或扣分。
+
+结果保留image_manifest（ID、字节哈希、格式和真实尺寸）、原稿指纹、区域节点和分数的图路径，不复制base64图片到输出。图与审阅载荷指纹在四Renderer再次核对，材料缺失时仍扣留分数和书写处罚文字。structured只是审计数据，学生端不交付未审阅视觉断言。图片字节和引用完整不是自动视觉评分或真人评分认证。
 
 ## 调用与兼容
 
@@ -35,6 +47,8 @@ python -m answer_engine analyze INPUT.json --renderer legacy-wechat
 ```
 
 Python review_provider仍可提交审阅后的输入，但必须通过相同Schema、原句跨度、题型与材料门禁。不能把正确答案、预设分数或程序测试数据当作独立学生证据。
+
+原图输送烟测可运行 `python -m answer_engine analyze examples/writing-image.synthetic.json --renderer legacy-wechat`。该文件用白色程序图片和明确标记的synthetic视觉断言测试通道；没有实际书写，不是评分、案例或真人结果。实际接入必须用真实原稿字节和宿主独立审阅替换，不可沿用示例断言。
 
 legacy-wechat按原两模块交付顺序输出自然段；逐处原句、改法、理由和可选润色均保留，不生成标题、编号或评分表。宿主提交text时也须遵循原纯文本消息契约。生成适配Skill引用本指南，原课程契约逐字保留。单独安装Skill时仍可依原契约答疑，核心命令需完整仓库。
 

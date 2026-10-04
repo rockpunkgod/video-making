@@ -7,7 +7,7 @@ name = "gaokao-method-engine"
 version = "0.2.0"
 description = "Evidence-grounded Gaokao English method and question-analysis system"
 requires-python = ">=3.10"
-dependencies = ["PyYAML>=6.0,<7", "jsonschema>=4,<5"]
+dependencies = ["PyYAML>=6.0,<7", "jsonschema>=4,<5", "Pillow>=12,<13"]
 
 [project.scripts]
 answer-engine = "answer_engine.__main__:main"

@@ -57,11 +57,23 @@ def build():
     writing_section=obj({'key':enum(['overall','diagnostics','anchors','emotion','outline','revised_text','practice','materials']),'text':STR,'evidence':array(span,1)})
     correction=obj({'original':span,'replacement':STR,'reason':STR,'kind':enum(['error','optional'])})
     proposed_score=obj({'scale':enum([15,25]),'lower':{'type':'integer','minimum':0,'maximum':25},'upper':{'type':'integer','minimum':0,'maximum':25},'band':STR,'rationale':STR,'evidence':array(span,1),'source_section_id':STR,'handwriting_applied':BOOL,'original_handwriting_reference':NULLSTR})
+    image_ref=obj({'image_id':STR,'sha256':{'type':'string','pattern':'^[0-9a-f]{64}$'},'box':{'type':'array','items':{'type':'integer','minimum':0},'minItems':4,'maxItems':4}})
+    image_region=obj({**image_ref['properties'],'observed':STR,'communication_impact':STR})
+    handwriting=obj({'reviewer':STR,'review_status':enum(['reviewed','unreviewed']),'original_handwriting':BOOL,'clear_image':BOOL,'affects_communication':{'type':['boolean','null']},'rationale':STR,'source_section_id':STR,'regions':array(image_region,1),'adjustment_kind':enum(['none','lower_one_band','discretionary_deduction']),'band_before':NULLSTR,'deduction_points':{'type':['integer','null'],'minimum':1,'maximum':25},'score_before':{'anyOf':[{'type':'null'},obj({'lower':{'type':'integer','minimum':0,'maximum':25},'upper':{'type':'integer','minimum':0,'maximum':25}})]}})
     writing_review=obj({'schema_version':enum(['1.0.0']),'question_type':enum(['应用文','读后续写']),'kind':enum(['guidance','correction']),'reviewer':STR,'review_status':enum(['reviewed','unreviewed']),'source_section_ids':array(STR,1),'student_text_complete':BOOL,'student_text_excludes_given_starters':BOOL,'sections':array(writing_section),'corrections':array(correction),'reviewed_student_spans':array(span),'proposed_score':{'anyOf':[{'type':'null'},proposed_score]}})
+    writing_review['properties']['schema_version']=enum(['1.0.0','1.1.0'])
+    handwriting['properties']['student_text_sha256']={'type':'string','pattern':'^[0-9a-f]{64}$'}
+    handwriting['required'].append('student_text_sha256')
+    writing_review['properties']['handwriting_review']={'anyOf':[{'type':'null'},handwriting]}
     write('writing-review',writing_review)
     write('question-input',obj({'question_id':STR,'question_type':enum(TYPES+['未知']),'task_type':STR,'passage':{'type':'string'},'stem':{'type':'string'},'options':{'type':'object','additionalProperties':STR},'student_symptoms':array(STR),'observations':array(obj({'method_id':STR,'evidence':array(span,1),'reviewed':BOOL})),'relations':array(relation),'given_word':{'type':['string','null']},'student_text':{'type':'string'},'continuation_starters':array(STR),'requested_chain':array(STR),'difficulty':enum(['easy','medium','hard','unknown']),'writing_review':writing_review,'action_executions':array(execution),'lesson_review':lesson_review},required=['question_id','question_type','stem'],extra=False))
+    question_schema=json.loads((ROOT/'schemas/question-input.json').read_text(encoding='utf-8'))
+    question_schema['properties']['original_images']=array(obj({'image_id':STR,'sha256':{'type':'string','pattern':'^[0-9a-f]{64}$'},'mime_type':enum(['image/png','image/jpeg']),'data_base64':{'type':'string','minLength':1,'maxLength':13981016}}))
+    write('question-input',question_schema)
     artifact_kinds=sorted({kind for kinds in ROLE_ARTIFACTS.values() for kind in kinds})
     node = obj({'id':STR,'type':enum(['question_signal','source_evidence','candidate_claim','relation','method_action','decision','verification','action_artifact']),'label':STR,'span':span,'method_id':STR,'candidate':STR,'reviewed':BOOL,'execution_id':STR,'artifact_kind':enum(artifact_kinds),'artifact_fingerprint':{'type':'string','pattern':'^[0-9a-f]{64}$'}},required=['id','type','label'],extra=False)
+    node['properties']['type']['enum'].append('image_evidence')
+    node['properties']['image_ref']=image_ref
     edge = obj({'from':STR,'to':STR,'type':enum(['supports','contradicts','locates','expands','narrows','eliminates','verifies'])})
     graph = obj({'nodes':array(node),'edges':array(edge)})
     write('evidence-graph',graph)
@@ -75,6 +87,8 @@ def build():
     analysis['properties']['grammar_navigation']={'anyOf':[{'type':'null'},navigation]}
     analysis['required'].append('grammar_navigation')
     feedback=obj({'review':writing_review,'scope':enum(['guidance','full_correction','partial_feedback','unreviewed']),'score_status':enum(['external_proposal_not_certified','withheld','not_requested']),'source_document':STR,'section_order':array(STR,1),'evidence_ids':array(STR),'limitations':array(STR,1)})
+    feedback['properties'].update(image_manifest=array(obj({'image_id':STR,'sha256':{'type':'string','pattern':'^[0-9a-f]{64}$'},'mime_type':enum(['image/png','image/jpeg']),'width':{'type':'integer','minimum':1},'height':{'type':'integer','minimum':1}})),image_evidence_ids=array(STR),student_text_sha256={'type':'string','pattern':'^[0-9a-f]{64}$'})
+    feedback['required']=list(feedback['properties'])
     analysis['properties']['writing_feedback']={'anyOf':[{'type':'null'},feedback]}
     analysis['required'].append('writing_feedback')
     executed=obj({**execution['properties'],'state':enum(['produced','stopped','unreviewed','incomplete_input']),'evidence_ids':array(STR),'action_node_id':NULLSTR,'artifact_node_id':NULLSTR,'scope':enum(['external_action_review_not_semantic_certification'])})

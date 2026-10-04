@@ -5,7 +5,7 @@ from .composer import compose, bind_contract
 from .execution import execute_actions, validate_execution_trace
 from .evidence import EvidenceGraph, check_span
 from .grammar_navigation import navigate_grammar
-from .writing_feedback import writing_feedback
+from .writing_feedback import writing_feedback, validate_writing_projection
 from .lesson_feedback import lesson_feedback, validate_lesson_projection
 
 class QuestionAnalyzer:
@@ -114,7 +114,7 @@ class QuestionAnalyzer:
             status = 'needs_evidence' if complete else 'incomplete_input'
             limitations.append('写作入口提供课程约束与动作；完整批改和评分由宿主依独立评分契约完成，本核心不虚构改稿或分数。')
         demo = self.demonstration(matches,candidate_analysis,chain)
-        result = {'schema_version':'1.5.0','question_id':q['question_id'],'question_type':q['question_type'],'task_type':q.get('task_type','unknown'),'method_matches':matches,'method_chain':chain,'trigger_evidence':triggers,'evidence_graph':graph.result(q),'candidate_analysis':candidate_analysis,'answer':answer,'answer_confidence':'medium' if answer else 'low','student_symptoms':q.get('student_symptoms',[]),'demonstration':demo,'status':status,'limitations':limitations,'next_action':chain[0]['action'] if chain else '补齐题面并确认受支持题型；不猜答案。','stop_rule':chain[0]['stop_rule'] if chain else '未覆盖题型停止推断。','review_scope':'external_semantic_review' if answer else 'mechanical_structure_only','method_versions':{x['method_id']:self.registry.methods[x['method_id']]['version'] for x in matches},'content_eligible':bool(answer and complete),'difficulty':q.get('difficulty','unknown'),'answer_verification':{'retained_candidates':sorted(retained),'eliminated_candidates':sorted(eliminated),'unresolved_candidates':unresolved,'candidate_coverage_complete':candidate_coverage,'unique_supported_candidate':len(retained)==1,'closed':bool(answer)}}
+        result = {'schema_version':'1.6.0','question_id':q['question_id'],'question_type':q['question_type'],'task_type':q.get('task_type','unknown'),'method_matches':matches,'method_chain':chain,'trigger_evidence':triggers,'evidence_graph':graph.result(q),'candidate_analysis':candidate_analysis,'answer':answer,'answer_confidence':'medium' if answer else 'low','student_symptoms':q.get('student_symptoms',[]),'demonstration':demo,'status':status,'limitations':limitations,'next_action':chain[0]['action'] if chain else '补齐题面并确认受支持题型；不猜答案。','stop_rule':chain[0]['stop_rule'] if chain else '未覆盖题型停止推断。','review_scope':'external_semantic_review' if answer else 'mechanical_structure_only','method_versions':{x['method_id']:self.registry.methods[x['method_id']]['version'] for x in matches},'content_eligible':bool(answer and complete),'difficulty':q.get('difficulty','unknown'),'answer_verification':{'retained_candidates':sorted(retained),'eliminated_candidates':sorted(eliminated),'unresolved_candidates':unresolved,'candidate_coverage_complete':candidate_coverage,'unique_supported_candidate':len(retained)==1,'closed':bool(answer)}}
         result['grammar_navigation']=navigate_grammar(q,self.registry)
         result['execution_trace']=execute_actions(q,chain,matches,self.registry,graph,trigger_nodes,complete,relation_nodes)
         result['demonstration']=self.demonstration(matches,candidate_analysis,chain)
@@ -143,6 +143,7 @@ class QuestionAnalyzer:
         validate_schema('question-analysis',result)
         validate_execution_trace(result,self.registry)
         validate_lesson_projection(result,self.registry)
+        validate_writing_projection(result,self.registry)
         return result
 
     def demonstration(self,matches,candidates,chain):

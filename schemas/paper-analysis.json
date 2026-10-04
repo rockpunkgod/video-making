@@ -235,7 +235,8 @@
                         "method_action",
                         "decision",
                         "verification",
-                        "action_artifact"
+                        "action_artifact",
+                        "image_evidence"
                       ]
                     },
                     "label": {
@@ -300,6 +301,34 @@
                     "artifact_fingerprint": {
                       "type": "string",
                       "pattern": "^[0-9a-f]{64}$"
+                    },
+                    "image_ref": {
+                      "type": "object",
+                      "properties": {
+                        "image_id": {
+                          "type": "string",
+                          "minLength": 1
+                        },
+                        "sha256": {
+                          "type": "string",
+                          "pattern": "^[0-9a-f]{64}$"
+                        },
+                        "box": {
+                          "type": "array",
+                          "items": {
+                            "type": "integer",
+                            "minimum": 0
+                          },
+                          "minItems": 4,
+                          "maxItems": 4
+                        }
+                      },
+                      "required": [
+                        "image_id",
+                        "sha256",
+                        "box"
+                      ],
+                      "additionalProperties": false
                     }
                   },
                   "required": [
@@ -640,7 +669,8 @@
                     "properties": {
                       "schema_version": {
                         "enum": [
-                          "1.0.0"
+                          "1.0.0",
+                          "1.1.0"
                         ]
                       },
                       "question_type": {
@@ -924,6 +954,158 @@
                             "additionalProperties": false
                           }
                         ]
+                      },
+                      "handwriting_review": {
+                        "anyOf": [
+                          {
+                            "type": "null"
+                          },
+                          {
+                            "type": "object",
+                            "properties": {
+                              "reviewer": {
+                                "type": "string",
+                                "minLength": 1
+                              },
+                              "review_status": {
+                                "enum": [
+                                  "reviewed",
+                                  "unreviewed"
+                                ]
+                              },
+                              "original_handwriting": {
+                                "type": "boolean"
+                              },
+                              "clear_image": {
+                                "type": "boolean"
+                              },
+                              "affects_communication": {
+                                "type": [
+                                  "boolean",
+                                  "null"
+                                ]
+                              },
+                              "rationale": {
+                                "type": "string",
+                                "minLength": 1
+                              },
+                              "source_section_id": {
+                                "type": "string",
+                                "minLength": 1
+                              },
+                              "regions": {
+                                "type": "array",
+                                "items": {
+                                  "type": "object",
+                                  "properties": {
+                                    "image_id": {
+                                      "type": "string",
+                                      "minLength": 1
+                                    },
+                                    "sha256": {
+                                      "type": "string",
+                                      "pattern": "^[0-9a-f]{64}$"
+                                    },
+                                    "box": {
+                                      "type": "array",
+                                      "items": {
+                                        "type": "integer",
+                                        "minimum": 0
+                                      },
+                                      "minItems": 4,
+                                      "maxItems": 4
+                                    },
+                                    "observed": {
+                                      "type": "string",
+                                      "minLength": 1
+                                    },
+                                    "communication_impact": {
+                                      "type": "string",
+                                      "minLength": 1
+                                    }
+                                  },
+                                  "required": [
+                                    "image_id",
+                                    "sha256",
+                                    "box",
+                                    "observed",
+                                    "communication_impact"
+                                  ],
+                                  "additionalProperties": false
+                                },
+                                "minItems": 1
+                              },
+                              "adjustment_kind": {
+                                "enum": [
+                                  "none",
+                                  "lower_one_band",
+                                  "discretionary_deduction"
+                                ]
+                              },
+                              "band_before": {
+                                "type": [
+                                  "string",
+                                  "null"
+                                ]
+                              },
+                              "deduction_points": {
+                                "type": [
+                                  "integer",
+                                  "null"
+                                ],
+                                "minimum": 1,
+                                "maximum": 25
+                              },
+                              "score_before": {
+                                "anyOf": [
+                                  {
+                                    "type": "null"
+                                  },
+                                  {
+                                    "type": "object",
+                                    "properties": {
+                                      "lower": {
+                                        "type": "integer",
+                                        "minimum": 0,
+                                        "maximum": 25
+                                      },
+                                      "upper": {
+                                        "type": "integer",
+                                        "minimum": 0,
+                                        "maximum": 25
+                                      }
+                                    },
+                                    "required": [
+                                      "lower",
+                                      "upper"
+                                    ],
+                                    "additionalProperties": false
+                                  }
+                                ]
+                              },
+                              "student_text_sha256": {
+                                "type": "string",
+                                "pattern": "^[0-9a-f]{64}$"
+                              }
+                            },
+                            "required": [
+                              "reviewer",
+                              "review_status",
+                              "original_handwriting",
+                              "clear_image",
+                              "affects_communication",
+                              "rationale",
+                              "source_section_id",
+                              "regions",
+                              "adjustment_kind",
+                              "band_before",
+                              "deduction_points",
+                              "score_before",
+                              "student_text_sha256"
+                            ],
+                            "additionalProperties": false
+                          }
+                        ]
                       }
                     },
                     "required": [
@@ -984,6 +1166,57 @@
                       "minLength": 1
                     },
                     "minItems": 1
+                  },
+                  "image_manifest": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "image_id": {
+                          "type": "string",
+                          "minLength": 1
+                        },
+                        "sha256": {
+                          "type": "string",
+                          "pattern": "^[0-9a-f]{64}$"
+                        },
+                        "mime_type": {
+                          "enum": [
+                            "image/png",
+                            "image/jpeg"
+                          ]
+                        },
+                        "width": {
+                          "type": "integer",
+                          "minimum": 1
+                        },
+                        "height": {
+                          "type": "integer",
+                          "minimum": 1
+                        }
+                      },
+                      "required": [
+                        "image_id",
+                        "sha256",
+                        "mime_type",
+                        "width",
+                        "height"
+                      ],
+                      "additionalProperties": false
+                    },
+                    "minItems": 0
+                  },
+                  "image_evidence_ids": {
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "minItems": 0
+                  },
+                  "student_text_sha256": {
+                    "type": "string",
+                    "pattern": "^[0-9a-f]{64}$"
                   }
                 },
                 "required": [
@@ -993,7 +1226,10 @@
                   "source_document",
                   "section_order",
                   "evidence_ids",
-                  "limitations"
+                  "limitations",
+                  "image_manifest",
+                  "image_evidence_ids",
+                  "student_text_sha256"
                 ],
                 "additionalProperties": false
               }

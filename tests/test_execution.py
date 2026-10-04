@@ -40,7 +40,7 @@ class ExecutionTest(unittest.TestCase):
     def test_plans_do_not_fabricate_artifacts(self):
         q=fixture(); q.pop('action_executions')
         out=self.analyzer.analyze(q)
-        self.assertEqual(out['schema_version'],'1.5.0'); self.assertEqual(out['execution_trace'],[])
+        self.assertEqual(out['schema_version'],'1.6.0'); self.assertEqual(out['execution_trace'],[])
         self.assertTrue(all(not s['execution_ids'] and s['state']!='executed' for s in out['method_chain']))
         self.assertTrue(out['answer_verification']['closed'])  # old reviewed relations stay compatible
 
@@ -203,7 +203,7 @@ class ExecutionTest(unittest.TestCase):
 
     def test_renderers_preserve_trace_and_reject_detached_payloads(self):
         out=self.analyzer.analyze(fixture()); exported=json.loads(render(out,'content-export',self.r))
-        self.assertEqual(exported['export_schema_version'],'1.5.0'); self.assertEqual(exported['execution_trace'],out['execution_trace'])
+        self.assertEqual(exported['export_schema_version'],'1.6.0'); self.assertEqual(exported['execution_trace'],out['execution_trace'])
         self.assertEqual(exported['method_chain'],out['method_chain']); self.assertIn('实际动作',render(out,'student',self.r))
         for mutation in ['value','node','chain','state','inputs','evidence']:
             bad=deepcopy(out)

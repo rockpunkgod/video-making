@@ -19,6 +19,10 @@ def check_span(question, span):
 def validate_graph(graph, question=None):
     validate_schema('evidence-graph',graph)
     nodes = {n['id']:n for n in graph['nodes']}
+    manifest=None
+    if question is not None and any(n['type']=='image_evidence' for n in nodes.values()):
+        from .image_evidence import image_manifest
+        manifest=image_manifest(question)
     if len(nodes) != len(graph['nodes']):
         raise ValueError('Duplicate evidence node')
     adjacency = {i:[] for i in nodes}
@@ -46,6 +50,12 @@ def validate_graph(graph, question=None):
                 work.extend(incoming[x])
         return [nodes[x] for x in found]
     for nid, node in nodes.items():
+        if node['type']=='image_evidence':
+            if not node.get('image_ref') or not node.get('artifact_fingerprint'):
+                raise ValueError('Image evidence requires original payload reference and review binding')
+            if manifest is not None:
+                from .image_evidence import check_image_region
+                check_image_region(node['image_ref'],manifest)
         if node['type']=='source_evidence':
             if not node.get('span') or node['label'] != node['span']['quote']:
                 raise ValueError('Source evidence must carry its exact quoted span')
