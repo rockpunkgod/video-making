@@ -6,7 +6,7 @@
     "head": "60ebaf4"
   },
   "after_refactor": {
-    "tests_run": 263,
+    "tests_run": 271,
     "failures": 0,
     "errors": 0,
     "registry": {
@@ -4645,6 +4645,20 @@
         "registered_examples_complete": false
       }
     ]
+  },
+  "paper_scan": {
+    "schema_version": "1.1.0",
+    "legacy_output_schema": "1.0.0 still accepted",
+    "coverage_stages": [
+      "potential_question_ids",
+      "verified_trigger_question_ids",
+      "produced_question_ids",
+      "reviewed_decision_question_ids",
+      "case_candidate_question_ids"
+    ],
+    "ranking": "own eligible case count descending then method ID; not suggestion frequency or demonstration score",
+    "gate": "closed question plus own verified trigger and own produced artifact or reviewed decision, with no stopped execution for this method",
+    "scope": "external reviewed structural scan, not legal-source, complete-paper or English-semantic certification"
   },
   "review_provider_binding": {
     "input_gate": "schema validation before callback and after return",

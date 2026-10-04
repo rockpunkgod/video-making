@@ -100,7 +100,12 @@ def build():
     analysis['properties']['lesson_feedback']={'anyOf':[{'type':'null'},lesson]}
     analysis['required'].append('lesson_feedback')
     write('question-analysis',analysis)
-    write('paper-analysis',obj({'schema_version':STR,'paper_id':STR,'questions':array(analysis),'recommendations':array(STR),'method_counts':{'type':'object','additionalProperties':{'type':'integer','minimum':0}},'difficulty_counts':{'type':'object'},'evidence_complete_count':{'type':'integer','minimum':0},'case_candidates':array(STR),'limitations':array(STR)}))
+    paper=obj({'schema_version':enum(['1.0.0','1.1.0']),'paper_id':STR,'questions':array(analysis),'recommendations':array(STR),'method_counts':{'type':'object','additionalProperties':{'type':'integer','minimum':0}},'difficulty_counts':{'type':'object'},'evidence_complete_count':{'type':'integer','minimum':0},'case_candidates':array(STR),'limitations':array(STR)})
+    stage_ids={**array(STR),'uniqueItems':True}
+    paper['properties']['method_coverage']={'type':'object','additionalProperties':obj({key:stage_ids for key in ['potential_question_ids','verified_trigger_question_ids','produced_question_ids','reviewed_decision_question_ids','case_candidate_question_ids']})}
+    paper['properties']['typical_method_candidates']={**array(STR),'uniqueItems':True}
+    paper['allOf']=[{'if':{'properties':{'schema_version':enum(['1.1.0'])}},'then':{'required':['method_coverage','typical_method_candidates']}}]
+    write('paper-analysis',paper)
     question_input=json.loads((ROOT/'schemas/question-input.json').read_text(encoding='utf-8'))
     order_step=obj({'question_id':STR,'pass':enum([1,2]),'outcome':enum(['solved','deferred']),'transition':STR,'evidence':array(span,1),'execution_ids':array(STR)})
     order_review=obj({'reviewer':STR,'review_status':enum(['reviewed','unreviewed']),'source_section_ids':array(STR,1),'reading_mode':enum(['original_order','central_task',None]),'steps':array(order_step,1)})

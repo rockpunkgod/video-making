@@ -25,6 +25,8 @@ method-registry/symptom-cues.yaml保存口语导航别名，不复制方法判�
 
 接口：QuestionAnalyzer.analyze(dict)、PaperAnalyzer.analyze(dict)、CLI；契约为Draft 2020-12 JSON Schema。当前部署为完整仓库+Python3.10+，源码或editable安装。单独Skill文件夹仅自包含宿主答疑，不自动安装核心。未建抓取/视频/AE/支付/发布服务。
 
+Paper Analysis 1.1.0保留原输出字段，并增加method_coverage和typical_method_candidates；Schema仍接受旧1.0.0投影。method_counts只表示匹配/建议次数，包括未核验的结构入口，不是适用率。method_coverage按方法列出潜在匹配、独立已核验触发、已提交产物、已审阅决定及案例候选题号；每一层都能回到questions核证据和角色。案例候选需该题结论闭合、该方法独立触发通过且有自身产物或决定，本方法已停止则不计。定位、拆句和分组产物仍是辅助角色，不因入选候选而获得定案权。典型方法候选只按自身案例候选数降序、同数按ID排序；缺产物的已核验建议不能借别的方法答案升级。此排序不证明提速、迁移或真实教学效果，边界/困难案例仍须另行人工审阅选取。逐题难度仍是输入标签，展示分仍是启发式指标；不由建议数量认证完整真题卷或案例来源合法性。
+
 Question Analysis与content-export当前版本1.7.0，grammar_navigation：非语法为null；语法包含hint_branch、status、paths、next_node、review_basis和limitations。导航只接受显式有无提示词及外部审阅触发；缺标注先确认入口，未核空位功能不进入叶节点。知识路由不产生新关系或答案，仍须按同一证据闭合机制验证。Paper内嵌单题同步采用此契约。
 
 writing_review输入经独立审阅适配进入writing_feedback；两类写作各自的功能顺序、纠错与改稿保留，缺材料实际扣留不支持的诊断/完整稿/分数。1.1.0审阅另可提交original_images字节、区域和转写稿指纹；image_evidence绑定分数审阅图路径，四Renderer重检图与载荷，输出不重复图片字节。图片名或转写文本仍不能授权书写扣分；看不清不扣分，应用文降档/续写酌扣独立。图和图片解码均不认证原稿身份、清晰度、交际影响、语义或评分，详见writing-review.md。

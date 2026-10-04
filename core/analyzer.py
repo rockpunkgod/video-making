@@ -170,11 +170,25 @@ class PaperAnalyzer:
         if len({q['question_id'] for q in paper['questions']}) != len(paper['questions']):
             raise ValueError('Duplicate question id in paper')
         results = [self.analyzer.analyze(q) for q in paper['questions']]
-        counts, difficulty = {}, {}
+        counts, difficulty, coverage = {}, {}, {}
         for q in results:
-            for m in q['method_matches']: counts[m['method_id']]=counts.get(m['method_id'],0)+1
+            produced={x['method_id'] for x in q['execution_trace'] if x['state']=='produced'}
+            stopped={x['method_id'] for x in q['execution_trace'] if x['state']=='stopped'}
+            decided={x['method_id'] for x in q['candidate_analysis'] if x['effect'] in {'retain','eliminate'}}
+            for m in q['method_matches']:
+                mid=m['method_id']; counts[mid]=counts.get(mid,0)+1
+                stages=coverage.setdefault(mid,{key:[] for key in ('potential_question_ids','verified_trigger_question_ids','produced_question_ids','reviewed_decision_question_ids','case_candidate_question_ids')})
+                stages['potential_question_ids'].append(q['question_id'])
+                if m['trigger_verified']: stages['verified_trigger_question_ids'].append(q['question_id'])
+                if mid in produced: stages['produced_question_ids'].append(q['question_id'])
+                if mid in decided: stages['reviewed_decision_question_ids'].append(q['question_id'])
+                # A closed answer supplied by another method does not make every
+                # suggestion in this question a typical demonstrated method.
+                if q['content_eligible'] and m['trigger_verified'] and mid not in stopped and mid in (produced|decided):
+                    stages['case_candidate_question_ids'].append(q['question_id'])
             difficulty[q['difficulty']] = difficulty.get(q['difficulty'],0)+1
         eligible = [q for q in results if q['content_eligible']]
-        output = {'schema_version':'1.0.0','paper_id':paper['paper_id'],'questions':results,'recommendations':[q['question_id'] for q in sorted(eligible,key=lambda q:q['demonstration']['score'],reverse=True)],'method_counts':counts,'difficulty_counts':difficulty,'evidence_complete_count':len(eligible),'case_candidates':[q['question_id'] for q in eligible],'limitations':['难度为输入标注，未做统计校准。推荐仅是进入人工课程审阅的候选，不是发布授权。未闭合的题不推荐。']}
+        typical=sorted((mid for mid,stages in coverage.items() if stages['case_candidate_question_ids']),key=lambda mid:(-len(coverage[mid]['case_candidate_question_ids']),mid))
+        output = {'schema_version':'1.1.0','paper_id':paper['paper_id'],'questions':results,'recommendations':[q['question_id'] for q in sorted(eligible,key=lambda q:q['demonstration']['score'],reverse=True)],'method_counts':counts,'method_coverage':coverage,'typical_method_candidates':typical,'difficulty_counts':difficulty,'evidence_complete_count':len(eligible),'case_candidates':[q['question_id'] for q in eligible],'limitations':['难度为输入标注，未做统计校准。推荐仅是进入人工课程审阅的候选，不是发布授权。未闭合的题不推荐。','method_counts包含未核验建议；method_coverage分开登记触发、产物、决定和案例候选。典型方法候选按自身可审阅案例数排序，不按建议频次或展示分定案。','产物与决定是外部审阅记录，不是程序自动解题或真实执行认证。方法自身停止、仅计划或仅触发不进入典型方法候选；困难边界案例仍须独立人工选取。完整卷覆盖、题目来源合法性和英语语义正确性仍须外部审阅。']}
         validate_schema('paper-analysis',output)
         return output
