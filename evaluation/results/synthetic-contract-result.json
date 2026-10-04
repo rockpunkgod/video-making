@@ -1,12 +1,67 @@
 {
-  "schema_version": "1.0.0",
+  "schema_version": "1.1.0",
   "origin": "synthetic",
   "record_count": 15,
   "groups": [
     {
       "method_id": "R01",
       "method_version": "1.1.0",
+      "dataset_id": "synthetic-contract-only",
+      "communication_freeze_id": "synthetic-not-study",
       "record_count": 15,
+      "design_audit": {
+        "ready_for_review": false,
+        "blocking_reasons": [
+          "matching_frozen_plan",
+          "workflow_artifact_present",
+          "all_three_phases_present",
+          "all_observation_times_present",
+          "controlled_blind_assignment",
+          "first_use_without_failures",
+          "workflow_checks_passed",
+          "communication_freeze_bound_to_observations",
+          "communication_observed_success",
+          "demonstration_not_reused_as_test",
+          "phase_order"
+        ],
+        "checks": {
+          "matching_frozen_plan": false,
+          "registry_version_role_binding": true,
+          "standalone_role_capacity": true,
+          "workflow_artifact_present": false,
+          "all_three_phases_present": false,
+          "all_observation_times_present": false,
+          "controlled_blind_assignment": false,
+          "consistent_frozen_item_labels": true,
+          "no_role_overclaim": true,
+          "first_use_without_failures": false,
+          "workflow_checks_passed": false,
+          "communication_freeze_bound_to_observations": false,
+          "communication_observed_success": false,
+          "demonstration_not_reused_as_test": false,
+          "cross_phase_learning_control": true,
+          "first_use_item_not_repeated_blind": true,
+          "phase_order": false
+        },
+        "record_ids": [
+          "10s-positive_trigger",
+          "10s-negative_trigger",
+          "10s-counterexample",
+          "10s-boundary",
+          "10s-transfer",
+          "30s-positive_trigger",
+          "30s-negative_trigger",
+          "30s-counterexample",
+          "30s-boundary",
+          "30s-transfer",
+          "90s-positive_trigger",
+          "90s-negative_trigger",
+          "90s-counterexample",
+          "90s-boundary",
+          "90s-transfer"
+        ],
+        "scope": "declared lineage only; dates, people, gate judgements and collected data require independent external audit"
+      },
       "metrics": {
         "trigger_precision": 1.0,
         "trigger_recall": 1.0,
@@ -133,6 +188,41 @@
           "boundary_accuracy": 1.0,
           "role_overclaim_rate": 0.0,
           "stop_rule_failure_rate": 0.0,
+          "action_failure_rate": 0.0,
+          "evidence_failure_rate": 0.0,
+          "metric_counts": {
+            "false_trigger_rate": {
+              "numerator": 0,
+              "denominator": 3
+            },
+            "boundary_accuracy": {
+              "numerator": 1,
+              "denominator": 1
+            },
+            "role_overclaim_rate": {
+              "numerator": 0,
+              "denominator": 5
+            },
+            "stop_rule_failure_rate": {
+              "numerator": 0,
+              "denominator": 2
+            },
+            "action_failure_rate": {
+              "numerator": 0,
+              "denominator": 2
+            },
+            "evidence_failure_rate": {
+              "numerator": 0,
+              "denominator": 2
+            }
+          },
+          "record_ids": [
+            "10s-positive_trigger",
+            "10s-negative_trigger",
+            "10s-counterexample",
+            "10s-boundary",
+            "10s-transfer"
+          ],
           "safe_for_release": "untested"
         },
         {
@@ -141,6 +231,41 @@
           "boundary_accuracy": 1.0,
           "role_overclaim_rate": 0.0,
           "stop_rule_failure_rate": 0.0,
+          "action_failure_rate": 0.0,
+          "evidence_failure_rate": 0.0,
+          "metric_counts": {
+            "false_trigger_rate": {
+              "numerator": 0,
+              "denominator": 3
+            },
+            "boundary_accuracy": {
+              "numerator": 1,
+              "denominator": 1
+            },
+            "role_overclaim_rate": {
+              "numerator": 0,
+              "denominator": 5
+            },
+            "stop_rule_failure_rate": {
+              "numerator": 0,
+              "denominator": 2
+            },
+            "action_failure_rate": {
+              "numerator": 0,
+              "denominator": 2
+            },
+            "evidence_failure_rate": {
+              "numerator": 0,
+              "denominator": 2
+            }
+          },
+          "record_ids": [
+            "30s-positive_trigger",
+            "30s-negative_trigger",
+            "30s-counterexample",
+            "30s-boundary",
+            "30s-transfer"
+          ],
           "safe_for_release": "untested"
         },
         {
@@ -149,6 +274,41 @@
           "boundary_accuracy": 1.0,
           "role_overclaim_rate": 0.0,
           "stop_rule_failure_rate": 0.0,
+          "action_failure_rate": 0.0,
+          "evidence_failure_rate": 0.0,
+          "metric_counts": {
+            "false_trigger_rate": {
+              "numerator": 0,
+              "denominator": 3
+            },
+            "boundary_accuracy": {
+              "numerator": 1,
+              "denominator": 1
+            },
+            "role_overclaim_rate": {
+              "numerator": 0,
+              "denominator": 5
+            },
+            "stop_rule_failure_rate": {
+              "numerator": 0,
+              "denominator": 2
+            },
+            "action_failure_rate": {
+              "numerator": 0,
+              "denominator": 2
+            },
+            "evidence_failure_rate": {
+              "numerator": 0,
+              "denominator": 2
+            }
+          },
+          "record_ids": [
+            "90s-positive_trigger",
+            "90s-negative_trigger",
+            "90s-counterexample",
+            "90s-boundary",
+            "90s-transfer"
+          ],
           "safe_for_release": "untested"
         }
       ],

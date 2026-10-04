@@ -31,9 +31,59 @@
             "type": "string",
             "minLength": 1
           },
+          "dataset_id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "communication_freeze_id": {
+            "type": "string",
+            "minLength": 1
+          },
           "record_count": {
             "type": "integer",
             "minimum": 0
+          },
+          "design_audit": {
+            "type": "object",
+            "properties": {
+              "ready_for_review": {
+                "type": "boolean"
+              },
+              "blocking_reasons": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "minItems": 0
+              },
+              "checks": {
+                "type": "object",
+                "additionalProperties": {
+                  "type": "boolean"
+                }
+              },
+              "record_ids": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "minItems": 0
+              },
+              "scope": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "required": [
+              "ready_for_review",
+              "blocking_reasons",
+              "checks",
+              "record_ids",
+              "scope"
+            ],
+            "additionalProperties": false
           },
           "metrics": {
             "type": "object",
@@ -183,6 +233,54 @@
                   "minimum": 0,
                   "maximum": 1
                 },
+                "action_failure_rate": {
+                  "type": [
+                    "number",
+                    "null"
+                  ],
+                  "minimum": 0,
+                  "maximum": 1
+                },
+                "evidence_failure_rate": {
+                  "type": [
+                    "number",
+                    "null"
+                  ],
+                  "minimum": 0,
+                  "maximum": 1
+                },
+                "metric_counts": {
+                  "type": "object",
+                  "additionalProperties": {
+                    "type": "object",
+                    "properties": {
+                      "numerator": {
+                        "type": [
+                          "integer",
+                          "null"
+                        ],
+                        "minimum": 0
+                      },
+                      "denominator": {
+                        "type": "integer",
+                        "minimum": 0
+                      }
+                    },
+                    "required": [
+                      "numerator",
+                      "denominator"
+                    ],
+                    "additionalProperties": false
+                  }
+                },
+                "record_ids": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "minItems": 0
+                },
                 "safe_for_release": {
                   "enum": [
                     "untested",
@@ -197,6 +295,10 @@
                 "boundary_accuracy",
                 "role_overclaim_rate",
                 "stop_rule_failure_rate",
+                "action_failure_rate",
+                "evidence_failure_rate",
+                "metric_counts",
+                "record_ids",
                 "safe_for_release"
               ],
               "additionalProperties": false
@@ -225,7 +327,10 @@
         "required": [
           "method_id",
           "method_version",
+          "dataset_id",
+          "communication_freeze_id",
           "record_count",
+          "design_audit",
           "metrics",
           "baseline_comparison",
           "first_use",

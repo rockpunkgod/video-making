@@ -8,6 +8,8 @@
   "min_boundary_accuracy": 0.95,
   "max_boundary_drop": 0.02,
   "max_stop_failure_delta": 0.02,
+  "max_action_failure_delta": 0.02,
+  "max_evidence_failure_delta": 0.02,
   "min_recall_rate": 0.9,
   "min_restatement_rate": 0.9,
   "minimum_efficiency_gain": {
@@ -18,5 +20,31 @@
     "unresolved": 0.05
   },
   "frozen_before_data_collection": false,
+  "workflow": {
+    "study_frozen_at": "REPLACE_WITH_ACTUAL_ISO_TIME_AND_TIMEZONE",
+    "communication_frozen_at": "REPLACE_WITH_ACTUAL_ISO_TIME_AND_TIMEZONE",
+    "practicality_reviewed_at": "REPLACE_WITH_ACTUAL_ISO_TIME_AND_TIMEZONE",
+    "communication_record_ids": [],
+    "communication_checks": {
+      "comprehension": false,
+      "memory": false,
+      "natural_speech": false,
+      "visual_action": false,
+      "short_long_consistency": false
+    },
+    "practicality_checks": {
+      "trigger": false,
+      "action": false,
+      "output": false,
+      "stop": false,
+      "transfer": false,
+      "efficiency_or_value": false,
+      "misuse_cost": false,
+      "role_correctness": false
+    },
+    "demonstration_item_ids": [],
+    "reviewer": "REPLACE_WITH_ACTUAL_REVIEWER",
+    "evidence_notes": "填写实际题面证据、观察、检查结论与外部审计材料引用；未完成不得勾为通过。"
+  },
   "rationale": "示例阈值不是通用门槛，须按误用风险、样本与效应量制定并在采集前冻结；本模板默认不可用于发布。"
 }

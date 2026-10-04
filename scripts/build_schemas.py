@@ -66,10 +66,13 @@ def build():
     record['properties']['declared_primary_role'] = enum(ROLES)
     record['properties']['observed_actual_role'] = enum(ROLES)
     record['required'] = list(record['properties'])
+    record['properties']['observed_at'] = STR
     write('evaluation-record',record)
     rate = {'type':['number','null'],'minimum':0,'maximum':1}
     metrics = obj({key:rate for key in ['trigger_precision','trigger_recall','resolution_rate','standalone_rate','assist_rate','false_trigger_rate','transfer_rate','boundary_accuracy','role_overclaim_rate','stop_rule_failure_rate']})
-    safety = obj({'version':STR,'false_trigger_rate':rate,'boundary_accuracy':rate,'role_overclaim_rate':rate,'stop_rule_failure_rate':rate,'safe_for_release':enum(['untested',False,True])})
-    write('evaluation-result',obj({'schema_version':STR,'origin':enum(['real','synthetic','empty']),'record_count':{'type':'integer','minimum':0},'groups':array(obj({'method_id':STR,'method_version':STR,'record_count':{'type':'integer','minimum':0},'metrics':metrics,'baseline_comparison':{'type':'object'},'first_use':{'type':'object'},'communication':{'type':'object'},'short_version_safety':array(safety),'release_eligible':BOOL,'upgrade_eligible':enum(['none','review_for_Efficient','review_for_Signature']),'limitations':array(STR)})),'limitations':array(STR)}))
+    count=obj({'numerator':{'type':['integer','null'],'minimum':0},'denominator':{'type':'integer','minimum':0}})
+    safety = obj({'version':STR,'false_trigger_rate':rate,'boundary_accuracy':rate,'role_overclaim_rate':rate,'stop_rule_failure_rate':rate,'action_failure_rate':rate,'evidence_failure_rate':rate,'metric_counts':{'type':'object','additionalProperties':count},'record_ids':array(STR),'safe_for_release':enum(['untested',False,True])})
+    audit=obj({'ready_for_review':BOOL,'blocking_reasons':array(STR),'checks':{'type':'object','additionalProperties':BOOL},'record_ids':array(STR),'scope':STR})
+    write('evaluation-result',obj({'schema_version':STR,'origin':enum(['real','synthetic','empty']),'record_count':{'type':'integer','minimum':0},'groups':array(obj({'method_id':STR,'method_version':STR,'dataset_id':STR,'communication_freeze_id':STR,'record_count':{'type':'integer','minimum':0},'design_audit':audit,'metrics':metrics,'baseline_comparison':{'type':'object'},'first_use':{'type':'object'},'communication':{'type':'object'},'short_version_safety':array(safety),'release_eligible':BOOL,'upgrade_eligible':enum(['none','review_for_Efficient','review_for_Signature']),'limitations':array(STR)})),'limitations':array(STR)}))
 
 if __name__ == '__main__': build()

@@ -177,8 +177,18 @@ short_version_safety:
 
 本协议仍是验收依据；实现入口为 `python -m answer_engine evaluate 观察记录.json --plan 冻结计划.json`。记录支持 JSON 数组或 JSONL，契约见 `schemas/evaluation-record.json`，结果见 `schemas/evaluation-result.json`。导入包含第一阶段 communication、第二阶段 first_use 与 blind 的实际观察，记录动作、证据、刹车与学生复述原话；不能把自动答案正确冒充这些过程成功。
 
-统计按 method_id + method_version 分组，不混用版本，也不混用 real/synthetic。指标保留分子分母与 record_id。没有样本为 null；未形成可比冻结题组时短版 safe_for_release 为 untested。独立受试组或 counterbalanced 分配用于控制重复学习；同一受试者重复题面的未平衡记录不能进入短版发布推荐。
+统计按 method_id + method_version + dataset_id + communication_freeze_id 分组，不混用版本、题组、冻结稿或 real/synthetic。指标保留分子分母与 record_id。没有样本为 null；未形成可比冻结题组时短版 safe_for_release 为 untested。独立受试组或 counterbalanced 分配用于控制重复学习；同一受试者重复题面的未平衡记录不能进入短版发布推荐。
 
 计划示例 `evaluation/plan.example.json` 默认未冻结，不能直接授予发布通过。采集前由研究者按风险设定样本量、边界门槛、短版允许差值与效率效应量，保存计划版本；工具不能认证提交者、采集时间或真人身份，这些必须由研究者外部审计。
 
 均值改善只产生 review_for_Efficient / review_for_Signature 的人工审阅候选，不能证明统计显著性，不能自动升级 Registry。发布推荐还需真实数据、传播记忆与复述、First-use 无动作/证据/刹车/越权/倒贴失败，以及三个短版安全条件。工程回归不等于教学效果通过。
+
+### 阶段链与压缩动作审计
+
+完整研究计划另存workflow：参数冻结时间、传播稿冻结时间、Practicality审阅时间、传播记录ID、五项传播检查、八项Practicality检查、示范题ID、审阅者与实际证据说明。观察记录可增加带时区的observed_at。必须核对参数冻结先于采集，传播观察先于传播稿冻结，Practicality先于First-use，First-use先于Blind；这些是所声明时间的结构检查，不能认证真实采集时间或真人身份。
+
+旧记录或缺workflow仍可统计，但不能进入释放、Efficient或Signature审阅建议。每组design_audit列出实际缺失环节；不能用另一题组的传播记录补齐当前盲测。示范题不能作为第二道陌生题；同一学生的First-use题不能再充当未见过的Blind题。跨阶段接触多个时长版本时也须控制学习效应，不能只检查Blind内部是否重复。
+
+短版另报告action_failure_rate和evidence_failure_rate，并用采集前冻结的max_action_failure_delta与max_evidence_failure_delta对照90秒版；缺差值门槛不视为压缩安全通过。猜中答案却动作或证据失败，不计Method Resolution、Standalone或Assist成功。原答案正确率仍如实统计，不能用它抵消动作失败。
+
+同一冻结题目在不同受试者、阶段和时长版本中，case_type、applicable与stop_required必须一致；不能通过重标适用题、反例或刹车要求制造短版优势。逐版安全指标保留各自分子、分母和观察记录ID。

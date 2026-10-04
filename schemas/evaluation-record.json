@@ -228,6 +228,10 @@
         "verifier",
         "framework"
       ]
+    },
+    "observed_at": {
+      "type": "string",
+      "minLength": 1
     }
   },
   "required": [
