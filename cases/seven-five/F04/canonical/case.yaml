@@ -13,7 +13,7 @@ evidence: []
 method_role: reducer
 expected_action: 标每项谓语及时间词，按真实事件时间分组，不用分词词尾代替时态
 expected_output: reduce
-stop_rule: 本步骤只产生缩小范围，不能自动定案。不能以本动作代替完整题面关系核验；题面缺失、关键词义不明或出现反证就停止定案。具体边界见源章节。
+stop_rule: 非谓语词尾不能分时态；没有真实时间差异就停筛。正文有经历、常态或感悟切换时按局部时间核，不强求全篇表面一致，也不重复三分。
 case_type: canonical
 status: evidence_gap
 notes: 源方法可核；尚未逐题核验案例，不可当成功样例

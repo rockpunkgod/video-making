@@ -13,7 +13,7 @@ evidence: []
 method_role: verifier
 expected_action: 圈两边对应对象与动作，标同指或同义关系，再回填核上下句和段落任务
 expected_output: verify
-stop_rule: 不能以本动作代替完整题面关系核验；题面缺失、关键词义不明或出现反证就停止定案。具体边界见源章节。
+stop_rule: 只是同主题或翻译通却没有明确呼应时不命名本法；同词多项都能接时比完整断言。形式it、概括名词或latter必须按实际内容还原，不能强找最近名词。
 case_type: canonical
 status: evidence_gap
 notes: 源方法可核；尚未逐题核验案例，不可当成功样例

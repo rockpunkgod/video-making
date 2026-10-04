@@ -2,7 +2,7 @@
 
 Registry索引六题型方法文件。method_type区分框架、方法、子动作、内部规则、分类与复核；primary_role只有一个，secondary_roles显式登记。source_name/source_alias保留原名；W03学生主名为剧情四格，PTSD只作源别名。
 
-82项不等于82个品牌：包括定位子动作、语法节点、训练框架与评分规则。阅读17项及F01/G01共19项有独立首次接触稿，其余63项仍为结构迁移、完整源章节与动作草稿，student_ready=false。student_ready=true只证明入口静态齐备，并不证明First-use、传播或迁移效果；所有方法仍为Useful+candidate。阅读13个非黄金修订以source_bound_editorial_review记录源绑定，真实案例和受试验证仍缺。
+82项不等于82个品牌：包括定位子动作、语法节点、训练框架与评分规则。阅读17项、七选五11项及G01共29项有独立首次接触稿，其余53项仍为结构迁移、完整源章节与动作草稿，student_ready=false。student_ready=true只证明入口静态齐备，并不证明First-use、传播或迁移效果；所有方法仍为Useful+candidate。阅读13项和七选五10项后续修订以source_bound_editorial_review记录源绑定，真实案例和受试验证仍缺。
 
 职责：locator→locate、interpreter/framework→interpret（G01路线为reduce）、reducer→reduce、decider→decide、verifier→verify。C01框架与decider为同一课程方法两种显式阶段，首次接触只突出主要职责；F01无decider副职责。
 

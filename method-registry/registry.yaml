@@ -105,52 +105,52 @@ methods:
   F02:
     brand_name: 句型分组
     status: candidate
-    version: 1.0.0
+    version: 1.1.0
     file: method-registry/seven-five.yaml
   F03:
     brand_name: 主角分组
     status: candidate
-    version: 1.0.0
+    version: 1.1.0
     file: method-registry/seven-five.yaml
   F04:
     brand_name: 时间分组
     status: candidate
-    version: 1.0.0
+    version: 1.1.0
     file: method-registry/seven-five.yaml
   F05:
     brand_name: 段首统领
     status: candidate
-    version: 1.0.0
+    version: 1.1.0
     file: method-registry/seven-five.yaml
   F06:
     brand_name: 前后呼应
     status: candidate
-    version: 1.0.0
+    version: 1.1.0
     file: method-registry/seven-five.yaml
   F07:
     brand_name: 关系拼接
     status: candidate
-    version: 1.0.0
+    version: 1.1.0
     file: method-registry/seven-five.yaml
   F08:
     brand_name: 情绪同向
     status: candidate
-    version: 1.0.0
+    version: 1.1.0
     file: method-registry/seven-five.yaml
   F09:
     brand_name: 半句补全
     status: candidate
-    version: 1.0.0
+    version: 1.1.0
     file: method-registry/seven-five.yaml
   F10:
     brand_name: 末轮反查
     status: candidate
-    version: 1.0.0
+    version: 1.1.0
     file: method-registry/seven-five.yaml
   F11:
     brand_name: 正文闭环
     status: candidate
-    version: 1.0.0
+    version: 1.1.0
     file: method-registry/seven-five.yaml
   C01:
     brand_name: 语篇线索链

@@ -13,7 +13,7 @@ evidence: []
 method_role: decider
 expected_action: 逐项核候选主体、动作、对象、上下句关系和段落任务，只以当前空自身的决定性关系定案
 expected_output: decide
-stop_rule: 不能以本动作代替完整题面关系核验；题面缺失、关键词义不明或出现反证就停止定案。具体边界见源章节。
+stop_rule: 多项仅局部接通或仍共同成立时暂留，不按主观更像原因撤销另一项；形式、同词、时态、占用或剩余均不能替代当前空自身证据。
 case_type: canonical
 status: evidence_gap
 notes: 源方法可核；尚未逐题核验案例，不可当成功样例
