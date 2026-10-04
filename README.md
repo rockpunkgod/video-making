@@ -32,6 +32,8 @@ python -m unittest discover -s tests -v
 
 Python API：`from answer_engine import QuestionAnalyzer, PaperAnalyzer`；`analyze(dict)` 返回受JSON Schema约束的结果。review_provider可接宿主语义分析器；没有内置外部模型、抓取或发布服务。
 
+外部审阅只能补标注，不能改变原题号、题型、题面、选项、提示词或学生材料；新增/删除这些字段也会拒绝。题面订正须由调用方重新提交，整卷推荐不会跟随审阅接口悄悄换题。
+
 写作审阅输入、原稿引用及完整/局部交付边界见[写作审阅通道](docs/writing-review.md)。缺原文或首句时实际扣留剧情诊断、整篇修改稿及完整分数，不只添加免责声明。
 
 方法组合可通过action_executions提交具体动作与类型化产物，execution_trace明确记录本步消费哪一步的定位、拆句、分组或骨架；停止/未审阅结果不能继续传递。计划不冒充已执行，核验失败撤回答案。见[可执行方法编排](docs/method-execution.md)；外部语义审阅仍不等于程序自动证明。

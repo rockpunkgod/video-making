@@ -15,6 +15,8 @@ source-sections保存运行时章节逐字内容、行区间和提交号，方�
 
 核心为确定性的结构、跨度与流程约束引擎，不是已校准的自由文本英语解题模型。无语义审阅时给方法建议/动作/刹车，answer=null。关系由宿主/人工提交，或Python review_provider产生；跨度一致不能证明语义正确。题型/任务/难度标注也要审阅。
 
+review_provider只补审阅标注，不替换原题。调用前先校验输入并保存独立深拷贝；返回后再校验，并逐项锁定question_id、question_type、stem、passage、options、given_word、student_text、continuation_starters、original_images及student_symptoms，连字段的新增/删除也拒绝。接口可以补observations、relations、action_executions、writing_review、lesson_review、requested_chain，以及task_type/difficulty标注；这些仍接受各自门禁。需修正题型或题面时，调用方先核对并重新提交题目，不能在审阅过程中悄悄换题。整卷入口复用同一限制，推荐题号因此仍绑定原输入。这是数据一致性控制，不是对Python回调的安全隔离或语义认证。
+
 Reviewed结论要求独立触发、当前题面跨度、具体判据、Stop检查、回填验证、审阅者与明确决定职责。不完整/未审阅/冲突关系不定案；排除与剩余不证明答案。提供options时，必须有唯一候选自身的保留证据，且其他候选全部具有审阅后的排除证据；单个保留项不能跳过未核验竞争项。无选项的语法生成仍需唯一词形的独立审阅关系。answer_verification列出保留、排除、未决候选及闭合状态，不是语义真实性认证。辅助角色不独立decide；C01只有显式二阶段decider可闭合当前空。
 
 图检查节点唯一、边闭合、无环、引文标签与跨度相同，以及同一方法的独立触发、同一候选的主张→审阅关系→结论路径。validate_graph(graph, question)可将每个引文重新绑定当前题面；Analyzer自动执行此检查。仅传graph不能认证源文本真实性，两个模式都不认证审阅者身份或语义为真。未闭合题不进整卷内容推荐；展示分为启发式排序，不代表传播或提分效果。

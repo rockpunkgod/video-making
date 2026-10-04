@@ -6,7 +6,7 @@
     "head": "60ebaf4"
   },
   "after_refactor": {
-    "tests_run": 257,
+    "tests_run": 263,
     "failures": 0,
     "errors": 0,
     "registry": {
@@ -4645,6 +4645,23 @@
         "registered_examples_complete": false
       }
     ]
+  },
+  "review_provider_binding": {
+    "input_gate": "schema validation before callback and after return",
+    "immutable_fields": [
+      "question_id",
+      "question_type",
+      "stem",
+      "passage",
+      "options",
+      "given_word",
+      "student_text",
+      "continuation_starters",
+      "original_images",
+      "student_symptoms"
+    ],
+    "snapshot": "independent deepcopy detects in-place and nested changes, additions and deletions",
+    "scope": "single question and inherited paper/passage input consistency; not a callback sandbox or semantic certification"
   },
   "student_entry_migration": {
     "static_ready": 82,

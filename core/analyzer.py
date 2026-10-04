@@ -15,11 +15,20 @@ class QuestionAnalyzer:
 
     def analyze(self,question):
         q = deepcopy(question)
+        validate_schema('question-input',q)
         if self.review_provider is not None:
             # A provider receives course facts, never an answer key. Its returned annotations
             # are still external semantic assertions, NOT automatically proven truths.
+            # Keep a separate snapshot: a provider may mutate its argument in place.
+            original = deepcopy(q)
             q = self.review_provider(q,self.registry)
-        validate_schema('question-input',q)
+            validate_schema('question-input',q)
+            material_fields = ('question_id','question_type','stem','passage','options',
+                               'given_word','student_text','continuation_starters',
+                               'original_images','student_symptoms')
+            for field in material_fields:
+                if (field in q)!=(field in original) or q.get(field)!=original.get(field):
+                    raise ValueError('Review provider cannot replace original question material: '+field)
         matches = match_methods(q,self.registry)
         chain = compose(q,matches,self.registry)
         graph = EvidenceGraph()
