@@ -6,7 +6,7 @@
     "head": "60ebaf4"
   },
   "after_refactor": {
-    "tests_run": 214,
+    "tests_run": 225,
     "failures": 0,
     "errors": 0,
     "registry": {
@@ -20,6 +20,14 @@
     "cli_smoke": [
       {
         "command": "python -m answer_engine validate",
+        "exit_code": 0
+      },
+      {
+        "command": "python -m answer_engine lesson examples/passage-lesson.synthetic.json --renderer legacy-wechat",
+        "exit_code": 0
+      },
+      {
+        "command": "python -m answer_engine lesson examples/passage-lesson.synthetic.json --renderer content-export",
         "exit_code": 0
       },
       {
@@ -139,5 +147,17 @@
     "complete_gate": "own actions, quotes, candidate relations, stop rules and closed answer",
     "seven_five": "three reviewed F01 partitions displayed once before body",
     "projection_binding": "text, method, trigger, candidate relation and current graph spans; unsupported full script withheld"
+  },
+  "whole_passage_delivery": {
+    "schema_version": "1.0.0",
+    "scope": "declared external course order and spoken delivery, not authenticated semantic/old-host performance",
+    "order_gate": [
+      "reading task mode, not passage letter",
+      "cloze original-number first pass / observed stop / exact recovery",
+      "grammar explicit hint branch then original-number order",
+      "seven-five one shared grouping before breakthrough"
+    ],
+    "complete_gate": "every own single-question script and closure, original material, reviewed order; no partial answer string",
+    "projection": "original input spans/order/action/text/answer-summary rechecked"
   }
 }

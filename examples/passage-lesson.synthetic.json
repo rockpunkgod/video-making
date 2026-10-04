@@ -1,0 +1,549 @@
+{
+  "lesson_id": "synthetic-program-whole-passage-not-real-exam",
+  "question_type": "阅读理解",
+  "passage": "alpha beta gamma",
+  "material_complete": true,
+  "questions": [
+    {
+      "number": 31,
+      "question": {
+        "question_id": "program-31",
+        "question_type": "阅读理解",
+        "task_type": "detail",
+        "stem": "program-only, not an English exam",
+        "passage": "alpha beta gamma",
+        "options": {
+          "A": "alpha",
+          "B": "beta"
+        },
+        "requested_chain": [
+          "R01"
+        ],
+        "observations": [
+          {
+            "method_id": "R01",
+            "reviewed": true,
+            "evidence": [
+              {
+                "field": "passage",
+                "start": 0,
+                "end": 16,
+                "quote": "alpha beta gamma"
+              }
+            ]
+          }
+        ],
+        "relations": [
+          {
+            "method_id": "R01",
+            "candidate": "A",
+            "effect": "retain",
+            "claim": "program-only candidate A",
+            "evidence": [
+              {
+                "field": "passage",
+                "start": 0,
+                "end": 16,
+                "quote": "alpha beta gamma"
+              }
+            ],
+            "decision_rule_check": "program relation, not teaching evidence",
+            "stop_rule_check": "program stop check",
+            "verification": "program verification",
+            "reviewer": "synthetic-parser-fixture",
+            "review_status": "reviewed"
+          },
+          {
+            "method_id": "R01",
+            "candidate": "B",
+            "effect": "eliminate",
+            "claim": "program-only candidate B",
+            "evidence": [
+              {
+                "field": "passage",
+                "start": 0,
+                "end": 16,
+                "quote": "alpha beta gamma"
+              }
+            ],
+            "decision_rule_check": "program relation, not teaching evidence",
+            "stop_rule_check": "program stop check",
+            "verification": "program verification",
+            "reviewer": "synthetic-parser-fixture",
+            "review_status": "reviewed"
+          }
+        ],
+        "lesson_review": {
+          "schema_version": "1.0.0",
+          "question_type": "阅读理解",
+          "review_status": "reviewed",
+          "reviewer": "synthetic-program-fixture-not-a-teacher-study",
+          "source_section_ids": [
+            "dba42e053595968b",
+            "044ac82fa0d47a9d"
+          ],
+          "segments": [
+            {
+              "segment_id": "1",
+              "function": "action",
+              "method_id": "R01",
+              "text": "这里先用选项加戏，把候选拆出后来多说的部分，先只查这一截。",
+              "evidence": [
+                {
+                  "field": "passage",
+                  "start": 0,
+                  "end": 16,
+                  "quote": "alpha beta gamma"
+                }
+              ],
+              "relation_indices": []
+            },
+            {
+              "segment_id": "2",
+              "function": "evidence",
+              "method_id": "R01",
+              "text": "先回到原文alpha beta gamma，这一截是当前核验的起点。",
+              "evidence": [
+                {
+                  "field": "passage",
+                  "start": 0,
+                  "end": 16,
+                  "quote": "alpha beta gamma"
+                }
+              ],
+              "relation_indices": []
+            },
+            {
+              "segment_id": "3",
+              "function": "comparison",
+              "method_id": "R01",
+              "text": "A的断言回到alpha beta gamma能得到支持，先保留。",
+              "evidence": [
+                {
+                  "field": "passage",
+                  "start": 0,
+                  "end": 16,
+                  "quote": "alpha beta gamma"
+                }
+              ],
+              "relation_indices": [
+                0
+              ]
+            },
+            {
+              "segment_id": "4",
+              "function": "comparison",
+              "method_id": "R01",
+              "text": "B的断言回到alpha beta gamma不能得到支持，在这一截排除。",
+              "evidence": [
+                {
+                  "field": "passage",
+                  "start": 0,
+                  "end": 16,
+                  "quote": "alpha beta gamma"
+                }
+              ],
+              "relation_indices": [
+                1
+              ]
+            },
+            {
+              "segment_id": "5",
+              "function": "stop",
+              "method_id": "R01",
+              "text": "新增部分有直接或间接文本支持时，就不能仅因没有原词而排除。",
+              "evidence": [
+                {
+                  "field": "passage",
+                  "start": 0,
+                  "end": 16,
+                  "quote": "alpha beta gamma"
+                }
+              ],
+              "relation_indices": []
+            }
+          ]
+        }
+      }
+    },
+    {
+      "number": 32,
+      "question": {
+        "question_id": "program-32",
+        "question_type": "阅读理解",
+        "task_type": "vocabulary",
+        "stem": "program-only, not an English exam",
+        "passage": "alpha beta gamma",
+        "options": {
+          "A": "alpha",
+          "B": "beta"
+        },
+        "requested_chain": [
+          "R01"
+        ],
+        "observations": [
+          {
+            "method_id": "R01",
+            "reviewed": true,
+            "evidence": [
+              {
+                "field": "passage",
+                "start": 0,
+                "end": 16,
+                "quote": "alpha beta gamma"
+              }
+            ]
+          }
+        ],
+        "relations": [
+          {
+            "method_id": "R01",
+            "candidate": "A",
+            "effect": "retain",
+            "claim": "program-only candidate A",
+            "evidence": [
+              {
+                "field": "passage",
+                "start": 0,
+                "end": 16,
+                "quote": "alpha beta gamma"
+              }
+            ],
+            "decision_rule_check": "program relation, not teaching evidence",
+            "stop_rule_check": "program stop check",
+            "verification": "program verification",
+            "reviewer": "synthetic-parser-fixture",
+            "review_status": "reviewed"
+          },
+          {
+            "method_id": "R01",
+            "candidate": "B",
+            "effect": "eliminate",
+            "claim": "program-only candidate B",
+            "evidence": [
+              {
+                "field": "passage",
+                "start": 0,
+                "end": 16,
+                "quote": "alpha beta gamma"
+              }
+            ],
+            "decision_rule_check": "program relation, not teaching evidence",
+            "stop_rule_check": "program stop check",
+            "verification": "program verification",
+            "reviewer": "synthetic-parser-fixture",
+            "review_status": "reviewed"
+          }
+        ],
+        "lesson_review": {
+          "schema_version": "1.0.0",
+          "question_type": "阅读理解",
+          "review_status": "reviewed",
+          "reviewer": "synthetic-program-fixture-not-a-teacher-study",
+          "source_section_ids": [
+            "dba42e053595968b",
+            "044ac82fa0d47a9d"
+          ],
+          "segments": [
+            {
+              "segment_id": "1",
+              "function": "action",
+              "method_id": "R01",
+              "text": "这里先用选项加戏，把候选拆出后来多说的部分，先只查这一截。",
+              "evidence": [
+                {
+                  "field": "passage",
+                  "start": 0,
+                  "end": 16,
+                  "quote": "alpha beta gamma"
+                }
+              ],
+              "relation_indices": []
+            },
+            {
+              "segment_id": "2",
+              "function": "evidence",
+              "method_id": "R01",
+              "text": "先回到原文alpha beta gamma，这一截是当前核验的起点。",
+              "evidence": [
+                {
+                  "field": "passage",
+                  "start": 0,
+                  "end": 16,
+                  "quote": "alpha beta gamma"
+                }
+              ],
+              "relation_indices": []
+            },
+            {
+              "segment_id": "3",
+              "function": "comparison",
+              "method_id": "R01",
+              "text": "A的断言回到alpha beta gamma能得到支持，先保留。",
+              "evidence": [
+                {
+                  "field": "passage",
+                  "start": 0,
+                  "end": 16,
+                  "quote": "alpha beta gamma"
+                }
+              ],
+              "relation_indices": [
+                0
+              ]
+            },
+            {
+              "segment_id": "4",
+              "function": "comparison",
+              "method_id": "R01",
+              "text": "B的断言回到alpha beta gamma不能得到支持，在这一截排除。",
+              "evidence": [
+                {
+                  "field": "passage",
+                  "start": 0,
+                  "end": 16,
+                  "quote": "alpha beta gamma"
+                }
+              ],
+              "relation_indices": [
+                1
+              ]
+            },
+            {
+              "segment_id": "5",
+              "function": "stop",
+              "method_id": "R01",
+              "text": "新增部分有直接或间接文本支持时，就不能仅因没有原词而排除。",
+              "evidence": [
+                {
+                  "field": "passage",
+                  "start": 0,
+                  "end": 16,
+                  "quote": "alpha beta gamma"
+                }
+              ],
+              "relation_indices": []
+            }
+          ]
+        }
+      }
+    },
+    {
+      "number": 33,
+      "question": {
+        "question_id": "program-33",
+        "question_type": "阅读理解",
+        "task_type": "main_idea",
+        "stem": "program-only, not an English exam",
+        "passage": "alpha beta gamma",
+        "options": {
+          "A": "alpha",
+          "B": "beta"
+        },
+        "requested_chain": [
+          "R01"
+        ],
+        "observations": [
+          {
+            "method_id": "R01",
+            "reviewed": true,
+            "evidence": [
+              {
+                "field": "passage",
+                "start": 0,
+                "end": 16,
+                "quote": "alpha beta gamma"
+              }
+            ]
+          }
+        ],
+        "relations": [
+          {
+            "method_id": "R01",
+            "candidate": "A",
+            "effect": "retain",
+            "claim": "program-only candidate A",
+            "evidence": [
+              {
+                "field": "passage",
+                "start": 0,
+                "end": 16,
+                "quote": "alpha beta gamma"
+              }
+            ],
+            "decision_rule_check": "program relation, not teaching evidence",
+            "stop_rule_check": "program stop check",
+            "verification": "program verification",
+            "reviewer": "synthetic-parser-fixture",
+            "review_status": "reviewed"
+          },
+          {
+            "method_id": "R01",
+            "candidate": "B",
+            "effect": "eliminate",
+            "claim": "program-only candidate B",
+            "evidence": [
+              {
+                "field": "passage",
+                "start": 0,
+                "end": 16,
+                "quote": "alpha beta gamma"
+              }
+            ],
+            "decision_rule_check": "program relation, not teaching evidence",
+            "stop_rule_check": "program stop check",
+            "verification": "program verification",
+            "reviewer": "synthetic-parser-fixture",
+            "review_status": "reviewed"
+          }
+        ],
+        "lesson_review": {
+          "schema_version": "1.0.0",
+          "question_type": "阅读理解",
+          "review_status": "reviewed",
+          "reviewer": "synthetic-program-fixture-not-a-teacher-study",
+          "source_section_ids": [
+            "dba42e053595968b",
+            "044ac82fa0d47a9d"
+          ],
+          "segments": [
+            {
+              "segment_id": "1",
+              "function": "action",
+              "method_id": "R01",
+              "text": "这里先用选项加戏，把候选拆出后来多说的部分，先只查这一截。",
+              "evidence": [
+                {
+                  "field": "passage",
+                  "start": 0,
+                  "end": 16,
+                  "quote": "alpha beta gamma"
+                }
+              ],
+              "relation_indices": []
+            },
+            {
+              "segment_id": "2",
+              "function": "evidence",
+              "method_id": "R01",
+              "text": "先回到原文alpha beta gamma，这一截是当前核验的起点。",
+              "evidence": [
+                {
+                  "field": "passage",
+                  "start": 0,
+                  "end": 16,
+                  "quote": "alpha beta gamma"
+                }
+              ],
+              "relation_indices": []
+            },
+            {
+              "segment_id": "3",
+              "function": "comparison",
+              "method_id": "R01",
+              "text": "A的断言回到alpha beta gamma能得到支持，先保留。",
+              "evidence": [
+                {
+                  "field": "passage",
+                  "start": 0,
+                  "end": 16,
+                  "quote": "alpha beta gamma"
+                }
+              ],
+              "relation_indices": [
+                0
+              ]
+            },
+            {
+              "segment_id": "4",
+              "function": "comparison",
+              "method_id": "R01",
+              "text": "B的断言回到alpha beta gamma不能得到支持，在这一截排除。",
+              "evidence": [
+                {
+                  "field": "passage",
+                  "start": 0,
+                  "end": 16,
+                  "quote": "alpha beta gamma"
+                }
+              ],
+              "relation_indices": [
+                1
+              ]
+            },
+            {
+              "segment_id": "5",
+              "function": "stop",
+              "method_id": "R01",
+              "text": "新增部分有直接或间接文本支持时，就不能仅因没有原词而排除。",
+              "evidence": [
+                {
+                  "field": "passage",
+                  "start": 0,
+                  "end": 16,
+                  "quote": "alpha beta gamma"
+                }
+              ],
+              "relation_indices": []
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "review": {
+    "reviewer": "synthetic-program-fixture-not-participant",
+    "review_status": "reviewed",
+    "source_section_ids": [
+      "c087e45a16752b01"
+    ],
+    "reading_mode": "central_task",
+    "steps": [
+      {
+        "question_id": "program-33",
+        "pass": 1,
+        "outcome": "solved",
+        "transition": "先回到alpha beta gamma，核第33题本身的任务和关系。",
+        "evidence": [
+          {
+            "field": "passage",
+            "start": 0,
+            "end": 16,
+            "quote": "alpha beta gamma"
+          }
+        ],
+        "execution_ids": []
+      },
+      {
+        "question_id": "program-31",
+        "pass": 1,
+        "outcome": "solved",
+        "transition": "先回到alpha beta gamma，核第31题本身的任务和关系。",
+        "evidence": [
+          {
+            "field": "passage",
+            "start": 0,
+            "end": 16,
+            "quote": "alpha beta gamma"
+          }
+        ],
+        "execution_ids": []
+      },
+      {
+        "question_id": "program-32",
+        "pass": 1,
+        "outcome": "solved",
+        "transition": "先回到alpha beta gamma，核第32题本身的任务和关系。",
+        "evidence": [
+          {
+            "field": "passage",
+            "start": 0,
+            "end": 16,
+            "quote": "alpha beta gamma"
+          }
+        ],
+        "execution_ids": []
+      }
+    ]
+  }
+}

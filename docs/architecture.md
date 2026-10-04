@@ -30,3 +30,5 @@ writing_review输入经单独文本审阅适配进入writing_feedback；两类�
 Composer计划另有类型化执行通道：action_executions → execution_trace → action_artifact图节点。明确区分计划、关系审阅与实际提交产物；只有更早的已审阅、完整、未刹车产物可被后续消费。R09骨架、F01分组、语法路线和独立候选判断各有限权；核验失败撤回答案。Renderer重检执行链与图指纹绑定，content-export保留完整产物。详见method-execution.md；该通道不认证外部语义或审阅身份。
 
 单题口播另经lesson_review → lesson_feedback输送，绑定实际动作/短引文/候选比较/刹车与独立触发，缺完整覆盖或答案未闭合时实际扣留。完整交付从同学、我们来分析一下进入正文，最后由核心答案汇总，不展示内部字段；宿主自由文字忠实性和整篇课程顺序仍未认证，详见lesson-review.md。
+
+PassageLessonAnalyzer复用单题核心与口播检查，另核冻结课程顺序、原题号、共享原文和实际暂留/回收步骤。篇级Renderer先分组三维，再说突破空，整篇只称呼及汇总一次；原题面和步骤保留供投影重检。顺序理由、完整性与自由文字仍是外部声明，不认证真实语义或宿主效果，见passage-lesson.md。

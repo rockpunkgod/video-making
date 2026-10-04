@@ -24,7 +24,7 @@ Registry（源章节+方法）→Matcher/Composer→Question/Paper Analyzer→Ev
 | 9 | PARTIAL | 整卷结构扫描、方法/难度/证据/Demo排序可运行；无完整真实卷语义回归 |
 | 10 | PARTIAL | 四Renderer与兼容Skill/脚本接入；完整旧答疑行为尚未认证 |
 | 11 | PASS | 真人记录导入、统计、冻结计划及短版安全；真人数据未运行 |
-| 12 | PASS | 214项自动Regression及CLI烟测通过 |
+| 12 | PASS | 225项自动Regression及CLI烟测通过 |
 | 13 | PASS | README及架构/维护/评估/迁移文档 |
 | 14 | PASS | 逐Gate如实验收，最终PARTIAL，不宣布工程全完成 |
 
@@ -43,7 +43,7 @@ Registry（源章节+方法）→Matcher/Composer→Question/Paper Analyzer→Ev
 
 ## 5. Tests
 
-Before：16/16；After：214/214。覆盖baseline、全量Registry/Case/标准Schema、Analyzer证据/角色/拒答、Paper推荐门禁、Renderer事实保留、Legacy资源/脚本、Evaluation公式/空数据/重复/污染/不可伪升级。四Skill通过skill-creator quick_validate（Windows使用UTF-8模式）；editable安装通过。CLI 10种烟测通过，写作示例为synthetic程序输送记录，不是实际英语题或真人评分。详细机器记录：evaluation/reports/engineering-acceptance.json。未声称旧题库正确率或宿主语义回归已通过。
+Before：16/16；After：225/225。覆盖baseline、全量Registry/Case/标准Schema、Analyzer证据/角色/拒答、Paper推荐门禁、Renderer事实保留、Legacy资源/脚本、Evaluation公式/空数据/重复/污染/不可伪升级。四Skill通过skill-creator quick_validate（Windows使用UTF-8模式）；editable安装通过。CLI 12种烟测通过，写作示例为synthetic程序输送记录，不是实际英语题或真人评分。详细机器记录：evaluation/reports/engineering-acceptance.json。未声称旧题库正确率或宿主语义回归已通过。
 
 ## 6. Evaluation Readiness
 
@@ -70,7 +70,7 @@ First-use、Blind/Baseline、10/30/90s Safety均有记录Schema及直接可运�
 | G11 | PARTIAL | 整卷接口可执行；真实完整卷回归缺数据 |
 | G12 | PASS | Core不含交付模板，Renderer不改变答案事实 |
 | G13 | PARTIAL | 入口/脚本/契约兼容通过，完整旧题库宿主语义表现未验 |
-| G14 | PASS | 16 baseline保留，当前214项通过 |
+| G14 | PASS | 16 baseline保留，当前225项通过 |
 | G15 | PASS | JSON/JSONL导入、12类指标/差值、三短版安全可运行；统计显著性需审阅 |
 | G16 | PASS | 真人未测为pending_real_participant_validation；零升级虚报 |
 
@@ -97,3 +97,5 @@ First-use、Blind/Baseline、10/30/90s Safety均有记录Schema及直接可运�
 方法编排执行通道：action_executions传入具体动作与八类产物，execution_trace按ID消费更早已审阅、完整、未刹车的兼容产物。R09三字段骨架、候选全覆盖分组、角色/版本/独立触发、对应候选关系和语法节点路径均有运行门禁；核验不支持时实际撤回答案与整卷推荐。产物指纹与执行链/图联合校验，Renderer显示实际动作和停止原因。此为外部动作结果的运行控制，不认证自由题面语义求解、真实动作或宿主审阅身份。
 
 单题口播通道：lesson_review经源合同、独立触发、实际动作、短引文、候选关系和刹车覆盖进入lesson_feedback；完整消息恢复原纯文本开场，最后由核心闭合答案汇总。七选五实际三维分组在开头展示一次，缺分组或闭合就扣留完整稿。投影重检文字/图/触发/候选/答案一致性；未认证宿主自由文字语义与整篇课程顺序，旧题库语义回归仍缺。生成技能只增加接口链接，不复制教学判据或改用户技能库。
+
+整篇交付接口：lesson复用单题核心，显式保留原题号、共享原文和审阅顺序。阅读中心任务先于细节/猜词、完形暂留后原空号回收、语法无提示词优先及七选五一次分组先于突破说明均有工程检查；最后按原题号汇总，缺某题口播时指出该题并扣留整篇消息。接口可运行不等于真实材料完整、自由文字语义或旧宿主表现已认证；相应真实回归仍缺。

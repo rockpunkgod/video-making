@@ -45,6 +45,8 @@ def build():
         if name in {'gaokao-english','gaokao-objective','gaokao-grammar-fill'}:
             assets[f'{name}/SKILL.md']+='\n需要完整单题口播进入核心时读 [lesson-review.md](references/lesson-review.md)，提交lesson_review并绑定实际动作、短引文、候选比较和刹车。完整口播没有闭合就扣留，不把通用结构投影当原课程现场讲解；整篇顺序仍须原契约完整执行，不由单题通道证明。\n'
             assets[f'{name}/references/lesson-review.md']='<!-- Generated interface guide; course facts stay in Registry. -->\n\n'+(ROOT/'docs/lesson-review.md').read_text(encoding='utf-8')
+            assets[f'{name}/SKILL.md']+='\n整篇讲题进入核心时读 [passage-lesson.md](references/passage-lesson.md)，用lesson命令提交原题号、共享原文及有证据的实际顺序/暂留/回收；不能直接拼单题消息冒充整篇，不凭篇号或答案键猜顺序。\n'
+            assets[f'{name}/references/passage-lesson.md']='<!-- Generated interface guide; course facts stay in Registry. -->\n\n'+(ROOT/'docs/passage-lesson.md').read_text(encoding='utf-8')
         if name=='gaokao-writing':
             assets[f'{name}/SKILL.md']+='\n完整写作审阅进入核心时读取 [writing-review.md](references/writing-review.md)，提交writing_review而非用客观题relations假装评分。区分确定错误与可选润色，独立15/25分规范、材料与书写边界不变；程序只检查引用/交付结构，分数仅外部建议。\n'
             assets[f'{name}/references/writing-review.md']='<!-- Generated interface guide; course facts stay in Registry. -->\n\n'+(ROOT/'docs/writing-review.md').read_text(encoding='utf-8')

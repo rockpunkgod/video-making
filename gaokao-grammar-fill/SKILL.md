@@ -14,3 +14,5 @@ description: 高考英语语法填空答疑；经注册表、证据核验与独�
 语法知识路由读取 [grammar-navigation.md](references/grammar-navigation.md)。先确认有无提示词，再按未填句功能进入节点；树路径只是知识调用计划，不能代替句法、搭配与词形核验。
 
 需要完整单题口播进入核心时读 [lesson-review.md](references/lesson-review.md)，提交lesson_review并绑定实际动作、短引文、候选比较和刹车。完整口播没有闭合就扣留，不把通用结构投影当原课程现场讲解；整篇顺序仍须原契约完整执行，不由单题通道证明。
+
+整篇讲题进入核心时读 [passage-lesson.md](references/passage-lesson.md)，用lesson命令提交原题号、共享原文及有证据的实际顺序/暂留/回收；不能直接拼单题消息冒充整篇，不凭篇号或答案键猜顺序。

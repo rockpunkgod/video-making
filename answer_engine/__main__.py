@@ -7,14 +7,16 @@ from core.analyzer import QuestionAnalyzer, PaperAnalyzer
 from core.matcher import symptom_route
 from renderers import render
 from evaluation.harness import evaluate,load_records
+from core.passage_lesson import PassageLessonAnalyzer
+from renderers.passage import render_passage
 
 def main():
     if hasattr(sys.stdout,'reconfigure'): sys.stdout.reconfigure(encoding='utf-8')
     parser = argparse.ArgumentParser(description='Evidence-grounded Gaokao Method Engine')
     commands = parser.add_subparsers(dest='command',required=True)
-    for name in ['analyze','paper']:
+    for name in ['analyze','paper','lesson']:
         sub = commands.add_parser(name); sub.add_argument('input')
-        if name=='analyze': sub.add_argument('--renderer',choices=['structured','student','legacy-wechat','content-export'],default='structured')
+        if name in {'analyze','lesson'}: sub.add_argument('--renderer',choices=['structured','student','legacy-wechat','content-export'],default='structured')
     sub=commands.add_parser('method'); sub.add_argument('method_id')
     sub=commands.add_parser('symptom'); sub.add_argument('question_type'); sub.add_argument('symptom')
     sub=commands.add_parser('evaluate'); sub.add_argument('input'); sub.add_argument('--plan')
@@ -29,7 +31,9 @@ def main():
     elif args.command=='evaluate': result=evaluate(load_records(args.input),json.loads(Path(args.plan).read_text(encoding='utf-8')) if args.plan else None)
     else:
         value=json.loads(Path(args.input).read_text(encoding='utf-8-sig'))
-        if args.command=='paper': result=PaperAnalyzer(QuestionAnalyzer(r)).analyze(value)
+        if args.command=='lesson':
+            print(render_passage(PassageLessonAnalyzer(QuestionAnalyzer(r)).analyze(value),args.renderer,r)); return
+        elif args.command=='paper': result=PaperAnalyzer(QuestionAnalyzer(r)).analyze(value)
         else:
             print(render(QuestionAnalyzer(r).analyze(value),args.renderer,r)); return
     print(json.dumps(result,ensure_ascii=False,indent=2))
