@@ -35,6 +35,12 @@ class RegistryEngineTest(unittest.TestCase):
     def test_all_source_documents_preserved(self):
         for d in self.r.sources['documents']:
             self.assertEqual(self.r.document(d['path']),(ROOT/'provenance/ANSWER'/d['path']).read_text(encoding='utf-8'))
+    def test_frozen_hashes_survive_git_checkout(self):
+        import hashlib
+        for item in load('provenance/manifest.yaml')['files']:
+            path='provenance/ANSWER/'+item['path']
+            blob=subprocess.run(['git','show',':'+path],cwd=ROOT,capture_output=True,check=True).stdout
+            self.assertEqual(hashlib.sha256(blob).hexdigest(),item['sha256'])
     def test_generated_assets_have_no_drift(self): self.assertEqual(generate(True)['generated_assets'],'PASS')
     def test_unique_ids_indexed_once(self): self.assertEqual(set(self.r.methods),set(self.r.index['methods']))
     def test_six_types_with_gaps_not_fake_cases(self):

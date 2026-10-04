@@ -6,7 +6,7 @@
     "head": "60ebaf4"
   },
   "after_refactor": {
-    "tests_run": 78,
+    "tests_run": 79,
     "failures": 0,
     "errors": 0,
     "registry": {

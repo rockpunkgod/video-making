@@ -1,0 +1,4 @@
+* text=auto eol=lf
+# Frozen audit snapshots must retain the exact captured bytes on every OS.
+provenance/ANSWER/** -text -whitespace
+gaokao-grammar-fill/scripts/check_lesson.py -text -whitespace
