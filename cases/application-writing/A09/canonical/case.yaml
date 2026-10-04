@@ -1,0 +1,19 @@
+case_id: A09-canonical
+method_id: A09
+question_type: 应用文
+source:
+  repository: https://github.com/rockpunkgod/ANSWER.git
+  commit: b04ebc26d7fa096404111a0bb12f6c77cc8525b9
+  path: gaokao-writing/references/application-writing-and-correction.md
+  heading: 15 分评分规范
+question: null
+answer: null
+trigger: 题目与学生全文可见且请求批改
+evidence: []
+method_role: verifier
+expected_action: 先按15分五档三维定档，逐条引用题面和原稿证据，缺材料不完整给分
+expected_output: verify
+stop_rule: 不能以本动作代替完整题面关系核验；题面缺失、关键词义不明或出现反证就停止定案。具体边界见源章节。
+case_type: canonical
+status: evidence_gap
+notes: 源方法可核；尚未逐题核验案例，不可当成功样例

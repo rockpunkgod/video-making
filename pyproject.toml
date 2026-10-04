@@ -1,0 +1,17 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "gaokao-method-engine"
+version = "0.2.0"
+description = "Evidence-grounded Gaokao English method and question-analysis system"
+requires-python = ">=3.10"
+dependencies = ["PyYAML>=6.0,<7", "jsonschema>=4,<5"]
+
+[project.scripts]
+answer-engine = "answer_engine.__main__:main"
+
+[tool.setuptools.packages.find]
+include = ["answer_engine*", "core*", "renderers*", "evaluation*", "scripts*"]
+exclude = ["tests*"]

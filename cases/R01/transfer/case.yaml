@@ -7,3 +7,14 @@ expected_action: 不依赖原题具体词汇，仍能分出 A 与 B 并只查 B�
 pass_condition: 正确识别触发、完成拆分、找决定性证据并使用 Stop Rule。
 gap: 需要一道题材不同的冻结盲题。
 source_reference: ANSWER@b04ebc26:gaokao-english/references/reading-comprehension.md#过度推测
+case_id: R01-transfer
+question_type: 阅读理解
+source: ANSWER@b04ebc26:gaokao-english/references/reading-comprehension.md#过度推测
+question: null
+answer: null
+trigger: 候选核心与原文对应，但又多出参与者、目的、用途、时间、范围、因果或确定程度。
+evidence: []
+method_role: decider
+expected_output: decide
+stop_rule: 没逐字出现，不等于没有依据。
+notes: 需要一道题材不同的冻结盲题。

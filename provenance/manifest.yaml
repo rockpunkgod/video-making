@@ -1,0 +1,46 @@
+repository: https://github.com/rockpunkgod/ANSWER.git
+commit: b04ebc26d7fa096404111a0bb12f6c77cc8525b9
+files:
+- path: agents/gaokao-grammar-fill.md
+  sha256: 1c0436e2d4fda0fe07d5e5c56161710269db4d1200c9f60c1db04ffb4f6df878
+- path: agents/gaokao-objective.md
+  sha256: 299428eeba7526f22dae564905b24de5d4b586bde5703b4aed518ca34721bedf
+- path: agents/gaokao-writing.md
+  sha256: de5f81ec944e59b5342c219eb9bb9c1cbf35d1994a812d59d75dd0a177a91c9e
+- path: gaokao-english/references/cloze.md
+  sha256: fddf21ba17e8a5d3bcb90a7281896fbd44bd7d532b6780a375303ebe8d9211ba
+- path: gaokao-english/references/course-evidence.md
+  sha256: 8fc17e35d454a7d1665ec616359072bc33a6c120ac2612d84c359a898085e9e3
+- path: gaokao-english/references/delivery-contract.md
+  sha256: 61aa9a84bf743932f4073ae93dba9db37ef9823851d04b78eaeb36b9e74a02f4
+- path: gaokao-english/references/evidence-gaps.md
+  sha256: 48e405dd4a42134f74d54018da5ec222bdf13b4cc4ef576a00e0c6b533eda520
+- path: gaokao-english/references/listening.md
+  sha256: c20af004ed2ea287146a32d76fb366c228c5e76d53da1b2d2a30de0afaba34d6
+- path: gaokao-english/references/reading-comprehension.md
+  sha256: 83559f667eb262351dc6ba90818725f1f517a1969a888bb18b831f403e3818dd
+- path: gaokao-english/references/router.md
+  sha256: 61b70e95a09dbcbd9bf2701366ef10ef026ca505c208f323b72b4506a818e732
+- path: gaokao-english/references/seven-five.md
+  sha256: 6beebb8d0e32297e1ab7611ffbf86a378d4ad690c0604baafe1584804d44b089
+- path: gaokao-english/SKILL.md
+  sha256: af44ada25049354e8a5edfbe3b9da2698a47ac8014aeb39bf1a3cbe2b100fdf5
+- path: gaokao-grammar-fill/references/course-evidence.md
+  sha256: feab1810a3788a2659633cc78f82fdb5d9d3ed52b9908edf9fe8f5b0ca751ae5
+- path: gaokao-grammar-fill/references/grammar-fill.md
+  sha256: b1ff451d8a01ae4c799ad60b4f47132e2dec4235c5acacd03582de63ab838148
+- path: gaokao-grammar-fill/references/method-application-example.md
+  sha256: b31cc2459f048403875a2d4c1912849c6008928e515f7ebddfea76e5c5155753
+- path: gaokao-grammar-fill/references/objective-revision.md
+  sha256: 135f45929404a3f77aa29336b2df8a1d7dd81ee3595c4d98029fbbea0a1345fa
+- path: gaokao-grammar-fill/scripts/check_lesson.py
+  sha256: 751a00d9e663603a9478aa1f52bcfa37db909f8d705b6652c6a53931f477e7a2
+- path: gaokao-grammar-fill/SKILL.md
+  sha256: 4d7d0e26e6007efba8fb3aca0dbe3bc75b8b78d15b14757fa4a80a7e6460b048
+- path: gaokao-writing/references/application-writing-and-correction.md
+  sha256: 1bb8f9c2eece155a531efaf653e29ee79d515f0a7a4eb36f480bfdec9b178192
+- path: gaokao-writing/references/continuation-writing-and-correction.md
+  sha256: 3149bb08249e3c8dce7f7b035bd2162d6b0ff02f6d8d19bbda1b054acaf9409b
+- path: gaokao-writing/SKILL.md
+  sha256: 5d6f50b52b6c2e612907bf24821aacb6012330d661ccb59439b67098a8f693e3
+usage: 只读审计快照，不是运行时人工维护事实源

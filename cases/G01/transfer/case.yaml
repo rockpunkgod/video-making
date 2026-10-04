@@ -8,3 +8,14 @@ expected_action: 根据 the + 空位 + of 结构判定名词中心，再将 deve
 expected_result: development
 pass_condition: 不依赖 protect/protection 的记忆，能由新句的位置重复执行。
 source_reference: ANSWER@b04ebc26:kaiming-english-qa/references/corpus/24c4e1bcbc7f.txt#PDF第4页
+case_id: G01-transfer
+question_type: 语法填空
+source: ANSWER@b04ebc26:kaiming-english-qa/references/corpus/24c4e1bcbc7f.txt#PDF第4页
+question: benefits the ___ (develop) of the local areas
+answer: development
+trigger: 任何语法填空空位开始处理时。
+evidence: []
+method_role: framework
+expected_output: reduce
+stop_rule: 提示词是什么词性，不等于答案就是什么词性。
+notes: 尚未真人验收

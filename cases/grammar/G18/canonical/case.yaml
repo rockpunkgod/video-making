@@ -1,0 +1,19 @@
+case_id: G18-canonical
+method_id: G18
+question_type: 语法填空
+source:
+  repository: https://github.com/rockpunkgod/ANSWER.git
+  commit: b04ebc26d7fa096404111a0bb12f6c77cc8525b9
+  path: gaokao-grammar-fill/references/grammar-fill.md
+  heading: 总路线
+question: null
+answer: null
+trigger: 整篇完成后核对考点分布
+evidence: []
+method_role: verifier
+expected_action: 列每空实际考点，发现重复只触发回查，不能推翻该空独立句法语义证据
+expected_output: verify
+stop_rule: 不能以本动作代替完整题面关系核验；题面缺失、关键词义不明或出现反证就停止定案。具体边界见源章节。
+case_type: canonical
+status: evidence_gap
+notes: 源方法可核；尚未逐题核验案例，不可当成功样例

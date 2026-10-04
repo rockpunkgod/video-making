@@ -1,0 +1,119 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://answer.local/schemas/case.json",
+  "type": "object",
+  "properties": {
+    "case_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "method_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "question_type": {
+      "enum": [
+        "阅读理解",
+        "七选五",
+        "完形填空",
+        "语法填空",
+        "应用文",
+        "读后续写"
+      ]
+    },
+    "source": {
+      "type": [
+        "object",
+        "string"
+      ]
+    },
+    "question": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "answer": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "trigger": {
+      "type": "string",
+      "minLength": 1
+    },
+    "evidence": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      },
+      "minItems": 0
+    },
+    "method_role": {
+      "enum": [
+        "locator",
+        "interpreter",
+        "reducer",
+        "decider",
+        "verifier",
+        "framework"
+      ]
+    },
+    "expected_action": {
+      "type": "string",
+      "minLength": 1
+    },
+    "expected_output": {
+      "enum": [
+        "locate",
+        "interpret",
+        "reduce",
+        "decide",
+        "verify"
+      ]
+    },
+    "stop_rule": {
+      "type": "string",
+      "minLength": 1
+    },
+    "case_type": {
+      "enum": [
+        "canonical",
+        "counterexample",
+        "boundary",
+        "transfer",
+        "hard"
+      ]
+    },
+    "status": {
+      "enum": [
+        "verified_course_example",
+        "source_pattern_only",
+        "evidence_gap"
+      ]
+    },
+    "notes": {
+      "type": "string",
+      "minLength": 1
+    }
+  },
+  "required": [
+    "case_id",
+    "method_id",
+    "question_type",
+    "source",
+    "question",
+    "answer",
+    "trigger",
+    "evidence",
+    "method_role",
+    "expected_action",
+    "expected_output",
+    "stop_rule",
+    "case_type",
+    "status",
+    "notes"
+  ],
+  "additionalProperties": true
+}

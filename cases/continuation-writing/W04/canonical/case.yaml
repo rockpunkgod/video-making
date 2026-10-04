@@ -1,0 +1,19 @@
+case_id: W04-canonical
+method_id: W04
+question_type: 读后续写
+source:
+  repository: https://github.com/rockpunkgod/ANSWER.git
+  commit: b04ebc26d7fa096404111a0bb12f6c77cc8525b9
+  path: gaokao-writing/references/continuation-writing-and-correction.md
+  heading: gap 读法与首句规则
+question: null
+answer: null
+trigger: 两段开头语对人物或行动有约束
+evidence: []
+method_role: locator
+expected_action: 圈开头语的名词和任务，回文找人物与矛盾，再反推段间需要补的动作
+expected_output: locate
+stop_rule: 本步骤只产生位置，不能自动定案。不能以本动作代替完整题面关系核验；题面缺失、关键词义不明或出现反证就停止定案。具体边界见源章节。
+case_type: canonical
+status: evidence_gap
+notes: 源方法可核；尚未逐题核验案例，不可当成功样例

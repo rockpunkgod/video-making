@@ -172,3 +172,13 @@ short_version_safety:
 完整版正确不能替代短版安全证据。Signature 要求实际对外使用的 10/30 秒压缩版本均通过安全门槛；好记不能抵消 False Trigger、Method Overreach 或 Boundary Failure。
 
 本轮六个方法暂为 `Useful + candidate`。这不是对方法价值的贬低，而是对尚未运行真实学生盲测的诚实记录。
+
+## 可运行数据与工具入口
+
+本协议仍是验收依据；实现入口为 `python -m answer_engine evaluate 观察记录.json --plan 冻结计划.json`。记录支持 JSON 数组或 JSONL，契约见 `schemas/evaluation-record.json`，结果见 `schemas/evaluation-result.json`。导入包含第一阶段 communication、第二阶段 first_use 与 blind 的实际观察，记录动作、证据、刹车与学生复述原话；不能把自动答案正确冒充这些过程成功。
+
+统计按 method_id + method_version 分组，不混用版本，也不混用 real/synthetic。指标保留分子分母与 record_id。没有样本为 null；未形成可比冻结题组时短版 safe_for_release 为 untested。独立受试组或 counterbalanced 分配用于控制重复学习；同一受试者重复题面的未平衡记录不能进入短版发布推荐。
+
+计划示例 `evaluation/plan.example.json` 默认未冻结，不能直接授予发布通过。采集前由研究者按风险设定样本量、边界门槛、短版允许差值与效率效应量，保存计划版本；工具不能认证提交者、采集时间或真人身份，这些必须由研究者外部审计。
+
+均值改善只产生 review_for_Efficient / review_for_Signature 的人工审阅候选，不能证明统计显著性，不能自动升级 Registry。发布推荐还需真实数据、传播记忆与复述、First-use 无动作/证据/刹车/越权/倒贴失败，以及三个短版安全条件。工程回归不等于教学效果通过。

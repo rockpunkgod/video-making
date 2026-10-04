@@ -7,3 +7,14 @@ expected_action: 仍能还原动作发出者、完整谓语和承受者。
 pass_condition: 不依赖人称代词或主动语态才能执行。
 gap: 需要冻结的跨题材盲题。
 source_reference: ANSWER@b04ebc26:gaokao-english/references/reading-comprehension.md#主客一致
+case_id: R02-transfer
+question_type: 阅读理解
+source: ANSWER@b04ebc26:gaokao-english/references/reading-comprehension.md#主客一致
+question: null
+answer: null
+trigger: 谁想做与谁真正做了之间可能被偷换。
+evidence: []
+method_role: decider
+expected_output: decide
+stop_rule: 关键词一样，不代表动作关系一样。
+notes: 需要冻结的跨题材盲题。

@@ -1,0 +1,19 @@
+case_id: C09-canonical
+method_id: C09
+question_type: 完形填空
+source:
+  repository: https://github.com/rockpunkgod/ANSWER.git
+  commit: b04ebc26d7fa096404111a0bb12f6c77cc8525b9
+  path: gaokao-english/references/cloze.md
+  heading: 评价、结果与动作链
+question: null
+answer: null
+trigger: 连续动作需要先后或因果衔接
+evidence: []
+method_role: interpreter
+expected_action: 按已有动作画先后链，逐个标连接关系，不增添题面没有的时长或因果
+expected_output: interpret
+stop_rule: 本步骤只产生语义结构，不能自动定案。不能以本动作代替完整题面关系核验；题面缺失、关键词义不明或出现反证就停止定案。具体边界见源章节。
+case_type: canonical
+status: evidence_gap
+notes: 源方法可核；尚未逐题核验案例，不可当成功样例

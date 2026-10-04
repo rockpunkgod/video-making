@@ -1,0 +1,120 @@
+method_id: F01
+brand_name: 选项三分
+source_name: 结构一致 + 主语一致 + 时态一致
+aliases:
+- 三一致初筛
+- 先分组再拼回去
+question_type: 七选五
+role: reducer
+primary_role: reducer
+secondary_roles: []
+output_type: reduce
+student_symptoms:
+- 七个选项感觉都能放，拿到每个空都从 A–G 凭语感试填。
+- 知道结构、主体或时态有用，却容易命中一项就直接定答案。
+trigger_cues:
+- 整篇七选五刚开始，候选之间存在可观察的句型角色、主角/核心话题或真谓语时间差异。
+- 单空请求时，需要先把七个候选缩成几个优先核对项。
+core_action: 在选项区只做一次三维标记：句型、主角、时间；形成暂定组后立即把候选拼回空前空后。
+decision_rule: 三分只输出优先候选组；最终必须核对主体、动作、对象、时间线、前后关系与段落任务才能定案。
+verification:
+- 句型维度：标小标题、完整句、半句、祈使句或其他实际结构角色。
+- 主角维度：圈语法主语、核心话题、指代或祈使句省略的行动者。
+- 时间维度：只圈真正承担时间关系的谓语，不把非谓语词形当句子时态。
+- 某维没有区分度时明确跳过，不编造组。
+- 回到空前、空后和全段，比较同组候选的完整内容与篇章功能。
+stop_rule: 分组只缩范围，不负责定答案。
+common_wrong_instinct: 拿到一个空就在七个选项里凭语感试填，或看到同主语、同时态、同句型就直接选。
+failure_cases:
+- 三个维度都无明显差异时，本法不产生有效缩减，应直接进入内容核对。
+- 同组内仍有多项时，不得按组大小、选项占用或所剩数量定案。
+counterexamples:
+- 两个选项都是祈使句且行动者相同，但一项针对的对象与本段任务不符；同组不等于同时成立。
+- 段中出现过去时事件，但当前空转向一般感悟；不能因最近动词是过去时就只留过去时组。
+transfer_pattern: 适用于任何七选五选项区的一次性初筛，不依赖文章题材。
+memory_line: 先分组，再拼回去。
+anti_rule: 分组 ≠ 答案。
+visual_formula: "A–G 选项\n  ├─ 句型组\n  ├─ 主角组     → 优先候选\n  └─ 时间组\n               \
+  \    ↓\n           拼回空前+空后\n                   ↓\n              内容才定案"
+challenge_prompt: 不填任何空，只把 A–G 按句型、主角和真谓语时间各分一次组，并说出哪一维没有区分度。
+source_references:
+- repository: https://github.com/rockpunkgod/ANSWER.git
+  commit: b04ebc26d7fa096404111a0bb12f6c77cc8525b9
+  path: gaokao-english/references/seven-five.md
+  heading: 共同行为、结构一致、主语一致、时态一致
+- repository: https://github.com/rockpunkgod/ANSWER.git
+  commit: b04ebc26d7fa096404111a0bb12f6c77cc8525b9
+  path: gaokao-english/references/course-evidence.md
+  heading: 结构一致、七选五主语一致、七选五时态一致
+- repository: https://github.com/rockpunkgod/ANSWER.git
+  commit: b04ebc26d7fa096404111a0bb12f6c77cc8525b9
+  path: gaokao-grammar-fill/references/course-evidence.md
+  heading: 七选五
+can_follow: []
+usually_before:
+- 总起句做题法
+- 对应词法
+- 逻辑关系法
+- 褒贬一致
+usually_after: []
+conflicts_with: []
+cannot_replace:
+- 空前空后内容核对
+- 段落任务判断
+- 最终回填验证
+levels:
+  L1: 只识别明显完整句、半句、小标题或祈使句。
+  L2: 加入语法主语、核心话题、代词与省略行动者分组。
+  L3: 识别真谓语和局部时间线，不被非谓语词形误导。
+  L4: 在三维重叠或无区分度时，正确转入主体、动作、对象、前后关系和段落任务。
+compact:
+  line: 七选五先按句型、主角、时间三分，再拼回正文。
+  boundary: 三分仅减少需要比较的选项，不输出最终答案。
+full:
+  summary: 结构一致、主语一致与时态一致合并为一次性初筛阶段；内容闭环仍由原七选五模块的对应、逻辑、褒贬和段落任务完成。
+  boundaries:
+  - 整篇开头只分组一次
+  - 单题只在该题开头分组一次
+  - 无区分度的维度跳过
+  - 不据所剩选项定案
+cases:
+  canonical: cases/F01/canonical/case.yaml
+  counterexample: cases/F01/counterexamples/case.yaml
+  boundary: cases/F01/boundary/case.yaml
+  transfer: cases/F01/transfer/case.yaml
+four_step_card:
+  start: 刚开始七选五，A–G 在句型、主角或真谓语时间上有可观察差异。
+  first_cut: 不填空，先在选项区把句型、主角、时间各分一次组。
+  judge: 用组别减少优先比较项，然后拼回空前空后核对完整内容。
+  stop: 分组后必须停止形式判断；内容不闭环就暂留，不定案。
+practicality_gate:
+  status: design_complete_empirical_pending
+  trigger: 只需观察 A–G 的句型角色、主角/话题与真谓语时间，不依赖答案。
+  action: 给选项标 S句型、P主角、T时间三类标签，把当前空的优先组拼回两侧。
+  output: reduce；只输出减少后的优先候选组。
+  stop: 三维都无区分度，或已进入正文内容比较时停止分组。
+  transfer: 三维标记不依赖文章题材，可迁移到任何七选五选项集。
+  efficiency: 目标是减少每空从七项重新试填的比较量；是否显著提速待盲测。
+  misuse_cost: high；将 reduce 当 decide 会直接误选，所以首次版反复显示分组不定案。
+first_use_test:
+  status: designed_not_run
+  trigger_success: null
+  action_success: null
+  evidence_success: null
+  stop_rule_success: null
+  no_answer_backfit: null
+  final_result: pending_real_student_test
+evaluation:
+  baseline: 每空对 A–G 全部试填+凭语感排除
+  trigger_precision: null
+  trigger_recall: null
+  resolution_rate: null
+  standalone_rate: null
+  assist_rate: null
+  false_trigger_rate: null
+  transfer_rate: null
+  time_complexity_gain: null
+  primary_benefit_hypothesis: 减少候选比较数量和无效试填，但不承担定案。
+usefulness_level: Useful
+status: candidate
+version: 1.0.0

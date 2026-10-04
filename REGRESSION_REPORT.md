@@ -1,5 +1,7 @@
 # Regression Report
 
+最新 Method Engine 工程回归见 `evaluation/reports/engineering-acceptance.json` 与 `docs/final-acceptance.md`。下文为首轮六卡历史基线，不代表当前全量验收。新增核心尚未有独立宿主语义行为回归或真人效果数据。
+
 日期：2026-10-05  
 来源基线：`rockpunkgod/ANSWER@b04ebc26d7fa096404111a0bb12f6c77cc8525b9`  
 目标仓库：`rockpunkgod/video-making`

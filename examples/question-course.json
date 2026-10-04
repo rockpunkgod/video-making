@@ -1,0 +1,10 @@
+{
+  "question_id": "course-protect",
+  "question_type": "语法填空",
+  "task_type": "word_form",
+  "stem": "in order to promote environmental ___ (protect)",
+  "given_word": "protect",
+  "student_symptoms": [
+    "有提示词不知道怎么变"
+  ]
+}

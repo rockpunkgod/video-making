@@ -1,0 +1,60 @@
+"""Generate public projections from Registry; --check rejects manual drift."""
+import argparse
+import yaml
+from core.registry import ROOT, Registry, load
+
+def build():
+    r = Registry()
+    assets = {}
+    for mid in r.index['golden_methods']:
+        m = r.methods[mid]
+        parts = [f'# {mid} {m["brand_name"]}：学生首次接触版', m['entry_copy'], '## 四步实战卡']
+        parts += [f'{i}. {label}：{m["four_step_card"][key]}' for i,(key,label) in enumerate([('start','启动'),('first_cut','第一刀'),('judge','判断'),('stop','停止')],1)]
+        for duration in ['10','30','90']:
+            parts += [f'## {duration} 秒版',m['compact'][duration+'s']]
+        parts += ['## 一屏视觉式','```text\n'+m['visual_formula']+'\n```','反口诀：'+m['anti_rule'],f'生成来源：Registry {mid}@{m["version"]}。真人验收待运行。']
+        assets[f'student-guides/{mid}-{m["brand_name"]}.md'] = '\n\n'.join(parts)+'\n'
+    symptoms = {'routes':[]}
+    for m in r.methods.values():
+        symptoms['routes'].append({'question_type':m['question_type'],'symptoms':m['student_symptoms'],'method_id':m['method_id'],'role':m['primary_role'],'first_action':m['core_action'],'stop_rule':m['stop_rule']})
+    assets['references/student-symptoms.yaml'] = yaml.safe_dump(symptoms,allow_unicode=True,sort_keys=False)
+    assets['references/student-symptoms.md'] = '# 学生卡点导航（自动生成）\n\n'+'\n\n'.join(f'{x["question_type"]}：{x["symptoms"][0]} → {x["method_id"]}；第一刀：{x["first_action"]}；停止：{x["stop_rule"]}' for x in symptoms['routes'])+'\n'
+    anti = load('method-registry/anti-rules.yaml')['rules']
+    assets['references/anti-rules.yaml'] = yaml.safe_dump({'rules':anti},allow_unicode=True,sort_keys=False)
+    assets['references/anti-rules.md'] = '# Anti-Rule Registry（自动生成）\n\n'+'\n\n'.join(f'## {x["anti_rule_id"]} {x["rule"]}\n\n绑定：{", ".join(x["related_methods"])}。反例与边界：{x["boundary"]}。依据：{", ".join(x["source_evidence"])}。仅源模式，不是真题验证。' for x in anti)+'\n'
+    for name,types in [('gaokao-english',['阅读理解','七选五','完形填空']),('gaokao-objective',['阅读理解','七选五','完形填空']),('gaokao-grammar-fill',['语法填空']),('gaokao-writing',['应用文','读后续写'])]:
+        source_name = 'gaokao-english' if name=='gaokao-objective' else name
+        original = r.document(source_name+'/SKILL.md')
+        front_end = original.split('---',2)[2].lstrip()
+        description = '高考英语'+ '、'.join(types)+'答疑；经注册表、证据核验与独立输出适配。'
+        assets[f'{name}/SKILL.md'] = f'---\nname: {name}\ndescription: {description}\n---\n\n# 统一引擎适配入口\n\n先读取本目录 [generated-contract.md](generated-contract.md)，再按题型读取其中链接的 references，保留原先题型、顺序与证据边界。课程原名和品牌名是同一方法的别名，不产生新判据。学生动作入口允许注册品牌名，方法问答同时兼容课程原名。源契约中的逆推只能用于独立核验，不得把已知答案当证据或在 First-use 先猜后贴方法。\n\n方法查询：在项目根执行 `python -m answer_engine method METHOD_ID`；单题：`python -m answer_engine analyze INPUT.json --renderer legacy-wechat`；整卷：`python -m answer_engine paper INPUT.json`。宿主模型按完整契约作语义分析，再提交有原文跨度、判据、刹车、回填和审阅者的 relations；核心不把宿主猜测当自动验证。缺题面或语义证据必须暂留，不填答案。写作完整批改仍由宿主按15/25分独立契约完成，不由本地程序伪评分。\n\n单独安装 Skill 文件夹时，生成资源可自包含调用，完整核心命令需整个仓库及依赖；不要假定安装 Skill 等于安装核心。不能执行程序时按题型查询 [generated-methods.yaml](generated-methods.yaml)，完成相同证据动作；明确标记宿主分析未经核心检查。不要绕开停用边界。\n'
+        assets[f'{name}/generated-contract.md'] = '<!-- Generated from Registry; DO NOT EDIT. -->\n\n'+front_end
+        assets[f'{name}/generated-methods.yaml'] = yaml.safe_dump({'methods':[m for m in r.methods.values() if m['question_type'] in types]},allow_unicode=True,sort_keys=False)
+        for doc in r.sources['documents']:
+            path = doc['path']
+            if path.startswith(source_name+'/references/'):
+                assets[name+'/'+path.split('/',1)[1]] = r.document(path)
+    for d in r.sources['documents']:
+        if d['path'].startswith('agents/'):
+            assets[d['path']] = '<!-- Generated compatibility contract; installed Skill uses Registry. -->\n'+r.document(d['path'])
+    assets['references/method-roles.md'] = '# 方法角色（自动生成）\n\n'+'\n'.join(f'- {m["method_id"]} {m["brand_name"]}：{m["method_type"]} / {m["primary_role"]} → {m["output_type"]}' for m in r.methods.values())+'\n'
+    return assets
+
+def generate(check=False):
+    stale = []
+    for relative, content in build().items():
+        p = ROOT/relative
+        if check:
+            if not p.exists() or p.read_text(encoding='utf-8') != content:
+                stale.append(relative)
+        else:
+            p.parent.mkdir(parents=True,exist_ok=True)
+            p.write_text(content,encoding='utf-8')
+    if stale:
+        raise ValueError('Stale generated assets: '+', '.join(stale))
+    return {'generated_assets':'PASS'}
+
+if __name__ == '__main__':
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--check',action='store_true')
+    print(generate(parser.parse_args().check))

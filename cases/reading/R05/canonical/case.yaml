@@ -1,0 +1,19 @@
+case_id: R05-canonical
+method_id: R05
+question_type: 阅读理解
+source:
+  repository: https://github.com/rockpunkgod/ANSWER.git
+  commit: b04ebc26d7fa096404111a0bb12f6c77cc8525b9
+  path: gaokao-english/references/reading-comprehension.md
+  heading: 因果选果
+question: null
+answer: null
+trigger: 两个有依据的候选可能属于同一因果链
+evidence: []
+method_role: decider
+expected_action: 先圈题干问原因还是结果，再写出原文支持的原因→结果，比较候选落点
+expected_output: decide
+stop_rule: 不能以本动作代替完整题面关系核验；题面缺失、关键词义不明或出现反证就停止定案。具体边界见源章节。
+case_type: canonical
+status: evidence_gap
+notes: 源方法可核；尚未逐题核验案例，不可当成功样例

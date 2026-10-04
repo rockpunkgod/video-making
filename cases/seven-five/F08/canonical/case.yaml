@@ -1,0 +1,19 @@
+case_id: F08-canonical
+method_id: F08
+question_type: 七选五
+source:
+  repository: https://github.com/rockpunkgod/ANSWER.git
+  commit: b04ebc26d7fa096404111a0bb12f6c77cc8525b9
+  path: gaokao-english/references/seven-five.md
+  heading: 褒贬一致
+question: null
+answer: null
+trigger: 同一对象有可确认的评价方向
+evidence: []
+method_role: reducer
+expected_action: 圈评价词及它评价的对象，比较候选评价维度，不因同为积极词就定案
+expected_output: reduce
+stop_rule: 本步骤只产生缩小范围，不能自动定案。不能以本动作代替完整题面关系核验；题面缺失、关键词义不明或出现反证就停止定案。具体边界见源章节。
+case_type: canonical
+status: evidence_gap
+notes: 源方法可核；尚未逐题核验案例，不可当成功样例

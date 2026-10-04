@@ -1,0 +1,166 @@
+{
+  "schema_version": "1.0.0",
+  "origin": "synthetic",
+  "record_count": 15,
+  "groups": [
+    {
+      "method_id": "R01",
+      "method_version": "1.1.0",
+      "record_count": 15,
+      "metrics": {
+        "trigger_precision": 1.0,
+        "trigger_recall": 1.0,
+        "resolution_rate": 1.0,
+        "standalone_rate": 1.0,
+        "assist_rate": 0.0,
+        "false_trigger_rate": 0.0,
+        "transfer_rate": 1.0,
+        "boundary_accuracy": 1.0,
+        "role_overclaim_rate": 0.0,
+        "stop_rule_failure_rate": 0.0
+      },
+      "baseline_comparison": {
+        "accuracy": {
+          "baseline": 1,
+          "method": 1,
+          "gain": 0
+        },
+        "time_seconds": {
+          "baseline": 20,
+          "method": 20,
+          "gain": 0
+        },
+        "candidates_remaining": {
+          "baseline": 2,
+          "method": 2,
+          "gain": 0
+        },
+        "evidence_span": {
+          "baseline": 3,
+          "method": 3,
+          "gain": 0
+        },
+        "hesitation_count": {
+          "baseline": 1,
+          "method": 1,
+          "gain": 0
+        },
+        "unresolved": {
+          "baseline": 0,
+          "method": 0,
+          "gain": 0
+        },
+        "paired_observations": 15,
+        "metric_counts": {
+          "trigger_precision": {
+            "numerator": 6,
+            "denominator": 6
+          },
+          "trigger_recall": {
+            "numerator": 6,
+            "denominator": 6
+          },
+          "resolution_rate": {
+            "numerator": 6,
+            "denominator": 6
+          },
+          "standalone_rate": {
+            "numerator": 6,
+            "denominator": 6
+          },
+          "assist_rate": {
+            "numerator": 0,
+            "denominator": 6
+          },
+          "false_trigger_rate": {
+            "numerator": 0,
+            "denominator": 9
+          },
+          "transfer_rate": {
+            "numerator": 3,
+            "denominator": 3
+          },
+          "boundary_accuracy": {
+            "numerator": 3,
+            "denominator": 3
+          },
+          "role_overclaim_rate": {
+            "numerator": 0,
+            "denominator": 15
+          },
+          "stop_rule_failure_rate": {
+            "numerator": 0,
+            "denominator": 6
+          }
+        },
+        "record_ids": [
+          "10s-positive_trigger",
+          "10s-negative_trigger",
+          "10s-counterexample",
+          "10s-boundary",
+          "10s-transfer",
+          "30s-positive_trigger",
+          "30s-negative_trigger",
+          "30s-counterexample",
+          "30s-boundary",
+          "30s-transfer",
+          "90s-positive_trigger",
+          "90s-negative_trigger",
+          "90s-counterexample",
+          "90s-boundary",
+          "90s-transfer"
+        ]
+      },
+      "first_use": {
+        "record_count": 0,
+        "trigger_success": null,
+        "action_success": null,
+        "evidence_success": null,
+        "stop_rule_success": null,
+        "final_result": "pending_real_participant_validation",
+        "failures": [],
+        "role_correctness": []
+      },
+      "communication": {
+        "record_count": 0,
+        "recall_rate": null,
+        "natural_restatement_rate": null
+      },
+      "short_version_safety": [
+        {
+          "version": "10s",
+          "false_trigger_rate": 0.0,
+          "boundary_accuracy": 1.0,
+          "role_overclaim_rate": 0.0,
+          "stop_rule_failure_rate": 0.0,
+          "safe_for_release": "untested"
+        },
+        {
+          "version": "30s",
+          "false_trigger_rate": 0.0,
+          "boundary_accuracy": 1.0,
+          "role_overclaim_rate": 0.0,
+          "stop_rule_failure_rate": 0.0,
+          "safe_for_release": "untested"
+        },
+        {
+          "version": "90s",
+          "false_trigger_rate": 0.0,
+          "boundary_accuracy": 1.0,
+          "role_overclaim_rate": 0.0,
+          "stop_rule_failure_rate": 0.0,
+          "safe_for_release": "untested"
+        }
+      ],
+      "release_eligible": false,
+      "upgrade_eligible": "none",
+      "limitations": [
+        "缺样本指标为null；阈值与计划须测试前冻结，工具不替代真实性和统计显著性审阅。",
+        "不自动修改 Registry 状态或实用等级。"
+      ]
+    }
+  ],
+  "limitations": [
+    "指标仅计算输入观察；origin、参与者与审阅真实性须由研究者外部审计。Synthetic 不得用于等级升级。"
+  ]
+}

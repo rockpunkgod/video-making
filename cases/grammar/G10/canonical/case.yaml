@@ -1,0 +1,19 @@
+case_id: G10-canonical
+method_id: G10
+question_type: 语法填空
+source:
+  repository: https://github.com/rockpunkgod/ANSWER.git
+  commit: b04ebc26d7fa096404111a0bb12f6c77cc8525b9
+  path: gaokao-grammar-fill/references/grammar-fill.md
+  heading: 形容词、副词与比较等级
+question: null
+answer: null
+trigger: 空位确定作修饰或表语
+evidence: []
+method_role: decider
+expected_action: 圈被修饰词和比较结构，判形/副及级别，不机械加比较级
+expected_output: decide
+stop_rule: 不能以本动作代替完整题面关系核验；题面缺失、关键词义不明或出现反证就停止定案。具体边界见源章节。
+case_type: canonical
+status: evidence_gap
+notes: 源方法可核；尚未逐题核验案例，不可当成功样例

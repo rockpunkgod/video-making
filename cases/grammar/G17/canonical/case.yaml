@@ -1,0 +1,19 @@
+case_id: G17-canonical
+method_id: G17
+question_type: 语法填空
+source:
+  repository: https://github.com/rockpunkgod/ANSWER.git
+  commit: b04ebc26d7fa096404111a0bb12f6c77cc8525b9
+  path: gaokao-grammar-fill/references/grammar-fill.md
+  heading: 总路线
+question: null
+answer: null
+trigger: 长句修饰妨碍识别空位成分
+evidence: []
+method_role: interpreter
+expected_action: 圈主干谓语和对应主语，暂划介词短语、非谓语、插入语和从句，再恢复决定空位的修饰、否定与条件
+expected_output: interpret
+stop_rule: 本步骤只产生语义结构，不能自动定案。不能以本动作代替完整题面关系核验；题面缺失、关键词义不明或出现反证就停止定案。具体边界见源章节。
+case_type: canonical
+status: evidence_gap
+notes: 源方法可核；尚未逐题核验案例，不可当成功样例

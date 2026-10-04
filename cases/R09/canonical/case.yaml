@@ -8,3 +8,14 @@ expected_action: 先提假设，再用首尾、段首和必要展开填三格。
 pass_condition: 三格均有全文证据，且不将取证入口当最终产物。
 gap: 完整材料未在 ANSWER 运行层发布。
 source_reference: ANSWER@b04ebc26:gaokao-english/references/course-evidence.md#例题复核补充
+case_id: R09-canonical
+question_type: 阅读理解
+source: ANSWER@b04ebc26:gaokao-english/references/course-evidence.md#例题复核补充
+question: null
+answer: null
+trigger: 主要段落齐备，任务是全文主题、态度、主体结构、最佳标题或长文框架。
+evidence: []
+method_role: framework
+expected_output: interpret
+stop_rule: 词频高，不等于主题完整。
+notes: 完整材料未在 ANSWER 运行层发布。

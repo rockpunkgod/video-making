@@ -1,0 +1,45 @@
+{
+  "question_id": "course-protect",
+  "question_type": "语法填空",
+  "task_type": "word_form",
+  "stem": "in order to promote environmental ___ (protect)",
+  "given_word": "protect",
+  "student_symptoms": [
+    "有提示词不知道怎么变"
+  ],
+  "observations": [
+    {
+      "method_id": "G09",
+      "evidence": [
+        {
+          "field": "stem",
+          "start": 0,
+          "end": 47,
+          "quote": "in order to promote environmental ___ (protect)"
+        }
+      ],
+      "reviewed": true
+    }
+  ],
+  "relations": [
+    {
+      "method_id": "G09",
+      "candidate": "protection",
+      "effect": "retain",
+      "claim": "environmental 修饰宾语中心，空位需要名词",
+      "evidence": [
+        {
+          "field": "stem",
+          "start": 0,
+          "end": 47,
+          "quote": "in order to promote environmental ___ (protect)"
+        }
+      ],
+      "decision_rule_check": "名词性宾语中心与形容词修饰位置均成立",
+      "stop_rule_check": "提示动词不代表动词位置，停用谓语/非谓语分支",
+      "verification": "回填 environmental protection，核 promote 宾语与派生形式",
+      "reviewer": "engineering-course-fixture-not-participant",
+      "review_status": "reviewed"
+    }
+  ]
+}

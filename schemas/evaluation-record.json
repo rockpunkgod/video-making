@@ -1,0 +1,273 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://answer.local/schemas/evaluation-record.json",
+  "type": "object",
+  "properties": {
+    "record_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "participant_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "method_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "method_version": {
+      "type": "string",
+      "minLength": 1
+    },
+    "question_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "dataset_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "origin": {
+      "enum": [
+        "real",
+        "synthetic"
+      ]
+    },
+    "phase": {
+      "enum": [
+        "communication",
+        "first_use",
+        "blind"
+      ]
+    },
+    "compact_version": {
+      "enum": [
+        "10s",
+        "30s",
+        "90s",
+        "full"
+      ]
+    },
+    "case_type": {
+      "enum": [
+        "positive_trigger",
+        "negative_trigger",
+        "counterexample",
+        "boundary",
+        "transfer"
+      ]
+    },
+    "applicable": {
+      "type": "boolean"
+    },
+    "triggered": {
+      "type": "boolean"
+    },
+    "action_success": {
+      "type": "boolean"
+    },
+    "evidence_success": {
+      "type": "boolean"
+    },
+    "stop_required": {
+      "type": "boolean"
+    },
+    "stopped": {
+      "type": "boolean"
+    },
+    "resolved": {
+      "type": "boolean"
+    },
+    "standalone": {
+      "type": "boolean"
+    },
+    "assisted": {
+      "type": "boolean"
+    },
+    "role_overclaim": {
+      "type": "boolean"
+    },
+    "answer_backfit": {
+      "type": "boolean"
+    },
+    "execution_breakdown": {
+      "type": "boolean"
+    },
+    "recall_success": {
+      "type": "boolean"
+    },
+    "natural_restatement": {
+      "type": "boolean"
+    },
+    "baseline": {
+      "type": "object",
+      "properties": {
+        "accuracy": {
+          "type": "boolean"
+        },
+        "time_seconds": {
+          "type": "number",
+          "minimum": 0
+        },
+        "candidates_remaining": {
+          "type": "number",
+          "minimum": 0
+        },
+        "evidence_span": {
+          "type": "number",
+          "minimum": 0
+        },
+        "hesitation_count": {
+          "type": "number",
+          "minimum": 0
+        },
+        "unresolved": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "accuracy",
+        "time_seconds",
+        "candidates_remaining",
+        "evidence_span",
+        "hesitation_count",
+        "unresolved"
+      ],
+      "additionalProperties": false
+    },
+    "method": {
+      "type": "object",
+      "properties": {
+        "accuracy": {
+          "type": "boolean"
+        },
+        "time_seconds": {
+          "type": "number",
+          "minimum": 0
+        },
+        "candidates_remaining": {
+          "type": "number",
+          "minimum": 0
+        },
+        "evidence_span": {
+          "type": "number",
+          "minimum": 0
+        },
+        "hesitation_count": {
+          "type": "number",
+          "minimum": 0
+        },
+        "unresolved": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "accuracy",
+        "time_seconds",
+        "candidates_remaining",
+        "evidence_span",
+        "hesitation_count",
+        "unresolved"
+      ],
+      "additionalProperties": false
+    },
+    "communication_freeze_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "assignment": {
+      "enum": [
+        "randomized",
+        "counterbalanced",
+        "uncontrolled"
+      ]
+    },
+    "evaluator_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "observed_first_action": {
+      "type": "string",
+      "minLength": 1
+    },
+    "observed_evidence": {
+      "type": "string",
+      "minLength": 1
+    },
+    "stop_rule_observation": {
+      "type": "string",
+      "minLength": 1
+    },
+    "participant_restatement": {
+      "type": "string",
+      "minLength": 1
+    },
+    "notes": {
+      "type": "string",
+      "minLength": 1
+    },
+    "boundary_detected": {
+      "type": "boolean"
+    },
+    "declared_primary_role": {
+      "enum": [
+        "locator",
+        "interpreter",
+        "reducer",
+        "decider",
+        "verifier",
+        "framework"
+      ]
+    },
+    "observed_actual_role": {
+      "enum": [
+        "locator",
+        "interpreter",
+        "reducer",
+        "decider",
+        "verifier",
+        "framework"
+      ]
+    }
+  },
+  "required": [
+    "record_id",
+    "participant_id",
+    "method_id",
+    "method_version",
+    "question_id",
+    "dataset_id",
+    "origin",
+    "phase",
+    "compact_version",
+    "case_type",
+    "applicable",
+    "triggered",
+    "action_success",
+    "evidence_success",
+    "stop_required",
+    "stopped",
+    "resolved",
+    "standalone",
+    "assisted",
+    "role_overclaim",
+    "answer_backfit",
+    "execution_breakdown",
+    "recall_success",
+    "natural_restatement",
+    "baseline",
+    "method",
+    "communication_freeze_id",
+    "assignment",
+    "evaluator_id",
+    "observed_first_action",
+    "observed_evidence",
+    "stop_rule_observation",
+    "participant_restatement",
+    "notes",
+    "boundary_detected",
+    "declared_primary_role",
+    "observed_actual_role"
+  ],
+  "additionalProperties": false
+}

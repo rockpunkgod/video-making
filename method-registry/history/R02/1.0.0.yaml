@@ -1,0 +1,115 @@
+method_id: R02
+brand_name: 谁干的陷阱
+source_name: 主客一致
+aliases:
+- 三槽位核对
+- 谁做什么对谁
+question_type: 阅读理解
+role: decider
+primary_role: decider
+secondary_roles: []
+output_type: decide
+student_symptoms:
+- 原文和选项关键词一样，但关系总判错。
+- 容易把愿望当事实、把能力当意愿，或把动作发出者和承受者调换。
+trigger_cues:
+- 谁想做与谁真正做了之间可能被偷换。
+- 谁有能力与谁有意愿之间可能被偷换。
+- 谁发出动作与动作指向谁之间可能被偷换。
+core_action: 把原文和候选都填进谁 → 做什么 → 对谁三个槽位。
+decision_rule: 原文与候选任一槽位发生无依据交换，或愿望/事实、能力/意愿被混同，才排除。
+verification:
+- 保留原文和候选的完整谓语，分别填写三槽位。
+- 核对每个人物是愿望、能力、看法，还是已发生事实。
+- 题干问实际或直接结果时，只认已发生的对应事实。
+- 若三槽位一致，再核范围、否定、时间和其他候选差异。
+stop_rule: 关键词一样，不代表动作关系一样。
+common_wrong_instinct: 只看人名和动词出现过，不核谁发出、谁承受以及动作是否已发生。
+failure_cases:
+- 题面没有可比的主体、施受或愿望/事实差异时，本法不单独定案。
+- 通过本检查只证明槽位未偷换，不证明范围、因果或程度正确。
+counterexamples:
+- 主体未在候选里重复，但题干已明示共同对象；不能仅因候选没重复主体就判错。
+- 原文确实说某主体具有能力且表达意愿，两者同时成立，不得为了应用方法强行二分。
+transfer_pattern: 适用于人物观点、机构措施、研究发现、主动/被动和多参与者事件。
+memory_line: 谁，做什么，对谁。
+anti_rule: 同词 ≠ 同关系。
+visual_formula: "原文：谁 ─动作→ 对谁\n候选：谁 ─动作→ 对谁\n        逐槽对齐，不许换位"
+challenge_prompt: 先不判选项，把原文和候选各自写成谁、做什么、对谁，再圈出变了的槽位。
+source_references:
+- repository: https://github.com/rockpunkgod/ANSWER.git
+  commit: b04ebc26d7fa096404111a0bb12f6c77cc8525b9
+  path: gaokao-english/references/reading-comprehension.md
+  heading: 主客一致
+- repository: https://github.com/rockpunkgod/ANSWER.git
+  commit: b04ebc26d7fa096404111a0bb12f6c77cc8525b9
+  path: gaokao-english/references/course-evidence.md
+  heading: 主客一致
+can_follow:
+- 跳读定位
+- 代词指代
+- 逻辑简化
+usually_before:
+- 正向验证
+usually_after:
+- 定位到完整谓语
+conflicts_with: []
+cannot_replace:
+- 范围核对
+- 因果核对
+- 保留项正向验证
+levels:
+  L1: 识别明显的动作发出者和承受者。
+  L2: 区分愿望与已发生事实。
+  L3: 区分能力、意愿、看法和实际结果。
+  L4: 处理省略主体、代词、被动和多参与者的间接关系。
+compact:
+  line: 谁→做什么→对谁，三格对不上才排。
+  boundary: 同关键词只是入口，三槽位一致也只通过本项检查。
+full:
+  summary: 核对愿望/事实、能力/意愿与施事/受事，只在题面出现可比差异时使用。
+  boundaries:
+  - 不自行扩写施受关系
+  - 不由能力推出意愿
+  - 不由愿望推出已实现
+cases:
+  canonical: cases/R02/canonical/case.yaml
+  counterexample: cases/R02/counterexamples/case.yaml
+  boundary: cases/R02/boundary/case.yaml
+  transfer: cases/R02/transfer/case.yaml
+four_step_card:
+  start: 原文和选项有同样的人物与动词，但可能把愿望、能力、事实或施受关系换了。
+  first_cut: 把两句各自填成谁→做什么→对谁。
+  judge: 三格任一格无依据换位，或愿望/事实、能力/意愿被混同，才排除。
+  stop: 三格对齐后就停止本法；它不证明范围、因果或程度正确。
+practicality_gate:
+  status: design_complete_empirical_pending
+  trigger: 可由多主体、愿望/事实、能力/意愿或主动/被动差异触发。
+  action: 圈主体，下划完整谓语，用箭头连到承受者，再两句对齐。
+  output: decide；对关系偷换项作排除或保留，仅解决主客关系差异。
+  stop: 无可比关系差异，或三槽位已对齐时停止。
+  transfer: 三槽位可迁移到人物、机构、研究和被动句。
+  efficiency: 把含多人物的长句缩成三格，降低代词与施受关系的工作记忆负担。
+  misuse_cost: high；无换位时强套会虚构关系，所以必须有可观察主体或施受差异。
+first_use_test:
+  status: designed_not_run
+  trigger_success: null
+  action_success: null
+  evidence_success: null
+  stop_rule_success: null
+  no_answer_backfit: null
+  final_result: pending_real_student_test
+evaluation:
+  baseline: 整句翻译+凭语感比选项
+  trigger_precision: null
+  trigger_recall: null
+  resolution_rate: null
+  standalone_rate: null
+  assist_rate: null
+  false_trigger_rate: null
+  transfer_rate: null
+  time_complexity_gain: null
+  primary_benefit_hypothesis: 提高主体、动作、对象与事实状态的对齐准确率。
+usefulness_level: Useful
+status: candidate
+version: 1.0.0

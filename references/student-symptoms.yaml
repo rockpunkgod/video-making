@@ -1,0 +1,581 @@
+routes:
+- question_type: 阅读理解
+  symptoms:
+  - 两个选项都像原文，找到定位句仍无法区分。
+  - 选项前半句能对上，但整项是否成立拿不准。
+  method_id: R01
+  role: decider
+  first_action: 把候选拆成原文已有内容 A 加新增内容 B。
+  stop_rule: 没逐字出现，不等于没有依据。
+- question_type: 阅读理解
+  symptoms:
+  - 原文和选项关键词一样，但关系总判错。
+  - 容易把愿望当事实、把能力当意愿，或把动作发出者和承受者调换。
+  method_id: R02
+  role: decider
+  first_action: 把原文和候选都填进谁 → 做什么 → 对谁三个槽位。
+  stop_rule: 关键词一样，不代表动作关系一样。
+- question_type: 阅读理解
+  symptoms:
+  - 主旨题总在两个相关选项之间摇摆。
+  - 容易选范围最大、词频最高或只概括一部分的选项。
+  method_id: R06
+  role: decider
+  first_action: 先把全文压成 2–4 个不可缺核心块 A+B+C，再用候选逐块拼图。
+  stop_rule: 范围大，不等于主旨对。
+- question_type: 阅读理解
+  symptoms:
+  - 长文读完只记得零散事实，说不出全文在完成什么任务。
+  - 主旨题只会数重复词或抄段首句，无法形成完整主题判断。
+  method_id: R09
+  role: framework
+  first_action: 依次压出对象、核心判断和全文结构任务。
+  stop_rule: 词频高，不等于主题完整。
+- question_type: 阅读理解
+  symptoms:
+  - 选项换了表达，需要核同一断言
+  method_id: R03
+  role: interpreter
+  first_action: 并排圈出原文与选项的对象、动作和限定词，逐格核语义是否相同
+  stop_rule: 本步骤只产生语义结构，不能自动定案。不能以本动作代替完整题面关系核验；题面缺失、关键词义不明或出现反证就停止定案。具体边界见源章节。
+- question_type: 阅读理解
+  symptoms:
+  - 候选带比较级或最高级
+  method_id: R04
+  role: decider
+  first_action: 列出比较双方、属性、方向、程度、范围、时间与条件，逐格回文核对
+  stop_rule: 不能以本动作代替完整题面关系核验；题面缺失、关键词义不明或出现反证就停止定案。具体边界见源章节。
+- question_type: 阅读理解
+  symptoms:
+  - 两个有依据的候选可能属于同一因果链
+  method_id: R05
+  role: decider
+  first_action: 先圈题干问原因还是结果，再写出原文支持的原因→结果，比较候选落点
+  stop_rule: 不能以本动作代替完整题面关系核验；题面缺失、关键词义不明或出现反证就停止定案。具体边界见源章节。
+- question_type: 阅读理解
+  symptoms:
+  - 多个细节真实并列且题干允许归为一组
+  method_id: R07
+  role: reducer
+  first_action: 把同层并列项框成一组，核候选是否只截取组内局部
+  stop_rule: 本步骤只产生缩小范围，不能自动定案。不能以本动作代替完整题面关系核验；题面缺失、关键词义不明或出现反证就停止定案。具体边界见源章节。
+- question_type: 阅读理解
+  symptoms:
+  - 题干问例子的作用而不是例子细节
+  method_id: R08
+  role: interpreter
+  first_action: 圈例子前后被支持的观点，再用例子内容检验它实际支持哪句
+  stop_rule: 本步骤只产生语义结构，不能自动定案。不能以本动作代替完整题面关系核验；题面缺失、关键词义不明或出现反证就停止定案。具体边界见源章节。
+- question_type: 阅读理解
+  symptoms:
+  - 代词使对象或动作归属不清
+  method_id: R10
+  role: interpreter
+  first_action: 列候选先行词，把每个换回原句，核数、动作角色和完整语义
+  stop_rule: 本步骤只产生语义结构，不能自动定案。不能以本动作代替完整题面关系核验；题面缺失、关键词义不明或出现反证就停止定案。具体边界见源章节。
+- question_type: 阅读理解
+  symptoms:
+  - 定位长句主干与枝叶混在一起
+  method_id: R11
+  role: interpreter
+  first_action: 圈谓语和对应主体，划开修饰枝叶，但保留否定、条件、范围和比较
+  stop_rule: 本步骤只产生语义结构，不能自动定案。不能以本动作代替完整题面关系核验；题面缺失、关键词义不明或出现反证就停止定案。具体边界见源章节。
+- question_type: 阅读理解
+  symptoms:
+  - 找不到与题干对象对应的证据句
+  method_id: R12
+  role: locator
+  first_action: 圈题干有区分力的对象或标签，回文找对应句，再读完整断言
+  stop_rule: 本步骤只产生位置，不能自动定案。不能以本动作代替完整题面关系核验；题面缺失、关键词义不明或出现反证就停止定案。具体边界见源章节。
+- question_type: 阅读理解
+  symptoms:
+  - 题干有可区别于其他段的名词
+  method_id: R13
+  role: locator
+  first_action: 圈差异性名词，回原文对应区域，不以同词命中直接定案
+  stop_rule: 本步骤只产生位置，不能自动定案。不能以本动作代替完整题面关系核验；题面缺失、关键词义不明或出现反证就停止定案。具体边界见源章节。
+- question_type: 阅读理解
+  symptoms:
+  - 文章组织与题目顺序实际相符
+  method_id: R14
+  role: locator
+  first_action: 标相邻已定位题的出处，作为当前题查找区间，发现倒叙或偏离就取消区间
+  stop_rule: 本步骤只产生位置，不能自动定案。不能以本动作代替完整题面关系核验；题面缺失、关键词义不明或出现反证就停止定案。具体边界见源章节。
+- question_type: 阅读理解
+  symptoms:
+  - 同一名词对应多个动作关系
+  method_id: R15
+  role: interpreter
+  first_action: 圈题干动词，配回主体和对象，与定位句的完整谓语比较
+  stop_rule: 本步骤只产生语义结构，不能自动定案。不能以本动作代替完整题面关系核验；题面缺失、关键词义不明或出现反证就停止定案。具体边界见源章节。
+- question_type: 阅读理解
+  symptoms:
+  - 题干问全文或指定段主旨
+  method_id: R16
+  role: framework
+  first_action: 先圈全文/段落范围，再写对象与核心判断，回各关键段检查覆盖
+  stop_rule: 本步骤只产生框架，不能自动定案。不能以本动作代替完整题面关系核验；题面缺失、关键词义不明或出现反证就停止定案。具体边界见源章节。
+- question_type: 阅读理解
+  symptoms:
+  - 定位句缺原因、指代或转折关系
+  method_id: R17
+  role: verifier
+  first_action: 明确缺哪种关系，只向前后扩读到能补清它的句子，再核主体和动作
+  stop_rule: 不能以本动作代替完整题面关系核验；题面缺失、关键词义不明或出现反证就停止定案。具体边界见源章节。
+- question_type: 七选五
+  symptoms:
+  - 七个选项感觉都能放，拿到每个空都从 A–G 凭语感试填。
+  - 知道结构、主体或时态有用，却容易命中一项就直接定答案。
+  method_id: F01
+  role: reducer
+  first_action: 在选项区只做一次三维标记：句型、主角、时间；形成暂定组后立即把候选拼回空前空后。
+  stop_rule: 分组只缩范围，不负责定答案。
+- question_type: 七选五
+  symptoms:
+  - 选项存在不同句式且空位有结构线索
+  method_id: F02
+  role: reducer
+  first_action: 一次圈出完整句/半句/疑问/祈使等真实结构并分组，再回正文核内容
+  stop_rule: 本步骤只产生缩小范围，不能自动定案。不能以本动作代替完整题面关系核验；题面缺失、关键词义不明或出现反证就停止定案。具体边界见源章节。
+- question_type: 七选五
+  symptoms:
+  - 选项谈论的主体或代词不同
+  method_id: F03
+  role: reducer
+  first_action: 圈选项主语与指代对象，按实际主体分组，正文发生话题转换时重新核对
+  stop_rule: 本步骤只产生缩小范围，不能自动定案。不能以本动作代替完整题面关系核验；题面缺失、关键词义不明或出现反证就停止定案。具体边界见源章节。
+- question_type: 七选五
+  symptoms:
+  - 选项存在真实时间差异
+  method_id: F04
+  role: reducer
+  first_action: 标每项谓语及时间词，按真实事件时间分组，不用分词词尾代替时态
+  stop_rule: 本步骤只产生缩小范围，不能自动定案。不能以本动作代替完整题面关系核验；题面缺失、关键词义不明或出现反证就停止定案。具体边界见源章节。
+- question_type: 七选五
+  symptoms:
+  - 空位在段首且可能统领下文
+  method_id: F05
+  role: interpreter
+  first_action: 列下文共同对象、动作与段落任务，再核候选能否统领，不把段首自动当中心
+  stop_rule: 本步骤只产生语义结构，不能自动定案。不能以本动作代替完整题面关系核验；题面缺失、关键词义不明或出现反证就停止定案。具体边界见源章节。
+- question_type: 七选五
+  symptoms:
+  - 候选与上下句有对象或词义复现
+  method_id: F06
+  role: verifier
+  first_action: 圈两边对应对象与动作，标同指或同义关系，再回填核上下句和段落任务
+  stop_rule: 不能以本动作代替完整题面关系核验；题面缺失、关键词义不明或出现反证就停止定案。具体边界见源章节。
+- question_type: 七选五
+  symptoms:
+  - 空前后显示转折、因果、解释等关系
+  method_id: F07
+  role: verifier
+  first_action: 写出两侧完整内容，指出实际关系，再核候选连接后是否成立
+  stop_rule: 不能以本动作代替完整题面关系核验；题面缺失、关键词义不明或出现反证就停止定案。具体边界见源章节。
+- question_type: 七选五
+  symptoms:
+  - 同一对象有可确认的评价方向
+  method_id: F08
+  role: reducer
+  first_action: 圈评价词及它评价的对象，比较候选评价维度，不因同为积极词就定案
+  stop_rule: 本步骤只产生缩小范围，不能自动定案。不能以本动作代替完整题面关系核验；题面缺失、关键词义不明或出现反证就停止定案。具体边界见源章节。
+- question_type: 七选五
+  symptoms:
+  - 空位与选项是需要拼接的半句
+  method_id: F09
+  role: interpreter
+  first_action: 把候选接到现有半句，标主语谓语与连接位置，再检验完整语义
+  stop_rule: 本步骤只产生语义结构，不能自动定案。不能以本动作代替完整题面关系核验；题面缺失、关键词义不明或出现反证就停止定案。具体边界见源章节。
+- question_type: 七选五
+  symptoms:
+  - 整篇初填后需要回查
+  method_id: F10
+  role: verifier
+  first_action: 逐空回填，核主体、动作、对象、上下句关系及段落任务，不以占用或剩余定案
+  stop_rule: 不能以本动作代替完整题面关系核验；题面缺失、关键词义不明或出现反证就停止定案。具体边界见源章节。
+- question_type: 七选五
+  symptoms:
+  - 候选已回填且必须区分竞争项
+  method_id: F11
+  role: decider
+  first_action: 逐项核候选主体、动作、对象、上下句关系和段落任务，只以当前空自身的决定性关系定案
+  stop_rule: 不能以本动作代替完整题面关系核验；题面缺失、关键词义不明或出现反证就停止定案。具体边界见源章节。
+- question_type: 完形填空
+  symptoms:
+  - 当前空不能由孤立语法闭合
+  method_id: C01
+  role: framework
+  first_action: 标当前空是词义/关系/搭配角色；找最近对象与动作线索；不足向复现、回答、结果或评价扩；回填核语义
+  stop_rule: 本步骤只产生框架，不能自动定案。不能以本动作代替完整题面关系核验；题面缺失、关键词义不明或出现反证就停止定案。具体边界见源章节。
+- question_type: 完形填空
+  symptoms:
+  - 空前空后证据尚未闭合
+  method_id: C02
+  role: verifier
+  first_action: 圈两侧谁、动作、评价和时间；近处不足再向明确复现或结果扩读，仍不足暂留
+  stop_rule: 不能以本动作代替完整题面关系核验；题面缺失、关键词义不明或出现反证就停止定案。具体边界见源章节。
+- question_type: 完形填空
+  symptoms:
+  - 当前空依赖人物背景或全文基调
+  method_id: C03
+  role: interpreter
+  first_action: 从首句记录人物、背景、主题、视角和暂定基调，不据此预编后续情节
+  stop_rule: 本步骤只产生语义结构，不能自动定案。不能以本动作代替完整题面关系核验；题面缺失、关键词义不明或出现反证就停止定案。具体边界见源章节。
+- question_type: 完形填空
+  symptoms:
+  - 空内词的句法作用能指向线索类型
+  method_id: C04
+  role: locator
+  first_action: 标空内作用，再圈修饰同一对象或动作的结构，不凭词性定案
+  stop_rule: 本步骤只产生位置，不能自动定案。不能以本动作代替完整题面关系核验；题面缺失、关键词义不明或出现反证就停止定案。具体边界见源章节。
+- question_type: 完形填空
+  symptoms:
+  - 多个候选译义相近或评价同向
+  method_id: C05
+  role: interpreter
+  first_action: 并列写出各项具体状态、程度或功能，回原文对象核差异，词义未知就停
+  stop_rule: 本步骤只产生语义结构，不能自动定案。不能以本动作代替完整题面关系核验；题面缺失、关键词义不明或出现反证就停止定案。具体边界见源章节。
+- question_type: 完形填空
+  symptoms:
+  - 空位依赖事件先后或时间间隔
+  method_id: C06
+  role: interpreter
+  first_action: 写两件事发生时间及间隔，再标先后或因果，不省略题面时间条件
+  stop_rule: 本步骤只产生语义结构，不能自动定案。不能以本动作代替完整题面关系核验；题面缺失、关键词义不明或出现反证就停止定案。具体边界见源章节。
+- question_type: 完形填空
+  symptoms:
+  - 名词空需要同一人物物件或事件线索
+  method_id: C07
+  role: locator
+  first_action: 圈原词/同义/同源复现并核是否同一对象，不把复现直接当答案
+  stop_rule: 本步骤只产生位置，不能自动定案。不能以本动作代替完整题面关系核验；题面缺失、关键词义不明或出现反证就停止定案。具体边界见源章节。
+- question_type: 完形填空
+  symptoms:
+  - 题面给出评价或结果可核当前行为
+  method_id: C08
+  role: verifier
+  first_action: 先还原结果所评价的具体行为，再核候选是否有真实题面联系，不能由猜定空互证
+  stop_rule: 不能以本动作代替完整题面关系核验；题面缺失、关键词义不明或出现反证就停止定案。具体边界见源章节。
+- question_type: 完形填空
+  symptoms:
+  - 连续动作需要先后或因果衔接
+  method_id: C09
+  role: interpreter
+  first_action: 按已有动作画先后链，逐个标连接关系，不增添题面没有的时长或因果
+  stop_rule: 本步骤只产生语义结构，不能自动定案。不能以本动作代替完整题面关系核验；题面缺失、关键词义不明或出现反证就停止定案。具体边界见源章节。
+- question_type: 语法填空
+  symptoms:
+  - 看到括号里的词就立即开始变形，不知道变成哪类词。
+  - 无提示词时把所有功能词一起猜，有提示词时又见动词就直接判谓语/非谓语。
+  method_id: G01
+  role: framework
+  first_action: 圈出空后的括号提示词（若有），再圈空前后支配或修饰词，在未填句上标明空位成分；确认需要动词才分谓语/非谓语。
+  stop_rule: 提示词是什么词性，不等于答案就是什么词性。
+- question_type: 语法填空
+  symptoms:
+  - 开始处理语法空位
+  method_id: G02
+  role: framework
+  first_action: 只标有/无提示词，再回完整句确认位置功能，不先改提示词
+  stop_rule: 本步骤只产生框架，不能自动定案。不能以本动作代替完整题面关系核验；题面缺失、关键词义不明或出现反证就停止定案。具体边界见源章节。
+- question_type: 语法填空
+  symptoms:
+  - 名词前缺限定且确认为冠词路线
+  method_id: G03
+  role: decider
+  first_action: 圈中心名词、单复数和已有修饰，回语境核特指泛指再定冠词
+  stop_rule: 不能以本动作代替完整题面关系核验；题面缺失、关键词义不明或出现反证就停止定案。具体边界见源章节。
+- question_type: 语法填空
+  symptoms:
+  - 空位需要代词或所有格功能
+  method_id: G04
+  role: decider
+  first_action: 标空位作主语/宾语/限定/反身功能，回指实际对象再用节点规则
+  stop_rule: 不能以本动作代替完整题面关系核验；题面缺失、关键词义不明或出现反证就停止定案。具体边界见源章节。
+- question_type: 语法填空
+  symptoms:
+  - 空位已判需要介词
+  method_id: G05
+  role: decider
+  first_action: 圈介词后的中心词及所属动作，核场景关系或固定搭配，陌生搭配不猜
+  stop_rule: 不能以本动作代替完整题面关系核验；题面缺失、关键词义不明或出现反证就停止定案。具体边界见源章节。
+- question_type: 语法填空
+  symptoms:
+  - 句间连接位置且可能是从句
+  method_id: G06
+  role: decider
+  first_action: 分别圈两侧谓语，核从句是否缺主语、宾语、表语或状语，再判连接功能
+  stop_rule: 不能以本动作代替完整题面关系核验；题面缺失、关键词义不明或出现反证就停止定案。具体边界见源章节。
+- question_type: 语法填空
+  symptoms:
+  - 两个结构完整的句子缺逻辑连接
+  method_id: G07
+  role: decider
+  first_action: 写两侧完整意思，标实际转折/因果/并列等关系，不由单个提示词定案
+  stop_rule: 不能以本动作代替完整题面关系核验；题面缺失、关键词义不明或出现反证就停止定案。具体边界见源章节。
+- question_type: 语法填空
+  symptoms:
+  - 有提示词但不确定空位需要什么
+  method_id: G08
+  role: reducer
+  first_action: 圈空位前后修饰与支配结构，标名/形/副/代/数/动功能，再进对应分支
+  stop_rule: 本步骤只产生缩小范围，不能自动定案。不能以本动作代替完整题面关系核验；题面缺失、关键词义不明或出现反证就停止定案。具体边界见源章节。
+- question_type: 语法填空
+  symptoms:
+  - 空位已确认需名词或所有格
+  method_id: G09
+  role: decider
+  first_action: 圈限定、数量和所有关系，核派生、单复数或所有格，不见提示动词就进动词路线
+  stop_rule: 不能以本动作代替完整题面关系核验；题面缺失、关键词义不明或出现反证就停止定案。具体边界见源章节。
+- question_type: 语法填空
+  symptoms:
+  - 空位确定作修饰或表语
+  method_id: G10
+  role: decider
+  first_action: 圈被修饰词和比较结构，判形/副及级别，不机械加比较级
+  stop_rule: 不能以本动作代替完整题面关系核验；题面缺失、关键词义不明或出现反证就停止定案。具体边界见源章节。
+- question_type: 语法填空
+  symptoms:
+  - 空位已确定需要数量或顺序
+  method_id: G11
+  role: decider
+  first_action: 圈数量/次序线索，按节点规则处理基数、序数或词形
+  stop_rule: 不能以本动作代替完整题面关系核验；题面缺失、关键词义不明或出现反证就停止定案。具体边界见源章节。
+- question_type: 语法填空
+  symptoms:
+  - 空位已确认需要动词形式
+  method_id: G12
+  role: reducer
+  first_action: 圈句内已有谓语与连接词，核空位是否承担谓语，再分谓语/非谓语
+  stop_rule: 本步骤只产生缩小范围，不能自动定案。不能以本动作代替完整题面关系核验；题面缺失、关键词义不明或出现反证就停止定案。具体边界见源章节。
+- question_type: 语法填空
+  symptoms:
+  - 空位是谓语且需判时态
+  method_id: G13
+  role: decider
+  first_action: 圈明确时间、上下文事件先后和句内语态，再与真主语核数
+  stop_rule: 不能以本动作代替完整题面关系核验；题面缺失、关键词义不明或出现反证就停止定案。具体边界见源章节。
+- question_type: 语法填空
+  symptoms:
+  - 主谓间有修饰造成数判断混乱
+  method_id: G14
+  role: verifier
+  first_action: 划开插入和修饰，圈真正主语中心词，核谓语一致，保留否定条件
+  stop_rule: 不能以本动作代替完整题面关系核验；题面缺失、关键词义不明或出现反证就停止定案。具体边界见源章节。
+- question_type: 语法填空
+  symptoms:
+  - 空位已确认非谓语
+  method_id: G15
+  role: decider
+  first_action: 标句法作用、逻辑主语与动作的主被动、同谓语的先后关系，再选择形式
+  stop_rule: 不能以本动作代替完整题面关系核验；题面缺失、关键词义不明或出现反证就停止定案。具体边界见源章节。
+- question_type: 语法填空
+  symptoms:
+  - 非谓语动作归属尚不明确
+  method_id: G16
+  role: verifier
+  first_action: 圈非谓语的逻辑主语，再核谁执行或承受动作，不只看最近名词
+  stop_rule: 不能以本动作代替完整题面关系核验；题面缺失、关键词义不明或出现反证就停止定案。具体边界见源章节。
+- question_type: 语法填空
+  symptoms:
+  - 长句修饰妨碍识别空位成分
+  method_id: G17
+  role: interpreter
+  first_action: 圈主干谓语和对应主语，暂划介词短语、非谓语、插入语和从句，再恢复决定空位的修饰、否定与条件
+  stop_rule: 本步骤只产生语义结构，不能自动定案。不能以本动作代替完整题面关系核验；题面缺失、关键词义不明或出现反证就停止定案。具体边界见源章节。
+- question_type: 语法填空
+  symptoms:
+  - 整篇完成后核对考点分布
+  method_id: G18
+  role: verifier
+  first_action: 列每空实际考点，发现重复只触发回查，不能推翻该空独立句法语义证据
+  stop_rule: 不能以本动作代替完整题面关系核验；题面缺失、关键词义不明或出现反证就停止定案。具体边界见源章节。
+- question_type: 语法填空
+  symptoms:
+  - 提示词初变形后需要复核
+  method_id: G19
+  role: verifier
+  first_action: 对照原提示词与空位成分记录变形路线，一般一次只是回查提示，不凭次数选答案
+  stop_rule: 不能以本动作代替完整题面关系核验；题面缺失、关键词义不明或出现反证就停止定案。具体边界见源章节。
+- question_type: 应用文
+  symptoms:
+  - 应用文题面要点或稿件任务不清
+  method_id: A01
+  role: framework
+  first_action: 按文体、对象、要点、逻辑、语言逐栏记录题面与原稿证据，先任务后语言
+  stop_rule: 本步骤只产生框架，不能自动定案。不能以本动作代替完整题面关系核验；题面缺失、关键词义不明或出现反证就停止定案。具体边界见源章节。
+- question_type: 应用文
+  symptoms:
+  - 有题目但需要从审题到成稿路线
+  method_id: A02
+  role: framework
+  first_action: 先圈限定和全部要点，搭文体骨架，再依原六步造句、组篇、升级和复核
+  stop_rule: 本步骤只产生框架，不能自动定案。不能以本动作代替完整题面关系核验；题面缺失、关键词义不明或出现反证就停止定案。具体边界见源章节。
+- question_type: 应用文
+  symptoms:
+  - 要点已确定但简单句写不出来
+  method_id: A03
+  role: interpreter
+  first_action: 先写主体，再写动作或状态，最后嵌入题面支持的场景细节
+  stop_rule: 本步骤只产生语义结构，不能自动定案。不能以本动作代替完整题面关系核验；题面缺失、关键词义不明或出现反证就停止定案。具体边界见源章节。
+- question_type: 应用文
+  symptoms:
+  - 多个动作要合成复杂句
+  method_id: A04
+  role: interpreter
+  first_action: 每个动作先写正确简单句，再按真实关系用从句、非谓语或连接词粘连
+  stop_rule: 本步骤只产生语义结构，不能自动定案。不能以本动作代替完整题面关系核验；题面缺失、关键词义不明或出现反证就停止定案。具体边界见源章节。
+- question_type: 应用文
+  symptoms:
+  - 中文长句信息和修饰混杂
+  method_id: A05
+  role: interpreter
+  first_action: 拆核心与修饰，按主体→动作→场景重组，再校时态词性单复数与风格
+  stop_rule: 本步骤只产生语义结构，不能自动定案。不能以本动作代替完整题面关系核验；题面缺失、关键词义不明或出现反证就停止定案。具体边界见源章节。
+- question_type: 应用文
+  symptoms:
+  - 课后需积累准确可迁移表达
+  method_id: A06
+  role: framework
+  first_action: 先简化中文自行译，再对照范文记录缺失表达；背诵复现后在同结构仿写
+  stop_rule: 本步骤只产生框架，不能自动定案。不能以本动作代替完整题面关系核验；题面缺失、关键词义不明或出现反证就停止定案。具体边界见源章节。
+- question_type: 应用文
+  symptoms:
+  - 基础句准确且需要自然升级
+  method_id: A07
+  role: interpreter
+  first_action: 先简化中文、译正确简单句，再加入服务真实逻辑的修饰或从句，搭配不明停升级
+  stop_rule: 本步骤只产生语义结构，不能自动定案。不能以本动作代替完整题面关系核验；题面缺失、关键词义不明或出现反证就停止定案。具体边界见源章节。
+- question_type: 应用文
+  symptoms:
+  - 应用文需要匹配文体与交际目的
+  method_id: A08
+  role: framework
+  first_action: 圈题目文体对象目的，调用对应骨架，不把文体模板算独立原创规则
+  stop_rule: 本步骤只产生框架，不能自动定案。不能以本动作代替完整题面关系核验；题面缺失、关键词义不明或出现反证就停止定案。具体边界见源章节。
+- question_type: 应用文
+  symptoms:
+  - 题目与学生全文可见且请求批改
+  method_id: A09
+  role: verifier
+  first_action: 先按15分五档三维定档，逐条引用题面和原稿证据，缺材料不完整给分
+  stop_rule: 不能以本动作代替完整题面关系核验；题面缺失、关键词义不明或出现反证就停止定案。具体边界见源章节。
+- question_type: 应用文
+  symptoms:
+  - 课后需要规划作文训练而非现场答案
+  method_id: A10
+  role: framework
+  first_action: 按材料中的训练阶段选一个下一步，不把分数锚定当个体提分保证
+  stop_rule: 本步骤只产生框架，不能自动定案。不能以本动作代替完整题面关系核验；题面缺失、关键词义不明或出现反证就停止定案。具体边界见源章节。
+- question_type: 读后续写
+  symptoms:
+  - 原文与两段开头语齐全，需要构思
+  method_id: W01
+  role: framework
+  first_action: 先读两段开头语找约束，再记录原文人物矛盾与时空，依跳定思提润推进
+  stop_rule: 本步骤只产生框架，不能自动定案。不能以本动作代替完整题面关系核验；题面缺失、关键词义不明或出现反证就停止定案。具体边界见源章节。
+- question_type: 读后续写
+  symptoms:
+  - 需要搭两段功能提纲或诊断桥接
+  method_id: W02
+  role: framework
+  first_action: 只标学生自写的第1/5/6/9/10句功能，写清衔接、桥接、解决与回扣，不算给定首句
+  stop_rule: 本步骤只产生框架，不能自动定案。不能以本动作代替完整题面关系核验；题面缺失、关键词义不明或出现反证就停止定案。具体边界见源章节。
+- question_type: 读后续写
+  symptoms:
+  - 已读原文首句需要整理情节
+  method_id: W03
+  role: framework
+  first_action: 只选需求→困难→行动→结局这一套四格，每格填原文约束，不混用另一版字母定义
+  stop_rule: 本步骤只产生框架，不能自动定案。不能以本动作代替完整题面关系核验；题面缺失、关键词义不明或出现反证就停止定案。具体边界见源章节。
+- question_type: 读后续写
+  symptoms:
+  - 两段开头语对人物或行动有约束
+  method_id: W04
+  role: locator
+  first_action: 圈开头语的名词和任务，回文找人物与矛盾，再反推段间需要补的动作
+  stop_rule: 本步骤只产生位置，不能自动定案。不能以本动作代替完整题面关系核验；题面缺失、关键词义不明或出现反证就停止定案。具体边界见源章节。
+- question_type: 读后续写
+  symptoms:
+  - 核心行动需要具体连贯描写
+  method_id: W05
+  role: interpreter
+  first_action: 把已有行动拆最多三个合理小动作，再加与场景相符的方式，不改变人物能力
+  stop_rule: 本步骤只产生语义结构，不能自动定案。不能以本动作代替完整题面关系核验；题面缺失、关键词义不明或出现反证就停止定案。具体边界见源章节。
+- question_type: 读后续写
+  symptoms:
+  - 续写不知从哪里下笔
+  method_id: W06
+  role: locator
+  first_action: 圈核心人物、核心矛盾和关键线索，不额外造主角或无铺垫事故
+  stop_rule: 本步骤只产生位置，不能自动定案。不能以本动作代替完整题面关系核验；题面缺失、关键词义不明或出现反证就停止定案。具体边界见源章节。
+- question_type: 读后续写
+  symptoms:
+  - 人物行为或物件需要兑现原文线索
+  method_id: W07
+  role: verifier
+  first_action: 把关键行为与原文伏笔逐对连线，找悬空线索，不强行用无关细节
+  stop_rule: 不能以本动作代替完整题面关系核验；题面缺失、关键词义不明或出现反证就停止定案。具体边界见源章节。
+- question_type: 读后续写
+  symptoms:
+  - 事件跳跃缺因果桥梁
+  method_id: W08
+  role: interpreter
+  first_action: 写因为A→行动B→结果C，每条边引用原文或合理铺垫，不让猜测互证
+  stop_rule: 本步骤只产生语义结构，不能自动定案。不能以本动作代替完整题面关系核验；题面缺失、关键词义不明或出现反证就停止定案。具体边界见源章节。
+- question_type: 读后续写
+  symptoms:
+  - 主线成立但画面单薄
+  method_id: W09
+  role: interpreter
+  first_action: 在推进主线的位置选动作、神态、环境中有用的细节，不每句堆三类
+  stop_rule: 本步骤只产生语义结构，不能自动定案。不能以本动作代替完整题面关系核验；题面缺失、关键词义不明或出现反证就停止定案。具体边界见源章节。
+- question_type: 读后续写
+  symptoms:
+  - 连接词堆砌却对象衔接不清
+  method_id: W10
+  role: interpreter
+  first_action: 圈相邻句共同对象和代词回指，使用关键词复现，不删掉必要逻辑关系
+  stop_rule: 本步骤只产生语义结构，不能自动定案。不能以本动作代替完整题面关系核验；题面缺失、关键词义不明或出现反证就停止定案。具体边界见源章节。
+- question_type: 读后续写
+  symptoms:
+  - 解决过程可以加入有铺垫波折
+  method_id: W11
+  role: interpreter
+  first_action: 从原文矛盾找小障碍，写解决动作，不凭空新增关键人物事故
+  stop_rule: 本步骤只产生语义结构，不能自动定案。不能以本动作代替完整题面关系核验；题面缺失、关键词义不明或出现反证就停止定案。具体边界见源章节。
+- question_type: 读后续写
+  symptoms:
+  - 基础表达准确后需改具体词
+  method_id: W12
+  role: interpreter
+  first_action: 圈笼统动词或形容词，用符合场景与搭配的具体词替换，生词搭配不明就停
+  stop_rule: 本步骤只产生语义结构，不能自动定案。不能以本动作代替完整题面关系核验；题面缺失、关键词义不明或出现反证就停止定案。具体边界见源章节。
+- question_type: 读后续写
+  symptoms:
+  - 故事结局需要回应主题
+  method_id: W13
+  role: verifier
+  first_action: 圈原文关键细节与解决结果，让结尾回扣它们；独立升华句不是必须项
+  stop_rule: 不能以本动作代替完整题面关系核验；题面缺失、关键词义不明或出现反证就停止定案。具体边界见源章节。
+- question_type: 读后续写
+  symptoms:
+  - 功能提纲与扩写位置需要区分
+  method_id: W14
+  role: framework
+  first_action: 标确定功能位为骨架，其余位置按因果与画面扩写，不把句数当评分扣分项
+  stop_rule: 本步骤只产生框架，不能自动定案。不能以本动作代替完整题面关系核验；题面缺失、关键词义不明或出现反证就停止定案。具体边界见源章节。
+- question_type: 读后续写
+  symptoms:
+  - 原文首句和学生续写齐全且请求评分
+  method_id: W15
+  role: verifier
+  first_action: 只按25分续写档次核原文融洽、语言与结构；不抄首句正常，书写只在实见影响交际时评
+  stop_rule: 不能以本动作代替完整题面关系核验；题面缺失、关键词义不明或出现反证就停止定案。具体边界见源章节。
+- question_type: 读后续写
+  symptoms:
+  - 课后需确定下一档训练缺口
+  method_id: W16
+  role: framework
+  first_action: 按现稿证据选对应升级动作，不把训练模板直接当官方独立扣分项
+  stop_rule: 本步骤只产生框架，不能自动定案。不能以本动作代替完整题面关系核验；题面缺失、关键词义不明或出现反证就停止定案。具体边界见源章节。

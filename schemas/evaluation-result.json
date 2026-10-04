@@ -1,0 +1,259 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://answer.local/schemas/evaluation-result.json",
+  "type": "object",
+  "properties": {
+    "schema_version": {
+      "type": "string",
+      "minLength": 1
+    },
+    "origin": {
+      "enum": [
+        "real",
+        "synthetic",
+        "empty"
+      ]
+    },
+    "record_count": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "groups": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "method_id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "method_version": {
+            "type": "string",
+            "minLength": 1
+          },
+          "record_count": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "metrics": {
+            "type": "object",
+            "properties": {
+              "trigger_precision": {
+                "type": [
+                  "number",
+                  "null"
+                ],
+                "minimum": 0,
+                "maximum": 1
+              },
+              "trigger_recall": {
+                "type": [
+                  "number",
+                  "null"
+                ],
+                "minimum": 0,
+                "maximum": 1
+              },
+              "resolution_rate": {
+                "type": [
+                  "number",
+                  "null"
+                ],
+                "minimum": 0,
+                "maximum": 1
+              },
+              "standalone_rate": {
+                "type": [
+                  "number",
+                  "null"
+                ],
+                "minimum": 0,
+                "maximum": 1
+              },
+              "assist_rate": {
+                "type": [
+                  "number",
+                  "null"
+                ],
+                "minimum": 0,
+                "maximum": 1
+              },
+              "false_trigger_rate": {
+                "type": [
+                  "number",
+                  "null"
+                ],
+                "minimum": 0,
+                "maximum": 1
+              },
+              "transfer_rate": {
+                "type": [
+                  "number",
+                  "null"
+                ],
+                "minimum": 0,
+                "maximum": 1
+              },
+              "boundary_accuracy": {
+                "type": [
+                  "number",
+                  "null"
+                ],
+                "minimum": 0,
+                "maximum": 1
+              },
+              "role_overclaim_rate": {
+                "type": [
+                  "number",
+                  "null"
+                ],
+                "minimum": 0,
+                "maximum": 1
+              },
+              "stop_rule_failure_rate": {
+                "type": [
+                  "number",
+                  "null"
+                ],
+                "minimum": 0,
+                "maximum": 1
+              }
+            },
+            "required": [
+              "trigger_precision",
+              "trigger_recall",
+              "resolution_rate",
+              "standalone_rate",
+              "assist_rate",
+              "false_trigger_rate",
+              "transfer_rate",
+              "boundary_accuracy",
+              "role_overclaim_rate",
+              "stop_rule_failure_rate"
+            ],
+            "additionalProperties": false
+          },
+          "baseline_comparison": {
+            "type": "object"
+          },
+          "first_use": {
+            "type": "object"
+          },
+          "communication": {
+            "type": "object"
+          },
+          "short_version_safety": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "version": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "false_trigger_rate": {
+                  "type": [
+                    "number",
+                    "null"
+                  ],
+                  "minimum": 0,
+                  "maximum": 1
+                },
+                "boundary_accuracy": {
+                  "type": [
+                    "number",
+                    "null"
+                  ],
+                  "minimum": 0,
+                  "maximum": 1
+                },
+                "role_overclaim_rate": {
+                  "type": [
+                    "number",
+                    "null"
+                  ],
+                  "minimum": 0,
+                  "maximum": 1
+                },
+                "stop_rule_failure_rate": {
+                  "type": [
+                    "number",
+                    "null"
+                  ],
+                  "minimum": 0,
+                  "maximum": 1
+                },
+                "safe_for_release": {
+                  "enum": [
+                    "untested",
+                    false,
+                    true
+                  ]
+                }
+              },
+              "required": [
+                "version",
+                "false_trigger_rate",
+                "boundary_accuracy",
+                "role_overclaim_rate",
+                "stop_rule_failure_rate",
+                "safe_for_release"
+              ],
+              "additionalProperties": false
+            },
+            "minItems": 0
+          },
+          "release_eligible": {
+            "type": "boolean"
+          },
+          "upgrade_eligible": {
+            "enum": [
+              "none",
+              "review_for_Efficient",
+              "review_for_Signature"
+            ]
+          },
+          "limitations": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 1
+            },
+            "minItems": 0
+          }
+        },
+        "required": [
+          "method_id",
+          "method_version",
+          "record_count",
+          "metrics",
+          "baseline_comparison",
+          "first_use",
+          "communication",
+          "short_version_safety",
+          "release_eligible",
+          "upgrade_eligible",
+          "limitations"
+        ],
+        "additionalProperties": false
+      },
+      "minItems": 0
+    },
+    "limitations": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      },
+      "minItems": 0
+    }
+  },
+  "required": [
+    "schema_version",
+    "origin",
+    "record_count",
+    "groups",
+    "limitations"
+  ],
+  "additionalProperties": false
+}

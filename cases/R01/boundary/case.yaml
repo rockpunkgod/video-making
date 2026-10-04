@@ -7,3 +7,14 @@ expected_action: 为每个候选分别列 A+B，仅比较各自 B 的文本支�
 pass_condition: 能区分已证伪、仍待验与有间接支持。
 gap: 待从课程原例中获得完整题面和原答案链。
 source_reference: ANSWER@b04ebc26:gaokao-english/references/reading-comprehension.md#过度推测
+case_id: R01-boundary
+question_type: 阅读理解
+source: ANSWER@b04ebc26:gaokao-english/references/reading-comprehension.md#过度推测
+question: null
+answer: null
+trigger: 候选核心与原文对应，但又多出参与者、目的、用途、时间、范围、因果或确定程度。
+evidence: []
+method_role: decider
+expected_output: decide
+stop_rule: 没逐字出现，不等于没有依据。
+notes: 待从课程原例中获得完整题面和原答案链。

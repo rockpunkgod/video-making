@@ -1,0 +1,19 @@
+case_id: C03-canonical
+method_id: C03
+question_type: 完形填空
+source:
+  repository: https://github.com/rockpunkgod/ANSWER.git
+  commit: b04ebc26d7fa096404111a0bb12f6c77cc8525b9
+  path: gaokao-english/references/cloze.md
+  heading: 完形语篇逻辑破译
+question: null
+answer: null
+trigger: 当前空依赖人物背景或全文基调
+evidence: []
+method_role: interpreter
+expected_action: 从首句记录人物、背景、主题、视角和暂定基调，不据此预编后续情节
+expected_output: interpret
+stop_rule: 本步骤只产生语义结构，不能自动定案。不能以本动作代替完整题面关系核验；题面缺失、关键词义不明或出现反证就停止定案。具体边界见源章节。
+case_type: canonical
+status: evidence_gap
+notes: 源方法可核；尚未逐题核验案例，不可当成功样例

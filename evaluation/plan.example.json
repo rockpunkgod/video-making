@@ -1,0 +1,22 @@
+{
+  "method_id": "R01",
+  "method_version": "1.1.0",
+  "dataset_id": "REPLACE_WITH_FROZEN_DATASET",
+  "communication_freeze_id": "REPLACE_WITH_COMMUNICATION_FREEZE",
+  "minimum_participants_per_version": 10,
+  "max_false_trigger_delta": 0.02,
+  "min_boundary_accuracy": 0.95,
+  "max_boundary_drop": 0.02,
+  "max_stop_failure_delta": 0.02,
+  "min_recall_rate": 0.9,
+  "min_restatement_rate": 0.9,
+  "minimum_efficiency_gain": {
+    "time_seconds": 3,
+    "candidates_remaining": 1,
+    "evidence_span": 1,
+    "hesitation_count": 1,
+    "unresolved": 0.05
+  },
+  "frozen_before_data_collection": false,
+  "rationale": "示例阈值不是通用门槛，须按误用风险、样本与效应量制定并在采集前冻结；本模板默认不可用于发布。"
+}

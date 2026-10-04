@@ -1,0 +1,412 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://answer.local/schemas/method-card.json",
+  "type": "object",
+  "properties": {
+    "method_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "brand_name": {
+      "type": "string",
+      "minLength": 1
+    },
+    "source_name": {
+      "type": "string",
+      "minLength": 1
+    },
+    "core_action": {
+      "type": "string",
+      "minLength": 1
+    },
+    "decision_rule": {
+      "type": "string",
+      "minLength": 1
+    },
+    "verification": {
+      "type": "string",
+      "minLength": 1
+    },
+    "stop_rule": {
+      "type": "string",
+      "minLength": 1
+    },
+    "common_wrong_instinct": {
+      "type": "string",
+      "minLength": 1
+    },
+    "transfer_pattern": {
+      "type": "string",
+      "minLength": 1
+    },
+    "memory_line": {
+      "type": "string",
+      "minLength": 1
+    },
+    "anti_rule": {
+      "type": "string",
+      "minLength": 1
+    },
+    "visual_formula": {
+      "type": "string",
+      "minLength": 1
+    },
+    "challenge_prompt": {
+      "type": "string",
+      "minLength": 1
+    },
+    "change_reason": {
+      "type": "string",
+      "minLength": 1
+    },
+    "regression_result": {
+      "type": "string",
+      "minLength": 1
+    },
+    "aliases": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      },
+      "minItems": 0
+    },
+    "secondary_roles": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      },
+      "minItems": 0
+    },
+    "student_symptoms": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      },
+      "minItems": 0
+    },
+    "trigger_cues": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      },
+      "minItems": 0
+    },
+    "failure_cases": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      },
+      "minItems": 0
+    },
+    "counterexamples": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      },
+      "minItems": 0
+    },
+    "can_follow": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      },
+      "minItems": 0
+    },
+    "usually_before": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      },
+      "minItems": 0
+    },
+    "usually_after": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      },
+      "minItems": 0
+    },
+    "conflicts_with": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      },
+      "minItems": 0
+    },
+    "cannot_replace": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      },
+      "minItems": 0
+    },
+    "affected_cases": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      },
+      "minItems": 0
+    },
+    "section_ids": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      },
+      "minItems": 0
+    },
+    "question_type": {
+      "enum": [
+        "阅读理解",
+        "七选五",
+        "完形填空",
+        "语法填空",
+        "应用文",
+        "读后续写"
+      ]
+    },
+    "method_type": {
+      "enum": [
+        "framework",
+        "method",
+        "sub_action",
+        "internal_rule",
+        "category",
+        "verification_rule"
+      ]
+    },
+    "primary_role": {
+      "enum": [
+        "locator",
+        "interpreter",
+        "reducer",
+        "decider",
+        "verifier",
+        "framework"
+      ]
+    },
+    "role": {
+      "enum": [
+        "locator",
+        "interpreter",
+        "reducer",
+        "decider",
+        "verifier",
+        "framework"
+      ]
+    },
+    "output_type": {
+      "enum": [
+        "locate",
+        "interpret",
+        "reduce",
+        "decide",
+        "verify"
+      ]
+    },
+    "version": {
+      "type": "string",
+      "pattern": "^\\d+\\.\\d+\\.\\d+$"
+    },
+    "maturity_status": {
+      "enum": [
+        "draft",
+        "candidate",
+        "validated",
+        "stable",
+        "deprecated"
+      ]
+    },
+    "status": {
+      "enum": [
+        "draft",
+        "candidate",
+        "validated",
+        "stable",
+        "deprecated"
+      ]
+    },
+    "practical_value": {
+      "enum": [
+        "Useful",
+        "Efficient",
+        "Signature"
+      ]
+    },
+    "usefulness_level": {
+      "enum": [
+        "Useful",
+        "Efficient",
+        "Signature"
+      ]
+    },
+    "compact": {
+      "type": "object",
+      "properties": {
+        "10s": {
+          "type": "string",
+          "minLength": 1
+        },
+        "30s": {
+          "type": "string",
+          "minLength": 1
+        },
+        "90s": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "10s",
+        "30s",
+        "90s"
+      ],
+      "additionalProperties": true
+    },
+    "four_step_card": {
+      "type": "object",
+      "properties": {
+        "start": {
+          "type": "string",
+          "minLength": 1
+        },
+        "first_cut": {
+          "type": "string",
+          "minLength": 1
+        },
+        "judge": {
+          "type": "string",
+          "minLength": 1
+        },
+        "stop": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "start",
+        "first_cut",
+        "judge",
+        "stop"
+      ],
+      "additionalProperties": false
+    },
+    "source_references": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "repository": {
+            "type": "string",
+            "minLength": 1
+          },
+          "commit": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{40}$"
+          },
+          "path": {
+            "type": "string",
+            "minLength": 1
+          },
+          "heading": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "required": [
+          "repository",
+          "commit",
+          "path",
+          "heading"
+        ],
+        "additionalProperties": false
+      },
+      "minItems": 1
+    },
+    "full": {
+      "type": "object"
+    },
+    "levels": {
+      "type": "object"
+    },
+    "cases": {
+      "type": "object",
+      "minProperties": 1,
+      "additionalProperties": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "practicality_gate": {
+      "type": "object"
+    },
+    "first_use_test": {
+      "type": "object"
+    },
+    "evaluation": {
+      "type": "object"
+    }
+  },
+  "required": [
+    "method_id",
+    "brand_name",
+    "source_name",
+    "core_action",
+    "decision_rule",
+    "verification",
+    "stop_rule",
+    "common_wrong_instinct",
+    "transfer_pattern",
+    "memory_line",
+    "anti_rule",
+    "visual_formula",
+    "challenge_prompt",
+    "change_reason",
+    "regression_result",
+    "aliases",
+    "secondary_roles",
+    "student_symptoms",
+    "trigger_cues",
+    "failure_cases",
+    "counterexamples",
+    "can_follow",
+    "usually_before",
+    "usually_after",
+    "conflicts_with",
+    "cannot_replace",
+    "affected_cases",
+    "section_ids",
+    "question_type",
+    "method_type",
+    "primary_role",
+    "role",
+    "output_type",
+    "version",
+    "maturity_status",
+    "status",
+    "practical_value",
+    "usefulness_level",
+    "compact",
+    "four_step_card",
+    "source_references",
+    "full",
+    "levels",
+    "cases",
+    "practicality_gate",
+    "first_use_test",
+    "evaluation"
+  ],
+  "additionalProperties": true
+}

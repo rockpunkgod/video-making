@@ -1,0 +1,19 @@
+case_id: F05-canonical
+method_id: F05
+question_type: 七选五
+source:
+  repository: https://github.com/rockpunkgod/ANSWER.git
+  commit: b04ebc26d7fa096404111a0bb12f6c77cc8525b9
+  path: gaokao-english/references/seven-five.md
+  heading: 总起句做题法
+question: null
+answer: null
+trigger: 空位在段首且可能统领下文
+evidence: []
+method_role: interpreter
+expected_action: 列下文共同对象、动作与段落任务，再核候选能否统领，不把段首自动当中心
+expected_output: interpret
+stop_rule: 本步骤只产生语义结构，不能自动定案。不能以本动作代替完整题面关系核验；题面缺失、关键词义不明或出现反证就停止定案。具体边界见源章节。
+case_type: canonical
+status: evidence_gap
+notes: 源方法可核；尚未逐题核验案例，不可当成功样例

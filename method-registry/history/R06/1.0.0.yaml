@@ -1,0 +1,120 @@
+method_id: R06
+brand_name: 主旨缺块
+source_name: 主旨缺失
+aliases:
+- 全文拼图
+- 核心块覆盖
+question_type: 阅读理解
+role: decider
+primary_role: decider
+secondary_roles: []
+output_type: decide
+student_symptoms:
+- 主旨题总在两个相关选项之间摇摆。
+- 容易选范围最大、词频最高或只概括一部分的选项。
+trigger_cues:
+- 题干问全文主旨、写作目的或最佳标题。
+- 多个候选都与全文相关，差别在遗漏核心块、扩大范围或换了块之间的关系。
+core_action: 先把全文压成 2–4 个不可缺核心块 A+B+C，再用候选逐块拼图。
+decision_rule: 候选要覆盖全文核心组合，同时不新增、替换或扭曲核心块之间的关系。
+verification:
+- 由题干与候选共同概念形成待验主题，不立即定案。
+- 回文核对开头、结尾和各段首句，识别 2–4 个贯穿核心块及其关系。
+- 把每个候选拆成谈什么与作什么判断，标注缺块、多块或错关系。
+- 对最终候选回查全文覆盖，说明没有遗漏哪些核心块。
+stop_rule: 范围大，不等于主旨对。
+common_wrong_instinct: 把抽象、范围大、包含其他选项或出现段数多当作正确主旨。
+failure_cases:
+- 明确局部细节题或某一段事实题不使用全文拼图。
+- 文章主要段落缺失时无法建立完整核心组合，应停止而不补造。
+counterexamples:
+- 候选覆盖的词更多，但把原文的对比改成因果，仍应排除。
+- 候选字面较短，但用上位概念准确覆盖 A+B+C 且关系正确，不能因词少排除。
+transfer_pattern: 可迁移到全文主旨、写作目的和最佳标题中的覆盖—关系双重检查。
+memory_line: 先拼齐核心块，再查块间关系。
+anti_rule: 范围最大 ≠ 主旨。
+visual_formula: '全文：A + B + C
+
+  候选1：A + B       → 缺 C
+
+  候选2：A + B + C   → 再查关系
+
+  候选3：A + C       → 关系被换'
+challenge_prompt: 先不选主旨，用三个短语写出全文不能少的核心块，再标注每个选项缺了哪块或换了什么关系。
+source_references:
+- repository: https://github.com/rockpunkgod/ANSWER.git
+  commit: b04ebc26d7fa096404111a0bb12f6c77cc8525b9
+  path: gaokao-english/references/reading-comprehension.md
+  heading: 主旨缺失
+- repository: https://github.com/rockpunkgod/ANSWER.git
+  commit: b04ebc26d7fa096404111a0bb12f6c77cc8525b9
+  path: gaokao-english/references/course-evidence.md
+  heading: 其他已激活阅读方法
+can_follow:
+- R09
+- mainly题与主旨大意
+usually_before:
+- 最终全文覆盖回查
+usually_after:
+- R09
+conflicts_with: []
+cannot_replace:
+- 局部细节核对
+- 全文取证
+- 错误关系检查
+levels:
+  L1: 识别明显只覆盖一段的候选。
+  L2: 把全文压成 2–4 个核心块并比较覆盖。
+  L3: 区分缺块、扩大范围和换属性。
+  L4: 在覆盖齐全时继续核对对比、因果、变化等块间关系。
+compact:
+  line: 全文先拼 A+B+C，主旨要不缺块也不换关系。
+  boundary: 拼图只用于全文主旨、目的或标题任务，不用于明确细节题。
+full:
+  summary: 用开头、结尾和各段首句验证核心组合，再比较候选的覆盖与完整判断。
+  boundaries:
+  - 重复词不定案
+  - 范围大不定案
+  - 包含其他候选不定案
+  - 指出以偏概全时必须说明遗漏块
+cases:
+  canonical: cases/R06/canonical/case.yaml
+  counterexample: cases/R06/counterexamples/case.yaml
+  boundary: cases/R06/boundary/case.yaml
+  transfer: cases/R06/transfer/case.yaml
+four_step_card:
+  start: 全文主旨、目的或标题题中，多个选项都相关却一直二选一。
+  first_cut: 先写出全文 2–4 个不可缺核心块 A+B+C。
+  judge: 对照候选是否缺块、多块或把块间关系换错。
+  stop: 明确细节题、单段题或主要段落不全时停止。
+practicality_gate:
+  status: design_complete_empirical_pending
+  trigger: 只由全文主旨、写作目的或最佳标题任务触发。
+  action: 从开头、结尾和各段主要任务提取 2–4 块，再给候选标缺块/多块/错关系。
+  output: decide；用覆盖与关系排除主旨干扰项。
+  stop: 题干范围不是全文，或无法建立可验核心块时停止。
+  transfer: 核心块覆盖+块间关系可迁移到不同文体的全文概括。
+  efficiency: 把多个抽象选项转成少量核心块对照，减少反复回文和范围犹豫。
+  misuse_cost: high；核心块提错会系统性误判，因此必须先由全文取证而不是从候选倒推。
+first_use_test:
+  status: designed_not_run
+  trigger_success: null
+  action_success: null
+  evidence_success: null
+  stop_rule_success: null
+  no_answer_backfit: null
+  final_result: pending_real_student_test
+evaluation:
+  baseline: 逐项凭相关性和抽象程度判断
+  trigger_precision: null
+  trigger_recall: null
+  resolution_rate: null
+  standalone_rate: null
+  assist_rate: null
+  false_trigger_rate: null
+  transfer_rate: null
+  time_complexity_gain: null
+  primary_benefit_hypothesis: 提高全文覆盖与关系完整性，降低以偏概全和范围贪大。
+usefulness_level: Useful
+status: candidate
+version: 1.0.0

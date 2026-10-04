@@ -1,0 +1,9 @@
+{
+  "schema_version": "1.0.0",
+  "origin": "empty",
+  "record_count": 0,
+  "groups": [],
+  "limitations": [
+    "指标仅计算输入观察；origin、参与者与审阅真实性须由研究者外部审计。Synthetic 不得用于等级升级。"
+  ]
+}

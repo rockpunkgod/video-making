@@ -1,0 +1,966 @@
+methods:
+- method_id: C01
+  brand_name: 语篇线索链
+  source_name: 完形语篇逻辑破译
+  aliases:
+  - 完形语篇逻辑破译
+  question_type: 完形填空
+  method_type: framework
+  role: framework
+  primary_role: framework
+  secondary_roles:
+  - decider
+  output_type: interpret
+  student_symptoms:
+  - 当前空不能由孤立语法闭合
+  trigger_cues:
+  - 当前空不能由孤立语法闭合
+  core_action: 标当前空是词义/关系/搭配角色；找最近对象与动作线索；不足向复现、回答、结果或评价扩；回填核语义
+  decision_rule: 执行动作后逐条对照源章节判据；不足则暂留，不能据关键词或剩余项定案。
+  verification: 回填或回原文逐条核主体、动作、限定和当前任务，见源章节完整规则。
+  stop_rule: 本步骤只产生框架，不能自动定案。不能以本动作代替完整题面关系核验；题面缺失、关键词义不明或出现反证就停止定案。具体边界见源章节。
+  common_wrong_instinct: 只记方法名或表面线索，跳过当前题面关系核验。
+  failure_cases:
+  - 缺完整题面或关键语义不能确认时强行定案
+  counterexamples:
+  - 表面触发信号存在，但完整关系不支持时不能继续；真实反例题面待核
+  transfer_pattern: 在新题面重复同一具体动作，不迁移上一题答案。
+  memory_line: 标当前空是词义/关系/搭配角色；找最近对象与动作线索；不足向复现、回答、结果或评价扩；回填核语义
+  anti_rule: 动作产物 ≠ 自动答案。
+  visual_formula: '当前空不能由孤立语法闭合
+
+    ↓
+
+    标当前空是词义/关系/搭配角色；找最近对象与动作线索；不足向复现、回答、结果或评价扩；回填核语义
+
+    ↓
+
+    interpret（未必定案）'
+  challenge_prompt: 先不报答案，只在题面标出：标当前空是词义/关系/搭配角色；找最近对象与动作线索；不足向复现、回答、结果或评价扩；回填核语义
+  source_references:
+  - repository: https://github.com/rockpunkgod/ANSWER.git
+    commit: b04ebc26d7fa096404111a0bb12f6c77cc8525b9
+    path: gaokao-english/references/cloze.md
+    heading: 完形语篇逻辑破译
+  section_ids: &id001
+  - 9b9a8cf18e4a40a5
+  can_follow: []
+  usually_before: []
+  usually_after: []
+  conflicts_with: []
+  cannot_replace:
+  - 完整题面验证
+  levels:
+    compact: 动作入口
+    full: 源章节判据
+  compact:
+    10s: 当前空不能由孤立语法闭合。标当前空是词义/关系/搭配角色；找最近对象与动作线索；不足向复现、回答、结果或评价扩；回填核语义。本步骤只产生框架，不能自动定案。不能以本动作代替完整题面关系核验；题面缺失、关键词义不明或出现反证就停止定案。具体边界见源章节。
+    30s: 当前空不能由孤立语法闭合。标当前空是词义/关系/搭配角色；找最近对象与动作线索；不足向复现、回答、结果或评价扩；回填核语义。判断与停止：本步骤只产生框架，不能自动定案。不能以本动作代替完整题面关系核验；题面缺失、关键词义不明或出现反证就停止定案。具体边界见源章节。
+    90s: 当前空不能由孤立语法闭合。标当前空是词义/关系/搭配角色；找最近对象与动作线索；不足向复现、回答、结果或评价扩；回填核语义。完整规则必须读取对应源章节；案例未核，不编示范答案。本步骤只产生框架，不能自动定案。不能以本动作代替完整题面关系核验；题面缺失、关键词义不明或出现反证就停止定案。具体边界见源章节。
+  full:
+    section_ids: *id001
+    source_boundary: 本步骤只产生框架，不能自动定案。不能以本动作代替完整题面关系核验；题面缺失、关键词义不明或出现反证就停止定案。具体边界见源章节。
+  cases:
+    canonical: cases/cloze/C01/canonical/case.yaml
+  four_step_card:
+    start: 当前空不能由孤立语法闭合
+    first_cut: 标当前空是词义/关系/搭配角色；找最近对象与动作线索；不足向复现、回答、结果或评价扩；回填核语义
+    judge: 逐条核源章节判据，不足则继续找独立证据。
+    stop: 本步骤只产生框架，不能自动定案。不能以本动作代替完整题面关系核验；题面缺失、关键词义不明或出现反证就停止定案。具体边界见源章节。
+  practicality_gate:
+    status: design_complete_empirical_pending
+    trigger: 当前空不能由孤立语法闭合
+    action: 标当前空是词义/关系/搭配角色；找最近对象与动作线索；不足向复现、回答、结果或评价扩；回填核语义
+    output: interpret；严格限制主职责
+    stop: 本步骤只产生框架，不能自动定案。不能以本动作代替完整题面关系核验；题面缺失、关键词义不明或出现反证就停止定案。具体边界见源章节。
+    transfer: 迁移同一动作，不迁移原题答案
+    efficiency: 未测；预期价值是显式化动作和边界，不保证提速
+    misuse_cost: 未测；误触发时不得定案
+  first_use_test:
+    status: designed_not_run
+    trigger_success: null
+    action_success: null
+    evidence_success: null
+    stop_rule_success: null
+    no_answer_backfit: null
+    failure_type: null
+    final_result: pending_real_student_test
+  evaluation:
+    baseline: 普通逐项核题面
+    primary_benefit_hypothesis: 显式化下一步动作和证据边界
+    trigger_precision: null
+    trigger_recall: null
+    resolution_rate: null
+    standalone_rate: null
+    assist_rate: null
+    false_trigger_rate: null
+    transfer_rate: null
+    boundary_accuracy: null
+    time_complexity_gain: null
+  usefulness_level: Useful
+  status: candidate
+  maturity_status: candidate
+  practical_value: Useful
+  version: 1.0.0
+  change_reason: 首次迁移现有激活章节；非黄金短版尚未逐一教学审查
+  affected_cases:
+  - cases/cloze/C01/canonical/case.yaml
+  regression_result: passed_automated_contract_tests_not_empirical_validation
+  student_ready: false
+  secondary_role_gate: 框架产物不足以定案；只有逐项比较具体词义、当前空自身决定性关系并回填闭合后，才以显式 decider 阶段提交。
+- method_id: C02
+  brand_name: 前后夹击
+  source_name: 瞻前顾后法
+  aliases:
+  - 瞻前顾后法
+  question_type: 完形填空
+  method_type: method
+  role: verifier
+  primary_role: verifier
+  secondary_roles: []
+  output_type: verify
+  student_symptoms:
+  - 空前空后证据尚未闭合
+  trigger_cues:
+  - 空前空后证据尚未闭合
+  core_action: 圈两侧谁、动作、评价和时间；近处不足再向明确复现或结果扩读，仍不足暂留
+  decision_rule: 执行动作后逐条对照源章节判据；不足则暂留，不能据关键词或剩余项定案。
+  verification: 回填或回原文逐条核主体、动作、限定和当前任务，见源章节完整规则。
+  stop_rule: 不能以本动作代替完整题面关系核验；题面缺失、关键词义不明或出现反证就停止定案。具体边界见源章节。
+  common_wrong_instinct: 只记方法名或表面线索，跳过当前题面关系核验。
+  failure_cases:
+  - 缺完整题面或关键语义不能确认时强行定案
+  counterexamples:
+  - 表面触发信号存在，但完整关系不支持时不能继续；真实反例题面待核
+  transfer_pattern: 在新题面重复同一具体动作，不迁移上一题答案。
+  memory_line: 圈两侧谁、动作、评价和时间；近处不足再向明确复现或结果扩读，仍不足暂留
+  anti_rule: 动作产物 ≠ 自动答案。
+  visual_formula: '空前空后证据尚未闭合
+
+    ↓
+
+    圈两侧谁、动作、评价和时间；近处不足再向明确复现或结果扩读，仍不足暂留
+
+    ↓
+
+    verify（未必定案）'
+  challenge_prompt: 先不报答案，只在题面标出：圈两侧谁、动作、评价和时间；近处不足再向明确复现或结果扩读，仍不足暂留
+  source_references:
+  - repository: https://github.com/rockpunkgod/ANSWER.git
+    commit: b04ebc26d7fa096404111a0bb12f6c77cc8525b9
+    path: gaokao-english/references/cloze.md
+    heading: 瞻前顾后法
+  section_ids: &id002
+  - 3070bb7253b5d49e
+  can_follow: []
+  usually_before: []
+  usually_after: []
+  conflicts_with: []
+  cannot_replace:
+  - 完整题面验证
+  levels:
+    compact: 动作入口
+    full: 源章节判据
+  compact:
+    10s: 空前空后证据尚未闭合。圈两侧谁、动作、评价和时间；近处不足再向明确复现或结果扩读，仍不足暂留。不能以本动作代替完整题面关系核验；题面缺失、关键词义不明或出现反证就停止定案。具体边界见源章节。
+    30s: 空前空后证据尚未闭合。圈两侧谁、动作、评价和时间；近处不足再向明确复现或结果扩读，仍不足暂留。判断与停止：不能以本动作代替完整题面关系核验；题面缺失、关键词义不明或出现反证就停止定案。具体边界见源章节。
+    90s: 空前空后证据尚未闭合。圈两侧谁、动作、评价和时间；近处不足再向明确复现或结果扩读，仍不足暂留。完整规则必须读取对应源章节；案例未核，不编示范答案。不能以本动作代替完整题面关系核验；题面缺失、关键词义不明或出现反证就停止定案。具体边界见源章节。
+  full:
+    section_ids: *id002
+    source_boundary: 不能以本动作代替完整题面关系核验；题面缺失、关键词义不明或出现反证就停止定案。具体边界见源章节。
+  cases:
+    canonical: cases/cloze/C02/canonical/case.yaml
+  four_step_card:
+    start: 空前空后证据尚未闭合
+    first_cut: 圈两侧谁、动作、评价和时间；近处不足再向明确复现或结果扩读，仍不足暂留
+    judge: 逐条核源章节判据，不足则继续找独立证据。
+    stop: 不能以本动作代替完整题面关系核验；题面缺失、关键词义不明或出现反证就停止定案。具体边界见源章节。
+  practicality_gate:
+    status: design_complete_empirical_pending
+    trigger: 空前空后证据尚未闭合
+    action: 圈两侧谁、动作、评价和时间；近处不足再向明确复现或结果扩读，仍不足暂留
+    output: verify；严格限制主职责
+    stop: 不能以本动作代替完整题面关系核验；题面缺失、关键词义不明或出现反证就停止定案。具体边界见源章节。
+    transfer: 迁移同一动作，不迁移原题答案
+    efficiency: 未测；预期价值是显式化动作和边界，不保证提速
+    misuse_cost: 未测；误触发时不得定案
+  first_use_test:
+    status: designed_not_run
+    trigger_success: null
+    action_success: null
+    evidence_success: null
+    stop_rule_success: null
+    no_answer_backfit: null
+    failure_type: null
+    final_result: pending_real_student_test
+  evaluation:
+    baseline: 普通逐项核题面
+    primary_benefit_hypothesis: 显式化下一步动作和证据边界
+    trigger_precision: null
+    trigger_recall: null
+    resolution_rate: null
+    standalone_rate: null
+    assist_rate: null
+    false_trigger_rate: null
+    transfer_rate: null
+    boundary_accuracy: null
+    time_complexity_gain: null
+  usefulness_level: Useful
+  status: candidate
+  maturity_status: candidate
+  practical_value: Useful
+  version: 1.0.0
+  change_reason: 首次迁移现有激活章节；非黄金短版尚未逐一教学审查
+  affected_cases:
+  - cases/cloze/C02/canonical/case.yaml
+  regression_result: passed_automated_contract_tests_not_empirical_validation
+  student_ready: false
+- method_id: C03
+  brand_name: 首句定调
+  source_name: 完形语篇逻辑破译
+  aliases:
+  - 完形语篇逻辑破译
+  question_type: 完形填空
+  method_type: sub_action
+  role: interpreter
+  primary_role: interpreter
+  secondary_roles: []
+  output_type: interpret
+  student_symptoms:
+  - 当前空依赖人物背景或全文基调
+  trigger_cues:
+  - 当前空依赖人物背景或全文基调
+  core_action: 从首句记录人物、背景、主题、视角和暂定基调，不据此预编后续情节
+  decision_rule: 执行动作后逐条对照源章节判据；不足则暂留，不能据关键词或剩余项定案。
+  verification: 回填或回原文逐条核主体、动作、限定和当前任务，见源章节完整规则。
+  stop_rule: 本步骤只产生语义结构，不能自动定案。不能以本动作代替完整题面关系核验；题面缺失、关键词义不明或出现反证就停止定案。具体边界见源章节。
+  common_wrong_instinct: 只记方法名或表面线索，跳过当前题面关系核验。
+  failure_cases:
+  - 缺完整题面或关键语义不能确认时强行定案
+  counterexamples:
+  - 表面触发信号存在，但完整关系不支持时不能继续；真实反例题面待核
+  transfer_pattern: 在新题面重复同一具体动作，不迁移上一题答案。
+  memory_line: 从首句记录人物、背景、主题、视角和暂定基调，不据此预编后续情节
+  anti_rule: 动作产物 ≠ 自动答案。
+  visual_formula: '当前空依赖人物背景或全文基调
+
+    ↓
+
+    从首句记录人物、背景、主题、视角和暂定基调，不据此预编后续情节
+
+    ↓
+
+    interpret（未必定案）'
+  challenge_prompt: 先不报答案，只在题面标出：从首句记录人物、背景、主题、视角和暂定基调，不据此预编后续情节
+  source_references:
+  - repository: https://github.com/rockpunkgod/ANSWER.git
+    commit: b04ebc26d7fa096404111a0bb12f6c77cc8525b9
+    path: gaokao-english/references/cloze.md
+    heading: 完形语篇逻辑破译
+  section_ids: &id003
+  - 9b9a8cf18e4a40a5
+  can_follow: []
+  usually_before: []
+  usually_after: []
+  conflicts_with: []
+  cannot_replace:
+  - 完整题面验证
+  levels:
+    compact: 动作入口
+    full: 源章节判据
+  compact:
+    10s: 当前空依赖人物背景或全文基调。从首句记录人物、背景、主题、视角和暂定基调，不据此预编后续情节。本步骤只产生语义结构，不能自动定案。不能以本动作代替完整题面关系核验；题面缺失、关键词义不明或出现反证就停止定案。具体边界见源章节。
+    30s: 当前空依赖人物背景或全文基调。从首句记录人物、背景、主题、视角和暂定基调，不据此预编后续情节。判断与停止：本步骤只产生语义结构，不能自动定案。不能以本动作代替完整题面关系核验；题面缺失、关键词义不明或出现反证就停止定案。具体边界见源章节。
+    90s: 当前空依赖人物背景或全文基调。从首句记录人物、背景、主题、视角和暂定基调，不据此预编后续情节。完整规则必须读取对应源章节；案例未核，不编示范答案。本步骤只产生语义结构，不能自动定案。不能以本动作代替完整题面关系核验；题面缺失、关键词义不明或出现反证就停止定案。具体边界见源章节。
+  full:
+    section_ids: *id003
+    source_boundary: 本步骤只产生语义结构，不能自动定案。不能以本动作代替完整题面关系核验；题面缺失、关键词义不明或出现反证就停止定案。具体边界见源章节。
+  cases:
+    canonical: cases/cloze/C03/canonical/case.yaml
+  four_step_card:
+    start: 当前空依赖人物背景或全文基调
+    first_cut: 从首句记录人物、背景、主题、视角和暂定基调，不据此预编后续情节
+    judge: 逐条核源章节判据，不足则继续找独立证据。
+    stop: 本步骤只产生语义结构，不能自动定案。不能以本动作代替完整题面关系核验；题面缺失、关键词义不明或出现反证就停止定案。具体边界见源章节。
+  practicality_gate:
+    status: design_complete_empirical_pending
+    trigger: 当前空依赖人物背景或全文基调
+    action: 从首句记录人物、背景、主题、视角和暂定基调，不据此预编后续情节
+    output: interpret；严格限制主职责
+    stop: 本步骤只产生语义结构，不能自动定案。不能以本动作代替完整题面关系核验；题面缺失、关键词义不明或出现反证就停止定案。具体边界见源章节。
+    transfer: 迁移同一动作，不迁移原题答案
+    efficiency: 未测；预期价值是显式化动作和边界，不保证提速
+    misuse_cost: 未测；误触发时不得定案
+  first_use_test:
+    status: designed_not_run
+    trigger_success: null
+    action_success: null
+    evidence_success: null
+    stop_rule_success: null
+    no_answer_backfit: null
+    failure_type: null
+    final_result: pending_real_student_test
+  evaluation:
+    baseline: 普通逐项核题面
+    primary_benefit_hypothesis: 显式化下一步动作和证据边界
+    trigger_precision: null
+    trigger_recall: null
+    resolution_rate: null
+    standalone_rate: null
+    assist_rate: null
+    false_trigger_rate: null
+    transfer_rate: null
+    boundary_accuracy: null
+    time_complexity_gain: null
+  usefulness_level: Useful
+  status: candidate
+  maturity_status: candidate
+  practical_value: Useful
+  version: 1.0.0
+  change_reason: 首次迁移现有激活章节；非黄金短版尚未逐一教学审查
+  affected_cases:
+  - cases/cloze/C03/canonical/case.yaml
+  regression_result: passed_automated_contract_tests_not_empirical_validation
+  student_ready: false
+- method_id: C04
+  brand_name: 词性导航
+  source_name: 词性只引导找线索
+  aliases:
+  - 词性只引导找线索
+  question_type: 完形填空
+  method_type: sub_action
+  role: locator
+  primary_role: locator
+  secondary_roles: []
+  output_type: locate
+  student_symptoms:
+  - 空内词的句法作用能指向线索类型
+  trigger_cues:
+  - 空内词的句法作用能指向线索类型
+  core_action: 标空内作用，再圈修饰同一对象或动作的结构，不凭词性定案
+  decision_rule: 执行动作后逐条对照源章节判据；不足则暂留，不能据关键词或剩余项定案。
+  verification: 回填或回原文逐条核主体、动作、限定和当前任务，见源章节完整规则。
+  stop_rule: 本步骤只产生位置，不能自动定案。不能以本动作代替完整题面关系核验；题面缺失、关键词义不明或出现反证就停止定案。具体边界见源章节。
+  common_wrong_instinct: 只记方法名或表面线索，跳过当前题面关系核验。
+  failure_cases:
+  - 缺完整题面或关键语义不能确认时强行定案
+  counterexamples:
+  - 表面触发信号存在，但完整关系不支持时不能继续；真实反例题面待核
+  transfer_pattern: 在新题面重复同一具体动作，不迁移上一题答案。
+  memory_line: 标空内作用，再圈修饰同一对象或动作的结构，不凭词性定案
+  anti_rule: 动作产物 ≠ 自动答案。
+  visual_formula: '空内词的句法作用能指向线索类型
+
+    ↓
+
+    标空内作用，再圈修饰同一对象或动作的结构，不凭词性定案
+
+    ↓
+
+    locate（未必定案）'
+  challenge_prompt: 先不报答案，只在题面标出：标空内作用，再圈修饰同一对象或动作的结构，不凭词性定案
+  source_references:
+  - repository: https://github.com/rockpunkgod/ANSWER.git
+    commit: b04ebc26d7fa096404111a0bb12f6c77cc8525b9
+    path: gaokao-english/references/cloze.md
+    heading: 词性只引导找线索
+  section_ids: &id004
+  - b50b911407b9faa9
+  can_follow: []
+  usually_before: []
+  usually_after: []
+  conflicts_with: []
+  cannot_replace:
+  - 完整题面验证
+  levels:
+    compact: 动作入口
+    full: 源章节判据
+  compact:
+    10s: 空内词的句法作用能指向线索类型。标空内作用，再圈修饰同一对象或动作的结构，不凭词性定案。本步骤只产生位置，不能自动定案。不能以本动作代替完整题面关系核验；题面缺失、关键词义不明或出现反证就停止定案。具体边界见源章节。
+    30s: 空内词的句法作用能指向线索类型。标空内作用，再圈修饰同一对象或动作的结构，不凭词性定案。判断与停止：本步骤只产生位置，不能自动定案。不能以本动作代替完整题面关系核验；题面缺失、关键词义不明或出现反证就停止定案。具体边界见源章节。
+    90s: 空内词的句法作用能指向线索类型。标空内作用，再圈修饰同一对象或动作的结构，不凭词性定案。完整规则必须读取对应源章节；案例未核，不编示范答案。本步骤只产生位置，不能自动定案。不能以本动作代替完整题面关系核验；题面缺失、关键词义不明或出现反证就停止定案。具体边界见源章节。
+  full:
+    section_ids: *id004
+    source_boundary: 本步骤只产生位置，不能自动定案。不能以本动作代替完整题面关系核验；题面缺失、关键词义不明或出现反证就停止定案。具体边界见源章节。
+  cases:
+    canonical: cases/cloze/C04/canonical/case.yaml
+  four_step_card:
+    start: 空内词的句法作用能指向线索类型
+    first_cut: 标空内作用，再圈修饰同一对象或动作的结构，不凭词性定案
+    judge: 逐条核源章节判据，不足则继续找独立证据。
+    stop: 本步骤只产生位置，不能自动定案。不能以本动作代替完整题面关系核验；题面缺失、关键词义不明或出现反证就停止定案。具体边界见源章节。
+  practicality_gate:
+    status: design_complete_empirical_pending
+    trigger: 空内词的句法作用能指向线索类型
+    action: 标空内作用，再圈修饰同一对象或动作的结构，不凭词性定案
+    output: locate；严格限制主职责
+    stop: 本步骤只产生位置，不能自动定案。不能以本动作代替完整题面关系核验；题面缺失、关键词义不明或出现反证就停止定案。具体边界见源章节。
+    transfer: 迁移同一动作，不迁移原题答案
+    efficiency: 未测；预期价值是显式化动作和边界，不保证提速
+    misuse_cost: 未测；误触发时不得定案
+  first_use_test:
+    status: designed_not_run
+    trigger_success: null
+    action_success: null
+    evidence_success: null
+    stop_rule_success: null
+    no_answer_backfit: null
+    failure_type: null
+    final_result: pending_real_student_test
+  evaluation:
+    baseline: 普通逐项核题面
+    primary_benefit_hypothesis: 显式化下一步动作和证据边界
+    trigger_precision: null
+    trigger_recall: null
+    resolution_rate: null
+    standalone_rate: null
+    assist_rate: null
+    false_trigger_rate: null
+    transfer_rate: null
+    boundary_accuracy: null
+    time_complexity_gain: null
+  usefulness_level: Useful
+  status: candidate
+  maturity_status: candidate
+  practical_value: Useful
+  version: 1.0.0
+  change_reason: 首次迁移现有激活章节；非黄金短版尚未逐一教学审查
+  affected_cases:
+  - cases/cloze/C04/canonical/case.yaml
+  regression_result: passed_automated_contract_tests_not_empirical_validation
+  student_ready: false
+- method_id: C05
+  brand_name: 近义落地
+  source_name: 近义项要落到具体语义
+  aliases:
+  - 近义项要落到具体语义
+  question_type: 完形填空
+  method_type: sub_action
+  role: interpreter
+  primary_role: interpreter
+  secondary_roles: []
+  output_type: interpret
+  student_symptoms:
+  - 多个候选译义相近或评价同向
+  trigger_cues:
+  - 多个候选译义相近或评价同向
+  core_action: 并列写出各项具体状态、程度或功能，回原文对象核差异，词义未知就停
+  decision_rule: 执行动作后逐条对照源章节判据；不足则暂留，不能据关键词或剩余项定案。
+  verification: 回填或回原文逐条核主体、动作、限定和当前任务，见源章节完整规则。
+  stop_rule: 本步骤只产生语义结构，不能自动定案。不能以本动作代替完整题面关系核验；题面缺失、关键词义不明或出现反证就停止定案。具体边界见源章节。
+  common_wrong_instinct: 只记方法名或表面线索，跳过当前题面关系核验。
+  failure_cases:
+  - 缺完整题面或关键语义不能确认时强行定案
+  counterexamples:
+  - 表面触发信号存在，但完整关系不支持时不能继续；真实反例题面待核
+  transfer_pattern: 在新题面重复同一具体动作，不迁移上一题答案。
+  memory_line: 并列写出各项具体状态、程度或功能，回原文对象核差异，词义未知就停
+  anti_rule: 动作产物 ≠ 自动答案。
+  visual_formula: '多个候选译义相近或评价同向
+
+    ↓
+
+    并列写出各项具体状态、程度或功能，回原文对象核差异，词义未知就停
+
+    ↓
+
+    interpret（未必定案）'
+  challenge_prompt: 先不报答案，只在题面标出：并列写出各项具体状态、程度或功能，回原文对象核差异，词义未知就停
+  source_references:
+  - repository: https://github.com/rockpunkgod/ANSWER.git
+    commit: b04ebc26d7fa096404111a0bb12f6c77cc8525b9
+    path: gaokao-english/references/cloze.md
+    heading: 近义项要落到具体语义
+  section_ids: &id005
+  - b5945ee8f990f448
+  can_follow: []
+  usually_before: []
+  usually_after: []
+  conflicts_with: []
+  cannot_replace:
+  - 完整题面验证
+  levels:
+    compact: 动作入口
+    full: 源章节判据
+  compact:
+    10s: 多个候选译义相近或评价同向。并列写出各项具体状态、程度或功能，回原文对象核差异，词义未知就停。本步骤只产生语义结构，不能自动定案。不能以本动作代替完整题面关系核验；题面缺失、关键词义不明或出现反证就停止定案。具体边界见源章节。
+    30s: 多个候选译义相近或评价同向。并列写出各项具体状态、程度或功能，回原文对象核差异，词义未知就停。判断与停止：本步骤只产生语义结构，不能自动定案。不能以本动作代替完整题面关系核验；题面缺失、关键词义不明或出现反证就停止定案。具体边界见源章节。
+    90s: 多个候选译义相近或评价同向。并列写出各项具体状态、程度或功能，回原文对象核差异，词义未知就停。完整规则必须读取对应源章节；案例未核，不编示范答案。本步骤只产生语义结构，不能自动定案。不能以本动作代替完整题面关系核验；题面缺失、关键词义不明或出现反证就停止定案。具体边界见源章节。
+  full:
+    section_ids: *id005
+    source_boundary: 本步骤只产生语义结构，不能自动定案。不能以本动作代替完整题面关系核验；题面缺失、关键词义不明或出现反证就停止定案。具体边界见源章节。
+  cases:
+    canonical: cases/cloze/C05/canonical/case.yaml
+  four_step_card:
+    start: 多个候选译义相近或评价同向
+    first_cut: 并列写出各项具体状态、程度或功能，回原文对象核差异，词义未知就停
+    judge: 逐条核源章节判据，不足则继续找独立证据。
+    stop: 本步骤只产生语义结构，不能自动定案。不能以本动作代替完整题面关系核验；题面缺失、关键词义不明或出现反证就停止定案。具体边界见源章节。
+  practicality_gate:
+    status: design_complete_empirical_pending
+    trigger: 多个候选译义相近或评价同向
+    action: 并列写出各项具体状态、程度或功能，回原文对象核差异，词义未知就停
+    output: interpret；严格限制主职责
+    stop: 本步骤只产生语义结构，不能自动定案。不能以本动作代替完整题面关系核验；题面缺失、关键词义不明或出现反证就停止定案。具体边界见源章节。
+    transfer: 迁移同一动作，不迁移原题答案
+    efficiency: 未测；预期价值是显式化动作和边界，不保证提速
+    misuse_cost: 未测；误触发时不得定案
+  first_use_test:
+    status: designed_not_run
+    trigger_success: null
+    action_success: null
+    evidence_success: null
+    stop_rule_success: null
+    no_answer_backfit: null
+    failure_type: null
+    final_result: pending_real_student_test
+  evaluation:
+    baseline: 普通逐项核题面
+    primary_benefit_hypothesis: 显式化下一步动作和证据边界
+    trigger_precision: null
+    trigger_recall: null
+    resolution_rate: null
+    standalone_rate: null
+    assist_rate: null
+    false_trigger_rate: null
+    transfer_rate: null
+    boundary_accuracy: null
+    time_complexity_gain: null
+  usefulness_level: Useful
+  status: candidate
+  maturity_status: candidate
+  practical_value: Useful
+  version: 1.0.0
+  change_reason: 首次迁移现有激活章节；非黄金短版尚未逐一教学审查
+  affected_cases:
+  - cases/cloze/C05/canonical/case.yaml
+  regression_result: passed_automated_contract_tests_not_empirical_validation
+  student_ready: false
+- method_id: C06
+  brand_name: 时间线复原
+  source_name: 逻辑与时间要看真实内容
+  aliases:
+  - 逻辑与时间要看真实内容
+  question_type: 完形填空
+  method_type: sub_action
+  role: interpreter
+  primary_role: interpreter
+  secondary_roles: []
+  output_type: interpret
+  student_symptoms:
+  - 空位依赖事件先后或时间间隔
+  trigger_cues:
+  - 空位依赖事件先后或时间间隔
+  core_action: 写两件事发生时间及间隔，再标先后或因果，不省略题面时间条件
+  decision_rule: 执行动作后逐条对照源章节判据；不足则暂留，不能据关键词或剩余项定案。
+  verification: 回填或回原文逐条核主体、动作、限定和当前任务，见源章节完整规则。
+  stop_rule: 本步骤只产生语义结构，不能自动定案。不能以本动作代替完整题面关系核验；题面缺失、关键词义不明或出现反证就停止定案。具体边界见源章节。
+  common_wrong_instinct: 只记方法名或表面线索，跳过当前题面关系核验。
+  failure_cases:
+  - 缺完整题面或关键语义不能确认时强行定案
+  counterexamples:
+  - 表面触发信号存在，但完整关系不支持时不能继续；真实反例题面待核
+  transfer_pattern: 在新题面重复同一具体动作，不迁移上一题答案。
+  memory_line: 写两件事发生时间及间隔，再标先后或因果，不省略题面时间条件
+  anti_rule: 动作产物 ≠ 自动答案。
+  visual_formula: '空位依赖事件先后或时间间隔
+
+    ↓
+
+    写两件事发生时间及间隔，再标先后或因果，不省略题面时间条件
+
+    ↓
+
+    interpret（未必定案）'
+  challenge_prompt: 先不报答案，只在题面标出：写两件事发生时间及间隔，再标先后或因果，不省略题面时间条件
+  source_references:
+  - repository: https://github.com/rockpunkgod/ANSWER.git
+    commit: b04ebc26d7fa096404111a0bb12f6c77cc8525b9
+    path: gaokao-english/references/cloze.md
+    heading: 逻辑与时间要看真实内容
+  section_ids: &id006
+  - a68178b2feeba3e5
+  can_follow: []
+  usually_before: []
+  usually_after: []
+  conflicts_with: []
+  cannot_replace:
+  - 完整题面验证
+  levels:
+    compact: 动作入口
+    full: 源章节判据
+  compact:
+    10s: 空位依赖事件先后或时间间隔。写两件事发生时间及间隔，再标先后或因果，不省略题面时间条件。本步骤只产生语义结构，不能自动定案。不能以本动作代替完整题面关系核验；题面缺失、关键词义不明或出现反证就停止定案。具体边界见源章节。
+    30s: 空位依赖事件先后或时间间隔。写两件事发生时间及间隔，再标先后或因果，不省略题面时间条件。判断与停止：本步骤只产生语义结构，不能自动定案。不能以本动作代替完整题面关系核验；题面缺失、关键词义不明或出现反证就停止定案。具体边界见源章节。
+    90s: 空位依赖事件先后或时间间隔。写两件事发生时间及间隔，再标先后或因果，不省略题面时间条件。完整规则必须读取对应源章节；案例未核，不编示范答案。本步骤只产生语义结构，不能自动定案。不能以本动作代替完整题面关系核验；题面缺失、关键词义不明或出现反证就停止定案。具体边界见源章节。
+  full:
+    section_ids: *id006
+    source_boundary: 本步骤只产生语义结构，不能自动定案。不能以本动作代替完整题面关系核验；题面缺失、关键词义不明或出现反证就停止定案。具体边界见源章节。
+  cases:
+    canonical: cases/cloze/C06/canonical/case.yaml
+  four_step_card:
+    start: 空位依赖事件先后或时间间隔
+    first_cut: 写两件事发生时间及间隔，再标先后或因果，不省略题面时间条件
+    judge: 逐条核源章节判据，不足则继续找独立证据。
+    stop: 本步骤只产生语义结构，不能自动定案。不能以本动作代替完整题面关系核验；题面缺失、关键词义不明或出现反证就停止定案。具体边界见源章节。
+  practicality_gate:
+    status: design_complete_empirical_pending
+    trigger: 空位依赖事件先后或时间间隔
+    action: 写两件事发生时间及间隔，再标先后或因果，不省略题面时间条件
+    output: interpret；严格限制主职责
+    stop: 本步骤只产生语义结构，不能自动定案。不能以本动作代替完整题面关系核验；题面缺失、关键词义不明或出现反证就停止定案。具体边界见源章节。
+    transfer: 迁移同一动作，不迁移原题答案
+    efficiency: 未测；预期价值是显式化动作和边界，不保证提速
+    misuse_cost: 未测；误触发时不得定案
+  first_use_test:
+    status: designed_not_run
+    trigger_success: null
+    action_success: null
+    evidence_success: null
+    stop_rule_success: null
+    no_answer_backfit: null
+    failure_type: null
+    final_result: pending_real_student_test
+  evaluation:
+    baseline: 普通逐项核题面
+    primary_benefit_hypothesis: 显式化下一步动作和证据边界
+    trigger_precision: null
+    trigger_recall: null
+    resolution_rate: null
+    standalone_rate: null
+    assist_rate: null
+    false_trigger_rate: null
+    transfer_rate: null
+    boundary_accuracy: null
+    time_complexity_gain: null
+  usefulness_level: Useful
+  status: candidate
+  maturity_status: candidate
+  practical_value: Useful
+  version: 1.0.0
+  change_reason: 首次迁移现有激活章节；非黄金短版尚未逐一教学审查
+  affected_cases:
+  - cases/cloze/C06/canonical/case.yaml
+  regression_result: passed_automated_contract_tests_not_empirical_validation
+  student_ready: false
+- method_id: C07
+  brand_name: 名词回声
+  source_name: 名词复现只是线索
+  aliases:
+  - 名词复现只是线索
+  question_type: 完形填空
+  method_type: sub_action
+  role: locator
+  primary_role: locator
+  secondary_roles: []
+  output_type: locate
+  student_symptoms:
+  - 名词空需要同一人物物件或事件线索
+  trigger_cues:
+  - 名词空需要同一人物物件或事件线索
+  core_action: 圈原词/同义/同源复现并核是否同一对象，不把复现直接当答案
+  decision_rule: 执行动作后逐条对照源章节判据；不足则暂留，不能据关键词或剩余项定案。
+  verification: 回填或回原文逐条核主体、动作、限定和当前任务，见源章节完整规则。
+  stop_rule: 本步骤只产生位置，不能自动定案。不能以本动作代替完整题面关系核验；题面缺失、关键词义不明或出现反证就停止定案。具体边界见源章节。
+  common_wrong_instinct: 只记方法名或表面线索，跳过当前题面关系核验。
+  failure_cases:
+  - 缺完整题面或关键语义不能确认时强行定案
+  counterexamples:
+  - 表面触发信号存在，但完整关系不支持时不能继续；真实反例题面待核
+  transfer_pattern: 在新题面重复同一具体动作，不迁移上一题答案。
+  memory_line: 圈原词/同义/同源复现并核是否同一对象，不把复现直接当答案
+  anti_rule: 动作产物 ≠ 自动答案。
+  visual_formula: '名词空需要同一人物物件或事件线索
+
+    ↓
+
+    圈原词/同义/同源复现并核是否同一对象，不把复现直接当答案
+
+    ↓
+
+    locate（未必定案）'
+  challenge_prompt: 先不报答案，只在题面标出：圈原词/同义/同源复现并核是否同一对象，不把复现直接当答案
+  source_references:
+  - repository: https://github.com/rockpunkgod/ANSWER.git
+    commit: b04ebc26d7fa096404111a0bb12f6c77cc8525b9
+    path: gaokao-english/references/cloze.md
+    heading: 名词复现只是线索
+  section_ids: &id007
+  - b0b1e691060b321a
+  can_follow: []
+  usually_before: []
+  usually_after: []
+  conflicts_with: []
+  cannot_replace:
+  - 完整题面验证
+  levels:
+    compact: 动作入口
+    full: 源章节判据
+  compact:
+    10s: 名词空需要同一人物物件或事件线索。圈原词/同义/同源复现并核是否同一对象，不把复现直接当答案。本步骤只产生位置，不能自动定案。不能以本动作代替完整题面关系核验；题面缺失、关键词义不明或出现反证就停止定案。具体边界见源章节。
+    30s: 名词空需要同一人物物件或事件线索。圈原词/同义/同源复现并核是否同一对象，不把复现直接当答案。判断与停止：本步骤只产生位置，不能自动定案。不能以本动作代替完整题面关系核验；题面缺失、关键词义不明或出现反证就停止定案。具体边界见源章节。
+    90s: 名词空需要同一人物物件或事件线索。圈原词/同义/同源复现并核是否同一对象，不把复现直接当答案。完整规则必须读取对应源章节；案例未核，不编示范答案。本步骤只产生位置，不能自动定案。不能以本动作代替完整题面关系核验；题面缺失、关键词义不明或出现反证就停止定案。具体边界见源章节。
+  full:
+    section_ids: *id007
+    source_boundary: 本步骤只产生位置，不能自动定案。不能以本动作代替完整题面关系核验；题面缺失、关键词义不明或出现反证就停止定案。具体边界见源章节。
+  cases:
+    canonical: cases/cloze/C07/canonical/case.yaml
+  four_step_card:
+    start: 名词空需要同一人物物件或事件线索
+    first_cut: 圈原词/同义/同源复现并核是否同一对象，不把复现直接当答案
+    judge: 逐条核源章节判据，不足则继续找独立证据。
+    stop: 本步骤只产生位置，不能自动定案。不能以本动作代替完整题面关系核验；题面缺失、关键词义不明或出现反证就停止定案。具体边界见源章节。
+  practicality_gate:
+    status: design_complete_empirical_pending
+    trigger: 名词空需要同一人物物件或事件线索
+    action: 圈原词/同义/同源复现并核是否同一对象，不把复现直接当答案
+    output: locate；严格限制主职责
+    stop: 本步骤只产生位置，不能自动定案。不能以本动作代替完整题面关系核验；题面缺失、关键词义不明或出现反证就停止定案。具体边界见源章节。
+    transfer: 迁移同一动作，不迁移原题答案
+    efficiency: 未测；预期价值是显式化动作和边界，不保证提速
+    misuse_cost: 未测；误触发时不得定案
+  first_use_test:
+    status: designed_not_run
+    trigger_success: null
+    action_success: null
+    evidence_success: null
+    stop_rule_success: null
+    no_answer_backfit: null
+    failure_type: null
+    final_result: pending_real_student_test
+  evaluation:
+    baseline: 普通逐项核题面
+    primary_benefit_hypothesis: 显式化下一步动作和证据边界
+    trigger_precision: null
+    trigger_recall: null
+    resolution_rate: null
+    standalone_rate: null
+    assist_rate: null
+    false_trigger_rate: null
+    transfer_rate: null
+    boundary_accuracy: null
+    time_complexity_gain: null
+  usefulness_level: Useful
+  status: candidate
+  maturity_status: candidate
+  practical_value: Useful
+  version: 1.0.0
+  change_reason: 首次迁移现有激活章节；非黄金短版尚未逐一教学审查
+  affected_cases:
+  - cases/cloze/C07/canonical/case.yaml
+  regression_result: passed_automated_contract_tests_not_empirical_validation
+  student_ready: false
+- method_id: C08
+  brand_name: 结果反推
+  source_name: 评价、结果与动作链
+  aliases:
+  - 评价、结果与动作链
+  question_type: 完形填空
+  method_type: sub_action
+  role: verifier
+  primary_role: verifier
+  secondary_roles: []
+  output_type: verify
+  student_symptoms:
+  - 题面给出评价或结果可核当前行为
+  trigger_cues:
+  - 题面给出评价或结果可核当前行为
+  core_action: 先还原结果所评价的具体行为，再核候选是否有真实题面联系，不能由猜定空互证
+  decision_rule: 执行动作后逐条对照源章节判据；不足则暂留，不能据关键词或剩余项定案。
+  verification: 回填或回原文逐条核主体、动作、限定和当前任务，见源章节完整规则。
+  stop_rule: 不能以本动作代替完整题面关系核验；题面缺失、关键词义不明或出现反证就停止定案。具体边界见源章节。
+  common_wrong_instinct: 只记方法名或表面线索，跳过当前题面关系核验。
+  failure_cases:
+  - 缺完整题面或关键语义不能确认时强行定案
+  counterexamples:
+  - 表面触发信号存在，但完整关系不支持时不能继续；真实反例题面待核
+  transfer_pattern: 在新题面重复同一具体动作，不迁移上一题答案。
+  memory_line: 先还原结果所评价的具体行为，再核候选是否有真实题面联系，不能由猜定空互证
+  anti_rule: 动作产物 ≠ 自动答案。
+  visual_formula: '题面给出评价或结果可核当前行为
+
+    ↓
+
+    先还原结果所评价的具体行为，再核候选是否有真实题面联系，不能由猜定空互证
+
+    ↓
+
+    verify（未必定案）'
+  challenge_prompt: 先不报答案，只在题面标出：先还原结果所评价的具体行为，再核候选是否有真实题面联系，不能由猜定空互证
+  source_references:
+  - repository: https://github.com/rockpunkgod/ANSWER.git
+    commit: b04ebc26d7fa096404111a0bb12f6c77cc8525b9
+    path: gaokao-english/references/cloze.md
+    heading: 评价、结果与动作链
+  section_ids: &id008
+  - 06810b964c0a3ca2
+  can_follow: []
+  usually_before: []
+  usually_after: []
+  conflicts_with: []
+  cannot_replace:
+  - 完整题面验证
+  levels:
+    compact: 动作入口
+    full: 源章节判据
+  compact:
+    10s: 题面给出评价或结果可核当前行为。先还原结果所评价的具体行为，再核候选是否有真实题面联系，不能由猜定空互证。不能以本动作代替完整题面关系核验；题面缺失、关键词义不明或出现反证就停止定案。具体边界见源章节。
+    30s: 题面给出评价或结果可核当前行为。先还原结果所评价的具体行为，再核候选是否有真实题面联系，不能由猜定空互证。判断与停止：不能以本动作代替完整题面关系核验；题面缺失、关键词义不明或出现反证就停止定案。具体边界见源章节。
+    90s: 题面给出评价或结果可核当前行为。先还原结果所评价的具体行为，再核候选是否有真实题面联系，不能由猜定空互证。完整规则必须读取对应源章节；案例未核，不编示范答案。不能以本动作代替完整题面关系核验；题面缺失、关键词义不明或出现反证就停止定案。具体边界见源章节。
+  full:
+    section_ids: *id008
+    source_boundary: 不能以本动作代替完整题面关系核验；题面缺失、关键词义不明或出现反证就停止定案。具体边界见源章节。
+  cases:
+    canonical: cases/cloze/C08/canonical/case.yaml
+  four_step_card:
+    start: 题面给出评价或结果可核当前行为
+    first_cut: 先还原结果所评价的具体行为，再核候选是否有真实题面联系，不能由猜定空互证
+    judge: 逐条核源章节判据，不足则继续找独立证据。
+    stop: 不能以本动作代替完整题面关系核验；题面缺失、关键词义不明或出现反证就停止定案。具体边界见源章节。
+  practicality_gate:
+    status: design_complete_empirical_pending
+    trigger: 题面给出评价或结果可核当前行为
+    action: 先还原结果所评价的具体行为，再核候选是否有真实题面联系，不能由猜定空互证
+    output: verify；严格限制主职责
+    stop: 不能以本动作代替完整题面关系核验；题面缺失、关键词义不明或出现反证就停止定案。具体边界见源章节。
+    transfer: 迁移同一动作，不迁移原题答案
+    efficiency: 未测；预期价值是显式化动作和边界，不保证提速
+    misuse_cost: 未测；误触发时不得定案
+  first_use_test:
+    status: designed_not_run
+    trigger_success: null
+    action_success: null
+    evidence_success: null
+    stop_rule_success: null
+    no_answer_backfit: null
+    failure_type: null
+    final_result: pending_real_student_test
+  evaluation:
+    baseline: 普通逐项核题面
+    primary_benefit_hypothesis: 显式化下一步动作和证据边界
+    trigger_precision: null
+    trigger_recall: null
+    resolution_rate: null
+    standalone_rate: null
+    assist_rate: null
+    false_trigger_rate: null
+    transfer_rate: null
+    boundary_accuracy: null
+    time_complexity_gain: null
+  usefulness_level: Useful
+  status: candidate
+  maturity_status: candidate
+  practical_value: Useful
+  version: 1.0.0
+  change_reason: 首次迁移现有激活章节；非黄金短版尚未逐一教学审查
+  affected_cases:
+  - cases/cloze/C08/canonical/case.yaml
+  regression_result: passed_automated_contract_tests_not_empirical_validation
+  student_ready: false
+- method_id: C09
+  brand_name: 动作串联
+  source_name: 评价、结果与动作链
+  aliases:
+  - 评价、结果与动作链
+  question_type: 完形填空
+  method_type: sub_action
+  role: interpreter
+  primary_role: interpreter
+  secondary_roles: []
+  output_type: interpret
+  student_symptoms:
+  - 连续动作需要先后或因果衔接
+  trigger_cues:
+  - 连续动作需要先后或因果衔接
+  core_action: 按已有动作画先后链，逐个标连接关系，不增添题面没有的时长或因果
+  decision_rule: 执行动作后逐条对照源章节判据；不足则暂留，不能据关键词或剩余项定案。
+  verification: 回填或回原文逐条核主体、动作、限定和当前任务，见源章节完整规则。
+  stop_rule: 本步骤只产生语义结构，不能自动定案。不能以本动作代替完整题面关系核验；题面缺失、关键词义不明或出现反证就停止定案。具体边界见源章节。
+  common_wrong_instinct: 只记方法名或表面线索，跳过当前题面关系核验。
+  failure_cases:
+  - 缺完整题面或关键语义不能确认时强行定案
+  counterexamples:
+  - 表面触发信号存在，但完整关系不支持时不能继续；真实反例题面待核
+  transfer_pattern: 在新题面重复同一具体动作，不迁移上一题答案。
+  memory_line: 按已有动作画先后链，逐个标连接关系，不增添题面没有的时长或因果
+  anti_rule: 动作产物 ≠ 自动答案。
+  visual_formula: '连续动作需要先后或因果衔接
+
+    ↓
+
+    按已有动作画先后链，逐个标连接关系，不增添题面没有的时长或因果
+
+    ↓
+
+    interpret（未必定案）'
+  challenge_prompt: 先不报答案，只在题面标出：按已有动作画先后链，逐个标连接关系，不增添题面没有的时长或因果
+  source_references:
+  - repository: https://github.com/rockpunkgod/ANSWER.git
+    commit: b04ebc26d7fa096404111a0bb12f6c77cc8525b9
+    path: gaokao-english/references/cloze.md
+    heading: 评价、结果与动作链
+  section_ids: &id009
+  - 06810b964c0a3ca2
+  can_follow: []
+  usually_before: []
+  usually_after: []
+  conflicts_with: []
+  cannot_replace:
+  - 完整题面验证
+  levels:
+    compact: 动作入口
+    full: 源章节判据
+  compact:
+    10s: 连续动作需要先后或因果衔接。按已有动作画先后链，逐个标连接关系，不增添题面没有的时长或因果。本步骤只产生语义结构，不能自动定案。不能以本动作代替完整题面关系核验；题面缺失、关键词义不明或出现反证就停止定案。具体边界见源章节。
+    30s: 连续动作需要先后或因果衔接。按已有动作画先后链，逐个标连接关系，不增添题面没有的时长或因果。判断与停止：本步骤只产生语义结构，不能自动定案。不能以本动作代替完整题面关系核验；题面缺失、关键词义不明或出现反证就停止定案。具体边界见源章节。
+    90s: 连续动作需要先后或因果衔接。按已有动作画先后链，逐个标连接关系，不增添题面没有的时长或因果。完整规则必须读取对应源章节；案例未核，不编示范答案。本步骤只产生语义结构，不能自动定案。不能以本动作代替完整题面关系核验；题面缺失、关键词义不明或出现反证就停止定案。具体边界见源章节。
+  full:
+    section_ids: *id009
+    source_boundary: 本步骤只产生语义结构，不能自动定案。不能以本动作代替完整题面关系核验；题面缺失、关键词义不明或出现反证就停止定案。具体边界见源章节。
+  cases:
+    canonical: cases/cloze/C09/canonical/case.yaml
+  four_step_card:
+    start: 连续动作需要先后或因果衔接
+    first_cut: 按已有动作画先后链，逐个标连接关系，不增添题面没有的时长或因果
+    judge: 逐条核源章节判据，不足则继续找独立证据。
+    stop: 本步骤只产生语义结构，不能自动定案。不能以本动作代替完整题面关系核验；题面缺失、关键词义不明或出现反证就停止定案。具体边界见源章节。
+  practicality_gate:
+    status: design_complete_empirical_pending
+    trigger: 连续动作需要先后或因果衔接
+    action: 按已有动作画先后链，逐个标连接关系，不增添题面没有的时长或因果
+    output: interpret；严格限制主职责
+    stop: 本步骤只产生语义结构，不能自动定案。不能以本动作代替完整题面关系核验；题面缺失、关键词义不明或出现反证就停止定案。具体边界见源章节。
+    transfer: 迁移同一动作，不迁移原题答案
+    efficiency: 未测；预期价值是显式化动作和边界，不保证提速
+    misuse_cost: 未测；误触发时不得定案
+  first_use_test:
+    status: designed_not_run
+    trigger_success: null
+    action_success: null
+    evidence_success: null
+    stop_rule_success: null
+    no_answer_backfit: null
+    failure_type: null
+    final_result: pending_real_student_test
+  evaluation:
+    baseline: 普通逐项核题面
+    primary_benefit_hypothesis: 显式化下一步动作和证据边界
+    trigger_precision: null
+    trigger_recall: null
+    resolution_rate: null
+    standalone_rate: null
+    assist_rate: null
+    false_trigger_rate: null
+    transfer_rate: null
+    boundary_accuracy: null
+    time_complexity_gain: null
+  usefulness_level: Useful
+  status: candidate
+  maturity_status: candidate
+  practical_value: Useful
+  version: 1.0.0
+  change_reason: 首次迁移现有激活章节；非黄金短版尚未逐一教学审查
+  affected_cases:
+  - cases/cloze/C09/canonical/case.yaml
+  regression_result: passed_automated_contract_tests_not_empirical_validation
+  student_ready: false

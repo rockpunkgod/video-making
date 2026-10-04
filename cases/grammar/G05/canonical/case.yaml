@@ -1,0 +1,19 @@
+case_id: G05-canonical
+method_id: G05
+question_type: 语法填空
+source:
+  repository: https://github.com/rockpunkgod/ANSWER.git
+  commit: b04ebc26d7fa096404111a0bb12f6c77cc8525b9
+  path: gaokao-grammar-fill/references/grammar-fill.md
+  heading: 介词
+question: null
+answer: null
+trigger: 空位已判需要介词
+evidence: []
+method_role: decider
+expected_action: 圈介词后的中心词及所属动作，核场景关系或固定搭配，陌生搭配不猜
+expected_output: decide
+stop_rule: 不能以本动作代替完整题面关系核验；题面缺失、关键词义不明或出现反证就停止定案。具体边界见源章节。
+case_type: canonical
+status: evidence_gap
+notes: 源方法可核；尚未逐题核验案例，不可当成功样例

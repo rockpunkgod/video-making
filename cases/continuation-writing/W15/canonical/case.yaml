@@ -1,0 +1,19 @@
+case_id: W15-canonical
+method_id: W15
+question_type: 读后续写
+source:
+  repository: https://github.com/rockpunkgod/ANSWER.git
+  commit: b04ebc26d7fa096404111a0bb12f6c77cc8525b9
+  path: gaokao-writing/references/continuation-writing-and-correction.md
+  heading: 25 分评分规范
+question: null
+answer: null
+trigger: 原文首句和学生续写齐全且请求评分
+evidence: []
+method_role: verifier
+expected_action: 只按25分续写档次核原文融洽、语言与结构；不抄首句正常，书写只在实见影响交际时评
+expected_output: verify
+stop_rule: 不能以本动作代替完整题面关系核验；题面缺失、关键词义不明或出现反证就停止定案。具体边界见源章节。
+case_type: canonical
+status: evidence_gap
+notes: 源方法可核；尚未逐题核验案例，不可当成功样例

@@ -1,0 +1,24 @@
+method_id: F01
+case_type: hard
+status: evidence_gap
+objective: 复杂多线索边界回归
+prompt_excerpt: null
+expected_action: 在选项区只做一次三维标记：句型、主角、时间；形成暂定组后立即把候选拼回空前空后。
+pass_condition: 无真实题面不得假设通过
+source_reference: &id001
+  repository: https://github.com/rockpunkgod/ANSWER.git
+  commit: b04ebc26d7fa096404111a0bb12f6c77cc8525b9
+  path: gaokao-english/references/seven-five.md
+  heading: 共同行为、结构一致、主语一致、时态一致
+gap: 缺少经核验完整困难题，不造题补数
+case_id: F01-hard
+question_type: 七选五
+source: *id001
+question: null
+answer: null
+trigger: 整篇七选五刚开始，候选之间存在可观察的句型角色、主角/核心话题或真谓语时间差异。
+evidence: []
+method_role: reducer
+expected_output: reduce
+stop_rule: 分组只缩范围，不负责定答案。
+notes: 缺少经核验完整困难题，不造题补数

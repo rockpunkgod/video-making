@@ -1,0 +1,1715 @@
+methods:
+- method_id: W01
+  brand_name: 五步锁剧情
+  source_name: 开明致学五步法：跳定思提润
+  aliases:
+  - 开明致学五步法：跳定思提润
+  question_type: 读后续写
+  method_type: framework
+  role: framework
+  primary_role: framework
+  secondary_roles: []
+  output_type: interpret
+  student_symptoms:
+  - 原文与两段开头语齐全，需要构思
+  trigger_cues:
+  - 原文与两段开头语齐全，需要构思
+  core_action: 先读两段开头语找约束，再记录原文人物矛盾与时空，依跳定思提润推进
+  decision_rule: 执行动作后逐条对照源章节判据；不足则暂留，不能据关键词或剩余项定案。
+  verification: 回填或回原文逐条核主体、动作、限定和当前任务，见源章节完整规则。
+  stop_rule: 本步骤只产生框架，不能自动定案。不能以本动作代替完整题面关系核验；题面缺失、关键词义不明或出现反证就停止定案。具体边界见源章节。
+  common_wrong_instinct: 只记方法名或表面线索，跳过当前题面关系核验。
+  failure_cases:
+  - 缺完整题面或关键语义不能确认时强行定案
+  counterexamples:
+  - 表面触发信号存在，但完整关系不支持时不能继续；真实反例题面待核
+  transfer_pattern: 在新题面重复同一具体动作，不迁移上一题答案。
+  memory_line: 先读两段开头语找约束，再记录原文人物矛盾与时空，依跳定思提润推进
+  anti_rule: 动作产物 ≠ 自动答案。
+  visual_formula: '原文与两段开头语齐全，需要构思
+
+    ↓
+
+    先读两段开头语找约束，再记录原文人物矛盾与时空，依跳定思提润推进
+
+    ↓
+
+    interpret（未必定案）'
+  challenge_prompt: 先不报答案，只在题面标出：先读两段开头语找约束，再记录原文人物矛盾与时空，依跳定思提润推进
+  source_references:
+  - repository: https://github.com/rockpunkgod/ANSWER.git
+    commit: b04ebc26d7fa096404111a0bb12f6c77cc8525b9
+    path: gaokao-writing/references/continuation-writing-and-correction.md
+    heading: 开明致学五步法：跳定思提润
+  section_ids: &id001
+  - 6c1ef222ac95b054
+  can_follow: []
+  usually_before: []
+  usually_after: []
+  conflicts_with: []
+  cannot_replace:
+  - 完整题面验证
+  levels:
+    compact: 动作入口
+    full: 源章节判据
+  compact:
+    10s: 原文与两段开头语齐全，需要构思。先读两段开头语找约束，再记录原文人物矛盾与时空，依跳定思提润推进。本步骤只产生框架，不能自动定案。不能以本动作代替完整题面关系核验；题面缺失、关键词义不明或出现反证就停止定案。具体边界见源章节。
+    30s: 原文与两段开头语齐全，需要构思。先读两段开头语找约束，再记录原文人物矛盾与时空，依跳定思提润推进。判断与停止：本步骤只产生框架，不能自动定案。不能以本动作代替完整题面关系核验；题面缺失、关键词义不明或出现反证就停止定案。具体边界见源章节。
+    90s: 原文与两段开头语齐全，需要构思。先读两段开头语找约束，再记录原文人物矛盾与时空，依跳定思提润推进。完整规则必须读取对应源章节；案例未核，不编示范答案。本步骤只产生框架，不能自动定案。不能以本动作代替完整题面关系核验；题面缺失、关键词义不明或出现反证就停止定案。具体边界见源章节。
+  full:
+    section_ids: *id001
+    source_boundary: 本步骤只产生框架，不能自动定案。不能以本动作代替完整题面关系核验；题面缺失、关键词义不明或出现反证就停止定案。具体边界见源章节。
+  cases:
+    canonical: cases/continuation-writing/W01/canonical/case.yaml
+  four_step_card:
+    start: 原文与两段开头语齐全，需要构思
+    first_cut: 先读两段开头语找约束，再记录原文人物矛盾与时空，依跳定思提润推进
+    judge: 逐条核源章节判据，不足则继续找独立证据。
+    stop: 本步骤只产生框架，不能自动定案。不能以本动作代替完整题面关系核验；题面缺失、关键词义不明或出现反证就停止定案。具体边界见源章节。
+  practicality_gate:
+    status: design_complete_empirical_pending
+    trigger: 原文与两段开头语齐全，需要构思
+    action: 先读两段开头语找约束，再记录原文人物矛盾与时空，依跳定思提润推进
+    output: interpret；严格限制主职责
+    stop: 本步骤只产生框架，不能自动定案。不能以本动作代替完整题面关系核验；题面缺失、关键词义不明或出现反证就停止定案。具体边界见源章节。
+    transfer: 迁移同一动作，不迁移原题答案
+    efficiency: 未测；预期价值是显式化动作和边界，不保证提速
+    misuse_cost: 未测；误触发时不得定案
+  first_use_test:
+    status: designed_not_run
+    trigger_success: null
+    action_success: null
+    evidence_success: null
+    stop_rule_success: null
+    no_answer_backfit: null
+    failure_type: null
+    final_result: pending_real_student_test
+  evaluation:
+    baseline: 普通逐项核题面
+    primary_benefit_hypothesis: 显式化下一步动作和证据边界
+    trigger_precision: null
+    trigger_recall: null
+    resolution_rate: null
+    standalone_rate: null
+    assist_rate: null
+    false_trigger_rate: null
+    transfer_rate: null
+    boundary_accuracy: null
+    time_complexity_gain: null
+  usefulness_level: Useful
+  status: candidate
+  maturity_status: candidate
+  practical_value: Useful
+  version: 1.0.0
+  change_reason: 首次迁移现有激活章节；非黄金短版尚未逐一教学审查
+  affected_cases:
+  - cases/continuation-writing/W01/canonical/case.yaml
+  regression_result: passed_automated_contract_tests_not_empirical_validation
+  student_ready: false
+- method_id: W02
+  brand_name: 十句五锚
+  source_name: 十句五定法
+  aliases:
+  - 十句五定法
+  question_type: 读后续写
+  method_type: framework
+  role: framework
+  primary_role: framework
+  secondary_roles: []
+  output_type: interpret
+  student_symptoms:
+  - 需要搭两段功能提纲或诊断桥接
+  trigger_cues:
+  - 需要搭两段功能提纲或诊断桥接
+  core_action: 只标学生自写的第1/5/6/9/10句功能，写清衔接、桥接、解决与回扣，不算给定首句
+  decision_rule: 执行动作后逐条对照源章节判据；不足则暂留，不能据关键词或剩余项定案。
+  verification: 回填或回原文逐条核主体、动作、限定和当前任务，见源章节完整规则。
+  stop_rule: 本步骤只产生框架，不能自动定案。不能以本动作代替完整题面关系核验；题面缺失、关键词义不明或出现反证就停止定案。具体边界见源章节。
+  common_wrong_instinct: 只记方法名或表面线索，跳过当前题面关系核验。
+  failure_cases:
+  - 缺完整题面或关键语义不能确认时强行定案
+  counterexamples:
+  - 表面触发信号存在，但完整关系不支持时不能继续；真实反例题面待核
+  transfer_pattern: 在新题面重复同一具体动作，不迁移上一题答案。
+  memory_line: 只标学生自写的第1/5/6/9/10句功能，写清衔接、桥接、解决与回扣，不算给定首句
+  anti_rule: 动作产物 ≠ 自动答案。
+  visual_formula: '需要搭两段功能提纲或诊断桥接
+
+    ↓
+
+    只标学生自写的第1/5/6/9/10句功能，写清衔接、桥接、解决与回扣，不算给定首句
+
+    ↓
+
+    interpret（未必定案）'
+  challenge_prompt: 先不报答案，只在题面标出：只标学生自写的第1/5/6/9/10句功能，写清衔接、桥接、解决与回扣，不算给定首句
+  source_references:
+  - repository: https://github.com/rockpunkgod/ANSWER.git
+    commit: b04ebc26d7fa096404111a0bb12f6c77cc8525b9
+    path: gaokao-writing/references/continuation-writing-and-correction.md
+    heading: 十句五定法
+  section_ids: &id002
+  - de128566b475de5e
+  - b096635f1943a034
+  can_follow: []
+  usually_before: []
+  usually_after: []
+  conflicts_with: []
+  cannot_replace:
+  - 完整题面验证
+  levels:
+    compact: 动作入口
+    full: 源章节判据
+  compact:
+    10s: 需要搭两段功能提纲或诊断桥接。只标学生自写的第1/5/6/9/10句功能，写清衔接、桥接、解决与回扣，不算给定首句。本步骤只产生框架，不能自动定案。不能以本动作代替完整题面关系核验；题面缺失、关键词义不明或出现反证就停止定案。具体边界见源章节。
+    30s: 需要搭两段功能提纲或诊断桥接。只标学生自写的第1/5/6/9/10句功能，写清衔接、桥接、解决与回扣，不算给定首句。判断与停止：本步骤只产生框架，不能自动定案。不能以本动作代替完整题面关系核验；题面缺失、关键词义不明或出现反证就停止定案。具体边界见源章节。
+    90s: 需要搭两段功能提纲或诊断桥接。只标学生自写的第1/5/6/9/10句功能，写清衔接、桥接、解决与回扣，不算给定首句。完整规则必须读取对应源章节；案例未核，不编示范答案。本步骤只产生框架，不能自动定案。不能以本动作代替完整题面关系核验；题面缺失、关键词义不明或出现反证就停止定案。具体边界见源章节。
+  full:
+    section_ids: *id002
+    source_boundary: 本步骤只产生框架，不能自动定案。不能以本动作代替完整题面关系核验；题面缺失、关键词义不明或出现反证就停止定案。具体边界见源章节。
+  cases:
+    canonical: cases/continuation-writing/W02/canonical/case.yaml
+  four_step_card:
+    start: 需要搭两段功能提纲或诊断桥接
+    first_cut: 只标学生自写的第1/5/6/9/10句功能，写清衔接、桥接、解决与回扣，不算给定首句
+    judge: 逐条核源章节判据，不足则继续找独立证据。
+    stop: 本步骤只产生框架，不能自动定案。不能以本动作代替完整题面关系核验；题面缺失、关键词义不明或出现反证就停止定案。具体边界见源章节。
+  practicality_gate:
+    status: design_complete_empirical_pending
+    trigger: 需要搭两段功能提纲或诊断桥接
+    action: 只标学生自写的第1/5/6/9/10句功能，写清衔接、桥接、解决与回扣，不算给定首句
+    output: interpret；严格限制主职责
+    stop: 本步骤只产生框架，不能自动定案。不能以本动作代替完整题面关系核验；题面缺失、关键词义不明或出现反证就停止定案。具体边界见源章节。
+    transfer: 迁移同一动作，不迁移原题答案
+    efficiency: 未测；预期价值是显式化动作和边界，不保证提速
+    misuse_cost: 未测；误触发时不得定案
+  first_use_test:
+    status: designed_not_run
+    trigger_success: null
+    action_success: null
+    evidence_success: null
+    stop_rule_success: null
+    no_answer_backfit: null
+    failure_type: null
+    final_result: pending_real_student_test
+  evaluation:
+    baseline: 普通逐项核题面
+    primary_benefit_hypothesis: 显式化下一步动作和证据边界
+    trigger_precision: null
+    trigger_recall: null
+    resolution_rate: null
+    standalone_rate: null
+    assist_rate: null
+    false_trigger_rate: null
+    transfer_rate: null
+    boundary_accuracy: null
+    time_complexity_gain: null
+  usefulness_level: Useful
+  status: candidate
+  maturity_status: candidate
+  practical_value: Useful
+  version: 1.0.0
+  change_reason: 首次迁移现有激活章节；非黄金短版尚未逐一教学审查
+  affected_cases:
+  - cases/continuation-writing/W02/canonical/case.yaml
+  regression_result: passed_automated_contract_tests_not_empirical_validation
+  student_ready: false
+- method_id: W03
+  brand_name: 剧情四格
+  source_name: 情节构思：PTSD 四步法
+  aliases:
+  - 情节构思：PTSD 四步法
+  question_type: 读后续写
+  method_type: framework
+  role: framework
+  primary_role: framework
+  secondary_roles: []
+  output_type: interpret
+  student_symptoms:
+  - 已读原文首句需要整理情节
+  trigger_cues:
+  - 已读原文首句需要整理情节
+  core_action: 只选需求→困难→行动→结局这一套四格，每格填原文约束，不混用另一版字母定义
+  decision_rule: 执行动作后逐条对照源章节判据；不足则暂留，不能据关键词或剩余项定案。
+  verification: 回填或回原文逐条核主体、动作、限定和当前任务，见源章节完整规则。
+  stop_rule: 本步骤只产生框架，不能自动定案。不能以本动作代替完整题面关系核验；题面缺失、关键词义不明或出现反证就停止定案。具体边界见源章节。
+  common_wrong_instinct: 只记方法名或表面线索，跳过当前题面关系核验。
+  failure_cases:
+  - 缺完整题面或关键语义不能确认时强行定案
+  counterexamples:
+  - 表面触发信号存在，但完整关系不支持时不能继续；真实反例题面待核
+  transfer_pattern: 在新题面重复同一具体动作，不迁移上一题答案。
+  memory_line: 只选需求→困难→行动→结局这一套四格，每格填原文约束，不混用另一版字母定义
+  anti_rule: 动作产物 ≠ 自动答案。
+  visual_formula: '已读原文首句需要整理情节
+
+    ↓
+
+    只选需求→困难→行动→结局这一套四格，每格填原文约束，不混用另一版字母定义
+
+    ↓
+
+    interpret（未必定案）'
+  challenge_prompt: 先不报答案，只在题面标出：只选需求→困难→行动→结局这一套四格，每格填原文约束，不混用另一版字母定义
+  source_references:
+  - repository: https://github.com/rockpunkgod/ANSWER.git
+    commit: b04ebc26d7fa096404111a0bb12f6c77cc8525b9
+    path: gaokao-writing/references/continuation-writing-and-correction.md
+    heading: 情节构思：PTSD 四步法
+  section_ids: &id003
+  - 3f0307af95397320
+  can_follow: []
+  usually_before: []
+  usually_after: []
+  conflicts_with: []
+  cannot_replace:
+  - 完整题面验证
+  levels:
+    compact: 动作入口
+    full: 源章节判据
+  compact:
+    10s: 已读原文首句需要整理情节。只选需求→困难→行动→结局这一套四格，每格填原文约束，不混用另一版字母定义。本步骤只产生框架，不能自动定案。不能以本动作代替完整题面关系核验；题面缺失、关键词义不明或出现反证就停止定案。具体边界见源章节。
+    30s: 已读原文首句需要整理情节。只选需求→困难→行动→结局这一套四格，每格填原文约束，不混用另一版字母定义。判断与停止：本步骤只产生框架，不能自动定案。不能以本动作代替完整题面关系核验；题面缺失、关键词义不明或出现反证就停止定案。具体边界见源章节。
+    90s: 已读原文首句需要整理情节。只选需求→困难→行动→结局这一套四格，每格填原文约束，不混用另一版字母定义。完整规则必须读取对应源章节；案例未核，不编示范答案。本步骤只产生框架，不能自动定案。不能以本动作代替完整题面关系核验；题面缺失、关键词义不明或出现反证就停止定案。具体边界见源章节。
+  full:
+    section_ids: *id003
+    source_boundary: 本步骤只产生框架，不能自动定案。不能以本动作代替完整题面关系核验；题面缺失、关键词义不明或出现反证就停止定案。具体边界见源章节。
+  cases:
+    canonical: cases/continuation-writing/W03/canonical/case.yaml
+  four_step_card:
+    start: 已读原文首句需要整理情节
+    first_cut: 只选需求→困难→行动→结局这一套四格，每格填原文约束，不混用另一版字母定义
+    judge: 逐条核源章节判据，不足则继续找独立证据。
+    stop: 本步骤只产生框架，不能自动定案。不能以本动作代替完整题面关系核验；题面缺失、关键词义不明或出现反证就停止定案。具体边界见源章节。
+  practicality_gate:
+    status: design_complete_empirical_pending
+    trigger: 已读原文首句需要整理情节
+    action: 只选需求→困难→行动→结局这一套四格，每格填原文约束，不混用另一版字母定义
+    output: interpret；严格限制主职责
+    stop: 本步骤只产生框架，不能自动定案。不能以本动作代替完整题面关系核验；题面缺失、关键词义不明或出现反证就停止定案。具体边界见源章节。
+    transfer: 迁移同一动作，不迁移原题答案
+    efficiency: 未测；预期价值是显式化动作和边界，不保证提速
+    misuse_cost: 未测；误触发时不得定案
+  first_use_test:
+    status: designed_not_run
+    trigger_success: null
+    action_success: null
+    evidence_success: null
+    stop_rule_success: null
+    no_answer_backfit: null
+    failure_type: null
+    final_result: pending_real_student_test
+  evaluation:
+    baseline: 普通逐项核题面
+    primary_benefit_hypothesis: 显式化下一步动作和证据边界
+    trigger_precision: null
+    trigger_recall: null
+    resolution_rate: null
+    standalone_rate: null
+    assist_rate: null
+    false_trigger_rate: null
+    transfer_rate: null
+    boundary_accuracy: null
+    time_complexity_gain: null
+  usefulness_level: Useful
+  status: candidate
+  maturity_status: candidate
+  practical_value: Useful
+  version: 1.0.0
+  change_reason: 首次迁移现有激活章节；非黄金短版尚未逐一教学审查
+  affected_cases:
+  - cases/continuation-writing/W03/canonical/case.yaml
+  regression_result: passed_automated_contract_tests_not_empirical_validation
+  student_ready: false
+  source_alias: PTSD
+- method_id: W04
+  brand_name: 首句找缺口
+  source_name: gap 读法与首句规则
+  aliases:
+  - gap 读法与首句规则
+  question_type: 读后续写
+  method_type: method
+  role: locator
+  primary_role: locator
+  secondary_roles: []
+  output_type: locate
+  student_symptoms:
+  - 两段开头语对人物或行动有约束
+  trigger_cues:
+  - 两段开头语对人物或行动有约束
+  core_action: 圈开头语的名词和任务，回文找人物与矛盾，再反推段间需要补的动作
+  decision_rule: 执行动作后逐条对照源章节判据；不足则暂留，不能据关键词或剩余项定案。
+  verification: 回填或回原文逐条核主体、动作、限定和当前任务，见源章节完整规则。
+  stop_rule: 本步骤只产生位置，不能自动定案。不能以本动作代替完整题面关系核验；题面缺失、关键词义不明或出现反证就停止定案。具体边界见源章节。
+  common_wrong_instinct: 只记方法名或表面线索，跳过当前题面关系核验。
+  failure_cases:
+  - 缺完整题面或关键语义不能确认时强行定案
+  counterexamples:
+  - 表面触发信号存在，但完整关系不支持时不能继续；真实反例题面待核
+  transfer_pattern: 在新题面重复同一具体动作，不迁移上一题答案。
+  memory_line: 圈开头语的名词和任务，回文找人物与矛盾，再反推段间需要补的动作
+  anti_rule: 动作产物 ≠ 自动答案。
+  visual_formula: '两段开头语对人物或行动有约束
+
+    ↓
+
+    圈开头语的名词和任务，回文找人物与矛盾，再反推段间需要补的动作
+
+    ↓
+
+    locate（未必定案）'
+  challenge_prompt: 先不报答案，只在题面标出：圈开头语的名词和任务，回文找人物与矛盾，再反推段间需要补的动作
+  source_references:
+  - repository: https://github.com/rockpunkgod/ANSWER.git
+    commit: b04ebc26d7fa096404111a0bb12f6c77cc8525b9
+    path: gaokao-writing/references/continuation-writing-and-correction.md
+    heading: gap 读法与首句规则
+  section_ids: &id004
+  - 0704baa69272c2a5
+  can_follow: []
+  usually_before: []
+  usually_after: []
+  conflicts_with: []
+  cannot_replace:
+  - 完整题面验证
+  levels:
+    compact: 动作入口
+    full: 源章节判据
+  compact:
+    10s: 两段开头语对人物或行动有约束。圈开头语的名词和任务，回文找人物与矛盾，再反推段间需要补的动作。本步骤只产生位置，不能自动定案。不能以本动作代替完整题面关系核验；题面缺失、关键词义不明或出现反证就停止定案。具体边界见源章节。
+    30s: 两段开头语对人物或行动有约束。圈开头语的名词和任务，回文找人物与矛盾，再反推段间需要补的动作。判断与停止：本步骤只产生位置，不能自动定案。不能以本动作代替完整题面关系核验；题面缺失、关键词义不明或出现反证就停止定案。具体边界见源章节。
+    90s: 两段开头语对人物或行动有约束。圈开头语的名词和任务，回文找人物与矛盾，再反推段间需要补的动作。完整规则必须读取对应源章节；案例未核，不编示范答案。本步骤只产生位置，不能自动定案。不能以本动作代替完整题面关系核验；题面缺失、关键词义不明或出现反证就停止定案。具体边界见源章节。
+  full:
+    section_ids: *id004
+    source_boundary: 本步骤只产生位置，不能自动定案。不能以本动作代替完整题面关系核验；题面缺失、关键词义不明或出现反证就停止定案。具体边界见源章节。
+  cases:
+    canonical: cases/continuation-writing/W04/canonical/case.yaml
+  four_step_card:
+    start: 两段开头语对人物或行动有约束
+    first_cut: 圈开头语的名词和任务，回文找人物与矛盾，再反推段间需要补的动作
+    judge: 逐条核源章节判据，不足则继续找独立证据。
+    stop: 本步骤只产生位置，不能自动定案。不能以本动作代替完整题面关系核验；题面缺失、关键词义不明或出现反证就停止定案。具体边界见源章节。
+  practicality_gate:
+    status: design_complete_empirical_pending
+    trigger: 两段开头语对人物或行动有约束
+    action: 圈开头语的名词和任务，回文找人物与矛盾，再反推段间需要补的动作
+    output: locate；严格限制主职责
+    stop: 本步骤只产生位置，不能自动定案。不能以本动作代替完整题面关系核验；题面缺失、关键词义不明或出现反证就停止定案。具体边界见源章节。
+    transfer: 迁移同一动作，不迁移原题答案
+    efficiency: 未测；预期价值是显式化动作和边界，不保证提速
+    misuse_cost: 未测；误触发时不得定案
+  first_use_test:
+    status: designed_not_run
+    trigger_success: null
+    action_success: null
+    evidence_success: null
+    stop_rule_success: null
+    no_answer_backfit: null
+    failure_type: null
+    final_result: pending_real_student_test
+  evaluation:
+    baseline: 普通逐项核题面
+    primary_benefit_hypothesis: 显式化下一步动作和证据边界
+    trigger_precision: null
+    trigger_recall: null
+    resolution_rate: null
+    standalone_rate: null
+    assist_rate: null
+    false_trigger_rate: null
+    transfer_rate: null
+    boundary_accuracy: null
+    time_complexity_gain: null
+  usefulness_level: Useful
+  status: candidate
+  maturity_status: candidate
+  practical_value: Useful
+  version: 1.0.0
+  change_reason: 首次迁移现有激活章节；非黄金短版尚未逐一教学审查
+  affected_cases:
+  - cases/continuation-writing/W04/canonical/case.yaml
+  regression_result: passed_automated_contract_tests_not_empirical_validation
+  student_ready: false
+- method_id: W05
+  brand_name: 动作拆链
+  source_name: 动作链与动作面（人物刻画核心）
+  aliases:
+  - 动作链与动作面（人物刻画核心）
+  question_type: 读后续写
+  method_type: method
+  role: interpreter
+  primary_role: interpreter
+  secondary_roles: []
+  output_type: interpret
+  student_symptoms:
+  - 核心行动需要具体连贯描写
+  trigger_cues:
+  - 核心行动需要具体连贯描写
+  core_action: 把已有行动拆最多三个合理小动作，再加与场景相符的方式，不改变人物能力
+  decision_rule: 执行动作后逐条对照源章节判据；不足则暂留，不能据关键词或剩余项定案。
+  verification: 回填或回原文逐条核主体、动作、限定和当前任务，见源章节完整规则。
+  stop_rule: 本步骤只产生语义结构，不能自动定案。不能以本动作代替完整题面关系核验；题面缺失、关键词义不明或出现反证就停止定案。具体边界见源章节。
+  common_wrong_instinct: 只记方法名或表面线索，跳过当前题面关系核验。
+  failure_cases:
+  - 缺完整题面或关键语义不能确认时强行定案
+  counterexamples:
+  - 表面触发信号存在，但完整关系不支持时不能继续；真实反例题面待核
+  transfer_pattern: 在新题面重复同一具体动作，不迁移上一题答案。
+  memory_line: 把已有行动拆最多三个合理小动作，再加与场景相符的方式，不改变人物能力
+  anti_rule: 动作产物 ≠ 自动答案。
+  visual_formula: '核心行动需要具体连贯描写
+
+    ↓
+
+    把已有行动拆最多三个合理小动作，再加与场景相符的方式，不改变人物能力
+
+    ↓
+
+    interpret（未必定案）'
+  challenge_prompt: 先不报答案，只在题面标出：把已有行动拆最多三个合理小动作，再加与场景相符的方式，不改变人物能力
+  source_references:
+  - repository: https://github.com/rockpunkgod/ANSWER.git
+    commit: b04ebc26d7fa096404111a0bb12f6c77cc8525b9
+    path: gaokao-writing/references/continuation-writing-and-correction.md
+    heading: 动作链与动作面（人物刻画核心）
+  section_ids: &id005
+  - c07ba63b18c4746d
+  can_follow: []
+  usually_before: []
+  usually_after: []
+  conflicts_with: []
+  cannot_replace:
+  - 完整题面验证
+  levels:
+    compact: 动作入口
+    full: 源章节判据
+  compact:
+    10s: 核心行动需要具体连贯描写。把已有行动拆最多三个合理小动作，再加与场景相符的方式，不改变人物能力。本步骤只产生语义结构，不能自动定案。不能以本动作代替完整题面关系核验；题面缺失、关键词义不明或出现反证就停止定案。具体边界见源章节。
+    30s: 核心行动需要具体连贯描写。把已有行动拆最多三个合理小动作，再加与场景相符的方式，不改变人物能力。判断与停止：本步骤只产生语义结构，不能自动定案。不能以本动作代替完整题面关系核验；题面缺失、关键词义不明或出现反证就停止定案。具体边界见源章节。
+    90s: 核心行动需要具体连贯描写。把已有行动拆最多三个合理小动作，再加与场景相符的方式，不改变人物能力。完整规则必须读取对应源章节；案例未核，不编示范答案。本步骤只产生语义结构，不能自动定案。不能以本动作代替完整题面关系核验；题面缺失、关键词义不明或出现反证就停止定案。具体边界见源章节。
+  full:
+    section_ids: *id005
+    source_boundary: 本步骤只产生语义结构，不能自动定案。不能以本动作代替完整题面关系核验；题面缺失、关键词义不明或出现反证就停止定案。具体边界见源章节。
+  cases:
+    canonical: cases/continuation-writing/W05/canonical/case.yaml
+  four_step_card:
+    start: 核心行动需要具体连贯描写
+    first_cut: 把已有行动拆最多三个合理小动作，再加与场景相符的方式，不改变人物能力
+    judge: 逐条核源章节判据，不足则继续找独立证据。
+    stop: 本步骤只产生语义结构，不能自动定案。不能以本动作代替完整题面关系核验；题面缺失、关键词义不明或出现反证就停止定案。具体边界见源章节。
+  practicality_gate:
+    status: design_complete_empirical_pending
+    trigger: 核心行动需要具体连贯描写
+    action: 把已有行动拆最多三个合理小动作，再加与场景相符的方式，不改变人物能力
+    output: interpret；严格限制主职责
+    stop: 本步骤只产生语义结构，不能自动定案。不能以本动作代替完整题面关系核验；题面缺失、关键词义不明或出现反证就停止定案。具体边界见源章节。
+    transfer: 迁移同一动作，不迁移原题答案
+    efficiency: 未测；预期价值是显式化动作和边界，不保证提速
+    misuse_cost: 未测；误触发时不得定案
+  first_use_test:
+    status: designed_not_run
+    trigger_success: null
+    action_success: null
+    evidence_success: null
+    stop_rule_success: null
+    no_answer_backfit: null
+    failure_type: null
+    final_result: pending_real_student_test
+  evaluation:
+    baseline: 普通逐项核题面
+    primary_benefit_hypothesis: 显式化下一步动作和证据边界
+    trigger_precision: null
+    trigger_recall: null
+    resolution_rate: null
+    standalone_rate: null
+    assist_rate: null
+    false_trigger_rate: null
+    transfer_rate: null
+    boundary_accuracy: null
+    time_complexity_gain: null
+  usefulness_level: Useful
+  status: candidate
+  maturity_status: candidate
+  practical_value: Useful
+  version: 1.0.0
+  change_reason: 首次迁移现有激活章节；非黄金短版尚未逐一教学审查
+  affected_cases:
+  - cases/continuation-writing/W05/canonical/case.yaml
+  regression_result: passed_automated_contract_tests_not_empirical_validation
+  student_ready: false
+- method_id: W06
+  brand_name: 三点锁题
+  source_name: 五档升级路径（训练用）
+  aliases:
+  - 五档升级路径（训练用）
+  question_type: 读后续写
+  method_type: sub_action
+  role: locator
+  primary_role: locator
+  secondary_roles: []
+  output_type: locate
+  student_symptoms:
+  - 续写不知从哪里下笔
+  trigger_cues:
+  - 续写不知从哪里下笔
+  core_action: 圈核心人物、核心矛盾和关键线索，不额外造主角或无铺垫事故
+  decision_rule: 执行动作后逐条对照源章节判据；不足则暂留，不能据关键词或剩余项定案。
+  verification: 回填或回原文逐条核主体、动作、限定和当前任务，见源章节完整规则。
+  stop_rule: 本步骤只产生位置，不能自动定案。不能以本动作代替完整题面关系核验；题面缺失、关键词义不明或出现反证就停止定案。具体边界见源章节。
+  common_wrong_instinct: 只记方法名或表面线索，跳过当前题面关系核验。
+  failure_cases:
+  - 缺完整题面或关键语义不能确认时强行定案
+  counterexamples:
+  - 表面触发信号存在，但完整关系不支持时不能继续；真实反例题面待核
+  transfer_pattern: 在新题面重复同一具体动作，不迁移上一题答案。
+  memory_line: 圈核心人物、核心矛盾和关键线索，不额外造主角或无铺垫事故
+  anti_rule: 动作产物 ≠ 自动答案。
+  visual_formula: '续写不知从哪里下笔
+
+    ↓
+
+    圈核心人物、核心矛盾和关键线索，不额外造主角或无铺垫事故
+
+    ↓
+
+    locate（未必定案）'
+  challenge_prompt: 先不报答案，只在题面标出：圈核心人物、核心矛盾和关键线索，不额外造主角或无铺垫事故
+  source_references:
+  - repository: https://github.com/rockpunkgod/ANSWER.git
+    commit: b04ebc26d7fa096404111a0bb12f6c77cc8525b9
+    path: gaokao-writing/references/continuation-writing-and-correction.md
+    heading: 五档升级路径（训练用）
+  section_ids: &id006
+  - da71883c7cd6b2bc
+  can_follow: []
+  usually_before: []
+  usually_after: []
+  conflicts_with: []
+  cannot_replace:
+  - 完整题面验证
+  levels:
+    compact: 动作入口
+    full: 源章节判据
+  compact:
+    10s: 续写不知从哪里下笔。圈核心人物、核心矛盾和关键线索，不额外造主角或无铺垫事故。本步骤只产生位置，不能自动定案。不能以本动作代替完整题面关系核验；题面缺失、关键词义不明或出现反证就停止定案。具体边界见源章节。
+    30s: 续写不知从哪里下笔。圈核心人物、核心矛盾和关键线索，不额外造主角或无铺垫事故。判断与停止：本步骤只产生位置，不能自动定案。不能以本动作代替完整题面关系核验；题面缺失、关键词义不明或出现反证就停止定案。具体边界见源章节。
+    90s: 续写不知从哪里下笔。圈核心人物、核心矛盾和关键线索，不额外造主角或无铺垫事故。完整规则必须读取对应源章节；案例未核，不编示范答案。本步骤只产生位置，不能自动定案。不能以本动作代替完整题面关系核验；题面缺失、关键词义不明或出现反证就停止定案。具体边界见源章节。
+  full:
+    section_ids: *id006
+    source_boundary: 本步骤只产生位置，不能自动定案。不能以本动作代替完整题面关系核验；题面缺失、关键词义不明或出现反证就停止定案。具体边界见源章节。
+  cases:
+    canonical: cases/continuation-writing/W06/canonical/case.yaml
+  four_step_card:
+    start: 续写不知从哪里下笔
+    first_cut: 圈核心人物、核心矛盾和关键线索，不额外造主角或无铺垫事故
+    judge: 逐条核源章节判据，不足则继续找独立证据。
+    stop: 本步骤只产生位置，不能自动定案。不能以本动作代替完整题面关系核验；题面缺失、关键词义不明或出现反证就停止定案。具体边界见源章节。
+  practicality_gate:
+    status: design_complete_empirical_pending
+    trigger: 续写不知从哪里下笔
+    action: 圈核心人物、核心矛盾和关键线索，不额外造主角或无铺垫事故
+    output: locate；严格限制主职责
+    stop: 本步骤只产生位置，不能自动定案。不能以本动作代替完整题面关系核验；题面缺失、关键词义不明或出现反证就停止定案。具体边界见源章节。
+    transfer: 迁移同一动作，不迁移原题答案
+    efficiency: 未测；预期价值是显式化动作和边界，不保证提速
+    misuse_cost: 未测；误触发时不得定案
+  first_use_test:
+    status: designed_not_run
+    trigger_success: null
+    action_success: null
+    evidence_success: null
+    stop_rule_success: null
+    no_answer_backfit: null
+    failure_type: null
+    final_result: pending_real_student_test
+  evaluation:
+    baseline: 普通逐项核题面
+    primary_benefit_hypothesis: 显式化下一步动作和证据边界
+    trigger_precision: null
+    trigger_recall: null
+    resolution_rate: null
+    standalone_rate: null
+    assist_rate: null
+    false_trigger_rate: null
+    transfer_rate: null
+    boundary_accuracy: null
+    time_complexity_gain: null
+  usefulness_level: Useful
+  status: candidate
+  maturity_status: candidate
+  practical_value: Useful
+  version: 1.0.0
+  change_reason: 首次迁移现有激活章节；非黄金短版尚未逐一教学审查
+  affected_cases:
+  - cases/continuation-writing/W06/canonical/case.yaml
+  regression_result: passed_automated_contract_tests_not_empirical_validation
+  student_ready: false
+- method_id: W07
+  brand_name: 伏笔回扣
+  source_name: 五档升级路径（训练用）
+  aliases:
+  - 五档升级路径（训练用）
+  question_type: 读后续写
+  method_type: sub_action
+  role: verifier
+  primary_role: verifier
+  secondary_roles: []
+  output_type: verify
+  student_symptoms:
+  - 人物行为或物件需要兑现原文线索
+  trigger_cues:
+  - 人物行为或物件需要兑现原文线索
+  core_action: 把关键行为与原文伏笔逐对连线，找悬空线索，不强行用无关细节
+  decision_rule: 执行动作后逐条对照源章节判据；不足则暂留，不能据关键词或剩余项定案。
+  verification: 回填或回原文逐条核主体、动作、限定和当前任务，见源章节完整规则。
+  stop_rule: 不能以本动作代替完整题面关系核验；题面缺失、关键词义不明或出现反证就停止定案。具体边界见源章节。
+  common_wrong_instinct: 只记方法名或表面线索，跳过当前题面关系核验。
+  failure_cases:
+  - 缺完整题面或关键语义不能确认时强行定案
+  counterexamples:
+  - 表面触发信号存在，但完整关系不支持时不能继续；真实反例题面待核
+  transfer_pattern: 在新题面重复同一具体动作，不迁移上一题答案。
+  memory_line: 把关键行为与原文伏笔逐对连线，找悬空线索，不强行用无关细节
+  anti_rule: 动作产物 ≠ 自动答案。
+  visual_formula: '人物行为或物件需要兑现原文线索
+
+    ↓
+
+    把关键行为与原文伏笔逐对连线，找悬空线索，不强行用无关细节
+
+    ↓
+
+    verify（未必定案）'
+  challenge_prompt: 先不报答案，只在题面标出：把关键行为与原文伏笔逐对连线，找悬空线索，不强行用无关细节
+  source_references:
+  - repository: https://github.com/rockpunkgod/ANSWER.git
+    commit: b04ebc26d7fa096404111a0bb12f6c77cc8525b9
+    path: gaokao-writing/references/continuation-writing-and-correction.md
+    heading: 五档升级路径（训练用）
+  section_ids: &id007
+  - da71883c7cd6b2bc
+  can_follow: []
+  usually_before: []
+  usually_after: []
+  conflicts_with: []
+  cannot_replace:
+  - 完整题面验证
+  levels:
+    compact: 动作入口
+    full: 源章节判据
+  compact:
+    10s: 人物行为或物件需要兑现原文线索。把关键行为与原文伏笔逐对连线，找悬空线索，不强行用无关细节。不能以本动作代替完整题面关系核验；题面缺失、关键词义不明或出现反证就停止定案。具体边界见源章节。
+    30s: 人物行为或物件需要兑现原文线索。把关键行为与原文伏笔逐对连线，找悬空线索，不强行用无关细节。判断与停止：不能以本动作代替完整题面关系核验；题面缺失、关键词义不明或出现反证就停止定案。具体边界见源章节。
+    90s: 人物行为或物件需要兑现原文线索。把关键行为与原文伏笔逐对连线，找悬空线索，不强行用无关细节。完整规则必须读取对应源章节；案例未核，不编示范答案。不能以本动作代替完整题面关系核验；题面缺失、关键词义不明或出现反证就停止定案。具体边界见源章节。
+  full:
+    section_ids: *id007
+    source_boundary: 不能以本动作代替完整题面关系核验；题面缺失、关键词义不明或出现反证就停止定案。具体边界见源章节。
+  cases:
+    canonical: cases/continuation-writing/W07/canonical/case.yaml
+  four_step_card:
+    start: 人物行为或物件需要兑现原文线索
+    first_cut: 把关键行为与原文伏笔逐对连线，找悬空线索，不强行用无关细节
+    judge: 逐条核源章节判据，不足则继续找独立证据。
+    stop: 不能以本动作代替完整题面关系核验；题面缺失、关键词义不明或出现反证就停止定案。具体边界见源章节。
+  practicality_gate:
+    status: design_complete_empirical_pending
+    trigger: 人物行为或物件需要兑现原文线索
+    action: 把关键行为与原文伏笔逐对连线，找悬空线索，不强行用无关细节
+    output: verify；严格限制主职责
+    stop: 不能以本动作代替完整题面关系核验；题面缺失、关键词义不明或出现反证就停止定案。具体边界见源章节。
+    transfer: 迁移同一动作，不迁移原题答案
+    efficiency: 未测；预期价值是显式化动作和边界，不保证提速
+    misuse_cost: 未测；误触发时不得定案
+  first_use_test:
+    status: designed_not_run
+    trigger_success: null
+    action_success: null
+    evidence_success: null
+    stop_rule_success: null
+    no_answer_backfit: null
+    failure_type: null
+    final_result: pending_real_student_test
+  evaluation:
+    baseline: 普通逐项核题面
+    primary_benefit_hypothesis: 显式化下一步动作和证据边界
+    trigger_precision: null
+    trigger_recall: null
+    resolution_rate: null
+    standalone_rate: null
+    assist_rate: null
+    false_trigger_rate: null
+    transfer_rate: null
+    boundary_accuracy: null
+    time_complexity_gain: null
+  usefulness_level: Useful
+  status: candidate
+  maturity_status: candidate
+  practical_value: Useful
+  version: 1.0.0
+  change_reason: 首次迁移现有激活章节；非黄金短版尚未逐一教学审查
+  affected_cases:
+  - cases/continuation-writing/W07/canonical/case.yaml
+  regression_result: passed_automated_contract_tests_not_empirical_validation
+  student_ready: false
+- method_id: W08
+  brand_name: 因果三连
+  source_name: 五档升级路径（训练用）
+  aliases:
+  - 五档升级路径（训练用）
+  question_type: 读后续写
+  method_type: sub_action
+  role: interpreter
+  primary_role: interpreter
+  secondary_roles: []
+  output_type: interpret
+  student_symptoms:
+  - 事件跳跃缺因果桥梁
+  trigger_cues:
+  - 事件跳跃缺因果桥梁
+  core_action: 写因为A→行动B→结果C，每条边引用原文或合理铺垫，不让猜测互证
+  decision_rule: 执行动作后逐条对照源章节判据；不足则暂留，不能据关键词或剩余项定案。
+  verification: 回填或回原文逐条核主体、动作、限定和当前任务，见源章节完整规则。
+  stop_rule: 本步骤只产生语义结构，不能自动定案。不能以本动作代替完整题面关系核验；题面缺失、关键词义不明或出现反证就停止定案。具体边界见源章节。
+  common_wrong_instinct: 只记方法名或表面线索，跳过当前题面关系核验。
+  failure_cases:
+  - 缺完整题面或关键语义不能确认时强行定案
+  counterexamples:
+  - 表面触发信号存在，但完整关系不支持时不能继续；真实反例题面待核
+  transfer_pattern: 在新题面重复同一具体动作，不迁移上一题答案。
+  memory_line: 写因为A→行动B→结果C，每条边引用原文或合理铺垫，不让猜测互证
+  anti_rule: 动作产物 ≠ 自动答案。
+  visual_formula: '事件跳跃缺因果桥梁
+
+    ↓
+
+    写因为A→行动B→结果C，每条边引用原文或合理铺垫，不让猜测互证
+
+    ↓
+
+    interpret（未必定案）'
+  challenge_prompt: 先不报答案，只在题面标出：写因为A→行动B→结果C，每条边引用原文或合理铺垫，不让猜测互证
+  source_references:
+  - repository: https://github.com/rockpunkgod/ANSWER.git
+    commit: b04ebc26d7fa096404111a0bb12f6c77cc8525b9
+    path: gaokao-writing/references/continuation-writing-and-correction.md
+    heading: 五档升级路径（训练用）
+  section_ids: &id008
+  - da71883c7cd6b2bc
+  can_follow: []
+  usually_before: []
+  usually_after: []
+  conflicts_with: []
+  cannot_replace:
+  - 完整题面验证
+  levels:
+    compact: 动作入口
+    full: 源章节判据
+  compact:
+    10s: 事件跳跃缺因果桥梁。写因为A→行动B→结果C，每条边引用原文或合理铺垫，不让猜测互证。本步骤只产生语义结构，不能自动定案。不能以本动作代替完整题面关系核验；题面缺失、关键词义不明或出现反证就停止定案。具体边界见源章节。
+    30s: 事件跳跃缺因果桥梁。写因为A→行动B→结果C，每条边引用原文或合理铺垫，不让猜测互证。判断与停止：本步骤只产生语义结构，不能自动定案。不能以本动作代替完整题面关系核验；题面缺失、关键词义不明或出现反证就停止定案。具体边界见源章节。
+    90s: 事件跳跃缺因果桥梁。写因为A→行动B→结果C，每条边引用原文或合理铺垫，不让猜测互证。完整规则必须读取对应源章节；案例未核，不编示范答案。本步骤只产生语义结构，不能自动定案。不能以本动作代替完整题面关系核验；题面缺失、关键词义不明或出现反证就停止定案。具体边界见源章节。
+  full:
+    section_ids: *id008
+    source_boundary: 本步骤只产生语义结构，不能自动定案。不能以本动作代替完整题面关系核验；题面缺失、关键词义不明或出现反证就停止定案。具体边界见源章节。
+  cases:
+    canonical: cases/continuation-writing/W08/canonical/case.yaml
+  four_step_card:
+    start: 事件跳跃缺因果桥梁
+    first_cut: 写因为A→行动B→结果C，每条边引用原文或合理铺垫，不让猜测互证
+    judge: 逐条核源章节判据，不足则继续找独立证据。
+    stop: 本步骤只产生语义结构，不能自动定案。不能以本动作代替完整题面关系核验；题面缺失、关键词义不明或出现反证就停止定案。具体边界见源章节。
+  practicality_gate:
+    status: design_complete_empirical_pending
+    trigger: 事件跳跃缺因果桥梁
+    action: 写因为A→行动B→结果C，每条边引用原文或合理铺垫，不让猜测互证
+    output: interpret；严格限制主职责
+    stop: 本步骤只产生语义结构，不能自动定案。不能以本动作代替完整题面关系核验；题面缺失、关键词义不明或出现反证就停止定案。具体边界见源章节。
+    transfer: 迁移同一动作，不迁移原题答案
+    efficiency: 未测；预期价值是显式化动作和边界，不保证提速
+    misuse_cost: 未测；误触发时不得定案
+  first_use_test:
+    status: designed_not_run
+    trigger_success: null
+    action_success: null
+    evidence_success: null
+    stop_rule_success: null
+    no_answer_backfit: null
+    failure_type: null
+    final_result: pending_real_student_test
+  evaluation:
+    baseline: 普通逐项核题面
+    primary_benefit_hypothesis: 显式化下一步动作和证据边界
+    trigger_precision: null
+    trigger_recall: null
+    resolution_rate: null
+    standalone_rate: null
+    assist_rate: null
+    false_trigger_rate: null
+    transfer_rate: null
+    boundary_accuracy: null
+    time_complexity_gain: null
+  usefulness_level: Useful
+  status: candidate
+  maturity_status: candidate
+  practical_value: Useful
+  version: 1.0.0
+  change_reason: 首次迁移现有激活章节；非黄金短版尚未逐一教学审查
+  affected_cases:
+  - cases/continuation-writing/W08/canonical/case.yaml
+  regression_result: passed_automated_contract_tests_not_empirical_validation
+  student_ready: false
+- method_id: W09
+  brand_name: 细节三镜
+  source_name: 五档升级路径（训练用）
+  aliases:
+  - 五档升级路径（训练用）
+  question_type: 读后续写
+  method_type: sub_action
+  role: interpreter
+  primary_role: interpreter
+  secondary_roles: []
+  output_type: interpret
+  student_symptoms:
+  - 主线成立但画面单薄
+  trigger_cues:
+  - 主线成立但画面单薄
+  core_action: 在推进主线的位置选动作、神态、环境中有用的细节，不每句堆三类
+  decision_rule: 执行动作后逐条对照源章节判据；不足则暂留，不能据关键词或剩余项定案。
+  verification: 回填或回原文逐条核主体、动作、限定和当前任务，见源章节完整规则。
+  stop_rule: 本步骤只产生语义结构，不能自动定案。不能以本动作代替完整题面关系核验；题面缺失、关键词义不明或出现反证就停止定案。具体边界见源章节。
+  common_wrong_instinct: 只记方法名或表面线索，跳过当前题面关系核验。
+  failure_cases:
+  - 缺完整题面或关键语义不能确认时强行定案
+  counterexamples:
+  - 表面触发信号存在，但完整关系不支持时不能继续；真实反例题面待核
+  transfer_pattern: 在新题面重复同一具体动作，不迁移上一题答案。
+  memory_line: 在推进主线的位置选动作、神态、环境中有用的细节，不每句堆三类
+  anti_rule: 动作产物 ≠ 自动答案。
+  visual_formula: '主线成立但画面单薄
+
+    ↓
+
+    在推进主线的位置选动作、神态、环境中有用的细节，不每句堆三类
+
+    ↓
+
+    interpret（未必定案）'
+  challenge_prompt: 先不报答案，只在题面标出：在推进主线的位置选动作、神态、环境中有用的细节，不每句堆三类
+  source_references:
+  - repository: https://github.com/rockpunkgod/ANSWER.git
+    commit: b04ebc26d7fa096404111a0bb12f6c77cc8525b9
+    path: gaokao-writing/references/continuation-writing-and-correction.md
+    heading: 五档升级路径（训练用）
+  section_ids: &id009
+  - da71883c7cd6b2bc
+  can_follow: []
+  usually_before: []
+  usually_after: []
+  conflicts_with: []
+  cannot_replace:
+  - 完整题面验证
+  levels:
+    compact: 动作入口
+    full: 源章节判据
+  compact:
+    10s: 主线成立但画面单薄。在推进主线的位置选动作、神态、环境中有用的细节，不每句堆三类。本步骤只产生语义结构，不能自动定案。不能以本动作代替完整题面关系核验；题面缺失、关键词义不明或出现反证就停止定案。具体边界见源章节。
+    30s: 主线成立但画面单薄。在推进主线的位置选动作、神态、环境中有用的细节，不每句堆三类。判断与停止：本步骤只产生语义结构，不能自动定案。不能以本动作代替完整题面关系核验；题面缺失、关键词义不明或出现反证就停止定案。具体边界见源章节。
+    90s: 主线成立但画面单薄。在推进主线的位置选动作、神态、环境中有用的细节，不每句堆三类。完整规则必须读取对应源章节；案例未核，不编示范答案。本步骤只产生语义结构，不能自动定案。不能以本动作代替完整题面关系核验；题面缺失、关键词义不明或出现反证就停止定案。具体边界见源章节。
+  full:
+    section_ids: *id009
+    source_boundary: 本步骤只产生语义结构，不能自动定案。不能以本动作代替完整题面关系核验；题面缺失、关键词义不明或出现反证就停止定案。具体边界见源章节。
+  cases:
+    canonical: cases/continuation-writing/W09/canonical/case.yaml
+  four_step_card:
+    start: 主线成立但画面单薄
+    first_cut: 在推进主线的位置选动作、神态、环境中有用的细节，不每句堆三类
+    judge: 逐条核源章节判据，不足则继续找独立证据。
+    stop: 本步骤只产生语义结构，不能自动定案。不能以本动作代替完整题面关系核验；题面缺失、关键词义不明或出现反证就停止定案。具体边界见源章节。
+  practicality_gate:
+    status: design_complete_empirical_pending
+    trigger: 主线成立但画面单薄
+    action: 在推进主线的位置选动作、神态、环境中有用的细节，不每句堆三类
+    output: interpret；严格限制主职责
+    stop: 本步骤只产生语义结构，不能自动定案。不能以本动作代替完整题面关系核验；题面缺失、关键词义不明或出现反证就停止定案。具体边界见源章节。
+    transfer: 迁移同一动作，不迁移原题答案
+    efficiency: 未测；预期价值是显式化动作和边界，不保证提速
+    misuse_cost: 未测；误触发时不得定案
+  first_use_test:
+    status: designed_not_run
+    trigger_success: null
+    action_success: null
+    evidence_success: null
+    stop_rule_success: null
+    no_answer_backfit: null
+    failure_type: null
+    final_result: pending_real_student_test
+  evaluation:
+    baseline: 普通逐项核题面
+    primary_benefit_hypothesis: 显式化下一步动作和证据边界
+    trigger_precision: null
+    trigger_recall: null
+    resolution_rate: null
+    standalone_rate: null
+    assist_rate: null
+    false_trigger_rate: null
+    transfer_rate: null
+    boundary_accuracy: null
+    time_complexity_gain: null
+  usefulness_level: Useful
+  status: candidate
+  maturity_status: candidate
+  practical_value: Useful
+  version: 1.0.0
+  change_reason: 首次迁移现有激活章节；非黄金短版尚未逐一教学审查
+  affected_cases:
+  - cases/continuation-writing/W09/canonical/case.yaml
+  regression_result: passed_automated_contract_tests_not_empirical_validation
+  student_ready: false
+- method_id: W10
+  brand_name: 无痕衔接
+  source_name: 五档升级路径（训练用）
+  aliases:
+  - 五档升级路径（训练用）
+  question_type: 读后续写
+  method_type: sub_action
+  role: interpreter
+  primary_role: interpreter
+  secondary_roles: []
+  output_type: interpret
+  student_symptoms:
+  - 连接词堆砌却对象衔接不清
+  trigger_cues:
+  - 连接词堆砌却对象衔接不清
+  core_action: 圈相邻句共同对象和代词回指，使用关键词复现，不删掉必要逻辑关系
+  decision_rule: 执行动作后逐条对照源章节判据；不足则暂留，不能据关键词或剩余项定案。
+  verification: 回填或回原文逐条核主体、动作、限定和当前任务，见源章节完整规则。
+  stop_rule: 本步骤只产生语义结构，不能自动定案。不能以本动作代替完整题面关系核验；题面缺失、关键词义不明或出现反证就停止定案。具体边界见源章节。
+  common_wrong_instinct: 只记方法名或表面线索，跳过当前题面关系核验。
+  failure_cases:
+  - 缺完整题面或关键语义不能确认时强行定案
+  counterexamples:
+  - 表面触发信号存在，但完整关系不支持时不能继续；真实反例题面待核
+  transfer_pattern: 在新题面重复同一具体动作，不迁移上一题答案。
+  memory_line: 圈相邻句共同对象和代词回指，使用关键词复现，不删掉必要逻辑关系
+  anti_rule: 动作产物 ≠ 自动答案。
+  visual_formula: '连接词堆砌却对象衔接不清
+
+    ↓
+
+    圈相邻句共同对象和代词回指，使用关键词复现，不删掉必要逻辑关系
+
+    ↓
+
+    interpret（未必定案）'
+  challenge_prompt: 先不报答案，只在题面标出：圈相邻句共同对象和代词回指，使用关键词复现，不删掉必要逻辑关系
+  source_references:
+  - repository: https://github.com/rockpunkgod/ANSWER.git
+    commit: b04ebc26d7fa096404111a0bb12f6c77cc8525b9
+    path: gaokao-writing/references/continuation-writing-and-correction.md
+    heading: 五档升级路径（训练用）
+  section_ids: &id010
+  - da71883c7cd6b2bc
+  can_follow: []
+  usually_before: []
+  usually_after: []
+  conflicts_with: []
+  cannot_replace:
+  - 完整题面验证
+  levels:
+    compact: 动作入口
+    full: 源章节判据
+  compact:
+    10s: 连接词堆砌却对象衔接不清。圈相邻句共同对象和代词回指，使用关键词复现，不删掉必要逻辑关系。本步骤只产生语义结构，不能自动定案。不能以本动作代替完整题面关系核验；题面缺失、关键词义不明或出现反证就停止定案。具体边界见源章节。
+    30s: 连接词堆砌却对象衔接不清。圈相邻句共同对象和代词回指，使用关键词复现，不删掉必要逻辑关系。判断与停止：本步骤只产生语义结构，不能自动定案。不能以本动作代替完整题面关系核验；题面缺失、关键词义不明或出现反证就停止定案。具体边界见源章节。
+    90s: 连接词堆砌却对象衔接不清。圈相邻句共同对象和代词回指，使用关键词复现，不删掉必要逻辑关系。完整规则必须读取对应源章节；案例未核，不编示范答案。本步骤只产生语义结构，不能自动定案。不能以本动作代替完整题面关系核验；题面缺失、关键词义不明或出现反证就停止定案。具体边界见源章节。
+  full:
+    section_ids: *id010
+    source_boundary: 本步骤只产生语义结构，不能自动定案。不能以本动作代替完整题面关系核验；题面缺失、关键词义不明或出现反证就停止定案。具体边界见源章节。
+  cases:
+    canonical: cases/continuation-writing/W10/canonical/case.yaml
+  four_step_card:
+    start: 连接词堆砌却对象衔接不清
+    first_cut: 圈相邻句共同对象和代词回指，使用关键词复现，不删掉必要逻辑关系
+    judge: 逐条核源章节判据，不足则继续找独立证据。
+    stop: 本步骤只产生语义结构，不能自动定案。不能以本动作代替完整题面关系核验；题面缺失、关键词义不明或出现反证就停止定案。具体边界见源章节。
+  practicality_gate:
+    status: design_complete_empirical_pending
+    trigger: 连接词堆砌却对象衔接不清
+    action: 圈相邻句共同对象和代词回指，使用关键词复现，不删掉必要逻辑关系
+    output: interpret；严格限制主职责
+    stop: 本步骤只产生语义结构，不能自动定案。不能以本动作代替完整题面关系核验；题面缺失、关键词义不明或出现反证就停止定案。具体边界见源章节。
+    transfer: 迁移同一动作，不迁移原题答案
+    efficiency: 未测；预期价值是显式化动作和边界，不保证提速
+    misuse_cost: 未测；误触发时不得定案
+  first_use_test:
+    status: designed_not_run
+    trigger_success: null
+    action_success: null
+    evidence_success: null
+    stop_rule_success: null
+    no_answer_backfit: null
+    failure_type: null
+    final_result: pending_real_student_test
+  evaluation:
+    baseline: 普通逐项核题面
+    primary_benefit_hypothesis: 显式化下一步动作和证据边界
+    trigger_precision: null
+    trigger_recall: null
+    resolution_rate: null
+    standalone_rate: null
+    assist_rate: null
+    false_trigger_rate: null
+    transfer_rate: null
+    boundary_accuracy: null
+    time_complexity_gain: null
+  usefulness_level: Useful
+  status: candidate
+  maturity_status: candidate
+  practical_value: Useful
+  version: 1.0.0
+  change_reason: 首次迁移现有激活章节；非黄金短版尚未逐一教学审查
+  affected_cases:
+  - cases/continuation-writing/W10/canonical/case.yaml
+  regression_result: passed_automated_contract_tests_not_empirical_validation
+  student_ready: false
+- method_id: W11
+  brand_name: 小转折
+  source_name: 五档升级路径（训练用）
+  aliases:
+  - 五档升级路径（训练用）
+  question_type: 读后续写
+  method_type: sub_action
+  role: interpreter
+  primary_role: interpreter
+  secondary_roles: []
+  output_type: interpret
+  student_symptoms:
+  - 解决过程可以加入有铺垫波折
+  trigger_cues:
+  - 解决过程可以加入有铺垫波折
+  core_action: 从原文矛盾找小障碍，写解决动作，不凭空新增关键人物事故
+  decision_rule: 执行动作后逐条对照源章节判据；不足则暂留，不能据关键词或剩余项定案。
+  verification: 回填或回原文逐条核主体、动作、限定和当前任务，见源章节完整规则。
+  stop_rule: 本步骤只产生语义结构，不能自动定案。不能以本动作代替完整题面关系核验；题面缺失、关键词义不明或出现反证就停止定案。具体边界见源章节。
+  common_wrong_instinct: 只记方法名或表面线索，跳过当前题面关系核验。
+  failure_cases:
+  - 缺完整题面或关键语义不能确认时强行定案
+  counterexamples:
+  - 表面触发信号存在，但完整关系不支持时不能继续；真实反例题面待核
+  transfer_pattern: 在新题面重复同一具体动作，不迁移上一题答案。
+  memory_line: 从原文矛盾找小障碍，写解决动作，不凭空新增关键人物事故
+  anti_rule: 动作产物 ≠ 自动答案。
+  visual_formula: '解决过程可以加入有铺垫波折
+
+    ↓
+
+    从原文矛盾找小障碍，写解决动作，不凭空新增关键人物事故
+
+    ↓
+
+    interpret（未必定案）'
+  challenge_prompt: 先不报答案，只在题面标出：从原文矛盾找小障碍，写解决动作，不凭空新增关键人物事故
+  source_references:
+  - repository: https://github.com/rockpunkgod/ANSWER.git
+    commit: b04ebc26d7fa096404111a0bb12f6c77cc8525b9
+    path: gaokao-writing/references/continuation-writing-and-correction.md
+    heading: 五档升级路径（训练用）
+  section_ids: &id011
+  - da71883c7cd6b2bc
+  can_follow: []
+  usually_before: []
+  usually_after: []
+  conflicts_with: []
+  cannot_replace:
+  - 完整题面验证
+  levels:
+    compact: 动作入口
+    full: 源章节判据
+  compact:
+    10s: 解决过程可以加入有铺垫波折。从原文矛盾找小障碍，写解决动作，不凭空新增关键人物事故。本步骤只产生语义结构，不能自动定案。不能以本动作代替完整题面关系核验；题面缺失、关键词义不明或出现反证就停止定案。具体边界见源章节。
+    30s: 解决过程可以加入有铺垫波折。从原文矛盾找小障碍，写解决动作，不凭空新增关键人物事故。判断与停止：本步骤只产生语义结构，不能自动定案。不能以本动作代替完整题面关系核验；题面缺失、关键词义不明或出现反证就停止定案。具体边界见源章节。
+    90s: 解决过程可以加入有铺垫波折。从原文矛盾找小障碍，写解决动作，不凭空新增关键人物事故。完整规则必须读取对应源章节；案例未核，不编示范答案。本步骤只产生语义结构，不能自动定案。不能以本动作代替完整题面关系核验；题面缺失、关键词义不明或出现反证就停止定案。具体边界见源章节。
+  full:
+    section_ids: *id011
+    source_boundary: 本步骤只产生语义结构，不能自动定案。不能以本动作代替完整题面关系核验；题面缺失、关键词义不明或出现反证就停止定案。具体边界见源章节。
+  cases:
+    canonical: cases/continuation-writing/W11/canonical/case.yaml
+  four_step_card:
+    start: 解决过程可以加入有铺垫波折
+    first_cut: 从原文矛盾找小障碍，写解决动作，不凭空新增关键人物事故
+    judge: 逐条核源章节判据，不足则继续找独立证据。
+    stop: 本步骤只产生语义结构，不能自动定案。不能以本动作代替完整题面关系核验；题面缺失、关键词义不明或出现反证就停止定案。具体边界见源章节。
+  practicality_gate:
+    status: design_complete_empirical_pending
+    trigger: 解决过程可以加入有铺垫波折
+    action: 从原文矛盾找小障碍，写解决动作，不凭空新增关键人物事故
+    output: interpret；严格限制主职责
+    stop: 本步骤只产生语义结构，不能自动定案。不能以本动作代替完整题面关系核验；题面缺失、关键词义不明或出现反证就停止定案。具体边界见源章节。
+    transfer: 迁移同一动作，不迁移原题答案
+    efficiency: 未测；预期价值是显式化动作和边界，不保证提速
+    misuse_cost: 未测；误触发时不得定案
+  first_use_test:
+    status: designed_not_run
+    trigger_success: null
+    action_success: null
+    evidence_success: null
+    stop_rule_success: null
+    no_answer_backfit: null
+    failure_type: null
+    final_result: pending_real_student_test
+  evaluation:
+    baseline: 普通逐项核题面
+    primary_benefit_hypothesis: 显式化下一步动作和证据边界
+    trigger_precision: null
+    trigger_recall: null
+    resolution_rate: null
+    standalone_rate: null
+    assist_rate: null
+    false_trigger_rate: null
+    transfer_rate: null
+    boundary_accuracy: null
+    time_complexity_gain: null
+  usefulness_level: Useful
+  status: candidate
+  maturity_status: candidate
+  practical_value: Useful
+  version: 1.0.0
+  change_reason: 首次迁移现有激活章节；非黄金短版尚未逐一教学审查
+  affected_cases:
+  - cases/continuation-writing/W11/canonical/case.yaml
+  regression_result: passed_automated_contract_tests_not_empirical_validation
+  student_ready: false
+- method_id: W12
+  brand_name: 精准换词
+  source_name: 五档升级路径（训练用）
+  aliases:
+  - 五档升级路径（训练用）
+  question_type: 读后续写
+  method_type: sub_action
+  role: interpreter
+  primary_role: interpreter
+  secondary_roles: []
+  output_type: interpret
+  student_symptoms:
+  - 基础表达准确后需改具体词
+  trigger_cues:
+  - 基础表达准确后需改具体词
+  core_action: 圈笼统动词或形容词，用符合场景与搭配的具体词替换，生词搭配不明就停
+  decision_rule: 执行动作后逐条对照源章节判据；不足则暂留，不能据关键词或剩余项定案。
+  verification: 回填或回原文逐条核主体、动作、限定和当前任务，见源章节完整规则。
+  stop_rule: 本步骤只产生语义结构，不能自动定案。不能以本动作代替完整题面关系核验；题面缺失、关键词义不明或出现反证就停止定案。具体边界见源章节。
+  common_wrong_instinct: 只记方法名或表面线索，跳过当前题面关系核验。
+  failure_cases:
+  - 缺完整题面或关键语义不能确认时强行定案
+  counterexamples:
+  - 表面触发信号存在，但完整关系不支持时不能继续；真实反例题面待核
+  transfer_pattern: 在新题面重复同一具体动作，不迁移上一题答案。
+  memory_line: 圈笼统动词或形容词，用符合场景与搭配的具体词替换，生词搭配不明就停
+  anti_rule: 动作产物 ≠ 自动答案。
+  visual_formula: '基础表达准确后需改具体词
+
+    ↓
+
+    圈笼统动词或形容词，用符合场景与搭配的具体词替换，生词搭配不明就停
+
+    ↓
+
+    interpret（未必定案）'
+  challenge_prompt: 先不报答案，只在题面标出：圈笼统动词或形容词，用符合场景与搭配的具体词替换，生词搭配不明就停
+  source_references:
+  - repository: https://github.com/rockpunkgod/ANSWER.git
+    commit: b04ebc26d7fa096404111a0bb12f6c77cc8525b9
+    path: gaokao-writing/references/continuation-writing-and-correction.md
+    heading: 五档升级路径（训练用）
+  section_ids: &id012
+  - da71883c7cd6b2bc
+  can_follow: []
+  usually_before: []
+  usually_after: []
+  conflicts_with: []
+  cannot_replace:
+  - 完整题面验证
+  levels:
+    compact: 动作入口
+    full: 源章节判据
+  compact:
+    10s: 基础表达准确后需改具体词。圈笼统动词或形容词，用符合场景与搭配的具体词替换，生词搭配不明就停。本步骤只产生语义结构，不能自动定案。不能以本动作代替完整题面关系核验；题面缺失、关键词义不明或出现反证就停止定案。具体边界见源章节。
+    30s: 基础表达准确后需改具体词。圈笼统动词或形容词，用符合场景与搭配的具体词替换，生词搭配不明就停。判断与停止：本步骤只产生语义结构，不能自动定案。不能以本动作代替完整题面关系核验；题面缺失、关键词义不明或出现反证就停止定案。具体边界见源章节。
+    90s: 基础表达准确后需改具体词。圈笼统动词或形容词，用符合场景与搭配的具体词替换，生词搭配不明就停。完整规则必须读取对应源章节；案例未核，不编示范答案。本步骤只产生语义结构，不能自动定案。不能以本动作代替完整题面关系核验；题面缺失、关键词义不明或出现反证就停止定案。具体边界见源章节。
+  full:
+    section_ids: *id012
+    source_boundary: 本步骤只产生语义结构，不能自动定案。不能以本动作代替完整题面关系核验；题面缺失、关键词义不明或出现反证就停止定案。具体边界见源章节。
+  cases:
+    canonical: cases/continuation-writing/W12/canonical/case.yaml
+  four_step_card:
+    start: 基础表达准确后需改具体词
+    first_cut: 圈笼统动词或形容词，用符合场景与搭配的具体词替换，生词搭配不明就停
+    judge: 逐条核源章节判据，不足则继续找独立证据。
+    stop: 本步骤只产生语义结构，不能自动定案。不能以本动作代替完整题面关系核验；题面缺失、关键词义不明或出现反证就停止定案。具体边界见源章节。
+  practicality_gate:
+    status: design_complete_empirical_pending
+    trigger: 基础表达准确后需改具体词
+    action: 圈笼统动词或形容词，用符合场景与搭配的具体词替换，生词搭配不明就停
+    output: interpret；严格限制主职责
+    stop: 本步骤只产生语义结构，不能自动定案。不能以本动作代替完整题面关系核验；题面缺失、关键词义不明或出现反证就停止定案。具体边界见源章节。
+    transfer: 迁移同一动作，不迁移原题答案
+    efficiency: 未测；预期价值是显式化动作和边界，不保证提速
+    misuse_cost: 未测；误触发时不得定案
+  first_use_test:
+    status: designed_not_run
+    trigger_success: null
+    action_success: null
+    evidence_success: null
+    stop_rule_success: null
+    no_answer_backfit: null
+    failure_type: null
+    final_result: pending_real_student_test
+  evaluation:
+    baseline: 普通逐项核题面
+    primary_benefit_hypothesis: 显式化下一步动作和证据边界
+    trigger_precision: null
+    trigger_recall: null
+    resolution_rate: null
+    standalone_rate: null
+    assist_rate: null
+    false_trigger_rate: null
+    transfer_rate: null
+    boundary_accuracy: null
+    time_complexity_gain: null
+  usefulness_level: Useful
+  status: candidate
+  maturity_status: candidate
+  practical_value: Useful
+  version: 1.0.0
+  change_reason: 首次迁移现有激活章节；非黄金短版尚未逐一教学审查
+  affected_cases:
+  - cases/continuation-writing/W12/canonical/case.yaml
+  regression_result: passed_automated_contract_tests_not_empirical_validation
+  student_ready: false
+- method_id: W13
+  brand_name: 结尾回扣
+  source_name: 素材与考点
+  aliases:
+  - 素材与考点
+  question_type: 读后续写
+  method_type: method
+  role: verifier
+  primary_role: verifier
+  secondary_roles: []
+  output_type: verify
+  student_symptoms:
+  - 故事结局需要回应主题
+  trigger_cues:
+  - 故事结局需要回应主题
+  core_action: 圈原文关键细节与解决结果，让结尾回扣它们；独立升华句不是必须项
+  decision_rule: 执行动作后逐条对照源章节判据；不足则暂留，不能据关键词或剩余项定案。
+  verification: 回填或回原文逐条核主体、动作、限定和当前任务，见源章节完整规则。
+  stop_rule: 不能以本动作代替完整题面关系核验；题面缺失、关键词义不明或出现反证就停止定案。具体边界见源章节。
+  common_wrong_instinct: 只记方法名或表面线索，跳过当前题面关系核验。
+  failure_cases:
+  - 缺完整题面或关键语义不能确认时强行定案
+  counterexamples:
+  - 表面触发信号存在，但完整关系不支持时不能继续；真实反例题面待核
+  transfer_pattern: 在新题面重复同一具体动作，不迁移上一题答案。
+  memory_line: 圈原文关键细节与解决结果，让结尾回扣它们；独立升华句不是必须项
+  anti_rule: 动作产物 ≠ 自动答案。
+  visual_formula: '故事结局需要回应主题
+
+    ↓
+
+    圈原文关键细节与解决结果，让结尾回扣它们；独立升华句不是必须项
+
+    ↓
+
+    verify（未必定案）'
+  challenge_prompt: 先不报答案，只在题面标出：圈原文关键细节与解决结果，让结尾回扣它们；独立升华句不是必须项
+  source_references:
+  - repository: https://github.com/rockpunkgod/ANSWER.git
+    commit: b04ebc26d7fa096404111a0bb12f6c77cc8525b9
+    path: gaokao-writing/references/continuation-writing-and-correction.md
+    heading: 素材与考点
+  section_ids: &id013
+  - 540b6fb2783f6027
+  can_follow: []
+  usually_before: []
+  usually_after: []
+  conflicts_with: []
+  cannot_replace:
+  - 完整题面验证
+  levels:
+    compact: 动作入口
+    full: 源章节判据
+  compact:
+    10s: 故事结局需要回应主题。圈原文关键细节与解决结果，让结尾回扣它们；独立升华句不是必须项。不能以本动作代替完整题面关系核验；题面缺失、关键词义不明或出现反证就停止定案。具体边界见源章节。
+    30s: 故事结局需要回应主题。圈原文关键细节与解决结果，让结尾回扣它们；独立升华句不是必须项。判断与停止：不能以本动作代替完整题面关系核验；题面缺失、关键词义不明或出现反证就停止定案。具体边界见源章节。
+    90s: 故事结局需要回应主题。圈原文关键细节与解决结果，让结尾回扣它们；独立升华句不是必须项。完整规则必须读取对应源章节；案例未核，不编示范答案。不能以本动作代替完整题面关系核验；题面缺失、关键词义不明或出现反证就停止定案。具体边界见源章节。
+  full:
+    section_ids: *id013
+    source_boundary: 不能以本动作代替完整题面关系核验；题面缺失、关键词义不明或出现反证就停止定案。具体边界见源章节。
+  cases:
+    canonical: cases/continuation-writing/W13/canonical/case.yaml
+  four_step_card:
+    start: 故事结局需要回应主题
+    first_cut: 圈原文关键细节与解决结果，让结尾回扣它们；独立升华句不是必须项
+    judge: 逐条核源章节判据，不足则继续找独立证据。
+    stop: 不能以本动作代替完整题面关系核验；题面缺失、关键词义不明或出现反证就停止定案。具体边界见源章节。
+  practicality_gate:
+    status: design_complete_empirical_pending
+    trigger: 故事结局需要回应主题
+    action: 圈原文关键细节与解决结果，让结尾回扣它们；独立升华句不是必须项
+    output: verify；严格限制主职责
+    stop: 不能以本动作代替完整题面关系核验；题面缺失、关键词义不明或出现反证就停止定案。具体边界见源章节。
+    transfer: 迁移同一动作，不迁移原题答案
+    efficiency: 未测；预期价值是显式化动作和边界，不保证提速
+    misuse_cost: 未测；误触发时不得定案
+  first_use_test:
+    status: designed_not_run
+    trigger_success: null
+    action_success: null
+    evidence_success: null
+    stop_rule_success: null
+    no_answer_backfit: null
+    failure_type: null
+    final_result: pending_real_student_test
+  evaluation:
+    baseline: 普通逐项核题面
+    primary_benefit_hypothesis: 显式化下一步动作和证据边界
+    trigger_precision: null
+    trigger_recall: null
+    resolution_rate: null
+    standalone_rate: null
+    assist_rate: null
+    false_trigger_rate: null
+    transfer_rate: null
+    boundary_accuracy: null
+    time_complexity_gain: null
+  usefulness_level: Useful
+  status: candidate
+  maturity_status: candidate
+  practical_value: Useful
+  version: 1.0.0
+  change_reason: 首次迁移现有激活章节；非黄金短版尚未逐一教学审查
+  affected_cases:
+  - cases/continuation-writing/W13/canonical/case.yaml
+  regression_result: passed_automated_contract_tests_not_empirical_validation
+  student_ready: false
+- method_id: W14
+  brand_name: 骨架句与肌肉句
+  source_name: 肌肉句与骨架句
+  aliases:
+  - 肌肉句与骨架句
+  question_type: 读后续写
+  method_type: category
+  role: framework
+  primary_role: framework
+  secondary_roles: []
+  output_type: interpret
+  student_symptoms:
+  - 功能提纲与扩写位置需要区分
+  trigger_cues:
+  - 功能提纲与扩写位置需要区分
+  core_action: 标确定功能位为骨架，其余位置按因果与画面扩写，不把句数当评分扣分项
+  decision_rule: 执行动作后逐条对照源章节判据；不足则暂留，不能据关键词或剩余项定案。
+  verification: 回填或回原文逐条核主体、动作、限定和当前任务，见源章节完整规则。
+  stop_rule: 本步骤只产生框架，不能自动定案。不能以本动作代替完整题面关系核验；题面缺失、关键词义不明或出现反证就停止定案。具体边界见源章节。
+  common_wrong_instinct: 只记方法名或表面线索，跳过当前题面关系核验。
+  failure_cases:
+  - 缺完整题面或关键语义不能确认时强行定案
+  counterexamples:
+  - 表面触发信号存在，但完整关系不支持时不能继续；真实反例题面待核
+  transfer_pattern: 在新题面重复同一具体动作，不迁移上一题答案。
+  memory_line: 标确定功能位为骨架，其余位置按因果与画面扩写，不把句数当评分扣分项
+  anti_rule: 动作产物 ≠ 自动答案。
+  visual_formula: '功能提纲与扩写位置需要区分
+
+    ↓
+
+    标确定功能位为骨架，其余位置按因果与画面扩写，不把句数当评分扣分项
+
+    ↓
+
+    interpret（未必定案）'
+  challenge_prompt: 先不报答案，只在题面标出：标确定功能位为骨架，其余位置按因果与画面扩写，不把句数当评分扣分项
+  source_references:
+  - repository: https://github.com/rockpunkgod/ANSWER.git
+    commit: b04ebc26d7fa096404111a0bb12f6c77cc8525b9
+    path: gaokao-writing/references/continuation-writing-and-correction.md
+    heading: 肌肉句与骨架句
+  section_ids: &id014
+  - 8de2c93d899d552b
+  can_follow: []
+  usually_before: []
+  usually_after: []
+  conflicts_with: []
+  cannot_replace:
+  - 完整题面验证
+  levels:
+    compact: 动作入口
+    full: 源章节判据
+  compact:
+    10s: 功能提纲与扩写位置需要区分。标确定功能位为骨架，其余位置按因果与画面扩写，不把句数当评分扣分项。本步骤只产生框架，不能自动定案。不能以本动作代替完整题面关系核验；题面缺失、关键词义不明或出现反证就停止定案。具体边界见源章节。
+    30s: 功能提纲与扩写位置需要区分。标确定功能位为骨架，其余位置按因果与画面扩写，不把句数当评分扣分项。判断与停止：本步骤只产生框架，不能自动定案。不能以本动作代替完整题面关系核验；题面缺失、关键词义不明或出现反证就停止定案。具体边界见源章节。
+    90s: 功能提纲与扩写位置需要区分。标确定功能位为骨架，其余位置按因果与画面扩写，不把句数当评分扣分项。完整规则必须读取对应源章节；案例未核，不编示范答案。本步骤只产生框架，不能自动定案。不能以本动作代替完整题面关系核验；题面缺失、关键词义不明或出现反证就停止定案。具体边界见源章节。
+  full:
+    section_ids: *id014
+    source_boundary: 本步骤只产生框架，不能自动定案。不能以本动作代替完整题面关系核验；题面缺失、关键词义不明或出现反证就停止定案。具体边界见源章节。
+  cases:
+    canonical: cases/continuation-writing/W14/canonical/case.yaml
+  four_step_card:
+    start: 功能提纲与扩写位置需要区分
+    first_cut: 标确定功能位为骨架，其余位置按因果与画面扩写，不把句数当评分扣分项
+    judge: 逐条核源章节判据，不足则继续找独立证据。
+    stop: 本步骤只产生框架，不能自动定案。不能以本动作代替完整题面关系核验；题面缺失、关键词义不明或出现反证就停止定案。具体边界见源章节。
+  practicality_gate:
+    status: design_complete_empirical_pending
+    trigger: 功能提纲与扩写位置需要区分
+    action: 标确定功能位为骨架，其余位置按因果与画面扩写，不把句数当评分扣分项
+    output: interpret；严格限制主职责
+    stop: 本步骤只产生框架，不能自动定案。不能以本动作代替完整题面关系核验；题面缺失、关键词义不明或出现反证就停止定案。具体边界见源章节。
+    transfer: 迁移同一动作，不迁移原题答案
+    efficiency: 未测；预期价值是显式化动作和边界，不保证提速
+    misuse_cost: 未测；误触发时不得定案
+  first_use_test:
+    status: designed_not_run
+    trigger_success: null
+    action_success: null
+    evidence_success: null
+    stop_rule_success: null
+    no_answer_backfit: null
+    failure_type: null
+    final_result: pending_real_student_test
+  evaluation:
+    baseline: 普通逐项核题面
+    primary_benefit_hypothesis: 显式化下一步动作和证据边界
+    trigger_precision: null
+    trigger_recall: null
+    resolution_rate: null
+    standalone_rate: null
+    assist_rate: null
+    false_trigger_rate: null
+    transfer_rate: null
+    boundary_accuracy: null
+    time_complexity_gain: null
+  usefulness_level: Useful
+  status: candidate
+  maturity_status: candidate
+  practical_value: Useful
+  version: 1.0.0
+  change_reason: 首次迁移现有激活章节；非黄金短版尚未逐一教学审查
+  affected_cases:
+  - cases/continuation-writing/W14/canonical/case.yaml
+  regression_result: passed_automated_contract_tests_not_empirical_validation
+  student_ready: false
+- method_id: W15
+  brand_name: 续写评分
+  source_name: 25 分评分规范
+  aliases:
+  - 25 分评分规范
+  question_type: 读后续写
+  method_type: internal_rule
+  role: verifier
+  primary_role: verifier
+  secondary_roles: []
+  output_type: verify
+  student_symptoms:
+  - 原文首句和学生续写齐全且请求评分
+  trigger_cues:
+  - 原文首句和学生续写齐全且请求评分
+  core_action: 只按25分续写档次核原文融洽、语言与结构；不抄首句正常，书写只在实见影响交际时评
+  decision_rule: 执行动作后逐条对照源章节判据；不足则暂留，不能据关键词或剩余项定案。
+  verification: 回填或回原文逐条核主体、动作、限定和当前任务，见源章节完整规则。
+  stop_rule: 不能以本动作代替完整题面关系核验；题面缺失、关键词义不明或出现反证就停止定案。具体边界见源章节。
+  common_wrong_instinct: 只记方法名或表面线索，跳过当前题面关系核验。
+  failure_cases:
+  - 缺完整题面或关键语义不能确认时强行定案
+  counterexamples:
+  - 表面触发信号存在，但完整关系不支持时不能继续；真实反例题面待核
+  transfer_pattern: 在新题面重复同一具体动作，不迁移上一题答案。
+  memory_line: 只按25分续写档次核原文融洽、语言与结构；不抄首句正常，书写只在实见影响交际时评
+  anti_rule: 动作产物 ≠ 自动答案。
+  visual_formula: '原文首句和学生续写齐全且请求评分
+
+    ↓
+
+    只按25分续写档次核原文融洽、语言与结构；不抄首句正常，书写只在实见影响交际时评
+
+    ↓
+
+    verify（未必定案）'
+  challenge_prompt: 先不报答案，只在题面标出：只按25分续写档次核原文融洽、语言与结构；不抄首句正常，书写只在实见影响交际时评
+  source_references:
+  - repository: https://github.com/rockpunkgod/ANSWER.git
+    commit: b04ebc26d7fa096404111a0bb12f6c77cc8525b9
+    path: gaokao-writing/references/continuation-writing-and-correction.md
+    heading: 25 分评分规范
+  section_ids: &id015
+  - d2dc77b78b7ce906
+  can_follow: []
+  usually_before: []
+  usually_after: []
+  conflicts_with: []
+  cannot_replace:
+  - 完整题面验证
+  levels:
+    compact: 动作入口
+    full: 源章节判据
+  compact:
+    10s: 原文首句和学生续写齐全且请求评分。只按25分续写档次核原文融洽、语言与结构；不抄首句正常，书写只在实见影响交际时评。不能以本动作代替完整题面关系核验；题面缺失、关键词义不明或出现反证就停止定案。具体边界见源章节。
+    30s: 原文首句和学生续写齐全且请求评分。只按25分续写档次核原文融洽、语言与结构；不抄首句正常，书写只在实见影响交际时评。判断与停止：不能以本动作代替完整题面关系核验；题面缺失、关键词义不明或出现反证就停止定案。具体边界见源章节。
+    90s: 原文首句和学生续写齐全且请求评分。只按25分续写档次核原文融洽、语言与结构；不抄首句正常，书写只在实见影响交际时评。完整规则必须读取对应源章节；案例未核，不编示范答案。不能以本动作代替完整题面关系核验；题面缺失、关键词义不明或出现反证就停止定案。具体边界见源章节。
+  full:
+    section_ids: *id015
+    source_boundary: 不能以本动作代替完整题面关系核验；题面缺失、关键词义不明或出现反证就停止定案。具体边界见源章节。
+  cases:
+    canonical: cases/continuation-writing/W15/canonical/case.yaml
+  four_step_card:
+    start: 原文首句和学生续写齐全且请求评分
+    first_cut: 只按25分续写档次核原文融洽、语言与结构；不抄首句正常，书写只在实见影响交际时评
+    judge: 逐条核源章节判据，不足则继续找独立证据。
+    stop: 不能以本动作代替完整题面关系核验；题面缺失、关键词义不明或出现反证就停止定案。具体边界见源章节。
+  practicality_gate:
+    status: design_complete_empirical_pending
+    trigger: 原文首句和学生续写齐全且请求评分
+    action: 只按25分续写档次核原文融洽、语言与结构；不抄首句正常，书写只在实见影响交际时评
+    output: verify；严格限制主职责
+    stop: 不能以本动作代替完整题面关系核验；题面缺失、关键词义不明或出现反证就停止定案。具体边界见源章节。
+    transfer: 迁移同一动作，不迁移原题答案
+    efficiency: 未测；预期价值是显式化动作和边界，不保证提速
+    misuse_cost: 未测；误触发时不得定案
+  first_use_test:
+    status: designed_not_run
+    trigger_success: null
+    action_success: null
+    evidence_success: null
+    stop_rule_success: null
+    no_answer_backfit: null
+    failure_type: null
+    final_result: pending_real_student_test
+  evaluation:
+    baseline: 普通逐项核题面
+    primary_benefit_hypothesis: 显式化下一步动作和证据边界
+    trigger_precision: null
+    trigger_recall: null
+    resolution_rate: null
+    standalone_rate: null
+    assist_rate: null
+    false_trigger_rate: null
+    transfer_rate: null
+    boundary_accuracy: null
+    time_complexity_gain: null
+  usefulness_level: Useful
+  status: candidate
+  maturity_status: candidate
+  practical_value: Useful
+  version: 1.0.0
+  change_reason: 首次迁移现有激活章节；非黄金短版尚未逐一教学审查
+  affected_cases:
+  - cases/continuation-writing/W15/canonical/case.yaml
+  regression_result: passed_automated_contract_tests_not_empirical_validation
+  student_ready: false
+- method_id: W16
+  brand_name: 五档训练升级
+  source_name: 五档升级路径（训练用）
+  aliases:
+  - 五档升级路径（训练用）
+  question_type: 读后续写
+  method_type: framework
+  role: framework
+  primary_role: framework
+  secondary_roles: []
+  output_type: interpret
+  student_symptoms:
+  - 课后需确定下一档训练缺口
+  trigger_cues:
+  - 课后需确定下一档训练缺口
+  core_action: 按现稿证据选对应升级动作，不把训练模板直接当官方独立扣分项
+  decision_rule: 执行动作后逐条对照源章节判据；不足则暂留，不能据关键词或剩余项定案。
+  verification: 回填或回原文逐条核主体、动作、限定和当前任务，见源章节完整规则。
+  stop_rule: 本步骤只产生框架，不能自动定案。不能以本动作代替完整题面关系核验；题面缺失、关键词义不明或出现反证就停止定案。具体边界见源章节。
+  common_wrong_instinct: 只记方法名或表面线索，跳过当前题面关系核验。
+  failure_cases:
+  - 缺完整题面或关键语义不能确认时强行定案
+  counterexamples:
+  - 表面触发信号存在，但完整关系不支持时不能继续；真实反例题面待核
+  transfer_pattern: 在新题面重复同一具体动作，不迁移上一题答案。
+  memory_line: 按现稿证据选对应升级动作，不把训练模板直接当官方独立扣分项
+  anti_rule: 动作产物 ≠ 自动答案。
+  visual_formula: '课后需确定下一档训练缺口
+
+    ↓
+
+    按现稿证据选对应升级动作，不把训练模板直接当官方独立扣分项
+
+    ↓
+
+    interpret（未必定案）'
+  challenge_prompt: 先不报答案，只在题面标出：按现稿证据选对应升级动作，不把训练模板直接当官方独立扣分项
+  source_references:
+  - repository: https://github.com/rockpunkgod/ANSWER.git
+    commit: b04ebc26d7fa096404111a0bb12f6c77cc8525b9
+    path: gaokao-writing/references/continuation-writing-and-correction.md
+    heading: 五档升级路径（训练用）
+  section_ids: &id016
+  - da71883c7cd6b2bc
+  can_follow: []
+  usually_before: []
+  usually_after: []
+  conflicts_with: []
+  cannot_replace:
+  - 完整题面验证
+  levels:
+    compact: 动作入口
+    full: 源章节判据
+  compact:
+    10s: 课后需确定下一档训练缺口。按现稿证据选对应升级动作，不把训练模板直接当官方独立扣分项。本步骤只产生框架，不能自动定案。不能以本动作代替完整题面关系核验；题面缺失、关键词义不明或出现反证就停止定案。具体边界见源章节。
+    30s: 课后需确定下一档训练缺口。按现稿证据选对应升级动作，不把训练模板直接当官方独立扣分项。判断与停止：本步骤只产生框架，不能自动定案。不能以本动作代替完整题面关系核验；题面缺失、关键词义不明或出现反证就停止定案。具体边界见源章节。
+    90s: 课后需确定下一档训练缺口。按现稿证据选对应升级动作，不把训练模板直接当官方独立扣分项。完整规则必须读取对应源章节；案例未核，不编示范答案。本步骤只产生框架，不能自动定案。不能以本动作代替完整题面关系核验；题面缺失、关键词义不明或出现反证就停止定案。具体边界见源章节。
+  full:
+    section_ids: *id016
+    source_boundary: 本步骤只产生框架，不能自动定案。不能以本动作代替完整题面关系核验；题面缺失、关键词义不明或出现反证就停止定案。具体边界见源章节。
+  cases:
+    canonical: cases/continuation-writing/W16/canonical/case.yaml
+  four_step_card:
+    start: 课后需确定下一档训练缺口
+    first_cut: 按现稿证据选对应升级动作，不把训练模板直接当官方独立扣分项
+    judge: 逐条核源章节判据，不足则继续找独立证据。
+    stop: 本步骤只产生框架，不能自动定案。不能以本动作代替完整题面关系核验；题面缺失、关键词义不明或出现反证就停止定案。具体边界见源章节。
+  practicality_gate:
+    status: design_complete_empirical_pending
+    trigger: 课后需确定下一档训练缺口
+    action: 按现稿证据选对应升级动作，不把训练模板直接当官方独立扣分项
+    output: interpret；严格限制主职责
+    stop: 本步骤只产生框架，不能自动定案。不能以本动作代替完整题面关系核验；题面缺失、关键词义不明或出现反证就停止定案。具体边界见源章节。
+    transfer: 迁移同一动作，不迁移原题答案
+    efficiency: 未测；预期价值是显式化动作和边界，不保证提速
+    misuse_cost: 未测；误触发时不得定案
+  first_use_test:
+    status: designed_not_run
+    trigger_success: null
+    action_success: null
+    evidence_success: null
+    stop_rule_success: null
+    no_answer_backfit: null
+    failure_type: null
+    final_result: pending_real_student_test
+  evaluation:
+    baseline: 普通逐项核题面
+    primary_benefit_hypothesis: 显式化下一步动作和证据边界
+    trigger_precision: null
+    trigger_recall: null
+    resolution_rate: null
+    standalone_rate: null
+    assist_rate: null
+    false_trigger_rate: null
+    transfer_rate: null
+    boundary_accuracy: null
+    time_complexity_gain: null
+  usefulness_level: Useful
+  status: candidate
+  maturity_status: candidate
+  practical_value: Useful
+  version: 1.0.0
+  change_reason: 首次迁移现有激活章节；非黄金短版尚未逐一教学审查
+  affected_cases:
+  - cases/continuation-writing/W16/canonical/case.yaml
+  regression_result: passed_automated_contract_tests_not_empirical_validation
+  student_ready: false

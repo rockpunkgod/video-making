@@ -1,0 +1,24 @@
+method_id: G01
+case_type: hard
+status: evidence_gap
+objective: 复杂多线索边界回归
+prompt_excerpt: null
+expected_action: 先问有无提示词，再由空位在未填句中的成分或功能走决策树。
+pass_condition: 无真实题面不得假设通过
+source_reference: &id001
+  repository: https://github.com/rockpunkgod/ANSWER.git
+  commit: b04ebc26d7fa096404111a0bb12f6c77cc8525b9
+  path: gaokao-grammar-fill/references/grammar-fill.md
+  heading: 总路线、无提示词、有提示词、需要动词形式
+gap: 缺少经核验完整困难题，不造题补数
+case_id: G01-hard
+question_type: 语法填空
+source: *id001
+question: null
+answer: null
+trigger: 任何语法填空空位开始处理时。
+evidence: []
+method_role: framework
+expected_output: reduce
+stop_rule: 提示词是什么词性，不等于答案就是什么词性。
+notes: 缺少经核验完整困难题，不造题补数

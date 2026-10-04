@@ -8,3 +8,14 @@ expected_action: 把原文和候选分别填入谁→做什么→对谁，并标
 pass_condition: 只在关系无依据换位时排除。
 gap: 完整题面与选项未在 ANSWER 运行层发布。
 source_reference: ANSWER@b04ebc26:gaokao-english/references/course-evidence.md#主客一致
+case_id: R02-canonical
+question_type: 阅读理解
+source: ANSWER@b04ebc26:gaokao-english/references/course-evidence.md#主客一致
+question: null
+answer: null
+trigger: 谁想做与谁真正做了之间可能被偷换。
+evidence: []
+method_role: decider
+expected_output: decide
+stop_rule: 关键词一样，不代表动作关系一样。
+notes: 完整题面与选项未在 ANSWER 运行层发布。
