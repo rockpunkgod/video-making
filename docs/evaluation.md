@@ -19,7 +19,11 @@ observed_at对旧统计输入仍可缺省，但完整研究链必须逐条提供
 
 输出触发精确/召回、Resolution、Standalone、Assist、False Trigger、Transfer、Boundary、Role Overclaim、Stop Failure及Baseline差值。Transfer测动作和证据迁移，不逼reducer独立定案；Boundary必须实际识别、停止、证据成立、无越权且边界结论正确。accuracy差值为Method−Baseline，其余为Baseline−Method。
 
-Evaluation Result契约1.1.0按方法、版本、dataset_id与communication_freeze_id隔离组，每组design_audit返回检查、阻断原因与record_id，不从其他题组借前置记录。所有均值仍只描述输入记录。Resolution/Standalone/Assist要求动作和证据成立且无倒贴、越权或执行中断；猜中答案仍可计入原accuracy，但不充当方法成功。
+Evaluation Result契约1.2.0按方法、版本、dataset_id与communication_freeze_id隔离组，每组design_audit返回检查、阻断原因与record_id，不从其他题组借前置记录。所有均值仍只描述输入记录。Resolution/Standalone/Assist要求动作和证据成立且无倒贴、越权或执行中断；猜中答案仍可计入原accuracy，但不充当方法成功。
+
+采集前另冻结blind_acceptance.minimums的trigger_precision、trigger_recall、action_success、evidence_success、transfer_rate，以及.maximums的false_trigger_rate、stop_rule_failure_rate。五项最低成功值为(0,1]、两项最大失败容忍为[0,1)，示例阈值按风险修订而不是通用标准。不能补填在已采集计划上；缺此项的旧计划仍可做描述性统计，但不授权发布或效率/Signature审阅。
+
+blind_acceptance_audit逐时长检查绝对可用性、Boundary、角色、参与者/题组覆盖及独立Baseline正确性不下降。动作/证据分母覆盖所有适用试次（漏触发也算失败），保留分子、分母、record_id和逐版效率对照。参照90s不达标，即使短版相对差值不坏也不能释放；某版正确率降低，不由其他时长的提高抵消。传播10/30/90的记忆与复述也逐版检查，不能借均值补证明。
 
 短版增加action_failure_rate与evidence_failure_rate。对90秒版的max_action_failure_delta、max_evidence_failure_delta须采集前按风险冻结，缺省时安全为untested。最低参与者须为整数，效率阈值须为有限正效应，不能用负数、布尔或NaN把零改善包装成改进。任何阶段、角色、题组或材料链缺口同时阻断效率审阅与Signature建议，而非只挡发布。
 

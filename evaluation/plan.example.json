@@ -12,6 +12,10 @@
   "max_evidence_failure_delta": 0.02,
   "min_recall_rate": 0.9,
   "min_restatement_rate": 0.9,
+  "blind_acceptance": {
+    "minimums": {"trigger_precision": 0.95, "trigger_recall": 0.95, "action_success": 0.95, "evidence_success": 0.95, "transfer_rate": 0.95},
+    "maximums": {"false_trigger_rate": 0.05, "stop_rule_failure_rate": 0.05}
+  },
   "minimum_efficiency_gain": {
     "time_seconds": 3,
     "candidates_remaining": 1,

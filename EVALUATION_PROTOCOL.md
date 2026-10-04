@@ -192,3 +192,13 @@ short_version_safety:
 短版另报告action_failure_rate和evidence_failure_rate，并用采集前冻结的max_action_failure_delta与max_evidence_failure_delta对照90秒版；缺差值门槛不视为压缩安全通过。猜中答案却动作或证据失败，不计Method Resolution、Standalone或Assist成功。原答案正确率仍如实统计，不能用它抵消动作失败。
 
 同一冻结题目在不同受试者、阶段和时长版本中，case_type、applicable与stop_required必须一致；不能通过重标适用题、反例或刹车要求制造短版优势。逐版安全指标保留各自分子、分母和观察记录ID。
+
+### 绝对实战通过与逐版对照
+
+相对90秒版不变差，不等于方法已可用。90秒版自身触发、动作、证据或迁移不达标时，不能作为“合格参照”让同样失败的短版上线。研究者须在采集前按误用风险冻结blind_acceptance：minimums含trigger_precision、trigger_recall、action_success、evidence_success、transfer_rate；maximums含false_trigger_rate、stop_rule_failure_rate。正向最低值必须大于0，最大失败容忍不能等于1；示例数值不是通用及格线，不得看结果后补门槛。
+
+每个实测时长版本独立检查上述绝对门槛、已有Boundary门槛、角色无越权、五类题及最低受试覆盖；Action/Evidence以全部适用试次为分母，漏触发不能从分母中消失。每个版本还须分别与自己的Baseline确认正确性不下降，不能由另一个版本的进步抵消当前版本的损害。效率审阅依据具体版本的成对改善；混合均值仅作描述，不证明任一版本有效。
+
+缺blind_acceptance的历史数据仍可计算指标，但短版安全保持untested，不给发布或实用等级审阅建议；实测绝对门槛失败或参照90秒版失败则safe_for_release=false。First-use和Practicality勾选通过不能覆盖后续Blind中观察到的失败。
+
+第一阶段10/30/90秒稿各须有自己的记忆和自然复述观察，不能借90秒版或合并平均值证明另外两版已传播通过。结果Schema 1.2.0增加blind_acceptance_audit，逐版保留门禁、比例分子/分母、Baseline对照、记录ID及阻断原因。程序仍不认证受试身份、采集真实性、计分正确或统计显著性，不自动修改Registry。

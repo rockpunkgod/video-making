@@ -85,6 +85,207 @@
             ],
             "additionalProperties": false
           },
+          "blind_acceptance_audit": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "version": {
+                  "enum": [
+                    "10s",
+                    "30s",
+                    "90s",
+                    "full"
+                  ]
+                },
+                "ready_for_review": {
+                  "type": "boolean"
+                },
+                "checks": {
+                  "type": "object",
+                  "additionalProperties": {
+                    "type": "boolean"
+                  }
+                },
+                "blocking_reasons": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "minItems": 0
+                },
+                "metrics": {
+                  "type": "object",
+                  "properties": {
+                    "trigger_precision": {
+                      "type": [
+                        "number",
+                        "null"
+                      ],
+                      "minimum": 0,
+                      "maximum": 1
+                    },
+                    "trigger_recall": {
+                      "type": [
+                        "number",
+                        "null"
+                      ],
+                      "minimum": 0,
+                      "maximum": 1
+                    },
+                    "resolution_rate": {
+                      "type": [
+                        "number",
+                        "null"
+                      ],
+                      "minimum": 0,
+                      "maximum": 1
+                    },
+                    "standalone_rate": {
+                      "type": [
+                        "number",
+                        "null"
+                      ],
+                      "minimum": 0,
+                      "maximum": 1
+                    },
+                    "assist_rate": {
+                      "type": [
+                        "number",
+                        "null"
+                      ],
+                      "minimum": 0,
+                      "maximum": 1
+                    },
+                    "false_trigger_rate": {
+                      "type": [
+                        "number",
+                        "null"
+                      ],
+                      "minimum": 0,
+                      "maximum": 1
+                    },
+                    "transfer_rate": {
+                      "type": [
+                        "number",
+                        "null"
+                      ],
+                      "minimum": 0,
+                      "maximum": 1
+                    },
+                    "boundary_accuracy": {
+                      "type": [
+                        "number",
+                        "null"
+                      ],
+                      "minimum": 0,
+                      "maximum": 1
+                    },
+                    "role_overclaim_rate": {
+                      "type": [
+                        "number",
+                        "null"
+                      ],
+                      "minimum": 0,
+                      "maximum": 1
+                    },
+                    "stop_rule_failure_rate": {
+                      "type": [
+                        "number",
+                        "null"
+                      ],
+                      "minimum": 0,
+                      "maximum": 1
+                    },
+                    "action_success": {
+                      "type": [
+                        "number",
+                        "null"
+                      ],
+                      "minimum": 0,
+                      "maximum": 1
+                    },
+                    "evidence_success": {
+                      "type": [
+                        "number",
+                        "null"
+                      ],
+                      "minimum": 0,
+                      "maximum": 1
+                    }
+                  },
+                  "required": [
+                    "trigger_precision",
+                    "trigger_recall",
+                    "resolution_rate",
+                    "standalone_rate",
+                    "assist_rate",
+                    "false_trigger_rate",
+                    "transfer_rate",
+                    "boundary_accuracy",
+                    "role_overclaim_rate",
+                    "stop_rule_failure_rate",
+                    "action_success",
+                    "evidence_success"
+                  ],
+                  "additionalProperties": false
+                },
+                "metric_counts": {
+                  "type": "object",
+                  "additionalProperties": {
+                    "type": "object",
+                    "properties": {
+                      "numerator": {
+                        "type": [
+                          "integer",
+                          "null"
+                        ],
+                        "minimum": 0
+                      },
+                      "denominator": {
+                        "type": "integer",
+                        "minimum": 0
+                      }
+                    },
+                    "required": [
+                      "numerator",
+                      "denominator"
+                    ],
+                    "additionalProperties": false
+                  }
+                },
+                "baseline_comparison": {
+                  "type": "object"
+                },
+                "record_ids": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "minItems": 0
+                },
+                "scope": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              },
+              "required": [
+                "version",
+                "ready_for_review",
+                "checks",
+                "blocking_reasons",
+                "metrics",
+                "metric_counts",
+                "baseline_comparison",
+                "record_ids",
+                "scope"
+              ],
+              "additionalProperties": false
+            },
+            "minItems": 0
+          },
           "metrics": {
             "type": "object",
             "properties": {
@@ -331,6 +532,7 @@
           "communication_freeze_id",
           "record_count",
           "design_audit",
+          "blind_acceptance_audit",
           "metrics",
           "baseline_comparison",
           "first_use",

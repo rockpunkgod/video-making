@@ -10,6 +10,8 @@ KINDS = {'positive_trigger','negative_trigger','counterexample','boundary','tran
 METRICS = ['trigger_precision','trigger_recall','resolution_rate','standalone_rate','assist_rate','false_trigger_rate','transfer_rate','boundary_accuracy','role_overclaim_rate','stop_rule_failure_rate']
 COMMUNICATION_CHECKS={'comprehension','memory','natural_speech','visual_action','short_long_consistency'}
 PRACTICALITY_CHECKS={'trigger','action','output','stop','transfer','efficiency_or_value','misuse_cost','role_correctness'}
+BLIND_MINIMUMS={'trigger_precision','trigger_recall','action_success','evidence_success','transfer_rate'}
+BLIND_MAXIMUMS={'false_trigger_rate','stop_rule_failure_rate'}
 
 def timestamp(value):
     if not isinstance(value,str): raise ValueError('Timestamp must be an ISO string with timezone')
@@ -96,6 +98,36 @@ def comparison(rows):
     out['paired_observations'] = len(rows)
     return out
 
+def audit_blind_versions(blind,plan):
+    """Absolute success and paired correctness, never a pooled-version pass."""
+    audits=[]
+    thresholds=plan.get('blind_acceptance') if plan else None
+    for version in ['10s','30s','90s','full']:
+        sample=[x for x in blind if x['compact_version']==version]
+        if not sample: continue
+        measured,counts=metrics(sample)
+        applicable=[x for x in sample if x['applicable']]
+        for key in ['action_success','evidence_success']:
+            passed=sum(x['triggered'] and x[key] and not any(x[k] for k in ['execution_breakdown','answer_backfit','role_overclaim']) for x in applicable)
+            measured[key]=ratio(passed,len(applicable))
+            counts[key]={'numerator':passed if applicable else None,'denominator':len(applicable)}
+        paired=comparison(sample)
+        checks={'absolute_thresholds_frozen':bool(thresholds),
+                'case_coverage':KINDS<={x['case_type'] for x in sample},
+                'participant_coverage':bool(plan and len({x['participant_id'] for x in sample})>=plan['minimum_participants_per_version']),
+                'accuracy_not_decreased':paired['accuracy']['gain'] is not None and paired['accuracy']['gain']>=0,
+                'no_role_overclaim':measured['role_overclaim_rate']==0}
+        if thresholds:
+            checks.update({key:measured[key] is not None and measured[key]>=thresholds['minimums'][key] for key in BLIND_MINIMUMS})
+            checks.update({key:measured[key] is not None and measured[key]<=thresholds['maximums'][key] for key in BLIND_MAXIMUMS})
+            checks['boundary_accuracy']=measured['boundary_accuracy'] is not None and measured['boundary_accuracy']>=plan['min_boundary_accuracy']
+        audits.append({'version':version,'ready_for_review':all(checks.values()),'checks':checks,
+                       'blocking_reasons':[key for key,value in checks.items() if not value],
+                       'metrics':measured,'metric_counts':counts,'baseline_comparison':paired,
+                       'record_ids':[x['record_id'] for x in sample],
+                       'scope':'declared observations and frozen thresholds only; not authenticated participants or grading'})
+    return audits
+
 def audit_design(rows,plan,registry):
     """Check declared study lineage, not authenticity of people or timestamps."""
     checks={}; phases={phase:[x for x in rows if x['phase']==phase] for phase in ['communication','first_use','blind']}
@@ -117,6 +149,9 @@ def audit_design(rows,plan,registry):
     checks['workflow_checks_passed']=bool(workflow and all(workflow['communication_checks'].values()) and all(workflow['practicality_checks'].values()))
     checks['communication_freeze_bound_to_observations']=bool(workflow and set(workflow['communication_record_ids'])=={x['record_id'] for x in phases['communication']} and phases['communication'])
     checks['communication_observed_success']=bool(plan and phases['communication'] and rate(phases['communication'],lambda x:x['recall_success'])>=plan['min_recall_rate'] and rate(phases['communication'],lambda x:x['natural_restatement'])>=plan['min_restatement_rate'])
+    communication_versions={v:[x for x in phases['communication'] if x['compact_version']==v] for v in ['10s','30s','90s']}
+    checks['communication_each_short_version_observed']=all(communication_versions.values())
+    checks['communication_each_short_version_success']=bool(plan and all(sample and rate(sample,lambda x:x['recall_success'])>=plan['min_recall_rate'] and rate(sample,lambda x:x['natural_restatement'])>=plan['min_restatement_rate'] for sample in communication_versions.values()))
     checks['demonstration_not_reused_as_test']=bool(workflow and all(x['question_id'] not in workflow['demonstration_item_ids'] for x in phases['first_use']+phases['blind']))
     seen={}
     for x in rows:
@@ -140,7 +175,7 @@ def evaluate(records,plan=None):
     registry=Registry() if records else None
     groups = defaultdict(list)
     for x in records: groups[(x['method_id'],x['method_version'],x['dataset_id'],x['communication_freeze_id'])].append(x)
-    output = {'schema_version':'1.1.0','origin':origin,'record_count':len(records),'groups':[],'limitations':['指标仅计算输入观察；origin、参与者与审阅真实性须由研究者外部审计。Synthetic 不得用于等级升级。']}
+    output = {'schema_version':'1.2.0','origin':origin,'record_count':len(records),'groups':[],'limitations':['指标仅计算输入观察；origin、参与者与审阅真实性须由研究者外部审计。Synthetic 不得用于等级升级。']}
     for (mid,version,dataset,freeze),rows in groups.items():
         blind = [x for x in rows if x['phase']=='blind']
         first = [x for x in rows if x['phase']=='first_use']
@@ -154,6 +189,8 @@ def evaluate(records,plan=None):
         safety = []
         p = plan if plan and plan['method_id']==mid and plan['method_version']==version and plan['dataset_id']==dataset and plan['communication_freeze_id']==freeze else None
         design=audit_design(rows,p,registry)
+        blind_audits=audit_blind_versions(blind,p)
+        blind_passed=bool(blind_audits and all(a['ready_for_review'] for a in blind_audits))
         full = [x for x in blind if x['compact_version']=='90s']
         full_metrics,_ = metrics(full)
         for v in ['10s','30s','90s']:
@@ -192,6 +229,10 @@ def evaluate(records,plan=None):
                                 and sm['stop_rule_failure_rate']<=full_metrics['stop_rule_failure_rate']+p['max_stop_failure_delta']
                                 and action_failure<=full_action_failure+p['max_action_failure_delta']
                                 and evidence_failure<=full_evidence_failure+p['max_evidence_failure_delta'])
+                    own=next((a for a in blind_audits if a['version']==v),None)
+                    reference=next((a for a in blind_audits if a['version']=='90s'),None)
+                    if not p.get('blind_acceptance'): safe='untested'
+                    elif not own or not reference or not own['ready_for_review'] or not reference['ready_for_review']: safe=False
             safety_counts={k:sm_counts[k] for k in ['false_trigger_rate','boundary_accuracy','role_overclaim_rate','stop_rule_failure_rate']}
             safety_counts.update(action_failure_rate={'numerator':None if action_failure is None else round(action_failure*len(active_sample)),'denominator':len(active_sample)},evidence_failure_rate={'numerator':None if evidence_failure is None else round(evidence_failure*len(active_sample)),'denominator':len(active_sample)})
             safety.append({'version':v,**{k:sm[k] for k in ['false_trigger_rate','boundary_accuracy','role_overclaim_rate','stop_rule_failure_rate']},'action_failure_rate':action_failure,'evidence_failure_rate':evidence_failure,'metric_counts':safety_counts,'record_ids':[x['record_id'] for x in sample],'safe_for_release':safe})
@@ -199,17 +240,18 @@ def evaluate(records,plan=None):
                         and first and not any(failure_types(x) for x in first)
                         and comm['recall_rate']>=p['min_recall_rate'] and comm['natural_restatement_rate']>=p['min_restatement_rate'])
         gain = compared['accuracy']['gain']
-        improved = any(compared[k]['gain'] is not None and compared[k]['gain']>=p['minimum_efficiency_gain'].get(k,float('inf')) for k in ['time_seconds','candidates_remaining','evidence_span','hesitation_count','unresolved']) if p else False
+        improved = any(a['ready_for_review'] and any(a['baseline_comparison'][k]['gain'] is not None and a['baseline_comparison'][k]['gain']>=p['minimum_efficiency_gain'].get(k,float('inf')) for k in ['time_seconds','candidates_remaining','evidence_span','hesitation_count','unresolved']) for a in blind_audits) if p else False
         # Means alone do not establish significance. They can only request review.
         blind_covered=bool(p and KINDS<={x['case_type'] for x in blind} and len({x['participant_id'] for x in blind})>=p['minimum_participants_per_version'])
-        upgrade = 'review_for_Signature' if eligible and gain is not None and gain>=0 and improved else 'review_for_Efficient' if origin=='real' and p and design['ready_for_review'] and blind_covered and gain is not None and gain>=0 and improved else 'none'
-        output['groups'].append({'method_id':mid,'method_version':version,'dataset_id':dataset,'communication_freeze_id':freeze,'record_count':len(rows),'design_audit':design,'metrics':m,'baseline_comparison':compared,'first_use':first_result,'communication':comm,'short_version_safety':safety,'release_eligible':eligible,'upgrade_eligible':upgrade,'limitations':['缺样本指标为null；阈值与计划须测试前冻结，工具不替代真实性和统计显著性审阅。','不自动修改 Registry 状态或实用等级。']})
+        eligible=eligible and blind_passed
+        upgrade = 'review_for_Signature' if eligible and gain is not None and gain>=0 and improved else 'review_for_Efficient' if origin=='real' and p and design['ready_for_review'] and blind_covered and blind_passed and gain is not None and gain>=0 and improved else 'none'
+        output['groups'].append({'method_id':mid,'method_version':version,'dataset_id':dataset,'communication_freeze_id':freeze,'record_count':len(rows),'design_audit':design,'blind_acceptance_audit':blind_audits,'metrics':m,'baseline_comparison':compared,'first_use':first_result,'communication':comm,'short_version_safety':safety,'release_eligible':eligible,'upgrade_eligible':upgrade,'limitations':['缺样本指标为null；阈值与计划须测试前冻结，工具不替代真实性和统计显著性审阅。','不自动修改 Registry 状态或实用等级。']})
     validate_schema('evaluation-result',output)
     return output
 
 def validate_plan(plan):
     required = {'method_id','method_version','dataset_id','communication_freeze_id','minimum_participants_per_version','max_false_trigger_delta','min_boundary_accuracy','max_boundary_drop','max_stop_failure_delta','min_recall_rate','min_restatement_rate','minimum_efficiency_gain','frozen_before_data_collection','rationale'}
-    if not required<=set(plan) or set(plan)-required-{'workflow','max_action_failure_delta','max_evidence_failure_delta'}: raise ValueError('Incomplete or unknown evaluation plan fields')
+    if not required<=set(plan) or set(plan)-required-{'workflow','max_action_failure_delta','max_evidence_failure_delta','blind_acceptance'}: raise ValueError('Incomplete or unknown evaluation plan fields')
     if any(not isinstance(plan[key],str) or not plan[key].strip() for key in ['method_id','method_version','dataset_id','communication_freeze_id','rationale']): raise ValueError('Invalid plan identity or rationale')
     participants=plan['minimum_participants_per_version']
     if plan['frozen_before_data_collection'] is not True or isinstance(participants,bool) or not isinstance(participants,int) or participants<2:
@@ -220,6 +262,14 @@ def validate_plan(plan):
     for key in ['max_action_failure_delta','max_evidence_failure_delta']:
         if key in plan and (isinstance(plan[key],bool) or not isinstance(plan[key],(int,float)) or not math.isfinite(plan[key]) or not 0<=plan[key]<=1): raise ValueError('Invalid action/evidence safety threshold')
     gains=plan['minimum_efficiency_gain']
+    absolute=plan.get('blind_acceptance')
+    if absolute is not None:
+        if not isinstance(absolute,dict) or set(absolute)!={'minimums','maximums'} or not isinstance(absolute['minimums'],dict) or not isinstance(absolute['maximums'],dict) or set(absolute['minimums'])!=BLIND_MINIMUMS or set(absolute['maximums'])!=BLIND_MAXIMUMS:
+            raise ValueError('Incomplete absolute blind acceptance thresholds')
+        for value in absolute['minimums'].values():
+            if isinstance(value,bool) or not isinstance(value,(int,float)) or not math.isfinite(value) or not 0<value<=1: raise ValueError('Blind minimums require finite positive success evidence')
+        for value in absolute['maximums'].values():
+            if isinstance(value,bool) or not isinstance(value,(int,float)) or not math.isfinite(value) or not 0<=value<1: raise ValueError('Blind maximums cannot accept total failure')
     if not isinstance(gains,dict) or set(gains)-{'time_seconds','candidates_remaining','evidence_span','hesitation_count','unresolved'} or any(isinstance(v,bool) or not isinstance(v,(int,float)) or not math.isfinite(v) or v<=0 for v in gains.values()):
         raise ValueError('Efficiency gain thresholds must be finite positive effects')
     workflow=plan.get('workflow')

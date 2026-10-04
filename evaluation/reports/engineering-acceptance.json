@@ -6,7 +6,7 @@
     "head": "60ebaf4"
   },
   "after_refactor": {
-    "tests_run": 243,
+    "tests_run": 251,
     "failures": 0,
     "errors": 0,
     "registry": {
@@ -138,16 +138,16 @@
     }
   },
   "evaluation_design_hardening": {
-    "result_schema_version": "1.1.0",
+    "result_schema_version": "1.2.0",
     "grouping": [
       "method_id",
       "method_version",
       "dataset_id",
       "communication_freeze_id"
     ],
-    "workflow": "declared study freeze / communication freeze / practicality / first-use / blind sequence, not authenticated dates",
-    "short_safety": "action and evidence failure deltas plus existing boundary/role/stop metrics",
-    "release": "missing workflow blocks all release and efficiency/signature review hints; no automatic Registry promotion"
+    "workflow": "declared study freeze / communication freeze / practicality / first-use / blind sequence, with each communication version observed; not authenticated dates",
+    "short_safety": "absolute trigger/action/evidence/transfer/stop gates plus relative boundary/role/stop deltas; bad 90s reference cannot release short versions",
+    "release": "missing workflow or absolute thresholds, any per-version correctness loss or failed blind gate blocks release and efficiency/signature review hints; no automatic Registry promotion"
   },
   "method_execution": {
     "schema_version": "1.7.0",

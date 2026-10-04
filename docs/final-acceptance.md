@@ -24,7 +24,7 @@ Registry（源章节+方法）→Matcher/Composer→Question/Paper Analyzer→Ev
 | 9 | PARTIAL | 整卷结构扫描、方法/难度/证据/Demo排序可运行；无完整真实卷语义回归 |
 | 10 | PARTIAL | 四Renderer与兼容Skill/脚本接入；完整旧答疑行为尚未认证 |
 | 11 | PASS | 真人记录导入、统计、冻结计划及短版安全；真人数据未运行 |
-| 12 | PASS | 243项自动Regression及CLI烟测通过 |
+| 12 | PASS | 251项自动Regression及CLI烟测通过 |
 | 13 | PASS | README及架构/维护/评估/迁移文档 |
 | 14 | PASS | 逐Gate如实验收，最终PARTIAL，不宣布工程全完成 |
 
@@ -43,7 +43,7 @@ Registry（源章节+方法）→Matcher/Composer→Question/Paper Analyzer→Ev
 
 ## 5. Tests
 
-Before：16/16；After：243/243。覆盖baseline、全量Registry/Case/标准Schema、Analyzer证据/角色/拒答、Paper推荐门禁、Renderer事实保留、Legacy资源/脚本、Evaluation公式/空数据/重复/污染/不可伪升级。四Skill通过skill-creator quick_validate（Windows使用UTF-8模式）；editable安装通过。CLI 16种烟测通过，写作示例为synthetic程序输送记录，不是实际英语题或真人评分。详细机器记录：evaluation/reports/engineering-acceptance.json。未声称旧题库正确率或宿主语义回归已通过。
+Before：16/16；After：251/251。覆盖baseline、全量Registry/Case/标准Schema、Analyzer证据/角色/拒答、Paper推荐门禁、Renderer事实保留、Legacy资源/脚本、Evaluation公式/空数据/重复/污染/不可伪升级。四Skill通过skill-creator quick_validate（Windows使用UTF-8模式）；editable安装通过。CLI 16种烟测通过，写作示例为synthetic程序输送记录，不是实际英语题或真人评分。详细机器记录：evaluation/reports/engineering-acceptance.json。未声称旧题库正确率或宿主语义回归已通过。
 
 ## 6. Evaluation Readiness
 
@@ -70,7 +70,7 @@ First-use、Blind/Baseline、10/30/90s Safety均有记录Schema及直接可运�
 | G11 | PARTIAL | 整卷接口可执行；真实完整卷回归缺数据 |
 | G12 | PASS | Core不含交付模板，Renderer不改变答案事实 |
 | G13 | PARTIAL | 入口/脚本/契约兼容通过，完整旧题库宿主语义表现未验 |
-| G14 | PASS | 16 baseline保留，当前243项通过 |
+| G14 | PASS | 16 baseline保留，当前251项通过 |
 | G15 | PASS | JSON/JSONL导入、12类指标/差值、三短版安全可运行；统计显著性需审阅 |
 | G16 | PASS | 真人未测为pending_real_participant_validation；零升级虚报 |
 
@@ -92,7 +92,7 @@ First-use、Blind/Baseline、10/30/90s Safety均有记录Schema及直接可运�
 
 写作审阅通道：宿主完整语义意见经writing_review进入统一结构、证据图与两模块原交付顺序；逐处纠错/可选润色不设数量上限，缺原文或首句实际扣留剧情诊断、完整稿与分数。分数只为外部建议，身份、语义与改写保真未认证；原图字节/区域/转写稿指纹进入独立审阅适配，应用文降档和续写酌扣不能混用；清晰度和交际影响仍外部声明，未完成真人评分验证。程序输送测试不能替代旧题库宿主语义回归。
 
-真实验收链增强：结果Schema 1.1.0按方法/版本/题组/传播冻结稿隔离，workflow核阶段顺序、传播观察绑定、陌生题与跨阶段学习控制。缺链条不授予释放或效率审阅建议；压缩版另比较动作/证据失败，猜中不充当方法成功。时间、身份与审阅结论仍为外部声明，程序不能认证真人数据；所有新增测试均为程序控制测试。
+真实验收链增强：结果Schema 1.2.0按方法/版本/题组/传播冻结稿隔离，workflow核阶段顺序、传播逐版观察绑定、陌生题与跨阶段学习控制。绝对盲测门槛、独立Baseline正确性和适用试次动作/证据均逐时长检查；90s失败不作合格参照，均值不掩盖某版损害。缺链条或采集前绝对门槛不授予释放或效率审阅建议；猜中不充当方法成功。时间、身份与审阅结论仍为外部声明，程序不能认证真人数据；新增测试均为程序控制测试。
 
 方法编排执行通道：action_executions传入具体动作与八类产物，execution_trace按ID消费更早已审阅、完整、未刹车的兼容产物。R09三字段骨架、候选全覆盖分组、角色/版本/独立触发、对应候选关系和语法节点路径均有运行门禁；核验不支持时实际撤回答案与整卷推荐。产物指纹与执行链/图联合校验，Renderer显示实际动作和停止原因。此为外部动作结果的运行控制，不认证自由题面语义求解、真实动作或宿主审阅身份。
 

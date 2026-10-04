@@ -22,9 +22,11 @@ def design():
         for person in range(2):
             for kind in ['positive_trigger','negative_trigger','counterexample','boundary','transfer']:
                 rows.append(observation(i,'blind',version,kind,'program-'+version+'-'+str(person))); i+=1
+    for version in ['10s','30s']:
+        rows.append(observation(i,'communication',version)); i+=1
     plan=load('evaluation/plan.example.json')
     plan.update(dataset_id='synthetic-protocol-fixture',communication_freeze_id='program-freeze',minimum_participants_per_version=2,frozen_before_data_collection=True)
-    plan['workflow']={'study_frozen_at':'2026-01-01T00:00:00Z','communication_frozen_at':'2026-01-03T00:00:00Z','practicality_reviewed_at':'2026-01-04T00:00:00Z','communication_record_ids':['program-0'],'communication_checks':{k:True for k in COMMUNICATION_CHECKS},'practicality_checks':{k:True for k in PRACTICALITY_CHECKS},'demonstration_item_ids':['program-demo-not-a-test'],'reviewer':'synthetic-program-fixture','evidence_notes':'Synthetic parser/control test, not a real audit or teaching trial.'}
+    plan['workflow']={'study_frozen_at':'2026-01-01T00:00:00Z','communication_frozen_at':'2026-01-03T00:00:00Z','practicality_reviewed_at':'2026-01-04T00:00:00Z','communication_record_ids':[x['record_id'] for x in rows if x['phase']=='communication'],'communication_checks':{k:True for k in COMMUNICATION_CHECKS},'practicality_checks':{k:True for k in PRACTICALITY_CHECKS},'demonstration_item_ids':['program-demo-not-a-test'],'reviewer':'synthetic-program-fixture','evidence_notes':'Synthetic parser/control test, not a real audit or teaching trial.'}
     return rows,plan
 
 def declared_real(rows):
@@ -33,6 +35,79 @@ def declared_real(rows):
     return [{**row,'origin':'real'} for row in rows]
 
 class EvaluationWorkflowTest(unittest.TestCase):
+    def test_all_versions_failing_actions_cannot_use_bad_90s_as_safe_reference(self):
+        rows,plan=design()
+        for x in rows:
+            if x['phase']=='blind' and x['applicable']: x.update(action_success=False,evidence_success=False)
+        g=evaluate(declared_real(rows),plan)['groups'][0]
+        self.assertEqual(g['metrics']['resolution_rate'],0)
+        self.assertEqual(g['metrics']['transfer_rate'],0)
+        self.assertTrue(all(s['safe_for_release'] is False for s in g['short_version_safety']))
+        self.assertTrue(all(not a['ready_for_review'] for a in g['blind_acceptance_audit']))
+        self.assertFalse(g['release_eligible']); self.assertEqual(g['upgrade_eligible'],'none')
+
+    def test_bad_reference_blocks_otherwise_successful_short_versions(self):
+        rows,plan=design()
+        for x in rows:
+            if x['phase']=='blind' and x['compact_version']=='90s' and x['applicable']: x['action_success']=False
+        g=evaluate(declared_real(rows),plan)['groups'][0]
+        self.assertTrue(all(s['safe_for_release'] is False for s in g['short_version_safety']))
+        self.assertEqual(g['upgrade_eligible'],'none')
+
+    def test_pooled_correctness_does_not_hide_one_version_degrading(self):
+        rows,plan=design()
+        for x in rows:
+            if x['phase']!='blind' or not x['applicable']: continue
+            if x['compact_version']=='10s': x['method']['accuracy']=False
+            if x['compact_version']=='30s': x['baseline']['accuracy']=False
+        g=evaluate(declared_real(rows),plan)['groups'][0]
+        self.assertEqual(g['baseline_comparison']['accuracy']['gain'],0)
+        audit=next(a for a in g['blind_acceptance_audit'] if a['version']=='10s')
+        self.assertIn('accuracy_not_decreased',audit['blocking_reasons'])
+        self.assertEqual(g['upgrade_eligible'],'none'); self.assertFalse(g['release_eligible'])
+
+    def test_missing_absolute_gate_keeps_old_statistics_but_no_release_hint(self):
+        rows,plan=design(); plan.pop('blind_acceptance')
+        g=evaluate(declared_real(rows),plan)['groups'][0]
+        self.assertEqual(g['metrics']['trigger_precision'],1)
+        self.assertTrue(all(s['safe_for_release']=='untested' for s in g['short_version_safety']))
+        self.assertFalse(g['release_eligible']); self.assertEqual(g['upgrade_eligible'],'none')
+
+    def test_absolute_thresholds_cannot_accept_zero_success_or_total_failure(self):
+        for value in [0,-1,True,float('nan'),float('inf'),1.1]:
+            _,plan=design(); plan['blind_acceptance']['minimums']['action_success']=value
+            with self.subTest(value=value),self.assertRaises(ValueError): validate_plan(plan)
+        for value in [1,-1,True,float('nan'),float('inf')]:
+            _,plan=design(); plan['blind_acceptance']['maximums']['false_trigger_rate']=value
+            with self.subTest(value=value),self.assertRaises(ValueError): validate_plan(plan)
+        _,plan=design(); plan['blind_acceptance']['minimums'].pop('transfer_rate')
+        with self.assertRaises(ValueError): validate_plan(plan)
+
+    def test_missing_short_communication_cannot_be_borrowed_from_90s(self):
+        rows,plan=design(); rows=[x for x in rows if x['phase']!='communication' or x['compact_version']=='90s']
+        plan['workflow']['communication_record_ids']=[x['record_id'] for x in rows if x['phase']=='communication']
+        g=evaluate(declared_real(rows),plan)['groups'][0]
+        self.assertIn('communication_each_short_version_observed',g['design_audit']['blocking_reasons'])
+        self.assertEqual(g['upgrade_eligible'],'none')
+
+    def test_pooled_memory_cannot_hide_unremembered_short_version(self):
+        rows,plan=design(); plan.update(min_recall_rate=.5,min_restatement_rate=.5)
+        for x in rows:
+            if x['phase']=='communication' and x['compact_version']=='10s': x['recall_success']=False
+        g=evaluate(declared_real(rows),plan)['groups'][0]
+        self.assertTrue(g['design_audit']['checks']['communication_observed_success'])
+        self.assertIn('communication_each_short_version_success',g['design_audit']['blocking_reasons'])
+        self.assertFalse(g['release_eligible']); self.assertEqual(g['upgrade_eligible'],'none')
+
+    def test_absolute_counts_include_missed_triggers_and_match_owned_records(self):
+        rows,plan=design(); rows[2].update(triggered=False,resolved=False,standalone=False)
+        g=evaluate(declared_real(rows),plan)['groups'][0]
+        a=next(a for a in g['blind_acceptance_audit'] if a['version']=='10s')
+        self.assertEqual(a['metric_counts']['action_success'],{'numerator':3,'denominator':4})
+        for key,counts in a['metric_counts'].items():
+            self.assertEqual(a['metrics'][key],None if not counts['denominator'] else counts['numerator']/counts['denominator'])
+        self.assertEqual(len(a['record_ids']),10)
+
     def test_complete_declared_lineage_is_auditable_but_synthetic_never_upgrades(self):
         rows,plan=design(); group=evaluate(rows,plan)['groups'][0]
         self.assertTrue(group['design_audit']['ready_for_review'])

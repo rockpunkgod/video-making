@@ -1,5 +1,5 @@
 {
-  "schema_version": "1.1.0",
+  "schema_version": "1.2.0",
   "origin": "synthetic",
   "record_count": 15,
   "groups": [
@@ -21,6 +21,8 @@
           "workflow_checks_passed",
           "communication_freeze_bound_to_observations",
           "communication_observed_success",
+          "communication_each_short_version_observed",
+          "communication_each_short_version_success",
           "demonstration_not_reused_as_test",
           "phase_order"
         ],
@@ -38,6 +40,8 @@
           "workflow_checks_passed": false,
           "communication_freeze_bound_to_observations": false,
           "communication_observed_success": false,
+          "communication_each_short_version_observed": false,
+          "communication_each_short_version_success": false,
           "demonstration_not_reused_as_test": false,
           "cross_phase_learning_control": true,
           "first_use_item_not_repeated_blind": true,
@@ -62,6 +66,368 @@
         ],
         "scope": "declared lineage only; dates, people, gate judgements and collected data require independent external audit"
       },
+      "blind_acceptance_audit": [
+        {
+          "version": "10s",
+          "ready_for_review": false,
+          "checks": {
+            "absolute_thresholds_frozen": false,
+            "case_coverage": true,
+            "participant_coverage": false,
+            "accuracy_not_decreased": true,
+            "no_role_overclaim": true
+          },
+          "blocking_reasons": [
+            "absolute_thresholds_frozen",
+            "participant_coverage"
+          ],
+          "metrics": {
+            "trigger_precision": 1.0,
+            "trigger_recall": 1.0,
+            "resolution_rate": 1.0,
+            "standalone_rate": 1.0,
+            "assist_rate": 0.0,
+            "false_trigger_rate": 0.0,
+            "transfer_rate": 1.0,
+            "boundary_accuracy": 1.0,
+            "role_overclaim_rate": 0.0,
+            "stop_rule_failure_rate": 0.0,
+            "action_success": 1.0,
+            "evidence_success": 1.0
+          },
+          "metric_counts": {
+            "trigger_precision": {
+              "numerator": 2,
+              "denominator": 2
+            },
+            "trigger_recall": {
+              "numerator": 2,
+              "denominator": 2
+            },
+            "resolution_rate": {
+              "numerator": 2,
+              "denominator": 2
+            },
+            "standalone_rate": {
+              "numerator": 2,
+              "denominator": 2
+            },
+            "assist_rate": {
+              "numerator": 0,
+              "denominator": 2
+            },
+            "false_trigger_rate": {
+              "numerator": 0,
+              "denominator": 3
+            },
+            "transfer_rate": {
+              "numerator": 1,
+              "denominator": 1
+            },
+            "boundary_accuracy": {
+              "numerator": 1,
+              "denominator": 1
+            },
+            "role_overclaim_rate": {
+              "numerator": 0,
+              "denominator": 5
+            },
+            "stop_rule_failure_rate": {
+              "numerator": 0,
+              "denominator": 2
+            },
+            "action_success": {
+              "numerator": 2,
+              "denominator": 2
+            },
+            "evidence_success": {
+              "numerator": 2,
+              "denominator": 2
+            }
+          },
+          "baseline_comparison": {
+            "accuracy": {
+              "baseline": 1,
+              "method": 1,
+              "gain": 0
+            },
+            "time_seconds": {
+              "baseline": 20,
+              "method": 20,
+              "gain": 0
+            },
+            "candidates_remaining": {
+              "baseline": 2,
+              "method": 2,
+              "gain": 0
+            },
+            "evidence_span": {
+              "baseline": 3,
+              "method": 3,
+              "gain": 0
+            },
+            "hesitation_count": {
+              "baseline": 1,
+              "method": 1,
+              "gain": 0
+            },
+            "unresolved": {
+              "baseline": 0,
+              "method": 0,
+              "gain": 0
+            },
+            "paired_observations": 5
+          },
+          "record_ids": [
+            "10s-positive_trigger",
+            "10s-negative_trigger",
+            "10s-counterexample",
+            "10s-boundary",
+            "10s-transfer"
+          ],
+          "scope": "declared observations and frozen thresholds only; not authenticated participants or grading"
+        },
+        {
+          "version": "30s",
+          "ready_for_review": false,
+          "checks": {
+            "absolute_thresholds_frozen": false,
+            "case_coverage": true,
+            "participant_coverage": false,
+            "accuracy_not_decreased": true,
+            "no_role_overclaim": true
+          },
+          "blocking_reasons": [
+            "absolute_thresholds_frozen",
+            "participant_coverage"
+          ],
+          "metrics": {
+            "trigger_precision": 1.0,
+            "trigger_recall": 1.0,
+            "resolution_rate": 1.0,
+            "standalone_rate": 1.0,
+            "assist_rate": 0.0,
+            "false_trigger_rate": 0.0,
+            "transfer_rate": 1.0,
+            "boundary_accuracy": 1.0,
+            "role_overclaim_rate": 0.0,
+            "stop_rule_failure_rate": 0.0,
+            "action_success": 1.0,
+            "evidence_success": 1.0
+          },
+          "metric_counts": {
+            "trigger_precision": {
+              "numerator": 2,
+              "denominator": 2
+            },
+            "trigger_recall": {
+              "numerator": 2,
+              "denominator": 2
+            },
+            "resolution_rate": {
+              "numerator": 2,
+              "denominator": 2
+            },
+            "standalone_rate": {
+              "numerator": 2,
+              "denominator": 2
+            },
+            "assist_rate": {
+              "numerator": 0,
+              "denominator": 2
+            },
+            "false_trigger_rate": {
+              "numerator": 0,
+              "denominator": 3
+            },
+            "transfer_rate": {
+              "numerator": 1,
+              "denominator": 1
+            },
+            "boundary_accuracy": {
+              "numerator": 1,
+              "denominator": 1
+            },
+            "role_overclaim_rate": {
+              "numerator": 0,
+              "denominator": 5
+            },
+            "stop_rule_failure_rate": {
+              "numerator": 0,
+              "denominator": 2
+            },
+            "action_success": {
+              "numerator": 2,
+              "denominator": 2
+            },
+            "evidence_success": {
+              "numerator": 2,
+              "denominator": 2
+            }
+          },
+          "baseline_comparison": {
+            "accuracy": {
+              "baseline": 1,
+              "method": 1,
+              "gain": 0
+            },
+            "time_seconds": {
+              "baseline": 20,
+              "method": 20,
+              "gain": 0
+            },
+            "candidates_remaining": {
+              "baseline": 2,
+              "method": 2,
+              "gain": 0
+            },
+            "evidence_span": {
+              "baseline": 3,
+              "method": 3,
+              "gain": 0
+            },
+            "hesitation_count": {
+              "baseline": 1,
+              "method": 1,
+              "gain": 0
+            },
+            "unresolved": {
+              "baseline": 0,
+              "method": 0,
+              "gain": 0
+            },
+            "paired_observations": 5
+          },
+          "record_ids": [
+            "30s-positive_trigger",
+            "30s-negative_trigger",
+            "30s-counterexample",
+            "30s-boundary",
+            "30s-transfer"
+          ],
+          "scope": "declared observations and frozen thresholds only; not authenticated participants or grading"
+        },
+        {
+          "version": "90s",
+          "ready_for_review": false,
+          "checks": {
+            "absolute_thresholds_frozen": false,
+            "case_coverage": true,
+            "participant_coverage": false,
+            "accuracy_not_decreased": true,
+            "no_role_overclaim": true
+          },
+          "blocking_reasons": [
+            "absolute_thresholds_frozen",
+            "participant_coverage"
+          ],
+          "metrics": {
+            "trigger_precision": 1.0,
+            "trigger_recall": 1.0,
+            "resolution_rate": 1.0,
+            "standalone_rate": 1.0,
+            "assist_rate": 0.0,
+            "false_trigger_rate": 0.0,
+            "transfer_rate": 1.0,
+            "boundary_accuracy": 1.0,
+            "role_overclaim_rate": 0.0,
+            "stop_rule_failure_rate": 0.0,
+            "action_success": 1.0,
+            "evidence_success": 1.0
+          },
+          "metric_counts": {
+            "trigger_precision": {
+              "numerator": 2,
+              "denominator": 2
+            },
+            "trigger_recall": {
+              "numerator": 2,
+              "denominator": 2
+            },
+            "resolution_rate": {
+              "numerator": 2,
+              "denominator": 2
+            },
+            "standalone_rate": {
+              "numerator": 2,
+              "denominator": 2
+            },
+            "assist_rate": {
+              "numerator": 0,
+              "denominator": 2
+            },
+            "false_trigger_rate": {
+              "numerator": 0,
+              "denominator": 3
+            },
+            "transfer_rate": {
+              "numerator": 1,
+              "denominator": 1
+            },
+            "boundary_accuracy": {
+              "numerator": 1,
+              "denominator": 1
+            },
+            "role_overclaim_rate": {
+              "numerator": 0,
+              "denominator": 5
+            },
+            "stop_rule_failure_rate": {
+              "numerator": 0,
+              "denominator": 2
+            },
+            "action_success": {
+              "numerator": 2,
+              "denominator": 2
+            },
+            "evidence_success": {
+              "numerator": 2,
+              "denominator": 2
+            }
+          },
+          "baseline_comparison": {
+            "accuracy": {
+              "baseline": 1,
+              "method": 1,
+              "gain": 0
+            },
+            "time_seconds": {
+              "baseline": 20,
+              "method": 20,
+              "gain": 0
+            },
+            "candidates_remaining": {
+              "baseline": 2,
+              "method": 2,
+              "gain": 0
+            },
+            "evidence_span": {
+              "baseline": 3,
+              "method": 3,
+              "gain": 0
+            },
+            "hesitation_count": {
+              "baseline": 1,
+              "method": 1,
+              "gain": 0
+            },
+            "unresolved": {
+              "baseline": 0,
+              "method": 0,
+              "gain": 0
+            },
+            "paired_observations": 5
+          },
+          "record_ids": [
+            "90s-positive_trigger",
+            "90s-negative_trigger",
+            "90s-counterexample",
+            "90s-boundary",
+            "90s-transfer"
+          ],
+          "scope": "declared observations and frozen thresholds only; not authenticated participants or grading"
+        }
+      ],
       "metrics": {
         "trigger_precision": 1.0,
         "trigger_recall": 1.0,
