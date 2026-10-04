@@ -1,0 +1,108 @@
+method_id: A04
+brand_name: 句块拼接
+source_name: 三种句子生成法
+aliases:
+- 三种句子生成法
+question_type: 应用文
+method_type: method
+role: interpreter
+primary_role: interpreter
+secondary_roles: []
+output_type: interpret
+student_symptoms:
+- 多个动作要合成复杂句
+trigger_cues:
+- 多个动作要合成复杂句
+core_action: 每个动作先写正确简单句，再按真实关系用从句、非谓语或连接词粘连
+decision_rule: 执行动作后逐条对照源章节判据；不足则暂留，不能据关键词或剩余项定案。
+verification: 回填或回原文逐条核主体、动作、限定和当前任务，见源章节完整规则。
+stop_rule: 本步骤只产生语义结构，不能自动定案。不能以本动作代替完整题面关系核验；题面缺失、关键词义不明或出现反证就停止定案。具体边界见源章节。
+common_wrong_instinct: 只记方法名或表面线索，跳过当前题面关系核验。
+failure_cases:
+- 缺完整题面或关键语义不能确认时强行定案
+counterexamples:
+- 表面触发信号存在，但完整关系不支持时不能继续；真实反例题面待核
+transfer_pattern: 在新题面重复同一具体动作，不迁移上一题答案。
+memory_line: 每个动作先写正确简单句，再按真实关系用从句、非谓语或连接词粘连
+anti_rule: 动作产物 ≠ 自动答案。
+visual_formula: '多个动作要合成复杂句
+
+  ↓
+
+  每个动作先写正确简单句，再按真实关系用从句、非谓语或连接词粘连
+
+  ↓
+
+  interpret（未必定案）'
+challenge_prompt: 先不报答案，只在题面标出：每个动作先写正确简单句，再按真实关系用从句、非谓语或连接词粘连
+source_references:
+- repository: https://github.com/rockpunkgod/ANSWER.git
+  commit: b04ebc26d7fa096404111a0bb12f6c77cc8525b9
+  path: gaokao-writing/references/application-writing-and-correction.md
+  heading: 三种句子生成法
+section_ids: &id001
+- 15e18423e3364f72
+- 8cc4571377b8183a
+can_follow: []
+usually_before: []
+usually_after: []
+conflicts_with: []
+cannot_replace:
+- 完整题面验证
+levels:
+  compact: 动作入口
+  full: 源章节判据
+compact:
+  10s: 多个动作要合成复杂句。每个动作先写正确简单句，再按真实关系用从句、非谓语或连接词粘连。本步骤只产生语义结构，不能自动定案。不能以本动作代替完整题面关系核验；题面缺失、关键词义不明或出现反证就停止定案。具体边界见源章节。
+  30s: 多个动作要合成复杂句。每个动作先写正确简单句，再按真实关系用从句、非谓语或连接词粘连。判断与停止：本步骤只产生语义结构，不能自动定案。不能以本动作代替完整题面关系核验；题面缺失、关键词义不明或出现反证就停止定案。具体边界见源章节。
+  90s: 多个动作要合成复杂句。每个动作先写正确简单句，再按真实关系用从句、非谓语或连接词粘连。完整规则必须读取对应源章节；案例未核，不编示范答案。本步骤只产生语义结构，不能自动定案。不能以本动作代替完整题面关系核验；题面缺失、关键词义不明或出现反证就停止定案。具体边界见源章节。
+full:
+  section_ids: *id001
+  source_boundary: 本步骤只产生语义结构，不能自动定案。不能以本动作代替完整题面关系核验；题面缺失、关键词义不明或出现反证就停止定案。具体边界见源章节。
+cases:
+  canonical: cases/application-writing/A04/canonical/case.yaml
+four_step_card:
+  start: 多个动作要合成复杂句
+  first_cut: 每个动作先写正确简单句，再按真实关系用从句、非谓语或连接词粘连
+  judge: 逐条核源章节判据，不足则继续找独立证据。
+  stop: 本步骤只产生语义结构，不能自动定案。不能以本动作代替完整题面关系核验；题面缺失、关键词义不明或出现反证就停止定案。具体边界见源章节。
+practicality_gate:
+  status: design_complete_empirical_pending
+  trigger: 多个动作要合成复杂句
+  action: 每个动作先写正确简单句，再按真实关系用从句、非谓语或连接词粘连
+  output: interpret；严格限制主职责
+  stop: 本步骤只产生语义结构，不能自动定案。不能以本动作代替完整题面关系核验；题面缺失、关键词义不明或出现反证就停止定案。具体边界见源章节。
+  transfer: 迁移同一动作，不迁移原题答案
+  efficiency: 未测；预期价值是显式化动作和边界，不保证提速
+  misuse_cost: 未测；误触发时不得定案
+first_use_test:
+  status: designed_not_run
+  trigger_success: null
+  action_success: null
+  evidence_success: null
+  stop_rule_success: null
+  no_answer_backfit: null
+  failure_type: null
+  final_result: pending_real_student_test
+evaluation:
+  baseline: 普通逐项核题面
+  primary_benefit_hypothesis: 显式化下一步动作和证据边界
+  trigger_precision: null
+  trigger_recall: null
+  resolution_rate: null
+  standalone_rate: null
+  assist_rate: null
+  false_trigger_rate: null
+  transfer_rate: null
+  boundary_accuracy: null
+  time_complexity_gain: null
+usefulness_level: Useful
+status: candidate
+maturity_status: candidate
+practical_value: Useful
+version: 1.0.0
+change_reason: 首次迁移现有激活章节；非黄金短版尚未逐一教学审查
+affected_cases:
+- cases/application-writing/A04/canonical/case.yaml
+regression_result: passed_automated_contract_tests_not_empirical_validation
+student_ready: false

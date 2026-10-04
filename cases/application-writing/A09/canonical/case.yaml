@@ -13,7 +13,7 @@ evidence: []
 method_role: verifier
 expected_action: 先按15分五档三维定档，逐条引用题面和原稿证据，缺材料不完整给分
 expected_output: verify
-stop_rule: 不能以本动作代替完整题面关系核验；题面缺失、关键词义不明或出现反证就停止定案。具体边界见源章节。
+stop_rule: 无题目或缺全文不给完整分数；仅转写文本不评书写。书写只有清晰原稿且确实影响交际才按源规范降档，不因美观降档；训练模板、五检和高级词不是独立扣分项。
 case_type: canonical
 status: evidence_gap
 notes: 源方法可核；尚未逐题核验案例，不可当成功样例

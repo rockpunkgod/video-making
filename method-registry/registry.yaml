@@ -295,52 +295,52 @@ methods:
   A01:
     brand_name: 作文五检
     status: candidate
-    version: 1.0.0
+    version: 1.1.0
     file: method-registry/application-writing.yaml
   A02:
     brand_name: 六步成稿
     status: candidate
-    version: 1.0.0
+    version: 1.1.0
     file: method-registry/application-writing.yaml
   A03:
     brand_name: 三步造句
     status: candidate
-    version: 1.0.0
+    version: 1.1.0
     file: method-registry/application-writing.yaml
   A04:
     brand_name: 句块拼接
     status: candidate
-    version: 1.0.0
+    version: 1.1.0
     file: method-registry/application-writing.yaml
   A05:
     brand_name: 长句重组
     status: candidate
-    version: 1.0.0
+    version: 1.1.0
     file: method-registry/application-writing.yaml
   A06:
     brand_name: 对照仿写
     status: candidate
-    version: 1.0.0
+    version: 1.1.0
     file: method-registry/application-writing.yaml
   A07:
     brand_name: 长句搭积木
     status: candidate
-    version: 1.0.0
+    version: 1.1.0
     file: method-registry/application-writing.yaml
   A08:
     brand_name: 文体骨架
     status: candidate
-    version: 1.0.0
+    version: 1.1.0
     file: method-registry/application-writing.yaml
   A09:
     brand_name: 应用文评分
     status: candidate
-    version: 1.0.0
+    version: 1.1.0
     file: method-registry/application-writing.yaml
   A10:
     brand_name: 读背仿与训练阶段
     status: candidate
-    version: 1.0.0
+    version: 1.1.0
     file: method-registry/application-writing.yaml
   W01:
     brand_name: 五步锁剧情

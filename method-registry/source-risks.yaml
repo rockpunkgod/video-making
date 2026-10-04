@@ -26,3 +26,10 @@ risks:
     status: contextual_review_required
     reason: 该全称句与同节固定选择清单尚无覆盖全部形式和句法位置的案例；不能仅据清单标题作跨题无条件排除。
     action: 原文保留用于审计；实际题先核作用、具体结构、逻辑主语与相对时间，触及此全称限制或简化清单而缺本句支持时暂留并请求独立审阅，不自行补成另一条普遍规则。
+  - risk_id: APPLICATION-TRAINING-WORDCOUNT-TENSION
+    section_id: 8cc4571377b8183a
+    affected_methods: [A01, A02, A05, A07, A09]
+    source_quote: '篇幅策略：110 词左右用两简一复从，120 词以上用句式重构。'
+    status: contextual_review_required
+    reason: 同一源文档的15分评分规范写明少于60或多于100减2分；训练句式的篇幅策略不能覆盖评分或当前题面字数限制。
+    action: 原训练说明保留用于审计；现场先核题面及适用字数规范，不将110或120词当作应用文通用目标，不靠加长触发升级。
