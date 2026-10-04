@@ -28,14 +28,15 @@ def run():
     statuses=Counter(c['status'] for c in cases)
     real=load_records(ROOT/'evaluation/datasets/real-observations.pending.json')
     synthetic=load_records(ROOT/'evaluation/datasets/synthetic-observations.json')
-    report={'final_status':'PARTIAL','before_refactor':{'tests_run':16,'passed':16,'head':'60ebaf4'},'after_refactor':{'tests_run':result.testsRun,'failures':len(result.failures),'errors':len(result.errors),'registry':validated,'generated':generated,'cli_smoke':smoke},'method_migration':dict(modules),'method_types':dict(categories),'case_counts':dict(statuses),'source_commit':r.index['source_baseline']['commit'],'source_repository_unchanged':'verified by read-only source git status and immutable snapshot hashes','evaluation_status':'pending_real_participant_validation','real_record_count':len(real),'synthetic_record_count':len(synthetic),'remaining_blockers':[f'{unfinished}项学生入口仍需逐一源绑定审阅，全部真实案例仍待核','缺完整六型盲题与旧答疑语义回归数据','没有可靠校准的自由文本语义求解后端，当前使用外部审阅接口','无真实受试者传播、First-use、Blind、效率或Signature数据']}
+    entry_gap=f'{unfinished}项学生入口仍需逐一源绑定审阅；' if unfinished else ''
+    report={'final_status':'PARTIAL','before_refactor':{'tests_run':16,'passed':16,'head':'60ebaf4'},'after_refactor':{'tests_run':result.testsRun,'failures':len(result.failures),'errors':len(result.errors),'registry':validated,'generated':generated,'cli_smoke':smoke},'method_migration':dict(modules),'method_types':dict(categories),'case_counts':dict(statuses),'source_commit':r.index['source_baseline']['commit'],'source_repository_unchanged':'verified by read-only source git status and immutable snapshot hashes','evaluation_status':'pending_real_participant_validation','real_record_count':len(real),'synthetic_record_count':len(synthetic),'remaining_blockers':[entry_gap+'全量真实完整案例仍待核','缺完整六型盲题与旧答疑语义回归数据','没有可靠校准的自由文本语义求解后端，当前使用外部审阅接口','无真实受试者传播、First-use、Blind、效率或Signature数据']}
     report['safety_hardening']={'option_closure':'unique own support plus reviewed elimination of every supplied rival','evidence_graph':'own method trigger, own candidate claim and current-input quote binding','spoken_symptoms':'10 requested examples tested; suggestions not semantic proof','analysis_schema_version':'1.2.0','grammar_navigation':'explicit hint branch plus reviewed trigger paths; never infer blank POS from hint spelling'}
     report['student_entry_migration']={'static_ready':ready,'draft_remaining':unfinished,'meaning':'static copy completeness, not observed first-use success','ready_by_module':dict(Counter(m['question_type'] for m in r.methods.values() if m.get('student_ready')))}
     p=ROOT/'evaluation/reports/engineering-acceptance.json'; p.parent.mkdir(parents=True,exist_ok=True)
     p.write_text(json.dumps(report,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
     table='\n'.join(f'| {kind} | {count} | {count} | {count} | 0 | 0 |' for kind,count in modules.items())
-    phases=[('0','PASS','源/目标基线、16项before测试'),('1','PASS','注册表、逐字源章节、标准Schema与历史快照'),('2','PASS','六样板完整结构、四步卡、三短版及显式案例缺口；不是教学成熟认证'),('3','PASS','保留两阶段协议、角色/短版/边界/失败类型、可运行Case契约'),('4','PARTIAL','六卡自动门禁通过；原宿主独立语义行为未测'),('5','PARTIAL',f'六模块82项结构迁移与全部源契约保留；{ready}项静态入口齐备，{unfinished}项草稿；真实案例待核'),('6','PASS','症状Router和9条有源Anti-Rule'),('7','PASS','EvidenceGraph路径/跨度/循环/冲突检查，明确Composer输入输出'),('8','PARTIAL','稳定单题接口、外部审阅及正确拒答；非自由题面自动语义求解器'),('9','PARTIAL','整卷结构扫描、方法/难度/证据/Demo排序可运行；无完整真实卷语义回归'),('10','PARTIAL','四Renderer与兼容Skill/脚本接入；完整旧答疑行为尚未认证'),('11','PASS','真人记录导入、统计、冻结计划及短版安全；真人数据未运行'),('12','PASS',f'{result.testsRun}项自动Regression及CLI烟测通过'),('13','PASS','README及架构/维护/评估/迁移文档'),('14','PASS','逐Gate如实验收，最终PARTIAL，不宣布工程全完成')]
-    gates=[('G1','PASS','源课程逐字快照与源工作区未改；已知规则风险明确后置'),('G2','PASS','Registry统一事实，生成资源漂移检查通过'),('G3','PASS','六个完整结构样板；教学效果待实测'),('G4','PARTIAL','82项结构迁移；未逐一完善短版/案例原因明示'),('G5','PASS','症状导航返回动作与Stop'),('G6','PASS','9条Anti-Rule有绑定/边界/源章节'),('G7','PASS',f'{len(cases)}条记录，{statuses["verified_course_example"]}个可核短片段；不是完整题集'),('G8','PARTIAL','图可生成并校验路径，语义关系仍外部审阅'),('G9','PASS','组合职责/输入/产物显式，无混题型和无匹配调用'),('G10','PARTIAL','单题稳定Schema，决定性语义判断非自动完成'),('G11','PARTIAL','整卷接口可执行；真实完整卷回归缺数据'),('G12','PASS','Core不含交付模板，Renderer不改变答案事实'),('G13','PARTIAL','入口/脚本/契约兼容通过，完整旧题库宿主语义表现未验'),('G14','PASS',f'16 baseline保留，当前{result.testsRun}项通过'),('G15','PASS','JSON/JSONL导入、12类指标/差值、三短版安全可运行；统计显著性需审阅'),('G16','PASS','真人未测为pending_real_participant_validation；零升级虚报')]
+    phases=[('0','PASS','源/目标基线、16项before测试'),('1','PASS','注册表、逐字源章节、标准Schema与历史快照'),('2','PASS','六样板完整结构、四步卡、三短版及显式案例缺口；不是教学成熟认证'),('3','PASS','保留两阶段协议、角色/短版/边界/失败类型、可运行Case契约'),('4','PARTIAL','六卡自动门禁通过；原宿主独立语义行为未测'),('5','PASS' if not unfinished else 'PARTIAL',f'六模块82项结构迁移与全部源契约保留；{ready}项静态入口齐备，{unfinished}项草稿；真实案例待核'),('6','PASS','症状Router和9条有源Anti-Rule'),('7','PASS','EvidenceGraph路径/跨度/循环/冲突检查，明确Composer输入输出'),('8','PARTIAL','稳定单题接口、外部审阅及正确拒答；非自由题面自动语义求解器'),('9','PARTIAL','整卷结构扫描、方法/难度/证据/Demo排序可运行；无完整真实卷语义回归'),('10','PARTIAL','四Renderer与兼容Skill/脚本接入；完整旧答疑行为尚未认证'),('11','PASS','真人记录导入、统计、冻结计划及短版安全；真人数据未运行'),('12','PASS',f'{result.testsRun}项自动Regression及CLI烟测通过'),('13','PASS','README及架构/维护/评估/迁移文档'),('14','PASS','逐Gate如实验收，最终PARTIAL，不宣布工程全完成')]
+    gates=[('G1','PASS','源课程逐字快照与源工作区未改；已知规则风险明确后置'),('G2','PASS','Registry统一事实，生成资源漂移检查通过'),('G3','PASS','六个完整结构样板；教学效果待实测'),('G4','PASS' if not unfinished else 'PARTIAL',f'82项结构迁移；{ready}项静态入口，{unfinished}项草稿，真实案例缺口明示'),('G5','PASS','症状导航返回动作与Stop'),('G6','PASS','9条Anti-Rule有绑定/边界/源章节'),('G7','PASS',f'{len(cases)}条记录，{statuses["verified_course_example"]}个可核短片段；不是完整题集'),('G8','PARTIAL','图可生成并校验路径，语义关系仍外部审阅'),('G9','PASS','组合职责/输入/产物显式，无混题型和无匹配调用'),('G10','PARTIAL','单题稳定Schema，决定性语义判断非自动完成'),('G11','PARTIAL','整卷接口可执行；真实完整卷回归缺数据'),('G12','PASS','Core不含交付模板，Renderer不改变答案事实'),('G13','PARTIAL','入口/脚本/契约兼容通过，完整旧题库宿主语义表现未验'),('G14','PASS',f'16 baseline保留，当前{result.testsRun}项通过'),('G15','PASS','JSON/JSONL导入、12类指标/差值、三短版安全可运行；统计显著性需审阅'),('G16','PASS','真人未测为pending_real_participant_validation；零升级虚报')]
     md=f'''# Final Acceptance
 
 ## 1. Final Status
@@ -70,7 +71,7 @@ First-use、Blind/Baseline、10/30/90s Safety均有记录Schema及直接可运�
 
 ## 7. Remaining Blockers
 
-其余{unfinished}项学生入口源绑定审阅及全量真实完整Case；六题型完整盲题与旧答疑回归材料；可靠语义后端或独立宿主审阅；真实学生传播/First-use/Blind及冻结对照数据。现有核心可接受外部语义审阅并保留完整路径，但不能凭结构校验认证推断正确或审阅身份。
+{entry_gap}全量真实完整Case；六题型完整盲题与旧答疑回归材料；可靠语义后端或独立宿主审阅；真实学生传播/First-use/Blind及冻结对照数据。现有核心可接受外部语义审阅并保留完整路径，但不能凭结构校验认证推断正确或审阅身份。
 
 ## 8. Final Acceptance
 
@@ -83,6 +84,7 @@ First-use、Blind/Baseline、10/30/90s Safety均有记录Schema及直接可运�
     md+='\n完形9项静态入口齐备：保留两个核心入口与七个子动作；线索、框架与核验不自动定案，C01二阶段decider必须显式声明。C01/C02的原空号两遍规则补充直接源引用，示意反例与真人结果仍未验证。\n'
     md+='\n语法19项静态入口齐备：18个非黄金节点保留旧稿后逐项源核，机器导航只确认有无提示词及已审阅功能；提示词原词性不决定空位词性，树不独立定案。三个语法源风险绑定原话与章节并自动校验，保留原资料、不机械执行简化口诀或全称清单。\n'
     md+='\n应用文10项静态入口齐备：先任务、后准确句、再升级；文体/评分/课后训练保持原类型。评分材料、书写及仿写循环直接源绑定，训练字数策略不覆盖题面与评分限制。示意反例不是真实Case，不据文案升级实用等级。\n'
+    md+='\n续写16项静态入口齐备：五步法引用具体子章节，首句约束、功能支架、细节/转折与回扣逐项区分；给定首句不计学生句数、不抄正常，十句和独立升华句不作机械扣分项。PTSD只作源别名，类别与评分/训练不升格；原课程版本张力继续保留。\n'
     (ROOT/'docs/final-acceptance.md').write_text(md,encoding='utf-8')
     return report
 

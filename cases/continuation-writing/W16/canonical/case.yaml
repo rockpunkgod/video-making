@@ -13,7 +13,7 @@ evidence: []
 method_role: framework
 expected_action: 按现稿证据选对应升级动作，不把训练模板直接当官方独立扣分项
 expected_output: interpret
-stop_rule: 本步骤只产生框架，不能自动定案。不能以本动作代替完整题面关系核验；题面缺失、关键词义不明或出现反证就停止定案。具体边界见源章节。
+stop_rule: 训练路径不代替25分定档，缺当前稿不能精确诊断；基础逻辑语言未稳不跳到华丽表达。每项练习都受原文约束，不机械追加转折或升华。
 case_type: canonical
 status: evidence_gap
 notes: 源方法可核；尚未逐题核验案例，不可当成功样例

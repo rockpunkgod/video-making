@@ -7,7 +7,7 @@ risks:
     reason: 同节同时要求分清状态性过去分词、真正主语和句法作用；快速二分不能脱离这些边界作为独立判据。
     action: 保留原文用于审计，不机械执行这条口诀；回该节完整句法、语态与状态边界求证。
   - risk_id: CONTINUATION-VERSION-TENSION
-    affected_methods: [W01, W03, W11, W13, W15]
+    affected_methods: [W01, W03, W07, W09, W11, W13, W14, W15]
     source_path: gaokao-writing/references/continuation-writing-and-correction.md
     status: contextual_review_required
     reason: 原模块显式记录26S春语言重心与原文根基/冲突设计的张力，且保留无铺垫新增事件不成立、独立升华句非必须项。

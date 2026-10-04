@@ -13,7 +13,7 @@ evidence: []
 method_role: interpreter
 expected_action: 从原文矛盾找小障碍，写解决动作，不凭空新增关键人物事故
 expected_output: interpret
-stop_rule: 本步骤只产生语义结构，不能自动定案。不能以本动作代替完整题面关系核验；题面缺失、关键词义不明或出现反证就停止定案。具体边界见源章节。
+stop_rule: 无原文矛盾轨道或必要铺垫先停设计；新关键人物、事故、超能力不能只为反转加入。框架未完整先解决框架，正向结果不等于强行大团圆。
 case_type: canonical
 status: evidence_gap
 notes: 源方法可核；尚未逐题核验案例，不可当成功样例

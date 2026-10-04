@@ -345,82 +345,82 @@ methods:
   W01:
     brand_name: 五步锁剧情
     status: candidate
-    version: 1.0.0
+    version: 1.1.0
     file: method-registry/continuation-writing.yaml
   W02:
     brand_name: 十句五锚
     status: candidate
-    version: 1.0.0
+    version: 1.1.0
     file: method-registry/continuation-writing.yaml
   W03:
     brand_name: 剧情四格
     status: candidate
-    version: 1.0.0
+    version: 1.1.0
     file: method-registry/continuation-writing.yaml
   W04:
     brand_name: 首句找缺口
     status: candidate
-    version: 1.0.0
+    version: 1.1.0
     file: method-registry/continuation-writing.yaml
   W05:
     brand_name: 动作拆链
     status: candidate
-    version: 1.0.0
+    version: 1.1.0
     file: method-registry/continuation-writing.yaml
   W06:
     brand_name: 三点锁题
     status: candidate
-    version: 1.0.0
+    version: 1.1.0
     file: method-registry/continuation-writing.yaml
   W07:
     brand_name: 伏笔回扣
     status: candidate
-    version: 1.0.0
+    version: 1.1.0
     file: method-registry/continuation-writing.yaml
   W08:
     brand_name: 因果三连
     status: candidate
-    version: 1.0.0
+    version: 1.1.0
     file: method-registry/continuation-writing.yaml
   W09:
     brand_name: 细节三镜
     status: candidate
-    version: 1.0.0
+    version: 1.1.0
     file: method-registry/continuation-writing.yaml
   W10:
     brand_name: 无痕衔接
     status: candidate
-    version: 1.0.0
+    version: 1.1.0
     file: method-registry/continuation-writing.yaml
   W11:
     brand_name: 小转折
     status: candidate
-    version: 1.0.0
+    version: 1.1.0
     file: method-registry/continuation-writing.yaml
   W12:
     brand_name: 精准换词
     status: candidate
-    version: 1.0.0
+    version: 1.1.0
     file: method-registry/continuation-writing.yaml
   W13:
     brand_name: 结尾回扣
     status: candidate
-    version: 1.0.0
+    version: 1.1.0
     file: method-registry/continuation-writing.yaml
   W14:
     brand_name: 骨架句与肌肉句
     status: candidate
-    version: 1.0.0
+    version: 1.1.0
     file: method-registry/continuation-writing.yaml
   W15:
     brand_name: 续写评分
     status: candidate
-    version: 1.0.0
+    version: 1.1.0
     file: method-registry/continuation-writing.yaml
   W16:
     brand_name: 五档训练升级
     status: candidate
-    version: 1.0.0
+    version: 1.1.0
     file: method-registry/continuation-writing.yaml
 version_policy:
   rule: 任何语义、触发、判据或边界改动都新增版本记录，不静默覆盖。

@@ -1,0 +1,107 @@
+method_id: W15
+brand_name: 续写评分
+source_name: 25 分评分规范
+aliases:
+- 25 分评分规范
+question_type: 读后续写
+method_type: internal_rule
+role: verifier
+primary_role: verifier
+secondary_roles: []
+output_type: verify
+student_symptoms:
+- 原文首句和学生续写齐全且请求评分
+trigger_cues:
+- 原文首句和学生续写齐全且请求评分
+core_action: 只按25分续写档次核原文融洽、语言与结构；不抄首句正常，书写只在实见影响交际时评
+decision_rule: 执行动作后逐条对照源章节判据；不足则暂留，不能据关键词或剩余项定案。
+verification: 回填或回原文逐条核主体、动作、限定和当前任务，见源章节完整规则。
+stop_rule: 不能以本动作代替完整题面关系核验；题面缺失、关键词义不明或出现反证就停止定案。具体边界见源章节。
+common_wrong_instinct: 只记方法名或表面线索，跳过当前题面关系核验。
+failure_cases:
+- 缺完整题面或关键语义不能确认时强行定案
+counterexamples:
+- 表面触发信号存在，但完整关系不支持时不能继续；真实反例题面待核
+transfer_pattern: 在新题面重复同一具体动作，不迁移上一题答案。
+memory_line: 只按25分续写档次核原文融洽、语言与结构；不抄首句正常，书写只在实见影响交际时评
+anti_rule: 动作产物 ≠ 自动答案。
+visual_formula: '原文首句和学生续写齐全且请求评分
+
+  ↓
+
+  只按25分续写档次核原文融洽、语言与结构；不抄首句正常，书写只在实见影响交际时评
+
+  ↓
+
+  verify（未必定案）'
+challenge_prompt: 先不报答案，只在题面标出：只按25分续写档次核原文融洽、语言与结构；不抄首句正常，书写只在实见影响交际时评
+source_references:
+- repository: https://github.com/rockpunkgod/ANSWER.git
+  commit: b04ebc26d7fa096404111a0bb12f6c77cc8525b9
+  path: gaokao-writing/references/continuation-writing-and-correction.md
+  heading: 25 分评分规范
+section_ids: &id001
+- d2dc77b78b7ce906
+can_follow: []
+usually_before: []
+usually_after: []
+conflicts_with: []
+cannot_replace:
+- 完整题面验证
+levels:
+  compact: 动作入口
+  full: 源章节判据
+compact:
+  10s: 原文首句和学生续写齐全且请求评分。只按25分续写档次核原文融洽、语言与结构；不抄首句正常，书写只在实见影响交际时评。不能以本动作代替完整题面关系核验；题面缺失、关键词义不明或出现反证就停止定案。具体边界见源章节。
+  30s: 原文首句和学生续写齐全且请求评分。只按25分续写档次核原文融洽、语言与结构；不抄首句正常，书写只在实见影响交际时评。判断与停止：不能以本动作代替完整题面关系核验；题面缺失、关键词义不明或出现反证就停止定案。具体边界见源章节。
+  90s: 原文首句和学生续写齐全且请求评分。只按25分续写档次核原文融洽、语言与结构；不抄首句正常，书写只在实见影响交际时评。完整规则必须读取对应源章节；案例未核，不编示范答案。不能以本动作代替完整题面关系核验；题面缺失、关键词义不明或出现反证就停止定案。具体边界见源章节。
+full:
+  section_ids: *id001
+  source_boundary: 不能以本动作代替完整题面关系核验；题面缺失、关键词义不明或出现反证就停止定案。具体边界见源章节。
+cases:
+  canonical: cases/continuation-writing/W15/canonical/case.yaml
+four_step_card:
+  start: 原文首句和学生续写齐全且请求评分
+  first_cut: 只按25分续写档次核原文融洽、语言与结构；不抄首句正常，书写只在实见影响交际时评
+  judge: 逐条核源章节判据，不足则继续找独立证据。
+  stop: 不能以本动作代替完整题面关系核验；题面缺失、关键词义不明或出现反证就停止定案。具体边界见源章节。
+practicality_gate:
+  status: design_complete_empirical_pending
+  trigger: 原文首句和学生续写齐全且请求评分
+  action: 只按25分续写档次核原文融洽、语言与结构；不抄首句正常，书写只在实见影响交际时评
+  output: verify；严格限制主职责
+  stop: 不能以本动作代替完整题面关系核验；题面缺失、关键词义不明或出现反证就停止定案。具体边界见源章节。
+  transfer: 迁移同一动作，不迁移原题答案
+  efficiency: 未测；预期价值是显式化动作和边界，不保证提速
+  misuse_cost: 未测；误触发时不得定案
+first_use_test:
+  status: designed_not_run
+  trigger_success: null
+  action_success: null
+  evidence_success: null
+  stop_rule_success: null
+  no_answer_backfit: null
+  failure_type: null
+  final_result: pending_real_student_test
+evaluation:
+  baseline: 普通逐项核题面
+  primary_benefit_hypothesis: 显式化下一步动作和证据边界
+  trigger_precision: null
+  trigger_recall: null
+  resolution_rate: null
+  standalone_rate: null
+  assist_rate: null
+  false_trigger_rate: null
+  transfer_rate: null
+  boundary_accuracy: null
+  time_complexity_gain: null
+usefulness_level: Useful
+status: candidate
+maturity_status: candidate
+practical_value: Useful
+version: 1.0.0
+change_reason: 首次迁移现有激活章节；非黄金短版尚未逐一教学审查
+affected_cases:
+- cases/continuation-writing/W15/canonical/case.yaml
+regression_result: passed_automated_contract_tests_not_empirical_validation
+student_ready: false

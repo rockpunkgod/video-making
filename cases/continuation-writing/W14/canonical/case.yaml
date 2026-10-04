@@ -13,7 +13,7 @@ evidence: []
 method_role: framework
 expected_action: 标确定功能位为骨架，其余位置按因果与画面扩写，不把句数当评分扣分项
 expected_output: interpret
-stop_rule: 本步骤只产生框架，不能自动定案。不能以本动作代替完整题面关系核验；题面缺失、关键词义不明或出现反证就停止定案。具体边界见源章节。
+stop_rule: 骨架任务未接通先补功能，不先堆肌肉；非功能位也受原文人物事实与因果限制，不能会什么背什么。句数不是独立扣分项。
 case_type: canonical
 status: evidence_gap
 notes: 源方法可核；尚未逐题核验案例，不可当成功样例
