@@ -23,8 +23,10 @@ method-registry/symptom-cues.yaml保存口语导航别名，不复制方法判�
 
 接口：QuestionAnalyzer.analyze(dict)、PaperAnalyzer.analyze(dict)、CLI；契约为Draft 2020-12 JSON Schema。当前部署为完整仓库+Python3.10+，源码或editable安装。单独Skill文件夹仅自包含宿主答疑，不自动安装核心。未建抓取/视频/AE/支付/发布服务。
 
-Question Analysis与content-export当前版本1.4.0，grammar_navigation：非语法为null；语法包含hint_branch、status、paths、next_node、review_basis和limitations。导航只接受显式有无提示词及外部审阅触发；缺标注先确认入口，未核空位功能不进入叶节点。知识路由不产生新关系或答案，仍须按同一证据闭合机制验证。Paper内嵌单题同步采用此契约。
+Question Analysis与content-export当前版本1.5.0，grammar_navigation：非语法为null；语法包含hint_branch、status、paths、next_node、review_basis和limitations。导航只接受显式有无提示词及外部审阅触发；缺标注先确认入口，未核空位功能不进入叶节点。知识路由不产生新关系或答案，仍须按同一证据闭合机制验证。Paper内嵌单题同步采用此契约。
 
 writing_review输入经单独文本审阅适配进入writing_feedback；两类写作各自的功能顺序、纠错与改稿保留，缺材料实际扣留不支持的诊断/完整稿/分数。审阅结果在EvidenceGraph绑定当前原稿及独立触发；图仍不认证语义、评分或身份。手写原图评价尚无核心证据适配，不能靠图片名或转写文本授权书写扣分。详见writing-review.md。
 
 Composer计划另有类型化执行通道：action_executions → execution_trace → action_artifact图节点。明确区分计划、关系审阅与实际提交产物；只有更早的已审阅、完整、未刹车产物可被后续消费。R09骨架、F01分组、语法路线和独立候选判断各有限权；核验失败撤回答案。Renderer重检执行链与图指纹绑定，content-export保留完整产物。详见method-execution.md；该通道不认证外部语义或审阅身份。
+
+单题口播另经lesson_review → lesson_feedback输送，绑定实际动作/短引文/候选比较/刹车与独立触发，缺完整覆盖或答案未闭合时实际扣留。完整交付从同学、我们来分析一下进入正文，最后由核心答案汇总，不展示内部字段；宿主自由文字忠实性和整篇课程顺序仍未认证，详见lesson-review.md。

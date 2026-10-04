@@ -1548,6 +1548,217 @@
               "additionalProperties": false
             },
             "minItems": 0
+          },
+          "lesson_feedback": {
+            "anyOf": [
+              {
+                "type": "null"
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "review": {
+                    "type": "object",
+                    "properties": {
+                      "schema_version": {
+                        "enum": [
+                          "1.0.0"
+                        ]
+                      },
+                      "question_type": {
+                        "enum": [
+                          "阅读理解",
+                          "七选五",
+                          "完形填空",
+                          "语法填空"
+                        ]
+                      },
+                      "reviewer": {
+                        "type": "string",
+                        "minLength": 1
+                      },
+                      "review_status": {
+                        "enum": [
+                          "reviewed",
+                          "unreviewed"
+                        ]
+                      },
+                      "source_section_ids": {
+                        "type": "array",
+                        "items": {
+                          "type": "string",
+                          "minLength": 1
+                        },
+                        "minItems": 1
+                      },
+                      "segments": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "segment_id": {
+                              "type": "string",
+                              "minLength": 1
+                            },
+                            "function": {
+                              "enum": [
+                                "action",
+                                "evidence",
+                                "comparison",
+                                "stop"
+                              ]
+                            },
+                            "method_id": {
+                              "type": "string",
+                              "minLength": 1
+                            },
+                            "text": {
+                              "type": "string",
+                              "minLength": 1
+                            },
+                            "evidence": {
+                              "type": "array",
+                              "items": {
+                                "type": "object",
+                                "properties": {
+                                  "field": {
+                                    "type": "string",
+                                    "minLength": 1
+                                  },
+                                  "start": {
+                                    "type": "integer",
+                                    "minimum": 0
+                                  },
+                                  "end": {
+                                    "type": "integer",
+                                    "minimum": 1
+                                  },
+                                  "quote": {
+                                    "type": "string",
+                                    "minLength": 1
+                                  }
+                                },
+                                "required": [
+                                  "field",
+                                  "start",
+                                  "end",
+                                  "quote"
+                                ],
+                                "additionalProperties": false
+                              },
+                              "minItems": 1
+                            },
+                            "relation_indices": {
+                              "type": "array",
+                              "items": {
+                                "type": "integer",
+                                "minimum": 0
+                              },
+                              "minItems": 0
+                            }
+                          },
+                          "required": [
+                            "segment_id",
+                            "function",
+                            "method_id",
+                            "text",
+                            "evidence",
+                            "relation_indices"
+                          ],
+                          "additionalProperties": false
+                        },
+                        "minItems": 0
+                      }
+                    },
+                    "required": [
+                      "schema_version",
+                      "question_type",
+                      "reviewer",
+                      "review_status",
+                      "source_section_ids",
+                      "segments"
+                    ],
+                    "additionalProperties": false
+                  },
+                  "scope": {
+                    "enum": [
+                      "single_question_lesson",
+                      "partial_delivery",
+                      "unreviewed"
+                    ]
+                  },
+                  "evidence_ids": {
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "minItems": 0
+                  },
+                  "segment_bindings": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "segment_id": {
+                          "type": "string",
+                          "minLength": 1
+                        },
+                        "claim_node_id": {
+                          "type": "string",
+                          "minLength": 1
+                        },
+                        "relation_node_id": {
+                          "type": "string",
+                          "minLength": 1
+                        },
+                        "evidence_ids": {
+                          "type": "array",
+                          "items": {
+                            "type": "string",
+                            "minLength": 1
+                          },
+                          "minItems": 1
+                        }
+                      },
+                      "required": [
+                        "segment_id",
+                        "claim_node_id",
+                        "relation_node_id",
+                        "evidence_ids"
+                      ],
+                      "additionalProperties": false
+                    },
+                    "minItems": 0
+                  },
+                  "grouping_execution_ids": {
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "minItems": 0
+                  },
+                  "limitations": {
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "minItems": 1
+                  }
+                },
+                "required": [
+                  "review",
+                  "scope",
+                  "evidence_ids",
+                  "segment_bindings",
+                  "grouping_execution_ids",
+                  "limitations"
+                ],
+                "additionalProperties": false
+              }
+            ]
           }
         },
         "required": [
@@ -1575,7 +1786,8 @@
           "answer_verification",
           "grammar_navigation",
           "writing_feedback",
-          "execution_trace"
+          "execution_trace",
+          "lesson_feedback"
         ],
         "additionalProperties": false
       },

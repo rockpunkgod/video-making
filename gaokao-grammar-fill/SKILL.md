@@ -12,3 +12,5 @@ description: 高考英语语法填空答疑；经注册表、证据核验与独�
 单独安装 Skill 文件夹时，生成资源可自包含调用，完整核心命令需整个仓库及依赖；不要假定安装 Skill 等于安装核心。不能执行程序时按题型查询 [generated-methods.yaml](generated-methods.yaml)，完成相同证据动作；明确标记宿主分析未经核心检查。不要绕开停用边界。
 
 语法知识路由读取 [grammar-navigation.md](references/grammar-navigation.md)。先确认有无提示词，再按未填句功能进入节点；树路径只是知识调用计划，不能代替句法、搭配与词形核验。
+
+需要完整单题口播进入核心时读 [lesson-review.md](references/lesson-review.md)，提交lesson_review并绑定实际动作、短引文、候选比较和刹车。完整口播没有闭合就扣留，不把通用结构投影当原课程现场讲解；整篇顺序仍须原契约完整执行，不由单题通道证明。

@@ -6,7 +6,7 @@
     "head": "60ebaf4"
   },
   "after_refactor": {
-    "tests_run": 199,
+    "tests_run": 214,
     "failures": 0,
     "errors": 0,
     "registry": {
@@ -20,6 +20,10 @@
     "cli_smoke": [
       {
         "command": "python -m answer_engine validate",
+        "exit_code": 0
+      },
+      {
+        "command": "python -m answer_engine analyze examples/question-lesson-course.json --renderer legacy-wechat",
         "exit_code": 0
       },
       {
@@ -92,7 +96,7 @@
     "option_closure": "unique own support plus reviewed elimination of every supplied rival",
     "evidence_graph": "own method trigger, own candidate claim and current-input quote binding",
     "spoken_symptoms": "10 requested examples tested; suggestions not semantic proof",
-    "analysis_schema_version": "1.4.0",
+    "analysis_schema_version": "1.5.0",
     "grammar_navigation": "explicit hint branch plus reviewed trigger paths; never infer blank POS from hint spelling",
     "writing_feedback": "external review transport with independent trigger, draft coverage, module-specific order and real withholding of unsupported sections; no automatic grading certification"
   },
@@ -122,11 +126,18 @@
     "release": "missing workflow blocks all release and efficiency/signature review hints; no automatic Registry promotion"
   },
   "method_execution": {
-    "schema_version": "1.4.0",
+    "schema_version": "1.5.0",
     "typed_artifact_count": 8,
     "scope": "external reviewed action results, not an automatic English semantic executor",
     "dependency_gate": "earlier reviewed complete non-stopped compatible artifacts only",
     "binding": "current input spans, role/version, named decisions and graph payload fingerprint",
     "failed_verification": "answer and recommendation actually withheld"
+  },
+  "single_question_lesson": {
+    "analysis_schema_version": "1.5.0",
+    "scope": "external reviewed spoken transport, not certified semantic or whole-passage delivery",
+    "complete_gate": "own actions, quotes, candidate relations, stop rules and closed answer",
+    "seven_five": "three reviewed F01 partitions displayed once before body",
+    "projection_binding": "text, method, trigger, candidate relation and current graph spans; unsupported full script withheld"
   }
 }

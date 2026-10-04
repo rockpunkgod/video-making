@@ -3,17 +3,32 @@ import json
 from core.registry import Registry, validate_schema
 from core.evidence import validate_graph
 from core.execution import validate_execution_trace
+from core.lesson_feedback import validate_lesson_projection
 
 def render(analysis,kind='structured',registry=None):
     validate_schema('question-analysis',analysis)
     validate_graph(analysis['evidence_graph'])
     r = registry or Registry()
     validate_execution_trace(analysis,r)
+    validate_lesson_projection(analysis,r)
     if kind=='structured': return json.dumps(analysis,ensure_ascii=False,indent=2)
     if kind=='content-export':
         assets = [{'method_id':x['method_id'],'method_version':r.methods[x['method_id']]['version'],'role':x['role'],'action':x['action'],'stop_rule':x['stop_rule'],'visual_formula':r.methods[x['method_id']]['visual_formula'],'compact':r.methods[x['method_id']]['compact'],'anti_rule':r.methods[x['method_id']]['anti_rule']} for x in analysis['method_chain']]
-        return json.dumps({'export_schema_version':'1.4.0','question_id':analysis['question_id'],'answer':analysis['answer'],'answer_verification':analysis['answer_verification'],'grammar_navigation':analysis['grammar_navigation'],'writing_feedback':analysis['writing_feedback'],'execution_trace':analysis['execution_trace'],'method_chain':analysis['method_chain'],'evidence_graph':analysis['evidence_graph'],'methods':assets,'eligible_for_review':analysis['content_eligible'],'safe_for_release':'untested','limitations':analysis['limitations']},ensure_ascii=False,indent=2)
+        return json.dumps({'export_schema_version':'1.5.0','question_id':analysis['question_id'],'answer':analysis['answer'],'answer_verification':analysis['answer_verification'],'grammar_navigation':analysis['grammar_navigation'],'writing_feedback':analysis['writing_feedback'],'lesson_feedback':analysis['lesson_feedback'],'execution_trace':analysis['execution_trace'],'method_chain':analysis['method_chain'],'evidence_graph':analysis['evidence_graph'],'methods':assets,'eligible_for_review':analysis['content_eligible'],'safe_for_release':'untested','limitations':analysis['limitations']},ensure_ascii=False,indent=2)
     if kind not in {'student','legacy-wechat'}: raise ValueError('Unknown renderer')
+    lesson=analysis['lesson_feedback']
+    if lesson and lesson['scope']=='single_question_lesson':
+        paragraphs=[]; grouped=False; executions={x['execution_id']:x for x in analysis['execution_trace']}
+        for s in lesson['review']['segments']:
+            paragraphs.append(s['text'])
+            if s['method_id']=='F01' and s['function']=='action' and not grouped and lesson['grouping_execution_ids']:
+                for eid in lesson['grouping_execution_ids']:
+                    output=executions[eid]['output']; label={'sentence':'句型','actor':'主角','time':'时间'}[output['axis']]
+                    paragraphs.append('按'+label+'先分，'+'，'.join('和'.join(g['candidates'])+'属于'+g['label'].rstrip('。') for g in output['groups'])+'。这一步只缩范围，分完再回正文核内容。')
+                grouped=True
+        body='\n\n'.join(paragraphs)
+        ending='最后这一空填'+analysis['answer']+'。' if analysis['question_type']=='语法填空' else '最后这一题选'+analysis['answer']+'。'
+        return '同学，我们来分析一下。\n\n'+body+'\n\n'+ending
     feedback=analysis['writing_feedback']
     if feedback and feedback['scope']!='unreviewed':
         body=render_writing(feedback)

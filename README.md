@@ -20,6 +20,7 @@ python -m answer_engine method R01
 python -m answer_engine analyze examples/question-course.json --renderer student
 python -m answer_engine analyze examples/question-reviewed-course.json --renderer structured
 python -m answer_engine analyze examples/question-action-course.json --renderer student
+python -m answer_engine analyze examples/question-lesson-course.json --renderer legacy-wechat
 python -m answer_engine paper examples/paper-course.json
 python -m answer_engine evaluate evaluation/datasets/real-observations.pending.json
 python -m unittest discover -s tests -v
@@ -32,6 +33,8 @@ Python API：`from answer_engine import QuestionAnalyzer, PaperAnalyzer`；`anal
 写作审阅输入、原稿引用及完整/局部交付边界见[写作审阅通道](docs/writing-review.md)。缺原文或首句时实际扣留剧情诊断、整篇修改稿及完整分数，不只添加免责声明。
 
 方法组合可通过action_executions提交具体动作与类型化产物，execution_trace明确记录本步消费哪一步的定位、拆句、分组或骨架；停止/未审阅结果不能继续传递。计划不冒充已执行，核验失败撤回答案。见[可执行方法编排](docs/method-execution.md)；外部语义审阅仍不等于程序自动证明。
+
+宿主完整单题讲解可通过[lesson_review](docs/lesson-review.md)进入原口播形态，绑定动作、短引文、候选比较和刹车，完整消息只在答案闭合后输出。缺口会实际扣留；单题通道不证明整篇做题顺序或旧题库语义表现。
 
 ## 目录与兼容
 
