@@ -2,7 +2,7 @@
 
 # 整篇讲题交付接口
 
-PassageLessonAnalyzer与lesson命令接入原课程整篇顺序，不替代PaperAnalyzer扫描整卷。输入passage-lesson-input，输出passage-lesson-analysis 1.0.0。当前单题内嵌契约仍为Question Analysis 1.6.0。
+PassageLessonAnalyzer与lesson命令接入原课程整篇顺序，不替代PaperAnalyzer扫描整卷。输入passage-lesson-input，输出passage-lesson-analysis 1.0.0。当前单题内嵌契约仍为Question Analysis 1.7.0。
 
 输入包含lesson_id、question_type、共享原文passage、material_complete、questions和review。questions逐项保留原题号number和原单题question；相同原文可省略各单题passage，由入口填入，已有passage不一致会拒绝。不能混题型或复用题号。材料完整性、题型、题目任务和原题号是宿主审阅声明，不由程序或篇字母猜定。
 

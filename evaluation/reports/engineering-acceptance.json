@@ -6,7 +6,7 @@
     "head": "60ebaf4"
   },
   "after_refactor": {
-    "tests_run": 235,
+    "tests_run": 243,
     "failures": 0,
     "errors": 0,
     "registry": {
@@ -18,6 +18,14 @@
       "generated_assets": "PASS"
     },
     "cli_smoke": [
+      {
+        "command": "python -m answer_engine analyze examples/writing-word-count.synthetic.json --renderer legacy-wechat",
+        "exit_code": 0
+      },
+      {
+        "command": "python -m answer_engine analyze examples/writing-word-count.synthetic.json --renderer content-export",
+        "exit_code": 0
+      },
       {
         "command": "python -m answer_engine analyze examples/writing-image.synthetic.json --renderer legacy-wechat",
         "exit_code": 0
@@ -112,7 +120,7 @@
     "option_closure": "unique own support plus reviewed elimination of every supplied rival",
     "evidence_graph": "own method trigger, own candidate claim and current-input quote binding",
     "spoken_symptoms": "10 requested examples tested; suggestions not semantic proof",
-    "analysis_schema_version": "1.6.0",
+    "analysis_schema_version": "1.7.0",
     "grammar_navigation": "explicit hint branch plus reviewed trigger paths; never infer blank POS from hint spelling",
     "writing_feedback": "external review transport with independent trigger, draft coverage, module-specific order and real withholding of unsupported sections; no automatic grading certification"
   },
@@ -142,7 +150,7 @@
     "release": "missing workflow blocks all release and efficiency/signature review hints; no automatic Registry promotion"
   },
   "method_execution": {
-    "schema_version": "1.6.0",
+    "schema_version": "1.7.0",
     "typed_artifact_count": 8,
     "scope": "external reviewed action results, not an automatic English semantic executor",
     "dependency_gate": "earlier reviewed complete non-stopped compatible artifacts only",
@@ -150,7 +158,7 @@
     "failed_verification": "answer and recommendation actually withheld"
   },
   "single_question_lesson": {
-    "analysis_schema_version": "1.6.0",
+    "analysis_schema_version": "1.7.0",
     "scope": "external reviewed spoken transport, not certified semantic or whole-passage delivery",
     "complete_gate": "own actions, quotes, candidate relations, stop rules and closed answer",
     "seven_five": "three reviewed F01 partitions displayed once before body",
@@ -170,7 +178,7 @@
   },
   "original_image_review": {
     "writing_review_version": "1.1.0",
-    "analysis_schema_version": "1.6.0",
+    "analysis_schema_version": "1.7.0",
     "formats": [
       "image/png",
       "image/jpeg"
@@ -179,5 +187,13 @@
     "course_rules": "application one-band lowering; continuation explicit discretionary deduction",
     "scope": "external visual assertions; original authorship, legibility, communication impact and grading not certified",
     "negative_gate": "filename, transcription, unclear image, missing communication impact or material cannot authorize adjustment"
+  },
+  "writing_score_boundaries": {
+    "writing_review_version": "1.2.0",
+    "analysis_version": "1.7.0",
+    "bands": "parsed from the same frozen course rubric, not a second table",
+    "word_count": "reviewed full-student-draft evidence, quoted course thresholds, supported deduction and before/after arithmetic; actual count remains external",
+    "projection": "all scores bind own current-draft / trigger / reviewed relation / verification path and score fingerprint, not only image scores",
+    "scope": "course-contract consistency, not certified English grading"
   }
 }

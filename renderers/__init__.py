@@ -16,7 +16,7 @@ def render(analysis,kind='structured',registry=None):
     if kind=='structured': return json.dumps(analysis,ensure_ascii=False,indent=2)
     if kind=='content-export':
         assets = [{'method_id':x['method_id'],'method_version':r.methods[x['method_id']]['version'],'role':x['role'],'action':x['action'],'stop_rule':x['stop_rule'],'visual_formula':r.methods[x['method_id']]['visual_formula'],'compact':r.methods[x['method_id']]['compact'],'anti_rule':r.methods[x['method_id']]['anti_rule']} for x in analysis['method_chain']]
-        return json.dumps({'export_schema_version':'1.6.0','question_id':analysis['question_id'],'answer':analysis['answer'],'answer_verification':analysis['answer_verification'],'grammar_navigation':analysis['grammar_navigation'],'writing_feedback':analysis['writing_feedback'],'lesson_feedback':analysis['lesson_feedback'],'execution_trace':analysis['execution_trace'],'method_chain':analysis['method_chain'],'evidence_graph':analysis['evidence_graph'],'methods':assets,'eligible_for_review':analysis['content_eligible'],'safe_for_release':'untested','limitations':analysis['limitations']},ensure_ascii=False,indent=2)
+        return json.dumps({'export_schema_version':'1.7.0','question_id':analysis['question_id'],'answer':analysis['answer'],'answer_verification':analysis['answer_verification'],'grammar_navigation':analysis['grammar_navigation'],'writing_feedback':analysis['writing_feedback'],'lesson_feedback':analysis['lesson_feedback'],'execution_trace':analysis['execution_trace'],'method_chain':analysis['method_chain'],'evidence_graph':analysis['evidence_graph'],'methods':assets,'eligible_for_review':analysis['content_eligible'],'safe_for_release':'untested','limitations':analysis['limitations']},ensure_ascii=False,indent=2)
     if kind not in {'student','legacy-wechat'}: raise ValueError('Unknown renderer')
     lesson=analysis['lesson_feedback']
     if lesson and lesson['scope']=='single_question_lesson':
@@ -98,7 +98,12 @@ def render_writing(feedback):
             parts.append(sections[key]['text'])
         if key=='overall' and review['proposed_score'] is not None:
             s=review['proposed_score']
-            parts.append('外部审阅建议：'+str(s['lower'])+'—'+str(s['upper'])+' / '+str(s['scale'])+'，'+s['band']+'。'+s['rationale']+' 这是外部建议，不是程序自动评分认证。')
+            adjustment=s.get('word_count_adjustment')
+            if adjustment:
+                before=adjustment['score_before']
+                parts.append('外部审阅先定为'+s['band']+'，档内建议'+str(before['lower'])+'—'+str(before['upper'])+' / '+str(s['scale'])+'。核词数为'+str(adjustment['word_count'])+'，按该模块课程规范扣'+str(adjustment['deduction_points'])+'分后，建议'+str(s['lower'])+'—'+str(s['upper'])+' / '+str(s['scale'])+'。'+adjustment['rationale']+'。'+s['rationale']+' 词数与评分仍为外部审阅建议，不是程序自动评分认证。')
+            else:
+                parts.append('外部审阅建议：'+str(s['lower'])+'—'+str(s['upper'])+' / '+str(s['scale'])+'，'+s['band']+'。'+s['rationale']+' 这是外部建议，不是程序自动评分认证。')
             visual=review.get('handwriting_review')
             if visual and s['handwriting_applied']:
                 parts.append('原稿中实际影响辨认的地方是'+'；'.join(r['observed']+'，'+r['communication_impact'] for r in visual['regions'])+'。'+visual['rationale']+'。书写处理依据原图的外部审阅，不按字迹美观扣分。')

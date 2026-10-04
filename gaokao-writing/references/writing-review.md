@@ -16,6 +16,14 @@
 - reviewed_student_spans：实际完成语言审阅的原稿范围。整段标注只是一项外部声明，不能证明错误已找全；程序只检查范围覆盖，不替代语义审阅。
 - proposed_score：可为null。非空须有正确15/25 scale、有界lower/upper、源评分表中的band、rationale、student_text证据及正确源评分章节。仅外部建议，不是程序认证分数；档次与附加规则仍由宿主依源课程判断。
 
+从Question Analysis/content-export 1.7.0起，未声明调整的建议区间必须位于该band的冻结评分表区间内，区间直接解析Registry源表，不维护第二份分档表。所有分数建议（含纯文本）绑定自己的审阅、原稿、触发和验证图路径及载荷指纹；四Renderer拒绝事后换分、换档或断开评分证据。旧writing_review 1.0.0/1.1.0正确输入继续支持；旧结构结果须重新分析后再按新契约输出。
+
+词数调整使用writing_review 1.2.0，并在proposed_score提供word_count_adjustment：reviewer、review_status=reviewed、source_section_id、source_quote（该模块具体词数附加规则的原句）、word_count、deduction_points、score_before（lower/upper）、evidence（覆盖完整student_text的跨度）、rationale。band表示词数调整之前的定档；score_before必须在该档内，proposed_score.lower/upper是扣分后区间，最低为0。没有词数调整则省略此字段。
+
+门槛和固定扣分值从同一冻结评分章节解析：应用文仅实际少于60或多于100时减2，恰好60/100不触发；续写仅少于120时接受宿主明确的酌情扣分值，不因超过150机械扣分。程序不认证英语计词结果，word_count与计数理由仍需宿主独立核对。不得数题目给定首句或以部分稿件估全稿词数。
+
+如同时存在原图书写处理，应用文先保持“降低一档”的源规则，续写先核视觉酌扣的前后区间，再输送词数调整；两项均要独立证据。学生输出明确分开档内建议与词数扣分后的建议，不把跨档的扣后数字错误称为档内分数。此为外部建议的记账顺序，不认证宿主定档或裁量正确。
+
 完整版批改同时需要普通observations中独立审阅的A09（应用文）或W15（续写）触发，不从评分建议倒贴触发。引用必须逐字绑定当前题面。应用文需题目与原稿证据，续写需原文、两首句与原稿证据。
 
 ## 实际输出门禁
@@ -26,7 +34,7 @@ full_correction仅表示材料、交付功能、引用及声称的语言审阅�
 
 ## 原手写图片的独立证据入口
 
-Question Analysis和content-export从1.6.0支持原图证据。原有writing_review 1.0.0文字批改仍可运行。图片审阅须使用writing_review 1.1.0，不能只提供一个文件名或转写稿：
+Question Analysis和content-export从1.6.0支持原图证据。原有writing_review 1.0.0文字批改仍可运行。图片审阅使用writing_review 1.1.0或1.2.0，不能只提供一个文件名或转写稿：
 
 - 单题输入original_images：image_id、sha256（原始字节的SHA-256）、mime_type、data_base64。仅PNG/JPEG单帧，单图最多10 MiB、2000万像素；核心不读取路径、不下载URL、不做OCR。原图字节解码和尺寸可核不代表原稿身份可核。
 - writing_review.handwriting_review：reviewer、review_status、original_handwriting、clear_image、affects_communication（不确定为null）、rationale、该模块评分章节source_section_id，以及student_text_sha256（当前转写稿UTF-8的SHA-256）。转写与原图对应仍须宿主实际核对，哈希只防换稿。
@@ -49,6 +57,8 @@ python -m answer_engine analyze INPUT.json --renderer legacy-wechat
 Python review_provider仍可提交审阅后的输入，但必须通过相同Schema、原句跨度、题型与材料门禁。不能把正确答案、预设分数或程序测试数据当作独立学生证据。
 
 原图输送烟测可运行 `python -m answer_engine analyze examples/writing-image.synthetic.json --renderer legacy-wechat`。该文件用白色程序图片和明确标记的synthetic视觉断言测试通道；没有实际书写，不是评分、案例或真人结果。实际接入必须用真实原稿字节和宿主独立审阅替换，不可沿用示例断言。
+
+词数记账烟测可运行 `python -m answer_engine analyze examples/writing-word-count.synthetic.json --renderer legacy-wechat`。仍是明确synthetic程序输送记录，不是真人文章或真实评分；完整的定档、词数和扣分值均须以实际审阅替换。
 
 legacy-wechat按原两模块交付顺序输出自然段；逐处原句、改法、理由和可选润色均保留，不生成标题、编号或评分表。宿主提交text时也须遵循原纯文本消息契约。生成适配Skill引用本指南，原课程契约逐字保留。单独安装Skill时仍可依原契约答疑，核心命令需完整仓库。
 

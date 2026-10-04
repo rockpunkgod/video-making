@@ -6,7 +6,8 @@
     "schema_version": {
       "enum": [
         "1.0.0",
-        "1.1.0"
+        "1.1.0",
+        "1.2.0"
       ]
     },
     "question_type": {
@@ -274,6 +275,106 @@
                 "string",
                 "null"
               ]
+            },
+            "word_count_adjustment": {
+              "type": "object",
+              "properties": {
+                "reviewer": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "review_status": {
+                  "enum": [
+                    "reviewed",
+                    "unreviewed"
+                  ]
+                },
+                "source_section_id": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "source_quote": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "word_count": {
+                  "type": "integer",
+                  "minimum": 0
+                },
+                "deduction_points": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 25
+                },
+                "score_before": {
+                  "type": "object",
+                  "properties": {
+                    "lower": {
+                      "type": "integer",
+                      "minimum": 0,
+                      "maximum": 25
+                    },
+                    "upper": {
+                      "type": "integer",
+                      "minimum": 0,
+                      "maximum": 25
+                    }
+                  },
+                  "required": [
+                    "lower",
+                    "upper"
+                  ],
+                  "additionalProperties": false
+                },
+                "evidence": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "field": {
+                        "type": "string",
+                        "minLength": 1
+                      },
+                      "start": {
+                        "type": "integer",
+                        "minimum": 0
+                      },
+                      "end": {
+                        "type": "integer",
+                        "minimum": 1
+                      },
+                      "quote": {
+                        "type": "string",
+                        "minLength": 1
+                      }
+                    },
+                    "required": [
+                      "field",
+                      "start",
+                      "end",
+                      "quote"
+                    ],
+                    "additionalProperties": false
+                  },
+                  "minItems": 1
+                },
+                "rationale": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              },
+              "required": [
+                "reviewer",
+                "review_status",
+                "source_section_id",
+                "source_quote",
+                "word_count",
+                "deduction_points",
+                "score_before",
+                "evidence",
+                "rationale"
+              ],
+              "additionalProperties": false
             }
           },
           "required": [

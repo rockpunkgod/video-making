@@ -6,6 +6,7 @@ rubric judgement, reviewer identity, or the preservation of meaning in a rewrite
 from copy import deepcopy
 import hashlib
 import json
+import re
 from .evidence import check_span
 from .image_evidence import image_manifest, check_image_region
 
@@ -14,19 +15,78 @@ ORDERS={
     '读后续写':['overall','diagnostics','anchors','emotion','corrections','outline','revised_text','practice'],
 }
 
+def score_rubric(review, kind, registry, score):
+    scale=15 if kind=='应用文' else 25
+    sid=score['source_section_id']
+    section=registry.sources['sections'].get(sid)
+    filename='application-writing-and-correction.md' if kind=='应用文' else 'continuation-writing-and-correction.md'
+    if sid not in review['source_section_ids'] or not section or section['heading']!=f'{scale} 分评分规范' or section['path']!='gaokao-writing/references/'+filename:
+        raise ValueError('Writing score requires the correct frozen rubric section')
+    bands={}
+    for line in section['content'].splitlines():
+        cells=[c.strip() for c in line.split('|')]
+        if len(cells)>3 and (cells[1].startswith('第') or cells[1]=='0 分档'):
+            match=re.fullmatch(r'(\d+)(?:[–-](\d+))?',cells[2])
+            if not match: raise ValueError('Unrecognised frozen rubric band range')
+            bands[cells[1]]=(int(match[1]),int(match[2] or match[1]))
+    if not bands: raise ValueError('Frozen rubric has no score bands')
+    return scale,section['content'],bands
+
+
+def check_score(review,kind,registry,score,question=None):
+    if score is None: return
+    scale,rubric,bands=score_rubric(review,kind,registry,score)
+    if score['scale']!=scale or not 0<=score['lower']<=score['upper']<=scale:
+        raise ValueError('Writing score scale or range mismatch')
+    if score['band'] not in bands: raise ValueError('Unknown course score band')
+    adjustment=score.get('word_count_adjustment')
+    graded=adjustment['score_before'] if adjustment else score
+    low,high=bands[score['band']]
+    if not low<=graded['lower']<=graded['upper']<=high:
+        raise ValueError('Writing score range is outside the declared frozen course band')
+    if not adjustment: return
+    if review['schema_version']!='1.2.0' or adjustment['review_status']!='reviewed':
+        raise ValueError('Word-count adjustment requires writing-review 1.2.0 and independent review')
+    if adjustment['source_section_id']!=score['source_section_id'] or adjustment['source_quote'] not in rubric:
+        raise ValueError('Word-count adjustment must quote its own course rubric')
+    count=adjustment['word_count']; points=adjustment['deduction_points']
+    if kind=='应用文':
+        rule=re.search(r'词数少于 (\d+) 或多于 (\d+)，从总分中减 (\d+) 分。',rubric)
+        if not rule or adjustment['source_quote']!=rule[0] or not (count<int(rule[1]) or count>int(rule[2])) or points!=int(rule[3]):
+            raise ValueError('Application word-count adjustment does not match the frozen rule')
+    else:
+        rule=re.search(r'词数少于 (\d+) 时酌情扣分',rubric)
+        if not rule or adjustment['source_quote']!=rule[0] or count>=int(rule[1]) or not 1<=points<=scale:
+            raise ValueError('Continuation word-count adjustment must be supported discretionary deduction')
+    if (score['lower'],score['upper'])!=tuple(max(0,graded[k]-points) for k in ['lower','upper']):
+        raise ValueError('Word-count adjustment before/after ranges do not match')
+    if question is not None:
+        covered=set()
+        for s in adjustment['evidence']:
+            check_span(question,s)
+            if s['field']!='student_text': raise ValueError('Word count covers only student-written draft')
+            covered.update(range(s['start'],s['end']))
+        text=question.get('student_text','')
+        if not text.strip() or any(i not in covered for i,c in enumerate(text) if not c.isspace()):
+            raise ValueError('Word-count adjustment needs the full current student draft')
+
+
+def score_fingerprint(score):
+    return hashlib.sha256(json.dumps(score,sort_keys=True,ensure_ascii=False,separators=(',',':')).encode()).hexdigest()
+
 def check_handwriting(review, kind, registry, manifest, score, allow_withheld=False):
     visual=review.get('handwriting_review')
     if visual is None:
         if score and score['handwriting_applied']:
             raise ValueError('Handwriting judgement needs independently reviewed original-image evidence')
         return
-    if review['schema_version']!='1.1.0':
-        raise ValueError('Original-image review requires writing-review 1.1.0')
+    if review['schema_version'] not in {'1.1.0','1.2.0'}:
+        raise ValueError('Original-image review requires writing-review 1.1.0 or newer')
     if review['kind']!='correction':
         raise ValueError('Writing guidance cannot judge student handwriting')
     sid=visual['source_section_id']
     expected='15 分评分规范' if kind=='应用文' else '25 分评分规范'
-    if sid not in review['source_section_ids'] or registry.sources['sections'][sid]['heading']!=expected:
+    if sid not in review['source_section_ids'] or sid not in registry.sources['sections'] or registry.sources['sections'][sid]['heading']!=expected:
         raise ValueError('Handwriting review requires its own module rubric')
     for region in visual['regions']: check_image_region(region,manifest)
     if len({json.dumps(r,sort_keys=True) for r in visual['regions']})!=len(visual['regions']):
@@ -45,7 +105,7 @@ def check_handwriting(review, kind, registry, manifest, score, allow_withheld=Fa
     if score['source_section_id']!=sid:
         raise ValueError('Handwriting score and visual review rubric mismatch')
     if kind=='应用文':
-        bands=['第五档','第四档','第三档','第二档','第一档','0 分档']
+        bands=list(score_rubric(review,kind,registry,score)[2])
         before=visual['band_before']
         if adjustment!='lower_one_band' or before not in bands[:-1] or score['band']!=bands[bands.index(before)+1] or visual['deduction_points'] is not None or visual['score_before'] is not None:
             raise ValueError('Application handwriting rule lowers one band, not arbitrary points')
@@ -53,7 +113,8 @@ def check_handwriting(review, kind, registry, manifest, score, allow_withheld=Fa
         before=visual['score_before']; points=visual['deduction_points']
         if adjustment!='discretionary_deduction' or points is None or before is None or visual['band_before'] is not None:
             raise ValueError('Continuation handwriting rule requires explicit discretionary deduction')
-        if not 0<=before['lower']<=before['upper']<=25 or before['lower']-points!=score['lower'] or before['upper']-points!=score['upper']:
+        after=score.get('word_count_adjustment',{}).get('score_before',score)
+        if not 0<=before['lower']<=before['upper']<=25 or max(0,before['lower']-points)!=after['lower'] or max(0,before['upper']-points)!=after['upper']:
             raise ValueError('Continuation handwriting deduction must match before/after proposal')
 
 
@@ -67,6 +128,25 @@ def validate_writing_projection(analysis,registry):
     feedback=analysis['writing_feedback']
     if feedback is None: return
     review=feedback['review']; manifest=feedback['image_manifest']
+    if review['question_type']!=analysis['question_type']: raise ValueError('Writing projection module mismatch')
+    score=review['proposed_score']; nodes={n['id']:n for n in analysis['evidence_graph']['nodes']}
+    check_score(review,analysis['question_type'],registry,score)
+    if score:
+        if feedback['scope']!='full_correction' or review['review_status']!='reviewed' or feedback['score_status']!='external_proposal_not_certified':
+            raise ValueError('Unreviewed or partial writing projection cannot expose full score')
+        matches=[n for n in nodes.values() if n['type']=='candidate_claim' and n.get('candidate')=='student_draft' and n['label']==score['rationale'] and n.get('artifact_fingerprint')==score_fingerprint(score)]
+        if not matches: raise ValueError('Writing score changed after reviewed evidence binding')
+        edges=analysis['evidence_graph']['edges']; mid='A09' if analysis['question_type']=='应用文' else 'W15'
+        relations=[n for n in nodes.values() if n['type']=='relation' and n.get('reviewed') and n.get('method_id')==mid and n['label']=='外部写作审阅：'+score['rationale'] and any(e['from'] in {m['id'] for m in matches} and e['to']==n['id'] and e['type']=='supports' for e in edges)]
+        required_spans=score['evidence']+(score.get('word_count_adjustment') or {}).get('evidence',[])
+        def own_path(rel):
+            upstream=[nodes[e['from']] for e in edges if e['to']==rel['id'] and e['type']=='supports']
+            if not all(any(n['type']=='source_evidence' and n.get('span')==s for n in upstream) for s in required_spans): return False
+            if not any(n['type']=='question_signal' and n.get('reviewed') and n.get('method_id')==mid for n in upstream): return False
+            actions={e['to'] for e in edges if e['from']==rel['id'] and e['type']=='supports' and nodes[e['to']]['type']=='method_action' and nodes[e['to']].get('method_id')==mid}
+            return any(e['from'] in actions and e['type']=='verifies' and nodes[e['to']]['type']=='verification' and nodes[e['to']].get('candidate')=='student_draft' and nodes[e['to']]['label']=='外部建议，非自动语义认证：'+score['rationale'] for e in edges)
+        if not any(own_path(rel) for rel in relations):
+            raise ValueError('Writing score lost its own draft, trigger or review verification path')
     if len({a['image_id'] for a in manifest})!=len(manifest): raise ValueError('Duplicate original image manifest')
     check_handwriting(review,analysis['question_type'],registry,manifest,review['proposed_score'],allow_withheld=feedback['scope']!='full_correction')
     visual=review.get('handwriting_review'); ids=feedback['image_evidence_ids']
@@ -99,6 +179,7 @@ def writing_feedback(question,registry,graph=None,triggers=None):
         raise ValueError('Writing review question type mismatch')
     review=deepcopy(supplied)
     manifest=image_manifest(question)
+    check_score(review,kind,registry,review['proposed_score'],question)
     check_handwriting(review,kind,registry,manifest,review['proposed_score'])
     if review.get('handwriting_review') and review['handwriting_review']['student_text_sha256']!=hashlib.sha256(question.get('student_text','').encode()).hexdigest():
         raise ValueError('Original-image review belongs to another student draft')
@@ -154,15 +235,6 @@ def writing_feedback(question,registry,graph=None,triggers=None):
     score_status='not_requested'
     score=review['proposed_score']
     if score is not None:
-        scale=15 if kind=='应用文' else 25
-        if score['scale']!=scale or not 0<=score['lower']<=score['upper']<=scale:
-            raise ValueError('Writing score scale or range mismatch')
-        sid=score['source_section_id']
-        if sid not in review['source_section_ids'] or registry.sources['sections'][sid]['heading']!=f'{scale} 分评分规范':
-            raise ValueError('Writing score requires the correct frozen rubric section')
-        rubric=registry.sources['sections'][sid]['content']
-        bands={line.split('|')[1].strip() for line in rubric.splitlines() if line.startswith('|') and (line.split('|')[1].strip().startswith('第') or line.split('|')[1].strip()=='0 分档')}
-        if score['band'] not in bands: raise ValueError('Unknown course score band')
         for s in score['evidence']: check_span(question,s)
         if not any(s['field']=='student_text' for s in score['evidence']):
             raise ValueError('Score requires actual student evidence')
@@ -193,10 +265,13 @@ def writing_feedback(question,registry,graph=None,triggers=None):
         entries=[(s['text'],s['evidence']) for s in review['sections']]
         entries += [(c['replacement']+'；'+c['reason'],[c['original']]) for c in review['corrections']]
         if review['proposed_score'] is not None:
-            entries.append((review['proposed_score']['rationale'],review['proposed_score']['evidence']))
+            score=review['proposed_score']
+            entries.append((score['rationale'],score['evidence']+(score.get('word_count_adjustment') or {}).get('evidence',[])))
         for claim,spans in entries:
             reviewed=review['review_status']=='reviewed' and independent_trigger and bool(spans)
-            candidate=graph.node('candidate_claim',claim,candidate='student_draft')
+            is_score=review['proposed_score'] is not None and claim==review['proposed_score']['rationale']
+            binding={'artifact_fingerprint':score_fingerprint(review['proposed_score'])} if is_score else {}
+            candidate=graph.node('candidate_claim',claim,candidate='student_draft',**binding)
             rel=graph.node('relation','外部写作审阅：'+claim,method_id=mid,reviewed=reviewed)
             graph.edge(candidate,rel,'supports')
             if review['proposed_score'] is not None and claim==review['proposed_score']['rationale'] and review['proposed_score']['handwriting_applied']:

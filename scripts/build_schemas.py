@@ -57,11 +57,12 @@ def build():
     writing_section=obj({'key':enum(['overall','diagnostics','anchors','emotion','outline','revised_text','practice','materials']),'text':STR,'evidence':array(span,1)})
     correction=obj({'original':span,'replacement':STR,'reason':STR,'kind':enum(['error','optional'])})
     proposed_score=obj({'scale':enum([15,25]),'lower':{'type':'integer','minimum':0,'maximum':25},'upper':{'type':'integer','minimum':0,'maximum':25},'band':STR,'rationale':STR,'evidence':array(span,1),'source_section_id':STR,'handwriting_applied':BOOL,'original_handwriting_reference':NULLSTR})
+    proposed_score['properties']['word_count_adjustment']=obj({'reviewer':STR,'review_status':enum(['reviewed','unreviewed']),'source_section_id':STR,'source_quote':STR,'word_count':{'type':'integer','minimum':0},'deduction_points':{'type':'integer','minimum':1,'maximum':25},'score_before':obj({'lower':{'type':'integer','minimum':0,'maximum':25},'upper':{'type':'integer','minimum':0,'maximum':25}}),'evidence':array(span,1),'rationale':STR})
     image_ref=obj({'image_id':STR,'sha256':{'type':'string','pattern':'^[0-9a-f]{64}$'},'box':{'type':'array','items':{'type':'integer','minimum':0},'minItems':4,'maxItems':4}})
     image_region=obj({**image_ref['properties'],'observed':STR,'communication_impact':STR})
     handwriting=obj({'reviewer':STR,'review_status':enum(['reviewed','unreviewed']),'original_handwriting':BOOL,'clear_image':BOOL,'affects_communication':{'type':['boolean','null']},'rationale':STR,'source_section_id':STR,'regions':array(image_region,1),'adjustment_kind':enum(['none','lower_one_band','discretionary_deduction']),'band_before':NULLSTR,'deduction_points':{'type':['integer','null'],'minimum':1,'maximum':25},'score_before':{'anyOf':[{'type':'null'},obj({'lower':{'type':'integer','minimum':0,'maximum':25},'upper':{'type':'integer','minimum':0,'maximum':25}})]}})
     writing_review=obj({'schema_version':enum(['1.0.0']),'question_type':enum(['应用文','读后续写']),'kind':enum(['guidance','correction']),'reviewer':STR,'review_status':enum(['reviewed','unreviewed']),'source_section_ids':array(STR,1),'student_text_complete':BOOL,'student_text_excludes_given_starters':BOOL,'sections':array(writing_section),'corrections':array(correction),'reviewed_student_spans':array(span),'proposed_score':{'anyOf':[{'type':'null'},proposed_score]}})
-    writing_review['properties']['schema_version']=enum(['1.0.0','1.1.0'])
+    writing_review['properties']['schema_version']=enum(['1.0.0','1.1.0','1.2.0'])
     handwriting['properties']['student_text_sha256']={'type':'string','pattern':'^[0-9a-f]{64}$'}
     handwriting['required'].append('student_text_sha256')
     writing_review['properties']['handwriting_review']={'anyOf':[{'type':'null'},handwriting]}
