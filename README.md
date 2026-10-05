@@ -56,6 +56,10 @@ Python API：`from answer_engine import QuestionAnalyzer, PaperAnalyzer`；`anal
 
 ## 目录与兼容
 
+V9.1 增量视频模块：见 [G01 Hero 工作流](docs/cinematic-hero-workflow.md) 与
+[Swiss Cognitive Motion](creative/motion-identity/motion-identity.md)。只消费冻结输出；
+实际视频、音乐及 Adobe 工程保留在忽略的本地目录。
+
 - method-registry：方法与源章节唯一事实源，history保留旧版。
 - schemas/cases：标准契约、案例及显式证据缺口。
 - core/renderers：流程约束与四种独立投影。

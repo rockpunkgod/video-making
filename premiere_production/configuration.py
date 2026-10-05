@@ -14,6 +14,7 @@ CORE_TOOLS = (
     "get_clip_properties", "get_effect_properties", "set_effect_property",
     "add_marker", "create_caption_track", "read_sequence_captions",
     "validate_export_preset", "export_sequence", "export_frame", "set_playhead_position",
+    "add_keyframe", "get_keyframes",
 )
 
 

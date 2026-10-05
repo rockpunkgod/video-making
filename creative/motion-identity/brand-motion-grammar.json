@@ -1,0 +1,18 @@
+{
+  "version": "0.1.0",
+  "philosophy": "Swiss Cognitive Motion",
+  "authority": "visual_metaphor_only",
+  "color": {"fog_blue": "#7E96A8", "soft_brick": "#A36F64"},
+  "preferred_transition": "logic_match_cut",
+  "grammar": [
+    {"id": "magnetic_alignment", "memory_phrase": "磁吸归位", "phases": ["approach", "align", "settle"], "constraints": {"low_amplitude": true, "bounce": false, "overshoot": 0}},
+    {"id": "evidence_develop", "memory_phrase": "证据显影", "phases": ["literal_context", "deemphasize_context", "fog_blue_advance", "restore_target_contrast", "hold"], "forbidden_effects": ["neon", "flicker", "scribbled_highlighter"]},
+    {"id": "focus_breathing", "memory_phrase": "焦点呼吸", "constraints": {"target_scale_percent": [100, 103], "background_weight_percent": [80, 88]}, "allowed_effects": ["scale", "opacity", "spacing", "local_blur"]},
+    {"id": "semantic_carry", "memory_phrase": "语义接力", "phases": ["retain_object", "move_same_object", "next_shot_origin"], "forbidden_effects": ["reset_all_objects"]},
+    {"id": "micro_lock", "memory_phrase": "微锁定", "constraints": {"last_move_pixels": [4, 6], "settle_frames": [4, 8], "bounce": false}, "phases": ["precise_landing", "line_lock", "stillness"]},
+    {"id": "boundary_seal", "memory_phrase": "边界封口", "phases": ["path_advance", "thin_line_close", "forward_space_closed", "motion_stop", "music_duck", "hold"], "forbidden_effects": ["stop_card", "red_cross", "green_answer", "boom", "riser"]}
+  ],
+  "effect_budget": {"structural": "unlimited_if_semantic", "depth_max_simultaneous": 2, "accent_max_simultaneous": 1},
+  "method_stamp": {"after": "signature_settle", "style": "small_editorial_metadata", "logo_reveal": false},
+  "sound": {"beat_sync": false, "sfx": "minimal_structural", "boundary": "duck_then_near_silence"}
+}

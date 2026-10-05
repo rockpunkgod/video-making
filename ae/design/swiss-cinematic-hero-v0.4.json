@@ -1,0 +1,15 @@
+{
+  "version": "0.4.0",
+  "profile": "CINEMATIC_LANDSCAPE_V1",
+  "canvas": {"width": 1920, "height": 1080, "fps": 24},
+  "grid": {"columns": 12, "side_margin": 128, "gutter": 24, "top_safe": 80, "bottom_safe": 80},
+  "motion": {"easing": "native_bezier_zero_velocity_70_percent_influence", "overshoot": 0, "base_seconds": 0.5, "transition": "persistent_keyword_and_slot_carry", "shutter_angle": 180, "shutter_phase": -90},
+  "effect_policy": {"structural": "reason_required", "depth": "restrained_focus_separation", "accent_per_shot_max": 1, "forbidden": ["glitch", "rgb_split", "neon", "shake", "spring", "particle_explosion"]},
+  "directions": [
+    {"id": "A_PAPER_CUT", "name": "Paper / Evidence", "background": "#F2F0EA", "ink": "#20211F", "secondary": "#58625C", "accent": "#829B84", "latin_font": "Georgia", "composition": "wide_evidence_to_asymmetric_two_fields"},
+    {"id": "B_INK_FIELD", "name": "Ink / Contrast", "background": "#20211F", "ink": "#F2F0EA", "secondary": "#BAC1B8", "accent": "#B0C2A4", "latin_font": "NotoSansSC-Regular", "composition": "split_field_large_slot_close_forward_space"},
+    {"id": "C_FOG_SPACE", "name": "Fog / Architecture", "background": "#E3E6E1", "ink": "#28312D", "secondary": "#606D65", "accent": "#6E8D79", "latin_font": "Georgia", "composition": "off_axis_evidence_with_deep_vertical_continuity"}
+  ],
+  "font": {"chinese": "NotoSansSC-Regular", "minimum_support_px": 32},
+  "public_render_ready": false
+}
