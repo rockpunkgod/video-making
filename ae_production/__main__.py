@@ -14,7 +14,7 @@ def main():
     package=load('package'); manifest=load('manifest'); raw=load('statuses')
     statuses=raw if isinstance(raw,dict) and 'asset_id' not in raw else {raw['asset_id']:raw}
     if args.command=='contract':
-        result=build_contract(package,manifest,statuses)
+        result=build_contract(package,manifest,statuses,load('design') if r.get('design') else None,r.get('revision',1),platform_profile=r.get('platform_profile'))
         write(request_path.parent/r['output'],result); print(result['render_id'])
     elif args.command=='validate':
         validate_contract(load('contract'),package,manifest,statuses); print('AE contract PASS')

@@ -1,5 +1,11 @@
 # AE Production Layer v0.1
 
+The V8 architecture remains unchanged. Swiss Academic Motion **v0.2** is an
+explicit visual version of the same Master family: [migration and element
+audit](design/V0.2_MIGRATION.md), [visual review](../AE_VISUAL_DIRECTION_REVIEW.md).
+The original v0.1 files and default contract projection remain available for
+historical replay. Real v0.2 artifacts live in ignored `local-data/v8.1/`.
+
 V8 is an incremental consumer of the frozen V0–V7 Video Package. It does not
 read teaching Markdown, Registry, raw questions or call teaching analyzers.
 `ae_production` consumes the explicit package, manifest and current status

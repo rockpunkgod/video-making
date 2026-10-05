@@ -2,7 +2,7 @@
 import json
 from pathlib import Path
 from video_contracts import ROOT, sha, write
-from .contract import validate_contract
+from .contract import validate_contract,template_path
 from .bridge import BridgeError
 
 
@@ -24,7 +24,7 @@ def build_in_ae(client,contract,package,manifest,statuses,output_dir):
     path=output_dir/'render-contract.json'; write(path,contract)
     code='var V8_CONTRACT_PATH='+json.dumps(path.as_posix(),ensure_ascii=True)+';\n'
     code+='var V8_PROJECT_PATH='+json.dumps((output_dir/'method-demo.aep').as_posix(),ensure_ascii=True)+';\n'
-    code+=(ROOT/'ae/templates/method-demo-master.jsx').read_text(encoding='utf-8')
+    code+=template_path(contract['template_version']).read_text(encoding='utf-8')
     write(output_dir/'build-request.json',{'tool':'ae_exec','arguments':{'code':code,'undo_group_name':'V8 METHOD_DEMO_MASTER','timeout_sec':120}})
     result=mutation_call(client,'ae_exec',{'code':code,'undo_group_name':'V8 METHOD_DEMO_MASTER','timeout_sec':120,
                                'checkpoint_label':'before-'+contract['render_id']},output_dir,150)
@@ -62,14 +62,19 @@ def audit_layout(client,comp_id,output_dir,contract=None):
     if contract is not None:
         expected={}
         for i,s in enumerate(contract['scenes']):
-            expected['PROGRESS_'+str(i)]=str(i+1).zfill(2)+' / '+s['scene_type']
+            v02=contract['template_version']=='0.2.0'
+            expected['PROGRESS_'+str(i)]=str(i+1).zfill(2)+' / '+(str(len(contract['scenes'])).zfill(2) if v02 else s['scene_type'])
             for c in s['components']:
                 key=c['component_id'];expected[key]=''.join(c['layout']['lines'])
                 if c['component_type']=='OPTION_CARD':expected[key+'_ID']=c['content']['candidate']
+                if v02 and c['component_type']=='OPTION_GROUP_GRID':expected[key+'_UNIVERSE']='   '.join(cid for g in c['content']['groups'] for cid in g['candidates'])
+                if v02 and (c['component_type']=='STOP_RULE_CARD' or c['component_type']=='DECISION_PATH' and c['content']['terminal']):expected[key+'_TERMINAL']=contract['design']['localized_labels']['stop']
                 if c['component_type']=='DECISION_PATH' and not c['content']['terminal']:expected[key+'_CONNECT']='↓'
                 if c['component_type']=='RELATION_COMPARE' and c['content'].get('chain_length') and c['content']['column']<c['content']['chain_length']-1:expected[key+'_ARROW']='→'
+                if v02 and c['component_type']=='RELATION_COMPARE' and c['content'].get('chain_length'):expected[key+'_SLOT']=contract['design']['localized_labels']['relation_slots'][c['content']['column']]
+                if v02 and c['component_type']=='CANDIDATE_VERDICT' and c['content']['effect']=='eliminate' and c['content']['whole_question_answer'] is False:expected[key+'_LOCAL_LABEL']=contract['design']['localized_labels']['local_eliminate']+' '+c['content']['candidate']
         expected.update({cue['cue_id']:''.join(cue['lines']) for cue in contract['subtitles']})
-        expected.update(METHOD_TAG=' + '.join(m['method_id']+' / '+m['role'] for m in contract['methods']),
+        expected.update(METHOD_TAG=' + '.join((m['brand']+' · ' if contract['template_version']=='0.2.0' else '')+m['method_id']+' / '+m['role'] for m in contract['methods']),
                         INTERNAL_ENGINEERING_PREVIEW='INTERNAL_ENGINEERING_PREVIEW',
                         TRACE='RENDER '+contract['render_id'].split(':')[1][:12]+' / TEMPLATE '+contract['template_version'])
         if contract['source_tags']:expected['SOURCE_TAG']=contract['source_tags']
@@ -94,6 +99,9 @@ def render_internal_preview(client,contract,package,manifest,statuses,comp_id,ou
     write(output_dir/'render-expression-check.json',expr)
     if not expr.get('valid') or expr.get('truncated'):raise ValueError('Expression validation failed or incomplete')
     audit_layout(client,comp_id,output_dir,contract)
+    if contract['design_system_version']=='0.2.0':
+        from .visual_qa import actual_visual_qa
+        actual_visual_qa(client,comp_id,contract,output_dir)
     code='var V8_COMP_ID='+str(int(comp_id))+'; var V8_OUTPUT='+json.dumps(video.as_posix(),ensure_ascii=True)+';\n'
     code+='''(function(){
       var comp=AEMCP.compById(V8_COMP_ID);

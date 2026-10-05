@@ -28,7 +28,11 @@ SCHEMA={'$schema':'https://json-schema.org/draft/2020-12/schema',**obj({
     'scenes':{'type':'array','minItems':1,'items':SCENE},'subtitles':array(CUE),'source_tags':S,'projection_refs':array(REF),
     'upstream_bindings':{'type':'object'},'status_input_shas':{'type':'object'},
     'render_profile':obj({'fps':{'const':30},'voiceover':{'const':'text_timed_no_recording'},'watermark':{'const':True},'silent_preview':{'const':True}})
-})}
+},required=None)}
+# v0.2 adds presentation-only fields; the v0.1 contract and teaching fields stay unchanged.
+SCHEMA['properties'].update(platform_profile={'type':'object'},actual_content_area={'type':'array','minItems':4,'maxItems':4,'items':N},
+    cover_candidate=obj({'hook_text':S,'method_name':S,'focal_scene_id':S}))
+SCHEMA['allOf']=[{'if':{'properties':{'design_system_version':{'const':'0.2.0'}}},'then':{'required':['platform_profile','actual_content_area','cover_candidate']}}]
 
 
 def main():

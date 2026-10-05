@@ -1,0 +1,18 @@
+{
+  "version": "0.1.0",
+  "status": "provisional_simulation_not_live_platform_ui",
+  "base": {
+    "safe_area_profile": {"core": [96, 248, 792, 1208]},
+    "cover_crop_profile": {"ratios": ["9:16", "3:4", "1:1"], "anchor": "center"},
+    "ui_overlay_profile": {"exclusion_rects": [[0, 0, 1080, 192], [900, 192, 180, 1488], [0, 1680, 1080, 240]]},
+    "caption_profile": {"x": 96, "y": 1504, "width": 792, "height": 144},
+    "branding_profile": {"debug_footer": true, "large_logo": false}
+  },
+  "profiles": {
+    "CN_VERTICAL_GENERIC": {},
+    "DOUYIN_VERTICAL": {},
+    "XHS_VERTICAL": {},
+    "BILIBILI_VERTICAL": {},
+    "WECHAT_CHANNELS_VERTICAL": {}
+  }
+}

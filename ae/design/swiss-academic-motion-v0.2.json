@@ -1,0 +1,21 @@
+{
+  "version": "0.2.0",
+  "name": "Swiss Academic Motion",
+  "canvas": {"width": 1080, "height": 1920, "fps": 30},
+  "grid": {"columns": 6, "side_margin": 96, "gutter": 24, "baseline": 8, "top_safe": 248, "content_bottom": 1456, "subtitle_top": 1504, "subtitle_bottom": 1704},
+  "typography": {
+    "Hero": {"size": 80, "leading": 104, "tracking": 0},
+    "Title": {"size": 64, "leading": 88, "tracking": 0},
+    "Body": {"size": 44, "leading": 68, "tracking": 0},
+    "Metadata": {"size": 28, "leading": 40, "tracking": 40},
+    "Subtitle": {"size": 38, "leading": 56, "tracking": 0}
+  },
+  "font": {"postscript": "NotoSansSC-Regular", "measurement_file": "C:/Windows/Fonts/NotoSansSC-VF.ttf", "variation": "Regular", "measurement_margin_px": 16},
+  "colors": {"background": "#F2F0EA", "primary_text": "#20211F", "secondary_text": "#4F5B63", "evidence": "#7E96A8", "error_extra": "#C97868", "valid": "#91A58F", "divider": "#D8D6D0"},
+  "motion": {"types": ["reveal", "focus", "compare", "eliminate", "connect"], "duration_frames": 12, "easing": "soft_out", "delay_frames": 2, "travel_px": 24, "overshoot": 0, "rhythm_frames": {"reveal": 8, "focus": 16, "compare": 12, "eliminate": 8, "connect": 12}, "node_interval_seconds": 0.45, "relation_candidate_delay_seconds": 2, "relation_verdict_delay_seconds": 4, "micro_alignment_px": 4},
+  "subtitles": {"max_lines": 2, "max_line_units": 20, "min_duration_frames": 24, "scene_sync": true},
+  "art_direction": {"personality": "calm_precise", "primary_focal_points": 1, "camera": "static", "background_motion": false, "public_render_ready": false},
+  "treatment": {"evidence_tint": 0.12, "persistent_rail": false, "node_cards": false, "stop_moment": "closing_rule_then_hold", "debug_overlay": "isolated_footer", "secondary_derivation": "50 percent Charcoal + 50 percent Fog Blue, rounded RGB"},
+  "cjk_typography": true,
+  "localized_labels": {"relation_slots": ["谁", "做什么", "对谁"], "stop": "方法边界", "local_eliminate": "局部排除"}
+}

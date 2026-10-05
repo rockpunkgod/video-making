@@ -453,6 +453,38 @@
         "silent_preview"
       ],
       "additionalProperties": false
+    },
+    "platform_profile": {
+      "type": "object"
+    },
+    "actual_content_area": {
+      "type": "array",
+      "minItems": 4,
+      "maxItems": 4,
+      "items": {
+        "type": "number",
+        "minimum": 0
+      }
+    },
+    "cover_candidate": {
+      "type": "object",
+      "properties": {
+        "hook_text": {
+          "type": "string"
+        },
+        "method_name": {
+          "type": "string"
+        },
+        "focal_scene_id": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "hook_text",
+        "method_name",
+        "focal_scene_id"
+      ],
+      "additionalProperties": false
     }
   },
   "required": [
@@ -481,5 +513,23 @@
     "status_input_shas",
     "render_profile"
   ],
-  "additionalProperties": false
+  "additionalProperties": false,
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "design_system_version": {
+            "const": "0.2.0"
+          }
+        }
+      },
+      "then": {
+        "required": [
+          "platform_profile",
+          "actual_content_area",
+          "cover_candidate"
+        ]
+      }
+    }
+  ]
 }

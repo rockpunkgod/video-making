@@ -8,25 +8,54 @@ class LayoutOverflow(ValueError):
     pass
 
 
+# Conservative, literal typography rules; no model or paraphrasing.
+CJK_PHRASES=('支持这个判断','自己的风格','翻页信号','点头风格','练习配合','三维标记','提示词',
+             '这个判断','不代表','不等于','到此停止','方法边界','原文依据',
+             '做什么','对谁','有限谓语','空位成分','名词节点','不能','没有','支持','动名词')
+LINE_START_FORBIDDEN='，。？！：；、）》】」』”’…%,.!?;:)]}'
+LINE_END_FORBIDDEN='（【《「『“‘('
+
+
 @lru_cache(maxsize=16)
-def font(path, size):
+def font(path, size, variation=None):
     # No silent substitute: AE and the measuring host must share this font.
-    return ImageFont.truetype(path, size)
+    face=ImageFont.truetype(path, size)
+    if variation: face.set_variation_by_name(variation)
+    return face
 
 
-def wrap(text, width, size, font_path, max_units=None):
+def wrap(text, width, size, font_path, max_units=None, variation=None, tracking=0, cjk=False):
     """Returns character-exact runs; joining runs reproduces the original string."""
-    face = font(font_path, size)
-    tokens = re.findall(r'[A-Za-z0-9]+(?:[’\'-][A-Za-z0-9]+)*|[^A-Za-z0-9]', text)
+    face = font(font_path, size, variation)
+    pattern=r'[A-Za-z0-9]+(?:[’\'-][A-Za-z0-9]+)*|[^A-Za-z0-9]'
+    if cjk:pattern=r'[A-Za-z0-9]+(?:[’\'_-][A-Za-z0-9]+)*|[^A-Za-z0-9]'
+    if cjk:pattern='|'.join(re.escape(s) for s in CJK_PHRASES)+'|'+pattern
+    tokens = re.findall(pattern, text)
     lines, line = [], ''
     for token in tokens:
         if token == '\n':
             lines.append(line + token); line = ''; continue
         def fits(value):
             units = sum(1 if ord(c) > 255 else 0.5 for c in value)
-            return face.getlength(value) <= width and (max_units is None or units <= max_units)
+            measured=face.getlength(value)+max(0,len(value)-1)*size*tracking/1000
+            return measured <= width and (max_units is None or units <= max_units)
         if line and not fits(line + token):
-            lines.append(line); line = ''
+            carry=''
+            if cjk:
+                # Prefer a recent punctuation pause; don't leave an opening mark behind.
+                pauses=[m.end() for m in re.finditer('[，；：。！？]',line)]
+                if pauses and pauses[-1]>=len(line)*0.55 and pauses[-1]<len(line):
+                    line,carry=line[:pauses[-1]],line[pauses[-1]:]
+                if line and line[-1] in LINE_END_FORBIDDEN:
+                    carry=line[-1]+carry;line=line[:-1]
+                if token[0] in LINE_START_FORBIDDEN and not carry:
+                    previous=re.search(r'[A-Za-z0-9]+(?:[’\'_-][A-Za-z0-9]+)*$|.$',line)
+                    if previous:
+                        carry=previous.group();line=line[:previous.start()]
+                if carry and not fits(carry+token):
+                    raise LayoutOverflow('layout_overflow: punctuation / phrase cannot safely wrap')
+            if line:lines.append(line)
+            line = carry
         if not fits(token):
             # Long English words can break at glyph boundaries, without inserting a hyphen.
             for ch in token:
@@ -37,7 +66,7 @@ def wrap(text, width, size, font_path, max_units=None):
             line += token
     if line: lines.append(line)
     # Avoid a lone closing mark / tiny tail while preserving all original characters.
-    if len(lines)>1 and len(lines[-1].strip())<4 and not lines[-2].endswith('\n'):
+    if not cjk and len(lines)>1 and len(lines[-1].strip())<4 and not lines[-2].endswith('\n'):
         move=min(4-len(lines[-1].strip()),len(lines[-2])-1)
         if move>0:
             lines[-1]=lines[-2][-move:]+lines[-1]; lines[-2]=lines[-2][:-move]
@@ -46,7 +75,8 @@ def wrap(text, width, size, font_path, max_units=None):
 
 def pages(text, width, height, token, design):
     style = design['typography'][token]
-    lines = wrap(text, width, style['size'], design['font']['measurement_file'])
+    lines = wrap(text, width-design['font'].get('measurement_margin_px',0), style['size'], design['font']['measurement_file'],
+                 variation=design['font'].get('variation'),tracking=style.get('tracking',0),cjk=design.get('cjk_typography',False))
     capacity = int(height // style['leading'])
     if capacity < 1: raise LayoutOverflow('layout_overflow: no readable line')
     return [lines[i:i + capacity] for i in range(0, len(lines), capacity)]
@@ -62,7 +92,8 @@ def slots(text, bounds, token, design):
 def subtitle_cues(text, start, end, scene_id, design):
     if not text: return []
     cfg = design['subtitles']; grid = design['grid']; style = design['typography']['Subtitle']
-    lines = wrap(text, 1080 - 2 * grid['side_margin'], style['size'], design['font']['measurement_file'], cfg['max_line_units'])
+    lines = wrap(text, cfg.get('width',1080 - 2 * grid['side_margin'])-design['font'].get('measurement_margin_px',0), style['size'], design['font']['measurement_file'], cfg['max_line_units'],
+                 variation=design['font'].get('variation'),tracking=style.get('tracking',0),cjk=design.get('cjk_typography',False))
     groups = [lines[i:i + cfg['max_lines']] for i in range(0, len(lines), cfg['max_lines'])]
     total = sum(len(''.join(g)) for g in groups)
     minimum=cfg['min_duration_frames']/design['canvas']['fps']
