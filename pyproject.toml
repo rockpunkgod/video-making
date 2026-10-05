@@ -19,5 +19,5 @@ ae-production = "ae_production.__main__:main"
 creative-os = "creative_os.__main__:main"
 
 [tool.setuptools.packages.find]
-include = ["answer_engine*", "core*", "renderers*", "evaluation*", "scripts*", "content_os*", "video_contracts*", "ae_production*", "creative_os*"]
+include = ["answer_engine*", "core*", "renderers*", "evaluation*", "scripts*", "content_os*", "video_contracts*", "ae_production*", "creative_os*", "premiere_production*"]
 exclude = ["tests*"]
