@@ -47,7 +47,8 @@ def run():
             'completed_blind_reveal_papers','new_question_count','host_reviewed_question_count',
             'host_reviewed_answered_count','host_reviewed_reference_match_count',
             'real_student_observation_count','new_registered_cases','case_review_candidate_count',
-            'post_reveal_ai_reviewed_question_count','negative_review_withheld_question_count']}
+            'post_reveal_ai_reviewed_question_count','negative_review_withheld_question_count',
+            'post_reveal_helper_action_review_count']}
         report['remaining_blockers'][1]='真实六型试卷已导入；全量语义、案例独立审阅和旧答疑语义回归仍缺，另有1卷源结构缺损'
     report.update(regression_snapshot(r))
     report['human_release_review']={'contract':'schemas/method-release.json','commands':['release-check','release-bindings'],'registry_index':'optional release_reviews method_id -> repository-relative approved artifact','scope':'explicit manual state changes only after bound real evaluation, five verified case types, current regression and human approval; identities, semantic judgement and statistical significance remain externally audited','indexed_review_count':len(r.index.get('release_reviews',{})),'applied_review_count':sum(m['maturity_status'] in {'validated','stable'} or m['practical_value']!='Useful' for m in r.methods.values())}
@@ -134,6 +135,7 @@ First-use、Blind/Baseline、10/30/90s Safety均有记录Schema及直接可运�
         md+='\n冻结审阅重放与Case Review：3卷各47项重放原题+冻结注释，逐方法6个候选（4个有产物、2个缺typed动作）；另有3道揭晓后AI语义审阅，不冒充新盲测或人工认证。两份R01出现同词强补共同断言归因问题，R09骨架有安全改善限定措辞风险。R01/R06 boundary和R02 canonical只作建议，已批准类型/登记/填槽仍0。2025两卷解析提取v1.2修复新题号/篇章内容吞入详解，旧源/预测/解析版本全部保留。源绑定或结构闭合不认证英语语义；不修改方法以贴答案。\n'
     if exam_path.is_file():
         md+='\n负向语义审阅执行：withdraw_review只接受绑定原输入及冻结分析的显式撤回，不能添加答案、改题或补方法。撤回关系同步扣留其决定产物；撤回框架/定位时传递停用全部依赖消费者及其决定，重新生成图/单题/整卷结果。3道实际审阅均在新揭晓后记录扣留答案与Demo/Case推荐，原盲稿仍保留3道参考匹配事实，不算新盲预测或safe_abstention认证。所有Renderer可消费扣留后的合法Schema。\n'
+        md+='\n辅助动作审阅：另有2025Ⅰ两项真实题面动作，F01 Q36三维A–G完整分组、G01 Q59有提示词到名词性功能节点，均产生实际产物但不填写答案。单独post_reveal_action_review通道核源指纹、不可变题面、角色、执行图和四种Renderer，不以整题未闭合否定辅助动作，也不以辅助产物认证整题成功。2项AI审阅、4个产物，与原盲预测/3道匹配分开统计；独立Case/学生/Baseline仍待核，正式登记及填槽0。\n'
     (ROOT/'docs/final-acceptance.md').write_text(md,encoding='utf-8')
     return report
 

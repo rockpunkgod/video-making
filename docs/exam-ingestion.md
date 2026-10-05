@@ -51,4 +51,21 @@ python -X utf8 -m scripts.apply_exam_withdrawals gaokao-2023-I local-data/exams-
 
 已发现的2024Ⅰ卷解析风险单独登记为pending_review：Q58援引`use sth. to do sth.`但原句是`open on warm days`；续写范文提取文本可见段落重复。保留原稿，不自动改答案、去重或把该解析判成正确。2021Ⅱ卷包内已知第65题the/from冲突及卷首分值问题仍单独保存，未用说明覆盖原题。
 
+## 辅助动作单独审阅，不冒充答案
+
+`scripts.collect_action_reviews`为揭晓后的辅助动作建立独立记录，不改原盲稿、不读参考答案、不注册Case。请求存放私有`action-reviews/<exam_id>/`，必须绑定机械预测哈希、完整原题、外部审阅者和Trigger/Action/Evidence/Output/Stop/Transfer/Practical Benefit。只允许原题上的观察、调用链和具体动作注释，题文、任务类型、选项及提示词不可改。产物必须是该方法自己的实际定位、拆解、分组、框架或导航；候选决定和最终答案不能混入这个通道。源绑定、图及四Renderer重放仅验证结构，不认证英语语义或审阅者身份。
+
+```powershell
+python -X utf8 -m scripts.collect_action_reviews local-data/exams-2020-2025/action-reviews/gaokao-2025-I/F01-q36.request.json
+python -X utf8 -m scripts.collect_action_reviews local-data/exams-2020-2025/action-reviews/gaokao-2025-I/G01-q59.request.json
+```
+
+实际新增两项post-reveal AI动作审阅、四个产物。F01 Q36句型/主角/时间三维各覆盖A–G一次：句型维无区分度必须明说；动名词作主语不等于宾语代词作主语；现在完成加当前情态不能硬归过去组。分组不排除任何字母，之后须回正文核内容。G01 Q59从有提示词进入名词性功能节点，依据支配动词、限定词和后接从句边界，不按提示词原词性进入动词二分；名词性功能不直接决定派生、单复数或所有动名词的可用性。两项均answer=null、整题不闭合，但可分别展示自身第一步产物。
+
+这两项计入`post_reveal_helper_action_review_count`，不混入揭晓前3道答案匹配、6个旧Case Candidate、真人或正式Case计数。记录冻结后只重放同一请求；源指纹、请求指纹或引擎结果漂移需显式回归审阅。独立Case Review、真实性/授权、学生Trigger/Action/Stop/迁移与Baseline收益仍待核，不升级成熟度或Signature。
+
+## 补充工程源，只读参考
+
+用户另提供`E:\新建文件夹`作为ANSWER工程源。只读检查其中`gaokao-english-rebuild`的课程蒸馏目录及参考模块，不运行源脚本、不改源文件、不公开上传提取素材。与当前`provenance/ANSWER/gaokao-english/references`比较，`seven-five.md`、`cloze.md`及`course-evidence.md`规范化文本一致，字节差异来自换行；`reading-comprehension.md`的三化法快判段存在版本差异：补充源描述可切换入口，现有冻结基线另含默认现场顺序及有效首段/段尾限定。保留差异供追溯，不自动替换、静默统一或回退方法。旧评估是否可复用需逐条核原题、身份、时序和版本，目录名blind/independent本身不证明独立盲测或真人数据。
+
 下一阶段须逐题独立语义审阅、错误分类、Case Candidate→Case Review→登记；不能为补数把同一题包装成五类案例，不能反推方法以贴参考答案。当前无可靠自由题面语义后端，机械Analyzer运行不冒充独立英语解答。嵌图、表格版式、第三方答案权威性与公开权利仍待核。真实学生传播/First-use/Blind/Baseline/Short-version Safety是另一条研究链，目前观察0，未被原题数据补齐。先传播效果验收，再强可用性验收；冲突以可用性为准，总验收仍PARTIAL。

@@ -6,7 +6,7 @@
     "head": "60ebaf4"
   },
   "after_refactor": {
-    "tests_run": 333,
+    "tests_run": 339,
     "failures": 0,
     "errors": 0,
     "registry": {
@@ -4667,7 +4667,8 @@
     "new_registered_cases": 0,
     "case_review_candidate_count": 6,
     "post_reveal_ai_reviewed_question_count": 3,
-    "negative_review_withheld_question_count": 3
+    "negative_review_withheld_question_count": 3,
+    "post_reveal_helper_action_review_count": 2
   },
   "runtime_files": {
     "core/__init__.py": "df48faa2d425622da755579fea50f9647d679f4098878545843d7b44da2a230f",
@@ -4694,6 +4695,7 @@
     "scripts/apply_exam_withdrawals.py": "8ccf5d3f720419729d4dc6af9eaf9bfe2870ec7fe18294eaa4ddeb36540cc90b",
     "scripts/build_examples.py": "fe5b7d972a420f168b8232514c5904093f8edee95d0298112ccb3483051d31dc",
     "scripts/build_schemas.py": "8eda42ad3c6c0b139b389d0c018573b1146ea26acb2e4cbeefba72244d528516",
+    "scripts/collect_action_reviews.py": "40513fc6cda9ddaec38f0e4600559d29029543612b3b8b9cd2b5b07fb5ccdef1",
     "scripts/collect_exam_cases.py": "ee6b16003e557ab2d5307046dd18771d4c9ca9531d2fc9041fb9acc545747af2",
     "scripts/exam_profiles_2020_2021.py": "b5a3ce355ed219ffdca8b4bb6ac0a6f1cb502fcd86091776e3a789868fc1817f",
     "scripts/exam_profiles_2022_2024.py": "21d2d0b75ec5987c2072dc495cbc2ec6f125199310d740af1e624c1a14453dbd",
@@ -4705,9 +4707,10 @@
     "scripts/migrate_registry.py": "8ed79f38f8a5ba75c54ef346deb6dbebc0d2b1e774552814f43572a651bd1387",
     "scripts/normalize_cases.py": "11695800699abffc6e841f7cd3f964371db84adc5ae78b61145f00c5ec093e30",
     "scripts/prepare_revision.py": "07d51b5f9efcb9bd851f1872ff2f54d5c3be36daa7772768ffa2aafb7f3dea39",
-    "scripts/run_acceptance.py": "70cd416d8a7b728c6edfd2bfd7c03d8e69813c296a8893dcab9fab9175b8984a",
+    "scripts/run_acceptance.py": "6ad63f0a36cfac037be4a848d3ed17092efe9c041d437b1db0bca706dfbf65bb",
     "scripts/run_exam_regression.py": "8bcdf8d98ea307118841acf5fe911ef6eaef650beca3d4b4cf7dde779f8fd1da",
-    "scripts/summarize_exam_ingestion.py": "6aad7fda59d2321429c9377220751e082f58a1c31a8ebfe3d2e1c9406ef46a28",
+    "scripts/summarize_exam_ingestion.py": "10565d8ba06f9d79478fab8dbf4fb8a568bf962537bdc12b8a6979add68703b9",
+    "tests/test_action_reviews.py": "0917499f64d6804962471b3f7c0576e1767513ad04fdb74f946a2e16f72729ee",
     "tests/test_application_migration.py": "069bd3a29aec718e1707f1e8db8ea6682de8a9e2a1654054a1c0eb7baab6bd75",
     "tests/test_case_coverage.py": "a34eda270237f5f0973420981d8e7db94f749e667f6d3b5eb57dcf552513f54a",
     "tests/test_cloze_migration.py": "02a80e5d3c3a4e138bd3509c28df71b01a3543f22994575b604f0674adfb3c76",
