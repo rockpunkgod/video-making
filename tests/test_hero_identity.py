@@ -8,11 +8,11 @@ from unittest.mock import Mock, patch
 from video_contracts import sha, seal
 from tests.test_ae_production import AEProductionTest
 from creative_os.delivery import make_delivery, attach_fidelity_review, CHECKS
-from creative_os.hero import build_contract, validate_contract, validate_handoff, render_receipt, require_approved_direction
+from creative_os.hero import build_contract, validate_contract, validate_handoff, render_receipt, require_approved_direction, file_sha
 from creative_os.motion_identity import bind_identity, validate_identity, registry, creative_review, CREATIVE_DIMENSIONS
 from premiere_production.router import BackendRouter
-from premiere_production.music import gain_envelope, recording_manifest
-from premiere_production.editorial import bind_final_display
+from premiere_production.music import gain_envelope, recording_manifest, verify_gain_keys
+from premiere_production.editorial import bind_final_display, validate_audio_plan, validate_audio_timeline
 from ae_production.hero_execution import audit
 
 
@@ -89,6 +89,55 @@ class HeroTests(unittest.TestCase):
 
 
 class ProductionControls(unittest.TestCase):
+    def audio_fixture(self, directory):
+        path=Path(directory)/'synthetic.wav';path.write_bytes(b'SYNTHETIC AUDIO')
+        units=[{'unit_id':key,'spoken_copy':'SYNTHETIC '+key,'source_claim_refs':['synthetic-'+key]} for key in ('a','b')]
+        voices=[{'unit_id':u['unit_id'],'path':str(path),'sha256':file_sha(path),
+                 'spoken_copy_sha':sha(u['spoken_copy']),'source_claim_refs':u['source_claim_refs'],
+                 'start':.2+i*.6,'end':.6+i*.6} for i,u in enumerate(units)]
+        audio={'render_contract_sha':'synthetic','final_copy_sha':'synthetic','duration':2,'fps':24,
+               'voice':voices,'sfx':{'path':str(path),'sha256':file_sha(path)}}
+        contract={'render_contract_sha':'synthetic','copy_lock':{'final_copy_sha':'synthetic'},'canvas':{'duration':2,'fps':24}}
+        return path,audio,contract,{'units':units}
+
+    def test_audio_plan_requires_all_voice_units_and_rejects_sfx_tamper(self):
+        with tempfile.TemporaryDirectory() as d:
+            path,audio,contract,hero=self.audio_fixture(d)
+            validate_audio_plan(audio,contract,hero)
+            for voices in ([],audio['voice'][:1],[audio['voice'][0],audio['voice'][0]]):
+                changed=deepcopy(audio);changed['voice']=voices
+                with self.assertRaisesRegex(ValueError,'every excerpt unit'):validate_audio_plan(changed,contract,hero)
+            sfx=Path(d)/'sfx.wav';sfx.write_bytes(b'ORIGINAL');audio['sfx']={'path':str(sfx),'sha256':file_sha(sfx)};sfx.write_bytes(b'TAMPERED')
+            with self.assertRaisesRegex(ValueError,'SFX changed'):validate_audio_plan(audio,contract,hero)
+
+    def test_music_plan_cannot_retain_no_music_ducking_declaration(self):
+        with tempfile.TemporaryDirectory() as d:
+            path,audio,contract,hero=self.audio_fixture(d)
+            audio['music']={'source_path':str(path),'file_sha':file_sha(path),'clip_path':str(path),'clip_sha':file_sha(path)}
+            audio['ducking']={'status':'not_applicable'}
+            with self.assertRaisesRegex(ValueError,'no-music'):validate_audio_plan(audio,contract,hero)
+
+    def test_native_audio_timeline_rejects_extra_clip_or_moved_voice(self):
+        with tempfile.TemporaryDirectory() as d:
+            path,audio,contract,hero=self.audio_fixture(d)
+            state={'audioTracks':[{'index':0,'clips':[{'name':path.name,'start':v['start'],'end':v['end']} for v in audio['voice']]},
+                                  {'index':1,'clips':[{'name':path.name,'start':0,'end':2}]}]}
+            validate_audio_timeline(state,audio)
+            changed=deepcopy(state);changed['audioTracks'][0]['clips'][0]['start']+=.2
+            with self.assertRaisesRegex(ValueError,'placement'):validate_audio_timeline(changed,audio)
+            changed=deepcopy(state);changed['audioTracks'][0]['clips'].append(changed['audioTracks'][0]['clips'][0])
+            with self.assertRaisesRegex(ValueError,'coverage'):validate_audio_timeline(changed,audio)
+
+    def test_native_music_readback_must_match_every_planned_key(self):
+        keys=[{'time_seconds':0,'level_db':-20},{'time_seconds':1,'level_db':-60}]
+        actual={'isTimeVarying':True,'keyframes':[{'time':k['time_seconds'],'value':10**((k['level_db']-15)/20)} for k in keys]}
+        verify_gain_keys(actual,keys)
+        for changed in (dict(actual,keyframes=actual['keyframes'][:1]),
+                        dict(actual,keyframes=actual['keyframes']+[actual['keyframes'][-1]])):
+            with self.assertRaisesRegex(ValueError,'coverage'):verify_gain_keys(changed,keys)
+        actual['keyframes'][-1]['value']*=2
+        with self.assertRaisesRegex(ValueError,'time/level'):verify_gain_keys(actual,keys)
+
     def test_creative_review_does_not_create_human_approval(self):
         r=creative_review({'render_contract_sha':'synthetic'},{'final_copy_sha':'synthetic'},'synthetic',
                           {k:'Synthetic observation, pending human review.' for k in CREATIVE_DIMENSIONS})

@@ -4,9 +4,83 @@ No teaching generation, no silent backend fallback, no publication command.
 """
 from pathlib import Path
 import re
+import math
 from video_contracts import read, write, sha
 from creative_os.hero import validate_contract, validate_handoff, file_sha
 from .router import BackendRouter
+from .music import verify_gain_keys
+
+
+def validate_audio_plan(audio, contract, excerpt):
+    """Freeze every voice unit and audio source before final-cut operations."""
+    duration = contract['canvas']['duration']
+    if (audio['render_contract_sha'] != contract['render_contract_sha']
+            or audio['final_copy_sha'] != contract['copy_lock']['final_copy_sha']):
+        raise ValueError('Audio plan belongs to another visual revision or final copy')
+    if audio['duration'] != duration or audio['fps'] != contract['canvas']['fps']:
+        raise ValueError('Audio plan timing/profile differs from the Hero')
+    units = {u['unit_id']:u for u in excerpt['units']}
+    voice_ids = [v['unit_id'] for v in audio['voice']]
+    if len(voice_ids) != len(set(voice_ids)) or set(voice_ids) != set(units):
+        raise ValueError('Voice must cover every excerpt unit exactly once')
+    previous_end = 0
+    for voice in audio['voice']:
+        unit = units[voice['unit_id']]
+        if (file_sha(voice['path']) != voice['sha256']
+                or voice['spoken_copy_sha'] != sha(unit['spoken_copy'])
+                or voice['source_claim_refs'] != unit['source_claim_refs']):
+            raise ValueError('Voice file/copy/binding drift')
+        start,end = voice['start'],voice['end']
+        if (not all(math.isfinite(t) for t in (start,end))
+                or not 0 <= start < end <= duration or start < previous_end):
+            raise ValueError('Voice timeline overlaps or exceeds the Hero')
+        previous_end = end
+    sfx = audio.get('sfx')
+    if sfx and file_sha(sfx['path']) != sfx['sha256']:
+        raise ValueError('Structural SFX changed after Audio Plan capture')
+    music = audio.get('music')
+    if music:
+        if (file_sha(music['source_path']) != music['file_sha']
+                or file_sha(music['clip_path']) != music['clip_sha']):
+            raise ValueError('Recording changed after license/input capture')
+        if audio.get('ducking',{}).get('status') == 'not_applicable':
+            raise ValueError('Music cannot retain a no-music ducking declaration')
+        behavior = audio.get('behavior',{})
+        if behavior.get('mix_owner') != 'Premiere' or behavior.get('beat_sync') is not False:
+            raise ValueError('Piano bed must be edited in Premiere without Beat Sync')
+        keys = music.get('gain_keys',[])
+        times = [k['time_seconds'] for k in keys]
+        if (not keys or times != sorted(set(times)) or times[0] != 0
+                or any(not math.isfinite(t) or not 0 <= t < duration for t in times)
+                or any(not math.isfinite(k['level_db']) or not -96 <= k['level_db'] <= 0 for k in keys)):
+            raise ValueError('Invalid native music gain envelope')
+    return audio
+
+
+def validate_audio_timeline(state, audio):
+    """Verify placements the native API exposes; do not infer unseen source IDs."""
+    if state.get('pagination',{}).get('truncated'):
+        raise ValueError('Native timeline snapshot truncated')
+    expected={0:[(Path(v['path']).name,v['start'],v['end']) for v in audio['voice']]}
+    if audio.get('sfx'):
+        expected[1]=[(Path(audio['sfx']['path']).name,0,audio['duration'])]
+    if audio.get('music'):
+        index=audio['music']['audio_track_index']
+        if index in expected:
+            raise ValueError('Music must occupy a separate audio track')
+        expected[index]=[(Path(audio['music']['clip_path']).name,0,audio['duration'])]
+    actual={t['index']:t['clips'] for t in state['audioTracks'] if t['clips']}
+    if set(actual)!=set(expected):
+        raise ValueError('Native audio tracks differ from the Audio Plan')
+    for index,planned in expected.items():
+        observed=actual[index]
+        if len(observed)!=len(planned):
+            raise ValueError('Native audio clip coverage differs from the Audio Plan')
+        for clip,(name,start,end) in zip(observed,planned):
+            if (clip['name']!=name or abs(clip['start']-start)>1/24
+                    or abs(clip['end']-end)>1/24):
+                raise ValueError('Native audio placement differs from the Audio Plan')
+    return 'PASS_native_clip_names_placement_and_coverage'
 
 
 def bind_final_display(manifest, excerpt, caption_path, frame_paths, attribution_text):
@@ -57,20 +131,7 @@ class EditorialSession:
         receipt = read(r['render_receipt'])
         validate_handoff(receipt, contract, r['ae_project'])
         audio = read(r['audio_plan'])
-        if audio['render_contract_sha'] != contract['render_contract_sha']:
-            raise ValueError('Audio plan belongs to another visual revision')
-        if audio['final_copy_sha'] != contract['copy_lock']['final_copy_sha']:
-            raise ValueError('Audio plan belongs to another final copy')
-        units = {u['unit_id']:u for u in excerpt['units']}
-        for voice in audio['voice']:
-            if (file_sha(voice['path']) != voice['sha256']
-                    or voice['spoken_copy_sha'] != sha(units[voice['unit_id']]['spoken_copy'])
-                    or voice['source_claim_refs'] != units[voice['unit_id']]['source_claim_refs']):
-                raise ValueError('Voice file/copy/binding drift')
-        music = audio.get('music')
-        if music and (file_sha(music['source_path']) != music['file_sha']
-                      or file_sha(music['clip_path']) != music['clip_sha']):
-            raise ValueError('Recording changed after license/input capture')
+        validate_audio_plan(audio, contract, excerpt)
         return contract, receipt, excerpt, audio
 
     def call(self, operation, inputs=None):
@@ -111,6 +172,19 @@ class EditorialSession:
             raise ValueError('Export a new revision rather than overwrite history')
         self.call('save_project')
         self.call('validate_export_preset', {'preset_path':str(preset)})
+        audio = self.preflight()[3]
+        state = self.call('get_active_sequence')
+        audio_verification = {'timeline':validate_audio_timeline(state,audio)}
+        if audio.get('music'):
+            music_clip = next(t for t in state['audioTracks'] if t['index']==audio['music']['audio_track_index'])['clips'][0]
+            properties = self.call('get_clip_properties', {'node_id':music_clip['nodeId']})
+            volume = next(e for e in properties['effects'] if e.get('matchName','').startswith('Internal Volume'))
+            parameters = self.call('get_effect_properties', {'node_id':music_clip['nodeId'], 'effect_name':volume['matchName']})
+            level = next(p['displayName'] for p in parameters['properties'] if p['displayName'] in ('Level','Nivel','级别'))
+            native_keys = self.call('get_keyframes', {'node_id':music_clip['nodeId'],
+                                      'effect_name':volume['matchName'], 'property_name':level})
+            audio_verification['music_keys'] = verify_gain_keys(native_keys,audio['music']['gain_keys'])
+            audio_verification['native_music_keys_sha'] = sha(native_keys)
         result = self.call('export_sequence', {'output_path':str(output), 'preset_path':str(preset),
                                                'range':'entire', 'timeout_minutes':3})
         if not Path(output).is_file() or not Path(output).stat().st_size:
@@ -121,6 +195,7 @@ class EditorialSession:
                 'final_copy_sha':sha([contract['copy_lock']['final_copy_sha'], file_sha(self.request['captions'])]),
                 'output_path':str(Path(output).resolve()), 'output_sha':file_sha(output),
                 'native_export_result':result, 'human_taste_review':'PENDING',
+                'audio_verification':audio_verification,
                 'music_license_gate':audio.get('music',{}).get('music_license_gate','HOLD'),
                 'teaching_release':'HOLD', 'source_display_release':'HOLD', 'editorial_release':'HOLD',
                 'public_render_ready':False}

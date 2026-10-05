@@ -45,6 +45,15 @@ recording source and derived clip hashes. Changed copy, files or current frozen
 dependencies are rejected before pipeline operations. Status snapshots do not
 provide live monitoring of external withdrawals.
 
+The audio preflight requires every excerpt voice unit exactly once, valid
+nonoverlapping placements, and unchanged SFX bytes. A music bed cannot retain
+an old `ducking.status: not_applicable` declaration. Before export, native
+audio-track clip names, counts and placements must match the Audio Plan, and
+every music Level key must match the planned time/value with no extra keys.
+This reads the native fields the upstream API exposes; clip names alone do
+not certify hidden media relink state or establish teaching/source permission.
+Recording file hashes and import receipts remain separate provenance evidence.
+
 The router requires a verified live backend and actual advertised tools. A
 static UXP capability entry does not establish a live UXP connection. It refuses
 silent fallback and blocks further edits after an uncertain operation. Inspect

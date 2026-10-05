@@ -11,6 +11,19 @@ LISTENING_QUESTIONS = (
 )
 
 
+def verify_gain_keys(actual, expected):
+    """Stored-key proof only; exact plan coverage, including no unexpected keys."""
+    stored = actual.get('keyframes', [])
+    if not actual.get('isTimeVarying') or len(stored) != len(expected):
+        raise ValueError('Native music keyframe coverage differs from the Audio Plan')
+    for observed, planned in zip(stored, expected):
+        value = 10 ** ((planned['level_db'] - 15) / 20)
+        if (abs(observed['time'] - planned['time_seconds']) > 1e-5
+                or abs(observed['value'] - value) > 1e-8):
+            raise ValueError('Native music keyframe time/level differs from the Audio Plan')
+    return 'PASS_native_parameter_readback_not_listening_approval'
+
+
 def recording_manifest(path, *, title, composer, performer, source,
                        license='unknown', license_evidence=None):
     evidence = license_evidence or []
@@ -63,5 +76,7 @@ def apply_music(router, sequence_id, node_id, effect_name, property_name, keys):
     actual = router.execute('get_keyframes', {
         'node_id': node_id, 'effect_name': effect_name, 'property_name': property_name,
     }, sequence_id=sequence_id)
+    verification = verify_gain_keys(actual, keys)
     return {'plan_sha': sha(keys), 'native_readback': actual,
+            'verification': verification,
             'human_listening_review': 'PENDING', 'public_render_ready': False}
