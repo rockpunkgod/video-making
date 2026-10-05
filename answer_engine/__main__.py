@@ -2,7 +2,7 @@ import argparse
 import json
 import sys
 from pathlib import Path
-from core.registry import Registry
+from core.registry import Registry,validate_schema
 from core.analyzer import QuestionAnalyzer, PaperAnalyzer
 from core.matcher import symptom_route
 from renderers import render
@@ -20,6 +20,8 @@ def main():
     sub=commands.add_parser('method'); sub.add_argument('method_id')
     sub=commands.add_parser('symptom'); sub.add_argument('question_type'); sub.add_argument('symptom')
     sub=commands.add_parser('evaluate'); sub.add_argument('input'); sub.add_argument('--plan')
+    sub=commands.add_parser('release-check'); sub.add_argument('input')
+    sub=commands.add_parser('release-bindings'); sub.add_argument('input')
     commands.add_parser('validate')
     commands.add_parser('case-coverage')
     args=parser.parse_args()
@@ -28,6 +30,10 @@ def main():
         from scripts.generate_assets import generate
         result = r.validate(); result.update(generate(check=True))
     elif args.command=='case-coverage': result=r.case_coverage()
+    elif args.command in {'release-check','release-bindings'}:
+        from core.release import read_json,check_release,release_bindings
+        r.validate(); review=read_json(args.input); validate_schema('method-release',review)
+        result=check_release(r,review) if args.command=='release-check' else release_bindings(r,review['method_id'],review['inputs'])
     elif args.command=='method': result={'card':r.methods[args.method_id],'full_source':r.full(args.method_id)}
     elif args.command=='symptom': result=symptom_route(args.question_type,args.symptom,r)
     elif args.command=='evaluate': result=evaluate(load_records(args.input),json.loads(Path(args.plan).read_text(encoding='utf-8')) if args.plan else None)

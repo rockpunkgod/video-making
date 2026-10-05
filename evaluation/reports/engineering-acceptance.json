@@ -6,7 +6,7 @@
     "head": "60ebaf4"
   },
   "after_refactor": {
-    "tests_run": 278,
+    "tests_run": 290,
     "failures": 0,
     "errors": 0,
     "registry": {
@@ -84,6 +84,14 @@
       },
       {
         "command": "python -m answer_engine evaluate evaluation/datasets/real-observations.pending.json",
+        "exit_code": 0
+      },
+      {
+        "command": "python -m answer_engine release-check evaluation/release-review.example.json",
+        "exit_code": 0
+      },
+      {
+        "command": "python -m answer_engine release-bindings evaluation/release-review.example.json",
         "exit_code": 0
       }
     ]
@@ -4645,6 +4653,86 @@
         "registered_examples_complete": false
       }
     ]
+  },
+  "runtime_files": {
+    "core/__init__.py": "df48faa2d425622da755579fea50f9647d679f4098878545843d7b44da2a230f",
+    "core/analyzer.py": "471df1c23397467dd896aea1bd04c4478910cf543890f887a461dc6cfcc14321",
+    "core/composer.py": "839fbf124012f6617a7b39d836f04f7b9a6c960de007fea0b9470f207b36cd4c",
+    "core/evidence.py": "bffa0edfe21a9204685ec895ff3856aa0be32f228007a61693fa04acb37d78c4",
+    "core/execution.py": "cf3f085ab7247809e9197d56fc61393feb87770fa97f6e79b4f7adeb01137764",
+    "core/grammar_navigation.py": "264fb0761a84d1d8745078819b1077fe69e28db84c14bcc7ce43fda9e93faf98",
+    "core/image_evidence.py": "d8398e22ddda290f57817e788e6375a082c155d522d226df9107d3b2b04fa744",
+    "core/lesson_feedback.py": "d81837d40e787c7ddbc746b7f9748814b3df02ffa299f7eae7ff669554b84f53",
+    "core/matcher.py": "b5133d630176695d3fccf4e0c5c72f563f81b1bae9418af7e46dfe8a099d3ba6",
+    "core/passage_lesson.py": "f024425d62ce2207015afb7567725765a6cd29de5b775d9fbeab573273b22a23",
+    "core/registry.py": "9d81d2d5d4fed46b5605312a92b51bb259f71df9459c12e202000c461a713b4a",
+    "core/release.py": "d2ff77418472fd67a86428c554278024ebc5531b8a8ae333b917a68c760b4615",
+    "core/writing_feedback.py": "e1f1e03cdeb746a5ef51510dcb76e3c898036c87c4df646c0d8f6c1288d5a8f4",
+    "answer_engine/__init__.py": "4382269cee2a379010a95d276fa1d34430d9e213de899492b75dd0404a0cb01a",
+    "answer_engine/__main__.py": "9a978ddf3aa616ca8daac79c5421795f3418dbd2e1585ac56b308db415a5f971",
+    "renderers/__init__.py": "8bf22f989115dfa93e561cf304020f9c02c463658fee8344a7f6d272628c7e23",
+    "renderers/passage.py": "1ff41c5fe5702498ca293e43b68da205c73d03f5863680115bcbf6cbf3602179",
+    "evaluation/__init__.py": "eda5a1aa9ecc60006485cc0dfecc05213eb0b9fe58c2eee9915c2826987a0f5f",
+    "evaluation/harness.py": "d37e672433b777f0f00c5a3e42942f9b7246c3a0268731fcfcb2d328efd5a5dc",
+    "scripts/__init__.py": "917b786193aee3335e068a78d209995e53f23a2df61cbed7a4d529f4ef600b10",
+    "scripts/build_examples.py": "fe5b7d972a420f168b8232514c5904093f8edee95d0298112ccb3483051d31dc",
+    "scripts/build_schemas.py": "8eda42ad3c6c0b139b389d0c018573b1146ea26acb2e4cbeefba72244d528516",
+    "scripts/export_git_tree.py": "bb80ea36d8d7edc207c9f8bd2d983008962e22a1ef8c9d81d198dcca0fe5844e",
+    "scripts/finalize_registry.py": "439f73dfb4ab968c4f41476e88ef30c559b1d4cc098625315884dac274d6c318",
+    "scripts/generate_assets.py": "9f0b5e42bd2d8e4fc572427e5420c2661e99f515f7274222eca1dd9571707b37",
+    "scripts/migrate_registry.py": "8ed79f38f8a5ba75c54ef346deb6dbebc0d2b1e774552814f43572a651bd1387",
+    "scripts/normalize_cases.py": "11695800699abffc6e841f7cd3f964371db84adc5ae78b61145f00c5ec093e30",
+    "scripts/prepare_revision.py": "07d51b5f9efcb9bd851f1872ff2f54d5c3be36daa7772768ffa2aafb7f3dea39",
+    "scripts/run_acceptance.py": "efecc74d9a4096e38e3164aa79138c778e94b88e4042e50d2f5b97466d733143",
+    "tests/test_application_migration.py": "069bd3a29aec718e1707f1e8db8ea6682de8a9e2a1654054a1c0eb7baab6bd75",
+    "tests/test_case_coverage.py": "a34eda270237f5f0973420981d8e7db94f749e667f6d3b5eb57dcf552513f54a",
+    "tests/test_cloze_migration.py": "02a80e5d3c3a4e138bd3509c28df71b01a3543f22994575b604f0674adfb3c76",
+    "tests/test_continuation_migration.py": "b453e747166c6aa5cbd2ffece1965a1e855c8a1a2b25dec3c794be53d1eea0a0",
+    "tests/test_engine.py": "a9e307532cdb174f5c835ea1d9e0cc974069ec5d8237476b0a1791570ef31345",
+    "tests/test_evaluation_workflow.py": "3c5832c74b758c7bc63b59fd019d98eb6343fefb940bfc233f880b4ae0c9cf63",
+    "tests/test_evidence_binding.py": "8740c22ae2d83007cbf25b1ea2a5c96feb3a1ef2e4a1ea3ba188f6df1e47c922",
+    "tests/test_execution.py": "30d5a51eab68e2653711489ce013a8f6ba8a93bf39a1f0260289544d932c4670",
+    "tests/test_grammar_migration.py": "92bb7acd399326f63b11dc7f8cb4678977b1d74889dc1909b0bb018aee186a47",
+    "tests/test_image_evidence.py": "85586e354e7cab8093fa567a33282ff04ef421fcc04ed250c8e2e490990da863",
+    "tests/test_lesson_feedback.py": "c9776a5b21998cfa9e147adf1f7e9faea40d78c7d87c7cd5a0094babd2fd14b8",
+    "tests/test_paper_coverage.py": "ca514091e2e97e36bcfd0d2ca006838658a323223a27c70ff7a70330a2c0dbe2",
+    "tests/test_passage_lesson.py": "ed28acc3e8523789f872e00c4f0f062763bf48327a790ebb21651abc15634cd7",
+    "tests/test_reading_migration.py": "86cab20f31791982840801d90d236a6856d50cfed37359535b19ba92980751bc",
+    "tests/test_registry.py": "d6b613124de8189bfb4095fac06d84fe870f12fb51bf1a5edaf26191bfe57575",
+    "tests/test_release_review.py": "c92ccade3ace918ea3948f5ced083745f74ce6fec291255bb6b09658304f6146",
+    "tests/test_review_provider_binding.py": "98993f6a5adb4baf5c05835f58f1f475a4bf20cb99c79b51fd2ce531c57a3a46",
+    "tests/test_score_boundaries.py": "eb66d8c878228c10d2b9223da7bf75ec14876b4a3206b58e1fe4cf5b0ede0b92",
+    "tests/test_seven_five_migration.py": "62d1ffd38cac296c16f0bc09c6202e5a348e98df0218f14956c4023162acbeab",
+    "tests/test_writing_feedback.py": "cb9dab3730b1eb41c69773a8ac6ff77a32f653c5cf59e94f2e394ae833e2f315",
+    "schemas/action-artifact.json": "6fd8c938864efeac68f2846f0867032bd4bb5c89a87b02d0e52130187bcee4e5",
+    "schemas/case.json": "c8c75a67ae87428d995f01fe41d44f3966001cad180c32c8c9f575831f9e8cec",
+    "schemas/evaluation-record.json": "ead4cc597cedda5bd6c674ea23124362dad82d0b332594a5e0714278da97e889",
+    "schemas/evaluation-result.json": "6caa6230a2b004ff2f477b3053154425ad5ff901775befc4a13b2e7e52c14967",
+    "schemas/evidence-graph.json": "295099da883f912b09623b17d10d34a92ceef2e86c5d37e7173f8d94d2070a04",
+    "schemas/lesson-review.json": "c7aab8e7cb4bf26cb3610a154f3981ccc8d48dc04281dbb4dfdf65bb398dd612",
+    "schemas/method-card.json": "563674cebfbde7bd7f3425f983d08a1c8c31d6e0ff715f181887c256540447f0",
+    "schemas/method-execution.json": "e6ac56888c59318efee58e91f58ce93fb53fe682e2cc74b0df37f96e76b95220",
+    "schemas/method-release.json": "192566478892b26db64e0fcc9594d0ae23248a08a35246e63e338a71e3e4b232",
+    "schemas/paper-analysis.json": "634eb851f1a3fa9fa8203942a594587e557f3fef7cfa794c0ad42a595e22d2f8",
+    "schemas/passage-lesson-analysis.json": "e1f31cf6819a8927fdde84d50c55afb46a0ea196c64b94839c9053e2f7b9b12b",
+    "schemas/passage-lesson-input.json": "a5cc71583b7db9e3715fd43b64594779c72d014cff47acc75265c8faf92f3a43",
+    "schemas/question-analysis.json": "d6964233067a02a325305733bccd60f4856d48b9f39d5069292e96f095b17c4a",
+    "schemas/question-input.json": "a939b6031015740dec398db7bb04a55853bff6fa9e0dc9d1eecc74aa379583f7",
+    "schemas/writing-review.json": "2043a5c24df6bbf702dc2e8f2c16059a40698cd82710e645128b03462fd2c554",
+    "EVALUATION_PROTOCOL.md": "1876be84ef2d828880b63264513cec42aa0bf0efaa06e23528ff2bcebfd6927a"
+  },
+  "semantic_registry_sha256": "39bc49d0f7ed9d69985e8e8bb15336a37085fd665921d2bb20f3547b45d92443",
+  "cases_sha256": "ebb70a9917211c69ff5a26ad4282f0b0bb9baf72d56a95d3374a48d3642aed61",
+  "human_release_review": {
+    "contract": "schemas/method-release.json",
+    "commands": [
+      "release-check",
+      "release-bindings"
+    ],
+    "registry_index": "optional release_reviews method_id -> repository-relative approved artifact",
+    "scope": "explicit manual state changes only after bound real evaluation, five verified case types, current regression and human approval; identities, semantic judgement and statistical significance remain externally audited",
+    "indexed_review_count": 0,
+    "applied_review_count": 0
   },
   "candidate_relation_binding": {
     "required": "same method_id and candidate on one reviewed relation, with own upstream claim/trigger and directly quoted source",

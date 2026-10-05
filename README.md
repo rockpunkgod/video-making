@@ -25,6 +25,8 @@ python -m answer_engine analyze examples/question-lesson-course.json --renderer 
 python -m answer_engine paper examples/paper-course.json
 python -m answer_engine lesson examples/passage-lesson.synthetic.json --renderer legacy-wechat
 python -m answer_engine evaluate evaluation/datasets/real-observations.pending.json
+python -m answer_engine release-check evaluation/release-review.example.json
+python -m answer_engine release-bindings evaluation/release-review.example.json
 python -m unittest discover -s tests -v
 ```
 
@@ -56,3 +58,5 @@ Python API：`from answer_engine import QuestionAnalyzer, PaperAnalyzer`；`anal
 改Registry后运行 `python -m scripts.generate_assets` 再测试校验，不手改生成资源。单独安装Skill仍可由宿主读取自包含参考；核心需完整仓库与依赖。支持源码目录/editable部署，不承诺独立wheel携带课程数据。
 
 验收顺序：传播效果→冻结→强可用性；第二阶段优先级更高。真实数据缺失为 pending_real_participant_validation。最终缺口见 [docs/final-acceptance.md](docs/final-acceptance.md)。课程基线为 ANSWER@b04ebc26d7fa096404111a0bb12f6c77cc8525b9。
+
+成熟度与实用等级由人工批准，工具不自动升级。release-check核对批准凭证、五类案例、真实冻结评估和当前回归绑定；release-bindings只生成材料指纹，指纹不是批准。示例未批准且会被挡住；实际操作见[真实验收运行](docs/evaluation.md)。

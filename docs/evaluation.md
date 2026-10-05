@@ -28,3 +28,20 @@ blind_acceptance_audit逐时长检查绝对可用性、Boundary、角色、参�
 短版增加action_failure_rate与evidence_failure_rate。对90秒版的max_action_failure_delta、max_evidence_failure_delta须采集前按风险冻结，缺省时安全为untested。最低参与者须为整数，效率阈值须为有限正效应，不能用负数、布尔或NaN把零改善包装成改进。任何阶段、角色、题组或材料链缺口同时阻断效率审阅与Signature建议，而非只挡发布。
 
 Synthetic仅为程序记录，不造真实考试或受试者，永不发布升级；其100%等数值不可引用为方法效果。real.pending为空。均值改善最多产审阅候选，不能证明显著性；最终由研究者按冻结计划审核不确定性和风险。工具不自动更改Registry。
+
+## 人工释放凭证
+
+成熟度与实用等级仍是两个字段，当前均为candidate+Useful。`schemas/method-release.json`定义单独的外部人工批准记录；`evaluation/release-review.example.json`默认approved=false、检查全false、绑定null，没有真实批准。
+
+先完成真实案例/版本修订、数据、冻结计划与课程审阅，在candidate状态运行完整验收。工程报告绑定代码、测试、Schema、协议、语义Registry与案例快照，并核对测试前后材料未变。然后复制未批准模板，填写实际输入文件、目标状态与等级，用release-bindings取当前材料指纹；方法指纹只排除四个状态/等级别名，不能借此改Trigger、Action、Stop、版本或其他教学事实。实际批准须由具名审阅者填写时间、材料引用与检查结论，再运行release-check。两命令只读；生成指纹或均值审阅建议均不构成批准。
+
+```powershell
+python -m answer_engine release-bindings evaluation/ACTUAL-REVIEW.json
+python -m answer_engine release-check evaluation/ACTUAL-REVIEW.json
+```
+
+凭证的inputs分别指向原始JSON/JSONL观察、冻结计划和完整工程回归报告，须是仓库内相对文件路径。检查器重新计算原始评估，不信任粘贴的safe_for_release=true；案例五槽必须有verified_course_example与题面，人工另核合法来源和语义。主职责与产物类型由机器另行核对，人工勾选不能覆盖类型错配。批准时间须晚于相同方法/版本/题组/冻结稿的观察。缺链、旧指纹、synthetic、未批准、少案例、旧回归或错目标均阻断。当前没有真实批准，不能沿用程序测试中的临时元数据标记。
+
+stable还需同版本、较早的validated批准记录（validated_review），本题组至少两道不同迁移题号及人工多题材审阅；不同题号不自动证明不同题材。Efficient另需评估的效率审阅候选与人工统计显著性核查。Signature再核品牌类型、视觉公式、记忆/口语和短版安全。身份、采集真实性、来源合法性、英语语义、题材差异与统计显著性始终由外部审阅者负责，程序不认证这些事实。
+
+只有真实批准后，维护者才手动更改Method Card及其别名/索引、重新生成投影，在registry.yaml的可选release_reviews中登记`method_id: 实际批准文件路径`。Registry.validate要求批准对象、目标状态和等级与当前卡一致，并重新核材料；数据、规则或代码改变后旧批准失效，需先回到待审状态并重新回归/审批。没有任何自动写卡或自动升级命令。实际版本/案例改动还须维护相应真实回归夹具，不能删失败测试来放行。

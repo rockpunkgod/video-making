@@ -1,0 +1,213 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://answer.local/schemas/method-release.json",
+  "type": "object",
+  "properties": {
+    "schema_version": {
+      "enum": [
+        "1.0.0"
+      ]
+    },
+    "method_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "method_version": {
+      "type": "string",
+      "minLength": 1
+    },
+    "target_maturity": {
+      "enum": [
+        "draft",
+        "candidate",
+        "validated",
+        "stable",
+        "deprecated"
+      ]
+    },
+    "target_practical_value": {
+      "enum": [
+        "Useful",
+        "Efficient",
+        "Signature"
+      ]
+    },
+    "approved": {
+      "type": "boolean"
+    },
+    "reviewer": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "reviewed_at": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "checks": {
+      "type": "object",
+      "properties": {
+        "course_provenance": {
+          "type": "boolean"
+        },
+        "compact_full_consistency": {
+          "type": "boolean"
+        },
+        "role_correctness": {
+          "type": "boolean"
+        },
+        "case_legality": {
+          "type": "boolean"
+        },
+        "case_semantics": {
+          "type": "boolean"
+        },
+        "practicality": {
+          "type": "boolean"
+        },
+        "first_use": {
+          "type": "boolean"
+        },
+        "regression": {
+          "type": "boolean"
+        },
+        "stable_transfer": {
+          "type": "boolean"
+        },
+        "statistical_significance": {
+          "type": "boolean"
+        },
+        "visual_memory_speech": {
+          "type": "boolean"
+        },
+        "short_version_safety": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "course_provenance",
+        "compact_full_consistency",
+        "role_correctness",
+        "case_legality",
+        "case_semantics",
+        "practicality",
+        "first_use",
+        "regression",
+        "stable_transfer",
+        "statistical_significance",
+        "visual_memory_speech",
+        "short_version_safety"
+      ],
+      "additionalProperties": false
+    },
+    "evidence_refs": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      },
+      "minItems": 0
+    },
+    "notes": {
+      "type": "string",
+      "minLength": 1
+    },
+    "inputs": {
+      "type": "object",
+      "properties": {
+        "records": {
+          "type": "string",
+          "minLength": 1
+        },
+        "plan": {
+          "type": "string",
+          "minLength": 1
+        },
+        "regression": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "records",
+        "plan",
+        "regression"
+      ],
+      "additionalProperties": false
+    },
+    "bindings": {
+      "type": "object",
+      "properties": {
+        "method_sha256": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "cases_sha256": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "records_sha256": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "plan_sha256": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "regression_sha256": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "pattern": "^[0-9a-f]{64}$"
+        }
+      },
+      "required": [
+        "method_sha256",
+        "cases_sha256",
+        "records_sha256",
+        "plan_sha256",
+        "regression_sha256"
+      ],
+      "additionalProperties": false
+    },
+    "validated_review": {
+      "type": [
+        "string",
+        "null"
+      ]
+    }
+  },
+  "required": [
+    "schema_version",
+    "method_id",
+    "method_version",
+    "target_maturity",
+    "target_practical_value",
+    "approved",
+    "reviewer",
+    "reviewed_at",
+    "checks",
+    "evidence_refs",
+    "notes",
+    "inputs",
+    "bindings",
+    "validated_review"
+  ],
+  "additionalProperties": false
+}

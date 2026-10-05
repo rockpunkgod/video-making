@@ -30,3 +30,5 @@ Case唯一事实源是cases记录，registry.yaml为索引。真实完整题、�
 case-coverage逐方法审计canonical、counterexample、boundary、transfer、hard五类槽，未登记槽只输出缺口，不生成虚构Case。validate同时检查索引与方法槽完全对应、路径与case_id唯一，以及实际Case的方法、类型、题型、职责和输出与槽一致。已登记但证据不足与未登记分别统计；该审计只证明登记及记录的来源状态，不认证完整题、语义正确性或学生效果。核心方法/框架缺少类型时，最终案例齐全度维持PARTIAL。
 
 所有项candidate+Useful，后者只指课程用途依据。自动检查不得升级validated/stable/Efficient/Signature；正式升级要有另存的课程与真人审阅释放记录，按协议人工确认。
+
+人工释放记录现有可运行release-check/release-bindings，契约为method-release.json。release_reviews是Registry索引中的可选方法→批准文件映射，不复制教学判据；只有目标状态与卡片一致且绑定实际案例、冻结评估、当前回归和人工检查时，Registry才接受成熟/更高等级。该机制不自动改卡、认证身份或替代语义与统计审阅，详见evaluation.md；当前映射为空。

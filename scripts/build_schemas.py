@@ -22,6 +22,9 @@ def write(name, schema):
     p.write_text(json.dumps(schema,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
 
 def build():
+    from core.release import CHECKS
+    release_hash={'type':['string','null'],'pattern':'^[0-9a-f]{64}$'}
+    write('method-release',obj({'schema_version':enum(['1.0.0']),'method_id':STR,'method_version':STR,'target_maturity':enum(['draft','candidate','validated','stable','deprecated']),'target_practical_value':enum(['Useful','Efficient','Signature']),'approved':BOOL,'reviewer':NULLSTR,'reviewed_at':NULLSTR,'checks':obj({key:BOOL for key in CHECKS}),'evidence_refs':array(STR),'notes':STR,'inputs':obj({key:STR for key in ['records','plan','regression']}),'bindings':obj({key:release_hash for key in ['method_sha256','cases_sha256','records_sha256','plan_sha256','regression_sha256']}),'validated_review':NULLSTR}))
     source = obj({'repository':STR,'commit':{'type':'string','pattern':'^[0-9a-f]{40}$'},'path':STR,'heading':STR})
     steps = obj({key:STR for key in ['start','first_cut','judge','stop']})
     compact = obj({key:STR for key in ['10s','30s','90s']},extra=True)

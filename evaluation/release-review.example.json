@@ -1,0 +1,39 @@
+{
+  "schema_version": "1.0.0",
+  "method_id": "R01",
+  "method_version": "1.1.0",
+  "target_maturity": "validated",
+  "target_practical_value": "Useful",
+  "approved": false,
+  "reviewer": null,
+  "reviewed_at": null,
+  "checks": {
+    "course_provenance": false,
+    "compact_full_consistency": false,
+    "role_correctness": false,
+    "case_legality": false,
+    "case_semantics": false,
+    "practicality": false,
+    "first_use": false,
+    "regression": false,
+    "stable_transfer": false,
+    "statistical_significance": false,
+    "visual_memory_speech": false,
+    "short_version_safety": false
+  },
+  "evidence_refs": [],
+  "notes": "未审批模板；没有真实案例、真实受试观察、冻结计划和人工审阅，不得改为通过。",
+  "inputs": {
+    "records": "evaluation/datasets/real-observations.pending.json",
+    "plan": "evaluation/plan.example.json",
+    "regression": "evaluation/reports/engineering-acceptance.json"
+  },
+  "bindings": {
+    "method_sha256": null,
+    "cases_sha256": null,
+    "records_sha256": null,
+    "plan_sha256": null,
+    "regression_sha256": null
+  },
+  "validated_review": null
+}

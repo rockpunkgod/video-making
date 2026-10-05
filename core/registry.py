@@ -6,6 +6,7 @@ from jsonschema import Draft202012Validator
 
 ROOT = Path(__file__).resolve().parents[1]
 CASE_TYPES = ('canonical','counterexample','boundary','transfer','hard')
+PRIMARY_OUTPUTS = {'locator':{'locate'},'interpreter':{'interpret'},'reducer':{'reduce'},'decider':{'decide'},'verifier':{'verify'},'framework':{'interpret','reduce'}}
 
 def load(path):
     return yaml.safe_load((ROOT/path).read_text(encoding='utf-8'))
@@ -90,6 +91,9 @@ class Registry:
 
     def validate(self):
         self.case_inventory()
+        releases=self.index.get('release_reviews',{})
+        if not isinstance(releases,dict) or any(mid not in self.methods or not isinstance(path,str) or not path.strip() for mid,path in releases.items()):
+            raise ValueError('Invalid human release review index')
         risk_ids=set()
         for risk in self.risks:
             if risk['risk_id'] in risk_ids: raise ValueError('Duplicate source risk')
@@ -136,7 +140,7 @@ class Registry:
                 raise ValueError('Editorial review source mismatch: '+mid)
             if m['role'] != m['primary_role'] or m['status'] != m['maturity_status'] or m['practical_value'] != m['usefulness_level']:
                 raise ValueError('Legacy alias mismatch: '+mid)
-            if m['primary_role'] in {'locator','reducer'} and m['output_type']=='decide':
+            if m['output_type'] not in PRIMARY_OUTPUTS[m['primary_role']]:
                 raise ValueError('method_overreach: '+mid)
             if self.index['methods'][mid]['version'] != m['version']:
                 raise ValueError('Version index mismatch')
@@ -152,8 +156,14 @@ class Registry:
                 if not (ROOT/'provenance/ANSWER'/ref['path']).is_file():
                     raise ValueError('Unresolved source path: '+ref['path'])
             if m['maturity_status'] in {'validated','stable'} or m['practical_value'] != 'Useful':
-                # Mechanical validation cannot authenticate people or validate teaching semantics.
-                raise ValueError('Human promotion requires separately reviewed release artifact: '+mid)
+                from .release import check_release,read_json
+                if not releases.get(mid):
+                    raise ValueError('Human promotion requires separately reviewed release artifact: '+mid)
+                review=read_json(releases[mid])
+                if review.get('method_id')!=mid: raise ValueError('Human release review method mismatch: '+mid)
+                audit=check_release(self,review,applied=True)
+                if not audit['ready_for_manual_release']:
+                    raise ValueError('Human release review blocked for '+mid+': '+', '.join(audit['blocking_reasons']))
         for item in load('provenance/manifest.yaml')['files']:
             if hashlib.sha256((ROOT/'provenance/ANSWER'/item['path']).read_bytes()).hexdigest() != item['sha256']:
                 raise ValueError('Frozen snapshot changed')
