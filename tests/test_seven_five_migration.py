@@ -22,7 +22,7 @@ class SevenFiveMigrationTest(unittest.TestCase):
     def test_old_versions_source_and_primary_roles_preserved(self):
         for mid in IDS:
             m=self.r.methods[mid]; old=load('method-registry/history/'+mid+'/1.0.0.yaml')
-            self.assertEqual(m['version'],'1.1.0')
+            self.assertEqual(m['version'],'1.2.0' if mid=='F05' else '1.1.0')
             for field in ['source_name','source_references','section_ids','primary_role','output_type','method_type']:
                 self.assertEqual(m[field],old[field])
             self.assertNotEqual(m['decision_rule'],old['decision_rule'])
@@ -33,6 +33,17 @@ class SevenFiveMigrationTest(unittest.TestCase):
         for key in ['decision_rule','stop_rule','counterexamples','visual_formula']:
             values={str(self.r.methods[mid][key]) for mid in IDS}
             self.assertEqual(len(values),10)
+
+    def test_F05_restores_source_branch_without_role_or_arbitrary_tail_overreach(self):
+        m=self.r.methods['F05']; old=load('method-registry/history/F05/1.1.0.yaml')
+        self.assertEqual(old['version'],'1.1.0')
+        self.assertNotIn('第一段段尾',old['trigger_cues'][0])
+        for text in [*m['trigger_cues'],m['four_step_card']['start'],m['practicality_gate']['trigger'],
+                     m['entry_copy'],*m['compact'].values()]:
+            self.assertTrue('第一段段尾' in text or '首段尾' in text)
+        for field in ['primary_role','output_type','decision_rule','stop_rule','source_references']:
+            self.assertEqual(m[field],old[field])
+        self.assertIn('不因任意段尾',m['full']['boundaries'][0])
 
     def test_all_guides_keep_four_steps_brake_challenge_and_counterexample(self):
         assets=build()

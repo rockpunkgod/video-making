@@ -14,6 +14,7 @@
   "post_reveal_ai_reviewed_question_count": 3,
   "negative_review_withheld_question_count": 3,
   "post_reveal_helper_action_review_count": 2,
+  "post_reveal_chain_review_count": 1,
   "scope": "actual local source ingestion and engine regression metadata; not semantic or learner certification",
   "sources": [
     {
@@ -390,7 +391,8 @@
       "host_reviewed_reference_match_count": null,
       "case_review": null,
       "negative_review_execution": null,
-      "post_reveal_action_reviews": []
+      "post_reveal_action_reviews": [],
+      "post_reveal_chain_reviews": []
     },
     {
       "exam_id": "gaokao-2020-II",
@@ -444,7 +446,8 @@
       "host_reviewed_reference_match_count": null,
       "case_review": null,
       "negative_review_execution": null,
-      "post_reveal_action_reviews": []
+      "post_reveal_action_reviews": [],
+      "post_reveal_chain_reviews": []
     },
     {
       "exam_id": "gaokao-2021-I",
@@ -568,7 +571,8 @@
         "registry_updates": 0,
         "semantic_certification": "not_certified"
       },
-      "post_reveal_action_reviews": []
+      "post_reveal_action_reviews": [],
+      "post_reveal_chain_reviews": []
     },
     {
       "exam_id": "gaokao-2021-II",
@@ -625,7 +629,8 @@
       "host_reviewed_reference_match_count": null,
       "case_review": null,
       "negative_review_execution": null,
-      "post_reveal_action_reviews": []
+      "post_reveal_action_reviews": [],
+      "post_reveal_chain_reviews": []
     },
     {
       "exam_id": "gaokao-2022-I",
@@ -688,7 +693,8 @@
       "host_reviewed_reference_match_count": 0,
       "case_review": null,
       "negative_review_execution": null,
-      "post_reveal_action_reviews": []
+      "post_reveal_action_reviews": [],
+      "post_reveal_chain_reviews": []
     },
     {
       "exam_id": "gaokao-2022-II",
@@ -766,7 +772,8 @@
       "host_reviewed_reference_match_count": 0,
       "case_review": null,
       "negative_review_execution": null,
-      "post_reveal_action_reviews": []
+      "post_reveal_action_reviews": [],
+      "post_reveal_chain_reviews": []
     },
     {
       "exam_id": "gaokao-2023-I",
@@ -906,7 +913,8 @@
         "registry_updates": 0,
         "semantic_certification": "not_certified"
       },
-      "post_reveal_action_reviews": []
+      "post_reveal_action_reviews": [],
+      "post_reveal_chain_reviews": []
     },
     {
       "exam_id": "gaokao-2023-II",
@@ -969,7 +977,8 @@
       "host_reviewed_reference_match_count": 0,
       "case_review": null,
       "negative_review_execution": null,
-      "post_reveal_action_reviews": []
+      "post_reveal_action_reviews": [],
+      "post_reveal_chain_reviews": []
     },
     {
       "exam_id": "gaokao-2024-I",
@@ -1038,7 +1047,8 @@
       "host_reviewed_reference_match_count": null,
       "case_review": null,
       "negative_review_execution": null,
-      "post_reveal_action_reviews": []
+      "post_reveal_action_reviews": [],
+      "post_reveal_chain_reviews": []
     },
     {
       "exam_id": "gaokao-2024-II",
@@ -1106,7 +1116,8 @@
       "host_reviewed_reference_match_count": 0,
       "case_review": null,
       "negative_review_execution": null,
-      "post_reveal_action_reviews": []
+      "post_reveal_action_reviews": [],
+      "post_reveal_chain_reviews": []
     },
     {
       "exam_id": "gaokao-2025-I",
@@ -1300,6 +1311,36 @@
           "answer_withheld": true,
           "whole_question_content_eligible": false
         }
+      ],
+      "post_reveal_chain_reviews": [
+        {
+          "exam_id": "gaokao-2025-I",
+          "question_id": "gaokao-2025-I-q36",
+          "stage": "post_reveal_chain_review",
+          "reviewer_kind": "AI",
+          "method_ids": [
+            "F01",
+            "F05",
+            "F11",
+            "F06"
+          ],
+          "method_versions": {
+            "F01": "1.1.0",
+            "F05": "1.2.0",
+            "F11": "1.1.0",
+            "F06": "1.1.0"
+          },
+          "mechanical_prediction_sha256": "20082c192286b98b32c27997d64f731b6f8e81f70647d20cefa647176c619d8f",
+          "upstream_action_review_sha256": "8c7fd169764936b07c9fd681f98dfc17d6af59e4d7f727d9de8aca6a01623c38",
+          "semantic_certification": "external_AI_or_human_review_not_authenticated",
+          "learner_validation": "pending_real_participant_validation",
+          "registry_updates": 0,
+          "case_slots_filled": 0,
+          "produced_action_count": 12,
+          "answer_withheld": true,
+          "structural_closure": false,
+          "superseded_artifact_count": 1
+        }
       ]
     },
     {
@@ -1382,7 +1423,8 @@
       "host_reviewed_reference_match_count": 0,
       "case_review": null,
       "negative_review_execution": null,
-      "post_reveal_action_reviews": []
+      "post_reveal_action_reviews": [],
+      "post_reveal_chain_reviews": []
     }
   ]
 }

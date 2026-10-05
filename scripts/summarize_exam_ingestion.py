@@ -6,6 +6,7 @@ from scripts.ingest_exam_sources import ROOT
 from scripts.collect_exam_cases import review_summary
 from scripts.apply_exam_withdrawals import load_metadata
 from scripts.collect_action_reviews import load_metadata as load_action_metadata
+from scripts.collect_action_reviews import load_chain_metadata
 
 def latest(directory,prefix):
     def version(path):
@@ -61,6 +62,7 @@ def summary(dataset):
         row['case_review']=review_summary(directory,exam)
         row['negative_review_execution']=load_metadata(directory,exam)
         row['post_reveal_action_reviews']=load_action_metadata(directory,exam)
+        row['post_reveal_chain_reviews']=load_chain_metadata(directory,exam)
         papers.append(row)
     return {'schema_version':'1.0.0','status':'PARTIAL','source_papers':len(papers),
         'source_files':len(manifest['sources']),'completed_blind_reveal_papers':sum(x['blind_reveal_completed'] for x in papers),
@@ -73,6 +75,7 @@ def summary(dataset):
         'post_reveal_ai_reviewed_question_count':sum(bool(x['case_review'] and x['case_review'].get('semantic_review_question_id')) for x in papers),
         'negative_review_withheld_question_count':sum(bool(x['negative_review_execution'] and x['negative_review_execution']['answer_withheld']) for x in papers),
         'post_reveal_helper_action_review_count':sum(len(x['post_reveal_action_reviews']) for x in papers),
+        'post_reveal_chain_review_count':sum(len(x['post_reveal_chain_reviews']) for x in papers),
         'scope':'actual local source ingestion and engine regression metadata; not semantic or learner certification',
         'sources':[{key:s[key] for key in ['source_id','exam_id','kind','filename','bytes','sha256','extraction_sha256','source_reference','download_reference','usage_status','answer_authority']} for s in manifest['sources']],
         'papers':papers}

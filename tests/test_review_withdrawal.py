@@ -5,7 +5,7 @@ from core.analyzer import QuestionAnalyzer,PaperAnalyzer
 from core.registry import Registry
 from core.review_withdrawal import withdraw_review,fingerprint
 from renderers import render
-from tests.test_execution import fixture
+from tests.test_execution import fixture,seven_chain_fixture
 
 class ReviewWithdrawalTest(unittest.TestCase):
     @classmethod
@@ -41,6 +41,16 @@ class ReviewWithdrawalTest(unittest.TestCase):
         self.assertEqual(out['input']['action_executions'],[])
         self.assertIsNone(out['analysis']['answer'])
         self.assertEqual(set(out['withdrawal']['effective_execution_ids']),{x['execution_id'] for x in q['action_executions']})
+
+    def test_withdrawn_group_invalidates_scope_decisions_and_verification(self):
+        q=seven_chain_fixture(); a=self.engine.analyze(q); _,_,f=self.pair()
+        f.update(question_id=q['question_id'],input_sha256=fingerprint(q),analysis_sha256=fingerprint(a),
+            withdrawn_relation_indexes=[],withdrawn_execution_ids=['group-actor'])
+        out=withdraw_review(q,a,f,self.engine)
+        self.assertIsNone(out['analysis']['answer'])
+        self.assertEqual(out['withdrawal']['effective_relation_indexes'],[0,1])
+        self.assertEqual([x['execution_id'] for x in out['input']['action_executions']],['group-sentence','group-time'])
+        self.assertFalse(out['analysis']['content_eligible'])
 
     def test_only_negative_fields_and_exact_hashes_accepted(self):
         q,a,f=self.pair()

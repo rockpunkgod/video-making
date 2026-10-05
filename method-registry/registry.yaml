@@ -120,7 +120,7 @@ methods:
   F05:
     brand_name: 段首统领
     status: candidate
-    version: 1.1.0
+    version: 1.2.0
     file: method-registry/seven-five.yaml
   F06:
     brand_name: 前后呼应

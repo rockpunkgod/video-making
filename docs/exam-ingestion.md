@@ -1,6 +1,6 @@
 # 用户提供的真实试卷：导入与隔离回归
 
-2026-10-05接收2020—2025年Ⅰ/Ⅱ卷共12套、25个Word源文件。清单哈希全部核对通过；材料是第三方整理及解析，不是官方扫描或官方解析，不把来源身份改写为官方。现有ANSWER和Method Registry未改。
+2026-10-05接收2020—2025年Ⅰ/Ⅱ卷共12套、25个Word源文件。清单哈希全部核对通过；材料是第三方整理及解析，不是官方扫描或官方解析，不把来源身份改写为官方。原ANSWER未改；目标仓库Registry修订须单独保存历史，不因试卷答案回写课程。
 
 原文件、原卷/解析独立提取、稳定题号输入、Blind Prediction、Reveal Result留在被Git忽略的`local-data/exams-2020-2025/`。未核公开再发行权限，不把全文或参考范文上传到公开仓库。冻结写入可重复执行，但不同内容不得覆盖；文件系统本身并非防篡改存储，采集身份和素材权利仍须外部审阅。
 
@@ -64,8 +64,20 @@ python -X utf8 -m scripts.collect_action_reviews local-data/exams-2020-2025/acti
 
 这两项计入`post_reveal_helper_action_review_count`，不混入揭晓前3道答案匹配、6个旧Case Candidate、真人或正式Case计数。记录冻结后只重放同一请求；源指纹、请求指纹或引擎结果漂移需显式回归审阅。独立Case Review、真实性/授权、学生Trigger/Action/Stop/迁移与Baseline收益仍待核，不升级成熟度或Signature。
 
-## 补充工程源，只读参考
+## 从分组产物接到正文，不借答案闭合
 
-用户另提供`E:\新建文件夹`作为ANSWER工程源。只读检查其中`gaokao-english-rebuild`的课程蒸馏目录及参考模块，不运行源脚本、不改源文件、不公开上传提取素材。与当前`provenance/ANSWER/gaokao-english/references`比较，`seven-five.md`、`cloze.md`及`course-evidence.md`规范化文本一致，字节差异来自换行；`reading-comprehension.md`的三化法快判段存在版本差异：补充源描述可切换入口，现有冻结基线另含默认现场顺序及有效首段/段尾限定。保留差异供追溯，不自动替换、静默统一或回退方法。旧评估是否可复用需逐条核原题、身份、时序和版本，目录名blind/independent本身不证明独立盲测或真人数据。
+七选五默认编排先F01一次分组，解释步骤可消费已产生的candidate_partition，不能消费后来的决定或未审阅分组。私有`chain-reviews/<exam_id>/`将原F01动作及触发逐字保留，再接F05范围解释、F11每项自身决定、F06同候选核验；各阶段使用具名产物和自身题面证据。缺依赖、改原题、改分组、版本漂移或重复当前记录均拒绝。四Renderer与失效传播接受同一执行链，分组失效会撤回依赖解释、决定和核验。
+
+```powershell
+python -X utf8 -m scripts.collect_action_reviews --chain --revision F05-1-2-0 local-data/exams-2020-2025/chain-reviews/gaokao-2025-I/q36-F05-1.2.0.request.json
+```
+
+2025ⅠQ36实际运行产生12个产物：3分组、1范围解释、7候选决定、1核验。E有正向支持，但其余六项没有足够排除依据，因此answer=null、闭合false，不声称独立解决该题。首段末空不是任意段尾规则，候选含新事实、完成时或未建立代词不能自动排除。这是揭晓后AI审阅链，不计新盲测、独立语义认证、真人或正式Case。
+
+实题暴露F05旧学生入口遗漏课程已允许的“第一段段尾附近”分支。F05显式修订为1.2.0，完整1.1.0卡另存history；恢复共同主题展开前提，仍为interpreter/interpret、Useful+candidate。原私有请求与结果不改，另存新版请求/结果；汇总只重放唯一当前版本，旧版仅计superseded_artifact_count，不当作当前成功。源规则恢复和程序重放都不能替代英语语义或学生验收。公开链元数据只含ID、版本、哈希、计数与扣留状态。
+
+## 补充工程源，暂不纳入
+
+用户另提供`E:\新建文件夹`作为ANSWER工程源，随后要求“先别放进去”。此前只读发现的相同模块或版本差异不作为新增输入，不导入补充模拟卷，不运行源脚本、不改源文件、不公开上传素材。继续使用已确认的2020—2025材料和原冻结课程；本次F05恢复分支依据原冻结课程，而不是补充目录。未来是否纳入须重新得到用户指示。
 
 下一阶段须逐题独立语义审阅、错误分类、Case Candidate→Case Review→登记；不能为补数把同一题包装成五类案例，不能反推方法以贴参考答案。当前无可靠自由题面语义后端，机械Analyzer运行不冒充独立英语解答。嵌图、表格版式、第三方答案权威性与公开权利仍待核。真实学生传播/First-use/Blind/Baseline/Short-version Safety是另一条研究链，目前观察0，未被原题数据补齐。先传播效果验收，再强可用性验收；冲突以可用性为准，总验收仍PARTIAL。

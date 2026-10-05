@@ -8,7 +8,7 @@ source:
   heading: 总起句做题法
 question: null
 answer: null
-trigger: 空位在段首且可能统领下文
+trigger: 空位在段首或第一段段尾附近，且后文围绕共同主题展开
 evidence: []
 method_role: interpreter
 expected_action: 列下文共同对象、动作与段落任务，再核候选能否统领，不把段首自动当中心

@@ -20,6 +20,6 @@ routes:
   - method_id: F01
     phrases: [七个选项感觉全能放, 七个选项都能放, 七选五凭感觉乱填]
   - method_id: F05
-    phrases: [段首不会, 段首空不知道怎么填]
+    phrases: [段首不会, 段首空不知道怎么填, 第一段段尾要引下文不知道怎么填]
   - method_id: F06
     phrases: [看到重复词就想选, 同词就想选]

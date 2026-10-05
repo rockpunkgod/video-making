@@ -33,6 +33,27 @@ def fixture():
     return q
 
 
+def seven_chain_fixture():
+    """Synthetic typed dependencies, not an English or learner test."""
+    q=fixture(); mids=['F01','F05','F11','F06']
+    q.update(question_type='七选五',requested_chain=mids,
+        observations=[{'method_id':m,'evidence':[span()],'reviewed':True} for m in mids])
+    for rel in q['relations']: rel['method_id']='F11'
+    groups=[]
+    for axis in ['sentence','actor','time']:
+        groups.append(action('group-'+axis,'F01','reducer',{'kind':'candidate_partition',
+            'axis':axis,'groups':[{'label':'program-only no distinction','candidates':['A','B']}]}))
+    ids=[x['execution_id'] for x in groups]
+    q['action_executions']=groups+[
+        action('scope','F05','interpreter',{'kind':'interpretation','parts':[
+            {'name':'program-only governed scope','value':'program-only scope interpretation','evidence':[span()]}]},ids),
+        action('choice-A','F11','decider',{'kind':'candidate_decision','candidate':'A','effect':'retain','relation_index':0},['scope',*ids]),
+        action('choice-B','F11','decider',{'kind':'candidate_decision','candidate':'B','effect':'eliminate','relation_index':1},['scope',*ids]),
+        action('verify-A','F06','verifier',{'kind':'verification_result','candidate':'A','target_execution_ids':['choice-A'],'verdict':'supports'},['choice-A'])]
+    q['action_executions'][3]['method_version']='1.2.0'
+    return q
+
+
 class ExecutionTest(unittest.TestCase):
     @classmethod
     def setUpClass(cls): cls.r=Registry(); cls.analyzer=QuestionAnalyzer(cls.r)
@@ -149,6 +170,37 @@ class ExecutionTest(unittest.TestCase):
             with self.assertRaisesRegex(ValueError,'exactly once'): self.analyzer.analyze(bad)
         q['action_executions'][0]['output']={'kind':'candidate_decision','candidate':'A','effect':'retain','relation_index':0}
         with self.assertRaisesRegex(ValueError,'overclaims|partition'): self.analyzer.analyze(q)
+
+    def test_group_scope_decide_verify_have_real_named_dependencies(self):
+        out=self.analyzer.analyze(seven_chain_fixture())
+        self.assertEqual([s['method_id'] for s in out['method_chain']],['F01','F05','F11','F06'])
+        self.assertEqual([s['state'] for s in out['method_chain']],['executed']*4)
+        self.assertIn('candidate_partition',out['method_chain'][1]['input_artifact_types'])
+        self.assertEqual(out['execution_trace'][3]['input_artifact_ids'],['group-sentence','group-actor','group-time'])
+        self.assertEqual(out['answer'],'A')  # Synthetic external assertions only.
+        for kind in ['structured','student','legacy-wechat','content-export']:
+            self.assertTrue(render(out,kind,self.r))
+
+    def test_default_seven_chain_groups_before_interpreting_scope(self):
+        q=seven_chain_fixture(); q.pop('requested_chain')
+        out=self.analyzer.analyze(q)
+        self.assertEqual([s['method_id'] for s in out['method_chain']],['F01','F05','F11','F06'])
+
+    def test_grouping_and_scope_do_not_supply_missing_candidate_decisions(self):
+        q=seven_chain_fixture(); q['relations']=[]; q['action_executions']=q['action_executions'][:4]
+        out=self.analyzer.analyze(q)
+        self.assertIsNone(out['answer']); self.assertFalse(out['content_eligible'])
+        self.assertEqual(out['candidate_analysis'],[])
+        self.assertEqual(out['answer_verification']['unresolved_candidates'],['A','B'])
+        self.assertEqual(PaperAnalyzer(self.analyzer).analyze({'paper_id':'PROGRAM','questions':[q]})['recommendations'],[])
+
+    def test_interpreter_cannot_consume_group_that_is_later_or_unreviewed(self):
+        for change in ['later','unreviewed']:
+            q=seven_chain_fixture()
+            if change=='later': q['action_executions'][0],q['action_executions'][3]=q['action_executions'][3],q['action_executions'][0]
+            else: q['action_executions'][0]['review_status']='unreviewed'
+            with self.subTest(change=change),self.assertRaisesRegex(ValueError,'earlier'):
+                self.analyzer.analyze(q)
 
     def test_text_grouping_and_expanding_verifier_remain_auxiliary(self):
         q=fixture(); q.update(requested_chain=['R07','R17'],relations=[],observations=[{'method_id':m,'evidence':[span()],'reviewed':True} for m in ['R07','R17']])

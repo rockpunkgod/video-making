@@ -10,7 +10,7 @@ ROLE_ARTIFACTS = {
 INPUT_ARTIFACTS = {
     'framework':['located_evidence','interpretation','framework_card','route_selection'],
     'locator':['framework_card','route_selection'],
-    'interpreter':['located_evidence','framework_card','route_selection'],
+    'interpreter':['located_evidence','framework_card','route_selection','candidate_partition'],
     'reducer':['located_evidence','interpretation','framework_card','route_selection'],
     'decider':['located_evidence','interpretation','candidate_partition','text_groups','framework_card','route_selection','verification_result'],
     'verifier':['located_evidence','interpretation','candidate_decision','framework_card'],
@@ -24,7 +24,12 @@ def bind_contract(step):
 def compose(question,matches,registry):
     allowed = {m['method_id'] for m in matches}
     requested = question.get('requested_chain')
-    ids = requested if requested is not None else [m['method_id'] for m in sorted(matches,key=lambda x:ROLE_ORDER[x['role']])]
+    # Seven-five starts with its one grouping pass, then returns to the passage.
+    # A generic interpreter-before-reducer sort reverses that course dependency.
+    def priority(match):
+        if question['question_type']=='七选五' and match['method_id']=='F01': return -1
+        return ROLE_ORDER[match['role']]
+    ids = requested if requested is not None else [m['method_id'] for m in sorted(matches,key=priority)]
     if len(ids) != len(set(ids)): raise ValueError('Repeated method in chain')
     steps = []
     for mid in ids:

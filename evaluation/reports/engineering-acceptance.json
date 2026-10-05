@@ -6,7 +6,7 @@
     "head": "60ebaf4"
   },
   "after_refactor": {
-    "tests_run": 339,
+    "tests_run": 356,
     "failures": 0,
     "errors": 0,
     "registry": {
@@ -1293,7 +1293,7 @@
       },
       {
         "method_id": "F05",
-        "method_version": "1.1.0",
+        "method_version": "1.2.0",
         "question_type": "七选五",
         "method_type": "method",
         "core_required": true,
@@ -4668,12 +4668,13 @@
     "case_review_candidate_count": 6,
     "post_reveal_ai_reviewed_question_count": 3,
     "negative_review_withheld_question_count": 3,
-    "post_reveal_helper_action_review_count": 2
+    "post_reveal_helper_action_review_count": 2,
+    "post_reveal_chain_review_count": 1
   },
   "runtime_files": {
     "core/__init__.py": "df48faa2d425622da755579fea50f9647d679f4098878545843d7b44da2a230f",
     "core/analyzer.py": "471df1c23397467dd896aea1bd04c4478910cf543890f887a461dc6cfcc14321",
-    "core/composer.py": "839fbf124012f6617a7b39d836f04f7b9a6c960de007fea0b9470f207b36cd4c",
+    "core/composer.py": "da423facfe4f1cf79793adbb5184e33e32e943e7c912084cb86149838f462efb",
     "core/evidence.py": "bffa0edfe21a9204685ec895ff3856aa0be32f228007a61693fa04acb37d78c4",
     "core/execution.py": "cf3f085ab7247809e9197d56fc61393feb87770fa97f6e79b4f7adeb01137764",
     "core/grammar_navigation.py": "264fb0761a84d1d8745078819b1077fe69e28db84c14bcc7ce43fda9e93faf98",
@@ -4695,7 +4696,7 @@
     "scripts/apply_exam_withdrawals.py": "8ccf5d3f720419729d4dc6af9eaf9bfe2870ec7fe18294eaa4ddeb36540cc90b",
     "scripts/build_examples.py": "fe5b7d972a420f168b8232514c5904093f8edee95d0298112ccb3483051d31dc",
     "scripts/build_schemas.py": "8eda42ad3c6c0b139b389d0c018573b1146ea26acb2e4cbeefba72244d528516",
-    "scripts/collect_action_reviews.py": "40513fc6cda9ddaec38f0e4600559d29029543612b3b8b9cd2b5b07fb5ccdef1",
+    "scripts/collect_action_reviews.py": "a0fe9eb5d128add9f73556d633c8fa6966de7a089faaed38fa99884bc48ffc54",
     "scripts/collect_exam_cases.py": "ee6b16003e557ab2d5307046dd18771d4c9ca9531d2fc9041fb9acc545747af2",
     "scripts/exam_profiles_2020_2021.py": "b5a3ce355ed219ffdca8b4bb6ac0a6f1cb502fcd86091776e3a789868fc1817f",
     "scripts/exam_profiles_2022_2024.py": "21d2d0b75ec5987c2072dc495cbc2ec6f125199310d740af1e624c1a14453dbd",
@@ -4707,10 +4708,10 @@
     "scripts/migrate_registry.py": "8ed79f38f8a5ba75c54ef346deb6dbebc0d2b1e774552814f43572a651bd1387",
     "scripts/normalize_cases.py": "11695800699abffc6e841f7cd3f964371db84adc5ae78b61145f00c5ec093e30",
     "scripts/prepare_revision.py": "07d51b5f9efcb9bd851f1872ff2f54d5c3be36daa7772768ffa2aafb7f3dea39",
-    "scripts/run_acceptance.py": "6ad63f0a36cfac037be4a848d3ed17092efe9c041d437b1db0bca706dfbf65bb",
+    "scripts/run_acceptance.py": "121cb24c8a6a3183a023ec3ebf1f950095492110c478c8ee69db38d5c7889c63",
     "scripts/run_exam_regression.py": "8bcdf8d98ea307118841acf5fe911ef6eaef650beca3d4b4cf7dde779f8fd1da",
-    "scripts/summarize_exam_ingestion.py": "10565d8ba06f9d79478fab8dbf4fb8a568bf962537bdc12b8a6979add68703b9",
-    "tests/test_action_reviews.py": "0917499f64d6804962471b3f7c0576e1767513ad04fdb74f946a2e16f72729ee",
+    "scripts/summarize_exam_ingestion.py": "182021f945195126cb2e13461b3aaeb57040d0aa4f2b385397cafea7994114a7",
+    "tests/test_action_reviews.py": "d003250efb2a62620da105cf712f6fe8effa481d0512d2ec6c6524abfed96f7b",
     "tests/test_application_migration.py": "069bd3a29aec718e1707f1e8db8ea6682de8a9e2a1654054a1c0eb7baab6bd75",
     "tests/test_case_coverage.py": "a34eda270237f5f0973420981d8e7db94f749e667f6d3b5eb57dcf552513f54a",
     "tests/test_cloze_migration.py": "02a80e5d3c3a4e138bd3509c28df71b01a3543f22994575b604f0674adfb3c76",
@@ -4723,7 +4724,7 @@
     "tests/test_exam_profiles_2020_2021.py": "2718165e4671dc5b23bc01fb727174c4f7b60cbe929c70321a071875bf87b097",
     "tests/test_exam_profiles_2022_2024.py": "904e48781422a248ee8d6df1068ba7227a120f6b9f3eed224fdc11b9c57712ba",
     "tests/test_exam_profiles_2025.py": "13df9269f82c838ee25d66a999b13b18c8645c0bd400b19e85a759b9da74a5fe",
-    "tests/test_execution.py": "30d5a51eab68e2653711489ce013a8f6ba8a93bf39a1f0260289544d932c4670",
+    "tests/test_execution.py": "700c0bd74ba43c4f3f48e14bd14e1a09ab33230c25410097b62ec268c56b5f66",
     "tests/test_grammar_migration.py": "92bb7acd399326f63b11dc7f8cb4678977b1d74889dc1909b0bb018aee186a47",
     "tests/test_image_evidence.py": "85586e354e7cab8093fa567a33282ff04ef421fcc04ed250c8e2e490990da863",
     "tests/test_lesson_feedback.py": "c9776a5b21998cfa9e147adf1f7e9faea40d78c7d87c7cd5a0094babd2fd14b8",
@@ -4733,9 +4734,9 @@
     "tests/test_registry.py": "d6b613124de8189bfb4095fac06d84fe870f12fb51bf1a5edaf26191bfe57575",
     "tests/test_release_review.py": "c92ccade3ace918ea3948f5ced083745f74ce6fec291255bb6b09658304f6146",
     "tests/test_review_provider_binding.py": "98993f6a5adb4baf5c05835f58f1f475a4bf20cb99c79b51fd2ce531c57a3a46",
-    "tests/test_review_withdrawal.py": "89628ca41bafd2ef7561ae31f844352099ebec50f25a5a4680905e76c304343e",
+    "tests/test_review_withdrawal.py": "0bef81404a2f404d4c681cadc35d96d75ce0e75e9c510e2d6dc9809cb729fdaa",
     "tests/test_score_boundaries.py": "eb66d8c878228c10d2b9223da7bf75ec14876b4a3206b58e1fe4cf5b0ede0b92",
-    "tests/test_seven_five_migration.py": "62d1ffd38cac296c16f0bc09c6202e5a348e98df0218f14956c4023162acbeab",
+    "tests/test_seven_five_migration.py": "0213567ba2b2137d0dbfcbd15d6e82075b0667c1c94e7f21e67047d0bf76c967",
     "tests/test_writing_feedback.py": "cb9dab3730b1eb41c69773a8ac6ff77a32f653c5cf59e94f2e394ae833e2f315",
     "schemas/action-artifact.json": "6fd8c938864efeac68f2846f0867032bd4bb5c89a87b02d0e52130187bcee4e5",
     "schemas/case.json": "c8c75a67ae87428d995f01fe41d44f3966001cad180c32c8c9f575831f9e8cec",
@@ -4754,8 +4755,8 @@
     "schemas/writing-review.json": "2043a5c24df6bbf702dc2e8f2c16059a40698cd82710e645128b03462fd2c554",
     "EVALUATION_PROTOCOL.md": "1876be84ef2d828880b63264513cec42aa0bf0efaa06e23528ff2bcebfd6927a"
   },
-  "semantic_registry_sha256": "39bc49d0f7ed9d69985e8e8bb15336a37085fd665921d2bb20f3547b45d92443",
-  "cases_sha256": "ebb70a9917211c69ff5a26ad4282f0b0bb9baf72d56a95d3374a48d3642aed61",
+  "semantic_registry_sha256": "61cffd0410f1242c61585679ea006546da8790a668105f4952ddf4fc373ad23f",
+  "cases_sha256": "62909de191a80b9cd9feba34b57b5029934f52bb9fd1fa918a6a42a4de06a9ca",
   "human_release_review": {
     "contract": "schemas/method-release.json",
     "commands": [
