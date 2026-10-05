@@ -6,7 +6,7 @@
     "head": "60ebaf4"
   },
   "after_refactor": {
-    "tests_run": 271,
+    "tests_run": 278,
     "failures": 0,
     "errors": 0,
     "registry": {
@@ -4645,6 +4645,24 @@
         "registered_examples_complete": false
       }
     ]
+  },
+  "candidate_relation_binding": {
+    "required": "same method_id and candidate on one reviewed relation, with own upstream claim/trigger and directly quoted source",
+    "applies_to": [
+      "decision",
+      "verification",
+      "candidate_decision action artifact"
+    ],
+    "writing_candidate": "student_draft explicitly recorded on review relation",
+    "negative_tests": [
+      "wrong candidate relation",
+      "borrowed draft relation",
+      "claim grafted to conclusion",
+      "trigger grafted to conclusion",
+      "trigger quote substituted for relation evidence",
+      "artifact without conclusion nodes"
+    ],
+    "scope": "structural binding of external assertions; not English semantics or scoring certification"
   },
   "paper_scan": {
     "schema_version": "1.1.0",

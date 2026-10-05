@@ -272,7 +272,7 @@ def writing_feedback(question,registry,graph=None,triggers=None):
             is_score=review['proposed_score'] is not None and claim==review['proposed_score']['rationale']
             binding={'artifact_fingerprint':score_fingerprint(review['proposed_score'])} if is_score else {}
             candidate=graph.node('candidate_claim',claim,candidate='student_draft',**binding)
-            rel=graph.node('relation','外部写作审阅：'+claim,method_id=mid,reviewed=reviewed)
+            rel=graph.node('relation','外部写作审阅：'+claim,method_id=mid,candidate='student_draft',reviewed=reviewed)
             graph.edge(candidate,rel,'supports')
             if review['proposed_score'] is not None and claim==review['proposed_score']['rationale'] and review['proposed_score']['handwriting_applied']:
                 for nid in image_ids: graph.edge(nid,rel,'supports')

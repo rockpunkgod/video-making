@@ -21,6 +21,8 @@ Reviewed结论要求独立触发、当前题面跨度、具体判据、Stop检�
 
 图检查节点唯一、边闭合、无环、引文标签与跨度相同，以及同一方法的独立触发、同一候选的主张→审阅关系→结论路径。validate_graph(graph, question)可将每个引文重新绑定当前题面；Analyzer自动执行此检查。仅传graph不能认证源文本真实性，两个模式都不认证审阅者身份或语义为真。未闭合题不进整卷内容推荐；展示分为启发式排序，不代表传播或提分效果。
 
+结论与candidate_decision产物还要求同一条已审阅关系明确绑定相同method_id和candidate；候选主张及该方法的独立触发必须在这条关系自身的上游，关系另有直接引用的source_evidence。把无关候选关系、触发或主张接到结论旁边，不能充当自己的推理链；只有触发引文也不能代替决定关系的引用。写作核验关系明确标记student_draft，不能借另一原稿关系；旧的写作分析若缺该关系标记须重新分析，原writing_review输入契约不变。这些检查仍只证明图与输入/外部审阅的结构一致，不认证英语推断或评分为真。
+
 method-registry/symptom-cues.yaml保存口语导航别名，不复制方法判据；公开症状表从它和方法卡生成。具体卡点优先于通用题型入口，口语匹配仍为low/trigger_verified=false，不能直接授权关系定案。题型和任务范围由调用方审阅；段落主旨不得调用全文覆盖排除法。未覆盖口语退回结构入口，不假称语义分类已经校准。
 
 接口：QuestionAnalyzer.analyze(dict)、PaperAnalyzer.analyze(dict)、CLI；契约为Draft 2020-12 JSON Schema。当前部署为完整仓库+Python3.10+，源码或editable安装。单独Skill文件夹仅自包含宿主答疑，不自动安装核心。未建抓取/视频/AE/支付/发布服务。

@@ -49,6 +49,13 @@ def validate_graph(graph, question=None):
                 found.add(x)
                 work.extend(incoming[x])
         return [nodes[x] for x in found]
+    def own_candidate_relation(relation,method_id,candidate):
+        if relation['type']!='relation' or not relation.get('reviewed') or relation.get('method_id')!=method_id or relation.get('candidate')!=candidate:
+            return False
+        proof=ancestors(relation['id'])
+        return (any(n['type']=='candidate_claim' and n.get('candidate')==candidate for n in proof)
+                and any(n['type']=='question_signal' and n.get('reviewed') and n.get('method_id')==method_id for n in proof)
+                and any(nodes[parent]['type']=='source_evidence' and nodes[parent].get('span') for parent in incoming[relation['id']]))
     for nid, node in nodes.items():
         if node['type']=='image_evidence':
             if not node.get('image_ref') or not node.get('artifact_fingerprint'):
@@ -75,7 +82,7 @@ def validate_graph(graph, question=None):
                 raise ValueError('Action artifact without independently reviewed method trigger')
             if not any(n['type']=='source_evidence' and n.get('span') for n in own_upstream):
                 raise ValueError('Action artifact without source evidence')
-            if node['artifact_kind']=='candidate_decision' and (not node.get('candidate') or not any(n['type']=='relation' and n.get('reviewed') and n.get('method_id')==node['method_id'] and n.get('candidate')==node['candidate'] for n in own_upstream)):
+            if node['artifact_kind']=='candidate_decision' and (not node.get('candidate') or not any(own_candidate_relation(n,node['method_id'],node['candidate']) for n in own_upstream)):
                 raise ValueError('Decision artifact without its own reviewed candidate relation')
         if node['type'] in {'decision','verification'}:
             if not node.get('method_id') or not node.get('candidate'):
@@ -89,6 +96,8 @@ def validate_graph(graph, question=None):
                 raise ValueError('Conclusion without independently reviewed method trigger')
             if not any(n['type']=='candidate_claim' and n.get('candidate')==node.get('candidate') for n in upstream):
                 raise ValueError('Conclusion without its own candidate claim')
+            if not any(own_candidate_relation(n,node['method_id'],node['candidate']) for n in upstream):
+                raise ValueError('Conclusion without its own candidate relation path: claim, trigger and direct source must bind the same reviewed relation')
     return graph
 
 class EvidenceGraph:
