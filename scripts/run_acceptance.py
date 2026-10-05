@@ -48,7 +48,8 @@ def run():
             'host_reviewed_answered_count','host_reviewed_reference_match_count',
             'real_student_observation_count','new_registered_cases','case_review_candidate_count',
             'post_reveal_ai_reviewed_question_count','negative_review_withheld_question_count',
-            'post_reveal_helper_action_review_count','post_reveal_chain_review_count']}
+            'post_reveal_helper_action_review_count','post_reveal_chain_review_count',
+            'post_reveal_bounded_action_review_count']}
         report['remaining_blockers'][1]='真实六型试卷已导入；全量语义、案例独立审阅和旧答疑语义回归仍缺，另有1卷源结构缺损'
     report.update(regression_snapshot(r))
     report['human_release_review']={'contract':'schemas/method-release.json','commands':['release-check','release-bindings'],'registry_index':'optional release_reviews method_id -> repository-relative approved artifact','scope':'explicit manual state changes only after bound real evaluation, five verified case types, current regression and human approval; identities, semantic judgement and statistical significance remain externally audited','indexed_review_count':len(r.index.get('release_reviews',{})),'applied_review_count':sum(m['maturity_status'] in {'validated','stable'} or m['practical_value']!='Useful' for m in r.methods.values())}
@@ -137,6 +138,7 @@ First-use、Blind/Baseline、10/30/90s Safety均有记录Schema及直接可运�
         md+='\n负向语义审阅执行：withdraw_review只接受绑定原输入及冻结分析的显式撤回，不能添加答案、改题或补方法。撤回关系同步扣留其决定产物；撤回框架/定位时传递停用全部依赖消费者及其决定，重新生成图/单题/整卷结果。3道实际审阅均在新揭晓后记录扣留答案与Demo/Case推荐，原盲稿仍保留3道参考匹配事实，不算新盲预测或safe_abstention认证。所有Renderer可消费扣留后的合法Schema。\n'
         md+='\n辅助动作审阅：另有2025Ⅰ两项真实题面动作，F01 Q36三维A–G完整分组、G01 Q59有提示词到名词性功能节点，均产生实际产物但不填写答案。单独post_reveal_action_review通道核源指纹、不可变题面、角色、执行图和四种Renderer，不以整题未闭合否定辅助动作，也不以辅助产物认证整题成功。2项AI审阅、4个产物，与原盲预测/3道匹配分开统计；独立Case/学生/Baseline仍待核，正式登记及填槽0。\n'
     md+='\n七选五组合修正：默认F01一次分组先于解释，解释可消费已审阅分组，不从分组得答案；实际2025ⅠQ36链12个产物但六项未决，仍扣留答案。F05恢复原冻结课程首段尾分支为1.2.0，完整1.1.0历史及私有旧结果保留，当前唯一版本单独重放；角色和成熟度不升级。链的英语语义、独立Case、学生迁移与Baseline收益仍待核。用户暂停纳入新建文件夹材料，本轮不使用该补充源或模拟卷。\n'
+    md+='\n有界动作审阅：2021ⅠQ26补录R02自己的单项决定，不借未执行legacy关系或剩余项定案。原performing词义过强的混合理由实际撤回；风格/配合归属的重新审阅另存并绑定前驱SHA，仅当前快照计1，A/B/C未解且整题null。原Case Candidate与盲稿不改，新动作是独立揭晓后修订，类型建议未批准，正式Case/填槽仍0；不声称真人或独立英语认证。\n'
     (ROOT/'docs/final-acceptance.md').write_text(md,encoding='utf-8')
     return report
 

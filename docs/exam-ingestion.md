@@ -64,6 +64,19 @@ python -X utf8 -m scripts.collect_action_reviews local-data/exams-2020-2025/acti
 
 这两项计入`post_reveal_helper_action_review_count`，不混入揭晓前3道答案匹配、6个旧Case Candidate、真人或正式Case计数。记录冻结后只重放同一请求；源指纹、请求指纹或引擎结果漂移需显式回归审阅。独立Case Review、真实性/授权、学生Trigger/Action/Stop/迁移与Baseline收益仍待核，不升级成熟度或Signature。
 
+## 有界决定及审阅纠错，不回写盲稿
+
+`post_reveal_bounded_action_review`单独支持primary decider自己的一个或多个候选决定。每个关系必须有恰好一个同方法typed动作，不能借未执行的legacy关系定案，也不能换角色、改原题或输出整题答案。它与辅助动作及完整组合链分开统计，不计新盲测、正式Case或学生实效。现有六个旧Case Candidate不重写；匹配题号/方法/版本的后续自有动作作为独立`post_reveal_own_action_revision`投影，旧索引仍如实显示当时未记录typed动作。
+
+```powershell
+python -X utf8 -m scripts.collect_action_reviews --withdraw-action local-data/exams-2020-2025/action-reviews/gaokao-2021-I/R02-q26.wording-withdrawal.json
+python -X utf8 -m scripts.collect_action_reviews --revision style-only local-data/exams-2020-2025/action-reviews/gaokao-2021-I/R02-q26-style-only.request.json
+```
+
+2021ⅠQ26补录R02仅排D的实际动作。另一次揭晓后AI复核发现原理由将performing强解为乐器演奏，不能形成这个词义口诀。旧理由的关系及typed决定通过`withdraw_review`实际撤回，结果另存，原稿未改。新请求绑定旧报告SHA，确认全部旧动作已撤回后另存：只对照each pianist拥有点头信号风格、与page turner练习配合，和D补回题干Titterton后的风格归属移交。performing保留泛指舞台任务的可能，不能证明翻页者永远不参与performance。重新审阅仍仅排D，A/B/C未决，answer=null；不借旧R01判断或参考答案闭合。
+
+实际当前有界动作计数1、typed决定1，不把旧撤回与新审阅双计；辅助审阅仍2、组合链仍1、原盲匹配仍3、正式Case/填槽仍0。类型建议canonical未批准；原文提取缺词/引号异常保留，公开权限、独立完整Case审阅、真人迁移及Baseline收益仍待核。撤回只撤信用；正向替换是另一次当前原题审阅，程序不能认证英语语义或审阅者身份。
+
 ## 从分组产物接到正文，不借答案闭合
 
 七选五默认编排先F01一次分组，解释步骤可消费已产生的candidate_partition，不能消费后来的决定或未审阅分组。私有`chain-reviews/<exam_id>/`将原F01动作及触发逐字保留，再接F05范围解释、F11每项自身决定、F06同候选核验；各阶段使用具名产物和自身题面证据。缺依赖、改原题、改分组、版本漂移或重复当前记录均拒绝。四Renderer与失效传播接受同一执行链，分组失效会撤回依赖解释、决定和核验。

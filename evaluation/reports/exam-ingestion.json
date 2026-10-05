@@ -14,6 +14,7 @@
   "post_reveal_ai_reviewed_question_count": 3,
   "negative_review_withheld_question_count": 3,
   "post_reveal_helper_action_review_count": 2,
+  "post_reveal_bounded_action_review_count": 1,
   "post_reveal_chain_review_count": 1,
   "scope": "actual local source ingestion and engine regression metadata; not semantic or learner certification",
   "sources": [
@@ -537,7 +538,31 @@
             "registry_registration": "not_registered",
             "proposed_case_type": "canonical",
             "ai_semantic_result": "valid_bounded_elimination",
-            "semantic_review_status": "AI_post_reveal_reviewed_not_independently_certified"
+            "semantic_review_status": "AI_post_reveal_reviewed_not_independently_certified",
+            "post_reveal_own_action_revision": {
+              "exam_id": "gaokao-2021-I",
+              "question_id": "gaokao-2021-I-q26",
+              "method_id": "R02",
+              "method_version": "1.1.0",
+              "primary_role": "decider",
+              "output_role": "decide",
+              "stage": "post_reveal_bounded_action_review",
+              "reviewer_kind": "AI",
+              "mechanical_prediction_sha256": "89c723b371506e14f7cbc40e8685cc8f8fa024a1caa2521d0cf3c989ded32a05",
+              "candidate_status": "pending_independent_case_review",
+              "case_type": null,
+              "registry_updates": 0,
+              "case_slots_filled": 0,
+              "learner_validation": "pending_real_participant_validation",
+              "semantic_certification": "external_action_review_not_certified",
+              "produced_action_count": 1,
+              "artifact_kinds": [
+                "candidate_decision"
+              ],
+              "answer_withheld": true,
+              "whole_question_content_eligible": false,
+              "supersedes_action_review_sha256": "7517d15a3c216ce189de57eb72324806f77491d24b0a8dc2c520aee8c1542222"
+            }
           }
         ],
         "registry_updates": 0,
@@ -571,7 +596,32 @@
         "registry_updates": 0,
         "semantic_certification": "not_certified"
       },
-      "post_reveal_action_reviews": [],
+      "post_reveal_action_reviews": [
+        {
+          "exam_id": "gaokao-2021-I",
+          "question_id": "gaokao-2021-I-q26",
+          "method_id": "R02",
+          "method_version": "1.1.0",
+          "primary_role": "decider",
+          "output_role": "decide",
+          "stage": "post_reveal_bounded_action_review",
+          "reviewer_kind": "AI",
+          "mechanical_prediction_sha256": "89c723b371506e14f7cbc40e8685cc8f8fa024a1caa2521d0cf3c989ded32a05",
+          "candidate_status": "pending_independent_case_review",
+          "case_type": null,
+          "registry_updates": 0,
+          "case_slots_filled": 0,
+          "learner_validation": "pending_real_participant_validation",
+          "semantic_certification": "external_action_review_not_certified",
+          "produced_action_count": 1,
+          "artifact_kinds": [
+            "candidate_decision"
+          ],
+          "answer_withheld": true,
+          "whole_question_content_eligible": false,
+          "supersedes_action_review_sha256": "7517d15a3c216ce189de57eb72324806f77491d24b0a8dc2c520aee8c1542222"
+        }
+      ],
       "post_reveal_chain_reviews": []
     },
     {

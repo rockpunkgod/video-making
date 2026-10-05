@@ -1,4 +1,4 @@
-"""Freeze post-reveal helper artifacts without claiming whole-question success.
+"""Freeze post-reveal own action artifacts, never whole-question success.
 
 This lane deliberately does not read answer keys, change blind predictions,
 register Cases, or promote methods. Full source text stays in local-data.
@@ -12,11 +12,13 @@ from core.analyzer import QuestionAnalyzer
 from core.registry import Registry, validate_schema
 from core.evidence import validate_graph
 from core.execution import validate_execution_trace
+from core.review_withdrawal import withdraw_review
 from renderers import render
 from scripts.collect_exam_cases import material_equal
 from scripts.ingest_exam_sources import ROOT, freeze_json, sha
 
 STAGE = 'post_reveal_action_review'
+BOUNDED_STAGE = 'post_reveal_bounded_action_review'
 FIELDS = {'exam_id', 'stage', 'reviewer', 'reviewer_kind', 'method_id',
           'mechanical_prediction_sha256', 'question', 'semantic_review'}
 REVIEW_FIELDS = {'trigger', 'action', 'evidence', 'output', 'stop', 'transfer',
@@ -46,7 +48,7 @@ def identifier(value):
 
 def review_action(request, mechanical, analyzer=None):
     """Validate supplied annotations and replay real artifacts, not solve English."""
-    if set(request) != FIELDS or request['stage'] != STAGE:
+    if set(request) not in (FIELDS,FIELDS|{'supersedes_action_review_sha256'}) or request['stage'] not in {STAGE,BOUNDED_STAGE}:
         raise ValueError('Explicit post-reveal action stage required')
     if request['reviewer_kind'] not in {'AI', 'human'} or not isinstance(request['reviewer'], str) or not request['reviewer'].strip():
         raise ValueError('Explicit external reviewer required')
@@ -72,18 +74,22 @@ def review_action(request, mechanical, analyzer=None):
         raise ValueError('Unknown or duplicate original question')
     original = originals[0]
     material_equal(original, question)
-    # Nothing beyond the three supported annotation fields may be added,
+    bounded=request['stage']==BOUNDED_STAGE
+    annotations=ANNOTATIONS|({'relations'} if bounded else set())
+    # Nothing beyond supported annotation fields may be added,
     # removed or replaced, including task type and preexisting source metadata.
-    if {k: v for k, v in original.items() if k not in ANNOTATIONS} != {
-            k: v for k, v in question.items() if k not in ANNOTATIONS}:
+    if {k: v for k, v in original.items() if k not in annotations} != {
+            k: v for k, v in question.items() if k not in annotations}:
         raise ValueError('Action review changed frozen question fields')
-    if question.get('relations') or question.get('word_answer'):
+    if question.get('word_answer') or (not bounded and question.get('relations')):
         raise ValueError('Helper action lane cannot assert answers or candidate effects')
     analyzer = analyzer or QuestionAnalyzer(Registry())
     if mid not in analyzer.registry.methods:
         raise ValueError('Unknown reviewed method')
     method = analyzer.registry.methods[mid]
-    if method['primary_role'] not in {'locator', 'interpreter', 'reducer', 'framework'}:
+    if bounded and method['primary_role']!='decider':
+        raise ValueError('Bounded action lane requires its own primary decider')
+    if not bounded and method['primary_role'] not in {'locator', 'interpreter', 'reducer', 'framework'}:
         raise ValueError('Helper lane cannot claim a decision or verification role')
     validate_schema('question-input', question)
     analysis = analyzer.analyze(deepcopy(question))
@@ -92,16 +98,24 @@ def review_action(request, mechanical, analyzer=None):
     registry = analyzer.registry
     validate_execution_trace(analysis, registry)
     actions = analysis['execution_trace']
+    kinds={'candidate_decision'} if bounded else HELPER_KINDS
     if not actions or any(x['method_id'] != mid or x['role'] != method['primary_role'] or
-            x['state'] != 'produced' or x['output']['kind'] not in HELPER_KINDS for x in actions):
-        raise ValueError('Requires actual own reviewed helper artifacts only')
-    if analysis['answer'] is not None or analysis['content_eligible'] or analysis['candidate_analysis']:
-        raise ValueError('Helper action must not assert whole-question closure')
+            x['state'] != 'produced' or x['output']['kind'] not in kinds for x in actions):
+        raise ValueError('Requires actual own reviewed action artifacts only')
+    if bounded:
+        relations=question.get('relations',[])
+        if any(x['method_id']!=mid for x in relations) or sorted(
+                x['output']['relation_index'] for x in actions)!=list(range(len(relations))):
+            raise ValueError('Every bounded relation requires exactly one own typed decision')
+        if len({x['output']['candidate'] for x in actions})!=len(actions):
+            raise ValueError('Bounded decisions cannot duplicate a candidate')
+    if analysis['answer'] is not None or analysis['content_eligible'] or (not bounded and analysis['candidate_analysis']):
+        raise ValueError('Own action review must not assert whole-question closure')
     for kind in ('structured', 'content-export', 'student', 'legacy-wechat'):
         render(analysis, kind, registry)
-    return {'exam_id': exam, 'question_id': qid, 'method_id': mid,
+    report={'exam_id': exam, 'question_id': qid, 'method_id': mid,
             'method_version': method['version'], 'primary_role': method['primary_role'],
-            'output_role': method['output_type'], 'stage': STAGE,
+            'output_role': method['output_type'], 'stage': request['stage'],
             'reviewer': request['reviewer'], 'reviewer_kind': request['reviewer_kind'],
             'mechanical_prediction_sha256': request['mechanical_prediction_sha256'],
             'question': deepcopy(question), 'analysis': analysis, 'semantic_review': deepcopy(semantic),
@@ -110,6 +124,10 @@ def review_action(request, mechanical, analyzer=None):
             'learner_validation': 'pending_real_participant_validation',
             'semantic_certification': 'external_action_review_not_certified',
             'source_rights': 'local_research_only; redistribution_not_verified'}
+    if 'supersedes_action_review_sha256' in request:
+        if not bounded: raise ValueError('Only explicitly withdrawn bounded actions may be replaced')
+        report['supersedes_action_review_sha256']=request['supersedes_action_review_sha256']
+    return report
 
 
 def public_metadata(report):
@@ -122,10 +140,12 @@ def public_metadata(report):
                    'artifact_kinds': [x['output']['kind'] for x in report['analysis']['execution_trace']],
                    'answer_withheld': report['analysis']['answer'] is None,
                    'whole_question_content_eligible': report['analysis']['content_eligible']})
+    if 'supersedes_action_review_sha256' in report:
+        result['supersedes_action_review_sha256']=report['supersedes_action_review_sha256']
     return result
 
 
-def collect(dataset, request_path):
+def collect(dataset, request_path,revision=None):
     root = Path(dataset).resolve(); path = Path(request_path).resolve()
     if not path.is_relative_to(root / 'action-reviews'):
         raise ValueError('Action requests must stay in private action-reviews directory')
@@ -142,16 +162,26 @@ def collect(dataset, request_path):
     report = review_action(request, json.loads(mechanical_raw))
     report['request_sha256'] = sha(raw)
     report['request_artifact'] = path.relative_to(root).as_posix()
-    output = root / 'action-reviews' / exam / (report['method_id'] + '-' + report['question_id'] + '.review.json')
+    suffix='-'+identifier(revision) if revision else ''
+    if 'supersedes_action_review_sha256' in report:
+        if not revision: raise ValueError('Replacement must be separately named; never overwrite history')
+        check_supersession(root,report)
+    elif revision: raise ValueError('Action revision requires explicit withdrawn predecessor')
+    output = root / 'action-reviews' / exam / (report['method_id'] + '-' + report['question_id'] + suffix + '.review.json')
+    if 'supersedes_action_review_sha256' in report:
+        for prior_path in (root/'action-reviews'/exam).glob('*.review.json'):
+            prior=json.loads(prior_path.read_bytes())
+            if prior_path!=output and prior.get('supersedes_action_review_sha256')==report['supersedes_action_review_sha256']:
+                raise ValueError('Predecessor already superseded; withdraw the current review before another revision')
     freeze_json(output, report)
     return public_metadata(report)
 
 
 def load_metadata(dataset, exam_id):
-    root = Path(dataset); exam = identifier(exam_id); results = []
+    root = Path(dataset); exam = identifier(exam_id); results = []; reports=[]
     for path in sorted((root / 'action-reviews' / exam).glob('*.review.json')):
         report = json.loads(path.read_bytes())
-        if report['exam_id'] != exam or report['stage'] != STAGE:
+        if report['exam_id'] != exam or report['stage'] not in {STAGE,BOUNDED_STAGE}:
             raise ValueError('Wrong action review identity')
         raw = (root / 'predictions' / exam / 'blind.json').read_bytes()
         if report['mechanical_prediction_sha256'] != sha(raw):
@@ -166,8 +196,95 @@ def load_metadata(dataset, exam_id):
         expected.update({'request_sha256': sha(request_raw), 'request_artifact': report['request_artifact']})
         if expected != report:
             raise ValueError('Action replay drift requires explicit regression review')
-        results.append(public_metadata(report))
+        reports.append((report,sha(path.read_bytes()),path))
+    superseded=set()
+    for report,_,_ in reports:
+        if 'supersedes_action_review_sha256' in report:
+            check_supersession(root,report)
+            superseded.add(report['supersedes_action_review_sha256'])
+    active=set()
+    for report,digest,path in reports:
+        if digest in superseded: continue
+        identity=(report['question_id'],report['method_id'])
+        if identity in active: raise ValueError('Multiple active own action reviews need explicit supersession')
+        active.add(identity)
+        withdrawal=path.with_name(path.stem+'-withdrawal.json')
+        if withdrawal.is_file():
+            result=load_withdrawal(root,path)
+            metadata=public_metadata(report)
+            produced=[x for x in result['analysis']['execution_trace'] if x['state']=='produced']
+            metadata.update(produced_action_count=len(produced),artifact_kinds=[x['output']['kind'] for x in produced],
+                candidate_status='partially_withdrawn_pending_new_review' if produced else 'withdrawn_pending_new_review',
+                withdrawal_applied=True)
+            results.append(metadata)
+        else: results.append(public_metadata(report))
     return results
+
+
+def action_withdrawal(dataset,finding_path):
+    """Execute a negative finding on an own frozen action, not its old host."""
+    root=Path(dataset).resolve(); path=Path(finding_path).resolve()
+    if not path.is_relative_to(root/'action-reviews'): raise ValueError('Private action finding required')
+    raw=path.read_bytes(); request=json.loads(raw)
+    if set(request)!={'exam_id','method_id','source_action_review_sha256','finding'}:
+        raise ValueError('Own action withdrawal fields required')
+    exam=identifier(request['exam_id']); mid=identifier(request['method_id'])
+    if not path.is_relative_to(root/'action-reviews'/exam): raise ValueError('Own exam finding required')
+    candidates=[p for p in (root/'action-reviews'/exam).glob('*.review.json')
+                if sha(p.read_bytes())==request['source_action_review_sha256']]
+    if len(candidates)!=1: raise ValueError('Finding must bind exactly one frozen action review')
+    source=candidates[0]; report=json.loads(source.read_bytes())
+    if report['exam_id']!=exam or report['method_id']!=mid: raise ValueError('Own action finding identity mismatch')
+    # Current requests/sources are checked before withdrawing; no backfit.
+    source_request=(root/report['request_artifact']).resolve()
+    if not source_request.is_relative_to(root/'action-reviews'/exam): raise ValueError('Source request escape')
+    original=source_request.read_bytes()
+    mechanical=(root/'predictions'/exam/'blind.json').read_bytes()
+    if sha(original)!=report['request_sha256'] or sha(mechanical)!=report['mechanical_prediction_sha256']:
+        raise ValueError('Own withdrawal source binding mismatch')
+    replay=review_action(json.loads(original),json.loads(mechanical))
+    replay.update(request_sha256=sha(original),request_artifact=report['request_artifact'])
+    if replay!=report: raise ValueError('Own withdrawal source replay drift')
+    out=withdraw_review(report['question'],report['analysis'],request['finding'])
+    registry=Registry()
+    for kind in ('structured','student','legacy-wechat','content-export'): render(out['analysis'],kind,registry)
+    return {'exam_id':exam,'method_id':mid,'stage':'post_reveal_own_action_withdrawal',
+        'source_action_review_sha256':sha(source.read_bytes()),'request_sha256':sha(raw),
+        'request_artifact':path.relative_to(root).as_posix(),**out,
+        'new_blind_prediction':False,'registry_updates':0,'case_slots_filled':0}
+
+
+def collect_withdrawal(dataset,finding_path):
+    result=action_withdrawal(dataset,finding_path)
+    root=Path(dataset)
+    source=next(p for p in (root/'action-reviews'/result['exam_id']).glob('*.review.json')
+                if sha(p.read_bytes())==result['source_action_review_sha256'])
+    freeze_json(source.with_name(source.stem+'-withdrawal.json'),result)
+    return {k:result[k] for k in ('exam_id','method_id','stage','source_action_review_sha256',
+                                'new_blind_prediction','registry_updates','case_slots_filled')}
+
+
+def load_withdrawal(root,source):
+    result=json.loads(source.with_name(source.stem+'-withdrawal.json').read_bytes())
+    if result['source_action_review_sha256']!=sha(source.read_bytes()):
+        raise ValueError('Withdrawal must belong to this exact source action report')
+    request=(Path(root)/result['request_artifact']).resolve()
+    if action_withdrawal(root,request)!=result: raise ValueError('Own action withdrawal replay drift')
+    return result
+
+
+def check_supersession(root,report):
+    paths=[p for p in (Path(root)/'action-reviews'/report['exam_id']).glob('*.review.json')
+           if sha(p.read_bytes())==report['supersedes_action_review_sha256']]
+    if len(paths)!=1: raise ValueError('Replacement must bind its exact frozen predecessor')
+    parent=json.loads(paths[0].read_bytes())
+    if any(parent[k]!=report[k] for k in ('exam_id','question_id','method_id','method_version','mechanical_prediction_sha256')):
+        raise ValueError('Replacement cannot change source, question, method or version')
+    material_equal(parent['question'],report['question'])
+    withdrawn=load_withdrawal(root,paths[0])
+    old_ids={x['execution_id'] for x in parent['analysis']['execution_trace']}
+    if old_ids!=set(withdrawn['withdrawal']['effective_execution_ids']):
+        raise ValueError('Replacement requires explicit withdrawal of every old own action')
 
 
 def chain_report(dataset, request_path):
@@ -208,7 +325,10 @@ def chain_report(dataset, request_path):
     parent_path=root/'action-reviews'/exam/('F01-'+qid+'.review.json')
     parent_raw=parent_path.read_bytes(); parent=json.loads(parent_raw)
     # Revalidate the original request and engine, not just its recorded output.
-    load_metadata(root,exam)
+    active=load_metadata(root,exam)
+    own=[x for x in active if x['question_id']==qid and x['method_id']=='F01']
+    if len(own)!=1 or own[0].get('withdrawal_applied') or own[0].get('supersedes_action_review_sha256'):
+        raise ValueError('Chain cannot consume withdrawn or superseded original grouping')
     if sha(parent_raw)!=request['upstream_action_review_sha256'] or parent['question_id']!=qid or parent['method_id']!='F01':
         raise ValueError('Chain review upstream binding mismatch')
     parent_actions=parent['question']['action_executions']; actions=question.get('action_executions',[])
@@ -304,11 +424,13 @@ def load_chain_metadata(dataset,exam_id):
 def main():
     parser = argparse.ArgumentParser(); parser.add_argument('request')
     parser.add_argument('--chain',action='store_true',help='post-reveal composition of frozen helper actions')
-    parser.add_argument('--revision',help='explicit immutable chain revision suffix; old records are never overwritten')
+    parser.add_argument('--revision',help='explicit immutable revision suffix; own actions also require a withdrawn predecessor')
+    parser.add_argument('--withdraw-action',action='store_true',help='apply bound negative finding to an own action review')
     parser.add_argument('--dataset', default=str(ROOT / 'local-data/exams-2020-2025'))
     args = parser.parse_args()
-    if args.revision and not args.chain: parser.error('--revision requires --chain')
-    result=collect_chain(args.dataset,args.request,args.revision) if args.chain else collect(args.dataset,args.request)
+    if args.withdraw_action and (args.chain or args.revision): parser.error('withdrawal cannot also collect a revision')
+    result=collect_withdrawal(args.dataset,args.request) if args.withdraw_action else (
+        collect_chain(args.dataset,args.request,args.revision) if args.chain else collect(args.dataset,args.request,args.revision))
     print(json.dumps(result, ensure_ascii=False, indent=2))
 
 

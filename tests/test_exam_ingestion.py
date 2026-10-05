@@ -45,6 +45,19 @@ class ExamIngestionTest(unittest.TestCase):
             self.assertEqual(result['new_question_count'],2)
             self.assertIsNone(result['papers'][0]['safe_abstention'])
 
+    def test_helper_and_bounded_actions_are_not_mixed_or_counted_as_registered_cases(self):
+        with tempfile.TemporaryDirectory() as d:
+            directory=Path(d)
+            entry={'exam_id':'PROGRAM','year':2024,'exam_name':'PROGRAM ONLY','usage_status':'program_only',
+                   'source_ids':[],'source_issue':[]}
+            freeze_json(directory/'source-manifest.json',{'papers':[entry],'sources':[]})
+            actions=[{'stage':'post_reveal_action_review'}, {'stage':'post_reveal_bounded_action_review'}]
+            with patch('scripts.summarize_exam_ingestion.load_action_metadata',return_value=actions):
+                result=summary(directory)
+            self.assertEqual(result['post_reveal_helper_action_review_count'],1)
+            self.assertEqual(result['post_reveal_bounded_action_review_count'],1)
+            self.assertEqual(result['new_registered_cases'],0)
+
     def test_freeze_is_idempotent_and_refuses_replacement(self):
         with tempfile.TemporaryDirectory() as d:
             path=Path(d)/'frozen.json'

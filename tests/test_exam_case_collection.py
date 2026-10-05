@@ -3,6 +3,7 @@ import unittest
 import json
 from pathlib import Path
 import tempfile
+from unittest.mock import patch
 from types import SimpleNamespace
 from scripts.collect_exam_cases import material_equal,host_items,own_candidates,public_metadata,review_summary
 from scripts.ingest_exam_sources import freeze_json,sha
@@ -76,3 +77,35 @@ class ExamCaseCollectionTest(unittest.TestCase):
                     read.side_effect=lambda p: json.dumps(review).encode() if p==review_path else real(p)
                     with self.subTest(extra=extra),self.assertRaisesRegex(ValueError,'actual post-reveal'):
                         review_summary(root,exam)
+
+    def test_own_action_revision_does_not_rewrite_frozen_host_candidate_or_approve_type(self):
+        with tempfile.TemporaryDirectory() as d:
+            root=Path(d); exam='CONTROL'; r,q,a=self.fixture()
+            host=root/'predictions'/exam/'reviewed-blind.json'; freeze_json(host,{'PROGRAM ONLY':True})
+            report={'exam_id':exam,'stage':'post_reveal','written_question_count':1,
+                'reviewed_question_ids':['CONTROL'],'host_prediction_sha256':sha(host.read_bytes()),
+                'case_candidates':own_candidates(q,a,r)}
+            candidate_path=root/'case-review'/exam/'candidates.json'; freeze_json(candidate_path,report)
+            before=candidate_path.read_bytes()
+            review={'exam_id':exam,'question_id':'CONTROL','stage':'post_reveal',
+                'reviewed_prediction_sha256':report['host_prediction_sha256'],
+                'method_reviews':[{'method_id':'M','method_version':'CONTROL','unique_case_type_candidate':'canonical'}]}
+            freeze_json(root/'semantic-reviews'/(exam+'.json'),review)
+            revision={'question_id':'CONTROL','method_id':'M','method_version':'CONTROL',
+                'stage':'post_reveal_bounded_action_review','produced_action_count':1,
+                'answer_withheld':True,'case_slots_filled':0}
+            with patch('scripts.collect_action_reviews.load_metadata',return_value=[revision]):
+                result=review_summary(root,exam)
+                index=root/'case-review'/exam/'review-index.json'; frozen=index.read_bytes()
+                self.assertEqual(review_summary(root,exam),result)
+                self.assertEqual(index.read_bytes(),frozen)
+            candidate=result['candidates'][0]
+            self.assertFalse(candidate['observable_action_recorded'])  # Original host snapshot.
+            self.assertEqual(candidate['post_reveal_own_action_revision'],revision)
+            self.assertIsNone(candidate['case_type'])
+            self.assertEqual(result['case_slots_filled'],0)
+            self.assertEqual(candidate_path.read_bytes(),before)
+            self.assertNotIn('post_reveal_own_action_revision',json.loads(frozen)['candidates'][0])
+            wrong={**revision,'method_version':'different-version'}
+            with patch('scripts.collect_action_reviews.load_metadata',return_value=[wrong]):
+                self.assertNotIn('post_reveal_own_action_revision',review_summary(root,exam)['candidates'][0])

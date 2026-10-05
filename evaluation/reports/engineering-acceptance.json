@@ -6,7 +6,7 @@
     "head": "60ebaf4"
   },
   "after_refactor": {
-    "tests_run": 356,
+    "tests_run": 369,
     "failures": 0,
     "errors": 0,
     "registry": {
@@ -4669,7 +4669,8 @@
     "post_reveal_ai_reviewed_question_count": 3,
     "negative_review_withheld_question_count": 3,
     "post_reveal_helper_action_review_count": 2,
-    "post_reveal_chain_review_count": 1
+    "post_reveal_chain_review_count": 1,
+    "post_reveal_bounded_action_review_count": 1
   },
   "runtime_files": {
     "core/__init__.py": "df48faa2d425622da755579fea50f9647d679f4098878545843d7b44da2a230f",
@@ -4696,8 +4697,8 @@
     "scripts/apply_exam_withdrawals.py": "8ccf5d3f720419729d4dc6af9eaf9bfe2870ec7fe18294eaa4ddeb36540cc90b",
     "scripts/build_examples.py": "fe5b7d972a420f168b8232514c5904093f8edee95d0298112ccb3483051d31dc",
     "scripts/build_schemas.py": "8eda42ad3c6c0b139b389d0c018573b1146ea26acb2e4cbeefba72244d528516",
-    "scripts/collect_action_reviews.py": "a0fe9eb5d128add9f73556d633c8fa6966de7a089faaed38fa99884bc48ffc54",
-    "scripts/collect_exam_cases.py": "ee6b16003e557ab2d5307046dd18771d4c9ca9531d2fc9041fb9acc545747af2",
+    "scripts/collect_action_reviews.py": "4fa59fcc465afc768dcee446a278bfc65abdf42f3b1ac618d68f3ca7c908c161",
+    "scripts/collect_exam_cases.py": "091035bf346cc8ee479a6f74d68b34194523440b21c015fe2f0e301841bc05ae",
     "scripts/exam_profiles_2020_2021.py": "b5a3ce355ed219ffdca8b4bb6ac0a6f1cb502fcd86091776e3a789868fc1817f",
     "scripts/exam_profiles_2022_2024.py": "21d2d0b75ec5987c2072dc495cbc2ec6f125199310d740af1e624c1a14453dbd",
     "scripts/exam_profiles_2025.py": "155399f24f3304eea5057085d93fda9566de3cf9438d97d39aa1dcb0318b8a0d",
@@ -4708,10 +4709,10 @@
     "scripts/migrate_registry.py": "8ed79f38f8a5ba75c54ef346deb6dbebc0d2b1e774552814f43572a651bd1387",
     "scripts/normalize_cases.py": "11695800699abffc6e841f7cd3f964371db84adc5ae78b61145f00c5ec093e30",
     "scripts/prepare_revision.py": "07d51b5f9efcb9bd851f1872ff2f54d5c3be36daa7772768ffa2aafb7f3dea39",
-    "scripts/run_acceptance.py": "121cb24c8a6a3183a023ec3ebf1f950095492110c478c8ee69db38d5c7889c63",
+    "scripts/run_acceptance.py": "7072937f5461950617a505108052454a855996a649ac17436be06f1367cc1d80",
     "scripts/run_exam_regression.py": "8bcdf8d98ea307118841acf5fe911ef6eaef650beca3d4b4cf7dde779f8fd1da",
-    "scripts/summarize_exam_ingestion.py": "182021f945195126cb2e13461b3aaeb57040d0aa4f2b385397cafea7994114a7",
-    "tests/test_action_reviews.py": "d003250efb2a62620da105cf712f6fe8effa481d0512d2ec6c6524abfed96f7b",
+    "scripts/summarize_exam_ingestion.py": "b6f4617e02e603ed77bd3413a1e525edb492ca679d41386b731da019131b771a",
+    "tests/test_action_reviews.py": "b100971174a8cdb89a8da70208bac4cac4247f48cf76bb4eae0d894a110ea371",
     "tests/test_application_migration.py": "069bd3a29aec718e1707f1e8db8ea6682de8a9e2a1654054a1c0eb7baab6bd75",
     "tests/test_case_coverage.py": "a34eda270237f5f0973420981d8e7db94f749e667f6d3b5eb57dcf552513f54a",
     "tests/test_cloze_migration.py": "02a80e5d3c3a4e138bd3509c28df71b01a3543f22994575b604f0674adfb3c76",
@@ -4719,8 +4720,8 @@
     "tests/test_engine.py": "a9e307532cdb174f5c835ea1d9e0cc974069ec5d8237476b0a1791570ef31345",
     "tests/test_evaluation_workflow.py": "3c5832c74b758c7bc63b59fd019d98eb6343fefb940bfc233f880b4ae0c9cf63",
     "tests/test_evidence_binding.py": "8740c22ae2d83007cbf25b1ea2a5c96feb3a1ef2e4a1ea3ba188f6df1e47c922",
-    "tests/test_exam_case_collection.py": "a05654fee957813b438bd65b6249995ad0974458691f0292c761e521d45400d6",
-    "tests/test_exam_ingestion.py": "52741cbea2a921c2e4eb93fcd8ea5c80c2656421d8b5bc207101743ac7ada8e0",
+    "tests/test_exam_case_collection.py": "3f9beaab64f1338f8c578103e1db14f8556266f70107e3972d4798a8ee36a54e",
+    "tests/test_exam_ingestion.py": "40b438c32f27724ad50d7891900a32a8f25c59cf49739f2fffa58a0403432ce6",
     "tests/test_exam_profiles_2020_2021.py": "2718165e4671dc5b23bc01fb727174c4f7b60cbe929c70321a071875bf87b097",
     "tests/test_exam_profiles_2022_2024.py": "904e48781422a248ee8d6df1068ba7227a120f6b9f3eed224fdc11b9c57712ba",
     "tests/test_exam_profiles_2025.py": "13df9269f82c838ee25d66a999b13b18c8645c0bd400b19e85a759b9da74a5fe",

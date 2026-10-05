@@ -153,6 +153,16 @@ def review_summary(dataset,exam_id):
         'method_attribution_status':review.get('overall',{}).get('method_attribution',review.get('overall_status')),
         'registry_updates':0,'case_slots_filled':0})
     freeze_json(root/'case-review'/exam_id/'review-index.json',result)
+    # Preserve the original frozen host candidate/index. Later own action
+    # recording is a separately replayed post-reveal revision, never backdated
+    # into the pre-reveal host evidence or treated as type approval.
+    from scripts.collect_action_reviews import load_metadata as action_metadata
+    revisions={(x['question_id'],x['method_id'],x['method_version']):x
+               for x in action_metadata(root,exam_id)}
+    for candidate in result['candidates']:
+        revision=revisions.get((candidate['question_id'],candidate['method_id'],candidate['method_version']))
+        if revision:
+            candidate['post_reveal_own_action_revision']=revision
     return result
 
 def main():

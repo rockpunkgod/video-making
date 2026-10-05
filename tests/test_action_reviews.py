@@ -8,7 +8,8 @@ import unittest
 from core.analyzer import QuestionAnalyzer
 from core.registry import Registry
 from scripts.collect_action_reviews import (collect, load_metadata, review_action, public_metadata,
-    collect_chain, load_chain_metadata)
+    collect_chain, load_chain_metadata, collect_withdrawal, load_withdrawal)
+from core.review_withdrawal import fingerprint
 from scripts.ingest_exam_sources import freeze_json, sha
 from tests.test_execution import action, span, seven_chain_fixture
 
@@ -33,6 +34,23 @@ def fixture():
             ('trigger', 'action', 'evidence', 'output', 'stop', 'transfer', 'practical_benefit', 'limitations')}}
     request['semantic_review']['proposed_case_type'] = None
     return request, mechanical
+
+
+def bounded_fixture():
+    request,mechanical=fixture()
+    original=mechanical['inputs']['questions'][0]
+    original['question_type']='阅读理解'
+    question=deepcopy(original)
+    question.update(requested_chain=['R02'],
+        observations=[{'method_id':'R02','evidence':[span()],'reviewed':True}],
+        relations=[{'method_id':'R02','candidate':'B','effect':'eliminate','claim':'program-only mismatch',
+            'evidence':[span()],'decision_rule_check':'program-only relation check',
+            'stop_rule_check':'program-only bounded stop','verification':'program-only recheck',
+            'reviewer':'synthetic-program-fixture','review_status':'reviewed'}],
+        action_executions=[action('reject-B','R02','decider',{'kind':'candidate_decision',
+            'candidate':'B','effect':'eliminate','relation_index':0})])
+    request.update(method_id='R02',stage='post_reveal_bounded_action_review',question=question)
+    return request,mechanical
 
 
 class ActionReviewTest(unittest.TestCase):
@@ -112,6 +130,146 @@ class ActionReviewTest(unittest.TestCase):
                     collect(root, path)
         with self.assertRaises(ValueError):
             load_metadata('.', '../outside')
+
+
+class BoundedActionTest(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls): cls.analyzer=QuestionAnalyzer(Registry())
+
+    def test_own_single_rejection_is_valid_without_whole_question_success(self):
+        request,mechanical=bounded_fixture(); before=deepcopy(request)
+        report=review_action(request,mechanical,self.analyzer)
+        self.assertEqual(report['primary_role'],'decider')
+        self.assertEqual(report['analysis']['candidate_analysis'][0]['candidate'],'B')
+        self.assertEqual(report['analysis']['candidate_analysis'][0]['effect'],'eliminate')
+        self.assertIsNone(report['analysis']['answer'])
+        self.assertEqual(report['analysis']['answer_verification']['unresolved_candidates'],['A'])
+        self.assertEqual(public_metadata(report)['produced_action_count'],1)
+        self.assertNotIn('alpha',json.dumps(public_metadata(report)))
+        self.assertEqual(request,before)
+
+    def test_missing_own_action_cannot_be_replaced_by_extra_relation(self):
+        request,mechanical=bounded_fixture()
+        extra=deepcopy(request['question']['relations'][0]); extra.update(candidate='A',effect='undetermined')
+        request['question']['relations'].append(extra)
+        with self.assertRaisesRegex(ValueError,'exactly one own typed'):
+            review_action(request,mechanical,self.analyzer)
+
+    def test_bounded_stage_never_accepts_whole_answer_or_changed_material(self):
+        request,mechanical=bounded_fixture()
+        extra=deepcopy(request['question']['relations'][0]); extra.update(candidate='A',effect='retain')
+        request['question']['relations'].append(extra)
+        request['question']['action_executions'].append(action('retain-A','R02','decider',
+            {'kind':'candidate_decision','candidate':'A','effect':'retain','relation_index':1}))
+        with self.assertRaisesRegex(ValueError,'whole-question closure'):
+            review_action(request,mechanical,self.analyzer)
+        request,mechanical=bounded_fixture(); request['question']['passage']='changed'
+        with self.assertRaisesRegex(ValueError,'changed'):
+            review_action(request,mechanical,self.analyzer)
+
+    def test_helper_role_cannot_be_relabelled_as_bounded_decider(self):
+        request,mechanical=fixture(); request['stage']='post_reveal_bounded_action_review'
+        with self.assertRaisesRegex(ValueError,'primary decider'):
+            review_action(request,mechanical,self.analyzer)
+
+    def test_duplicate_action_and_foreign_relation_rejected(self):
+        request,mechanical=bounded_fixture()
+        duplicate=deepcopy(request['question']['action_executions'][0]); duplicate['execution_id']='again-B'
+        request['question']['action_executions'].append(duplicate)
+        with self.assertRaisesRegex(ValueError,'exactly one own typed'):
+            review_action(request,mechanical,self.analyzer)
+        request,mechanical=bounded_fixture(); request['question']['relations'][0]['method_id']='R01'
+        with self.assertRaises(ValueError):
+            review_action(request,mechanical,self.analyzer)
+
+    def test_bounded_record_freeze_and_replay_keep_stage_and_case_gap(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root=Path(directory); request,mechanical=bounded_fixture()
+            prediction=root/'predictions/program-only/blind.json'; freeze_json(prediction,mechanical)
+            request['mechanical_prediction_sha256']=sha(prediction.read_bytes())
+            freeze_json(root/'results/program-only/reveal.json',{'stage':'synthetic-program-reveal'})
+            path=root/'action-reviews/program-only/R02.request.json'; freeze_json(path,request)
+            metadata=collect(root,path)
+            self.assertEqual(load_metadata(root,'program-only'),[metadata])
+            self.assertEqual(metadata['stage'],'post_reveal_bounded_action_review')
+            self.assertEqual(metadata['case_slots_filled'],0)
+            self.assertTrue(metadata['answer_withheld'])
+
+    def frozen_own_action(self,root):
+        request,mechanical=bounded_fixture()
+        prediction=root/'predictions/program-only/blind.json'; freeze_json(prediction,mechanical)
+        request['mechanical_prediction_sha256']=sha(prediction.read_bytes())
+        freeze_json(root/'results/program-only/reveal.json',{'stage':'synthetic-program-reveal'})
+        path=root/'action-reviews/program-only/R02.request.json'; freeze_json(path,request)
+        collect(root,path)
+        source=root/'action-reviews/program-only/R02-program-only-q1.review.json'
+        report=json.loads(source.read_bytes())
+        finding={'question_id':report['question_id'],'input_sha256':fingerprint(report['question']),
+            'analysis_sha256':fingerprint(report['analysis']),'review_stage':'post_reveal',
+            'reviewer':'synthetic-program-not-a-learner','reviewer_kind':'AI','reason':'program-only negative check',
+            'withdrawn_relation_indexes':[0],'withdrawn_execution_ids':['reject-B'],
+            'failure_categories':['semantic_review_problem']}
+        negative={'exam_id':'program-only','method_id':'R02','source_action_review_sha256':sha(source.read_bytes()),
+                  'finding':finding}
+        finding_path=root/'action-reviews/program-only/negative.json'; freeze_json(finding_path,negative)
+        return request,source,finding_path,negative
+
+    def test_negative_own_review_actually_removes_output_without_overwriting_history(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root=Path(directory); _,source,path,_=self.frozen_own_action(root); before=source.read_bytes()
+            collect_withdrawal(root,path)
+            self.assertEqual(source.read_bytes(),before)
+            current=load_metadata(root,'program-only')[0]
+            self.assertEqual(current['produced_action_count'],0)
+            self.assertTrue(current['withdrawal_applied'])
+            result=json.loads(source.with_name(source.stem+'-withdrawal.json').read_bytes())
+            self.assertEqual(result['analysis']['execution_trace'],[])
+            self.assertEqual(result['analysis']['answer_verification']['unresolved_candidates'],['A','B'])
+            self.assertIsNone(result['analysis']['answer'])
+
+    def test_replacement_requires_bound_withdrawal_then_counts_only_new_snapshot(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root=Path(directory); request,source,negative,_=self.frozen_own_action(root)
+            revised=deepcopy(request); revised['supersedes_action_review_sha256']=sha(source.read_bytes())
+            revised['question']['action_executions'][0]['concrete_action']='separately reviewed program action'
+            path=root/'action-reviews/program-only/R02.revised.request.json'; freeze_json(path,revised)
+            with self.assertRaisesRegex(ValueError,'separately named'):
+                collect(root,path)
+            with self.assertRaises(FileNotFoundError): collect(root,path,revision='corrected')
+            before=source.read_bytes(); collect_withdrawal(root,negative)
+            metadata=collect(root,path,revision='corrected')
+            self.assertEqual(collect(root,path,revision='corrected'),metadata)
+            with self.assertRaisesRegex(ValueError,'already superseded'):
+                collect(root,path,revision='fork')
+            self.assertFalse((root/'action-reviews/program-only/R02-program-only-q1-fork.review.json').exists())
+            self.assertEqual(load_metadata(root,'program-only'),[metadata])
+            self.assertEqual(source.read_bytes(),before)
+            self.assertEqual(metadata['produced_action_count'],1)
+            self.assertEqual(metadata['case_slots_filled'],0)
+
+    def test_negative_binding_and_unnamed_replacement_are_not_silently_accepted(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root=Path(directory); _,_,path,negative=self.frozen_own_action(root)
+            changed=deepcopy(negative); changed['finding']['input_sha256']='wrong'
+            wrong=root/'action-reviews/program-only/wrong.json'; freeze_json(wrong,changed)
+            with self.assertRaisesRegex(ValueError,'exact input'):
+                collect_withdrawal(root,wrong)
+            changed=deepcopy(negative); changed['method_id']='R01'
+            wrong=root/'action-reviews/program-only/wrong-method.json'; freeze_json(wrong,changed)
+            with self.assertRaisesRegex(ValueError,'identity'):
+                collect_withdrawal(root,wrong)
+
+    def test_valid_withdrawal_copied_to_another_report_cannot_withdraw_it(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root=Path(directory); _,source,path,_=self.frozen_own_action(root)
+            collect_withdrawal(root,path)
+            other=source.with_name('unrelated.review.json')
+            changed=json.loads(source.read_bytes()); changed['reviewer']='another synthetic reviewer'
+            freeze_json(other,changed)
+            original=json.loads(source.with_name(source.stem+'-withdrawal.json').read_bytes())
+            freeze_json(other.with_name(other.stem+'-withdrawal.json'),original)
+            with self.assertRaisesRegex(ValueError,'exact source action'):
+                load_withdrawal(root,other)
 
 
 class ChainReviewTest(unittest.TestCase):
@@ -242,3 +400,21 @@ class ChainReviewTest(unittest.TestCase):
         collect_chain(self.root,path,revision='duplicate')
         with self.assertRaisesRegex(ValueError,'Exactly one'):
             load_chain_metadata(self.root,'program-only')
+
+    def test_partially_withdrawn_grouping_cannot_feed_old_chain(self):
+        source=self.root/'action-reviews/program-only/F01-program-only-typed-pipeline.review.json'
+        report=json.loads(source.read_bytes())
+        finding={'question_id':report['question_id'],'input_sha256':fingerprint(report['question']),
+            'analysis_sha256':fingerprint(report['analysis']),'review_stage':'post_reveal',
+            'reviewer':'synthetic-program-not-a-learner','reviewer_kind':'AI','reason':'program-only grouping flaw',
+            'withdrawn_relation_indexes':[],'withdrawn_execution_ids':['group-actor'],
+            'failure_categories':['semantic_review_problem']}
+        negative={'exam_id':'program-only','method_id':'F01','source_action_review_sha256':sha(source.read_bytes()),
+                  'finding':finding}
+        path=self.root/'action-reviews/program-only/negative-group.json'; freeze_json(path,negative)
+        collect_withdrawal(self.root,path)
+        metadata=load_metadata(self.root,'program-only')[0]
+        self.assertEqual(metadata['produced_action_count'],2)  # Still-valid dimensions stay visible.
+        self.assertTrue(metadata['withdrawal_applied'])
+        with self.assertRaisesRegex(ValueError,'withdrawn or superseded'):
+            self.run_request()
