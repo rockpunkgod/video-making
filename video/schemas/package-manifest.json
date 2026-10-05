@@ -1,0 +1,103 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "properties": {
+    "schema_version": {
+      "enum": [
+        "1.0.0"
+      ]
+    },
+    "package_id": {
+      "type": "string"
+    },
+    "generated_at": {
+      "type": "string"
+    },
+    "candidate_sha": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "package_sha": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "inputs": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "asset_id": {
+            "type": "string"
+          },
+          "content_sha": {
+            "type": "string",
+            "pattern": "^[a-f0-9]{64}$"
+          },
+          "semantic_binding_sha": {
+            "type": "string",
+            "pattern": "^[a-f0-9]{64}$"
+          },
+          "method_versions": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "string"
+            }
+          },
+          "review_ids": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        },
+        "required": [
+          "asset_id",
+          "content_sha",
+          "semantic_binding_sha",
+          "method_versions",
+          "review_ids"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "pattern_version": {
+      "type": "string"
+    },
+    "pattern_sha": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "rubric_version": {
+      "type": "string"
+    },
+    "ranking_policy_version": {
+      "type": "string"
+    },
+    "director_version": {
+      "type": "string"
+    },
+    "timing_version": {
+      "type": "string"
+    },
+    "final_copy_sha": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    }
+  },
+  "required": [
+    "schema_version",
+    "package_id",
+    "generated_at",
+    "candidate_sha",
+    "package_sha",
+    "inputs",
+    "pattern_version",
+    "pattern_sha",
+    "rubric_version",
+    "ranking_policy_version",
+    "director_version",
+    "timing_version",
+    "final_copy_sha"
+  ],
+  "additionalProperties": false
+}

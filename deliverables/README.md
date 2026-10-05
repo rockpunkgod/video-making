@@ -1,5 +1,20 @@
 # 独立开发交付包
 
+## Video Production OS v0.1
+
+[Video-Production-OS-v0.1.zip](Video-Production-OS-v0.1.zip) 包含当前 V0–V7 源码、契约、公开示例、文档和逐文件 DELIVERY_MANIFEST.json，共511个文件。解压后从 docs/video-os.md 开始接入。
+
+- 源码全量424项回归通过；独立解压目录49项Video OS测试、Registry和契约校验通过。最终包的运行代码及参考资源字节与冷启动验收包一致。
+- F01、G01、R02三条真实 Engineering Pilot 通过；真实题与生产包保留在原工作区 local-data，ZIP不携带。
+- 教学认证、来源显示和最终编辑批准仍为PENDING，公开渲染资格为false。正式AE/Astra/发布属于后续阶段。
+- 所有归档条目CRC和逐文件SHA256核对通过；不包含私有试卷、Git历史、缓存或旧交付包。
+
+大小：1,608,922字节。SHA256：`d2d86ca45e8eae577a4613927e2c1b354c2582c7df94259103b9947f5871507e`。
+
+[完整核验记录](Video-Production-OS-v0.1.verification.json) · [压缩包校验值](Video-Production-OS-v0.1.sha256.json)
+
+## ANSWER Method Engine 历史快照
+
 [ANSWER-Method-Engine-9f27746.zip](ANSWER-Method-Engine-9f27746.zip) 解压后得到一个完整文件夹。先读最外层的 `开发前先读.md`，再按需要接入其他模块；目录结构不要拆散。
 
 - 源码快照：本地提交 `9f2774675111739434765d6cdd48c2da7284e45f`，对应GitHub提交 `7e3009902fb4c801ecca43f013114fc372cf4cc0`，源码树一致。

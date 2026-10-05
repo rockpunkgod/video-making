@@ -11,7 +11,8 @@ dependencies = ["PyYAML>=6.0,<7", "jsonschema>=4,<5", "Pillow>=12,<13"]
 
 [project.scripts]
 answer-engine = "answer_engine.__main__:main"
+video-os = "content_os.__main__:main"
 
 [tool.setuptools.packages.find]
-include = ["answer_engine*", "core*", "renderers*", "evaluation*", "scripts*"]
+include = ["answer_engine*", "core*", "renderers*", "evaluation*", "scripts*", "content_os*", "video_contracts*"]
 exclude = ["tests*"]

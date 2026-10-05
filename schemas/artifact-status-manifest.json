@@ -1,0 +1,285 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "properties": {
+    "schema_version": {
+      "enum": [
+        "1.0.0"
+      ]
+    },
+    "asset_id": {
+      "type": "string"
+    },
+    "generated_at": {
+      "type": "string"
+    },
+    "semantic_binding_sha": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "source_sha": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "presentation_sha": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "question": {
+      "type": "object",
+      "properties": {
+        "snapshot_sha": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
+        },
+        "status": {
+          "enum": [
+            "ACTIVE",
+            "INCOMPLETE",
+            "WITHDRAWN",
+            "SUPERSEDED",
+            "STALE",
+            "BLOCKED"
+          ]
+        }
+      },
+      "required": [
+        "snapshot_sha",
+        "status"
+      ],
+      "additionalProperties": false
+    },
+    "method_versions": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "string"
+      }
+    },
+    "lifecycle": {
+      "type": "object",
+      "properties": {
+        "reviews": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "artifact_id": {
+                "type": "string"
+              },
+              "status": {
+                "enum": [
+                  "active",
+                  "withdrawn",
+                  "superseded"
+                ]
+              },
+              "withdrawal_refs": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              }
+            },
+            "required": [
+              "artifact_id",
+              "status",
+              "withdrawal_refs"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "actions": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "artifact_id": {
+                "type": "string"
+              },
+              "status": {
+                "enum": [
+                  "active",
+                  "blocked",
+                  "withdrawn",
+                  "superseded"
+                ]
+              },
+              "parent_artifacts": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "cause": {
+                "anyOf": [
+                  {
+                    "type": "object",
+                    "properties": {
+                      "why": {
+                        "type": "string"
+                      },
+                      "which_parent": {
+                        "type": "string"
+                      },
+                      "withdrawal_artifact_id": {
+                        "type": "string"
+                      },
+                      "withdrawal_sha": {
+                        "type": "string",
+                        "pattern": "^[a-f0-9]{64}$"
+                      }
+                    },
+                    "required": [
+                      "why",
+                      "which_parent",
+                      "withdrawal_artifact_id",
+                      "withdrawal_sha"
+                    ],
+                    "additionalProperties": false
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              }
+            },
+            "required": [
+              "artifact_id",
+              "status",
+              "parent_artifacts",
+              "cause"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "decisions": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "artifact_id": {
+                "type": "string"
+              },
+              "status": {
+                "enum": [
+                  "active",
+                  "blocked",
+                  "withdrawn",
+                  "superseded"
+                ]
+              },
+              "cause": {
+                "anyOf": [
+                  {
+                    "type": "object",
+                    "properties": {
+                      "why": {
+                        "type": "string"
+                      },
+                      "which_parent": {
+                        "type": "string"
+                      },
+                      "withdrawal_artifact_id": {
+                        "type": "string"
+                      },
+                      "withdrawal_sha": {
+                        "type": "string",
+                        "pattern": "^[a-f0-9]{64}$"
+                      }
+                    },
+                    "required": [
+                      "why",
+                      "which_parent",
+                      "withdrawal_artifact_id",
+                      "withdrawal_sha"
+                    ],
+                    "additionalProperties": false
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              }
+            },
+            "required": [
+              "artifact_id",
+              "status",
+              "cause"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "evidence": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "artifact_id": {
+                "type": "string"
+              },
+              "status": {
+                "enum": [
+                  "active",
+                  "withdrawn",
+                  "superseded"
+                ]
+              }
+            },
+            "required": [
+              "artifact_id",
+              "status"
+            ],
+            "additionalProperties": false
+          }
+        }
+      },
+      "required": [
+        "reviews",
+        "actions",
+        "decisions",
+        "evidence"
+      ],
+      "additionalProperties": false
+    },
+    "effective_status": {
+      "enum": [
+        "ACTIVE",
+        "INCOMPLETE",
+        "WITHDRAWN",
+        "SUPERSEDED",
+        "STALE",
+        "BLOCKED"
+      ]
+    },
+    "invalidation_reasons": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "content_sha": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "envelope_sha": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    }
+  },
+  "required": [
+    "schema_version",
+    "asset_id",
+    "generated_at",
+    "semantic_binding_sha",
+    "source_sha",
+    "presentation_sha",
+    "question",
+    "method_versions",
+    "lifecycle",
+    "effective_status",
+    "invalidation_reasons",
+    "content_sha",
+    "envelope_sha"
+  ],
+  "additionalProperties": false
+}

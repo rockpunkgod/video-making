@@ -1,5 +1,7 @@
 # ANSWER Method Engine · video-making
 
+Video Production OS v0.1 的冻结消费接口、分级门禁与本地运行说明见 [Video OS](docs/video-os.md)，基线见 [video-os-baseline](docs/video-os-baseline.md)。工程试制通过不代表独立教学认证或公开视频放行。
+
 ANSWER is an evidence-grounded Gaokao English method and question-analysis system.
 
 以课程证据为根基，把高考英语方法转化为可触发、可执行、可验证、可迁移的考试决策系统。成果另存于本仓库；`rockpunkgod/ANSWER` 源仓库未修改。

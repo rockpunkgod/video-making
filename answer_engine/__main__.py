@@ -14,6 +14,8 @@ def main():
     if hasattr(sys.stdout,'reconfigure'): sys.stdout.reconfigure(encoding='utf-8')
     parser = argparse.ArgumentParser(description='Evidence-grounded Gaokao Method Engine')
     commands = parser.add_subparsers(dest='command',required=True)
+    for name in ('export-asset', 'export-status'):
+        sub = commands.add_parser(name); sub.add_argument('input')
     for name in ['analyze','paper','lesson']:
         sub = commands.add_parser(name); sub.add_argument('input')
         if name in {'analyze','lesson'}: sub.add_argument('--renderer',choices=['structured','student','legacy-wechat','content-export'],default='structured')
@@ -25,6 +27,12 @@ def main():
     commands.add_parser('validate')
     commands.add_parser('case-coverage')
     args=parser.parse_args()
+    if args.command in ('export-asset', 'export-status'):
+        from answer_engine.frozen_export import FrozenAssetExporter, load_request
+        exporter = FrozenAssetExporter()
+        request = load_request(args.input)
+        result = exporter.export(request) if args.command == 'export-asset' else exporter.status(request)
+        print(json.dumps(result, ensure_ascii=False, indent=2)); return
     r=Registry()
     if args.command=='validate':
         from scripts.generate_assets import generate

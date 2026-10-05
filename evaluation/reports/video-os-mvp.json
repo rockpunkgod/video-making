@@ -1,0 +1,128 @@
+{
+  "selection_policy": "review_cleanliness > teaching_clarity > visual_demonstrability > brand_priority",
+  "engineering_pilot": {
+    "status": "PASS",
+    "completed_real_assets": 3,
+    "meaning": "Engineering preservation only; no independent teaching certification"
+  },
+  "semantic_certification": {
+    "status": "PENDING"
+  },
+  "source_release": {
+    "status": "PENDING"
+  },
+  "editorial_release": {
+    "status": "PENDING"
+  },
+  "pilots": [
+    {
+      "question_id": "gaokao-2025-I-q36",
+      "method_id": "F01",
+      "scope": "method_action_demo",
+      "upstream_review_level": "ai_reviewed",
+      "withdrawal_audit": [],
+      "engineering": "PASS",
+      "semantic_certification": "PENDING",
+      "source_release": "PENDING",
+      "editorial_release": "PENDING",
+      "estimated_seconds": 73,
+      "semantic_binding_sha": "157e900f1f5100e303bfa068b0a03ef69df9f7a3bbd5a17a5c48d330c228d44d",
+      "final_copy_sha": "61f6e3c831f2b87b9c0245cf94edd7449883b138a32f8e84ed9c9989298052c9",
+      "replay_identical": true,
+      "staleness_propagated": true
+    },
+    {
+      "question_id": "gaokao-2025-I-q59",
+      "method_id": "G01",
+      "scope": "method_action_demo",
+      "upstream_review_level": "ai_reviewed",
+      "withdrawal_audit": [],
+      "engineering": "PASS",
+      "semantic_certification": "PENDING",
+      "source_release": "PENDING",
+      "editorial_release": "PENDING",
+      "estimated_seconds": 86,
+      "semantic_binding_sha": "101f9ac68420c2e54ca422bf4f61c91b20ec53e651c397cf8e8c95ecf1102e9b",
+      "final_copy_sha": "73e944268ddff5d25439820971abd3ceef70779feb18c55f4e7f20435f4937c9",
+      "replay_identical": true,
+      "staleness_propagated": true
+    },
+    {
+      "question_id": "gaokao-2021-I-q26",
+      "method_id": "R02",
+      "scope": "method_action_demo",
+      "upstream_review_level": "ai_reviewed",
+      "withdrawal_audit": [
+        {
+          "artifact_sha": "4e5dabd192685356b1c7da46e3273190855bd9af9a6990dd8a3d935daff992ca",
+          "targets_selected_snapshot": false
+        },
+        {
+          "artifact_sha": "db72a9c99337dae1f04def475774c5cf0a39370ea5b038e55dcc7d4622791961",
+          "targets_selected_snapshot": false
+        }
+      ],
+      "engineering": "PASS",
+      "semantic_certification": "PENDING",
+      "source_release": "PENDING",
+      "editorial_release": "PENDING",
+      "estimated_seconds": 78,
+      "semantic_binding_sha": "3d0aca78088cdadb57e5505d91a3e369c670a1dc7403bdc699ffb1262a1e18fa",
+      "final_copy_sha": "6a7097614ccc4a59760d42a08c5cd91a47802f8a2a7a4e81832c758686dbc0f2",
+      "replay_identical": true,
+      "staleness_propagated": true
+    }
+  ],
+  "upstream_files_unchanged": true,
+  "baseline_commit": "18afe8a",
+  "validation": {
+    "full_regression": {
+      "tests": 424,
+      "status": "PASS",
+      "log": "local-data/video-os-delivery-regression.log"
+    },
+    "video_os_targeted": {
+      "tests": 49,
+      "status": "PASS"
+    },
+    "cold_extracted_source": {
+      "checks": 3,
+      "video_os_tests": 49,
+      "status": "PASS"
+    },
+    "registry": {
+      "methods": 82,
+      "source_documents": 20,
+      "status": "PASS"
+    },
+    "generated_assets": "PASS",
+    "contract_schema_check": "PASS",
+    "scope_positive_controls": [
+      {
+        "scope": "full_solution",
+        "pattern": "P01",
+        "status": "PASS",
+        "fixture_type": "synthetic_control_only"
+      },
+      {
+        "scope": "boundary_demo",
+        "pattern": "P02",
+        "status": "PASS",
+        "fixture_type": "synthetic_control_only"
+      },
+      {
+        "scope": "anti_rule_demo",
+        "pattern": "P03",
+        "status": "PASS",
+        "fixture_type": "synthetic_control_only"
+      }
+    ],
+    "ranking_20_candidate_control": {
+      "status": "PASS",
+      "stable_after_input_reversal": true
+    },
+    "cli_export_produce_review_refresh_handoff": "PASS",
+    "public_handoff_rejected": "PASS"
+  },
+  "public_render_ready": false
+}
