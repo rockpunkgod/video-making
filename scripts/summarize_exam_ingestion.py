@@ -4,6 +4,7 @@ import json
 from pathlib import Path
 from scripts.ingest_exam_sources import ROOT
 from scripts.collect_exam_cases import review_summary
+from scripts.apply_exam_withdrawals import load_metadata
 
 def latest(directory,prefix):
     def version(path):
@@ -57,6 +58,7 @@ def summary(dataset):
         if row['host_reviewed_reference_match_count'] is None:
             row['host_reviewed_reference_match_count']=host.get('host_reviewed_match_count',result.get('host_reviewed_match_count'))
         row['case_review']=review_summary(directory,exam)
+        row['negative_review_execution']=load_metadata(directory,exam)
         papers.append(row)
     return {'schema_version':'1.0.0','status':'PARTIAL','source_papers':len(papers),
         'source_files':len(manifest['sources']),'completed_blind_reveal_papers':sum(x['blind_reveal_completed'] for x in papers),
@@ -67,6 +69,7 @@ def summary(dataset):
         'real_student_observation_count':0,'new_registered_cases':0,
         'case_review_candidate_count':sum((x['case_review'] or {}).get('case_candidate_count',0) for x in papers),
         'post_reveal_ai_reviewed_question_count':sum(bool(x['case_review'] and x['case_review'].get('semantic_review_question_id')) for x in papers),
+        'negative_review_withheld_question_count':sum(bool(x['negative_review_execution'] and x['negative_review_execution']['answer_withheld']) for x in papers),
         'scope':'actual local source ingestion and engine regression metadata; not semantic or learner certification',
         'sources':[{key:s[key] for key in ['source_id','exam_id','kind','filename','bytes','sha256','extraction_sha256','source_reference','download_reference','usage_status','answer_authority']} for s in manifest['sources']],
         'papers':papers}

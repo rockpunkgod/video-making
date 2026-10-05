@@ -6,7 +6,7 @@
     "head": "60ebaf4"
   },
   "after_refactor": {
-    "tests_run": 328,
+    "tests_run": 333,
     "failures": 0,
     "errors": 0,
     "registry": {
@@ -4666,7 +4666,8 @@
     "real_student_observation_count": 0,
     "new_registered_cases": 0,
     "case_review_candidate_count": 6,
-    "post_reveal_ai_reviewed_question_count": 3
+    "post_reveal_ai_reviewed_question_count": 3,
+    "negative_review_withheld_question_count": 3
   },
   "runtime_files": {
     "core/__init__.py": "df48faa2d425622da755579fea50f9647d679f4098878545843d7b44da2a230f",
@@ -4681,14 +4682,16 @@
     "core/passage_lesson.py": "f024425d62ce2207015afb7567725765a6cd29de5b775d9fbeab573273b22a23",
     "core/registry.py": "9d81d2d5d4fed46b5605312a92b51bb259f71df9459c12e202000c461a713b4a",
     "core/release.py": "d2ff77418472fd67a86428c554278024ebc5531b8a8ae333b917a68c760b4615",
+    "core/review_withdrawal.py": "201ab926ce63218ef087b540fb78e4dbae5223025dc865846f4a4c874150d4bc",
     "core/writing_feedback.py": "e1f1e03cdeb746a5ef51510dcb76e3c898036c87c4df646c0d8f6c1288d5a8f4",
-    "answer_engine/__init__.py": "4382269cee2a379010a95d276fa1d34430d9e213de899492b75dd0404a0cb01a",
+    "answer_engine/__init__.py": "f134f77cf23228ee57030f85f82a981a7c58dfaf203cc3806b25856386f5a1a8",
     "answer_engine/__main__.py": "9a978ddf3aa616ca8daac79c5421795f3418dbd2e1585ac56b308db415a5f971",
     "renderers/__init__.py": "8bf22f989115dfa93e561cf304020f9c02c463658fee8344a7f6d272628c7e23",
     "renderers/passage.py": "1ff41c5fe5702498ca293e43b68da205c73d03f5863680115bcbf6cbf3602179",
     "evaluation/__init__.py": "eda5a1aa9ecc60006485cc0dfecc05213eb0b9fe58c2eee9915c2826987a0f5f",
     "evaluation/harness.py": "d37e672433b777f0f00c5a3e42942f9b7246c3a0268731fcfcb2d328efd5a5dc",
     "scripts/__init__.py": "917b786193aee3335e068a78d209995e53f23a2df61cbed7a4d529f4ef600b10",
+    "scripts/apply_exam_withdrawals.py": "8ccf5d3f720419729d4dc6af9eaf9bfe2870ec7fe18294eaa4ddeb36540cc90b",
     "scripts/build_examples.py": "fe5b7d972a420f168b8232514c5904093f8edee95d0298112ccb3483051d31dc",
     "scripts/build_schemas.py": "8eda42ad3c6c0b139b389d0c018573b1146ea26acb2e4cbeefba72244d528516",
     "scripts/collect_exam_cases.py": "ee6b16003e557ab2d5307046dd18771d4c9ca9531d2fc9041fb9acc545747af2",
@@ -4702,9 +4705,9 @@
     "scripts/migrate_registry.py": "8ed79f38f8a5ba75c54ef346deb6dbebc0d2b1e774552814f43572a651bd1387",
     "scripts/normalize_cases.py": "11695800699abffc6e841f7cd3f964371db84adc5ae78b61145f00c5ec093e30",
     "scripts/prepare_revision.py": "07d51b5f9efcb9bd851f1872ff2f54d5c3be36daa7772768ffa2aafb7f3dea39",
-    "scripts/run_acceptance.py": "1873ad85c003568f15c2a1c9734b990ce3593b499ad36496aa00c9729c266587",
+    "scripts/run_acceptance.py": "70cd416d8a7b728c6edfd2bfd7c03d8e69813c296a8893dcab9fab9175b8984a",
     "scripts/run_exam_regression.py": "8bcdf8d98ea307118841acf5fe911ef6eaef650beca3d4b4cf7dde779f8fd1da",
-    "scripts/summarize_exam_ingestion.py": "0df35d0d0805de466d16ea01083d330a78080e161d683017ce76b783e1305969",
+    "scripts/summarize_exam_ingestion.py": "6aad7fda59d2321429c9377220751e082f58a1c31a8ebfe3d2e1c9406ef46a28",
     "tests/test_application_migration.py": "069bd3a29aec718e1707f1e8db8ea6682de8a9e2a1654054a1c0eb7baab6bd75",
     "tests/test_case_coverage.py": "a34eda270237f5f0973420981d8e7db94f749e667f6d3b5eb57dcf552513f54a",
     "tests/test_cloze_migration.py": "02a80e5d3c3a4e138bd3509c28df71b01a3543f22994575b604f0674adfb3c76",
@@ -4727,6 +4730,7 @@
     "tests/test_registry.py": "d6b613124de8189bfb4095fac06d84fe870f12fb51bf1a5edaf26191bfe57575",
     "tests/test_release_review.py": "c92ccade3ace918ea3948f5ced083745f74ce6fec291255bb6b09658304f6146",
     "tests/test_review_provider_binding.py": "98993f6a5adb4baf5c05835f58f1f475a4bf20cb99c79b51fd2ce531c57a3a46",
+    "tests/test_review_withdrawal.py": "89628ca41bafd2ef7561ae31f844352099ebec50f25a5a4680905e76c304343e",
     "tests/test_score_boundaries.py": "eb66d8c878228c10d2b9223da7bf75ec14876b4a3206b58e1fe4cf5b0ede0b92",
     "tests/test_seven_five_migration.py": "62d1ffd38cac296c16f0bc09c6202e5a348e98df0218f14956c4023162acbeab",
     "tests/test_writing_feedback.py": "cb9dab3730b1eb41c69773a8ac6ff77a32f653c5cf59e94f2e394ae833e2f315",

@@ -37,6 +37,18 @@ python -X utf8 -m scripts.summarize_exam_ingestion
 
 闭环当前已到Case Candidate→AI Case Review，登记仍待完整来源/语义/动作及授权审阅；新增正式Case和填槽仍为0。题目答案匹配、工程重放、方法归因与真人效果是四项不同证据，均不互相代替。
 
+## 负向审阅必须实际执行
+
+`from answer_engine import withdraw_review`接收原输入、冻结分析与显式负向审阅。finding必须绑定两份内容指纹、题号、揭晓后阶段、审阅者、失败分类及精确关系索引/执行ID。仅能撤回，不能添加答案或改原题；现有引擎重放不等于冻结结果时拒绝事后贴合。
+
+撤回关系后，将它标为unreviewed并停用对应决定产物；撤回框架、定位或决定产物时沿依赖链停用消费者，并撤回消费者所声称的决定关系。关系索引保持不变，不改候选原主张；旧讲解/评分注释不能复用。重新运行Question/Paper Analyzer及四Renderer，不以原高Demo分越过失效证据。
+
+```powershell
+python -X utf8 -m scripts.apply_exam_withdrawals gaokao-2023-I local-data/exams-2020-2025/semantic-reviews/gaokao-2023-I.withdrawal-request.json
+```
+
+实际三道负向处理另存私有withdrawal.json：2021ⅠQ26及2023ⅠQ21撤回R01对A的归因，候选A待核，答案与展示推荐实际扣留；2025ⅠQ31暂撤精度待核的R09骨架及依赖的四项决定。此为保守停用，不宣称参考答案错误。公开报告分开保留原3道盲匹配与当前3道扣留，不回写原预测，也不将扣留计作新的盲测或语义已认证的safe_abstention。审阅身份及英语结论仍待独立审阅，程序仅执行负向决定。
+
 已发现的2024Ⅰ卷解析风险单独登记为pending_review：Q58援引`use sth. to do sth.`但原句是`open on warm days`；续写范文提取文本可见段落重复。保留原稿，不自动改答案、去重或把该解析判成正确。2021Ⅱ卷包内已知第65题the/from冲突及卷首分值问题仍单独保存，未用说明覆盖原题。
 
 下一阶段须逐题独立语义审阅、错误分类、Case Candidate→Case Review→登记；不能为补数把同一题包装成五类案例，不能反推方法以贴参考答案。当前无可靠自由题面语义后端，机械Analyzer运行不冒充独立英语解答。嵌图、表格版式、第三方答案权威性与公开权利仍待核。真实学生传播/First-use/Blind/Baseline/Short-version Safety是另一条研究链，目前观察0，未被原题数据补齐。先传播效果验收，再强可用性验收；冲突以可用性为准，总验收仍PARTIAL。

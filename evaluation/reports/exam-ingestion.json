@@ -12,6 +12,7 @@
   "new_registered_cases": 0,
   "case_review_candidate_count": 6,
   "post_reveal_ai_reviewed_question_count": 3,
+  "negative_review_withheld_question_count": 3,
   "scope": "actual local source ingestion and engine regression metadata; not semantic or learner certification",
   "sources": [
     {
@@ -386,7 +387,8 @@
       "host_reviewed_question_count": null,
       "host_reviewed_answered_count": null,
       "host_reviewed_reference_match_count": null,
-      "case_review": null
+      "case_review": null,
+      "negative_review_execution": null
     },
     {
       "exam_id": "gaokao-2020-II",
@@ -438,7 +440,8 @@
       "host_reviewed_question_count": null,
       "host_reviewed_answered_count": null,
       "host_reviewed_reference_match_count": null,
-      "case_review": null
+      "case_review": null,
+      "negative_review_execution": null
     },
     {
       "exam_id": "gaokao-2021-I",
@@ -539,6 +542,28 @@
         "semantic_review_question_id": "gaokao-2021-I-q26",
         "failure_category": "method_trigger_problem",
         "method_attribution_status": null
+      },
+      "negative_review_execution": {
+        "exam_id": "gaokao-2021-I",
+        "stage": "post_reveal_negative_review_execution",
+        "finding_sha256": "89d2a2250561d60aedc69290930fc65a9da7c92611075658c22aabd0a707193c",
+        "host_prediction_sha256": "aee5b66bf887092bb6a502f35080653f27ef3669a83ef5c75b3a3203dd7bcfb0",
+        "semantic_review_sha256": "8fd4d58670adf632ca89e07ececc3bce4d06688517cefcd639aec043c6a370d8",
+        "question_id": "gaokao-2021-I-q26",
+        "answer_withheld": true,
+        "content_eligible": false,
+        "effective_relation_indexes": [
+          0
+        ],
+        "effective_execution_ids": [],
+        "failure_categories": [
+          "method_trigger_problem"
+        ],
+        "recommendations": [],
+        "case_candidates": [],
+        "new_blind_prediction": false,
+        "registry_updates": 0,
+        "semantic_certification": "not_certified"
       }
     },
     {
@@ -594,7 +619,8 @@
       "host_reviewed_question_count": null,
       "host_reviewed_answered_count": null,
       "host_reviewed_reference_match_count": null,
-      "case_review": null
+      "case_review": null,
+      "negative_review_execution": null
     },
     {
       "exam_id": "gaokao-2022-I",
@@ -655,7 +681,8 @@
       "host_reviewed_question_count": null,
       "host_reviewed_answered_count": 0,
       "host_reviewed_reference_match_count": 0,
-      "case_review": null
+      "case_review": null,
+      "negative_review_execution": null
     },
     {
       "exam_id": "gaokao-2022-II",
@@ -731,7 +758,8 @@
       "host_reviewed_question_count": null,
       "host_reviewed_answered_count": 0,
       "host_reviewed_reference_match_count": 0,
-      "case_review": null
+      "case_review": null,
+      "negative_review_execution": null
     },
     {
       "exam_id": "gaokao-2023-I",
@@ -846,6 +874,30 @@
         "semantic_review_question_id": "gaokao-2023-I-q21",
         "failure_category": null,
         "method_attribution_status": "PARTIAL"
+      },
+      "negative_review_execution": {
+        "exam_id": "gaokao-2023-I",
+        "stage": "post_reveal_negative_review_execution",
+        "finding_sha256": "6e4fb1e0cf902d6ec270c0e4158cf52f6895e280dff97e0e9b7f049b67365f8a",
+        "host_prediction_sha256": "90f4d6cce12290afa71bd5762cad93f8b813571b101273d3bcd0189e3906273c",
+        "semantic_review_sha256": "0851a7760c09b347eb41f5498c919d5fdb92854b297ab94b06a104a20237f3e2",
+        "question_id": "gaokao-2023-I-q21",
+        "answer_withheld": true,
+        "content_eligible": false,
+        "effective_relation_indexes": [
+          0
+        ],
+        "effective_execution_ids": [
+          "check-A"
+        ],
+        "failure_categories": [
+          "method_trigger_problem"
+        ],
+        "recommendations": [],
+        "case_candidates": [],
+        "new_blind_prediction": false,
+        "registry_updates": 0,
+        "semantic_certification": "not_certified"
       }
     },
     {
@@ -907,7 +959,8 @@
       "host_reviewed_question_count": null,
       "host_reviewed_answered_count": 0,
       "host_reviewed_reference_match_count": 0,
-      "case_review": null
+      "case_review": null,
+      "negative_review_execution": null
     },
     {
       "exam_id": "gaokao-2024-I",
@@ -974,7 +1027,8 @@
       "host_reviewed_question_count": null,
       "host_reviewed_answered_count": null,
       "host_reviewed_reference_match_count": null,
-      "case_review": null
+      "case_review": null,
+      "negative_review_execution": null
     },
     {
       "exam_id": "gaokao-2024-II",
@@ -1040,7 +1094,8 @@
       "host_reviewed_question_count": null,
       "host_reviewed_answered_count": 0,
       "host_reviewed_reference_match_count": 0,
-      "case_review": null
+      "case_review": null,
+      "negative_review_execution": null
     },
     {
       "exam_id": "gaokao-2025-I",
@@ -1153,6 +1208,37 @@
         "semantic_review_question_id": "gaokao-2025-I-q31",
         "failure_category": null,
         "method_attribution_status": "AI_relation_supported_precision_and_human_review_pending"
+      },
+      "negative_review_execution": {
+        "exam_id": "gaokao-2025-I",
+        "stage": "post_reveal_negative_review_execution",
+        "finding_sha256": "be0c47ef3ba576ee02278fc0e380e051509028057434d741e508ed9f7110f193",
+        "host_prediction_sha256": "63e2faad096d71555c262aa507f83b23aa1d05b0094a69ae6b139d0965dd78ba",
+        "semantic_review_sha256": "eb5e06e0fc4e22abe1ce78b111154e248db7ce0b127ea2d15215aeec2a5ac1f6",
+        "question_id": "gaokao-2025-I-q31",
+        "answer_withheld": true,
+        "content_eligible": false,
+        "effective_relation_indexes": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "effective_execution_ids": [
+          "host-2025-I-q31-A",
+          "host-2025-I-q31-B",
+          "host-2025-I-q31-C",
+          "host-2025-I-q31-D",
+          "host-2025-I-q31-skeleton"
+        ],
+        "failure_categories": [
+          "semantic_review_problem"
+        ],
+        "recommendations": [],
+        "case_candidates": [],
+        "new_blind_prediction": false,
+        "registry_updates": 0,
+        "semantic_certification": "not_certified"
       }
     },
     {
@@ -1233,7 +1319,8 @@
       "host_reviewed_question_count": 0,
       "host_reviewed_answered_count": 0,
       "host_reviewed_reference_match_count": 0,
-      "case_review": null
+      "case_review": null,
+      "negative_review_execution": null
     }
   ]
 }

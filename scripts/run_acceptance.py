@@ -47,7 +47,7 @@ def run():
             'completed_blind_reveal_papers','new_question_count','host_reviewed_question_count',
             'host_reviewed_answered_count','host_reviewed_reference_match_count',
             'real_student_observation_count','new_registered_cases','case_review_candidate_count',
-            'post_reveal_ai_reviewed_question_count']}
+            'post_reveal_ai_reviewed_question_count','negative_review_withheld_question_count']}
         report['remaining_blockers'][1]='真实六型试卷已导入；全量语义、案例独立审阅和旧答疑语义回归仍缺，另有1卷源结构缺损'
     report.update(regression_snapshot(r))
     report['human_release_review']={'contract':'schemas/method-release.json','commands':['release-check','release-bindings'],'registry_index':'optional release_reviews method_id -> repository-relative approved artifact','scope':'explicit manual state changes only after bound real evaluation, five verified case types, current regression and human approval; identities, semantic judgement and statistical significance remain externally audited','indexed_review_count':len(r.index.get('release_reviews',{})),'applied_review_count':sum(m['maturity_status'] in {'validated','stable'} or m['practical_value']!='Useful' for m in r.methods.values())}
@@ -132,6 +132,8 @@ First-use、Blind/Baseline、10/30/90s Safety均有记录Schema及直接可运�
     if exam_path.is_file():
         md+='\n真实试卷导入：12套25个Word源哈希冻结，仅公开元数据。11套517项（495道客观题、22项写作）完成结构回归、冻结机械Prediction后Reveal；2021Ⅱ原题结构缺损拒绝推补。机械客观题全部未解，不能将未猜测统计当成语义正确的safe_abstention。3道另有揭晓前AI宿主动作审阅并与第三方答案一致，不是整卷自动正确率、独立人工语义认证或真人学习效果。写作按约束审阅、不以范文Exact Match。新Case及填槽均为0，方法状态不变；G8/G11及学生研究链仍PARTIAL。详情见exam-ingestion.md及evaluation/reports/exam-ingestion.json。\n'
         md+='\n冻结审阅重放与Case Review：3卷各47项重放原题+冻结注释，逐方法6个候选（4个有产物、2个缺typed动作）；另有3道揭晓后AI语义审阅，不冒充新盲测或人工认证。两份R01出现同词强补共同断言归因问题，R09骨架有安全改善限定措辞风险。R01/R06 boundary和R02 canonical只作建议，已批准类型/登记/填槽仍0。2025两卷解析提取v1.2修复新题号/篇章内容吞入详解，旧源/预测/解析版本全部保留。源绑定或结构闭合不认证英语语义；不修改方法以贴答案。\n'
+    if exam_path.is_file():
+        md+='\n负向语义审阅执行：withdraw_review只接受绑定原输入及冻结分析的显式撤回，不能添加答案、改题或补方法。撤回关系同步扣留其决定产物；撤回框架/定位时传递停用全部依赖消费者及其决定，重新生成图/单题/整卷结果。3道实际审阅均在新揭晓后记录扣留答案与Demo/Case推荐，原盲稿仍保留3道参考匹配事实，不算新盲预测或safe_abstention认证。所有Renderer可消费扣留后的合法Schema。\n'
     (ROOT/'docs/final-acceptance.md').write_text(md,encoding='utf-8')
     return report
 
