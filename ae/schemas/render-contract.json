@@ -1,0 +1,485 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "properties": {
+    "schema_version": {
+      "const": "0.1.0"
+    },
+    "render_id": {
+      "type": "string"
+    },
+    "package_id": {
+      "type": "string"
+    },
+    "package_sha": {
+      "type": "string"
+    },
+    "manifest_sha": {
+      "type": "string"
+    },
+    "final_copy_sha": {
+      "type": "string"
+    },
+    "usage": {
+      "const": "INTERNAL_ENGINEERING_PREVIEW"
+    },
+    "public_render_ready": {
+      "const": false
+    },
+    "canvas": {
+      "type": "object",
+      "properties": {
+        "width": {
+          "const": 1080
+        },
+        "height": {
+          "const": 1920
+        },
+        "fps": {
+          "const": 30
+        },
+        "duration": {
+          "type": "number",
+          "minimum": 0
+        },
+        "safe_area": {
+          "type": "object"
+        }
+      },
+      "required": [
+        "width",
+        "height",
+        "fps",
+        "duration",
+        "safe_area"
+      ],
+      "additionalProperties": false
+    },
+    "design_system_version": {
+      "type": "string"
+    },
+    "design_sha": {
+      "type": "string"
+    },
+    "design": {
+      "type": "object"
+    },
+    "template_family": {
+      "const": "METHOD_DEMO_MASTER"
+    },
+    "template_version": {
+      "type": "string"
+    },
+    "template_sha": {
+      "type": "string"
+    },
+    "revision": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "methods": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "method_id": {
+            "type": "string"
+          },
+          "role": {
+            "type": "string"
+          },
+          "brand": {
+            "type": "string"
+          },
+          "refs": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "pointer": {
+                  "type": "string"
+                },
+                "value_sha": {
+                  "type": "string",
+                  "pattern": "^[a-f0-9]{64}$"
+                }
+              },
+              "required": [
+                "pointer",
+                "value_sha"
+              ],
+              "additionalProperties": false
+            }
+          }
+        },
+        "required": [
+          "method_id",
+          "role",
+          "brand",
+          "refs"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "scenes": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "properties": {
+          "scene_id": {
+            "type": "string"
+          },
+          "package_scene_id": {
+            "type": "string"
+          },
+          "scene_type": {
+            "type": "string"
+          },
+          "start": {
+            "type": "number",
+            "minimum": 0
+          },
+          "end": {
+            "type": "number",
+            "minimum": 0
+          },
+          "layout_variant": {
+            "type": "string"
+          },
+          "components": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "type": "object",
+              "properties": {
+                "component_id": {
+                  "type": "string"
+                },
+                "component_type": {
+                  "enum": [
+                    "TEXT_HERO",
+                    "TEXT_TITLE",
+                    "TEXT_BODY",
+                    "METHOD_TAG",
+                    "QUESTION_CARD",
+                    "OPTION_CARD",
+                    "OPTION_GROUP_GRID",
+                    "EVIDENCE_TEXT",
+                    "EVIDENCE_HIGHLIGHT",
+                    "DECISION_PATH",
+                    "RELATION_ARROW",
+                    "STOP_RULE_CARD",
+                    "PROGRESS_MARKER",
+                    "SUBTITLE_LINE",
+                    "SOURCE_TAG",
+                    "CANDIDATE_VERDICT",
+                    "FRAMEWORK_CARD",
+                    "RELATION_COMPARE"
+                  ]
+                },
+                "content": {
+                  "type": "object"
+                },
+                "source_refs": {
+                  "type": "array",
+                  "minItems": 1,
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "pointer": {
+                        "type": "string"
+                      },
+                      "value_sha": {
+                        "type": "string",
+                        "pattern": "^[a-f0-9]{64}$"
+                      }
+                    },
+                    "required": [
+                      "pointer",
+                      "value_sha"
+                    ],
+                    "additionalProperties": false
+                  }
+                },
+                "layout": {
+                  "type": "object",
+                  "properties": {
+                    "x": {
+                      "type": "number",
+                      "minimum": 0
+                    },
+                    "y": {
+                      "type": "number",
+                      "minimum": 0
+                    },
+                    "width": {
+                      "type": "number",
+                      "minimum": 0
+                    },
+                    "height": {
+                      "type": "number",
+                      "minimum": 0
+                    },
+                    "lines": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    },
+                    "style_token": {
+                      "enum": [
+                        "Hero",
+                        "Title",
+                        "Body",
+                        "Metadata",
+                        "Subtitle"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "x",
+                    "y",
+                    "width",
+                    "height",
+                    "lines",
+                    "style_token"
+                  ],
+                  "additionalProperties": false
+                },
+                "style_token": {
+                  "type": "string"
+                },
+                "motion_primitive": {
+                  "type": "object",
+                  "properties": {
+                    "type": {
+                      "enum": [
+                        "reveal",
+                        "focus",
+                        "compare",
+                        "eliminate",
+                        "connect"
+                      ]
+                    },
+                    "duration_frames": {
+                      "type": "integer",
+                      "minimum": 1
+                    },
+                    "easing": {
+                      "const": "soft_out"
+                    },
+                    "delay_frames": {
+                      "type": "integer",
+                      "minimum": 0
+                    },
+                    "emphasis": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "type",
+                    "duration_frames",
+                    "easing",
+                    "delay_frames",
+                    "emphasis"
+                  ],
+                  "additionalProperties": false
+                }
+              },
+              "required": [
+                "component_id",
+                "component_type",
+                "content",
+                "source_refs",
+                "layout",
+                "style_token",
+                "motion_primitive"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "claim_refs": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "evidence_refs": {
+            "type": "array",
+            "items": {
+              "type": "object"
+            }
+          },
+          "semantic_payload_sha": {
+            "type": "string"
+          },
+          "spoken_text": {
+            "type": "string"
+          },
+          "typed_output": {
+            "type": [
+              "object",
+              "null"
+            ]
+          }
+        },
+        "required": [
+          "scene_id",
+          "package_scene_id",
+          "scene_type",
+          "start",
+          "end",
+          "layout_variant",
+          "components",
+          "claim_refs",
+          "evidence_refs",
+          "semantic_payload_sha",
+          "spoken_text",
+          "typed_output"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "subtitles": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "cue_id": {
+            "type": "string"
+          },
+          "scene_id": {
+            "type": "string"
+          },
+          "start": {
+            "type": "number",
+            "minimum": 0
+          },
+          "end": {
+            "type": "number",
+            "minimum": 0
+          },
+          "text": {
+            "type": "string"
+          },
+          "lines": {
+            "type": "array",
+            "minItems": 1,
+            "maxItems": 2,
+            "items": {
+              "type": "string"
+            }
+          },
+          "source_ref": {
+            "type": "object",
+            "properties": {
+              "pointer": {
+                "type": "string"
+              },
+              "value_sha": {
+                "type": "string",
+                "pattern": "^[a-f0-9]{64}$"
+              }
+            },
+            "required": [
+              "pointer",
+              "value_sha"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "required": [
+          "cue_id",
+          "scene_id",
+          "start",
+          "end",
+          "text",
+          "lines",
+          "source_ref"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "source_tags": {
+      "type": "string"
+    },
+    "projection_refs": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "pointer": {
+            "type": "string"
+          },
+          "value_sha": {
+            "type": "string",
+            "pattern": "^[a-f0-9]{64}$"
+          }
+        },
+        "required": [
+          "pointer",
+          "value_sha"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "upstream_bindings": {
+      "type": "object"
+    },
+    "status_input_shas": {
+      "type": "object"
+    },
+    "render_profile": {
+      "type": "object",
+      "properties": {
+        "fps": {
+          "const": 30
+        },
+        "voiceover": {
+          "const": "text_timed_no_recording"
+        },
+        "watermark": {
+          "const": true
+        },
+        "silent_preview": {
+          "const": true
+        }
+      },
+      "required": [
+        "fps",
+        "voiceover",
+        "watermark",
+        "silent_preview"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "required": [
+    "schema_version",
+    "render_id",
+    "package_id",
+    "package_sha",
+    "manifest_sha",
+    "final_copy_sha",
+    "usage",
+    "public_render_ready",
+    "canvas",
+    "design_system_version",
+    "design_sha",
+    "design",
+    "template_family",
+    "template_version",
+    "template_sha",
+    "revision",
+    "methods",
+    "scenes",
+    "subtitles",
+    "source_tags",
+    "projection_refs",
+    "upstream_bindings",
+    "status_input_shas",
+    "render_profile"
+  ],
+  "additionalProperties": false
+}

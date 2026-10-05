@@ -1,0 +1,18 @@
+{
+  "version": "0.1.0",
+  "name": "Swiss Academic Motion",
+  "canvas": {"width": 1080, "height": 1920, "fps": 30},
+  "grid": {"columns": 6, "side_margin": 96, "gutter": 24, "baseline": 8, "top_safe": 248, "content_bottom": 1456, "subtitle_top": 1504, "subtitle_bottom": 1704},
+  "typography": {
+    "Hero": {"size": 80, "leading": 104},
+    "Title": {"size": 64, "leading": 88},
+    "Body": {"size": 44, "leading": 64},
+    "Metadata": {"size": 28, "leading": 40},
+    "Subtitle": {"size": 44, "leading": 64}
+  },
+  "font": {"postscript": "MicrosoftYaHei", "measurement_file": "C:/Windows/Fonts/msyh.ttc"},
+  "colors": {"background": "#F3F1E9", "primary_text": "#172320", "secondary_text": "#53645B", "evidence": "#CFE765", "error_extra": "#AC493C", "valid": "#247560", "divider": "#CFD6CB"},
+  "motion": {"types": ["reveal", "focus", "compare", "eliminate", "connect"], "duration_frames": 12, "easing": "soft_out", "delay_frames": 2, "travel_px": 24, "overshoot": 0},
+  "subtitles": {"max_lines": 2, "max_line_units": 20, "min_duration_frames": 24, "scene_sync": true},
+  "art_direction": {"personality": "calm_precise", "primary_focal_points": 1, "camera": "static", "background_motion": false, "public_render_ready": false}
+}
