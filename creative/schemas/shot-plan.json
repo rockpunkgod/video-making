@@ -1,0 +1,96 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "properties": {
+    "version": {
+      "const": "0.1.0"
+    },
+    "profile": {
+      "const": "CINEMATIC_LANDSCAPE"
+    },
+    "design": {
+      "type": "object"
+    },
+    "design_sha": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "delivery_copy_sha": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "screen_copy_sha": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "teaching_semantic_sha": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "audio_timing_sha": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "duration": {
+      "type": "number",
+      "minimum": 0
+    },
+    "shots": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "shot_id",
+          "unit_id",
+          "scene_id",
+          "start",
+          "end",
+          "phases",
+          "hold_start",
+          "components",
+          "structure",
+          "source_claim_refs",
+          "evidence_refs"
+        ]
+      }
+    },
+    "captions": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "cue_id",
+          "unit_id",
+          "start",
+          "end",
+          "lines",
+          "text",
+          "source_claim_refs",
+          "evidence_refs"
+        ]
+      }
+    },
+    "source_display": {
+      "type": "object"
+    },
+    "public_render_ready": {
+      "const": false
+    }
+  },
+  "required": [
+    "version",
+    "profile",
+    "design",
+    "design_sha",
+    "delivery_copy_sha",
+    "screen_copy_sha",
+    "teaching_semantic_sha",
+    "audio_timing_sha",
+    "duration",
+    "shots",
+    "captions",
+    "source_display",
+    "public_render_ready"
+  ],
+  "additionalProperties": false
+}

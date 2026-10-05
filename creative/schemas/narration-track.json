@@ -1,0 +1,119 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "properties": {
+    "version": {
+      "const": "0.1.0"
+    },
+    "delivery_copy_sha": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "fps": {
+      "const": 24
+    },
+    "provider": {
+      "type": "string"
+    },
+    "usage": {
+      "const": "INTERNAL_SCRATCH_VOICE"
+    },
+    "duration": {
+      "type": "number",
+      "minimum": 0
+    },
+    "audio_timing_sha": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "units": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "unit_id": {
+            "type": "string"
+          },
+          "start": {
+            "type": "number",
+            "minimum": 0
+          },
+          "voice_end": {
+            "type": "number",
+            "minimum": 0
+          },
+          "end": {
+            "type": "number",
+            "minimum": 0
+          },
+          "estimated_or_recorded_duration": {
+            "type": "number",
+            "minimum": 0
+          },
+          "duration_kind": {
+            "type": "string"
+          },
+          "pause": {
+            "type": "number",
+            "minimum": 0
+          },
+          "breath": {
+            "type": "string"
+          },
+          "emphasis": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "audio_path": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "audio": {
+            "type": "object"
+          },
+          "spoken_copy_sha": {
+            "type": "string",
+            "pattern": "^[a-f0-9]{64}$"
+          },
+          "sentence_boundaries": {
+            "type": "array",
+            "items": {
+              "type": "object"
+            }
+          }
+        },
+        "required": [
+          "unit_id",
+          "start",
+          "voice_end",
+          "end",
+          "estimated_or_recorded_duration",
+          "duration_kind",
+          "pause",
+          "breath",
+          "emphasis",
+          "audio_path",
+          "audio",
+          "spoken_copy_sha",
+          "sentence_boundaries"
+        ],
+        "additionalProperties": false
+      }
+    }
+  },
+  "required": [
+    "version",
+    "delivery_copy_sha",
+    "fps",
+    "provider",
+    "usage",
+    "duration",
+    "audio_timing_sha",
+    "units"
+  ],
+  "additionalProperties": false
+}

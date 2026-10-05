@@ -1,0 +1,13 @@
+{
+  "version": "0.3.0",
+  "profile": "CINEMATIC_LANDSCAPE",
+  "canvas": {"width": 1920, "height": 1080, "fps": 24},
+  "grid": {"columns": 12, "side_margin": 144, "gutter": 24, "top_safe": 96, "content_bottom": 872, "subtitle_top": 916, "subtitle_bottom": 1036},
+  "font": {"postscript": "NotoSansSC-Regular", "measurement_file": "C:/Windows/Fonts/NotoSansSC-VF.ttf", "variation": "Regular", "measurement_margin_px": 16},
+  "typography": {"Hero": {"size": 112, "leading": 144}, "Title": {"size": 72, "leading": 96}, "Body": {"size": 46, "leading": 64}, "Metadata": {"size": 26, "leading": 38}, "Subtitle": {"size": 42, "leading": 58}},
+  "colors": {"background": "#F2F0EA", "primary_text": "#20211F", "secondary_text": "#4F5B63", "evidence": "#7E96A8", "error": "#C97868", "valid": "#91A58F", "divider": "#D8D6D0"},
+  "motion": {"easing": "cubic_soft_out", "reveal_frames": 6, "focus_frames": 12, "reflow_frames": 24, "connect_frames": 12, "settle_frames": 8, "micro_px": 6, "overshoot": 0, "background_motion": false, "shutter_angle": 180, "shutter_phase": -90, "blur_policy": "moving_identity_and_relation_only_static_reading_text_unblurred"},
+  "texture": {"enabled": false, "reason": "quiet_paper_palette_first_no_filter_required"},
+  "depth": {"mode": "editorial_layer_separation", "camera_rotation": 0, "max_focus_push": 1.02},
+  "usage": "INTERNAL_CREATIVE_PREVIEW"
+}

@@ -120,3 +120,10 @@ Previews are silent and timed against existing final copy, not recorded speech.
 Timing/readability is an engineering estimate. All previews visibly carry
 `INTERNAL_ENGINEERING_PREVIEW`; public eligibility remains false. Actual release
 reviews and user taste approval are independent of structural checks.
+
+# V9 增量横屏层
+
+当前 Creative Direction 为 CINEMATIC_LANDSCAPE v0.3。独立分镜、实测测试配音和
+新的内部 render contract 见 [Creative OS](../creative/README.md)、
+[v0.3 migration](design/V0.3_MIGRATION.md) 和 [V9 验收](../V9_CINEMATIC_HUMAN_ACCEPTANCE.md)。
+旧竖屏 API 和回放路径继续保留。音纹后续调整，当前输出不具备公开资格。
