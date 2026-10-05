@@ -60,3 +60,6 @@ Python API：`from answer_engine import QuestionAnalyzer, PaperAnalyzer`；`anal
 验收顺序：传播效果→冻结→强可用性；第二阶段优先级更高。真实数据缺失为 pending_real_participant_validation。最终缺口见 [docs/final-acceptance.md](docs/final-acceptance.md)。课程基线为 ANSWER@b04ebc26d7fa096404111a0bb12f6c77cc8525b9。
 
 成熟度与实用等级由人工批准，工具不自动升级。release-check核对批准凭证、五类案例、真实冻结评估和当前回归绑定；release-bindings只生成材料指纹，指纹不是批准。示例未批准且会被挡住；实际操作见[真实验收运行](docs/evaluation.md)。
+## 真实试卷材料
+
+用户提供的2020—2025原卷与第三方解析仅用于本地方法回归，全文不随公开仓库再发行；原卷先Blind、冻结预测后才Reveal。导入流程、当前卷级进度及未审项见 [docs/exam-ingestion.md](docs/exam-ingestion.md) 和 `evaluation/reports/exam-ingestion.json`。原题回归不构成真实学生效果验证。

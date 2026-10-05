@@ -1,0 +1,1078 @@
+{
+  "schema_version": "1.0.0",
+  "status": "PARTIAL",
+  "source_papers": 12,
+  "source_files": 25,
+  "completed_blind_reveal_papers": 11,
+  "new_question_count": 517,
+  "host_reviewed_question_count": 3,
+  "host_reviewed_answered_count": 3,
+  "host_reviewed_reference_match_count": 3,
+  "real_student_observation_count": 0,
+  "new_registered_cases": 0,
+  "scope": "actual local source ingestion and engine regression metadata; not semantic or learner certification",
+  "sources": [
+    {
+      "source_id": "gaokao-2020-I-listening",
+      "exam_id": "gaokao-2020-I",
+      "kind": "listening",
+      "filename": "2020/2020_I/2020年高考英语试卷（新高考Ⅰ卷）（山东）（听力试题及答案）.doc",
+      "bytes": 55296,
+      "sha256": "101ddbac37767a67bcb4fca6709d57b5bfa4d1d0666ed58caa66869bd8c1f042",
+      "extraction_sha256": "0d6083b1db34eaf578fee7dd2c5d8162c760a60a7483dca8176132bccb06c9ed",
+      "source_reference": "https://gaokaoguru.org/gaokao-english-tests/?eeFolder=2020%C2%B7%E9%AB%98%E8%80%83%E8%8B%B1%E8%AF%AD%E7%9C%9F%E9%A2%98&eeListID=1&ee=1",
+      "download_reference": "https://gaokaoguru.org/wp-content/english_tests/2020%C2%B7%E9%AB%98%E8%80%83%E8%8B%B1%E8%AF%AD%E7%9C%9F%E9%A2%98/2020%E5%B9%B4%E9%AB%98%E8%80%83%E8%8B%B1%E8%AF%AD%E8%AF%95%E5%8D%B7%EF%BC%88%E6%96%B0%E9%AB%98%E8%80%83%E2%85%A0%E5%8D%B7%EF%BC%89%EF%BC%88%E5%B1%B1%E4%B8%9C%EF%BC%89%EF%BC%88%E5%90%AC%E5%8A%9B%E8%AF%95%E9%A2%98%E5%8F%8A%E7%AD%94%E6%A1%88%EF%BC%89.doc",
+      "usage_status": "user_supplied_local_research; redistribution_not_verified",
+      "answer_authority": "third_party_compilation_not_official"
+    },
+    {
+      "source_id": "gaokao-2020-I-blank",
+      "exam_id": "gaokao-2020-I",
+      "kind": "blank",
+      "filename": "2020/2020_I/2020年高考英语试卷（新高考Ⅰ卷）（山东）（空白卷）.doc",
+      "bytes": 56320,
+      "sha256": "ea20dbc5df79afdf41abe970b803b0158cf2ff18c751324ca66d9a11f82e5f77",
+      "extraction_sha256": "e4c31146eaaf5b09731f86a28f783a0cffb368a98daaad9d86043b88a2c0fd57",
+      "source_reference": "https://gaokaoguru.org/gaokao-english-tests/?eeFolder=2020%C2%B7%E9%AB%98%E8%80%83%E8%8B%B1%E8%AF%AD%E7%9C%9F%E9%A2%98&eeListID=1&ee=1",
+      "download_reference": "https://gaokaoguru.org/wp-content/english_tests/2020%C2%B7%E9%AB%98%E8%80%83%E8%8B%B1%E8%AF%AD%E7%9C%9F%E9%A2%98/2020%E5%B9%B4%E9%AB%98%E8%80%83%E8%8B%B1%E8%AF%AD%E8%AF%95%E5%8D%B7%EF%BC%88%E6%96%B0%E9%AB%98%E8%80%83%E2%85%A0%E5%8D%B7%EF%BC%89%EF%BC%88%E5%B1%B1%E4%B8%9C%EF%BC%89%EF%BC%88%E7%A9%BA%E7%99%BD%E5%8D%B7%EF%BC%89.doc",
+      "usage_status": "user_supplied_local_research; redistribution_not_verified",
+      "answer_authority": "third_party_compilation_not_official"
+    },
+    {
+      "source_id": "gaokao-2020-I-reveal",
+      "exam_id": "gaokao-2020-I",
+      "kind": "reveal",
+      "filename": "2020/2020_I/2020年高考英语试卷（新高考Ⅰ卷）（山东）（解析卷）-.doc",
+      "bytes": 89088,
+      "sha256": "54bf0263bb584dcb4f585167535fb2108c28be1df5b950275e74fd27b68ed4fe",
+      "extraction_sha256": "4cab8509354dfce3bcac7f59539db4e5f54850bd20a4f868645cf3d85a21432a",
+      "source_reference": "https://gaokaoguru.org/gaokao-english-tests/?eeFolder=2020%C2%B7%E9%AB%98%E8%80%83%E8%8B%B1%E8%AF%AD%E7%9C%9F%E9%A2%98&eeListID=1&ee=1",
+      "download_reference": "https://gaokaoguru.org/wp-content/english_tests/2020%C2%B7%E9%AB%98%E8%80%83%E8%8B%B1%E8%AF%AD%E7%9C%9F%E9%A2%98/2020%E5%B9%B4%E9%AB%98%E8%80%83%E8%8B%B1%E8%AF%AD%E8%AF%95%E5%8D%B7%EF%BC%88%E6%96%B0%E9%AB%98%E8%80%83%E2%85%A0%E5%8D%B7%EF%BC%89%EF%BC%88%E5%B1%B1%E4%B8%9C%EF%BC%89%EF%BC%88%E8%A7%A3%E6%9E%90%E5%8D%B7%EF%BC%89-.doc",
+      "usage_status": "user_supplied_local_research; redistribution_not_verified",
+      "answer_authority": "third_party_compilation_not_official"
+    },
+    {
+      "source_id": "gaokao-2020-II-blank",
+      "exam_id": "gaokao-2020-II",
+      "kind": "blank",
+      "filename": "2020/2020_II/2020年高考英语试卷（新高考Ⅱ卷）（海南）（空白卷）.doc",
+      "bytes": 76800,
+      "sha256": "76ef59362c8764f2c07f3b23effcfbc95168c29d0e3e4722ef9b4f49383267b7",
+      "extraction_sha256": "e97165c3ca3a87afac4640c8a98d1c1ba3d811b99c1720acdf04b32997e4e201",
+      "source_reference": "https://gaokaoguru.org/gaokao-english-tests/?eeFolder=2020%C2%B7%E9%AB%98%E8%80%83%E8%8B%B1%E8%AF%AD%E7%9C%9F%E9%A2%98&eeListID=1&ee=1",
+      "download_reference": "https://gaokaoguru.org/wp-content/english_tests/2020%C2%B7%E9%AB%98%E8%80%83%E8%8B%B1%E8%AF%AD%E7%9C%9F%E9%A2%98/2020%E5%B9%B4%E9%AB%98%E8%80%83%E8%8B%B1%E8%AF%AD%E8%AF%95%E5%8D%B7%EF%BC%88%E6%96%B0%E9%AB%98%E8%80%83%E2%85%A1%E5%8D%B7%EF%BC%89%EF%BC%88%E6%B5%B7%E5%8D%97%EF%BC%89%EF%BC%88%E7%A9%BA%E7%99%BD%E5%8D%B7%EF%BC%89.doc",
+      "usage_status": "user_supplied_local_research; redistribution_not_verified",
+      "answer_authority": "third_party_compilation_not_official"
+    },
+    {
+      "source_id": "gaokao-2020-II-reveal",
+      "exam_id": "gaokao-2020-II",
+      "kind": "reveal",
+      "filename": "2020/2020_II/2020年高考英语试卷（新高考Ⅱ卷）（海南）（解析卷）.doc",
+      "bytes": 146944,
+      "sha256": "b8bbbaa4eeaa14ac17736b8327c9bde3604312c096f13ff4a92f38cb36b07755",
+      "extraction_sha256": "ffb0fbe44e970ac0a5dfca15cddef2721364e14fb6ed82a53e8aff75249fe32c",
+      "source_reference": "https://gaokaoguru.org/gaokao-english-tests/?eeFolder=2020%C2%B7%E9%AB%98%E8%80%83%E8%8B%B1%E8%AF%AD%E7%9C%9F%E9%A2%98&eeListID=1&ee=1",
+      "download_reference": "https://gaokaoguru.org/wp-content/english_tests/2020%C2%B7%E9%AB%98%E8%80%83%E8%8B%B1%E8%AF%AD%E7%9C%9F%E9%A2%98/2020%E5%B9%B4%E9%AB%98%E8%80%83%E8%8B%B1%E8%AF%AD%E8%AF%95%E5%8D%B7%EF%BC%88%E6%96%B0%E9%AB%98%E8%80%83%E2%85%A1%E5%8D%B7%EF%BC%89%EF%BC%88%E6%B5%B7%E5%8D%97%EF%BC%89%EF%BC%88%E8%A7%A3%E6%9E%90%E5%8D%B7%EF%BC%89.doc",
+      "usage_status": "user_supplied_local_research; redistribution_not_verified",
+      "answer_authority": "third_party_compilation_not_official"
+    },
+    {
+      "source_id": "gaokao-2021-I-blank",
+      "exam_id": "gaokao-2021-I",
+      "kind": "blank",
+      "filename": "2021/2021_I/2021年高考英语试卷（新高考Ⅰ卷）（空白卷）.doc",
+      "bytes": 64000,
+      "sha256": "614337721895ddec285be490c309c31ec2f9dc1bec2c727ae63350c710882568",
+      "extraction_sha256": "03ed9b91828a625b68a865b162face9c6454852baf0a31c362125fbb24dc51ed",
+      "source_reference": "https://gaokaoguru.org/gaokao-english-tests/?eeFolder=2021%C2%B7%E9%AB%98%E8%80%83%E8%8B%B1%E8%AF%AD%E7%9C%9F%E9%A2%98&eeListID=1&ee=1",
+      "download_reference": "https://gaokaoguru.org/wp-content/english_tests/2021%C2%B7%E9%AB%98%E8%80%83%E8%8B%B1%E8%AF%AD%E7%9C%9F%E9%A2%98/2021%E5%B9%B4%E9%AB%98%E8%80%83%E8%8B%B1%E8%AF%AD%E8%AF%95%E5%8D%B7%EF%BC%88%E6%96%B0%E9%AB%98%E8%80%83%E2%85%A0%E5%8D%B7%EF%BC%89%EF%BC%88%E7%A9%BA%E7%99%BD%E5%8D%B7%EF%BC%89.doc",
+      "usage_status": "user_supplied_local_research; redistribution_not_verified",
+      "answer_authority": "third_party_compilation_not_official"
+    },
+    {
+      "source_id": "gaokao-2021-I-reveal",
+      "exam_id": "gaokao-2021-I",
+      "kind": "reveal",
+      "filename": "2021/2021_I/2021年高考英语试卷（新高考Ⅰ卷）（解析卷）.doc",
+      "bytes": 109056,
+      "sha256": "e66c34aa62fd7dda93ebd3032cdcb5841145f2adba02feebf6211f74aba05b77",
+      "extraction_sha256": "c11b09055f4fc0d2bd073f83824bbdc102301277b2d3c13ec454f649be225b9c",
+      "source_reference": "https://gaokaoguru.org/gaokao-english-tests/?eeFolder=2021%C2%B7%E9%AB%98%E8%80%83%E8%8B%B1%E8%AF%AD%E7%9C%9F%E9%A2%98&eeListID=1&ee=1",
+      "download_reference": "https://gaokaoguru.org/wp-content/english_tests/2021%C2%B7%E9%AB%98%E8%80%83%E8%8B%B1%E8%AF%AD%E7%9C%9F%E9%A2%98/2021%E5%B9%B4%E9%AB%98%E8%80%83%E8%8B%B1%E8%AF%AD%E8%AF%95%E5%8D%B7%EF%BC%88%E6%96%B0%E9%AB%98%E8%80%83%E2%85%A0%E5%8D%B7%EF%BC%89%EF%BC%88%E8%A7%A3%E6%9E%90%E5%8D%B7%EF%BC%89.doc",
+      "usage_status": "user_supplied_local_research; redistribution_not_verified",
+      "answer_authority": "third_party_compilation_not_official"
+    },
+    {
+      "source_id": "gaokao-2021-II-blank",
+      "exam_id": "gaokao-2021-II",
+      "kind": "blank",
+      "filename": "2021/2021_II/2021年高考英语试卷（新高考Ⅱ卷）（空白卷）.doc",
+      "bytes": 58368,
+      "sha256": "3cb49c109da74251e4cf8c8f787729ff725f6664947e9902db7f35ed0c4dcc86",
+      "extraction_sha256": "9064d870d2b09277414f1fe9fa9f1f6bee8fd78ed4fa595c70afae794b9bac90",
+      "source_reference": "https://gaokaoguru.org/gaokao-english-tests/?eeFolder=2021%C2%B7%E9%AB%98%E8%80%83%E8%8B%B1%E8%AF%AD%E7%9C%9F%E9%A2%98&eeListID=1&ee=1",
+      "download_reference": "https://gaokaoguru.org/wp-content/english_tests/2021%C2%B7%E9%AB%98%E8%80%83%E8%8B%B1%E8%AF%AD%E7%9C%9F%E9%A2%98/2021%E5%B9%B4%E9%AB%98%E8%80%83%E8%8B%B1%E8%AF%AD%E8%AF%95%E5%8D%B7%EF%BC%88%E6%96%B0%E9%AB%98%E8%80%83%E2%85%A1%E5%8D%B7%EF%BC%89%EF%BC%88%E7%A9%BA%E7%99%BD%E5%8D%B7%EF%BC%89.doc",
+      "usage_status": "user_supplied_local_research; redistribution_not_verified",
+      "answer_authority": "third_party_compilation_not_official"
+    },
+    {
+      "source_id": "gaokao-2021-II-reveal",
+      "exam_id": "gaokao-2021-II",
+      "kind": "reveal",
+      "filename": "2021/2021_II/2021年高考英语试卷（新高考Ⅱ卷）（解析卷）.doc",
+      "bytes": 118272,
+      "sha256": "8e26283f33537da5d5ffe19afc664367495f3fd7c5c832592cb232551f853838",
+      "extraction_sha256": "e2c3d6801f36b3688da343e641b7e5183d58246bd1a341f5bbc1007f393d62e4",
+      "source_reference": "https://gaokaoguru.org/gaokao-english-tests/?eeFolder=2021%C2%B7%E9%AB%98%E8%80%83%E8%8B%B1%E8%AF%AD%E7%9C%9F%E9%A2%98&eeListID=1&ee=1",
+      "download_reference": "https://gaokaoguru.org/wp-content/english_tests/2021%C2%B7%E9%AB%98%E8%80%83%E8%8B%B1%E8%AF%AD%E7%9C%9F%E9%A2%98/2021%E5%B9%B4%E9%AB%98%E8%80%83%E8%8B%B1%E8%AF%AD%E8%AF%95%E5%8D%B7%EF%BC%88%E6%96%B0%E9%AB%98%E8%80%83%E2%85%A1%E5%8D%B7%EF%BC%89%EF%BC%88%E8%A7%A3%E6%9E%90%E5%8D%B7%EF%BC%89.doc",
+      "usage_status": "user_supplied_local_research; redistribution_not_verified",
+      "answer_authority": "third_party_compilation_not_official"
+    },
+    {
+      "source_id": "gaokao-2022-I-blank",
+      "exam_id": "gaokao-2022-I",
+      "kind": "blank",
+      "filename": "2022/2022_I/2022年高考英语试卷（新高考Ⅰ卷）（空白卷）.docx",
+      "bytes": 42919,
+      "sha256": "8176ba71cbbdd655658beef6f483de3dd441f19d06f44d19308ce19322e8734e",
+      "extraction_sha256": "b84257e58c871a31682f857122f71bc64cec3fa69dfe0f94d3e0132571bada25",
+      "source_reference": "https://gaokaoguru.org/gaokao-english-tests/?eeFolder=2022%C2%B7%E9%AB%98%E8%80%83%E8%8B%B1%E8%AF%AD%E7%9C%9F%E9%A2%98&eeListID=1&ee=1",
+      "download_reference": "https://gaokaoguru.org/wp-content/english_tests/2022%C2%B7%E9%AB%98%E8%80%83%E8%8B%B1%E8%AF%AD%E7%9C%9F%E9%A2%98/2022%E5%B9%B4%E9%AB%98%E8%80%83%E8%8B%B1%E8%AF%AD%E8%AF%95%E5%8D%B7%EF%BC%88%E6%96%B0%E9%AB%98%E8%80%83%E2%85%A0%E5%8D%B7%EF%BC%89%EF%BC%88%E7%A9%BA%E7%99%BD%E5%8D%B7%EF%BC%89.docx",
+      "usage_status": "user_supplied_local_research; redistribution_not_verified",
+      "answer_authority": "third_party_compilation_not_official"
+    },
+    {
+      "source_id": "gaokao-2022-I-reveal",
+      "exam_id": "gaokao-2022-I",
+      "kind": "reveal",
+      "filename": "2022/2022_I/2022年高考英语试卷（新高考Ⅰ卷）（解析卷）.docx",
+      "bytes": 62385,
+      "sha256": "44448cae3f72a2b8ed4a14476f9d2fe91af9fab663b1d2fba0735aaea6a59872",
+      "extraction_sha256": "1498754ec371d0d9e87e06e04811f6f81adb731a5e8f9547c01790af9ed6e5d5",
+      "source_reference": "https://gaokaoguru.org/gaokao-english-tests/?eeFolder=2022%C2%B7%E9%AB%98%E8%80%83%E8%8B%B1%E8%AF%AD%E7%9C%9F%E9%A2%98&eeListID=1&ee=1",
+      "download_reference": "https://gaokaoguru.org/wp-content/english_tests/2022%C2%B7%E9%AB%98%E8%80%83%E8%8B%B1%E8%AF%AD%E7%9C%9F%E9%A2%98/2022%E5%B9%B4%E9%AB%98%E8%80%83%E8%8B%B1%E8%AF%AD%E8%AF%95%E5%8D%B7%EF%BC%88%E6%96%B0%E9%AB%98%E8%80%83%E2%85%A0%E5%8D%B7%EF%BC%89%EF%BC%88%E8%A7%A3%E6%9E%90%E5%8D%B7%EF%BC%89.docx",
+      "usage_status": "user_supplied_local_research; redistribution_not_verified",
+      "answer_authority": "third_party_compilation_not_official"
+    },
+    {
+      "source_id": "gaokao-2022-II-blank",
+      "exam_id": "gaokao-2022-II",
+      "kind": "blank",
+      "filename": "2022/2022_II/2022年高考英语试卷（新高考Ⅱ卷）（空白卷）.docx",
+      "bytes": 43227,
+      "sha256": "86cecddc0cb47ae1d5e2a8ff41afde9b50f5faf3632cb153a5afbbd17387281f",
+      "extraction_sha256": "a214c9f2b48b75a323ea11991eb6b0d6dc6c813579cf357f6408270e392d881c",
+      "source_reference": "https://gaokaoguru.org/gaokao-english-tests/?eeFolder=2022%C2%B7%E9%AB%98%E8%80%83%E8%8B%B1%E8%AF%AD%E7%9C%9F%E9%A2%98&eeListID=1&ee=1",
+      "download_reference": "https://gaokaoguru.org/wp-content/english_tests/2022%C2%B7%E9%AB%98%E8%80%83%E8%8B%B1%E8%AF%AD%E7%9C%9F%E9%A2%98/2022%E5%B9%B4%E9%AB%98%E8%80%83%E8%8B%B1%E8%AF%AD%E8%AF%95%E5%8D%B7%EF%BC%88%E6%96%B0%E9%AB%98%E8%80%83%E2%85%A1%E5%8D%B7%EF%BC%89%EF%BC%88%E7%A9%BA%E7%99%BD%E5%8D%B7%EF%BC%89.docx",
+      "usage_status": "user_supplied_local_research; redistribution_not_verified",
+      "answer_authority": "third_party_compilation_not_official"
+    },
+    {
+      "source_id": "gaokao-2022-II-reveal",
+      "exam_id": "gaokao-2022-II",
+      "kind": "reveal",
+      "filename": "2022/2022_II/2022年高考英语试卷（新高考Ⅱ卷）（解析卷）.docx",
+      "bytes": 61806,
+      "sha256": "8adcf3618918568442bb9c73f9f4f01582a09ca2f89e0b11592d5379466096c6",
+      "extraction_sha256": "ed40df6b574e3bcecb13b31ac8acd06b72326a2bd1ae909c01432d0edc1e3080",
+      "source_reference": "https://gaokaoguru.org/gaokao-english-tests/?eeFolder=2022%C2%B7%E9%AB%98%E8%80%83%E8%8B%B1%E8%AF%AD%E7%9C%9F%E9%A2%98&eeListID=1&ee=1",
+      "download_reference": "https://gaokaoguru.org/wp-content/english_tests/2022%C2%B7%E9%AB%98%E8%80%83%E8%8B%B1%E8%AF%AD%E7%9C%9F%E9%A2%98/2022%E5%B9%B4%E9%AB%98%E8%80%83%E8%8B%B1%E8%AF%AD%E8%AF%95%E5%8D%B7%EF%BC%88%E6%96%B0%E9%AB%98%E8%80%83%E2%85%A1%E5%8D%B7%EF%BC%89%EF%BC%88%E8%A7%A3%E6%9E%90%E5%8D%B7%EF%BC%89.docx",
+      "usage_status": "user_supplied_local_research; redistribution_not_verified",
+      "answer_authority": "third_party_compilation_not_official"
+    },
+    {
+      "source_id": "gaokao-2023-I-blank",
+      "exam_id": "gaokao-2023-I",
+      "kind": "blank",
+      "filename": "2023/2023_I/2023年高考英语试卷（新课标Ⅰ卷）（空白卷）.docx",
+      "bytes": 30917,
+      "sha256": "66aee4e932ad83cf1ef04214f194df308373c8b3b5e69fc785e5b055121901ab",
+      "extraction_sha256": "adcca42b52e70af46d083399118c10fdbb9674c73dad9b92be206f90c7ad5f71",
+      "source_reference": "https://gaokaoguru.org/gaokao-english-tests/?ee=1&eeFolder=2023%C2%B7%E9%AB%98%E8%80%83%E8%8B%B1%E8%AF%AD%E7%9C%9F%E9%A2%98&eeListID=1",
+      "download_reference": "https://gaokaoguru.org/wp-content/english_tests/2023%C2%B7%E9%AB%98%E8%80%83%E8%8B%B1%E8%AF%AD%E7%9C%9F%E9%A2%98/2023%E5%B9%B4%E9%AB%98%E8%80%83%E8%8B%B1%E8%AF%AD%E8%AF%95%E5%8D%B7%EF%BC%88%E6%96%B0%E8%AF%BE%E6%A0%87%E2%85%A0%E5%8D%B7%EF%BC%89%EF%BC%88%E7%A9%BA%E7%99%BD%E5%8D%B7%EF%BC%89.docx",
+      "usage_status": "user_supplied_local_research; redistribution_not_verified",
+      "answer_authority": "third_party_compilation_not_official"
+    },
+    {
+      "source_id": "gaokao-2023-I-reveal",
+      "exam_id": "gaokao-2023-I",
+      "kind": "reveal",
+      "filename": "2023/2023_I/2023年高考英语试卷（新课标Ⅰ卷）（解析卷）.docx",
+      "bytes": 49681,
+      "sha256": "c93a9e7b38c301e62d6bab7ede4db6dbfa4d9284ef85f43a50f90d9df3f8cea2",
+      "extraction_sha256": "2e8387bb50fa4962d76139212dc7a65eeb2a2dda5805d0dcd7c80f1a6ba0d8fb",
+      "source_reference": "https://gaokaoguru.org/gaokao-english-tests/?ee=1&eeFolder=2023%C2%B7%E9%AB%98%E8%80%83%E8%8B%B1%E8%AF%AD%E7%9C%9F%E9%A2%98&eeListID=1",
+      "download_reference": "https://gaokaoguru.org/wp-content/english_tests/2023%C2%B7%E9%AB%98%E8%80%83%E8%8B%B1%E8%AF%AD%E7%9C%9F%E9%A2%98/2023%E5%B9%B4%E9%AB%98%E8%80%83%E8%8B%B1%E8%AF%AD%E8%AF%95%E5%8D%B7%EF%BC%88%E6%96%B0%E8%AF%BE%E6%A0%87%E2%85%A0%E5%8D%B7%EF%BC%89%EF%BC%88%E8%A7%A3%E6%9E%90%E5%8D%B7%EF%BC%89.docx",
+      "usage_status": "user_supplied_local_research; redistribution_not_verified",
+      "answer_authority": "third_party_compilation_not_official"
+    },
+    {
+      "source_id": "gaokao-2023-II-blank",
+      "exam_id": "gaokao-2023-II",
+      "kind": "blank",
+      "filename": "2023/2023_II/2023年高考英语试卷（新课标Ⅱ卷）（空白卷）.docx",
+      "bytes": 32367,
+      "sha256": "cb848729d8ad6b154179bedbe1146455ed4dd46334877191bf6856d5b4c23ddd",
+      "extraction_sha256": "70afca97a450be6c810448775aeda37b65e012e3e60097f041f0d5c3606d5671",
+      "source_reference": "https://gaokaoguru.org/gaokao-english-tests/?ee=1&eeFolder=2023%C2%B7%E9%AB%98%E8%80%83%E8%8B%B1%E8%AF%AD%E7%9C%9F%E9%A2%98&eeListID=1",
+      "download_reference": "https://gaokaoguru.org/wp-content/english_tests/2023%C2%B7%E9%AB%98%E8%80%83%E8%8B%B1%E8%AF%AD%E7%9C%9F%E9%A2%98/2023%E5%B9%B4%E9%AB%98%E8%80%83%E8%8B%B1%E8%AF%AD%E8%AF%95%E5%8D%B7%EF%BC%88%E6%96%B0%E8%AF%BE%E6%A0%87%E2%85%A1%E5%8D%B7%EF%BC%89%EF%BC%88%E7%A9%BA%E7%99%BD%E5%8D%B7%EF%BC%89.docx",
+      "usage_status": "user_supplied_local_research; redistribution_not_verified",
+      "answer_authority": "third_party_compilation_not_official"
+    },
+    {
+      "source_id": "gaokao-2023-II-reveal",
+      "exam_id": "gaokao-2023-II",
+      "kind": "reveal",
+      "filename": "2023/2023_II/2023年高考英语试卷（新课标Ⅱ卷）（解析卷）.docx",
+      "bytes": 50147,
+      "sha256": "ccc908f40956c0d69d77d14bc40144c743351b1cd51327bd48aa94730c10e03a",
+      "extraction_sha256": "b13da9666c6f62e386b538324a841046713f47b05471f7931be3368318449d51",
+      "source_reference": "https://gaokaoguru.org/gaokao-english-tests/?ee=1&eeFolder=2023%C2%B7%E9%AB%98%E8%80%83%E8%8B%B1%E8%AF%AD%E7%9C%9F%E9%A2%98&eeListID=1",
+      "download_reference": "https://gaokaoguru.org/wp-content/english_tests/2023%C2%B7%E9%AB%98%E8%80%83%E8%8B%B1%E8%AF%AD%E7%9C%9F%E9%A2%98/2023%E5%B9%B4%E9%AB%98%E8%80%83%E8%8B%B1%E8%AF%AD%E8%AF%95%E5%8D%B7%EF%BC%88%E6%96%B0%E8%AF%BE%E6%A0%87%E2%85%A1%E5%8D%B7%EF%BC%89%EF%BC%88%E8%A7%A3%E6%9E%90%E5%8D%B7%EF%BC%89.docx",
+      "usage_status": "user_supplied_local_research; redistribution_not_verified",
+      "answer_authority": "third_party_compilation_not_official"
+    },
+    {
+      "source_id": "gaokao-2024-I-blank",
+      "exam_id": "gaokao-2024-I",
+      "kind": "blank",
+      "filename": "2024/2024_I/2024年高考英语试卷（新课标Ⅰ卷）（空白卷）.docx",
+      "bytes": 48359,
+      "sha256": "6c49347bb4f296d3a983f3526d9a3936dfe8f2c692964f349002b1cda9283cdd",
+      "extraction_sha256": "4e5f01df76a310d7a7d83b22816b790c206cd529271aebfa3937a10df54fc62b",
+      "source_reference": "https://gaokaoguru.org/gaokao-english-tests/?ee=1&eeFolder=2024%C2%B7%E9%AB%98%E8%80%83%E8%8B%B1%E8%AF%AD%E7%9C%9F%E9%A2%98&eeListID=1",
+      "download_reference": "https://gaokaoguru.org/wp-content/english_tests/2024%C2%B7%E9%AB%98%E8%80%83%E8%8B%B1%E8%AF%AD%E7%9C%9F%E9%A2%98/2024%E5%B9%B4%E9%AB%98%E8%80%83%E8%8B%B1%E8%AF%AD%E8%AF%95%E5%8D%B7%EF%BC%88%E6%96%B0%E8%AF%BE%E6%A0%87%E2%85%A0%E5%8D%B7%EF%BC%89%EF%BC%88%E7%A9%BA%E7%99%BD%E5%8D%B7%EF%BC%89.docx",
+      "usage_status": "user_supplied_local_research; redistribution_not_verified",
+      "answer_authority": "third_party_compilation_not_official"
+    },
+    {
+      "source_id": "gaokao-2024-I-reveal",
+      "exam_id": "gaokao-2024-I",
+      "kind": "reveal",
+      "filename": "2024/2024_I/2024年高考英语试卷（新课标Ⅰ卷）（解析卷）.docx",
+      "bytes": 68430,
+      "sha256": "07beee22252dd85d5f2fac63d6ae03f72067bdd18d555d38f5a3484860b90d15",
+      "extraction_sha256": "5153e40f1a9099e71b130a7d322829b7c08b0c2fe65428c097de6b653701f07d",
+      "source_reference": "https://gaokaoguru.org/gaokao-english-tests/?ee=1&eeFolder=2024%C2%B7%E9%AB%98%E8%80%83%E8%8B%B1%E8%AF%AD%E7%9C%9F%E9%A2%98&eeListID=1",
+      "download_reference": "https://gaokaoguru.org/wp-content/english_tests/2024%C2%B7%E9%AB%98%E8%80%83%E8%8B%B1%E8%AF%AD%E7%9C%9F%E9%A2%98/2024%E5%B9%B4%E9%AB%98%E8%80%83%E8%8B%B1%E8%AF%AD%E8%AF%95%E5%8D%B7%EF%BC%88%E6%96%B0%E8%AF%BE%E6%A0%87%E2%85%A0%E5%8D%B7%EF%BC%89%EF%BC%88%E8%A7%A3%E6%9E%90%E5%8D%B7%EF%BC%89.docx",
+      "usage_status": "user_supplied_local_research; redistribution_not_verified",
+      "answer_authority": "third_party_compilation_not_official"
+    },
+    {
+      "source_id": "gaokao-2024-II-blank",
+      "exam_id": "gaokao-2024-II",
+      "kind": "blank",
+      "filename": "2024/2024_II/2024年高考英语试卷（新课标Ⅱ卷）（空白卷）.docx",
+      "bytes": 43280,
+      "sha256": "518408561edabd84d2c44f14f1793050df04e6508e77e3eca5895b460d5c2df7",
+      "extraction_sha256": "c91bd939e209b46de3e8b91d7210d63a8f26c98c2d3759e20bfc34183fcc2a3f",
+      "source_reference": "https://gaokaoguru.org/gaokao-english-tests/?ee=1&eeFolder=2024%C2%B7%E9%AB%98%E8%80%83%E8%8B%B1%E8%AF%AD%E7%9C%9F%E9%A2%98&eeListID=1",
+      "download_reference": "https://gaokaoguru.org/wp-content/english_tests/2024%C2%B7%E9%AB%98%E8%80%83%E8%8B%B1%E8%AF%AD%E7%9C%9F%E9%A2%98/2024%E5%B9%B4%E9%AB%98%E8%80%83%E8%8B%B1%E8%AF%AD%E8%AF%95%E5%8D%B7%EF%BC%88%E6%96%B0%E8%AF%BE%E6%A0%87%E2%85%A1%E5%8D%B7%EF%BC%89%EF%BC%88%E7%A9%BA%E7%99%BD%E5%8D%B7%EF%BC%89.docx",
+      "usage_status": "user_supplied_local_research; redistribution_not_verified",
+      "answer_authority": "third_party_compilation_not_official"
+    },
+    {
+      "source_id": "gaokao-2024-II-reveal",
+      "exam_id": "gaokao-2024-II",
+      "kind": "reveal",
+      "filename": "2024/2024_II/2024年高考英语试卷（新课标Ⅱ卷）（解析卷）.docx",
+      "bytes": 62703,
+      "sha256": "ecd87a563592245d2b854537fe8fd39ff35aa23b86dbe39b1598da30b25b5179",
+      "extraction_sha256": "fe46a93cea7f81c482122bd3962313da2ed21aa76e30a309e62cf54d8f02e086",
+      "source_reference": "https://gaokaoguru.org/gaokao-english-tests/?ee=1&eeFolder=2024%C2%B7%E9%AB%98%E8%80%83%E8%8B%B1%E8%AF%AD%E7%9C%9F%E9%A2%98&eeListID=1",
+      "download_reference": "https://gaokaoguru.org/wp-content/english_tests/2024%C2%B7%E9%AB%98%E8%80%83%E8%8B%B1%E8%AF%AD%E7%9C%9F%E9%A2%98/2024%E5%B9%B4%E9%AB%98%E8%80%83%E8%8B%B1%E8%AF%AD%E8%AF%95%E5%8D%B7%EF%BC%88%E6%96%B0%E8%AF%BE%E6%A0%87%E2%85%A1%E5%8D%B7%EF%BC%89%EF%BC%88%E8%A7%A3%E6%9E%90%E5%8D%B7%EF%BC%89.docx",
+      "usage_status": "user_supplied_local_research; redistribution_not_verified",
+      "answer_authority": "third_party_compilation_not_official"
+    },
+    {
+      "source_id": "gaokao-2025-I-blank",
+      "exam_id": "gaokao-2025-I",
+      "kind": "blank",
+      "filename": "2025/2025_I/精品解析：2025年全国高考一卷英语真题（原卷版）.docx",
+      "bytes": 173832,
+      "sha256": "a5d576269a8f0db81df6103bdff60747dcfffc4ad77b1a5827d3dcdc5f3f28a0",
+      "extraction_sha256": "dae71fbb29f7c13d0c1422e7fc734eb5f70b1230044f9c3283fbc24f6574802c",
+      "source_reference": "https://gaokaoguru.org/gaokao-english-tests/?ee=1&eeFolder=2025%C2%B7%E8%8B%B1%E8%AF%AD%E9%AB%98%E8%80%83%E7%9C%9F%E9%A2%98/%E7%B2%BE%E5%93%81%E8%A7%A3%E6%9E%90%EF%BC%9A2025%E5%B9%B4%E9%AB%98%E8%80%83%E5%85%A8%E5%9B%BD%E4%B8%80%E5%8D%B7%E8%8B%B1%E8%AF%AD%E9%AB%98%E8%80%83%E7%9C%9F%E9%A2%98%E8%A7%A3%E6%9E%90&eeListID=1",
+      "download_reference": "https://gaokaoguru.org/wp-content/english_tests/2025%C2%B7%E8%8B%B1%E8%AF%AD%E9%AB%98%E8%80%83%E7%9C%9F%E9%A2%98/%E7%B2%BE%E5%93%81%E8%A7%A3%E6%9E%90%EF%BC%9A2025%E5%B9%B4%E9%AB%98%E8%80%83%E5%85%A8%E5%9B%BD%E4%B8%80%E5%8D%B7%E8%8B%B1%E8%AF%AD%E9%AB%98%E8%80%83%E7%9C%9F%E9%A2%98%E8%A7%A3%E6%9E%90/%E7%B2%BE%E5%93%81%E8%A7%A3%E6%9E%90%EF%BC%9A2025%E5%B9%B4%E5%85%A8%E5%9B%BD%E9%AB%98%E8%80%83%E4%B8%80%E5%8D%B7%E8%8B%B1%E8%AF%AD%E7%9C%9F%E9%A2%98%EF%BC%88%E5%8E%9F%E5%8D%B7%E7%89%88%EF%BC%89.docx",
+      "usage_status": "user_supplied_local_research; redistribution_not_verified",
+      "answer_authority": "third_party_compilation_not_official"
+    },
+    {
+      "source_id": "gaokao-2025-I-reveal",
+      "exam_id": "gaokao-2025-I",
+      "kind": "reveal",
+      "filename": "2025/2025_I/精品解析：2025年全国高考一卷英语真题（解析版）.docx",
+      "bytes": 197009,
+      "sha256": "3d84332d40f1828acfee5a05e648d5518756eec68a621518d157287d8105180b",
+      "extraction_sha256": "7015fa5ea3add4eced7fedd4dbb64eb6138a94f5803cdd85fdc30b3e2c1fd1e1",
+      "source_reference": "https://gaokaoguru.org/gaokao-english-tests/?ee=1&eeFolder=2025%C2%B7%E8%8B%B1%E8%AF%AD%E9%AB%98%E8%80%83%E7%9C%9F%E9%A2%98/%E7%B2%BE%E5%93%81%E8%A7%A3%E6%9E%90%EF%BC%9A2025%E5%B9%B4%E9%AB%98%E8%80%83%E5%85%A8%E5%9B%BD%E4%B8%80%E5%8D%B7%E8%8B%B1%E8%AF%AD%E9%AB%98%E8%80%83%E7%9C%9F%E9%A2%98%E8%A7%A3%E6%9E%90&eeListID=1",
+      "download_reference": "https://gaokaoguru.org/wp-content/english_tests/2025%C2%B7%E8%8B%B1%E8%AF%AD%E9%AB%98%E8%80%83%E7%9C%9F%E9%A2%98/%E7%B2%BE%E5%93%81%E8%A7%A3%E6%9E%90%EF%BC%9A2025%E5%B9%B4%E9%AB%98%E8%80%83%E5%85%A8%E5%9B%BD%E4%B8%80%E5%8D%B7%E8%8B%B1%E8%AF%AD%E9%AB%98%E8%80%83%E7%9C%9F%E9%A2%98%E8%A7%A3%E6%9E%90/%E7%B2%BE%E5%93%81%E8%A7%A3%E6%9E%90%EF%BC%9A2025%E5%B9%B4%E5%85%A8%E5%9B%BD%E9%AB%98%E8%80%83%E4%B8%80%E5%8D%B7%E8%8B%B1%E8%AF%AD%E7%9C%9F%E9%A2%98%EF%BC%88%E8%A7%A3%E6%9E%90%E7%89%88%EF%BC%89.docx",
+      "usage_status": "user_supplied_local_research; redistribution_not_verified",
+      "answer_authority": "third_party_compilation_not_official"
+    },
+    {
+      "source_id": "gaokao-2025-II-blank",
+      "exam_id": "gaokao-2025-II",
+      "kind": "blank",
+      "filename": "2025/2025_II/精品解析：2025年全国高考二卷英语真题（原卷版）.docx",
+      "bytes": 49911,
+      "sha256": "6de4dd3397219e55c843f1a0c1bffb055a77bb428b304c6a059f529139711047",
+      "extraction_sha256": "b158018265f5353455b6ae07e642662da1f0c0fab8ce5277d33db3e989b85d52",
+      "source_reference": "https://gaokaoguru.org/gaokao-english-tests/?ee=1&eeFolder=2025%C2%B7%E8%8B%B1%E8%AF%AD%E9%AB%98%E8%80%83%E7%9C%9F%E9%A2%98/%E7%B2%BE%E5%93%81%E8%A7%A3%E6%9E%90%EF%BC%9A2025%E5%B9%B4%E9%AB%98%E8%80%83%E5%85%A8%E5%9B%BD%E4%BA%8C%E5%8D%B7%E8%8B%B1%E8%AF%AD%E9%AB%98%E8%80%83%E7%9C%9F%E9%A2%98%E8%A7%A3%E6%9E%90&eeListID=1",
+      "download_reference": "https://gaokaoguru.org/wp-content/english_tests/2025%C2%B7%E8%8B%B1%E8%AF%AD%E9%AB%98%E8%80%83%E7%9C%9F%E9%A2%98/%E7%B2%BE%E5%93%81%E8%A7%A3%E6%9E%90%EF%BC%9A2025%E5%B9%B4%E9%AB%98%E8%80%83%E5%85%A8%E5%9B%BD%E4%BA%8C%E5%8D%B7%E8%8B%B1%E8%AF%AD%E9%AB%98%E8%80%83%E7%9C%9F%E9%A2%98%E8%A7%A3%E6%9E%90/%E7%B2%BE%E5%93%81%E8%A7%A3%E6%9E%90%EF%BC%9A2025%E5%B9%B4%E5%85%A8%E5%9B%BD%E9%AB%98%E8%80%83%E4%BA%8C%E5%8D%B7%E8%8B%B1%E8%AF%AD%E7%9C%9F%E9%A2%98%EF%BC%88%E5%8E%9F%E5%8D%B7%E7%89%88%EF%BC%89.docx",
+      "usage_status": "user_supplied_local_research; redistribution_not_verified",
+      "answer_authority": "third_party_compilation_not_official"
+    },
+    {
+      "source_id": "gaokao-2025-II-reveal",
+      "exam_id": "gaokao-2025-II",
+      "kind": "reveal",
+      "filename": "2025/2025_II/精品解析：2025年全国高考二卷英语真题（解析版）.docx",
+      "bytes": 68763,
+      "sha256": "6b1a93512628542d560bd9d5d8d6263e39a1add5a90dc9a6ba409a7e6d4f3126",
+      "extraction_sha256": "34f1418a63181bf53f37160460d3ed8b859e7409b1fcd960efbda4874943d3e6",
+      "source_reference": "https://gaokaoguru.org/gaokao-english-tests/?ee=1&eeFolder=2025%C2%B7%E8%8B%B1%E8%AF%AD%E9%AB%98%E8%80%83%E7%9C%9F%E9%A2%98/%E7%B2%BE%E5%93%81%E8%A7%A3%E6%9E%90%EF%BC%9A2025%E5%B9%B4%E9%AB%98%E8%80%83%E5%85%A8%E5%9B%BD%E4%BA%8C%E5%8D%B7%E8%8B%B1%E8%AF%AD%E9%AB%98%E8%80%83%E7%9C%9F%E9%A2%98%E8%A7%A3%E6%9E%90&eeListID=1",
+      "download_reference": "https://gaokaoguru.org/wp-content/english_tests/2025%C2%B7%E8%8B%B1%E8%AF%AD%E9%AB%98%E8%80%83%E7%9C%9F%E9%A2%98/%E7%B2%BE%E5%93%81%E8%A7%A3%E6%9E%90%EF%BC%9A2025%E5%B9%B4%E9%AB%98%E8%80%83%E5%85%A8%E5%9B%BD%E4%BA%8C%E5%8D%B7%E8%8B%B1%E8%AF%AD%E9%AB%98%E8%80%83%E7%9C%9F%E9%A2%98%E8%A7%A3%E6%9E%90/%E7%B2%BE%E5%93%81%E8%A7%A3%E6%9E%90%EF%BC%9A2025%E5%B9%B4%E5%85%A8%E5%9B%BD%E9%AB%98%E8%80%83%E4%BA%8C%E5%8D%B7%E8%8B%B1%E8%AF%AD%E7%9C%9F%E9%A2%98%EF%BC%88%E8%A7%A3%E6%9E%90%E7%89%88%EF%BC%89.docx",
+      "usage_status": "user_supplied_local_research; redistribution_not_verified",
+      "answer_authority": "third_party_compilation_not_official"
+    }
+  ],
+  "papers": [
+    {
+      "exam_id": "gaokao-2020-I",
+      "year": 2020,
+      "exam_name": "2020 高考英语 I卷（第三方整理版）",
+      "usage_status": "user_supplied_local_research; redistribution_not_verified",
+      "source_ids": [
+        "gaokao-2020-I-listening",
+        "gaokao-2020-I-blank",
+        "gaokao-2020-I-reveal"
+      ],
+      "status": "PARTIAL",
+      "result_artifact": "results/gaokao-2020-I/reveal.json",
+      "blind_prediction_frozen": true,
+      "blind_reveal_completed": true,
+      "new_question_count": 47,
+      "question_type_counts": {
+        "阅读理解": 15,
+        "七选五": 5,
+        "完形填空": 15,
+        "语法填空": 10,
+        "应用文": 1,
+        "读后续写": 1
+      },
+      "objective_count": 45,
+      "answered_count": 0,
+      "blind_answer_match": null,
+      "matched_count": null,
+      "wrong_answer_count": 0,
+      "unresolved_count": 45,
+      "structurally_safe_abstention_count": null,
+      "safe_abstention": null,
+      "evidence_failure": null,
+      "method_trigger_failure": null,
+      "boundary_failure": null,
+      "new_real_case_count": 0,
+      "filled_case_slots": 0,
+      "remaining_core_unregistered_slots": 144,
+      "method_case_contributions": [],
+      "prediction_sha256": "117b221bd5f7a5b4dc129c2187c27e100a739ab9aa8e328bb68bcff83279dbcd",
+      "blank_source_sha256": null,
+      "reveal_source_sha256": "54bf0263bb584dcb4f585167535fb2108c28be1df5b950275e74fd27b68ed4fe",
+      "source_issue": [],
+      "host_reviewed_question_count": null,
+      "host_reviewed_answered_count": null,
+      "host_reviewed_reference_match_count": null
+    },
+    {
+      "exam_id": "gaokao-2020-II",
+      "year": 2020,
+      "exam_name": "2020 高考英语 II卷（第三方整理版）",
+      "usage_status": "user_supplied_local_research; redistribution_not_verified",
+      "source_ids": [
+        "gaokao-2020-II-blank",
+        "gaokao-2020-II-reveal"
+      ],
+      "status": "PARTIAL",
+      "result_artifact": "results/gaokao-2020-II/reveal.json",
+      "blind_prediction_frozen": true,
+      "blind_reveal_completed": true,
+      "new_question_count": 47,
+      "question_type_counts": {
+        "阅读理解": 15,
+        "七选五": 5,
+        "完形填空": 15,
+        "语法填空": 10,
+        "应用文": 1,
+        "读后续写": 1
+      },
+      "objective_count": 45,
+      "answered_count": 0,
+      "blind_answer_match": null,
+      "matched_count": null,
+      "wrong_answer_count": 0,
+      "unresolved_count": 45,
+      "structurally_safe_abstention_count": null,
+      "safe_abstention": null,
+      "evidence_failure": null,
+      "method_trigger_failure": null,
+      "boundary_failure": null,
+      "new_real_case_count": 0,
+      "filled_case_slots": 0,
+      "remaining_core_unregistered_slots": 144,
+      "method_case_contributions": [],
+      "prediction_sha256": "74b45bcf5cf860cd502585cdad43d38d6de1c5cad5a606e68ed57b19238e2b64",
+      "blank_source_sha256": null,
+      "reveal_source_sha256": "b8bbbaa4eeaa14ac17736b8327c9bde3604312c096f13ff4a92f38cb36b07755",
+      "source_issue": [
+        {
+          "type": "option_label_punctuation_absent",
+          "description": "Original line-start A/C labels are explicit and uniquely segmented; punctuation remains absent in original material. Earlier conservative rejection preserved, not overwritten.",
+          "status": "pending_review"
+        }
+      ],
+      "host_reviewed_question_count": null,
+      "host_reviewed_answered_count": null,
+      "host_reviewed_reference_match_count": null
+    },
+    {
+      "exam_id": "gaokao-2021-I",
+      "year": 2021,
+      "exam_name": "2021 高考英语 I卷（第三方整理版）",
+      "usage_status": "user_supplied_local_research; redistribution_not_verified",
+      "source_ids": [
+        "gaokao-2021-I-blank",
+        "gaokao-2021-I-reveal"
+      ],
+      "status": "PARTIAL",
+      "result_artifact": "results/gaokao-2021-I/reveal.json",
+      "blind_prediction_frozen": true,
+      "blind_reveal_completed": true,
+      "new_question_count": 47,
+      "question_type_counts": {
+        "阅读理解": 15,
+        "七选五": 5,
+        "完形填空": 15,
+        "语法填空": 10,
+        "应用文": 1,
+        "读后续写": 1
+      },
+      "objective_count": 45,
+      "answered_count": 0,
+      "blind_answer_match": null,
+      "matched_count": null,
+      "wrong_answer_count": 0,
+      "unresolved_count": 45,
+      "structurally_safe_abstention_count": null,
+      "safe_abstention": null,
+      "evidence_failure": null,
+      "method_trigger_failure": null,
+      "boundary_failure": null,
+      "new_real_case_count": 0,
+      "filled_case_slots": 0,
+      "remaining_core_unregistered_slots": 144,
+      "method_case_contributions": [],
+      "prediction_sha256": "89c723b371506e14f7cbc40e8685cc8f8fa024a1caa2521d0cf3c989ded32a05",
+      "blank_source_sha256": null,
+      "reveal_source_sha256": "e66c34aa62fd7dda93ebd3032cdcb5841145f2adba02feebf6211f74aba05b77",
+      "source_issue": [
+        {
+          "type": "extraction_numbering",
+          "description": "reveal has automatic numbering; plain-text numbers require review",
+          "status": "pending_review"
+        }
+      ],
+      "host_reviewed_question_count": 1,
+      "host_reviewed_answered_count": 1,
+      "host_reviewed_reference_match_count": 1
+    },
+    {
+      "exam_id": "gaokao-2021-II",
+      "year": 2021,
+      "exam_name": "2021 高考英语 II卷（第三方整理版）",
+      "usage_status": "user_supplied_local_research; redistribution_not_verified",
+      "source_ids": [
+        "gaokao-2021-II-blank",
+        "gaokao-2021-II-reveal"
+      ],
+      "status": "SOURCE_REVIEW_REQUIRED",
+      "result_artifact": null,
+      "blind_prediction_frozen": false,
+      "blind_reveal_completed": false,
+      "new_question_count": 0,
+      "question_type_counts": {},
+      "objective_count": null,
+      "answered_count": null,
+      "blind_answer_match": null,
+      "matched_count": null,
+      "wrong_answer_count": null,
+      "unresolved_count": null,
+      "structurally_safe_abstention_count": null,
+      "safe_abstention": null,
+      "evidence_failure": null,
+      "method_trigger_failure": null,
+      "boundary_failure": null,
+      "new_real_case_count": 0,
+      "filled_case_slots": 0,
+      "remaining_core_unregistered_slots": 144,
+      "method_case_contributions": [],
+      "prediction_sha256": null,
+      "blank_source_sha256": null,
+      "reveal_source_sha256": null,
+      "source_issue": [
+        {
+          "type": "source_answer_conflict",
+          "description": "Supplied errata reports Q65 per-item explanation the vs final key from; preserve both and require semantic review",
+          "status": "pending_review"
+        },
+        {
+          "type": "source_header_conflict",
+          "description": "Supplied errata reports 100-point/90-minute header inconsistent with section marks",
+          "status": "pending_review"
+        },
+        {
+          "type": "source_problem",
+          "description": "2021 II source_problem: missing G option delimiter and damaged cloze blank markers; original-document review required, no answer-assisted repair",
+          "status": "pending_review"
+        }
+      ],
+      "host_reviewed_question_count": null,
+      "host_reviewed_answered_count": null,
+      "host_reviewed_reference_match_count": null
+    },
+    {
+      "exam_id": "gaokao-2022-I",
+      "year": 2022,
+      "exam_name": "2022 高考英语 I卷（第三方整理版）",
+      "usage_status": "user_supplied_local_research; redistribution_not_verified",
+      "source_ids": [
+        "gaokao-2022-I-blank",
+        "gaokao-2022-I-reveal"
+      ],
+      "status": "PARTIAL",
+      "result_artifact": "results/gaokao-2022-I/reveal.json",
+      "blind_prediction_frozen": true,
+      "blind_reveal_completed": true,
+      "new_question_count": 47,
+      "question_type_counts": {
+        "阅读理解": 15,
+        "七选五": 5,
+        "完形填空": 15,
+        "语法填空": 10,
+        "应用文": 1,
+        "读后续写": 1
+      },
+      "objective_count": 45,
+      "answered_count": 0,
+      "blind_answer_match": null,
+      "matched_count": null,
+      "wrong_answer_count": null,
+      "unresolved_count": 45,
+      "structurally_safe_abstention_count": null,
+      "safe_abstention": null,
+      "evidence_failure": null,
+      "method_trigger_failure": null,
+      "boundary_failure": null,
+      "new_real_case_count": 0,
+      "filled_case_slots": 0,
+      "remaining_core_unregistered_slots": null,
+      "method_case_contributions": [],
+      "prediction_sha256": "5fda8348f96c57c4b2aa41dbf883c4564e50cfcc4f24b93232c9a508f188dd20",
+      "blank_source_sha256": "8176ba71cbbdd655658beef6f483de3dd441f19d06f44d19308ce19322e8734e",
+      "reveal_source_sha256": "44448cae3f72a2b8ed4a14476f9d2fe91af9fab663b1d2fba0735aaea6a59872",
+      "source_issue": [
+        {
+          "type": "embedded_media",
+          "description": "blank contains images; raw source preserved, text extraction is not complete image transcription",
+          "status": "pending_review"
+        },
+        {
+          "type": "embedded_media",
+          "description": "reveal contains images; raw source preserved, text extraction is not complete image transcription",
+          "status": "pending_review"
+        },
+        {
+          "type": "embedded_images_and_table_layout",
+          "status": "pending_source_review"
+        }
+      ],
+      "host_reviewed_question_count": null,
+      "host_reviewed_answered_count": 0,
+      "host_reviewed_reference_match_count": 0
+    },
+    {
+      "exam_id": "gaokao-2022-II",
+      "year": 2022,
+      "exam_name": "2022 高考英语 II卷（第三方整理版）",
+      "usage_status": "user_supplied_local_research; redistribution_not_verified",
+      "source_ids": [
+        "gaokao-2022-II-blank",
+        "gaokao-2022-II-reveal"
+      ],
+      "status": "PARTIAL",
+      "result_artifact": "results/gaokao-2022-II/reveal.json",
+      "blind_prediction_frozen": true,
+      "blind_reveal_completed": true,
+      "new_question_count": 47,
+      "question_type_counts": {
+        "阅读理解": 15,
+        "七选五": 5,
+        "完形填空": 15,
+        "语法填空": 10,
+        "应用文": 1,
+        "读后续写": 1
+      },
+      "objective_count": 45,
+      "answered_count": 0,
+      "blind_answer_match": null,
+      "matched_count": null,
+      "wrong_answer_count": null,
+      "unresolved_count": 45,
+      "structurally_safe_abstention_count": null,
+      "safe_abstention": null,
+      "evidence_failure": null,
+      "method_trigger_failure": null,
+      "boundary_failure": null,
+      "new_real_case_count": 0,
+      "filled_case_slots": 0,
+      "remaining_core_unregistered_slots": null,
+      "method_case_contributions": [],
+      "prediction_sha256": "7095e97144158af5425f4141a496cecda8c80c62ac3d8410e2edbeca62f5d875",
+      "blank_source_sha256": "86cecddc0cb47ae1d5e2a8ff41afde9b50f5faf3632cb153a5afbbd17387281f",
+      "reveal_source_sha256": "8adcf3618918568442bb9c73f9f4f01582a09ca2f89e0b11592d5379466096c6",
+      "source_issue": [
+        {
+          "type": "embedded_media",
+          "description": "blank contains images; raw source preserved, text extraction is not complete image transcription",
+          "status": "pending_review"
+        },
+        {
+          "type": "extraction_numbering",
+          "description": "reveal has automatic numbering; plain-text numbers require review",
+          "status": "pending_review"
+        },
+        {
+          "type": "embedded_media",
+          "description": "reveal contains images; raw source preserved, text extraction is not complete image transcription",
+          "status": "pending_review"
+        },
+        {
+          "type": "malformed_reference_explanation_marker",
+          "printed_question_number": 3,
+          "status": "preserved_not_corrected"
+        },
+        {
+          "type": "malformed_reference_explanation_marker",
+          "printed_question_number": 10,
+          "status": "preserved_not_corrected"
+        },
+        {
+          "type": "embedded_images_and_table_layout",
+          "status": "pending_source_review"
+        }
+      ],
+      "host_reviewed_question_count": null,
+      "host_reviewed_answered_count": 0,
+      "host_reviewed_reference_match_count": 0
+    },
+    {
+      "exam_id": "gaokao-2023-I",
+      "year": 2023,
+      "exam_name": "2023 高考英语 I卷（第三方整理版）",
+      "usage_status": "user_supplied_local_research; redistribution_not_verified",
+      "source_ids": [
+        "gaokao-2023-I-blank",
+        "gaokao-2023-I-reveal"
+      ],
+      "status": "PARTIAL",
+      "result_artifact": "results/gaokao-2023-I/reveal.json",
+      "blind_prediction_frozen": true,
+      "blind_reveal_completed": true,
+      "new_question_count": 47,
+      "question_type_counts": {
+        "阅读理解": 15,
+        "七选五": 5,
+        "完形填空": 15,
+        "语法填空": 10,
+        "应用文": 1,
+        "读后续写": 1
+      },
+      "objective_count": 45,
+      "answered_count": 0,
+      "blind_answer_match": null,
+      "matched_count": null,
+      "wrong_answer_count": null,
+      "unresolved_count": 45,
+      "structurally_safe_abstention_count": null,
+      "safe_abstention": null,
+      "evidence_failure": null,
+      "method_trigger_failure": null,
+      "boundary_failure": null,
+      "new_real_case_count": 0,
+      "filled_case_slots": 0,
+      "remaining_core_unregistered_slots": null,
+      "method_case_contributions": [],
+      "prediction_sha256": "1519f88b6b907fe12c344d9c38e7b44a391c1c49db3c2c256340eb93921a45dd",
+      "blank_source_sha256": "66aee4e932ad83cf1ef04214f194df308373c8b3b5e69fc785e5b055121901ab",
+      "reveal_source_sha256": "c93a9e7b38c301e62d6bab7ede4db6dbfa4d9284ef85f43a50f90d9df3f8cea2",
+      "source_issue": [
+        {
+          "type": "embedded_media",
+          "description": "blank contains images; raw source preserved, text extraction is not complete image transcription",
+          "status": "pending_review"
+        },
+        {
+          "type": "embedded_media",
+          "description": "reveal contains images; raw source preserved, text extraction is not complete image transcription",
+          "status": "pending_review"
+        },
+        {
+          "type": "malformed_reference_explanation_marker",
+          "printed_question_number": 55,
+          "status": "preserved_not_corrected"
+        },
+        {
+          "type": "embedded_images_and_table_layout",
+          "status": "pending_source_review"
+        }
+      ],
+      "host_reviewed_question_count": 1,
+      "host_reviewed_answered_count": 1,
+      "host_reviewed_reference_match_count": 1
+    },
+    {
+      "exam_id": "gaokao-2023-II",
+      "year": 2023,
+      "exam_name": "2023 高考英语 II卷（第三方整理版）",
+      "usage_status": "user_supplied_local_research; redistribution_not_verified",
+      "source_ids": [
+        "gaokao-2023-II-blank",
+        "gaokao-2023-II-reveal"
+      ],
+      "status": "PARTIAL",
+      "result_artifact": "results/gaokao-2023-II/reveal.json",
+      "blind_prediction_frozen": true,
+      "blind_reveal_completed": true,
+      "new_question_count": 47,
+      "question_type_counts": {
+        "阅读理解": 15,
+        "七选五": 5,
+        "完形填空": 15,
+        "语法填空": 10,
+        "应用文": 1,
+        "读后续写": 1
+      },
+      "objective_count": 45,
+      "answered_count": 0,
+      "blind_answer_match": null,
+      "matched_count": null,
+      "wrong_answer_count": null,
+      "unresolved_count": 45,
+      "structurally_safe_abstention_count": null,
+      "safe_abstention": null,
+      "evidence_failure": null,
+      "method_trigger_failure": null,
+      "boundary_failure": null,
+      "new_real_case_count": 0,
+      "filled_case_slots": 0,
+      "remaining_core_unregistered_slots": null,
+      "method_case_contributions": [],
+      "prediction_sha256": "cfa3d596d4dff4103cadad0a6698d6ed8b9a6db214709ae20239ebeaeec9b576",
+      "blank_source_sha256": "cb848729d8ad6b154179bedbe1146455ed4dd46334877191bf6856d5b4c23ddd",
+      "reveal_source_sha256": "ccc908f40956c0d69d77d14bc40144c743351b1cd51327bd48aa94730c10e03a",
+      "source_issue": [
+        {
+          "type": "embedded_media",
+          "description": "blank contains images; raw source preserved, text extraction is not complete image transcription",
+          "status": "pending_review"
+        },
+        {
+          "type": "embedded_media",
+          "description": "reveal contains images; raw source preserved, text extraction is not complete image transcription",
+          "status": "pending_review"
+        },
+        {
+          "type": "embedded_images_and_table_layout",
+          "status": "pending_source_review"
+        }
+      ],
+      "host_reviewed_question_count": null,
+      "host_reviewed_answered_count": 0,
+      "host_reviewed_reference_match_count": 0
+    },
+    {
+      "exam_id": "gaokao-2024-I",
+      "year": 2024,
+      "exam_name": "2024 高考英语 I卷（第三方整理版）",
+      "usage_status": "user_supplied_local_research; redistribution_not_verified",
+      "source_ids": [
+        "gaokao-2024-I-blank",
+        "gaokao-2024-I-reveal"
+      ],
+      "status": "PARTIAL",
+      "result_artifact": "results/gaokao-2024-I/reveal.json",
+      "blind_prediction_frozen": true,
+      "blind_reveal_completed": true,
+      "new_question_count": 47,
+      "question_type_counts": {
+        "阅读理解": 15,
+        "七选五": 5,
+        "完形填空": 15,
+        "语法填空": 10,
+        "应用文": 1,
+        "读后续写": 1
+      },
+      "objective_count": 45,
+      "answered_count": 0,
+      "blind_answer_match": null,
+      "matched_count": 0,
+      "wrong_answer_count": 0,
+      "unresolved_count": 45,
+      "structurally_safe_abstention_count": 45,
+      "safe_abstention": null,
+      "evidence_failure": null,
+      "method_trigger_failure": null,
+      "boundary_failure": null,
+      "new_real_case_count": 0,
+      "filled_case_slots": 0,
+      "remaining_core_unregistered_slots": 144,
+      "method_case_contributions": [],
+      "prediction_sha256": "ea260a2f456517a3d8818279fba6d86b2cd5adfb3ef67c66a4ca87f393a88457",
+      "blank_source_sha256": "6c49347bb4f296d3a983f3526d9a3936dfe8f2c692964f349002b1cda9283cdd",
+      "reveal_source_sha256": "07beee22252dd85d5f2fac63d6ae03f72067bdd18d555d38f5a3484860b90d15",
+      "source_issue": [
+        {
+          "type": "embedded_media",
+          "description": "blank contains images; raw source preserved, text extraction is not complete image transcription",
+          "status": "pending_review"
+        },
+        {
+          "type": "embedded_media",
+          "description": "reveal contains images; raw source preserved, text extraction is not complete image transcription",
+          "status": "pending_review"
+        },
+        {
+          "type": "source_explanation_mismatch",
+          "description": "Q58 explanation mentions use sth. to do sth., but the supplied blank sentence has open on warm days; raw explanation preserved, semantic justification pending independent review",
+          "status": "pending_review"
+        },
+        {
+          "type": "reference_sample_duplicate",
+          "description": "Continuation reference extraction visibly repeats paragraphs; original source and raw text preserved, no automatic deduplication",
+          "status": "pending_review"
+        }
+      ],
+      "host_reviewed_question_count": null,
+      "host_reviewed_answered_count": null,
+      "host_reviewed_reference_match_count": null
+    },
+    {
+      "exam_id": "gaokao-2024-II",
+      "year": 2024,
+      "exam_name": "2024 高考英语 II卷（第三方整理版）",
+      "usage_status": "user_supplied_local_research; redistribution_not_verified",
+      "source_ids": [
+        "gaokao-2024-II-blank",
+        "gaokao-2024-II-reveal"
+      ],
+      "status": "PARTIAL",
+      "result_artifact": "results/gaokao-2024-II/reveal.json",
+      "blind_prediction_frozen": true,
+      "blind_reveal_completed": true,
+      "new_question_count": 47,
+      "question_type_counts": {
+        "阅读理解": 15,
+        "七选五": 5,
+        "完形填空": 15,
+        "语法填空": 10,
+        "应用文": 1,
+        "读后续写": 1
+      },
+      "objective_count": 45,
+      "answered_count": 0,
+      "blind_answer_match": null,
+      "matched_count": null,
+      "wrong_answer_count": null,
+      "unresolved_count": 45,
+      "structurally_safe_abstention_count": null,
+      "safe_abstention": null,
+      "evidence_failure": null,
+      "method_trigger_failure": null,
+      "boundary_failure": null,
+      "new_real_case_count": 0,
+      "filled_case_slots": 0,
+      "remaining_core_unregistered_slots": null,
+      "method_case_contributions": [],
+      "prediction_sha256": "a1fe2d53328d2f861e08c79d258c408ec2f73be56222923613b52605966b29e3",
+      "blank_source_sha256": "518408561edabd84d2c44f14f1793050df04e6508e77e3eca5895b460d5c2df7",
+      "reveal_source_sha256": "ecd87a563592245d2b854537fe8fd39ff35aa23b86dbe39b1598da30b25b5179",
+      "source_issue": [
+        {
+          "type": "embedded_media",
+          "description": "blank contains images; raw source preserved, text extraction is not complete image transcription",
+          "status": "pending_review"
+        },
+        {
+          "type": "embedded_media",
+          "description": "reveal contains images; raw source preserved, text extraction is not complete image transcription",
+          "status": "pending_review"
+        },
+        {
+          "type": "malformed_reference_explanation_marker",
+          "printed_question_number": 19,
+          "status": "preserved_not_corrected"
+        },
+        {
+          "type": "embedded_images_and_table_layout",
+          "status": "pending_source_review"
+        }
+      ],
+      "host_reviewed_question_count": null,
+      "host_reviewed_answered_count": 0,
+      "host_reviewed_reference_match_count": 0
+    },
+    {
+      "exam_id": "gaokao-2025-I",
+      "year": 2025,
+      "exam_name": "2025 高考英语 I卷（第三方整理版）",
+      "usage_status": "user_supplied_local_research; redistribution_not_verified",
+      "source_ids": [
+        "gaokao-2025-I-blank",
+        "gaokao-2025-I-reveal"
+      ],
+      "status": "PARTIAL",
+      "result_artifact": "results/gaokao-2025-I/reveal-v1.1.json",
+      "blind_prediction_frozen": true,
+      "blind_reveal_completed": true,
+      "new_question_count": 47,
+      "question_type_counts": {
+        "阅读理解": 15,
+        "七选五": 5,
+        "完形填空": 15,
+        "语法填空": 10,
+        "应用文": 1,
+        "读后续写": 1
+      },
+      "objective_count": 45,
+      "answered_count": 0,
+      "blind_answer_match": null,
+      "matched_count": null,
+      "wrong_answer_count": null,
+      "unresolved_count": 45,
+      "structurally_safe_abstention_count": null,
+      "safe_abstention": null,
+      "evidence_failure": null,
+      "method_trigger_failure": null,
+      "boundary_failure": null,
+      "new_real_case_count": 0,
+      "filled_case_slots": 0,
+      "remaining_core_unregistered_slots": null,
+      "method_case_contributions": [],
+      "prediction_sha256": "20082c192286b98b32c27997d64f731b6f8e81f70647d20cefa647176c619d8f",
+      "blank_source_sha256": "a5d576269a8f0db81df6103bdff60747dcfffc4ad77b1a5827d3dcdc5f3f28a0",
+      "reveal_source_sha256": "3d84332d40f1828acfee5a05e648d5518756eec68a621518d157287d8105180b",
+      "source_issue": [
+        {
+          "type": "embedded_media",
+          "description": "blank contains images; raw source preserved, text extraction is not complete image transcription",
+          "status": "pending_review"
+        },
+        {
+          "type": "embedded_media",
+          "description": "reveal contains images; raw source preserved, text extraction is not complete image transcription",
+          "status": "pending_review"
+        },
+        {
+          "type": "embedded_media",
+          "count": 9,
+          "description": "Embedded media preserved in source, not visually transcribed or certified by text extraction",
+          "status": "pending_review"
+        }
+      ],
+      "source_completeness": "written text layouts checked; full visual/semantic authenticity and redistribution rights pending",
+      "host_reviewed_question_count": 1,
+      "host_reviewed_answered_count": 1,
+      "host_reviewed_reference_match_count": 1
+    },
+    {
+      "exam_id": "gaokao-2025-II",
+      "year": 2025,
+      "exam_name": "2025 高考英语 II卷（第三方整理版）",
+      "usage_status": "user_supplied_local_research; redistribution_not_verified",
+      "source_ids": [
+        "gaokao-2025-II-blank",
+        "gaokao-2025-II-reveal"
+      ],
+      "status": "PARTIAL",
+      "result_artifact": "results/gaokao-2025-II/reveal-v1.1.json",
+      "blind_prediction_frozen": true,
+      "blind_reveal_completed": true,
+      "new_question_count": 47,
+      "question_type_counts": {
+        "阅读理解": 15,
+        "七选五": 5,
+        "完形填空": 15,
+        "语法填空": 10,
+        "应用文": 1,
+        "读后续写": 1
+      },
+      "objective_count": 45,
+      "answered_count": 0,
+      "blind_answer_match": null,
+      "matched_count": null,
+      "wrong_answer_count": null,
+      "unresolved_count": 45,
+      "structurally_safe_abstention_count": null,
+      "safe_abstention": null,
+      "evidence_failure": null,
+      "method_trigger_failure": null,
+      "boundary_failure": null,
+      "new_real_case_count": 0,
+      "filled_case_slots": 0,
+      "remaining_core_unregistered_slots": null,
+      "method_case_contributions": [],
+      "prediction_sha256": "88d812fc6d34c949ae8f49c48e435475b854373df41eb02a1ccfb87133a7ba6e",
+      "blank_source_sha256": "6de4dd3397219e55c843f1a0c1bffb055a77bb428b304c6a059f529139711047",
+      "reveal_source_sha256": "6b1a93512628542d560bd9d5d8d6263e39a1add5a90dc9a6ba409a7e6d4f3126",
+      "source_issue": [
+        {
+          "type": "embedded_media",
+          "description": "blank contains images; raw source preserved, text extraction is not complete image transcription",
+          "status": "pending_review"
+        },
+        {
+          "type": "embedded_media",
+          "description": "reveal contains images; raw source preserved, text extraction is not complete image transcription",
+          "status": "pending_review"
+        },
+        {
+          "type": "embedded_media",
+          "count": 5,
+          "description": "Embedded media preserved in source, not visually transcribed or certified by text extraction",
+          "status": "pending_review"
+        },
+        {
+          "type": "written_numbering_restart",
+          "description": "Written Q1–47 are separate from listening Q1–20; mapping is section-scoped",
+          "status": "preserved"
+        },
+        {
+          "type": "source_option_punctuation",
+          "question_number": 7,
+          "description": "Printed option A lacks a dot; source text preserved, tab-delimited label interpreted without adding content",
+          "status": "preserved"
+        },
+        {
+          "type": "source_score_typography",
+          "description": "Grammar header says 每小题15分 alongside 10 questions/15 total; raw text preserved, no automatic score correction",
+          "status": "pending_review"
+        }
+      ],
+      "source_completeness": "written text layouts checked; full visual/semantic authenticity and redistribution rights pending",
+      "host_reviewed_question_count": 0,
+      "host_reviewed_answered_count": 0,
+      "host_reviewed_reference_match_count": 0
+    }
+  ]
+}

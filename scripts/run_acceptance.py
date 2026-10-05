@@ -40,6 +40,14 @@ def run():
     report={'final_status':'PARTIAL','before_refactor':{'tests_run':16,'passed':16,'head':'60ebaf4'},'after_refactor':{'tests_run':result.testsRun,'failures':len(result.failures),'errors':len(result.errors),'registry':validated,'generated':generated,'cli_smoke':smoke},'method_migration':dict(modules),'method_types':dict(categories),'case_counts':dict(statuses),'source_commit':r.index['source_baseline']['commit'],'source_repository_unchanged':'verified by read-only source git status and immutable snapshot hashes','evaluation_status':'pending_real_participant_validation','real_record_count':len(real),'synthetic_record_count':len(synthetic),'remaining_blockers':[entry_gap+'全量真实完整案例仍待核','缺完整六型盲题与旧答疑语义回归数据','没有可靠校准的自由文本语义求解后端，当前使用外部审阅接口','无真实受试者传播、First-use、Blind、效率或Signature数据']}
     report['safety_hardening']={'option_closure':'unique own support plus reviewed elimination of every supplied rival','evidence_graph':'own method trigger, own candidate claim and current-input quote binding','spoken_symptoms':'10 requested examples tested; suggestions not semantic proof','analysis_schema_version':'1.7.0','grammar_navigation':'explicit hint branch plus reviewed trigger paths; never infer blank POS from hint spelling','writing_feedback':'external review transport with independent trigger, draft coverage, module-specific order and real withholding of unsupported sections; no automatic grading certification'}
     report['case_coverage']=coverage
+    exam_path=ROOT/'evaluation/reports/exam-ingestion.json'
+    if exam_path.is_file():
+        exam=load(exam_path)
+        report['real_exam_ingestion']={key:exam[key] for key in ['status','source_papers','source_files',
+            'completed_blind_reveal_papers','new_question_count','host_reviewed_question_count',
+            'host_reviewed_answered_count','host_reviewed_reference_match_count',
+            'real_student_observation_count','new_registered_cases']}
+        report['remaining_blockers'][1]='真实六型试卷已导入；全量语义、案例独立审阅和旧答疑语义回归仍缺，另有1卷源结构缺损'
     report.update(regression_snapshot(r))
     report['human_release_review']={'contract':'schemas/method-release.json','commands':['release-check','release-bindings'],'registry_index':'optional release_reviews method_id -> repository-relative approved artifact','scope':'explicit manual state changes only after bound real evaluation, five verified case types, current regression and human approval; identities, semantic judgement and statistical significance remain externally audited','indexed_review_count':len(r.index.get('release_reviews',{})),'applied_review_count':sum(m['maturity_status'] in {'validated','stable'} or m['practical_value']!='Useful' for m in r.methods.values())}
     report['candidate_relation_binding']={'required':'same method_id and candidate on one reviewed relation, with own upstream claim/trigger and directly quoted source','applies_to':['decision','verification','candidate_decision action artifact'],'writing_candidate':'student_draft explicitly recorded on review relation','negative_tests':['wrong candidate relation','borrowed draft relation','claim grafted to conclusion','trigger grafted to conclusion','trigger quote substituted for relation evidence','artifact without conclusion nodes'],'scope':'structural binding of external assertions; not English semantics or scoring certification'}
@@ -120,6 +128,8 @@ First-use、Blind/Baseline、10/30/90s Safety均有记录Schema及直接可运�
     md+='\n整卷方法覆盖1.1.0：保留建议次数，另逐方法列出核验触发、产物、决定及案例候选题号。典型方法候选只按自身可审阅案例数排序；不能借其他方法的闭合答案或高展示分，把仅计划、仅触发或已停止的方法包装成典型用法。辅助方法产物仍无定案权；Schema兼容旧1.0.0投影。程序测试不认证完整真题卷、来源合法性、英语语义或学生效果，G11保持PARTIAL。\n'
     md+='\n证据关系候选绑定：完成审计发现原图门禁可接受不同候选的审阅关系，现已修复。结论及candidate_decision产物要求同方法、同候选的同一条审阅关系，自身上游具备主张与独立触发，并有直接源引文；旁接主张/触发或只有触发引文不作决定关系证据。写作关系显式绑定student_draft，旧的缺标记写作结果须重新分析，原输入不变。回归覆盖四Renderer和无结论节点的产物图；这是结构修复，不把G8语义认证或其他未核要求改成PASS。\n'
     md+='\n人工释放凭证入口：release-check与release-bindings只读检查方法/案例/原始观察/冻结计划/回归报告绑定，Registry的可选release_reviews索引指向显式人工批准记录。成熟度或实用等级不再永久无条件拒绝，但五类已核验案例、真实评估阶段链、当前代码/测试/语义Registry回归快照、人工审核及目标状态均必须通过；stable另需同版validated批准和多道迁移题，Efficient/Signature另需统计及相应人工审阅。工具不修改卡片，空模板不能批准；当前批准记录为0，82项仍Useful+candidate，不认证人、语义或显著性。\n'
+    if exam_path.is_file():
+        md+='\n真实试卷导入：12套25个Word源哈希冻结，仅公开元数据。11套517项（495道客观题、22项写作）完成结构回归、冻结机械Prediction后Reveal；2021Ⅱ原题结构缺损拒绝推补。机械客观题全部未解，不能将未猜测统计当成语义正确的safe_abstention。3道另有揭晓前AI宿主动作审阅并与第三方答案一致，不是整卷自动正确率、独立人工语义认证或真人学习效果。写作按约束审阅、不以范文Exact Match。新Case及填槽均为0，方法状态不变；G8/G11及学生研究链仍PARTIAL。详情见exam-ingestion.md及evaluation/reports/exam-ingestion.json。\n'
     (ROOT/'docs/final-acceptance.md').write_text(md,encoding='utf-8')
     return report
 
