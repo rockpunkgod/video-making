@@ -202,6 +202,19 @@ def validate_execution_trace(analysis,registry=None):
             raise ValueError('Unreviewed action must not expose reviewed graph bindings')
     bound=[]
     for step in analysis['method_chain']:
+        if registry is not None:
+            method=registry.methods.get(step['method_id'])
+            if (not method or analysis['method_versions'].get(step['method_id'])!=method['version']
+                    or method['question_type']!=analysis['question_type']
+                    or step['role'] not in [method['primary_role']]+method['secondary_roles']):
+                raise ValueError('Serialized method plan violates Registry role/version binding')
+            expected_output=method['output_type'] if step['role']==method['primary_role'] else {
+                'locator':'locate','interpreter':'interpret','reducer':'reduce',
+                'decider':'decide','verifier':'verify','framework':'interpret'}[step['role']]
+            if step['output']!=expected_output or step['stop_rule']!=method['stop_rule']:
+                raise ValueError('Serialized method plan changed Registry output/stop rule')
+            if step['role']==method['primary_role'] and step['action']!=method['core_action']:
+                raise ValueError('Serialized method plan changed Registry primary action')
         if step['input_artifact_types']!=INPUT_ARTIFACTS[step['role']] or step['output_artifact_types']!=ROLE_ARTIFACTS[step['role']]:
             raise ValueError('Serialized method contract was changed')
         for eid in step['execution_ids']:

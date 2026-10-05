@@ -44,24 +44,50 @@ def render(analysis,kind='structured',registry=None):
         elif nav['status']=='needs_function_confirmation': parts.append('有提示词，先圈空位所需成分或词性；提示词原词性不是答案词性。' if nav['hint_branch']=='with_hint' else '无提示词，先圈空位的限定、介词、指代、连接或句间逻辑功能；不把候选锁死为四类。')
         else: parts.append('按题面触发审阅记录进入知识节点；树只导航，词形仍须独立核验。')
     if analysis['student_symptoms']: parts.append('先解决你卡住的这一处：'+analysis['student_symptoms'][0]+'。')
+    # A plan is not an executed lesson. Keep all submitted artifacts, but expose
+    # only one pending entry and never invite continuation through a stop.
+    blocked = any(x['state']=='stopped' or
+                  (x['state']=='produced' and x['output']['kind']=='verification_result'
+                   and x['output']['verdict']!='supports')
+                  for x in analysis['execution_trace'])
+    pending = next((s for s in analysis['method_chain']
+                    if s['state'] not in {'executed','stopped'}),None)
     for step in analysis['method_chain']:
         m = r.methods[step['method_id']]
         output_label={'locate':'证据位置','interpret':'语义或框架','reduce':'缩小后的范围','decide':'当前候选的判断','verify':'核验结果'}[step['output']]
-        prefix='已提交动作记录：' if step['state']=='executed' else '此处已刹车：' if step['state']=='stopped' else '下一步计划：'
-        parts.append(prefix+m['brand_name']+'，'+step['action'].rstrip('。')+'。职责产物是'+output_label+'；计划或关系审阅不等于动作已经完成。')
+        if step['state'] not in {'executed','stopped'}:
+            if blocked or analysis['answer_verification']['closed'] or step is not pending:
+                continue
+            parts.append('先核对一个入口：'+m['brand_name']+'。这是方法建议，不代表题面触发已经验证。')
+            if step['role']==m['primary_role']:
+                card=m['four_step_card']
+                parts.extend(['什么时候启动：'+card['start'],
+                              '第一刀：'+card['first_cut'],
+                              '怎么判：'+card['judge'],
+                              '什么时候停：'+card['stop']])
+            else:
+                parts.extend(['第一刀：'+step['action'],'什么时候停：'+step['stop_rule']])
+            parts.append('这一步只产出'+output_label+'，不能把计划当成已完成的动作或答案。')
+            continue
+        prefix='已提交动作记录：' if step['state']=='executed' else '此处已刹车：'
+        parts.append(prefix+m['brand_name']+'。职责产物是'+output_label+'；记录来自外部审阅，不是自动语义认证。')
         for x in analysis['execution_trace']:
             if x['execution_id'] not in step['execution_ids']: continue
             if x['state']=='produced': parts.append('实际动作：'+x['concrete_action'].rstrip('。')+'。'+render_artifact(x['output']))
             elif x['state']=='stopped': parts.append('停止原因：'+x['stop_rule_check']+'。这一步没有继续产出。')
             else: parts.append('该动作尚未形成可继续使用的审阅产物。')
         parts.append(step['stop_rule'])
+    if blocked:
+        parts.append('先处理已停止或未通过核验的缺口，不继续套后续方法，不消费被扣留的产物。')
+    elif pending is None and not analysis['answer_verification']['closed']:
+        parts.append('下一步：'+analysis['next_action'])
     for c in analysis['candidate_analysis']:
         quotes = [n['label'] for n in analysis['evidence_graph']['nodes'] if n['id'] in c['evidence_ids']]
         effect={'retain':'有依据，暂时保留','eliminate':'依据判据排除','undetermined':'尚不能判断'}[c['effect']]
         parts.append(c['candidate']+'：'+c['claim']+'。题面证据：'+'；'.join(quotes)+'。审阅结果：'+effect+'。')
     if analysis['answer'] is None:
         parts.append('现在先不报答案。'+analysis['limitations'][-1])
-        if analysis['answer_verification']['unresolved_candidates']:
+        if not blocked and analysis['answer_verification']['unresolved_candidates']:
             parts.append('下一步核验这些候选自己的证据：'+'、'.join(analysis['answer_verification']['unresolved_candidates'])+'。')
     else:
         parts.append('依据上述外部审阅记录，当前保留 '+analysis['answer']+'。这不是自动语义验证的结论。')

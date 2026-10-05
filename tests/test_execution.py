@@ -72,6 +72,85 @@ class ExecutionTest(unittest.TestCase):
         fresh=self.analyzer.analyze(q)
         self.assertEqual(fresh['method_chain'][0]['output_artifact_types'],['located_evidence'])
 
+    def test_student_shows_one_first_use_card_without_changing_machine_chain(self):
+        q={'question_id':'program-main-idea','question_type':'阅读理解',
+           'task_type':'main_idea','stem':'program-only main idea task',
+           'passage':'alpha beta gamma','options':{'A':'alpha','B':'beta'}}
+        out=self.analyzer.analyze(q); before=deepcopy(out)
+        self.assertEqual([s['method_id'] for s in out['method_chain']],['R09','R06'])
+        for kind in ['student','legacy-wechat']:
+            text=render(out,kind,self.r)
+            self.assertEqual(text.count('先核对一个入口：'),1)
+            for key in ['start','first_cut','judge','stop']:
+                self.assertIn(self.r.methods['R09']['four_step_card'][key],text)
+            self.assertNotIn(self.r.methods['R06']['brand_name'],text)
+            self.assertIn('不代表题面触发已经验证',text)
+        for kind in ['structured','content-export']:
+            self.assertEqual(json.loads(render(out,kind,self.r))['method_chain'],out['method_chain'])
+        self.assertEqual(out,before)
+
+    def test_student_keeps_produced_artifacts_but_no_future_plan_after_stop(self):
+        q=fixture(); q['action_executions']=q['action_executions'][:2]
+        q['action_executions'][1].update(stop_applied=True,output=None)
+        out=self.analyzer.analyze(q); before=deepcopy(out)
+        for kind in ['student','legacy-wechat']:
+            text=render(out,kind,self.r)
+            self.assertIn('定位到：alpha',text)
+            self.assertIn('停止原因：',text)
+            self.assertIn('不继续套后续方法',text)
+            self.assertNotIn('先核对一个入口：',text)
+            self.assertNotIn(self.r.methods['R01']['brand_name'],text)
+            self.assertNotIn('下一步核验这些候选',text)
+        self.assertEqual(out,before)
+
+    def test_failed_verification_does_not_offer_pending_method(self):
+        q=fixture(); q['requested_chain'].append('R03')
+        q['observations'].append({'method_id':'R03','evidence':[span()],'reviewed':True})
+        q['action_executions'][-1]['output']['verdict']='unresolved'
+        out=self.analyzer.analyze(q)
+        text=render(out,'student',self.r)
+        self.assertIn('回填核验：尚未闭合',text)
+        self.assertIn('未通过核验的缺口',text)
+        self.assertNotIn('先核对一个入口：',text)
+        self.assertIsNone(out['answer'])
+
+    def test_stop_does_not_hide_later_independent_produced_evidence(self):
+        q=fixture(); q['relations']=[]
+        q['action_executions']=q['action_executions'][:2]
+        q['action_executions'][1].update(stop_applied=True,output=None)
+        q['action_executions'].append(action('independent-expand','R17','verifier',
+            {'kind':'located_evidence','spans':[span('alpha beta')]}))
+        out=self.analyzer.analyze(q); text=render(out,'student',self.r)
+        self.assertIn('定位到：alpha beta',text)
+        self.assertIn('停止原因：',text)
+        self.assertNotIn('先核对一个入口：',text)
+        self.assertEqual(len(out['execution_trace']),3)
+
+    def test_mixed_produced_and_stopped_step_still_blocks_future_plans(self):
+        q=fixture(); q['relations']=[]
+        q['action_executions']=q['action_executions'][:2]
+        stopped=deepcopy(q['action_executions'][1])
+        stopped.update(execution_id='meaning-stop',stop_applied=True,output=None)
+        q['action_executions'].append(stopped)
+        out=self.analyzer.analyze(q)
+        self.assertEqual(out['method_chain'][1]['state'],'executed')
+        text=render(out,'student',self.r)
+        self.assertIn('拆解结果：',text)
+        self.assertIn('停止原因：',text)
+        self.assertNotIn('先核对一个入口：',text)
+
+    def test_empty_plan_cannot_change_registry_teaching_fields(self):
+        q=fixture(); q.pop('action_executions'); q['relations']=[]
+        out=self.analyzer.analyze(q)
+        for field,value in [('action','just guess'),('stop_rule','never stop'),
+                            ('output','decide'),('role','decider'),('version','1.0.0')]:
+            bad=deepcopy(out)
+            if field=='version': bad['method_versions']['R12']=value
+            else: bad['method_chain'][0][field]=value
+            for kind in ['structured','content-export','student','legacy-wechat']:
+                with self.subTest(field=field,kind=kind),self.assertRaisesRegex(ValueError,'Registry'):
+                    render(bad,kind,self.r)
+
     def test_locator_interpreter_decider_verifier_use_named_artifacts(self):
         out=self.analyzer.analyze(fixture()); validate_schema('question-analysis',out)
         self.assertEqual([x['state'] for x in out['execution_trace']],['produced']*5)

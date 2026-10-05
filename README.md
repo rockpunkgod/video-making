@@ -10,6 +10,8 @@ ANSWER is an evidence-grounded Gaokao English method and question-analysis syste
 
 ## 使用
 
+开发其他模块或使用独立交付文件夹，先读[模块开发交接入口](docs/module-integration.md)：接口、版本、示例、数据排除范围和尚未验证能力。
+
 完整仓库内使用 Python 3.10+：
 
 ```powershell
