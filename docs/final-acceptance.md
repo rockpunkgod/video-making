@@ -24,7 +24,7 @@ Registry（源章节+方法）→Matcher/Composer→Question/Paper Analyzer→Ev
 | 9 | PARTIAL | 整卷结构扫描、方法/难度/证据/Demo排序可运行；无完整真实卷语义回归 |
 | 10 | PARTIAL | 四Renderer与兼容Skill/脚本接入；完整旧答疑行为尚未认证 |
 | 11 | PASS | 真人记录导入、统计、冻结计划及短版安全；真人数据未运行 |
-| 12 | PASS | 320项自动Regression及CLI烟测通过 |
+| 12 | PASS | 328项自动Regression及CLI烟测通过 |
 | 13 | PASS | README及架构/维护/评估/迁移文档 |
 | 14 | PASS | 逐Gate如实验收，最终PARTIAL，不宣布工程全完成 |
 
@@ -43,7 +43,7 @@ Registry（源章节+方法）→Matcher/Composer→Question/Paper Analyzer→Ev
 
 ## 5. Tests
 
-Before：16/16；After：320/320。覆盖baseline、全量Registry/Case/标准Schema、Analyzer证据/角色/拒答、Paper推荐门禁、Renderer事实保留、Legacy资源/脚本、Evaluation公式/空数据/重复/污染/不可伪升级。四Skill通过skill-creator quick_validate（Windows使用UTF-8模式）；editable安装通过。CLI 19种烟测通过，写作示例为synthetic程序输送记录，不是实际英语题或真人评分。详细机器记录：evaluation/reports/engineering-acceptance.json。未声称旧题库正确率或宿主语义回归已通过。
+Before：16/16；After：328/328。覆盖baseline、全量Registry/Case/标准Schema、Analyzer证据/角色/拒答、Paper推荐门禁、Renderer事实保留、Legacy资源/脚本、Evaluation公式/空数据/重复/污染/不可伪升级。四Skill通过skill-creator quick_validate（Windows使用UTF-8模式）；editable安装通过。CLI 19种烟测通过，写作示例为synthetic程序输送记录，不是实际英语题或真人评分。详细机器记录：evaluation/reports/engineering-acceptance.json。未声称旧题库正确率或宿主语义回归已通过。
 
 ## 6. Evaluation Readiness
 
@@ -70,7 +70,7 @@ First-use、Blind/Baseline、10/30/90s Safety均有记录Schema及直接可运�
 | G11 | PARTIAL | 整卷接口可执行；真实完整卷回归缺数据 |
 | G12 | PASS | Core不含交付模板，Renderer不改变答案事实 |
 | G13 | PARTIAL | 入口/脚本/契约兼容通过，完整旧题库宿主语义表现未验 |
-| G14 | PASS | 16 baseline保留，当前320项通过 |
+| G14 | PASS | 16 baseline保留，当前328项通过 |
 | G15 | PASS | JSON/JSONL导入、12类指标/差值、三短版安全可运行；统计显著性需审阅 |
 | G16 | PASS | 真人未测为pending_real_participant_validation；零升级虚报 |
 
@@ -160,3 +160,5 @@ First-use、Blind/Baseline、10/30/90s Safety均有记录Schema及直接可运�
 人工释放凭证入口：release-check与release-bindings只读检查方法/案例/原始观察/冻结计划/回归报告绑定，Registry的可选release_reviews索引指向显式人工批准记录。成熟度或实用等级不再永久无条件拒绝，但五类已核验案例、真实评估阶段链、当前代码/测试/语义Registry回归快照、人工审核及目标状态均必须通过；stable另需同版validated批准和多道迁移题，Efficient/Signature另需统计及相应人工审阅。工具不修改卡片，空模板不能批准；当前批准记录为0，82项仍Useful+candidate，不认证人、语义或显著性。
 
 真实试卷导入：12套25个Word源哈希冻结，仅公开元数据。11套517项（495道客观题、22项写作）完成结构回归、冻结机械Prediction后Reveal；2021Ⅱ原题结构缺损拒绝推补。机械客观题全部未解，不能将未猜测统计当成语义正确的safe_abstention。3道另有揭晓前AI宿主动作审阅并与第三方答案一致，不是整卷自动正确率、独立人工语义认证或真人学习效果。写作按约束审阅、不以范文Exact Match。新Case及填槽均为0，方法状态不变；G8/G11及学生研究链仍PARTIAL。详情见exam-ingestion.md及evaluation/reports/exam-ingestion.json。
+
+冻结审阅重放与Case Review：3卷各47项重放原题+冻结注释，逐方法6个候选（4个有产物、2个缺typed动作）；另有3道揭晓后AI语义审阅，不冒充新盲测或人工认证。两份R01出现同词强补共同断言归因问题，R09骨架有安全改善限定措辞风险。R01/R06 boundary和R02 canonical只作建议，已批准类型/登记/填槽仍0。2025两卷解析提取v1.2修复新题号/篇章内容吞入详解，旧源/预测/解析版本全部保留。源绑定或结构闭合不认证英语语义；不修改方法以贴答案。

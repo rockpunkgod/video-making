@@ -146,10 +146,12 @@ def reviewed_blind(dataset,exam_id,annotations_path):
     return {'exam_id':exam_id,'host_reviewed_questions':len(results),'host_engine_answers':sum(x['analysis']['answer'] is not None for x in results)}
 
 
-def explanation_stop(lines,start,wanted):
+def explanation_stop(lines,start,question_number):
     """An explanation may itself begin with its printed question number."""
     return next((j for j in range(start+1,len(lines)) if re.match(r'【\d+题详解】|【答案】',lines[j])
-                 or (NUMBER.match(lines[j]) and int(NUMBER.match(lines[j])[1]) not in wanted)),len(lines))
+                 or lines[j] in list('ABCD')
+                 or re.match(r'^(?:第[一二三四五六七八九十]+部分|第[一二三四五六七八九十]+节)',lines[j])
+                 or (NUMBER.match(lines[j]) and int(NUMBER.match(lines[j])[1])!=question_number)),len(lines))
 
 
 def reveal(dataset,exam_id):
@@ -176,7 +178,7 @@ def reveal(dataset,exam_id):
                 else: keys[n]=value
         m=re.fullmatch(r'【(\d+)题详解】',t)
         if m and int(m[1]) in wanted:
-            stop=explanation_stop(lines,i,wanted)
+            stop=explanation_stop(lines,i,int(m[1]))
             details[int(m[1])]='\n'.join(lines[i+1:stop]).strip()
     missing=sorted(wanted-set(keys)); missing_details=sorted(wanted-{n for n,t in details.items() if t})
     rows=[]
@@ -195,7 +197,7 @@ def reveal(dataset,exam_id):
                 'answer_match':None if answer is None or reference is None else answer in reference.split('##'),
                 'reviewer_kind':'codex_host_not_independent_human','review_timing':'pre_reveal',
                 'reviewed_prediction_sha256':sha(host_path.read_bytes()),'semantic_review_status':'pending_independent_review'})
-    report={'schema_version':'1.1.0','exam_id':exam_id,'status':'PARTIAL','prediction_sha256':sha(raw),
+    report={'schema_version':'1.2.0','exam_id':exam_id,'status':'PARTIAL','prediction_sha256':sha(raw),
         'blank_source_sha256':prediction['source_sha256'],'reveal_source_sha256':source['source_sha256'],
         'new_question_count':47,'objective_count':45,'question_type_counts':prediction['question_type_counts'],
         'answered_count':sum(x['engine_answer'] is not None for x in rows[:45]),'unresolved_count':sum(x['engine_answer'] is None for x in rows[:45]),
@@ -208,11 +210,11 @@ def reveal(dataset,exam_id):
             'Reference authority, embedded images, case semantics and actual learners remain unverified. No method upgrades.']}
     # Retain the initial frozen reveal snapshot when the extraction profile is
     # corrected. Never change the original blank predictions or source bytes.
-    freeze_json(root/'results'/exam_id/'reveal-v1.1.json',report)
+    freeze_json(root/'results'/exam_id/'reveal-v1.2.json',report)
     summary={k:v for k,v in report.items() if k not in {'questions','case_candidates','demo_candidates','host_reviewed_blind'}}
     summary['host_reviewed_question_count']=len(host); summary['host_reviewed_answered_count']=sum(x['engine_answer'] is not None for x in host)
     summary['host_reviewed_reference_match_count']=sum(x['answer_match'] is True for x in host)
-    freeze_json(root/'results'/exam_id/'contribution-summary-v1.1.json',summary)
+    freeze_json(root/'results'/exam_id/'contribution-summary-v1.2.json',summary)
     return summary
 
 

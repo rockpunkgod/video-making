@@ -10,6 +10,8 @@
   "host_reviewed_reference_match_count": 3,
   "real_student_observation_count": 0,
   "new_registered_cases": 0,
+  "case_review_candidate_count": 6,
+  "post_reveal_ai_reviewed_question_count": 3,
   "scope": "actual local source ingestion and engine regression metadata; not semantic or learner certification",
   "sources": [
     {
@@ -383,7 +385,8 @@
       "source_issue": [],
       "host_reviewed_question_count": null,
       "host_reviewed_answered_count": null,
-      "host_reviewed_reference_match_count": null
+      "host_reviewed_reference_match_count": null,
+      "case_review": null
     },
     {
       "exam_id": "gaokao-2020-II",
@@ -434,7 +437,8 @@
       ],
       "host_reviewed_question_count": null,
       "host_reviewed_answered_count": null,
-      "host_reviewed_reference_match_count": null
+      "host_reviewed_reference_match_count": null,
+      "case_review": null
     },
     {
       "exam_id": "gaokao-2021-I",
@@ -485,7 +489,57 @@
       ],
       "host_reviewed_question_count": 1,
       "host_reviewed_answered_count": 1,
-      "host_reviewed_reference_match_count": 1
+      "host_reviewed_reference_match_count": 1,
+      "case_review": {
+        "exam_id": "gaokao-2021-I",
+        "stage": "post_reveal_aggregation_of_frozen_pre_reveal_annotations",
+        "written_question_count": 47,
+        "reviewed_question_ids": [
+          "gaokao-2021-I-q26"
+        ],
+        "host_prediction_sha256": "aee5b66bf887092bb6a502f35080653f27ef3669a83ef5c75b3a3203dd7bcfb0",
+        "case_candidate_count": 2,
+        "candidates": [
+          {
+            "candidate_id": "gaokao-2021-I-q26-R01",
+            "question_id": "gaokao-2021-I-q26",
+            "method_id": "R01",
+            "method_version": "1.1.0",
+            "primary_role": "decider",
+            "output_role": "decide",
+            "observable_action_recorded": false,
+            "candidate_status": "needs_action_recording",
+            "case_type": null,
+            "registry_registration": "not_registered",
+            "proposed_case_type": "boundary",
+            "ai_semantic_result": "partial_validity",
+            "semantic_review_status": "AI_post_reveal_reviewed_not_independently_certified"
+          },
+          {
+            "candidate_id": "gaokao-2021-I-q26-R02",
+            "question_id": "gaokao-2021-I-q26",
+            "method_id": "R02",
+            "method_version": "1.1.0",
+            "primary_role": "decider",
+            "output_role": "decide",
+            "observable_action_recorded": false,
+            "candidate_status": "needs_action_recording",
+            "case_type": null,
+            "registry_registration": "not_registered",
+            "proposed_case_type": "canonical",
+            "ai_semantic_result": "valid_bounded_elimination",
+            "semantic_review_status": "AI_post_reveal_reviewed_not_independently_certified"
+          }
+        ],
+        "registry_updates": 0,
+        "case_slots_filled": 0,
+        "semantic_certification": "not_certified",
+        "semantic_review_status": "AI_post_reveal_reviewed_not_independently_certified",
+        "semantic_review_sha256": "8fd4d58670adf632ca89e07ececc3bce4d06688517cefcd639aec043c6a370d8",
+        "semantic_review_question_id": "gaokao-2021-I-q26",
+        "failure_category": "method_trigger_problem",
+        "method_attribution_status": null
+      }
     },
     {
       "exam_id": "gaokao-2021-II",
@@ -539,7 +593,8 @@
       ],
       "host_reviewed_question_count": null,
       "host_reviewed_answered_count": null,
-      "host_reviewed_reference_match_count": null
+      "host_reviewed_reference_match_count": null,
+      "case_review": null
     },
     {
       "exam_id": "gaokao-2022-I",
@@ -599,7 +654,8 @@
       ],
       "host_reviewed_question_count": null,
       "host_reviewed_answered_count": 0,
-      "host_reviewed_reference_match_count": 0
+      "host_reviewed_reference_match_count": 0,
+      "case_review": null
     },
     {
       "exam_id": "gaokao-2022-II",
@@ -674,7 +730,8 @@
       ],
       "host_reviewed_question_count": null,
       "host_reviewed_answered_count": 0,
-      "host_reviewed_reference_match_count": 0
+      "host_reviewed_reference_match_count": 0,
+      "case_review": null
     },
     {
       "exam_id": "gaokao-2023-I",
@@ -739,7 +796,57 @@
       ],
       "host_reviewed_question_count": 1,
       "host_reviewed_answered_count": 1,
-      "host_reviewed_reference_match_count": 1
+      "host_reviewed_reference_match_count": 1,
+      "case_review": {
+        "exam_id": "gaokao-2023-I",
+        "stage": "post_reveal_aggregation_of_frozen_pre_reveal_annotations",
+        "written_question_count": 47,
+        "reviewed_question_ids": [
+          "gaokao-2023-I-q21"
+        ],
+        "host_prediction_sha256": "90f4d6cce12290afa71bd5762cad93f8b813571b101273d3bcd0189e3906273c",
+        "case_candidate_count": 2,
+        "candidates": [
+          {
+            "candidate_id": "gaokao-2023-I-q21-R12",
+            "question_id": "gaokao-2023-I-q21",
+            "method_id": "R12",
+            "method_version": "1.1.0",
+            "primary_role": "locator",
+            "output_role": "locate",
+            "observable_action_recorded": true,
+            "candidate_status": "pending_case_review",
+            "case_type": null,
+            "registry_registration": "not_registered",
+            "proposed_case_type": null,
+            "ai_semantic_result": "PARTIAL",
+            "semantic_review_status": "AI_post_reveal_reviewed_not_independently_certified"
+          },
+          {
+            "candidate_id": "gaokao-2023-I-q21-R01",
+            "question_id": "gaokao-2023-I-q21",
+            "method_id": "R01",
+            "method_version": "1.1.0",
+            "primary_role": "decider",
+            "output_role": "decide",
+            "observable_action_recorded": true,
+            "candidate_status": "pending_case_review",
+            "case_type": null,
+            "registry_registration": "not_registered",
+            "proposed_case_type": "boundary",
+            "ai_semantic_result": "PARTIAL",
+            "semantic_review_status": "AI_post_reveal_reviewed_not_independently_certified"
+          }
+        ],
+        "registry_updates": 0,
+        "case_slots_filled": 0,
+        "semantic_certification": "not_certified",
+        "semantic_review_status": "AI_post_reveal_reviewed_not_independently_certified",
+        "semantic_review_sha256": "0851a7760c09b347eb41f5498c919d5fdb92854b297ab94b06a104a20237f3e2",
+        "semantic_review_question_id": "gaokao-2023-I-q21",
+        "failure_category": null,
+        "method_attribution_status": "PARTIAL"
+      }
     },
     {
       "exam_id": "gaokao-2023-II",
@@ -799,7 +906,8 @@
       ],
       "host_reviewed_question_count": null,
       "host_reviewed_answered_count": 0,
-      "host_reviewed_reference_match_count": 0
+      "host_reviewed_reference_match_count": 0,
+      "case_review": null
     },
     {
       "exam_id": "gaokao-2024-I",
@@ -865,7 +973,8 @@
       ],
       "host_reviewed_question_count": null,
       "host_reviewed_answered_count": null,
-      "host_reviewed_reference_match_count": null
+      "host_reviewed_reference_match_count": null,
+      "case_review": null
     },
     {
       "exam_id": "gaokao-2024-II",
@@ -930,7 +1039,8 @@
       ],
       "host_reviewed_question_count": null,
       "host_reviewed_answered_count": 0,
-      "host_reviewed_reference_match_count": 0
+      "host_reviewed_reference_match_count": 0,
+      "case_review": null
     },
     {
       "exam_id": "gaokao-2025-I",
@@ -942,7 +1052,7 @@
         "gaokao-2025-I-reveal"
       ],
       "status": "PARTIAL",
-      "result_artifact": "results/gaokao-2025-I/reveal-v1.1.json",
+      "result_artifact": "results/gaokao-2025-I/reveal-v1.2.json",
       "blind_prediction_frozen": true,
       "blind_reveal_completed": true,
       "new_question_count": 47,
@@ -993,7 +1103,57 @@
       "source_completeness": "written text layouts checked; full visual/semantic authenticity and redistribution rights pending",
       "host_reviewed_question_count": 1,
       "host_reviewed_answered_count": 1,
-      "host_reviewed_reference_match_count": 1
+      "host_reviewed_reference_match_count": 1,
+      "case_review": {
+        "exam_id": "gaokao-2025-I",
+        "stage": "post_reveal_aggregation_of_frozen_pre_reveal_annotations",
+        "written_question_count": 47,
+        "reviewed_question_ids": [
+          "gaokao-2025-I-q31"
+        ],
+        "host_prediction_sha256": "63e2faad096d71555c262aa507f83b23aa1d05b0094a69ae6b139d0965dd78ba",
+        "case_candidate_count": 2,
+        "candidates": [
+          {
+            "candidate_id": "gaokao-2025-I-q31-R09",
+            "question_id": "gaokao-2025-I-q31",
+            "method_id": "R09",
+            "method_version": "1.1.0",
+            "primary_role": "framework",
+            "output_role": "interpret",
+            "observable_action_recorded": true,
+            "candidate_status": "pending_case_review",
+            "case_type": null,
+            "registry_registration": "not_registered",
+            "proposed_case_type": null,
+            "ai_semantic_result": "supported_with_core_judgement_wording_caveat",
+            "semantic_review_status": "AI_post_reveal_reviewed_not_independently_certified"
+          },
+          {
+            "candidate_id": "gaokao-2025-I-q31-R06",
+            "question_id": "gaokao-2025-I-q31",
+            "method_id": "R06",
+            "method_version": "1.1.0",
+            "primary_role": "decider",
+            "output_role": "decide",
+            "observable_action_recorded": true,
+            "candidate_status": "pending_case_review",
+            "case_type": null,
+            "registry_registration": "not_registered",
+            "proposed_case_type": "boundary",
+            "ai_semantic_result": "candidate_relations_supported_not_human_certified",
+            "semantic_review_status": "AI_post_reveal_reviewed_not_independently_certified"
+          }
+        ],
+        "registry_updates": 0,
+        "case_slots_filled": 0,
+        "semantic_certification": "not_certified",
+        "semantic_review_status": "AI_post_reveal_reviewed_not_independently_certified",
+        "semantic_review_sha256": "eb5e06e0fc4e22abe1ce78b111154e248db7ce0b127ea2d15215aeec2a5ac1f6",
+        "semantic_review_question_id": "gaokao-2025-I-q31",
+        "failure_category": null,
+        "method_attribution_status": "AI_relation_supported_precision_and_human_review_pending"
+      }
     },
     {
       "exam_id": "gaokao-2025-II",
@@ -1005,7 +1165,7 @@
         "gaokao-2025-II-reveal"
       ],
       "status": "PARTIAL",
-      "result_artifact": "results/gaokao-2025-II/reveal-v1.1.json",
+      "result_artifact": "results/gaokao-2025-II/reveal-v1.2.json",
       "blind_prediction_frozen": true,
       "blind_reveal_completed": true,
       "new_question_count": 47,
@@ -1072,7 +1232,8 @@
       "source_completeness": "written text layouts checked; full visual/semantic authenticity and redistribution rights pending",
       "host_reviewed_question_count": 0,
       "host_reviewed_answered_count": 0,
-      "host_reviewed_reference_match_count": 0
+      "host_reviewed_reference_match_count": 0,
+      "case_review": null
     }
   ]
 }
