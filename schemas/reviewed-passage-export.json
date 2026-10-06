@@ -1,0 +1,409 @@
+{
+  "type": "object",
+  "properties": {
+    "lesson_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "passage": {
+      "type": "string",
+      "minLength": 1
+    },
+    "questions": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "question_id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "number": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "stem": {
+            "type": "string",
+            "minLength": 1
+          },
+          "options": {
+            "type": "object",
+            "minProperties": 2,
+            "additionalProperties": {
+              "type": "string",
+              "minLength": 1
+            }
+          }
+        },
+        "required": [
+          "question_id",
+          "number",
+          "stem",
+          "options"
+        ],
+        "additionalProperties": false
+      },
+      "minItems": 1
+    },
+    "methods": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      },
+      "minItems": 0
+    },
+    "review": {
+      "type": "object",
+      "properties": {
+        "reviewer": {
+          "type": "string",
+          "minLength": 1
+        },
+        "reviewer_kind": {
+          "enum": [
+            "AI",
+            "ai_host",
+            "human"
+          ]
+        },
+        "status": {
+          "const": "reviewed"
+        },
+        "evaluation_phase": {
+          "const": "post_reveal"
+        },
+        "independent_human_certified": {
+          "type": "boolean"
+        },
+        "independent_human_review": {
+          "type": "string",
+          "minLength": 1
+        },
+        "order": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "minItems": 1
+        },
+        "order_rationale": {
+          "type": "string",
+          "minLength": 1
+        },
+        "decisions": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "question_id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "candidate": {
+                "type": "string",
+                "minLength": 1
+              },
+              "effect": {
+                "enum": [
+                  "retain",
+                  "eliminate"
+                ]
+              },
+              "basis": {
+                "const": "direct_text_review"
+              },
+              "method_id": {
+                "type": "null"
+              },
+              "rationale": {
+                "type": "string",
+                "minLength": 1
+              },
+              "evidence": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "field": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "start": {
+                      "type": "integer",
+                      "minimum": 0
+                    },
+                    "end": {
+                      "type": "integer",
+                      "minimum": 1
+                    },
+                    "quote": {
+                      "type": "string",
+                      "minLength": 1
+                    }
+                  },
+                  "required": [
+                    "field",
+                    "start",
+                    "end",
+                    "quote"
+                  ],
+                  "additionalProperties": false
+                },
+                "minItems": 1
+              }
+            },
+            "required": [
+              "question_id",
+              "candidate",
+              "effect",
+              "basis",
+              "method_id",
+              "rationale",
+              "evidence"
+            ],
+            "additionalProperties": false
+          },
+          "minItems": 2
+        },
+        "method_actions": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "action_id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "question_id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "method_id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "method_version": {
+                "type": "string",
+                "minLength": 1
+              },
+              "role": {
+                "enum": [
+                  "locator",
+                  "interpreter",
+                  "framework"
+                ]
+              },
+              "output": {
+                "type": "string",
+                "minLength": 1
+              },
+              "evidence": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "field": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "start": {
+                      "type": "integer",
+                      "minimum": 0
+                    },
+                    "end": {
+                      "type": "integer",
+                      "minimum": 1
+                    },
+                    "quote": {
+                      "type": "string",
+                      "minLength": 1
+                    }
+                  },
+                  "required": [
+                    "field",
+                    "start",
+                    "end",
+                    "quote"
+                  ],
+                  "additionalProperties": false
+                },
+                "minItems": 1
+              },
+              "stop_rule": {
+                "type": "string",
+                "minLength": 1
+              },
+              "answer": {
+                "type": "null"
+              }
+            },
+            "required": [
+              "action_id",
+              "question_id",
+              "method_id",
+              "method_version",
+              "role",
+              "output",
+              "evidence",
+              "stop_rule",
+              "answer"
+            ],
+            "additionalProperties": false
+          },
+          "minItems": 0
+        },
+        "segments": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "segment_id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "question_id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "kind": {
+                "enum": [
+                  "action",
+                  "evidence",
+                  "comparison",
+                  "closure",
+                  "boundary"
+                ]
+              },
+              "text": {
+                "type": "string",
+                "minLength": 1
+              },
+              "screen_text": {
+                "type": "string",
+                "minLength": 1
+              },
+              "evidence": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "field": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "start": {
+                      "type": "integer",
+                      "minimum": 0
+                    },
+                    "end": {
+                      "type": "integer",
+                      "minimum": 1
+                    },
+                    "quote": {
+                      "type": "string",
+                      "minLength": 1
+                    }
+                  },
+                  "required": [
+                    "field",
+                    "start",
+                    "end",
+                    "quote"
+                  ],
+                  "additionalProperties": false
+                },
+                "minItems": 1
+              },
+              "decision_refs": {
+                "type": "array",
+                "items": {
+                  "type": "integer",
+                  "minimum": 0
+                },
+                "minItems": 0
+              },
+              "action_refs": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "minItems": 0
+              },
+              "fidelity_reviewed": {
+                "const": true
+              },
+              "summary_refs": {
+                "type": "array",
+                "items": {
+                  "type": "integer",
+                  "minimum": 0
+                },
+                "minItems": 0
+              }
+            },
+            "required": [
+              "segment_id",
+              "question_id",
+              "kind",
+              "text",
+              "screen_text",
+              "evidence",
+              "decision_refs",
+              "action_refs",
+              "fidelity_reviewed"
+            ],
+            "additionalProperties": false
+          },
+          "minItems": 1
+        },
+        "material_sha": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "reviewer",
+        "reviewer_kind",
+        "status",
+        "evaluation_phase",
+        "order",
+        "order_rationale",
+        "decisions",
+        "method_actions",
+        "segments",
+        "material_sha"
+      ],
+      "additionalProperties": false
+    },
+    "source": {
+      "type": "object",
+      "required": [
+        "usage_status",
+        "redistribution_status"
+      ],
+      "properties": {
+        "usage_status": {
+          "type": "string",
+          "minLength": 1
+        },
+        "redistribution_status": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    }
+  },
+  "required": [
+    "lesson_id",
+    "passage",
+    "questions",
+    "methods",
+    "review",
+    "source"
+  ],
+  "additionalProperties": false,
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://answer.local/schemas/reviewed-passage-export.json"
+}

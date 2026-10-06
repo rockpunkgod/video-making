@@ -60,6 +60,10 @@ V9.1 增量视频模块：见 [G01 Hero 工作流](docs/cinematic-hero-workflow.
 [Swiss Cognitive Motion](creative/motion-identity/motion-identity.md)。只消费冻结输出；
 实际视频、音乐及 Adobe 工程保留在忽略的本地目录。
 
+完整篇目内部试制另见 [阅读 D 篇生产工作流](docs/reading-d-2025-production.md)：
+显式 ANSWER 宿主审阅纯导出、已接受本地声音配置、持续题目区、原生 AE 场景与 PR 整片交付。
+附加篇级契约不修改旧分析器闭合状态，也不自动取得公开发布资格。
+
 - method-registry：方法与源章节唯一事实源，history保留旧版。
 - schemas/cases：标准契约、案例及显式证据缺口。
 - core/renderers：流程约束与四种独立投影。
