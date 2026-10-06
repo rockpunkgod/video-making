@@ -128,6 +128,8 @@ class EditorialSession:
         validate_contract(contract, read(r['package']), read(r['manifest']),
                           {k: read(v) for k,v in r['statuses'].items()},
                           read(r['full_delivery']), excerpt)
+        from creative_os.consumer_copy import require_consumer_copy
+        require_consumer_copy(excerpt, contract['nodes'])
         receipt = read(r['render_receipt'])
         validate_handoff(receipt, contract, r['ae_project'])
         audio = read(r['audio_plan'])

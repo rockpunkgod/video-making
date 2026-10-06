@@ -4,6 +4,13 @@ Production remains on the V9.1 branch of work. The producer consumes explicit
 frozen package, package manifest and current supplied status files. It never
 reads a teaching Registry, teaching Markdown or a raw question bank.
 
+Final video copy is for students: no internal method numbers in narration,
+captions or displayed text. Keep method IDs and review routing in provenance
+only. Replace internal labels with reviewed student-facing wording without
+dropping pending checks or Stop Rules. See [consumer presentation policy](hero-direction-comparison.md).
+New copy needs new fidelity review and copy/render bindings; old approvals do
+not transfer. Premiere preflight enforces the visible/spoken identifier check.
+
 1. Keep the full Delivery Copy. Author a distinct-ID bounded excerpt; retain
    its frozen Stop Rule, role, negative qualifications and claim references.
 2. Run `python -m creative_os.hero <local-request.json>` to create a 10–15s,
@@ -11,7 +18,9 @@ reads a teaching Registry, teaching Markdown or a raw question bank.
    `package`, `manifest`, `statuses` (asset ID → local path), `full_delivery`,
    `excerpt`, `design`, `nodes`, `beats`, `duration`, `revision`, `output`.
    Every text node projects its own unit's screen copy or literal evidence.
-3. Bind `design.motion_identity` with `creative_os.motion_identity.bind_identity`.
+3. For a registered visual signature, bind `design.motion_identity` with
+   `creative_os.motion_identity.bind_identity`. Alternative spatial narratives
+   may omit this binding; they must not claim to implement that signature.
    Each Shot Plan identifies the frozen semantic scene, method/signature/phase,
    brand motions and purpose of structural/depth/accent effects. The visual
    registry cannot supply facts or applicability conditions.

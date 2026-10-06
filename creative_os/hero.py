@@ -46,6 +46,9 @@ def validate_excerpt(excerpt, full_delivery, package, manifest, statuses):
 
 def build_contract(package, manifest, statuses, full_delivery, excerpt, design, nodes, beats, duration, revision=1):
     scope = validate_excerpt(excerpt, full_delivery, package, manifest, statuses)
+    if design.get('audience') == 'consumer':
+        from .consumer_copy import require_consumer_copy
+        require_consumer_copy(excerpt, nodes)
     if not 10 <= duration <= 15 or round(duration * 24) != duration * 24:
         raise ValueError('Hero must occupy 10–15 seconds on the 24fps grid')
     units = {u['unit_id']: u for u in excerpt['units']}
