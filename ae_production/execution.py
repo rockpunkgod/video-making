@@ -1,5 +1,6 @@
 """Explicit contract revalidation, public MCP build/read/preview/checkpoint loop."""
 import json
+from http.client import HTTPException
 from pathlib import Path
 from video_contracts import ROOT, sha, write
 from .contract import validate_contract,template_path
@@ -15,6 +16,13 @@ def mutation_call(client,tool,arguments,output_dir,timeout):
         try: detail=json.loads(str(error))
         except ValueError: detail={'error':str(error),'state':'uncertain'}
         write(Path(output_dir)/'last-mutation-failure.json',{'tool':tool,'result':detail})
+        raise
+    except (OSError, HTTPException) as error:
+        # A closed transport can mean the native host exited after applying part
+        # of the operation. Persist uncertainty; never infer that nothing ran.
+        write(Path(output_dir)/'last-mutation-failure.json',{
+            'tool':tool,'result':{'error_type':type(error).__name__,'state':'uncertain',
+                                 'next_action':'inspect_native_state_before_retry'}})
         raise
 
 

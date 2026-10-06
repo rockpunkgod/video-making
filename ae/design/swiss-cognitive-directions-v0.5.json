@@ -1,0 +1,13 @@
+{
+  "version": "0.5.0",
+  "usage": "INTERNAL_CREATIVE_PREVIEW",
+  "base_direction": "A_PAPER_CUT",
+  "invariants": ["frozen_copy", "same_carry_object", "extract_route_seal", "micro_lock_distance", "timing", "readable_stop", "no_public_release"],
+  "directions": [
+    {"id": "D_MONO_POSTER", "name": "排印海报", "background": "#FAFAF7", "ink": "#151817", "secondary": "#545C59", "accent": "#7E96A8", "latin_font": "NotoSansSC-Regular", "composition": "large_left_result_with_lower_route_and_offset_right_annotations", "main_offset": [0, 60], "boundary_offset": [32, 30], "hook_size": 88, "noun_size": 156, "stop_size": 56},
+    {"id": "E_BLUE_STRUCTURE", "name": "结构蓝图", "background": "#172831", "ink": "#F1F1E9", "secondary": "#B8C7CD", "accent": "#7E96A8", "latin_font": "NotoSansSC-Regular", "composition": "high_evidence_lower_structural_axis_with_light_caption_footer", "main_offset": [64, 50], "boundary_offset": [48, -10], "evidence_offset": [0, -65], "hook_size": 60, "noun_size": 116, "stop_size": 48, "caption_footer": true, "caption_footer_height": 200},
+    {"id": "F_BOOK_MARGIN", "name": "书页批注", "background": "#F3EBDD", "ink": "#35352E", "secondary": "#686759", "accent": "#7E96A8", "latin_font": "Georgia", "composition": "upper_left_result_with_quiet_margin_annotations_and_generous_lower_space", "main_offset": [64, -60], "boundary_offset": [48, 0], "hook_size": 58, "noun_size": 112, "stop_size": 48, "margin_rule": true, "margin_rule_reveal": [4.25, 4.75]}
+  ],
+  "human_direction_review": "PENDING",
+  "public_render_ready": false
+}

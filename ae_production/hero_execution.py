@@ -1,5 +1,7 @@
 """Native short motion segments; final narration and cuts belong to Premiere."""
 import json
+import re
+import subprocess
 from pathlib import Path
 
 from video_contracts import write, sha
@@ -96,4 +98,54 @@ def render(client, contract, package, manifest, statuses, full, excerpt, comp_id
     write(out / 'render-result.json', result)
     if not json.loads(result['content']).get('ok') or not video.exists() or video.stat().st_size == 0:
         raise ValueError('Native render incomplete; reconcile before retrying')
+    return video
+
+
+def render_intermediate(client, contract, package, manifest, statuses, full, excerpt, comp_id, out):
+    """Native lossless frames, then software encoding of motion only.
+
+    Explicit recovery choice, never an automatic retry of an uncertain render.
+    Any old queued job must first be reconciled by the operator.
+    """
+    validate_contract(contract, package, manifest, statuses, full, excerpt)
+    out = Path(out).resolve()
+    frames, video = out / 'native-tiff', out / 'AE_HERO_MOTION.mp4'
+    if frames.exists() or video.exists():
+        raise ValueError('Intermediate revision already exists; inspect rather than retry')
+    audit(client, contract, comp_id, out)
+    layers = client.call('ae_read', {'target': 'layers', 'comp': {'id': str(comp_id)}, 'page': {'limit': 200}})
+    check = client.call('ae_validateExpressions', {'comp_id': str(comp_id),
+        'layer_ids': [l['stackIndex'] for l in layers['layers'] if l['name'] != 'RENDER_CONTRACT'],
+        'sample_times': [2, 3.75, 5.2, 6.5, 8.5, 11.5], 'max_results': 1000})
+    write(out / 'intermediate-expression-audit.json', check)
+    if not check.get('valid') or check.get('truncated'):
+        raise ValueError('Intermediate expression audit incomplete')
+    frames.mkdir()
+    code = '''(function(){for(var i=1;i<=app.project.renderQueue.numItems;i++){var r=app.project.renderQueue.item(i);if(r.render&&r.status===RQItemStatus.QUEUED)throw new Error('Unreconciled queued render');}var cp=AEMCP.compById(%d),rq=app.project.renderQueue.items.add(cp),om=rq.outputModule(1),preset=null;for(var i=0;i<om.templates.length;i++)if(om.templates[i].indexOf('TIFF')!==-1){preset=om.templates[i];break;}if(!preset){rq.remove();throw new Error('Native TIFF template unavailable');}om.applyTemplate(preset);om.file=new File(%s);rq.timeSpanStart=0;rq.timeSpanDuration=cp.duration;app.project.save();app.project.renderQueue.render();return JSON.stringify({ok:rq.status===RQItemStatus.DONE,path:om.file.fsName,preset:preset});})();''' % (int(comp_id), json.dumps((frames / 'FRAME_[#####].tif').as_posix()))
+    result = mutation_call(client, 'ae_exec', {'code': code, 'timeout_sec': 600,
+                           'checkpoint_label': 'before-native-intermediate'}, out, 630)
+    write(out / 'native-intermediate-result.json', result)
+    if not json.loads(result['content']).get('ok'):
+        raise ValueError('Native image-sequence render incomplete')
+    files = sorted(frames.glob('*.tif'))
+    expected = round(contract['canvas']['duration'] * 24)
+    if len(files) != expected or not all(p.stat().st_size for p in files):
+        raise ValueError('Native frame sequence is incomplete')
+    matches = [re.fullmatch(r'(.*?)(\d+)(\.[^.]+)', p.name) for p in files]
+    if any(m is None for m in matches):
+        raise ValueError('Unexpected native frame names')
+    first = matches[0]
+    start = int(first[2])
+    if ([int(m[2]) for m in matches] != list(range(start, start + expected))
+            or any((m[1], len(m[2]), m[3]) != (first[1], len(first[2]), first[3]) for m in matches)):
+        raise ValueError('Native frame numbering is not continuous')
+    pattern = frames / (first[1] + '%0' + str(len(first[2])) + 'd' + first[3])
+    subprocess.run(['ffmpeg', '-v', 'error', '-n', '-framerate', '24', '-start_number', str(start),
+                    '-i', str(pattern), '-frames:v', str(expected), '-an', '-c:v', 'libx264',
+                    '-crf', '16', '-pix_fmt', 'yuv420p', '-movflags', '+faststart', str(video)], check=True)
+    write(out / 'intermediate-lineage.json', {'renderer': 'native_AE_TIFF_sequence',
+        'encoder': 'ffmpeg_libx264_motion_only', 'frame_count': len(files),
+        'frames': [{'name': p.name, 'sha256': file_sha(p)} for p in files],
+        'output_sha': file_sha(video), 'render_contract_sha': contract['render_contract_sha'],
+        'public_render_ready': False})
     return video
