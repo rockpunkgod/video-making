@@ -17,8 +17,8 @@ def normalized_chars(text):
     return [(i,c.lower()) for i,c in enumerate(text) if c.isalnum()]
 
 
-def caption_cues(text, diagnostic, duration, max_chars=27):
-    """Preserve exact characters; interpolate only unmatched ASR timing gaps."""
+def timing_centres(text, diagnostic, duration):
+    """Estimate authored character centres from ASR without changing wording."""
     authored=normalized_chars(text)
     spoken=[]
     for row in diagnostic['rows']:
@@ -38,6 +38,12 @@ def caption_cues(text, diagnostic, duration, max_chars=27):
     for a,b in zip(ordered,ordered[1:]):
         for i in range(max(0,a),min(b+1,len(authored))):
             centres[i]=anchors[a]+(anchors[b]-anchors[a])*(i-a)/(b-a)
+    return authored,centres
+
+
+def caption_cues(text, diagnostic, duration, max_chars=27):
+    """Preserve exact characters; interpolate only unmatched ASR timing gaps."""
+    authored,centres=timing_centres(text,diagnostic,duration)
     pieces=re.findall(r'.*?[，。！？；,!?;：:]|.+$',text,re.S)
     chunks=[];pending=''
     for piece in pieces:
@@ -95,11 +101,22 @@ def verified_head(scene,receipt):
             or file_sha(receipt['video'])!=receipt['video_sha']
             or file_sha(receipt['hold_frame'])!=receipt['hold_sha']):
         raise ValueError('Native motion or verified hold changed')
+    if receipt.get('reuse_proof'):
+        proof=receipt['reuse_proof']
+        if file_sha(proof['receipt'])!=proof['receipt_sha']:
+            raise ValueError('Original native reuse receipt changed')
 
 
-def assemble(plan,bundle,status_path,heads_root,voice_root,output,caption_font):
+def assemble(plan,bundle,status_path,heads_root,voice_root,output,caption_font,motion=None,direction=None):
     output=Path(output).resolve()
     validate_plan(plan,bundle,read(status_path))
+    if direction is not None:
+        from .passage_director import validate_direction
+        validate_direction(direction,plan,bundle)
+        if motion is None: raise ValueError('Directed presentation needs its phrase clock')
+    if motion is not None:
+        from .passage_motion import validate_motion
+        validate_motion(motion,plan,voice_root)
     if caption_font['family']!='Passage Caption' or file_sha(caption_font['font'])!=caption_font['font_sha']:
         raise ValueError('Frozen regular caption font required')
     output.mkdir(parents=True,exist_ok=True)
@@ -107,11 +124,18 @@ def assemble(plan,bundle,status_path,heads_root,voice_root,output,caption_font):
     for scene in plan['scenes']:
         validate_plan(plan,bundle,read(status_path))
         sid=scene['segment_id'];head=read(Path(heads_root)/sid/'receipt.json');verified_head(scene,head)
+        if head.get('direction_sha') != (direction['direction_sha'] if direction else None):
+            raise ValueError('Native direction is missing or stale')
+        if head.get('reuse_proof') and head['reuse_proof']['scene_direction_sha']!=sha(direction['scenes'][sid]):
+            raise ValueError('Reused head no longer has identical visible nodes')
         diagnostic=read(Path(voice_root)/sid/'asr.json')
         if diagnostic['audio_sha']!=scene['voice']['sha256']:raise ValueError('Stale ASR diagnostic')
         cues=caption_cues(scene['voice']['text'],diagnostic,scene['voice']['duration'])
         folder=output/sid;receipt=folder/'receipt.json'
-        binding=sha({'plan':plan['plan_sha'],'scene':sid,'head':head,'cues':cues,'caption_font':caption_font})
+        events=motion['scenes'][sid] if motion is not None else []
+        if motion is not None and head.get('presentation_sha')!=motion['presentation_sha']:
+            raise ValueError('Motion retiming requires its exact native presentation')
+        binding=sha({'plan':plan['plan_sha'],'scene':sid,'head':head,'cues':cues,'caption_font':caption_font,'motion':events})
         if receipt.exists():
             prior=read(receipt)
             if prior['input_sha']!=binding or file_sha(prior['path'])!=prior['sha256']:
@@ -123,8 +147,11 @@ def assemble(plan,bundle,status_path,heads_root,voice_root,output,caption_font):
         import shutil
         (folder/'fonts').mkdir();shutil.copyfile(caption_font['font'],folder/'fonts/regular.ttf')
         dest=folder/'scene.mp4';frames=round(scene['duration']*24)
+        from .passage_motion import time_expression
+        clock=time_expression(events)
+        native_end=(events[-1]['native_start']+.5+1/24 if events else .5+1/24) if motion is not None else 4
         subprocess.run(['ffmpeg','-v','error','-n','-threads','2','-i',head['video'],
-            '-vf',f"tpad=stop_mode=clone:stop_duration={max(0,scene['duration']-4)+1},subtitles=bound.ass:fontsdir=fonts",
+            '-vf',f"trim=end={native_end},setpts='{clock}',fps=24,tpad=stop_mode=clone:stop_duration={scene['duration']},subtitles=bound.ass:fontsdir=fonts",
             '-frames:v',str(frames),'-an','-c:v','libx264','-threads','2','-preset','veryfast',
             '-crf','17','-pix_fmt','yuv420p','-r','24',str(dest)],cwd=folder,check=True)
         global_cues=[dict(c,start=c['start']+scene['start']+scene['voice_start'],
@@ -132,6 +159,7 @@ def assemble(plan,bundle,status_path,heads_root,voice_root,output,caption_font):
         record={'input_sha':binding,'path':str(dest),'sha256':file_sha(dest),'frames':frames,
             'captions':global_cues,'caption_timing':'ASR_anchored_interpolation_estimate',
             'caption_copy_sha':sha(scene['voice']['text']),'ass_sha':file_sha(folder/'bound.ass'),'caption_font_sha':caption_font['font_sha'],
+            'motion_events':events,'presentation_sha':head.get('presentation_sha'),
             'independent_listening_review':False,'public_render_ready':False}
         write(receipt,record);clips.append(record);captions.extend(global_cues)
         print('Assembled',sid,scene['duration'],flush=True)
@@ -156,6 +184,7 @@ def assemble(plan,bundle,status_path,heads_root,voice_root,output,caption_font):
         target.writeframes(b'\0'*(2*(round(plan['canvas']['duration']*48000)-written)))
     write(output/'captions.json',{'copy_sha':plan['copy_sha'],'cues':captions,'timing_is_estimated':True})
     result={'plan_sha':plan['plan_sha'],'visual':str(silent),'visual_sha':file_sha(silent),
+        'direction_sha':direction['direction_sha'] if direction else None,
         'voice':str(master_voice),'voice_sha':file_sha(master_voice),'clips':clips,
         'public_render_ready':False,'teaching_release':'HOLD','source_display_release':'HOLD','editorial_release':'HOLD'}
     write(output/'assembly.json',result);return result

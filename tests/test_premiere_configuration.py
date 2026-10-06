@@ -8,6 +8,15 @@ from premiere_production.mcp import PremiereMcpClient, PremiereMcpError
 
 
 class PremiereConfigurationTests(unittest.TestCase):
+    def test_long_export_stream_may_start_with_keepalive_comments(self):
+        import io
+        client = PremiereMcpClient('http://127.0.0.1:11489/mcp', 'test-only')
+        response = io.BytesIO(b': ping\n\nevent: message\ndata: {"jsonrpc":"2.0","id":1,"result":{"written":true}}\n\n')
+        response.headers = {}
+        with patch.object(client.opener, 'open', return_value=response) as opened:
+            self.assertEqual(client.rpc('tools/call'), {'written':True})
+            self.assertEqual(opened.call_count, 1)
+
     def test_config_preserves_other_servers_and_environment_and_is_idempotent(self):
         import tomllib
         original = ('model = "existing-model"\n[mcp_servers.other]\ncommand = "other"\n'

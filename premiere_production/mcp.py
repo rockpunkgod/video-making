@@ -44,7 +44,9 @@ class PremiereMcpClient:
             raw = response.read().decode('utf-8')
         if notification:
             return None
-        if raw.startswith('event:') or raw.startswith('data:'):
+        # Long exports can receive SSE keep-alive comments before the result.
+        # Detect data lines instead of assuming the first line is an event.
+        if any(line.startswith('data:') for line in raw.splitlines()):
             chunks = [json.loads(line[5:].strip()) for line in raw.splitlines() if line.startswith('data:')]
             result = next((r for r in chunks if r.get('id') == self.sequence), None)
         else:
