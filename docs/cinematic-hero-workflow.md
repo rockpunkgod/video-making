@@ -4,6 +4,12 @@ Production remains on the V9.1 branch of work. The producer consumes explicit
 frozen package, package manifest and current supplied status files. It never
 reads a teaching Registry, teaching Markdown or a raw question bank.
 
+Current creative direction is under revision after user rejection of the visual
+result. Read the [reference research and actual-frame critique](visual-reference-research-2026-10-06.md)
+before further Hero styling. Engineering PASS is not visual or learning acceptance.
+Prioritize a source-anchored teaching action over additional palette variants;
+external animation references must never become teaching sources.
+
 Final video copy is for students: no internal method numbers in narration,
 captions or displayed text. Keep method IDs and review routing in provenance
 only. Replace internal labels with reviewed student-facing wording without
