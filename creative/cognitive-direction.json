@@ -1,0 +1,25 @@
+{
+  "version": "0.2.0",
+  "authority": "visual_direction_only_not_teaching_truth",
+  "mother_direction": "Swiss Cognitive POV",
+  "principle": "Motion may be spatial and dynamic. Settle must be Swiss.",
+  "cognitive_states": ["REALITY", "FULL_SCOPE", "SEARCH", "SUSPECT", "ANCHOR", "FOCUS", "ISOLATE", "STRUCTURE", "COMPARE", "TRANSFORM", "REDUCE", "UNRESOLVED", "RESOLUTION", "PAYOFF", "STOP", "MEMORY"],
+  "camera_scopes": ["wide", "medium", "close", "focus"],
+  "camera_intents": ["hold", "push", "reframe", "traverse", "snap_to_anchor", "depth_focus", "spatial_carry"],
+  "spatial_planes": ["foreground", "reading_plane", "supporting_plane", "background_plane", "latent_plane"],
+  "composition_characters": ["dense", "searching", "focused", "split", "aligned", "isolated", "compressed", "resolved", "sealed"],
+  "rhythm": ["MOVE", "SETTLE", "READ", "TRANSFORM", "HOLD"],
+  "camera_reasons": ["attention_scope_changed", "logical_object_changed", "spatial_relation_readability"],
+  "legal_cut_reasons": ["cognitive_scope_jump", "major_object_ownership_change", "major_time_compression", "comparison_mode_change", "payoff_punctuation"],
+  "effect_budget": {"structural_unrestricted_if_semantic": true, "depth_max_simultaneous": 2, "accent_max_simultaneous": 1},
+  "brand_grammar_refs": ["magnetic_alignment", "evidence_develop", "focus_breathing", "semantic_carry", "micro_lock", "boundary_seal"],
+  "operation_intents": {
+    "navigation": {"scan": "spatial_traversal", "jump": "attention_velocity_change", "anchor": "anchor_attraction", "lock": "scope_lock", "return": "first_action_recall"},
+    "reduction": {"peel": "layer_separation", "mute": "visual_weight_reduction", "fold": "reversible_fold", "tighten": "layout_contraction", "reveal": "structure_reveal", "restore": "same_object_restore"},
+    "comparison": {"align": "coordinate_convergence", "overlay": "shared_coordinate_overlay", "split": "shared_baseline_split", "extrude": "semantic_depth_separation", "reveal_difference": "difference_isolation"},
+    "relationship": {"connect": "relation_establishment", "detach": "edge_discontinuity", "rewire": "topology_change", "reverse": "supplied_relation_reversal", "reconnect": "relation_reconnection", "lock": "relation_settle"},
+    "classification": {"float": "free_field", "attract": "axis_attraction", "regroup": "cluster_formation", "cluster": "supplied_cluster_emphasis", "separate": "group_separation", "settle": "group_settle"},
+    "routing": {"extract": "slot_isolation", "branch": "supplied_path_expansion", "route": "branch_emphasis", "resolve": "current_route_settle", "seal": "terminal_boundary"}
+  },
+  "authority_limits": ["no_new_state_without_source", "no_new_text", "no_syntax_inference", "no_candidate_inference", "no_final_answer_treatment", "no_absolute_geometry", "no_ae_keyframes", "no_voice_parameters", "no_automatic_human_review"]
+}
