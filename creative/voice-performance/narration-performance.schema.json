@@ -1,0 +1,97 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:video-making:narration-performance:v1",
+  "title": "Narration Performance v0.1 — delivery intent, never teaching truth",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema", "version", "binding", "global_voice", "clips", "silent_beats", "silence_events", "direction_overrides", "copy_issue_candidates", "reference_bank", "listening_review", "final_voice_accepted", "sample_delivery_allowed", "public_render_ready", "performance_sha", "performance_id"],
+  "properties": {
+    "schema": {"const": "narration-performance/v1"},
+    "version": {"const": "0.1.0"},
+    "binding": {
+      "type": "object", "additionalProperties": false,
+      "required": ["method_id", "plan_id", "source_plan_sha", "source_analysis_sha", "copy_sha", "script_sha", "final_copy_sha", "production_spec_sha", "teaching_semantic_sha"],
+      "properties": {
+        "method_id": {"const": "R02"},
+        "plan_id": {"type": "string", "minLength": 1},
+        "source_plan_sha": {"$ref": "#/$defs/sha"},
+        "source_analysis_sha": {"$ref": "#/$defs/sha"},
+        "copy_sha": {"$ref": "#/$defs/sha"},
+        "script_sha": {"$ref": "#/$defs/sha"},
+        "final_copy_sha": {"$ref": "#/$defs/sha"},
+        "production_spec_sha": {"$ref": "#/$defs/sha"},
+        "teaching_semantic_sha": {"$ref": "#/$defs/sha"}
+      }
+    },
+    "global_voice": {
+      "type": "object", "additionalProperties": false,
+      "required": ["personality", "melancholic_drift_forbidden", "gain_is_not_energy"],
+      "properties": {
+        "personality": {"const": "bright_neutral_intelligent"},
+        "melancholic_drift_forbidden": {"const": true},
+        "gain_is_not_energy": {"const": true}
+      }
+    },
+    "clips": {
+      "type": "array", "minItems": 1,
+      "items": {
+        "type": "object", "additionalProperties": false,
+        "required": ["id", "scene_id", "cognitive_function", "transcript", "transcript_sha", "source_refs", "intent", "take_policy"],
+        "properties": {
+          "id": {"$ref": "#/$defs/id"}, "scene_id": {"$ref": "#/$defs/id"},
+          "cognitive_function": {"$ref": "#/$defs/function"},
+          "transcript": {"type": "string", "minLength": 1},
+          "transcript_sha": {"$ref": "#/$defs/sha"},
+          "source_refs": {
+            "type": "object", "additionalProperties": false, "required": ["pedagogy", "evidence"],
+            "properties": {"pedagogy": {"$ref": "#/$defs/refs"}, "evidence": {"$ref": "#/$defs/refs"}}
+          },
+          "intent": {"$ref": "#/$defs/intent"},
+          "take_policy": {
+            "type": "object", "additionalProperties": false, "required": ["count", "selection_status"],
+            "properties": {"count": {"type": "integer", "minimum": 1, "maximum": 3}, "selection_status": {"const": "PENDING_HUMAN_LISTENING"}}
+          }
+        }
+      }
+    },
+    "silent_beats": {
+      "type": "array", "items": {
+        "type": "object", "additionalProperties": false, "required": ["scene_id", "cognitive_function", "pedagogy_refs"],
+        "properties": {"scene_id": {"$ref": "#/$defs/id"}, "cognitive_function": {"$ref": "#/$defs/function"}, "pedagogy_refs": {"$ref": "#/$defs/refs"}}
+      }
+    },
+    "silence_events": {
+      "type": "array", "items": {
+        "type": "object", "required": ["scene_id", "event", "duration_seconds", "pedagogy_ref"],
+        "properties": {"scene_id": {"$ref": "#/$defs/id"}, "event": {"enum": ["collapse", "answer_lock", "evidence_lock", "boundary_seal", "payoff", "transformation"]}}
+      }
+    },
+    "direction_overrides": {"type": "object", "additionalProperties": {"type": "object"}},
+    "copy_issue_candidates": {"type": "array", "items": {"type": "object"}},
+    "reference_bank": {"const": "RESERVED_NOT_ENABLED"},
+    "listening_review": {"const": "PENDING"},
+    "final_voice_accepted": {"const": false},
+    "sample_delivery_allowed": {"const": false},
+    "public_render_ready": {"const": false},
+    "performance_sha": {"$ref": "#/$defs/sha"},
+    "performance_id": {"type": "string", "pattern": "^narration-performance:[0-9a-f]{64}$"}
+  },
+  "$defs": {
+    "sha": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "id": {"type": "string", "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]*$"},
+    "function": {"enum": ["pain", "interrupt", "focus", "action", "collapse", "payoff", "stop", "stamp"]},
+    "refs": {"type": "array", "items": {"type": "object"}},
+    "unit": {"type": "number", "minimum": 0, "maximum": 1},
+    "pause": {"type": "integer", "minimum": 0, "maximum": 2000},
+    "intent": {
+      "type": "object", "additionalProperties": false,
+      "required": ["tone", "energy", "pace", "certainty", "emphasis", "pause_before_ms", "pause_after_ms"],
+      "properties": {
+        "tone": {"enum": ["conversational", "alert", "focused", "firm", "curious", "relieved", "restrained"]},
+        "energy": {"$ref": "#/$defs/unit"}, "pace": {"$ref": "#/$defs/unit"}, "certainty": {"$ref": "#/$defs/unit"},
+        "emphasis": {"type": "array", "uniqueItems": true, "items": {"type": "string", "minLength": 1}},
+        "pause_before_ms": {"$ref": "#/$defs/pause"}, "pause_after_ms": {"$ref": "#/$defs/pause"}
+      }
+    }
+  }
+}

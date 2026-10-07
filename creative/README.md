@@ -8,6 +8,10 @@
 Shot Plan → Landscape Render Contract → AE 检查／预览／内部 MP4。
 最终公开教学、来源展示、编辑及 Human Taste 审核仍独立，当前全部 PENDING。
 
+R02 现有 Frozen Copy 0.3 的口播 A/B 实验接入独立
+[Narration Performance v0.1](voice-performance/README.md)。它保存认知交付意图、
+真实后端能力和新 PR 时间绑定；不重新实现文案、解题或既有生产链。
+
 ## 文案与语义
 
 HumanVoiceWriter 是模型无关协议。`FixtureHumanVoiceWriter` 用于模拟适配测试；

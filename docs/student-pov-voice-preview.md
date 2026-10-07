@@ -3,6 +3,9 @@
 这条增量通道把用户要求试用的新声音接到既有画面。它产出内部试听预览，
 不把一次模型生成请求记成最终声音验收，也不替代教学、来源、编辑或 Human Taste。
 
+认知口播 A/B 另见 [Narration Performance v0.1](../creative/voice-performance/README.md)。
+它通过独立 sidecar 绑定同一 Frozen Copy、真实 Take 与新时间线；不修改 voice-delivery/v1。
+
 ## 可替换的声音生产者
 
 Video OS 只消费 `voice-delivery/v1` 中的 WAV、逐字文稿和文件绑定。

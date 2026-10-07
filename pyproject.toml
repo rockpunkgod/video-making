@@ -20,7 +20,8 @@ ae-production = "ae_production.__main__:main"
 creative-os = "creative_os.__main__:main"
 pedagogy-compiler = "pedagogy.__main__:main"
 student-pov-copy = "student_pov.__main__:main"
+narration-performance = "narration_performance.__main__:main"
 
 [tool.setuptools.packages.find]
-include = ["answer_engine*", "core*", "renderers*", "evaluation*", "scripts*", "content_os*", "video_contracts*", "ae_production*", "creative_os*", "premiere_production*", "pedagogy*", "student_pov*"]
+include = ["answer_engine*", "core*", "renderers*", "evaluation*", "scripts*", "content_os*", "video_contracts*", "ae_production*", "creative_os*", "premiere_production*", "pedagogy*", "student_pov*", "narration_performance*"]
 exclude = ["tests*"]

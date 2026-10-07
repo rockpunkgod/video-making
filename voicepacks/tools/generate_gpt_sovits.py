@@ -56,12 +56,23 @@ def main():
     scripts = parser.add_mutually_exclusive_group(required=True)
     scripts.add_argument('--text-file', type=Path)
     scripts.add_argument('--clips-file', type=Path)
+    scripts.add_argument('--performance-request', type=Path)
     parser.add_argument('--output', type=Path, required=True)
     parser.add_argument('--cpu', action='store_true')
     args = parser.parse_args()
     pack, runtime, output = args.pack.resolve(), args.runtime.resolve(), args.output.resolve()
-    rows = scripts_from(args.text_file, args.clips_file)
-    input_path = (args.text_file or args.clips_file).resolve(); input_sha = sha256(input_path)
+    performance = None
+    if args.performance_request:
+        from narration_performance.plan import load_context, validate_plan
+        context = json.loads(args.performance_request.read_text(encoding='utf-8-sig'))
+        for key in ('copy', 'projection', 'plan', 'bundle', 'status', 'spec', 'performance_plan'):
+            context[key] = str((args.performance_request.resolve().parent / context[key]).resolve())
+        copy, spec = load_context(context)
+        performance = validate_plan(json.loads(Path(context['performance_plan']).read_text(encoding='utf-8-sig')), copy, spec)
+        rows = [{'id': c['id'], 'text': c['transcript']} for c in performance['clips']]
+    else:
+        rows = scripts_from(args.text_file, args.clips_file)
+    input_path = (args.text_file or args.clips_file or args.performance_request).resolve(); input_sha = sha256(input_path)
     if output.exists():
         raise FileExistsError('Choose a new output directory; existing takes are never overwritten')
     profile_file = pack / 'profile.json'
@@ -78,6 +89,12 @@ def main():
     # Validate the effective controls before loading model weights. New packs
     # store split/fragment controls at the Profile root; older packs use settings.
     effective = inference_request(profile, rows[0]['text'], asset(pack, profile['reference']), prompt)
+    if performance:
+        from narration_performance.adapter import take_requests, generation_take, CAPABILITIES
+        execution = take_requests(performance, profile, effective)
+    else:
+        execution = [{'id': row['id'], 'request': inference_request(profile, row['text'],
+                      asset(pack, profile['reference']), prompt)} for row in rows]
     # Resolve inputs before the runtime changes the working directory.
     os.chdir(runtime)
     sys.path[:0] = [str(runtime), str(runtime / 'GPT_SoVITS')]
@@ -97,9 +114,9 @@ def main():
     output.mkdir(parents=True, exist_ok=False)
     config.configs_path = str(output / 'inference_config.yaml')
     tts = TTS(config)
-    clips, takes = [], []
-    for row in rows:
-        request = inference_request(profile, row['text'], asset(pack, profile['reference']), prompt)
+    clips, takes, performance_receipts = [], [], []
+    for row in execution:
+        request = row['request']
         print('Generating bound clip: ' + row['id'], flush=True)
         chunks, rates = [], set()
         for rate, chunk in tts.run(request):
@@ -113,18 +130,34 @@ def main():
             raise ValueError('Invalid synthesized audio')
         # New training packs request no postprocessing except peak attenuation.
         # Preserve that policy; earlier packs retain their existing -3 dB target.
-        gain = (min(1.0, 0.89 / peak) if profile.get('postprocessing', '').startswith('none;')
+        gain = (min(1.0, 0.89 / peak) if performance or profile.get('postprocessing', '').startswith('none;')
                 else 10 ** (-3 / 20) / peak)
         audio *= gain; rate = rates.pop()
         name = row['id']; sf.write(output / (name + '.wav'), audio, rate, subtype='PCM_16')
-        (output / (name + '.txt')).write_text(row['text'], encoding='utf-8')
+        (output / (name + '.txt')).write_text(request['text'], encoding='utf-8')
         clips.append(describe_clip(output, name, name + '.wav', name + '.txt'))
-        takes.append(dict(id=name, duration_seconds=len(audio)/rate, raw_peak=peak, applied_gain=gain))
+        parameters = {k: v for k, v in request.items() if k not in ('text', 'ref_audio_path', 'prompt_text')}
+        take = dict(id=name, duration_seconds=len(audio)/rate, raw_peak=peak, applied_gain=gain)
+        if performance:
+            take['inference_parameters'] = parameters
+            receipt = generation_take(row, clips[-1], request['text'], profile_sha,
+                                     profile['assets_sha256'], performance['performance_sha'], parameters)
+            receipt_path = output / 'receipts' / (name + '.json'); receipt_path.parent.mkdir(exist_ok=True)
+            receipt_path.write_text(json.dumps(receipt, ensure_ascii=False, indent=2), encoding='utf-8')
+            performance_receipts.append({'take_id': name, 'scene_id': row['scene_id'],
+                'receipt': str(receipt_path.relative_to(output)).replace('\\', '/'),
+                'receipt_sha256': sha256(receipt_path), 'take_receipt_sha': receipt['take_receipt_sha']})
+        takes.append(take)
     for relative, expected in profile['assets_sha256'].items():
         if sha256(asset(pack, relative)) != expected:
             raise ValueError('Voice-pack changed during generation')
     if sha256(input_path) != input_sha or sha256(profile_file) != profile_sha:
         raise ValueError('Input transcript changed during generation')
+    if performance:
+        current_copy, current_spec = load_context(context)
+        current_performance = validate_plan(json.loads(Path(context['performance_plan']).read_text(encoding='utf-8-sig')), current_copy, current_spec)
+        if current_performance != performance:
+            raise ValueError('Performance or frozen inputs changed during generation')
     delivery = dict(schema='voice-delivery/v1', clips=clips)
     (output / 'delivery.json').write_text(json.dumps(delivery, ensure_ascii=False, indent=2), encoding='utf-8')
     # Provider details stay in a separate receipt, outside the consumer contract.
@@ -136,6 +169,17 @@ def main():
                    takes=takes, torch_version=torch.__version__, device=str(config.device),
                    listening_review='PENDING', public_render_ready=False)
     (output / 'generation.json').write_text(json.dumps(receipt, ensure_ascii=False, indent=2), encoding='utf-8')
+    if performance:
+        from video_contracts import sha, write
+        realization = {'schema': 'narration-performance-realization/v1', 'version': '0.1.0',
+            'performance_sha': performance['performance_sha'], 'binding': performance['binding'],
+            'profile_sha256': profile_sha, 'assets_sha256': profile['assets_sha256'],
+            'engine_capabilities': CAPABILITIES, 'takes': performance_receipts,
+            'delivery_sha256': sha256(output / 'delivery.json'), 'generation_sha256': sha256(output / 'generation.json'),
+            'listening_review': 'PENDING', 'final_voice_accepted': False,
+            'sample_delivery_allowed': False, 'public_render_ready': False}
+        realization['realization_sha'] = sha(realization)
+        write(output / 'performance-realization.json', realization)
     validate(output / 'delivery.json')
     print(f'SAVED: {output / "delivery.json"}')
 

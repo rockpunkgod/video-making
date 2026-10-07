@@ -71,6 +71,12 @@ def preflight(request):
         [{'id': v['id'], 'start': v['start']} for v in plan['voices']], audio['silence_candidates'])
     if plan != rebound:
         raise ValueError('Trial voice must retain its exact Copy, placement and pending release state')
+    sidecars = ('performance_context', 'performance_timing', 'performance_selection')
+    if any(k in request for k in sidecars):
+        if not all(k in request for k in sidecars):
+            raise ValueError('Performance sidecar binding must be complete')
+        from narration_performance.timing import validate_handoff
+        validate_handoff(request, plan, spec)
     return prepared, spec, picture, audio, plan
 
 

@@ -19,3 +19,8 @@
 `scripts.voice_delivery` 只依赖 Python 标准库。可选的 GPT-SoVITS 生成工具单独放在
 `voicepacks/tools/`，不会被视频模块导入。删掉生成工具和模型后，已交付 WAV 仍可使用。
 新生成文稿默认待试听；本次试听接受只绑定成品示例，不传递给未来配音或整片发布。
+
+现有 GPT-SoVITS 生产者可选消费独立的
+[Narration Performance Plan](../creative/voice-performance/README.md)，按冻结认知 Voice Slot
+生成有限 Take，并记录实际 speed/seed、分句/尾音参数及未实现意图。
+Performance 元数据独立保存；WAV 消费接口、旧 accepted pack 和既有生成入口保持兼容。
