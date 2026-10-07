@@ -1,0 +1,31 @@
+{
+  "profile_id": "optimized-2026-10-07",
+  "engine": "gpt-sovits/v2ProPlus",
+  "runtime_revision": "48b1a0169a28582a8984402f82cf438d3bfa6aca",
+  "gpt": "models/gpt-e12.ckpt",
+  "sovits": "models/sovits-e12-s816.pth",
+  "reference": "reference/reference.wav",
+  "reference_text": "reference/reference.txt",
+  "assets_sha256": {
+    "models/gpt-e12.ckpt": "e6f7183c0637f5290dbfee62599ec0dc63a894d9e217562de0291d01f05a7bea",
+    "models/sovits-e12-s816.pth": "21a715e41617bf64d524adff0e9c7e64c1f0ac6f44bfbc0b8586b08f90cfa8fb",
+    "reference/reference.wav": "99273294e9362197dca44fcea57b26b6eafb306b3a91a724e227231997796f23",
+    "reference/reference.txt": "e330e36c6cc5799bcca5618239e11b03c5b4e692f65283a92e7c6cda9df33ca1"
+  },
+  "settings": {
+    "split_method": "cut0",
+    "temperature": 0.75,
+    "top_k": 10,
+    "top_p": 1.0,
+    "repetition_penalty": 1.15,
+    "speed_factor": 1.0,
+    "fragment_interval": 0.1,
+    "seed": 42
+  },
+  "acceptance": {
+    "date": "2026-10-07",
+    "scope": "audio/narration.wav",
+    "user_statement": "优化版很好",
+    "future_takes_require_listening_review": true
+  }
+}

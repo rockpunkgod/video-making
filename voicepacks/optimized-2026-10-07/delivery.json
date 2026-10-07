@@ -1,0 +1,16 @@
+{
+  "schema": "voice-delivery/v1",
+  "clips": [
+    {
+      "id": "narration",
+      "audio": "audio/narration.wav",
+      "audio_sha256": "6a64a9e8676522e68a2944d82386c94809353a3ae23f4a7336ada342d0db337c",
+      "transcript": "audio/narration.txt",
+      "transcript_sha256": "b83ab7552a2bc07ef77d45e2c2f2f4d2bdc627425bde41c79ac5183edbb9bc62",
+      "duration_seconds": 23.78,
+      "sample_rate": 32000,
+      "channels": 1,
+      "listening_review": "USER_ACCEPTED"
+    }
+  ]
+}

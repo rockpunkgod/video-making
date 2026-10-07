@@ -2,3 +2,8 @@
 # Frozen audit snapshots must retain the exact captured bytes on every OS.
 provenance/ANSWER/** -text -whitespace
 gaokao-grammar-fill/scripts/check_lesson.py -text -whitespace
+voicepacks/*/models/* filter=lfs diff=lfs merge=lfs -text
+voicepacks/*/audio/*.wav -text
+voicepacks/*/reference/*.wav -text
+voicepacks/*/audio/*.txt -text
+voicepacks/*/reference/*.txt -text
