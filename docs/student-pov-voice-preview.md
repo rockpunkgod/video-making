@@ -21,7 +21,12 @@ Video OS 只消费 `voice-delivery/v1` 中的 WAV、逐字文稿和文件绑定�
 文稿列表使用唯一的 `id / text`，从已校验 Copy 的实际 VO 逐字导出。
 现有 `--text-file` 单篇入口保持兼容。一次加载模型，所有句子使用同一套
 权重、参考音频和 Profile 参数；中文入口保留中英混读。
-新训练包未提供 split/fragment 参数时，使用 `cut0 / 0.1s`，不改变其语速参数。
+分句与片段停顿读取 Profile 根字段 `text_split_method / fragment_interval`，
+兼容旧版 `settings.split_method / settings.fragment_interval`。
+两种位置同时提供且冲突时拒绝生成，不能静默使用旧值。
+两处都未提供时使用 `cut0 / 0.1s`，不改变其语速参数。
+`generation.json` 记录实际推理参数、Profile 与参考声音 hash；试听重做必须
+另用新目录，并保留上一版。参考声音更新也属于新 take，不能只比较模型权重。
 声明 `none;` 后期策略的 Profile 只允许降低过高峰值，不自动提升音量或变速。
 所有新声音的听感状态为 PENDING，不能继承参考音频或旧声音的用户认可。
 

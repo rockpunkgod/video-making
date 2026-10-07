@@ -1,6 +1,7 @@
 """Optional producer. Video consumers only see its voice-delivery/v1 output."""
 import argparse
 import json
+import math
 import os
 from pathlib import Path
 import re
@@ -30,10 +31,20 @@ def scripts_from(text_file=None, clips_file=None):
 
 def inference_request(profile, text, reference, prompt):
     settings = profile['settings']
+    controls = {}
+    for name, legacy, default in (('text_split_method', 'split_method', 'cut0'),
+                                  ('fragment_interval', 'fragment_interval', 0.1)):
+        if name in profile and legacy in settings and profile[name] != settings[legacy]:
+            raise ValueError(f'Conflicting voice Profile control: {name}')
+        controls[name] = profile.get(name, settings.get(legacy, default))
+    if not isinstance(controls['text_split_method'], str) or not controls['text_split_method']:
+        raise ValueError('Voice Profile text_split_method must be explicit nonempty text')
+    gap = controls['fragment_interval']
+    if type(gap) not in (int, float) or not math.isfinite(gap) or gap < 0:
+        raise ValueError('Voice Profile fragment_interval must be finite and nonnegative')
     return dict(text=text, text_lang='zh', ref_audio_path=str(reference), prompt_text=prompt,
         prompt_lang='en' if profile.get('reference_language') == 'EN' else 'all_zh',
-        text_split_method=settings.get('split_method', 'cut0'), batch_size=1, parallel_infer=True,
-        fragment_interval=settings.get('fragment_interval', 0.1),
+        **controls, batch_size=1, parallel_infer=True,
         **{key: settings[key] for key in ('seed', 'speed_factor', 'top_k', 'top_p',
                                          'temperature', 'repetition_penalty')})
 
@@ -63,6 +74,10 @@ def main():
             raise ValueError(f'Voice-pack asset mismatch: {relative}; run git lfs pull if needed')
     if not (runtime / 'GPT_SoVITS').is_dir():
         raise ValueError('Expected a separate GPT-SoVITS runtime checkout')
+    prompt = asset(pack, profile['reference_text']).read_text(encoding='utf-8-sig').strip()
+    # Validate the effective controls before loading model weights. New packs
+    # store split/fragment controls at the Profile root; older packs use settings.
+    effective = inference_request(profile, rows[0]['text'], asset(pack, profile['reference']), prompt)
     # Resolve inputs before the runtime changes the working directory.
     os.chdir(runtime)
     sys.path[:0] = [str(runtime), str(runtime / 'GPT_SoVITS')]
@@ -82,7 +97,6 @@ def main():
     output.mkdir(parents=True, exist_ok=False)
     config.configs_path = str(output / 'inference_config.yaml')
     tts = TTS(config)
-    prompt = asset(pack, profile['reference_text']).read_text(encoding='utf-8-sig').strip()
     clips, takes = [], []
     for row in rows:
         request = inference_request(profile, row['text'], asset(pack, profile['reference']), prompt)
@@ -114,8 +128,10 @@ def main():
     delivery = dict(schema='voice-delivery/v1', clips=clips)
     (output / 'delivery.json').write_text(json.dumps(delivery, ensure_ascii=False, indent=2), encoding='utf-8')
     # Provider details stay in a separate receipt, outside the consumer contract.
-    receipt = dict(engine=profile['engine'], profile_sha256=profile_sha,
+    receipt = dict(engine=profile['engine'], profile_id=profile.get('profile_id'), profile_sha256=profile_sha,
                    assets_sha256=profile['assets_sha256'], settings=profile['settings'],
+                   inference_parameters={k: v for k, v in effective.items()
+                                         if k not in ('text', 'ref_audio_path', 'prompt_text')},
                    text_language='zh_mixed_with_english', input_sha256=input_sha,
                    takes=takes, torch_version=torch.__version__, device=str(config.device),
                    listening_review='PENDING', public_render_ready=False)

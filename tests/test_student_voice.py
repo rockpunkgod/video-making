@@ -27,6 +27,33 @@ class VoiceProducerTests(unittest.TestCase):
         self.assertEqual(legacy['text_split_method'], 'cut5')
         self.assertEqual(legacy['fragment_interval'], .3)
 
+    def test_root_profile_tail_controls_are_used_without_changing_pace(self):
+        profile = {'reference_language': 'ZH', 'text_split_method': 'cut3',
+                   'fragment_interval': .28,
+                   'settings': {'speed_factor': 1, 'seed': 42, 'top_k': 10, 'top_p': 1,
+                                'temperature': .75, 'repetition_penalty': 1.15}}
+        request = inference_request(profile, 'SYNTHETIC mixed English。', 'SYNTHETIC.wav', 'SYNTHETIC')
+        self.assertEqual(request['text_split_method'], 'cut3')
+        self.assertEqual(request['fragment_interval'], .28)
+        self.assertEqual(request['prompt_lang'], 'all_zh')
+        self.assertEqual(request['text_lang'], 'zh')
+        self.assertEqual(request['speed_factor'], 1)
+        profile['settings'].update(split_method='cut3', fragment_interval=.28)
+        self.assertEqual(request, inference_request(profile, request['text'], 'SYNTHETIC.wav', 'SYNTHETIC'))
+        for key, value in (('split_method', 'cut0'), ('fragment_interval', .1)):
+            conflicting = dict(profile, settings=dict(profile['settings'], **{key: value}))
+            with self.assertRaisesRegex(ValueError, 'Conflicting'):
+                inference_request(conflicting, 'SYNTHETIC', 'SYNTHETIC.wav', 'SYNTHETIC')
+
+    def test_invalid_tail_controls_do_not_silently_fall_back(self):
+        settings = {'speed_factor': 1, 'seed': 42, 'top_k': 10, 'top_p': 1,
+                    'temperature': .75, 'repetition_penalty': 1.15}
+        for controls in ({'text_split_method': None}, {'text_split_method': ''},
+                         {'fragment_interval': None}, {'fragment_interval': True},
+                         {'fragment_interval': -1}, {'fragment_interval': float('nan')}):
+            with self.subTest(controls=controls), self.assertRaises(ValueError):
+                inference_request(dict(settings=settings, **controls), 'SYNTHETIC', 'SYNTHETIC.wav', 'SYNTHETIC')
+
     def test_clip_names_cannot_escape_or_overwrite_other_takes(self):
         with TemporaryDirectory() as root:
             path = Path(root) / 'clips.json'
