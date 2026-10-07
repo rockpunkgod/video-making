@@ -185,3 +185,15 @@ python -m scripts.freeze_caption_font <本地可变字体.ttf> <新的本地regu
 Premiere 传输层增加对 SSE 保活注释开头响应的支持与合成回归；未知导出状态仍
 不得盲目重发。实际工程、输出、字幕、配乐、参考声音、当前上游状态及展示内容的
 绑定均保留在本地 Manifest。GitHub 提交仅包含可复用工作流与脱敏验证说明。
+
+### 原题先展示的兼容投影
+
+`creative_os.passage_sequence.question_first` 为已有整篇 Plan 显式插入冻结原文与
+原选项的中性展示，再沿原来的题组顺序消费既有讲解。`sequence_sha` 绑定原题文字、
+插入顺序与时长；`ae/templates/question-first-cards-v0.1.jsx` 输出原生静态题面。
+原题停留时间由编辑显式提供，画面带可暂停阅读提示，不声称足够读完整篇。
+
+组装、配乐和 Premiere 交付通过可选 `sequence_plan` 核对同一序列，保留原有口播、
+字幕和解释素材绑定。该通道属于既有整篇流程；当前单方法 Swiss Cognitive POV
+试制使用自己的持续原题空间与原生 AE/Premiere 链路。三项合成测试覆盖原题先后顺序、
+插入答案篡改与跨题静默重排；本轮没有因此重新制作整篇视频。

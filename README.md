@@ -60,6 +60,17 @@ V9.1 增量视频模块：见 [G01 Hero 工作流](docs/cinematic-hero-workflow.
 [Swiss Cognitive Motion](creative/motion-identity/motion-identity.md)。只消费冻结输出；
 实际视频、音乐及 Adobe 工程保留在忽略的本地目录。
 
+当前方法应用视觉试制见 [Swiss Cognitive POV 工作流](docs/swiss-cognitive-pov.md)：
+纯导出已有动作与语义跨度，在持续原题中执行注意力镜头和可逆拆解；AE 输出动效，
+Premiere 完成声音、字幕与最终内部样片。工程成功与教学、来源、编辑及 Human Taste 分开记录。
+
+教学选择与学生视角文案为两个独立增量层：
+[Pedagogy Compiler](docs/pedagogy-compiler.md) 提供 `python -m pedagogy compile|validate|handoff|matrix`；
+[Student POV Copy](docs/student-pov-copy.md) 提供 `python -m student_pov realize|validate`。
+两者只消费冻结资产和当前状态；READY 教学投影不替真实 Payoff、最终文案或学生体验认证。
+本轮 G01 worked_example 投影 READY，新 Student POV 候选因既有基线路径与工作减少凭证缺失 HOLD。
+自然口语规则、现有表达问题和可修改入口见 [文案 Agent 交接说明](docs/student-pov-natural-copy-handoff.md)。
+
 完整篇目内部试制另见 [阅读 D 篇生产工作流](docs/reading-d-2025-production.md)：
 显式 ANSWER 宿主审阅纯导出、已接受本地声音配置、持续题目区、原生 AE 场景与 PR 整片交付。
 附加篇级契约不修改旧分析器闭合状态，也不自动取得公开发布资格。

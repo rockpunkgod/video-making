@@ -1,0 +1,38 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Explicit annotations of an already reviewed frozen method action",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["action_index", "review_indices", "source_region", "spans", "reduced_span_ids", "deferred_span_ids", "protected_span_ids", "relations"],
+  "properties": {
+    "action_index": {"type": "integer", "minimum": 0},
+    "review_indices": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"type": "integer", "minimum": 0}},
+    "source_region": {"$ref": "#/$defs/span"},
+    "spans": {"type": "array", "minItems": 1, "items": {"type": "object", "additionalProperties": false, "required": ["span_id", "field", "start", "end", "quote", "semantic_role", "assertion"], "properties": {
+      "span_id": {"type": "string", "minLength": 1},
+      "field": {"type": "string", "minLength": 1},
+      "start": {"type": "integer", "minimum": 0},
+      "end": {"type": "integer", "minimum": 1},
+      "quote": {"type": "string", "minLength": 1},
+      "semantic_role": {"enum": ["context", "predicate", "determiner", "slot", "hint", "temporal_clause", "core", "modifier", "condition", "negation", "scope", "comparison"]},
+      "assertion": {"$ref": "#/$defs/assertion"}
+    }}},
+    "reduced_span_ids": {"$ref": "#/$defs/ids"},
+    "deferred_span_ids": {"type": "array", "uniqueItems": true, "items": {"type": "string", "minLength": 1}},
+    "protected_span_ids": {"$ref": "#/$defs/ids"},
+    "relations": {"type": "array", "items": {"type": "object", "additionalProperties": false, "required": ["from_span_id", "to_span_ids", "assertion"], "properties": {
+      "from_span_id": {"type": "string", "minLength": 1},
+      "to_span_ids": {"$ref": "#/$defs/ids"},
+      "assertion": {"$ref": "#/$defs/assertion"}
+    }}}
+  },
+  "$defs": {
+    "ids": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"type": "string", "minLength": 1}},
+    "assertion": {"type": "object", "additionalProperties": false, "required": ["field", "quote"], "properties": {
+      "field": {"enum": ["concrete_action", "decision_rule_check", "stop_rule_check"]}, "quote": {"type": "string", "minLength": 1}
+    }},
+    "span": {"type": "object", "additionalProperties": false, "required": ["field", "start", "end", "quote"], "properties": {
+      "field": {"type": "string", "minLength": 1}, "start": {"type": "integer", "minimum": 0}, "end": {"type": "integer", "minimum": 1}, "quote": {"type": "string", "minLength": 1}
+    }}
+  }
+}

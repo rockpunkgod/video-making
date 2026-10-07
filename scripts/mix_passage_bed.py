@@ -14,7 +14,11 @@ def mix(request):
         raise ValueError('Music or voice source changed')
     out=Path(request['output']).resolve()
     if out.exists():raise ValueError('Preserve previous mix')
-    out.mkdir(parents=True);duration=plan['canvas']['duration']
+    out.mkdir(parents=True);duration=plan['canvas']['duration'];sequence=None
+    if request.get('sequence_plan'):
+        from creative_os.passage_sequence import validate_sequence
+        sequence=read(request['sequence_plan']);validate_sequence(sequence,plan,bundle,read(request['status']))
+        duration=sequence['canvas']['duration']
     # A gentle overlap of the same recording maintains a continuous bed if needed.
     # The input must be at least 20 s; this renderer supports at most one repeat.
     import json
@@ -36,6 +40,7 @@ def mix(request):
     if float(measurement['input_tp'])>=-1:raise ValueError('Mix needs peak correction; keep failed candidate for inspection')
     validate_plan(plan,bundle,read(request['status']))
     receipt={'plan_sha':plan['plan_sha'],'voice_sha':request['voice_sha'],'mix':str(out/'mix.wav'),
+        'sequence_sha':sequence['sequence_sha'] if sequence else None,
         'mix_sha':file_sha(out/'mix.wav'),'music':request['music'],'music_sha':request['music_sha'],
         'music_measurement':measure(out/'music.wav'),'measurement':measurement,'music_target_lufs':-31,
         'music_loop_overlap_seconds':6 if duration>music_duration else 0,
