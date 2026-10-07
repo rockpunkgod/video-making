@@ -48,15 +48,21 @@ copy = copy_projection(plan, frozen_bundle, current_manifest)
 - 只有既有 Review 记录明确将当前相关性降为 low，且其它风险不触发保守条件，才允许 Tell Later。记录需 source_pointer、item_sha、risk 三项等级及 rationale；Compiler 不创建这种记录。
 - Engine Only 是固定的实现字段白名单：method ID/version、Role ID、审阅/Evidence ID、源分析指纹、release state。语义 Stop、教学限制和反例不能伪装成工程元数据。
 
+以上是没有独立披露审阅时的默认保守政策。另可显式提供`boundary_review`，契约为`schemas/boundary-risk-review.json`（0.1.0），由Pedagogy层消费已有冻结事实完成的外部边界风险审阅；它不是ANSWER教学Review，也不生成英语规则。审阅精确绑定基础Plan、题目、方法、动作、分析、完整Guard及原边界台账。每条记录省略风险、严重度、当前分支、依据和后置触发点。当前没有学生实测，frequency必须unknown；低当前相关性不能写成低频或低严重度。
+
+显式审阅可将已判断本次未触发的分支移到Later，也可把多个当前边界合到一份字面呈现；当前实际Stop仍是Now，必须逐字符记录所有子句的覆盖。允许的覆盖是字面显示、经审阅的等价关系、已有Evidence聚焦、未闭合候选状态与上游重检。当前Stop不能仅靠后台标签覆盖；教学条件不能整条改称ENGINE_ONLY。程序检查绑定和结构覆盖，不认证风险判断或英语真值。AI审阅只允许内部工程投影，三类公开Release不变。
+
 Tell Later 的断言、风险依据、原因及 `still_exists=true` 均保留在 Plan 和 compression_audit。完整方法与实际动作作为 BACKEND_GUARD 绑定；这个标记不授权删除某条 Tell Now。频率 unknown 不等于罕见，数字风险分数不接受。
 
-当前动作 Stop 和方法 Stop 文本完全相同且属于同一分层时，保留全部来源引用并作为一条学生边界；每个来源仍有独立风险台账记录，条目指向合并后仍存在的边界 ID。语义近似的句子不会自动合并。严谨性超过首次教学预算时输出 HOLD/PEDAGOGY_OVERLOAD，要求分系列或消费已有的分级凭证，不由本模块创建评审来解除过载。
+默认情况下，当前动作Stop和方法Stop文字完全相同且属于同一分层时保留全部来源并合为一条；语义近似不自动合并。显式风险审阅可以批准多个来源共用当前呈现，但只能选已有原文字面片段，保存每项及每句的覆盖和审阅引用；不能自由改写判据。重放会重新核验审阅、来源、现行状态、遗漏和预算，不直接清空HOLD。Compiler不自动生成这种评审来解除过载。
 
 ## 模式、Case 与认知负载
 
-支持 first_touch、worked_example、counterexample、boundary、transfer、hard_case、review。canonical→first_touch/worked_example；counterexample→反例；boundary→刹车；transfer→迁移；hard→高阶。Case 类型只能来自当前冻结且有效的 Review 标签或已审阅 boundary/counterexample Claim。Registry 中的示意或 evidence_gap 不能充当真实 Case。
+支持 first_touch、worked_example、counterexample、boundary、transfer、hard_case、review。canonical→first_touch/worked_example；counterexample→反例；boundary→刹车；transfer→迁移；hard→高阶。对应Case内容只能来自当前选中题目、方法和实际动作自己的有效冻结Review中的 `reviewed_claims`。只有 `case_type / case_kind` 标签不能开启Case模式或后续可用槽；Registry中的示意或evidence_gap不能充当真实Case。
 
-当前 transfer/hard_case 的 Case 可用性由冻结 Review case_type 标签判断，步骤仍是已选动作的通用投影；followup ref 仅指向类型标签，没有加载另一道独立 Case 的题面与内容。它是结构入口，不是完整迁移或高阶教学系列的验收证明。simultaneous_concepts 统计当前不同 step-kind 数，是工程近似值，不表示已验证学生实际同时处理的概念数。
+支持的内容键为 `canonical / counterexample / boundary / transfer / hard`，`hard_case`也可绑定到hard槽。每份非空内容必须是已有文本断言；空值或非文本形状拒绝消费，同一槽的冲突断言也拒绝，不按最后一份Review覆盖。计划的case步骤和followup引用指向实际内容及其hash，保留该题已有动作、Evidence和Stop。内容变化会使旧投影源重放失败。Compiler不把标签扩写成反例，也不加载另一道未提交的题目。
+
+transfer/hard_case现在可投影这份已有、已审阅的具体内容；步骤仍围绕明确提交的同一道冻结应用，不代表已完成独立练习产品、整个教学系列或真实学生迁移验证。simultaneous_concepts统计当前不同step-kind数，是工程近似值，不表示已验证学生实际同时处理的概念数。
 
 first_touch 的结构预算：core_actions≤2、primary_boundary≤1、memory_phrase=1、primary_evidence_cluster≤1、simultaneous_concepts≤3；另有学生字段 180 字/记忆句 80 字的保守长度检查。它们是 provisional 工程限制，不是认知科学精确指标。Student POV 的首次教学进一步要求只有一个主动作，不能借 Compiler 的上限偷塞两个主简化。
 
@@ -80,7 +86,7 @@ counterexample / boundary / transfer / hard_case 缺对应已绑定 Case 时为 
 
 独立 `python -m pedagogy compile|validate|handoff|matrix <request.json>`；请求显式列 bundle/status/selection，输出不可覆盖历史。同类操作没有自动解题或目录扫描。editable 安装同时提供 `pedagogy-compiler`。
 
-当前真实投影保存在忽略的 `local-data/pedagogy/compiler-r5/`，此前目录保留为历史。F01、G01、R02 的 bounded worked_example READY；未补风险凭证，所有已冻结 Caveat 都保守纳入 Tell Now，分别为 9/10/9 条。first_touch 因必要边界过载而 HOLD；独立 boundary Case 缺口为 UNAVAILABLE。R01/R06/R09 未提供可消费的冻结资产，保持缺口。九条 Plan、六个 READY Copy/Motion Handoff 当前源重放通过，原 bundle/status 字节指纹不变；迁移记录位于本地 migration.json。详见 `PEDAGOGY_COMPILER_ACCEPTANCE.md`。
+没有显式风险审阅的真实投影仍在忽略的`local-data/pedagogy/compiler-r5/`，F01/G01/R02的默认首用分别因9/10/9项边界HOLD。本轮R02经用户要求的实质风险审阅，另存`local-data/pedagogy/boundary-risk-r1/R02/`：基础九项原文及台账未改，1/2/3/8功能合到一个关系比较和候选状态，4/5/6/7/9后置；新first_touch/worked_example工程投影READY。这是当前D-only动作的呈现判断，不是解除其它模式的Case缺口。F01/G01首用限制和R01/R06/R09的缺资产状态不变。详见`R02_BOUNDARY_RISK_REVIEW.md`与`PEDAGOGY_COMPILER_ACCEPTANCE.md`。
 
 Payoff 优先携带已有 Review 中的 `reviewed_payoff`，要求同题、同方法版本、同组实际动作及自身 Evidence。后备的 `frozen_candidate_transition` 只投影已有有效局部排除：原候选域、唯一自有 decider 产物、精确审阅范围、未核集合与当前生命周期必须一致。多个决定的先后不明、借用其他方法、已闭合或失效依赖均不可投影；分组、路由不伪造候选淘汰。
 

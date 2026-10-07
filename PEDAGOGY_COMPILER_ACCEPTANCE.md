@@ -4,7 +4,7 @@
 
 2026-10-07：Compiler/Plan/Handoff 0.3.0，披露 Policy 0.2.0。工程冻结投影、原题快照和局部候选状态适配通过；完整首用/迁移/高阶内容与真人教学效果仍为 PARTIAL/PENDING。以下 v0.2 记录保留为历史，不授予当前消费资格。
 
-当前输出为忽略的 `local-data/pedagogy/compiler-r5/`：三份真实输入、九个 Plan、六个 Copy/Motion Handoff 完成源重放，源与此前本地输出字节 hash 不变。F01/G01/R02 的 worked_example 继续 READY；first_touch 继续因9/10/9条必要边界 HOLD；独立 boundary Case 缺口仍如实保留。
+未提供单独风险审阅的基础输出保存在忽略的`local-data/pedagogy/compiler-r5/`：三份真实输入、九个Plan、六个Copy/Motion Handoff完成源重放，历史字节不变。F01/G01/R02的worked_example继续READY；默认first_touch仍因9/10/9项HOLD。用户要求的R02九项实质风险审阅另存`boundary-risk-r2/R02/`，新first_touch/worked_example投影READY：四项当前功能合到一个关系比较与输出状态，五项未触发分支Later。frequency全unknown，severity全high，没有借低风险假设解除过载。
 
 原题 whitelist、逐字段引用和 Copy 持续题面层已接通；不输出正确答案或执行元数据到题面。历史0.1/0.2完整性可读、当前消费拒绝，旧批准不能继承新的题面或文案。
 
@@ -12,7 +12,11 @@ R02 的现有审阅动作支持唯一局部排除的4→3结构对照；机械�
 
 `baseline_kind=structural_candidate_state`、`baseline_measured=false`，仅关闭本 scope 的一个候选核验任务；其他候选与 Stop 仍需要，源变化可重开。不证明学习、速度、少读全文、独立人工认证或最终答案。公开资格持续为 false。
 
-当前完整仓库回归647项通过，ANSWER82 methods / 20 source documents / generated assets PASS。本轮新增19项程序控制覆盖原题、历史兼容、机械候选归属/失效/范围及非实测路径标记；全部真实题、文案、声音、视频和工程保持本地。验收只计相应能力，不把 step-kind 近似或通用 worked sequence 算成完整认知负担/迁移/高阶教学验收。
+Case门禁已补齐：只有自己的有效冻结Review中非空`reviewed_claims`内容才能开放Case/followup；case_type标签、空内容、非文本或冲突内容不能放行。标签本身不再算独立迁移/高阶内容。
+
+风险Review契约0.1.0、投影交付0.1.1是0.3主契约的显式增量。基础Plan未改；新投影精确绑定原九项、每个复合Stop子句、旧Guard及当前状态。Reviewer是AI，不升级Teaching/Source/Editorial。旧0.1.0风险交付保持历史完整性可读、当前消费阻断；重新生成0.1.1，内嵌Review时间/envelope不改变语义SHA。没有覆盖旧包或旧Review。
+
+本轮12项风险/呈现测试与6项native绑定测试通过；最终全仓664项回归通过（410.222秒），日志`local-data/pedagogy/verification-r7/full-regression.log`。ANSWER82 methods / 20 source documents / generated assets PASS。全部真实题、文案、声音、视频和工程保持本地，不把step-kind近似、结构预算READY或风险分层当成真人首用/迁移验收。
 
 ## v0.2 历史记录
 

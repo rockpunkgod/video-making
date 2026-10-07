@@ -33,7 +33,7 @@ class PedagogyTests(unittest.TestCase):
         cls.engine = QuestionAnalyzer(cls.registry)
 
     def assets(self, mid='R12', case=None, unknown_boundary=False, risk=None, defer_caveats=True,
-               question_change=None):
+               question_change=None, case_content=True, case_extra_claims=None):
         q = fixture()
         if mid == 'F01':
             q = seven_chain_fixture()
@@ -61,8 +61,11 @@ class PedagogyTests(unittest.TestCase):
             'method_id': mid, 'method_version': self.registry.methods[mid]['version']}
         if case:
             review['case_type'] = case
-            if case in ('counterexample', 'boundary'):
-                review['reviewed_claims'] = {case: 'SYNTHETIC reviewed ' + case + ' assertion'}
+            if case_content is not False:
+                review['reviewed_claims'] = {case: 'SYNTHETIC reviewed ' + case + ' assertion'
+                                           if case_content is True else case_content}
+            if case_extra_claims:
+                review.setdefault('reviewed_claims', {}).update(case_extra_claims)
         methods = [deepcopy(self.registry.methods[m]) for m in analysis['method_versions']]
         mi = next(i for i, m in enumerate(methods) if m['method_id'] == mid)
         # Explicit SYNTHETIC risk credentials keep the positive test genuinely
@@ -242,8 +245,65 @@ class PedagogyTests(unittest.TestCase):
                 self.assertEqual(p['availability']['status'], 'READY')
                 self.assertFalse(p['answer_scope']['may_output_final_answer'])
                 self.assertTrue(validate_plan(p, b, s)['consumption_allowed'])
-                if kind in ('boundary', 'counterexample'):
-                    self.assertTrue(any(x['kind'] == 'case' for x in p['student_steps']))
+                case_items = [x['item'] for x in p['student_steps'] if x['kind'] == 'case']
+                self.assertEqual(len(case_items), 1)
+                self.assertEqual(case_items[0]['text'], 'SYNTHETIC reviewed ' + kind + ' assertion')
+                self.assertTrue(case_items[0]['source_refs'][0]['pointer'].endswith('/reviewed_claims/' + kind))
+                self.assertTrue(p['followup_content'][kind]['case_ref']['pointer'].endswith('/reviewed_claims/' + kind))
+
+    def test_case_type_label_alone_cannot_unlock_case_mode_or_followup(self):
+        for mode, kind in [('counterexample', 'counterexample'), ('boundary', 'boundary'),
+                           ('transfer', 'transfer'), ('hard_case', 'hard')]:
+            b, s, selection = self.assets(case=kind, case_content=False)
+            p = compile_plan(b, s, selection, mode=mode)
+            with self.subTest(mode=mode):
+                self.assertEqual(p['availability']['status'], 'UNAVAILABLE_EVIDENCE_GAP')
+                self.assertIn('missing_reviewed_' + kind + '_case', p['availability']['gaps'])
+                self.assertEqual(p['public_claims'], [])
+                self.assertEqual(p['followup_content'][kind],
+                                 {'status': 'UNAVAILABLE_EVIDENCE_GAP', 'case_ref': None})
+                with self.assertRaises(ValueError):
+                    copy_projection(p, b, s)
+
+    def test_empty_or_structured_reviewed_case_content_is_not_a_case_assertion(self):
+        for value in ('', '   ', None, [], {'note': 'SYNTHETIC metadata only'}):
+            b, s, selection = self.assets(case='transfer', case_content=value)
+            with self.subTest(value=value), self.assertRaisesRegex(ValueError, 'case content'):
+                compile_plan(b, s, selection, mode='transfer')
+
+    def test_changed_frozen_case_content_invalidates_its_old_projection(self):
+        b, s, selection = self.assets(case='transfer')
+        p = compile_plan(b, s, selection, mode='transfer', generated_at='SYNTHETIC')
+        new_b, new_s, new_selection = self.assets(case='transfer',
+            case_content='SYNTHETIC revised transfer assertion; no learner result claimed')
+        next_plan = compile_plan(new_b, new_s, new_selection, mode='transfer', generated_at='SYNTHETIC')
+        self.assertNotEqual(p['plan_sha'], next_plan['plan_sha'])
+        self.assertTrue(inspect_historical(p)['status'] == 'HISTORICAL_ONLY')
+        with self.assertRaises(ValueError):
+            validate_plan(p, new_b, new_s)
+        self.assertTrue(validate_plan(next_plan, new_b, new_s)['consumption_allowed'])
+
+    def test_hard_case_claim_alias_preserves_its_frozen_content(self):
+        b, s, selection = self.assets(case='hard_case')
+        p = compile_plan(b, s, selection, mode='hard_case')
+        self.assertEqual(p['availability']['status'], 'READY')
+        self.assertEqual(p['followup_content']['hard']['case_ref']['pointer'],
+                         '/reviews/0/record/reviewed_claims/hard_case')
+        self.assertTrue(any(step['kind'] == 'case' and step['item']['text'] ==
+                            'SYNTHETIC reviewed hard_case assertion' for step in p['student_steps']))
+        self.assertTrue(validate_plan(p, b, s)['consumption_allowed'])
+
+    def test_conflicting_case_content_cannot_be_resolved_by_last_value(self):
+        for alias in ('SYNTHETIC reviewed hard assertion', 'SYNTHETIC different hard assertion'):
+            b, s, selection = self.assets(case='hard', case_extra_claims={'hard_case': alias})
+            with self.subTest(alias=alias):
+                if alias == 'SYNTHETIC reviewed hard assertion':
+                    p = compile_plan(b, s, selection, mode='hard_case')
+                    self.assertTrue(validate_plan(p, b, s)['consumption_allowed'])
+                    self.assertTrue(p['followup_content']['hard']['case_ref']['pointer'].endswith('/hard'))
+                else:
+                    with self.assertRaisesRegex(ValueError, 'Conflicting frozen reviewed case'):
+                        compile_plan(b, s, selection, mode='hard_case')
 
     def test_reducer_cannot_claim_decision_and_g01_cannot_claim_a_word(self):
         for mid, text in [('F01', '做到这里答案就是A'), ('G01', '所以填具体词X')]:

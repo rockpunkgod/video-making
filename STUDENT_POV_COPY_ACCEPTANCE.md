@@ -2,11 +2,13 @@
 
 ## 当前 v0.3 Copy 同步
 
-2026-10-07：Compiler/Copy契约0.3.0。最新自然口语判据已同步到实际G01候选，明确先分开从句、再看主句；名词性功能路线不表示具体词形已定。固定方法名、记忆句、10条Tell Now和framework范围保留。当前本地目录 `local-data/pedagogy/student-pov-r8/G01/`，其中包含逐句候选、完整逐景脚本、AI Copy 文本凭证及绑定已有实际动作的Motion协调表。
+2026-10-07：Compiler/Copy主契约0.3.0，Boundary Risk Review契约0.1.0、交付0.1.1。当前两份Copy在忽略的`local-data/pedagogy/student-pov-r14/{R02,G01}/`，入口`current-copy.json`。用户要求的结果后检查清单式提醒已省去，不搬成字幕。G01保留先分从句、再看主句的实际动作，删除Stop VO；固定方法名、记忆句、十项既有屏幕边界与framework范围不变，没有替该资产做风险降级或补工作减少。
 
-唯一新增受支持 Golden 文案选择 R02 bounded worked_example，位于 `local-data/pedagogy/student-pov-r8/R02/`：3条Hook、2条Payoff、1份完整推荐脚本、逐景VO/Screen/Motion/引用/静默、Stop审计和removed/deferred/still_required台账。选题以审阅清洁、教学清晰、可视觉化和品牌次序判断。G01是既有草稿同步，不作为第二份已通过认知压缩的样片。替代Hook/Payoff仍是待审核候选，更换后不能沿用当前最终文案凭证。
+唯一新增受支持Golden文案仍为R02 bounded worked_example：三条Hook、两条Payoff、一份完整推荐脚本、逐景VO/Screen/Motion/引用/静默、Stop审计与removed/deferred/still_required台账均重新绑定。当前口播取消冗余关键词警告，结果仅为短句局部排除；原题持续层和关系对比保留。替代Hook/Payoff仍待审核，更换后不能沿用当前凭证。G01仅同步既有草稿，不作为第二份通过认知压缩的样片。
 
-独立 AI Copy peer 精确绑定两份最终 script_sha/final_copy_sha，semantic_fidelity、书面口语自然度及计划三层分工均 pass。登记凭证没有改变已审文字或场景；G01继续HOLD/PAYOFF_UNSUPPORTED，R02内部Copy工程READY。该凭证不是ANSWER教学Review，不认证教学真值、真人听感、学习效果或公开Release。全部148份既有源/历史JSON字节不变，旧稿保留。
+R02九项实质Boundary Risk Review将1/2/3/8的当前功能合到一次归属比较和中性候选状态，4/5/6/7/9后置到未走到的分支；frequency全unknown、severity全high，不靠低风险假设删提醒。复合实际Stop逐句保留字符区间、依据、当前适用性与覆盖，任何原教学条件都没有整条改称ENGINE_ONLY。完整Guard、原Review、答案范围及Payoff来源不变。详见`R02_BOUNDARY_RISK_REVIEW.md`；本地新Plan在`boundary-risk-r2/R02/`。
+
+独立AI Copy peer精确绑定两份最终script_sha/final_copy_sha，semantic_fidelity、书面口语及计划三层分工均pass；登记凭证未改文字或场景。R02内部Copy工程READY，G01继续HOLD/PAYOFF_UNSUPPORTED。该凭证不是ANSWER教学Review，不认证教学真值、真人听感、学习效果或公开Release。旧稿、旧风险记录与冻结输入字节保留，不覆盖历史。
 
 当前阅读入口 `local-data/pedagogy/CURRENT_COPY.md`；机器入口 `current-copy.json`。每份 `RECOMMENDED_FINAL_SCRIPT.md` 提供连贯口播和完整逐景便览，权威生成与绑定仍以同目录JSON为准。
 
@@ -14,9 +16,9 @@ R02 的真实支持为冻结局部候选4→3，D的当前核验任务被既有�
 
 所有Copy先展示完整可用原题，后续引用同一persistent reality_layer。逐字段来源、题面、口播和逐景脚本纳入最终指纹；旧审批对变化稿失效。原题字面文本与新增教学Claim分别处理，未借原题数字制造学生统计。0.1/0.2历史Schema保留，当前消费只接受0.3源重放。
 
-已通过当前全仓647项回归及ANSWER82 methods / 20 source documents / generated assets校验。原冻结输入与此前候选字节不变；没有修改ANSWER源仓库、Registry、题目事实、正确答案或新建教学Review。AI Copy文本审阅与真人听感、实际视效、Human Taste及三类公开Release分别记录。公开资格始终false，旧20秒native样片只作历史视觉证明。
+已通过当前全仓664项回归及ANSWER82 methods / 20 source documents / generated assets校验。新增五项Case内容门禁与十二项风险/呈现控制，覆盖缺绑定、错误方法证据、未知适用性、当前Stop移后、子句遗漏、原文范围越界、当前状态撤回、历史交付重载、嵌套时间不改语义SHA及边界跨场景重复等。没有修改ANSWER源仓库、Registry、题目事实、答案或创建教学Review。公开资格始终false；旧20秒native样片只作历史视觉证明。
 
-默认保守估算G01约176.35秒、R02约256.15秒，主要包括完整题面和全部必要边界的屏幕阅读；这些是待导演复核的计划，不能称15/30/60秒成片已经通过。没有为了目标时长压掉边界或伪报实际节奏。当前实际画面、学生体验、首用与陌生题复用仍PENDING。
+当前默认保守估算G01约176.35秒、R02约184.45秒，包含完整题面与已安排内容的屏幕阅读，不是实际配音或导演节奏。没有新生成视频、声纹或AE/PR工程，也不宣称短片时长已验收。Human Taste收到旧稿的人工负反馈并记录PARTIAL；新稿完整体验、真实听感、画面、首用及陌生题复用仍PENDING。
 
 ## v0.2 历史记录
 

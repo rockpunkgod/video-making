@@ -174,7 +174,7 @@ def realize(projection, plan, bundle, status, *, draft_lines=None, copy_review=N
     def scene(function, vo, screen, refs, motion='none', removed=None, output=None,
               boundary_ids=None, silence=0.0):
         sequence.append({'scene_id': 'pov-' + str(len(sequence) + 1).zfill(3),
-            'cognitive_function': function, 'vo': vo, 'screen_copy': screen,
+            'cognitive_function': function, 'vo': vo, 'screen_copy': deepcopy(screen),
             'visual_state': 'original_evidence' if function in ('pain', 'focus', 'action') else function,
             'student_attention': function, 'motion_function': motion,
             'evidence_ref': deepcopy(plan['evidence_refs']), 'pedagogy_ref': deepcopy(refs),
@@ -209,10 +209,30 @@ def realize(projection, plan, bundle, status, *, draft_lines=None, copy_review=N
               script['payoff_line']['pedagogy_refs'], 'settle', silence=0.5)
     else:
         gaps.append('COGNITIVE_RELIEF_UNAVAILABLE')
-    scene('stop', script['stop_line']['text'], [x['text'] for x in projection['must_show_boundary']],
+    delivery = projection.get('boundary_delivery')
+    stop_items = projection['must_show_boundary']
+    if delivery:
+        stop_items = []
+        for placement in delivery['placements']:
+            item = next(x for x in projection['must_show_boundary'] if x['item_id'] == placement['item_id'])
+            if placement['scene'] == 'stop':
+                stop_items.append(item)
+            else:
+                target = next((r for r in sequence if r['cognitive_function'] == placement['scene']), None)
+                if target is None:
+                    raise ValueError('Reviewed boundary has no assigned comparison scene')
+                target['screen_copy'].append(item['text'])
+                target['tell_now_boundary_ids'].append(item['item_id'])
+                target['pedagogy_ref'].append(_ref(plan, '/boundaries/tell_now'))
+    stop_screen = [x['text'] for x in stop_items]
+    if delivery and delivery['bounded_candidate_state']:
+        # Existing unresolved candidates are the scope signal. Do not append a
+        # narrated checklist or imply any surviving candidate is the answer.
+        stop_screen += [r['text'] for r in payoff['method_path']]
+    scene('stop', script['stop_line']['text'], stop_screen,
           [_ref(plan, '/boundaries/tell_now'), _ref(plan, '/answer_scope')], 'boundary_seal',
           output=script['decision_state'],
-          boundary_ids=[x['item_id'] for x in projection['must_show_boundary']], silence=0.5)
+          boundary_ids=[x['item_id'] for x in stop_items], silence=0.5)
     if script['method_stamp']:
         screen = [script['method_stamp']['text']]
         if script['memory_phrase']:
@@ -244,7 +264,8 @@ def realize(projection, plan, bundle, status, *, draft_lines=None, copy_review=N
         'tell_now_preserved': True, 'payoff_supported': payoff is not None,
         **planned_scene_observations(sequence, payoff, first_action_ref=_ref(plan, '/first_action'),
             payoff_ref=_ref(plan, '/payoff'),
-            tell_now_ids=[x['item_id'] for x in projection['must_show_boundary']]),
+            tell_now_ids=[x['item_id'] for x in projection['must_show_boundary']],
+            tell_now_items=projection['must_show_boundary']),
         'action_language_present': bool(re.search(r'看|圈|划|拆|比|对|找|砍|留|排|停', all_copy)),
         'ai_explanation_density': 'high' if boilerplate > 2 else 'medium' if boilerplate else 'low',
         'expert_chain_leakage': any('expert_chain' in s for s in issues),

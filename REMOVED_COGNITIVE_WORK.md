@@ -42,7 +42,7 @@ TYPE A 需真正局部排除/判断产物；TYPE B 需实际剩余候选，完�
 | 第一动作复用 | 模板可描述；learner_transfer_validated=false，不等于学生已会陌生题复用 |
 | Copy状态 | AI文本与计划分工复核通过，内部Copy工程READY；实际体验/Human Taste/PUBLIC均未放行 |
 
-当前完整台账、动作与Evidence引用位于忽略的 `local-data/pedagogy/student-pov-r8/R02/cognitive-work.json`。一份真实局部排除支持一个有限简化，不将其他方法的分组或路线自动升级为同样的候选压缩。
+当前完整台账、动作与Evidence引用位于`local-data/pedagogy/current-copy.json`列出的R02目录下`cognitive-work.json`。实质Boundary Risk Review只是合并前台重复呈现并后置本次未触发的教学分支；它没有从工作台账删除Stop，也没有把ABC核验包装成removed。一份真实局部排除支持一个有限简化，不将其他方法的分组或路线自动升级为同样的候选压缩。
 
 ## G01 q59 既有草稿同步
 

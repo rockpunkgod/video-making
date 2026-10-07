@@ -12,7 +12,7 @@
 
 目前同步的是既有 G01 bounded worked_example 草稿。它只到已有名词性功能路线，具体词形仍未闭合；不能排除全部动名词，不能写成已经填出答案。Compiler/Copy 0.3 保留完整原题与持续题面层，未知风险的冻结 Caveat 仍进入十条 Tell Now；first_touch 因边界负荷 HOLD。G01 当前没有受支持的真实工作减少，不因口语改得自然而获得 Payoff。当前定稿已由独立 AI 文本复核，绑定最终文字与逐景脚本；这份凭证不代签真人听感或 Human Taste。
 
-唯一新增的受支持 Golden 完整题型文案选择 R02：既有审阅的局部排除支持当前候选4→3，A/B/C和整题答案未闭合。它来自冻结结构状态，未观察学生原路径或验证提速。绑定独立 AI Copy 文本复核后，R02 内部 Copy 工程 READY，公开资格仍 false。G01 的同步草稿与这个 Golden 样片分别记录，未新做多方法视频。
+唯一新增的受支持Golden完整题型文案选择R02：既有审阅的局部排除支持当前候选4→3，未观察学生原路径或验证提速。用户明确不要结果后的安全提醒，本轮Pedagogy已逐项审阅九条Tell Now：1/2/3/8用关系对比与实际中性候选状态覆盖，4/5/6/7/9只因当前未触发而后置，frequency仍unknown。详见`R02_BOUNDARY_RISK_REVIEW.md`。Copy消费这个显式决定，不自行分级；新稿省去提醒墙，不把同样废话搬成字幕。G01同步稿删除Stop VO，但没有做该资产的风险降级或补Payoff。
 
 ## 已有的“人味”要求，优先改这些
 
@@ -23,11 +23,11 @@
 3. 用能对应眼睛、笔尖或下一步操作的语言，例如看、圈、拆、比、留、停。抽象概念只在学生此刻确实需要时出现。
 4. “先别……”用于有依据地阻断旧路径；“只看……”用于明确注意对象。它们是可选表达，不是每条片子必须重复的口头模板。
 5. 一个第一动作来自 Plan。不要为了自然感补新的英语规则，也不要把整条专家推理链念出来证明严谨。
-6. VO 推进思考与下一动作；Screen 放原文、Evidence 与当前产物；Motion 展示抽离、重组或范围变化。画面已经表达清楚且下一动作不依赖这句时，可以删除重复 VO，必要 Stop / Tell Now 必须保留。
+6. VO推进思考与下一动作；Screen放原文、Evidence与当前产物；Motion展示抽离、重组或范围变化。用户不要结果后的检查清单式提醒，也不移到字幕。必要Stop/Tell Now的教学功能必须按Pedagogy已审安排覆盖，不等于每句后台原文都要重复念出。
 7. 有依据的结果出现以后，一句短反应或 0.3–1.0 秒停顿即可。不要追加十秒总结，也不要为凑30/60/90秒增加解释。
 8. 定位、缩小范围和得出答案必须说出各自真实程度。不能把“暂时放后面核”说成“以后都不用做”。
 9. 方法名放在动作价值之后；最后留下学生下一题能调用的第一动作。不要把“记住方法编号”当作记忆目标。
-10. 成功标准是学生能说“下次我先看这个”“做到这里还不能选”，并能尝试第一动作。画面酷、分析详细、程序 lint PASS 都不能替代这个判断。
+10. 成功标准是学生知道下一题第一动作、能识别当前产物与适用边界；不是强制学生复述安全提醒。画面酷、分析详细、程序lint PASS都不能替代这个判断。
 
 最直接的原话是：“Student POV 是思考位置，不是第一人称代词密度。”“Copy 应该能对应笔尖动作。”“不要让 VO 重复解释画面已经完成的事情。”这些指导的是思考和表达，不是要求某些词一定出现。原始第十至十二节的“先别”“只看”是示例；改稿时可以提出更自然、同样有来源支持的写法。
 
@@ -60,12 +60,12 @@
 本机真实材料仅在忽略的目录中，不在 GitHub：
 
 - `local-data/pedagogy/compiler-r5/G01/worked_example.copy.json`：当前 Copy-facing Projection，0.3 契约。
-- `local-data/pedagogy/student-pov-r8/G01/draft-lines.json`：同步最新自然表达判据的当前稿，明确先分从句再看主句、名词性路线不等于确定词形。
+- `local-data/pedagogy/current-copy.json`列出的G01目录下`draft-lines.json`：明确先分从句再看主句，删去结果后的冗余提醒，名词性路线范围仍保存。
 - 同目录 `hook-variants.json` / `payoff-variants.json`：开头与结果表达候选，当前均待审。
 - 同目录 `final-script.candidate.json`：VO / Screen / Motion / 来源 / 停顿协调上下文。
 - 同目录 `RECOMMENDED_FINAL_SCRIPT.md`：便于连续阅读的口播和完整逐景便览；生成与核验以 JSON 为准。
 - 同目录 `copy-review.ai.json`：只覆盖当前最终文案的 AI 文本凭证，明确真人听感、画面、Human Taste 及公开审核待完成。
 
-G01 同目录 `motion-copy-coordination.json` 绑定已有实际动作指令，记录分开 till 从句、保留主句、提取空位、路线和封界；它不证明这些动作已经渲染。R02 Golden 文案位于 `local-data/pedagogy/student-pov-r8/R02/`。本地阅读入口为 `local-data/pedagogy/CURRENT_COPY.md`，机器入口为 `current-copy.json`。所有此前版本仍保留为历史，不能拿旧文案批准或旧20秒视觉样片代替当前必要边界覆盖。
+G01同目录`motion-copy-coordination.json`绑定已有实际动作指令，记录分开till从句、保留主句、提取空位、路线和封界；它不证明这些动作已经渲染。R02使用`local-data/pedagogy/boundary-risk-r2/R02/`的新Plan；当前两份文案的最终目录和SHA都以`local-data/pedagogy/current-copy.json`为准，阅读入口为`CURRENT_COPY.md`。所有此前版本仍保留为历史，不能拿旧批准或旧20秒视觉样片代替当前必要边界覆盖。
 
 若另一位 Agent 只有 GitHub 权限，需要由用户另行提供以上本地投影和候选；不要扫描教学 Markdown、题库或 Registry 补事实。真实题目、口播、视频、声音与工程保持本地，不提交到公开仓库。

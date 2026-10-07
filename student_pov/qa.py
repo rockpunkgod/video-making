@@ -5,7 +5,8 @@ import re
 from video_contracts import sha
 
 
-def planned_scene_observations(sequence, payoff, *, first_action_ref, payoff_ref, tell_now_ids):
+def planned_scene_observations(sequence, payoff, *, first_action_ref, payoff_ref, tell_now_ids,
+                               tell_now_items=None):
     """Observe planned scene fields, never rendered frames or student experience.
 
     A bound Payoff alone does not make a reduction visible. Its before/after
@@ -20,8 +21,11 @@ def planned_scene_observations(sequence, payoff, *, first_action_ref, payoff_ref
         and bool(row['pedagogy_ref']) and bool(row['evidence_ref'])
         and bool(row['screen_copy']) and row['motion_function'] == 'focus_existing_evidence'
         for row in sequence)
-    shown_boundaries = {item for row in sequence if row['cognitive_function'] == 'stop'
-                        and row['screen_copy'] for item in row['tell_now_boundary_ids']}
+    required_text = {item['item_id']: item['text'] for item in tell_now_items or []}
+    shown_boundaries = {item for row in sequence if row['screen_copy']
+        and row['cognitive_function'] in ('focus', 'action', 'stop')
+        for item in row['tell_now_boundary_ids']
+        if not required_text or required_text.get(item) in row['screen_copy']}
     student_path = action_present and focus_present and bool(required_boundaries) \
         and required_boundaries <= shown_boundaries
     reduction_visible = False

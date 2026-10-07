@@ -68,7 +68,9 @@ Pain 来自既有症状或具体题面结构，不造“90%的学生”。Interr
 - 相邻句避免机械套同一句式。保留有助于对比、节奏或记忆的重复；重复开头却没有推进新动作时才重写。一次听不完整的长句先拆短。
 - 方法名放动作价值之后，最后留下下一题能直接调用的第一动作。
 
-词表用于选择新表达，不对受保护文本执行批量替换。必要的“词形”等教学对象应保留其含义；“定死”等候选说法也不能增加确定性。冻结题面、Evidence、方法名和必须展示的 Stop 继续按当前契约原样投影。
+用户明确不要结果后的检查清单式提醒。类似“另外几个还得再看”“现在还不能选”“这里只负责……”的自我审查口播全部省去，也不搬到字幕或单独的片尾提醒墙。已经成立的结果用短句、真实产物和停顿表达。必要边界的教学功能仍须有依据：由Pedagogy的实质Boundary Risk Review决定哪些当前需要、哪些属于未走到的后续分支；当前功能可以由正确Evidence对比和中性未定候选状态覆盖。Copy不能自行把边界移后，也不能以“安全”为由把重复提醒默认加回。`stop_vo`可以不提供，任何改稿都重新绑定文案审核。
+
+词表用于选择新表达，不对受保护文本执行批量替换。必要的“词形”等教学对象应保留其含义；“定死”等候选说法也不能增加确定性。冻结题面、Evidence、方法名继续按契约原样投影。默认Stop逐字保留；只有显式、同题同动作的Pedagogy风险审阅才允许合并呈现或用已绑定的Evidence/Output覆盖。原Stop全文、条件及依赖仍留在Guard，不能靠删文案消除约束。
 
 这些判据只约束表达。它们不改 Tell Now/Tell Later、Role、答案范围、Evidence、Stop，也不许因“写得顺”补出未认证的认知收益，或把 deferred 说成 removed。判据通过不等于自然口语通过。工程入口接受明确标明 AI 或人工身份、绑定最终文案的外部 Copy 凭证及 natural_speech 检查；它不代签真人听感或 Human Taste，后两项仍需人工反馈。
 
@@ -84,7 +86,7 @@ Signature 映射仅协调视觉语法：R01 Overgrowth；R02 Relation Rewire；R
 
 ## Silence 与 Explanation Suppression
 
-支持 Collapse/Answer Lock/Evidence Lock/Boundary Seal/Payoff/Transformation 后0.3–1.0秒的 Hold/Silence/Music Duck/Settle 候选。必要 Tell Now 在静默中仍可见且有阅读时间；静默不用于藏边界。
+支持 Collapse/Answer Lock/Evidence Lock/Boundary Seal/Payoff/Transformation 后0.3–1.0秒的 Hold/Silence/Music Duck/Settle 候选。必要Tell Now可放在实际focus/action比较处；经已绑定风险审阅批准的局部范围可由候选状态覆盖。静默不用于隐藏尚未覆盖的边界。
 
 `suppression_qa(copy,coverage)` 只产生审阅候选。coverage 由编辑显式记录画面、Motion、Evidence 均已表达且下一动作不依赖这句，才标 EXPLANATION_REDUNDANT 并建议去掉 VO。Stop 和绑定 Tell Now 的 scene 永远保护；来源 Copy 不改，原最终 Copy Approval 对变化后的候选失效。
 
@@ -110,4 +112,4 @@ validate_copy(candidate, copy_projection, plan, frozen_bundle, current_status)
 
 独立 `python -m student_pov realize|validate|inspect <request.json>`，只读明确列出的计划/投影/资产/状态和可选 draft_lines/copy_review；inspect 只需指定 copy。命令不覆盖历史。教学、来源、编辑与公开渲染始终独立，本模块不自动发布。
 
-真实 G01 当前缺已有基线路径/removed_work 与自然 Copy 凭证，学生视角层 HOLD；工程化 Contract 合成测试不补这个缺口。当前本地 Copy 为 student-pov-r4，使用 compiler-r3 的 0.2 Plan，完整保留十条 Tell Now，未改候选措辞。旧20秒 Hero 保留为历史视觉证明；旧 Plan 当前消费被阻断，它也没有覆盖新 Plan 的全部 Tell Now，不能继承新 READY 或声称 Student POV 通过学生验收。详见 `STUDENT_POV_COPY_ACCEPTANCE.md`。
+当前真实Copy以本地`local-data/pedagogy/current-copy.json`为入口。R02已完成九项Boundary Risk Review，实质结论和绑定规则见`R02_BOUNDARY_RISK_REVIEW.md`；当前稿省去结果提醒，保留关系对比和真实候选状态。G01同步稿删除冗余Stop VO，缺受支持的工作减少，继续HOLD；本轮没有替G01做风险降级。旧20秒Hero只保留为历史视觉证明，不能继承新文案或新Plan的审核。详见`STUDENT_POV_COPY_ACCEPTANCE.md`。

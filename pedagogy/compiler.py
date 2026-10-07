@@ -37,8 +37,15 @@ def _field_allowed(source, key, path):
 
 
 def plan_semantics(plan):
-    return {k: v for k, v in plan.items()
-            if k not in ('plan_sha', 'plan_id', 'generated_at', 'content_sha', 'envelope_sha')}
+    result = {k: v for k, v in plan.items()
+              if k not in ('plan_sha', 'plan_id', 'generated_at', 'content_sha', 'envelope_sha')}
+    if ('boundary_review' in result.get('replay_request', {})
+            and plan.get('boundary_delivery', {}).get('contract_version') != '0.1.0'):
+        result['replay_request'] = deepcopy(result['replay_request'])
+        review = result['replay_request']['boundary_review']
+        result['replay_request']['boundary_review'] = {k: v for k, v in review.items()
+                                                       if k not in ('generated_at', 'envelope_sha')}
+    return result
 
 
 def _item(source, item_id, path):
@@ -82,7 +89,13 @@ def _original_question(source):
 
 def compile_plan(bundle, status, selection, *, mode='first_touch', audience='first_time_student',
                  channel='video', duration_target=30, fields=None, extra_boundary_refs=None,
-                 generated_at=None):
+                 generated_at=None, boundary_review=None):
+    if boundary_review is not None:
+        from .boundary_review import apply_review
+        base = compile_plan(bundle, status, selection, mode=mode, audience=audience, channel=channel,
+            duration_target=duration_target, fields=fields, extra_boundary_refs=extra_boundary_refs,
+            generated_at=generated_at)
+        return apply_review(base, bundle, boundary_review)
     if mode not in policy.MODES or channel not in policy.CHANNELS:
         raise ValueError('Unsupported pedagogy mode or channel')
     if audience not in ('first_time_student', 'returning_student'):

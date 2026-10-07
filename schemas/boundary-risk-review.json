@@ -1,0 +1,96 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://answer.local/schemas/boundary-risk-review.json",
+  "title": "Explicit case-bound Pedagogy disclosure review; not an ANSWER teaching Review",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "kind", "status", "reviewer", "reviewer_kind", "independent_human_teaching_certified", "empirical_frequency_established", "binding", "entries", "presentations", "delivery", "generated_at", "content_sha", "envelope_sha"],
+  "properties": {
+    "schema_version": {"const": "0.1.0"},
+    "kind": {"const": "pedagogy_boundary_risk_review"},
+    "status": {"enum": ["pass", "changes_requested"]},
+    "reviewer": {"type": "string", "minLength": 1, "pattern": "\\S"},
+    "reviewer_kind": {"enum": ["ai_host", "human"]},
+    "independent_human_teaching_certified": {"const": false},
+    "empirical_frequency_established": {"const": false},
+    "binding": {
+      "type": "object", "additionalProperties": false,
+      "required": ["source_plan_shas", "input_binding", "source_analysis_sha", "truth_guard_sha", "boundary_inventory_sha"],
+      "properties": {
+        "source_plan_shas": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"$ref": "#/$defs/sha"}},
+        "input_binding": {"type": "object"},
+        "source_analysis_sha": {"$ref": "#/$defs/sha"},
+        "truth_guard_sha": {"$ref": "#/$defs/sha"},
+        "boundary_inventory_sha": {"$ref": "#/$defs/sha"}
+      }
+    },
+    "entries": {"type": "array", "minItems": 1, "items": {
+      "type": "object", "additionalProperties": false,
+      "required": ["source_ref", "risk", "frequency_basis", "current_applicability", "omission_risk", "rationale", "assessment_refs", "decision", "deferred_until"],
+      "properties": {
+        "source_ref": {"$ref": "#/$defs/ref"},
+        "risk": {"type": "object", "additionalProperties": false, "required": ["frequency", "severity", "current_relevance"], "properties": {
+          "frequency": {"const": "unknown"},
+          "severity": {"enum": ["low", "medium", "high", "unknown"]},
+          "current_relevance": {"enum": ["low", "medium", "high", "unknown"]}
+        }},
+        "frequency_basis": {"type": "string", "minLength": 1, "pattern": "\\S"},
+        "current_applicability": {"enum": ["triggered", "conditional", "not_exercised"]},
+        "omission_risk": {"type": "string", "minLength": 1, "pattern": "\\S"},
+        "rationale": {"type": "string", "minLength": 1, "pattern": "\\S"},
+        "assessment_refs": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/ref"}},
+        "decision": {"enum": ["TELL_NOW", "TELL_LATER"]},
+        "deferred_until": {"type": ["string", "null"], "minLength": 1},
+        "clause_assessments": {"type": "array", "minItems": 1, "items": {
+          "type": "object", "additionalProperties": false,
+          "required": ["range", "risk", "decision", "rationale"],
+          "properties": {
+            "range": {"$ref": "#/$defs/range"},
+            "risk": {"type": "object", "additionalProperties": false, "required": ["frequency", "severity", "current_relevance"], "properties": {
+              "frequency": {"const": "unknown"}, "severity": {"enum": ["low", "medium", "high", "unknown"]}, "current_relevance": {"enum": ["low", "medium", "high", "unknown"]}
+            }},
+            "decision": {"enum": ["TELL_NOW", "TELL_LATER"]},
+            "rationale": {"type": "string", "minLength": 1, "pattern": "\\S"}
+          }
+        }}
+      },
+      "allOf": [{"if": {"properties": {"decision": {"const": "TELL_LATER"}}}, "then": {"properties": {"deferred_until": {"type": "string"}}}}]
+    }},
+    "presentations": {"type": "array", "minItems": 1, "items": {
+      "type": "object", "additionalProperties": false,
+      "required": ["group_id", "member_refs", "literal_ref", "literal_range", "scene", "rationale", "coverage"],
+      "properties": {
+        "group_id": {"type": "string", "minLength": 1},
+        "member_refs": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"$ref": "#/$defs/ref"}},
+        "literal_ref": {"$ref": "#/$defs/ref"},
+        "literal_range": {"$ref": "#/$defs/range"},
+        "scene": {"enum": ["focus", "action", "stop"]},
+        "rationale": {"type": "string", "minLength": 1, "pattern": "\\S"},
+        "coverage": {"type": "array", "minItems": 1, "items": {
+          "type": "object", "additionalProperties": false,
+          "required": ["source_ref", "range", "mechanism", "rationale"],
+          "properties": {
+            "source_ref": {"$ref": "#/$defs/ref"},
+            "range": {"$ref": "#/$defs/range"},
+            "mechanism": {"enum": ["literal_display", "reviewed_equivalent", "evidence_focus", "bounded_candidate_state", "upstream_revalidation"]},
+            "rationale": {"type": "string", "minLength": 1, "pattern": "\\S"}
+          }
+        }}
+      }
+    }},
+    "delivery": {"type": "object", "additionalProperties": false, "required": ["focus_evidence_refs", "bounded_candidate_state"], "properties": {
+      "focus_evidence_refs": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"$ref": "#/$defs/ref"}},
+      "bounded_candidate_state": {"type": "boolean"}
+    }},
+    "generated_at": {"type": "string", "minLength": 1},
+    "content_sha": {"$ref": "#/$defs/sha"},
+    "envelope_sha": {"$ref": "#/$defs/sha"}
+  },
+  "$defs": {
+    "sha": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+    "ref": {"type": "object", "additionalProperties": false, "required": ["asset_id", "pointer", "sha"], "properties": {
+      "asset_id": {"type": "string", "minLength": 1}, "pointer": {"type": "string", "pattern": "^/"}, "sha": {"$ref": "#/$defs/sha"}
+    }},
+    "range": {"type": "array", "minItems": 2, "maxItems": 2, "items": {"type": "integer", "minimum": 0}}
+  }
+}

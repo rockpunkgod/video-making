@@ -39,6 +39,10 @@ def copy_projection(plan, bundle, status):
         answer_scope=deepcopy(plan['answer_scope']),
         omitted_boundary_ids=[x['item_id'] for x in plan['boundaries']['tell_later']],
         truth_guard_sha=sha(plan['truth_guard']))
+    if 'boundary_delivery' in plan:
+        result['boundary_delivery'] = deepcopy(plan['boundary_delivery'])
+        result['evidence_snippets'] = [s for s in result['evidence_snippets']
+            if s['ref'] in plan['boundary_delivery']['focus_evidence_refs']]
     return seal(result)
 
 
@@ -54,6 +58,8 @@ def motion_projection(plan, bundle, status):
         do_not_say=deepcopy(plan['prohibited_claims']),
         truth_guard_sha=sha(plan['truth_guard']),
         ae_effect_selection=None)
+    if 'boundary_delivery' in plan:
+        result['boundary_delivery'] = deepcopy(plan['boundary_delivery'])
     return seal(result)
 
 

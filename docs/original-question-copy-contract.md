@@ -27,4 +27,4 @@ Copy 的 `reality_layer` 保存原题、逐字段引用、字面屏幕文本、`
 - 完成：已有冻结候选变化到 Payoff 的机械适配。专门 `reviewed_payoff` 继续兼容；原候选域与有效的唯一自有局部排除也可形成结构状态对照，不要求 ANSWER 新增 Review，不推出学生行为、提速或最终答案。
 - 未认证：真人听感、Human Taste、学习效果、实际画面持续可见性、陌生题迁移和公开来源权限。
 
-transfer/hard_case 的完整内容投影以及 simultaneous_concepts 的 step-kind 近似仍是已有能力限制，不纳入完整教学系列或实际认知负担验收。当前验证与真实 Copy 状态见两份 Acceptance 报告。
+transfer/hard_case必须引用已有具体reviewed_claims，类型标签不能放行；独立练习/系列及simultaneous_concepts的step-kind近似仍是能力限制，不纳入完整教学系列或实际认知负担验收。当前验证与真实Copy状态见两份Acceptance报告。

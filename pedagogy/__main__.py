@@ -40,11 +40,13 @@ def main():
     bundle, status = load('bundle'), load('status')
     if args.command == 'compile':
         allowed = {'bundle', 'status', 'selection', 'mode', 'audience', 'channel',
-                   'duration_target', 'fields', 'extra_boundary_refs', 'output'}
+                   'duration_target', 'fields', 'extra_boundary_refs', 'boundary_review', 'output'}
         if set(request) - allowed:
             raise ValueError('Unknown compile request field')
         kwargs = {k: request[k] for k in ('mode', 'audience', 'channel', 'duration_target',
                                          'fields', 'extra_boundary_refs') if k in request}
+        if 'boundary_review' in request:
+            kwargs['boundary_review'] = load('boundary_review')
         plan = compile_plan(bundle, status, request['selection'], **kwargs)
         validate_plan(plan, bundle, status)
         _save(path.parent / request['output'], plan)

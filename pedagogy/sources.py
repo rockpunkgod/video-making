@@ -167,17 +167,33 @@ class FrozenSource:
         return result
 
     def cases(self):
-        """Only explicit frozen review credentials create a case-content slot."""
+        """Case content must exist in the own frozen Review, not just its label.
+
+        The question, actual actions and evidence remain those of this selected
+        frozen application. These assertions do not create another question or
+        prove that a learner has completed transfer. Conflicting active content
+        cannot be resolved by silently picking the last Review.
+        """
         result = {}
         for path, record in zip(self.review_paths, self.review_records):
             prefix = path + ('/record' if self.transport == 'frozen_asset' else '')
-            kind = record.get('case_type', record.get('case_kind'))
-            if kind in ('canonical', 'counterexample', 'boundary', 'transfer', 'hard'):
-                result[kind] = self.ref(prefix + ('/case_type' if 'case_type' in record else '/case_kind'))
             claims = record.get('reviewed_claims', {})
-            for kind in ('boundary', 'counterexample'):
-                if isinstance(claims.get(kind), str) and claims[kind].strip():
-                    result[kind] = self.ref(prefix + '/reviewed_claims/' + kind)
+            if not isinstance(claims, dict):
+                raise ValueError('Frozen reviewed case content must be a claims object')
+            for key in ('canonical', 'counterexample', 'boundary', 'transfer', 'hard', 'hard_case'):
+                if key not in claims:
+                    continue
+                value = claims[key]
+                if not isinstance(value, str) or not value.strip():
+                    raise ValueError('Frozen reviewed case content needs an existing nonempty assertion: ' + key)
+                kind = 'hard' if key == 'hard_case' else key
+                ref = self.ref(prefix + '/reviewed_claims/' + key)
+                if kind in result:
+                    previous = pointer(self.bundle, result[kind]['pointer'])
+                    if previous != value:
+                        raise ValueError('Conflicting frozen reviewed case content: ' + kind)
+                else:
+                    result[kind] = ref
         return result
 
     def risk(self, item_path):
