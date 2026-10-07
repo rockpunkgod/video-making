@@ -6,6 +6,8 @@ Bundle 和当前提供的 Status。当前只支持 R02 已有的局部候选排�
 
 用户正在优化声音时，生产停在 `PICTURE_AND_MUSIC_PREPARED_VOICE_PENDING`。
 这是制作组件，尚不是带配音样片；不生成临时声音，不导出或交付最终样片。
+用户明确要求先看画面时，可以另行导出画面与钢琴预览；不会把这条请求记成
+声音完成通知，也不会改变最终样片或公开放行状态。
 
 ## 冻结输入与画面
 
@@ -64,6 +66,34 @@ python -m premiere_production.student_picture audit <pr-request.json>
 V1 为已验证的无声原生画面；A1 留空；A2 为用户提供的本地钢琴录音。
 工程只导入这两个媒体源，拒绝额外声音或另一版素材；回读来源、源范围、时间线
 和音乐音量包络。另登记画面段落与待配音的编辑标记。
+
+### 画面与钢琴预览
+
+```text
+python -m premiere_production.student_picture preview <preview-request.json>
+```
+
+预览请求沿用准备请求，另加 `preview`：
+
+```json
+{
+  "preview": {
+    "output_path": "<准备输出目录>/preview/PICTURE_MUSIC_PREVIEW.mp4",
+    "preset_path": "<本机 H.264 与 AAC 导出预设>.epr",
+    "preset_sha": "<该预设文件的 SHA-256>"
+  }
+}
+```
+
+该操作先核验当前冻结输入、原生序列、空 A1、唯一画面与钢琴来源及音乐包络，
+再从 Premiere 导出整个序列。导出后重新核验准备状态和 1080p24 / 48 kHz
+双声道媒体；不覆盖既有视频。原生调用超时保留原请求及不确定记录，不自动重试。
+
+预览 Receipt 明记 `preview_scope: picture_and_music_only`、
+`voice_status: AWAITING_USER_AUDIO` 和编辑预估时序。`preview_export_performed`
+可以为 true，但 `user_voice_ready_signal_received / sample_export_performed /
+sample_delivery_allowed / public_render_ready` 均保持 false。
+这条视频用于查看画面与动效，不能充当最终配音、字幕对齐或听感凭证。
 
 钢琴为内部试制素材，录音权利和实际听感保持单独状态。暂定音量包络不等于
 最终混音批准。AE/PR 工程、题面、Copy、声音、音乐、视频及逐帧材料均留在

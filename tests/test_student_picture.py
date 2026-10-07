@@ -1,11 +1,16 @@
 """SYNTHETIC-only picture bindings and explicit final-voice waiting controls."""
 from copy import deepcopy
+import json
+from pathlib import Path
+from tempfile import TemporaryDirectory
 import unittest
-from unittest.mock import patch
+from unittest.mock import Mock, patch
 
 from creative_os.student_sample import build_spec, resolve_text, validate_direction, validate_spec, require_sample_delivery
 from ae_production.student_picture import _tracks_close
-from premiere_production.student_picture import inspect_timeline, inspect_media_items
+from premiere_production.student_picture import (inspect_timeline, inspect_media_items,
+                                                preview_paths, inspect_preview_media, preview)
+from creative_os.hero import file_sha
 from video_contracts import pointer, sha
 
 
@@ -159,6 +164,84 @@ class PreparedTimelineTests(unittest.TestCase):
         media.append({'nodeId': 'SYNTHETIC-voice', 'mediaPath': 'SYNTHETIC_voice.wav'})
         with self.assertRaisesRegex(ValueError, 'voice media'):
             inspect_media_items(media, identity, receipt, audio)
+
+
+class PicturePreviewTests(unittest.TestCase):
+    def request(self, root):
+        root = Path(root); preset = root / 'SYNTHETIC.epr'
+        preset.write_text('SYNTHETIC preset', encoding='utf-8')
+        return {'output': str(root), 'project': str(root / 'SYNTHETIC.prproj'),
+            'preview': {'output_path': str(root / 'preview' / 'SYNTHETIC.mp4'),
+                        'preset_path': str(preset), 'preset_sha': file_sha(preset)}}
+
+    def media(self):
+        return {'streams': [{'codec_type': 'video', 'codec_name': 'h264', 'width': 1920,
+            'height': 1080, 'r_frame_rate': '24/1', 'duration': '10'},
+            {'codec_type': 'audio', 'codec_name': 'aac', 'sample_rate': '48000',
+             'channels': 2, 'duration': '10'}]}
+
+    def test_preview_preserves_existing_file_and_bound_preset(self):
+        with TemporaryDirectory() as root:
+            request = self.request(root); output, preset = preview_paths(request)
+            preset.write_text('SYNTHETIC changed', encoding='utf-8')
+            with self.assertRaisesRegex(ValueError, 'preset binding'):
+                preview_paths(request)
+            output.parent.mkdir(); output.write_bytes(b'SYNTHETIC prior preview')
+            with self.assertRaisesRegex(ValueError, 'Preserve existing'):
+                preview_paths(request)
+            self.assertEqual(output.read_bytes(), b'SYNTHETIC prior preview')
+
+    def test_partial_or_wrong_export_cannot_receive_a_verified_receipt(self):
+        inspect_preview_media(self.media(), 10)
+        for change in ('missing_music', 'short_picture', 'wrong_rate'):
+            with self.subTest(change=change):
+                info = self.media()
+                if change == 'missing_music': info['streams'].pop()
+                if change == 'short_picture': info['streams'][0]['duration'] = '8'
+                if change == 'wrong_rate': info['streams'][0]['r_frame_rate'] = '30/1'
+                with self.assertRaisesRegex(ValueError, 'preview profile'):
+                    inspect_preview_media(info, 10)
+
+    def run_preview(self, request, fail=False):
+        captured = {'project_sha': sha('SYNTHETIC project'), 'timeline': {'id': 'SYNTHETIC sequence'},
+                    'voice_track_empty': True, 'sample_delivery_allowed': False}
+        spec = {'spec_sha': sha('SYNTHETIC spec'), 'copy_lock': {'final_copy_sha': sha('SYNTHETIC copy')}}
+        audio = {'audio_plan_sha': sha('SYNTHETIC audio'), 'duration': 10,
+                 'music': {'clip_sha': sha('SYNTHETIC music')}}
+        client = Mock()
+        def call(name, inputs, **kwargs):
+            if name == 'export_sequence':
+                if fail: raise TimeoutError('SYNTHETIC host timeout')
+                Path(inputs['output_path']).write_bytes(b'SYNTHETIC media')
+            return {'SYNTHETIC': name}
+        client.call.side_effect = call
+        with patch('premiere_production.student_picture.audit', return_value=captured), \
+             patch('premiere_production.student_picture.preflight', return_value=(spec, {'output_sha': sha('SYNTHETIC picture')}, audio)), \
+             patch('premiere_production.student_picture.client_for', return_value=client), \
+             patch('premiere_production.student_picture.subprocess.check_output', return_value=json.dumps(self.media())):
+            if fail:
+                with self.assertRaises(TimeoutError): preview(request)
+                return client
+            return preview(request)
+
+    def test_picture_preview_does_not_unlock_voice_or_sample_delivery(self):
+        with TemporaryDirectory() as root:
+            result = self.run_preview(self.request(root))
+            self.assertTrue(result['preview_export_performed'])
+            for field in ('user_voice_ready_signal_received', 'sample_export_performed',
+                          'sample_delivery_allowed', 'public_render_ready'):
+                self.assertFalse(result[field])
+            self.assertEqual(result['voice_status'], 'AWAITING_USER_AUDIO')
+            self.assertEqual(result['preview_scope'], 'picture_and_music_only')
+
+    def test_timeout_preserves_uncertain_request_without_retry(self):
+        with TemporaryDirectory() as root:
+            request = self.request(root); client = self.run_preview(request, fail=True)
+            exports = [c for c in client.call.call_args_list if c.args[0] == 'export_sequence']
+            self.assertEqual(len(exports), 1)
+            output = Path(request['preview']['output_path'])
+            self.assertTrue(output.with_suffix('.uncertain.json').exists())
+            self.assertFalse(output.with_suffix('.receipt.json').exists())
 
 
 if __name__ == '__main__':

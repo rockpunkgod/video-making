@@ -1,7 +1,8 @@
 """Prepare a native editing project while reserving an empty final-voice track.
 
-This entry point deliberately has no sample export operation. Final audio,
-alignment, listening, and user delivery remain a subsequent task.
+An explicit preview operation exports picture and piano with the voice track
+still empty. Final audio, alignment, listening, and sample delivery remain a
+subsequent task; a preview never unlocks them.
 """
 import argparse
 import json
@@ -200,11 +201,82 @@ def audit(request):
     return result
 
 
+def preview_paths(request):
+    preview = request['preview']; output = Path(preview['output_path']).resolve()
+    root = Path(request['output']).resolve()
+    if output.suffix.lower() != '.mp4' or root not in output.parents:
+        raise ValueError('Picture preview must be a new local MP4 in the preparation directory')
+    if output.exists():
+        raise ValueError('Preserve existing preview; inspect its receipt before another export')
+    preset = Path(preview['preset_path']).resolve()
+    if preset.suffix.lower() != '.epr' or file_sha(preset) != preview['preset_sha']:
+        raise ValueError('Preview export preset binding changed')
+    return output, preset
+
+
+def inspect_preview_media(info, duration):
+    streams = info['streams']
+    video = [s for s in streams if s['codec_type'] == 'video']
+    audio = [s for s in streams if s['codec_type'] == 'audio']
+    if (len(streams) != 2 or len(video) != 1 or len(audio) != 1
+            or [video[0].get(k) for k in ('codec_name', 'width', 'height', 'r_frame_rate')]
+            != ['h264', 1920, 1080, '24/1']
+            or [audio[0].get(k) for k in ('codec_name', 'sample_rate', 'channels')]
+            != ['aac', '48000', 2]
+            or abs(float(video[0]['duration']) - duration) > 1/24
+            or abs(float(audio[0]['duration']) - duration) > 0.1):
+        raise ValueError('Exported picture/piano preview profile or duration changed')
+
+
+def preview(request):
+    output, preset = preview_paths(request)
+    captured = audit(request)
+    spec, picture, audio = preflight(request)
+    client = client_for(request)
+    validation = client.call('validate_export_preset', {'preset_path': str(preset)})
+    output.parent.mkdir(parents=True, exist_ok=True)
+    capture = {'kind': 'internal_picture_preview', 'spec_sha': spec['spec_sha'],
+        'final_copy_sha': spec['copy_lock']['final_copy_sha'],
+        'preparation_sha': sha(captured), 'audio_plan_sha': audio['audio_plan_sha'],
+        'project': request['project'], 'project_sha': captured['project_sha'],
+        'sequence_id': captured['timeline']['id'], 'picture_sha': picture['output_sha'],
+        'music_sha': audio['music']['clip_sha'], 'preset_sha': file_sha(preset),
+        'preset_validation': validation, 'preview_scope': 'picture_and_music_only',
+        'voice_track_empty': True, 'voice_status': 'AWAITING_USER_AUDIO',
+        'user_voice_ready_signal_received': False, 'sample_delivery_allowed': False,
+        'public_render_ready': False, 'timing_basis': 'editorial_estimate_pending_final_audio'}
+    write(output.with_suffix('.preflight.json'), capture)
+    inputs = {'output_path': str(output), 'preset_path': str(preset),
+              'range': 'entire', 'overwrite': False, 'timeout_minutes': 15}
+    write(output.with_suffix('.pending.json'), {'tool': 'export_sequence', 'inputs': inputs})
+    try:
+        native = client.call('export_sequence', inputs, timeout=960)
+    except Exception:
+        write(output.with_suffix('.uncertain.json'), {'tool': 'export_sequence', 'inputs': inputs,
+            'next_action': 'inspect_native_state_and_output_before_retry', 'mutation_retried': False})
+        raise
+    after = audit(request)
+    if sha(after) != sha(captured):
+        raise ValueError('Prepared inputs or native timeline changed during preview export')
+    info = json.loads(subprocess.check_output(['ffprobe', '-v', 'error', '-show_streams',
+        '-show_format', '-of', 'json', str(output)], encoding='utf-8'))
+    inspect_preview_media(info, audio['duration'])
+    result = dict(capture, status='PICTURE_AND_MUSIC_PREVIEW_EXPORTED_VOICE_PENDING',
+        output=str(output), output_sha=file_sha(output), native_export=native,
+        media=info, preview_export_performed=True, sample_export_performed=False,
+        caption_alignment='PENDING_FINAL_AUDIO', human_taste_review='PENDING')
+    write(output.with_suffix('.receipt.json'), result)
+    return result
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('operation', choices=('assemble', 'audit')); parser.add_argument('request')
-    args = parser.parse_args(); globals()[args.operation](read(args.request))
-    print('Picture and piano prepared; final voice and sample delivery remain pending', flush=True)
+    parser.add_argument('operation', choices=('assemble', 'audit', 'preview')); parser.add_argument('request')
+    args = parser.parse_args(); result = globals()[args.operation](read(args.request))
+    if args.operation == 'preview':
+        print('Picture and piano preview exported: ' + result['output'], flush=True)
+    else:
+        print('Picture and piano prepared; final voice and sample delivery remain pending', flush=True)
 
 
 if __name__ == '__main__':
