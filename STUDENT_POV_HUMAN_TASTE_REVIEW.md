@@ -24,3 +24,27 @@
 | 最后真正记住哪一句？ | PENDING |
 
 实际反馈应精确绑定最终 Copy/画面版本。任何最终文案改变让旧编辑批准失效；教学认证、来源展示许可和公开发布门禁继续独立。
+
+## Student POV Experience v0.4：新 15 问
+
+状态：**PENDING**。新增体验草稿与指纹以本地 `student-experience-v04-r1/` 为准；旧 r8/r14 的人工负反馈仍属于原版本，不自动认可新 Experience。结构回放、计划中的复杂度变化及外部 AI Copy 凭证均不替代以下真人回答。
+
+| 问题 | 结果 |
+|---|---|
+| 像不像自己在做题，而不是听人讲题？ | PENDING |
+| 第一刀能不能马上复现？ | PENDING |
+| 前 5–10 秒有没有明确卡点？ | PENDING；本层不指定最终时间 |
+| 有没有一处真实的“哦，原来就看这个”？ | PENDING |
+| 如果有 Payoff，它具体少了什么工作？ | PENDING |
+| 有没有把 deferred 的工作包装成 removed？ | PENDING；结构分类检查另行记录 |
+| Stop 是否自然，而不是免责声明？ | PENDING |
+| VO 有没有重复画面？ | PENDING；原样文字重复 lint 不代签视听分工 |
+| 有没有 AI 解释感？ | PENDING |
+| 有没有营销号感？ | PENDING |
+| 不显示方法名，还知道刚才做了什么吗？ | PENDING |
+| 下一道类似题第一刀会做什么？ | PENDING |
+| 最后记住的是方法动作还是一堆规则？ | PENDING |
+| 会不会收藏？为什么？ | PENDING |
+| 会不会转发给同学？为什么？ | PENDING |
+
+每份未来反馈必须绑定当前 Experience / final_copy_sha；声音或画面改变后另行绑定对应实际输出。当前没有新音频、视频或学生实验，不用机械 Audit 把任何一行改成 PASS。

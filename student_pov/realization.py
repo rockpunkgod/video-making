@@ -62,13 +62,24 @@ def _credential(review, script_sha, final_copy_sha):
                     for k in ('semantic_fidelity', 'natural_speech', 'layer_division')))
 
 
-def realize(projection, plan, bundle, status, *, draft_lines=None, copy_review=None, adapter=None):
+def realize(projection, plan, bundle, status, *, draft_lines=None, copy_review=None, adapter=None,
+            contract_version=VERSION, motion_projection=None, options=None, allow_held_plan=False):
     """Freeze a literal default or a bound natural-copy candidate.
 
     Adapters receive only the small projection. The runtime never supplies a
     Registry, solver, hidden truth files, or a choice of disclosure tiers.
     An adapter's new wording always needs an explicit final-copy credential.
     """
+    if contract_version == '0.4.0':
+        from .experience import realize_experience
+        if adapter is not None:
+            raise ValueError('Experience v0.4 accepts explicit bound drafts; no implicit adapter generation')
+        return realize_experience(projection, motion_projection, plan, bundle, status,
+            draft_lines=draft_lines, copy_review=copy_review, options=options, allow_held_plan=allow_held_plan)
+    if contract_version != VERSION or motion_projection is not None or options is not None or allow_held_plan:
+        raise ValueError('Explicit Student POV contract required; experience choices require v0.4')
+    if plan.get('schema_version') != VERSION:
+        raise ValueError('Student POV Copy 0.3 requires its compatible Pedagogy 0.3 contract')
     validate_handoff(projection, plan, bundle, status)
     if projection['kind'] != 'pedagogy_copy_projection':
         raise ValueError('Student POV requires a Copy-facing projection')

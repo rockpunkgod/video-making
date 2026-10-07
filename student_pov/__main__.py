@@ -12,6 +12,10 @@ def main():
     parser.add_argument('request')
     args = parser.parse_args()
     path = Path(args.request); request = read(path)
+    allowed = {'copy'} if args.command == 'inspect' else {'plan','projection','motion_projection',
+        'bundle','status','copy','output','draft_lines','copy_review','contract_version','options','allow_held_plan'}
+    if set(request) - allowed:
+        raise ValueError('Unknown Student POV request field; Creative/voice control belongs downstream')
     def load(key):
         return read(path.parent / request[key])
     if args.command == 'inspect':
@@ -19,9 +23,13 @@ def main():
         print('Historical integrity PASS; current upstream not verified; consumption blocked ('
               + result['contract_status'] + ')')
         return
-    plan, projection, bundle, status = (load(k) for k in ('plan', 'projection', 'bundle', 'status'))
+    version = request.get('contract_version', '0.3.0')
+    plan, bundle, status = (load(k) for k in ('plan', 'bundle', 'status'))
+    projection = load('projection') if request.get('projection') else None
+    motion = load('motion_projection') if request.get('motion_projection') else None
     if args.command == 'validate':
-        result = validate_copy(load('copy'), projection, plan, bundle, status)
+        result = validate_copy(load('copy'), projection, plan, bundle, status,
+            motion_projection=motion, required_version=version)
         print('Current binding PASS; consumption ' + ('allowed' if result['consumption_allowed'] else 'blocked'))
     else:
         output = path.parent / request['output']
@@ -29,8 +37,10 @@ def main():
             raise ValueError('Preserve historical Student POV outputs')
         copy = realize(projection, plan, bundle, status,
             draft_lines=load('draft_lines') if request.get('draft_lines') else None,
-            copy_review=load('copy_review') if request.get('copy_review') else None)
-        validate_copy(copy, projection, plan, bundle, status)
+            copy_review=load('copy_review') if request.get('copy_review') else None,
+            contract_version=version, motion_projection=motion,
+            options=request.get('options'), allow_held_plan=request.get('allow_held_plan', False))
+        validate_copy(copy, projection, plan, bundle, status, motion_projection=motion, required_version=version)
         write(output, copy)
         print('Student POV Copy: ' + copy['availability']['status'] + '; public release remains false')
 

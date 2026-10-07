@@ -1,0 +1,1864 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Student POV v0.4 learner experience; no new truth, motion or voice execution",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "kind",
+    "experience_id",
+    "experience_sha",
+    "source_pedagogy_plan",
+    "upstream",
+    "method_id",
+    "method_version",
+    "question_id",
+    "role",
+    "mode",
+    "experience_kind",
+    "first_action",
+    "focus",
+    "work_delta",
+    "collapse",
+    "stop",
+    "memory_closure",
+    "beats",
+    "experience_curve",
+    "reality_layer",
+    "answer_permission",
+    "silence_candidates",
+    "timing",
+    "human_taste_review",
+    "release_state",
+    "public_render_ready",
+    "realization_request",
+    "experience_audit",
+    "ai_tone_lint",
+    "copy_review_state",
+    "compilation_status",
+    "availability",
+    "script_sha",
+    "final_copy_sha",
+    "generated_at",
+    "content_sha",
+    "envelope_sha"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "0.4.0"
+    },
+    "kind": {
+      "const": "student_pov_experience"
+    },
+    "experience_id": {
+      "type": "string",
+      "pattern": "^student-experience:[a-f0-9]{64}$"
+    },
+    "experience_sha": {
+      "$ref": "#/$defs/sha"
+    },
+    "source_pedagogy_plan": {
+      "$ref": "#/$defs/binding"
+    },
+    "upstream": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "status",
+        "copy_content_sha",
+        "motion_content_sha",
+        "current_upstream_verified"
+      ],
+      "properties": {
+        "status": {
+          "enum": [
+            "CURRENT_HANDOFFS_VERIFIED",
+            "DIAGNOSTIC_UPSTREAM_HOLD"
+          ]
+        },
+        "copy_content_sha": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/sha"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "motion_content_sha": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/sha"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "current_upstream_verified": {
+          "const": true
+        }
+      }
+    },
+    "method_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "method_version": {
+      "type": "string",
+      "minLength": 1
+    },
+    "question_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "role": {
+      "enum": [
+        "locator",
+        "interpreter",
+        "reducer",
+        "framework",
+        "decider",
+        "verifier"
+      ]
+    },
+    "mode": {
+      "enum": [
+        "first_touch",
+        "worked_example"
+      ]
+    },
+    "experience_kind": {
+      "enum": [
+        "action_demo",
+        "cognitive_payoff",
+        "boundary_demo",
+        "transfer_demo",
+        "counterexample"
+      ]
+    },
+    "first_action": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/up_primary_action"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "focus": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "object_ids",
+        "scope_before",
+        "scope_after",
+        "reason_ref"
+      ],
+      "properties": {
+        "object_ids": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "scope_before": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "scope_after": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "reason_ref": {
+          "$ref": "#/$defs/pedagogy_ref"
+        }
+      }
+    },
+    "work_delta": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "baseline_kind",
+        "baseline_measured",
+        "learner_transfer_validated",
+        "scope",
+        "status",
+        "unsupported_savings",
+        "baseline_work",
+        "removed_work",
+        "deferred_work",
+        "still_required_work"
+      ],
+      "properties": {
+        "baseline_kind": {
+          "enum": [
+            "reviewed_path",
+            "structural_candidate_state",
+            null
+          ]
+        },
+        "baseline_measured": {
+          "type": "boolean"
+        },
+        "learner_transfer_validated": {
+          "const": false
+        },
+        "scope": {
+          "const": "selected_question_and_actual_action"
+        },
+        "status": {
+          "enum": [
+            "HOLD",
+            "SUPPORTED_REVIEWED_STRUCTURE"
+          ]
+        },
+        "unsupported_savings": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "baseline_work": {
+          "anyOf": [
+            {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "removed_work": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "deferred_work": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "still_required_work": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      }
+    },
+    "collapse": {
+      "$ref": "#/$defs/collapse"
+    },
+    "stop": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "current_output",
+        "scope",
+        "unresolved",
+        "deferred_work",
+        "still_required_work",
+        "prohibited_next_inference",
+        "boundary_presentations",
+        "pedagogy_refs"
+      ],
+      "properties": {
+        "current_output": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "output_ref",
+              "value"
+            ],
+            "properties": {
+              "output_ref": {
+                "$ref": "#/$defs/source_ref"
+              },
+              "value": {}
+            }
+          }
+        },
+        "scope": {
+          "enum": [
+            "local",
+            "candidate_set",
+            "evidence_scope",
+            "whole_question",
+            "method_action_demo"
+          ]
+        },
+        "unresolved": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "deferred_work": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "still_required_work": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "prohibited_next_inference": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "boundary_presentations": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/up_presentation"
+          }
+        },
+        "pedagogy_refs": {
+          "$ref": "#/$defs/pedagogy_refs"
+        }
+      }
+    },
+    "memory_closure": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "first_action_ref",
+        "memory_phrase",
+        "method_name",
+        "name_after_action_required",
+        "student_retention_certified"
+      ],
+      "properties": {
+        "first_action_ref": {
+          "$ref": "#/$defs/pedagogy_ref"
+        },
+        "memory_phrase": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/line"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "method_name": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/line"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "name_after_action_required": {
+          "const": true
+        },
+        "student_retention_certified": {
+          "const": false
+        }
+      }
+    },
+    "beats": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/beat"
+      },
+      "minItems": 1
+    },
+    "experience_curve": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "stage",
+          "beat_id",
+          "pedagogy_refs",
+          "observation_scope"
+        ],
+        "properties": {
+          "stage": {
+            "enum": [
+              "PAIN",
+              "INTERRUPT",
+              "ORIENT",
+              "FOCUS",
+              "ACT",
+              "TENSION",
+              "COLLAPSE",
+              "PAYOFF",
+              "STOP",
+              "MEMORY"
+            ]
+          },
+          "beat_id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "pedagogy_refs": {
+            "$ref": "#/$defs/pedagogy_refs"
+          },
+          "observation_scope": {
+            "const": "planned_learner_path_only"
+          }
+        }
+      }
+    },
+    "reality_layer": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "question",
+        "screen_copy",
+        "field_refs",
+        "persistent",
+        "fact_mutation_allowed",
+        "pedagogy_ref",
+        "visibility_review"
+      ],
+      "properties": {
+        "question": {
+          "type": "object"
+        },
+        "screen_copy": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "field_refs": {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/$defs/source_ref"
+          }
+        },
+        "persistent": {
+          "const": true
+        },
+        "fact_mutation_allowed": {
+          "const": false
+        },
+        "pedagogy_ref": {
+          "$ref": "#/$defs/pedagogy_ref"
+        },
+        "visibility_review": {
+          "const": "PENDING"
+        }
+      }
+    },
+    "answer_permission": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "answer",
+        "may_output_final_answer"
+      ],
+      "properties": {
+        "answer": {
+          "type": "null"
+        },
+        "may_output_final_answer": {
+          "const": false
+        }
+      }
+    },
+    "silence_candidates": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "beat_id",
+          "event",
+          "duration_range_seconds",
+          "cognitive_reason",
+          "pedagogy_refs",
+          "final_timing_owner",
+          "absolute_timing_assigned"
+        ],
+        "properties": {
+          "beat_id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "event": {
+            "enum": [
+              "collapse",
+              "payoff",
+              "answer_lock",
+              "evidence_lock",
+              "boundary_seal",
+              "transformation"
+            ]
+          },
+          "duration_range_seconds": {
+            "type": "array",
+            "prefixItems": [
+              {
+                "type": "number",
+                "minimum": 0.3,
+                "maximum": 1.0
+              },
+              {
+                "type": "number",
+                "minimum": 0.3,
+                "maximum": 1.0
+              }
+            ],
+            "minItems": 2,
+            "maxItems": 2
+          },
+          "cognitive_reason": {
+            "type": "string",
+            "minLength": 1
+          },
+          "pedagogy_refs": {
+            "$ref": "#/$defs/pedagogy_refs"
+          },
+          "final_timing_owner": {
+            "const": "creative_or_premiere"
+          },
+          "absolute_timing_assigned": {
+            "const": false
+          }
+        }
+      }
+    },
+    "timing": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "owner",
+        "absolute_timing_assigned",
+        "fixed_duration_fill",
+        "historical_timing_approval_inherited"
+      ],
+      "properties": {
+        "owner": {
+          "const": "creative_or_premiere"
+        },
+        "absolute_timing_assigned": {
+          "const": false
+        },
+        "fixed_duration_fill": {
+          "const": false
+        },
+        "historical_timing_approval_inherited": {
+          "const": false
+        }
+      }
+    },
+    "human_taste_review": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "status",
+        "self_signed"
+      ],
+      "properties": {
+        "status": {
+          "const": "PENDING"
+        },
+        "self_signed": {
+          "const": false
+        }
+      }
+    },
+    "release_state": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "teaching",
+        "source_display",
+        "editorial"
+      ],
+      "properties": {
+        "teaching": {
+          "const": "HOLD"
+        },
+        "source_display": {
+          "const": "HOLD"
+        },
+        "editorial": {
+          "const": "HOLD"
+        }
+      }
+    },
+    "public_render_ready": {
+      "const": false
+    },
+    "realization_request": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "draft_lines",
+        "copy_review",
+        "options",
+        "allow_held_plan"
+      ],
+      "properties": {
+        "draft_lines": {
+          "type": "object",
+          "propertyNames": {
+            "enum": [
+              "pain",
+              "interrupt",
+              "orient",
+              "focus",
+              "action",
+              "payoff",
+              "stop",
+              "memory"
+            ]
+          },
+          "additionalProperties": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "text",
+              "pedagogy_refs"
+            ],
+            "properties": {
+              "text": {
+                "type": "string",
+                "minLength": 1
+              },
+              "pedagogy_refs": {
+                "$ref": "#/$defs/pedagogy_refs"
+              }
+            }
+          }
+        },
+        "copy_review": {
+          "anyOf": [
+            {
+              "type": "object"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "options": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "include_orient",
+            "include_tension",
+            "merge_collapse_payoff",
+            "payoff_delivery",
+            "silence_functions"
+          ],
+          "properties": {
+            "include_orient": {
+              "type": "boolean"
+            },
+            "include_tension": {
+              "type": "boolean"
+            },
+            "merge_collapse_payoff": {
+              "type": "boolean"
+            },
+            "payoff_delivery": {
+              "enum": [
+                "silent",
+                "literal"
+              ]
+            },
+            "silence_functions": {
+              "type": "array",
+              "uniqueItems": true,
+              "items": {
+                "enum": [
+                  "collapse",
+                  "payoff",
+                  "stop"
+                ]
+              }
+            }
+          }
+        },
+        "allow_held_plan": {
+          "type": "boolean"
+        }
+      }
+    },
+    "experience_audit": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "first_action_visible",
+        "first_action_unique",
+        "focus_scope_preserved",
+        "payoff_supported",
+        "payoff_scope_preserved",
+        "collapse_visible_in_plan",
+        "stop_preserved",
+        "unresolved_preserved",
+        "work_dispositions_preserved",
+        "original_question_first",
+        "vo_screen_duplication",
+        "over_explained",
+        "method_named_before_action",
+        "unsupported_hype",
+        "method_named_before_understood",
+        "observation_scope",
+        "semantic_truth_certification",
+        "actual_visual_review",
+        "actual_voice_review",
+        "human_taste_review"
+      ],
+      "properties": {
+        "first_action_visible": {
+          "type": "boolean"
+        },
+        "first_action_unique": {
+          "type": "boolean"
+        },
+        "focus_scope_preserved": {
+          "type": "boolean"
+        },
+        "payoff_supported": {
+          "type": "boolean"
+        },
+        "payoff_scope_preserved": {
+          "type": "boolean"
+        },
+        "collapse_visible_in_plan": {
+          "type": "boolean"
+        },
+        "stop_preserved": {
+          "type": "boolean"
+        },
+        "unresolved_preserved": {
+          "type": "boolean"
+        },
+        "work_dispositions_preserved": {
+          "type": "boolean"
+        },
+        "original_question_first": {
+          "type": "boolean"
+        },
+        "vo_screen_duplication": {
+          "type": "boolean"
+        },
+        "over_explained": {
+          "type": "boolean"
+        },
+        "method_named_before_action": {
+          "type": "boolean"
+        },
+        "unsupported_hype": {
+          "type": "boolean"
+        },
+        "method_named_before_understood": {
+          "type": "null"
+        },
+        "observation_scope": {
+          "const": "planned_encounters_and_text_only"
+        },
+        "semantic_truth_certification": {
+          "const": false
+        },
+        "actual_visual_review": {
+          "const": "PENDING"
+        },
+        "actual_voice_review": {
+          "const": "PENDING"
+        },
+        "human_taste_review": {
+          "const": "PENDING"
+        }
+      }
+    },
+    "ai_tone_lint": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "flags",
+        "deterministic_lint_only",
+        "semantic_truth_certification",
+        "actual_delivery_review"
+      ],
+      "properties": {
+        "flags": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "deterministic_lint_only": {
+          "const": true
+        },
+        "semantic_truth_certification": {
+          "const": false
+        },
+        "actual_delivery_review": {
+          "const": "PENDING"
+        }
+      }
+    },
+    "copy_review_state": {
+      "enum": [
+        "EXPLICIT_CURRENT_CREDENTIAL",
+        "PENDING"
+      ]
+    },
+    "compilation_status": {
+      "enum": [
+        "PASS",
+        "FAIL"
+      ]
+    },
+    "availability": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "status",
+        "gaps",
+        "issues"
+      ],
+      "properties": {
+        "status": {
+          "enum": [
+            "READY",
+            "HOLD",
+            "FAIL"
+          ]
+        },
+        "gaps": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "issues": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      }
+    },
+    "script_sha": {
+      "$ref": "#/$defs/sha"
+    },
+    "final_copy_sha": {
+      "$ref": "#/$defs/sha"
+    },
+    "generated_at": {
+      "type": "string",
+      "minLength": 1
+    },
+    "content_sha": {
+      "$ref": "#/$defs/sha"
+    },
+    "envelope_sha": {
+      "$ref": "#/$defs/sha"
+    }
+  },
+  "$defs": {
+    "sha": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "strings": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "pedagogy_ref": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "plan_id",
+        "pointer",
+        "sha"
+      ],
+      "properties": {
+        "plan_id": {
+          "type": "string",
+          "pattern": "^pedagogy:[a-f0-9]{64}$"
+        },
+        "pointer": {
+          "type": "string",
+          "minLength": 1
+        },
+        "sha": {
+          "$ref": "#/$defs/sha"
+        }
+      }
+    },
+    "pedagogy_refs": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/pedagogy_ref"
+      },
+      "minItems": 1
+    },
+    "source_ref": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "asset_id",
+        "pointer",
+        "sha"
+      ],
+      "properties": {
+        "asset_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "pointer": {
+          "type": "string",
+          "minLength": 1
+        },
+        "sha": {
+          "$ref": "#/$defs/sha"
+        }
+      }
+    },
+    "line": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "text",
+        "pedagogy_refs",
+        "wording"
+      ],
+      "properties": {
+        "text": {
+          "type": "string",
+          "minLength": 1
+        },
+        "pedagogy_refs": {
+          "$ref": "#/$defs/pedagogy_refs"
+        },
+        "wording": {
+          "enum": [
+            "literal_projection",
+            "review_candidate"
+          ]
+        }
+      }
+    },
+    "screen_line": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "text",
+        "pedagogy_refs",
+        "source_refs",
+        "kind"
+      ],
+      "properties": {
+        "text": {
+          "type": "string",
+          "minLength": 1
+        },
+        "pedagogy_refs": {
+          "$ref": "#/$defs/pedagogy_refs"
+        },
+        "source_refs": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/source_ref"
+          }
+        },
+        "kind": {
+          "enum": [
+            "literal_evidence",
+            "reviewed_boundary",
+            "memory",
+            "method_name"
+          ]
+        }
+      }
+    },
+    "binding": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "plan_id",
+        "plan_sha",
+        "pedagogy_contract",
+        "analysis_sha"
+      ],
+      "properties": {
+        "plan_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "plan_sha": {
+          "$ref": "#/$defs/sha"
+        },
+        "pedagogy_contract": {
+          "const": "0.4.0"
+        },
+        "analysis_sha": {
+          "$ref": "#/$defs/sha"
+        }
+      }
+    },
+    "structural_state": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "objects",
+        "source_refs",
+        "action_artifact_refs",
+        "evidence_refs",
+        "review_refs"
+      ],
+      "properties": {
+        "objects": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "source_refs": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/source_ref"
+          }
+        },
+        "action_artifact_refs": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/source_ref"
+          }
+        },
+        "evidence_refs": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/source_ref"
+          }
+        },
+        "review_refs": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/source_ref"
+          }
+        }
+      }
+    },
+    "attention": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "focus_objects",
+        "background_objects",
+        "preserve_objects",
+        "unresolved_objects"
+      ],
+      "properties": {
+        "focus_objects": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "background_objects": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "preserve_objects": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "unresolved_objects": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      }
+    },
+    "collapse": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "supported",
+        "reduction_type",
+        "before_state",
+        "after_state",
+        "learner_visible",
+        "scope",
+        "work_delta_ref",
+        "observation_scope"
+      ],
+      "properties": {
+        "supported": {
+          "type": "boolean"
+        },
+        "reduction_type": {
+          "type": "array",
+          "items": {
+            "enum": [
+              "scope_reduction",
+              "candidate_reduction",
+              "relation_simplification",
+              "text_structure_reduction",
+              "attention_reduction",
+              "decision_completion",
+              "none"
+            ]
+          }
+        },
+        "before_state": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/structural_state"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "after_state": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/structural_state"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "learner_visible": {
+          "type": "boolean"
+        },
+        "scope": {
+          "enum": [
+            "local",
+            "candidate_set",
+            "evidence_scope",
+            "whole_question",
+            null
+          ]
+        },
+        "work_delta_ref": {
+          "$ref": "#/$defs/pedagogy_ref"
+        },
+        "observation_scope": {
+          "const": "planned_screen_structure_not_rendered_or_psychological_measurement"
+        }
+      }
+    },
+    "silence": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "event",
+        "duration_range_seconds",
+        "cognitive_reason",
+        "pedagogy_refs",
+        "final_timing_owner",
+        "absolute_timing_assigned"
+      ],
+      "properties": {
+        "event": {
+          "enum": [
+            "collapse",
+            "payoff",
+            "answer_lock",
+            "evidence_lock",
+            "boundary_seal",
+            "transformation"
+          ]
+        },
+        "duration_range_seconds": {
+          "type": "array",
+          "prefixItems": [
+            {
+              "type": "number",
+              "minimum": 0.3,
+              "maximum": 1.0
+            },
+            {
+              "type": "number",
+              "minimum": 0.3,
+              "maximum": 1.0
+            }
+          ],
+          "minItems": 2,
+          "maxItems": 2
+        },
+        "cognitive_reason": {
+          "type": "string",
+          "minLength": 1
+        },
+        "pedagogy_refs": {
+          "$ref": "#/$defs/pedagogy_refs"
+        },
+        "final_timing_owner": {
+          "const": "creative_or_premiere"
+        },
+        "absolute_timing_assigned": {
+          "const": false
+        }
+      }
+    },
+    "beat": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "beat_id",
+        "cognitive_function",
+        "learner_state_before",
+        "learner_state_after",
+        "vo",
+        "screen",
+        "experience",
+        "delivery_intent",
+        "silence_candidate",
+        "boundary_ids",
+        "source_binding",
+        "pedagogy_refs"
+      ],
+      "properties": {
+        "beat_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "cognitive_function": {
+          "enum": [
+            "pain",
+            "interrupt",
+            "orient",
+            "focus",
+            "action",
+            "tension",
+            "collapse",
+            "payoff",
+            "stop",
+            "stamp"
+          ]
+        },
+        "learner_state_before": {
+          "enum": [
+            "encounter",
+            "blocked",
+            "interrupted",
+            "oriented",
+            "focused",
+            "acting",
+            "reduced",
+            "settled",
+            "stopped",
+            "remembered"
+          ]
+        },
+        "learner_state_after": {
+          "enum": [
+            "encounter",
+            "blocked",
+            "interrupted",
+            "oriented",
+            "focused",
+            "acting",
+            "reduced",
+            "settled",
+            "stopped",
+            "remembered"
+          ]
+        },
+        "vo": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/line"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "screen": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "copy",
+            "object_ids",
+            "structural_state",
+            "reality_layer_ref"
+          ],
+          "properties": {
+            "copy": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/screen_line"
+              }
+            },
+            "object_ids": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "structural_state": {
+              "anyOf": [
+                {
+                  "$ref": "#/$defs/structural_state"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "reality_layer_ref": {
+              "const": "/reality_layer"
+            }
+          }
+        },
+        "experience": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "attention_intent",
+            "tension_state",
+            "reduction_state",
+            "payoff_state",
+            "unresolved_state"
+          ],
+          "properties": {
+            "attention_intent": {
+              "$ref": "#/$defs/attention"
+            },
+            "tension_state": {
+              "anyOf": [
+                {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": [
+                    "unresolved_objects",
+                    "source_refs"
+                  ],
+                  "properties": {
+                    "unresolved_objects": {
+                      "type": "array",
+                      "items": {
+                        "type": "string",
+                        "minLength": 1
+                      }
+                    },
+                    "source_refs": {
+                      "$ref": "#/$defs/pedagogy_refs"
+                    }
+                  }
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "reduction_state": {
+              "anyOf": [
+                {
+                  "$ref": "#/$defs/collapse"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "payoff_state": {
+              "anyOf": [
+                {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": [
+                    "scope",
+                    "allowed_claim_ref",
+                    "supported"
+                  ],
+                  "properties": {
+                    "scope": {
+                      "enum": [
+                        "local",
+                        "candidate_set",
+                        "evidence_scope",
+                        "whole_question"
+                      ]
+                    },
+                    "allowed_claim_ref": {
+                      "$ref": "#/$defs/pedagogy_ref"
+                    },
+                    "supported": {
+                      "const": true
+                    }
+                  }
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "unresolved_state": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "minLength": 1
+              }
+            }
+          }
+        },
+        "delivery_intent": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "cognitive_state",
+            "speech_function",
+            "desired_character",
+            "voice_execution"
+          ],
+          "properties": {
+            "cognitive_state": {
+              "enum": [
+                "encounter",
+                "blocked",
+                "interrupted",
+                "oriented",
+                "focused",
+                "acting",
+                "reduced",
+                "settled",
+                "stopped",
+                "remembered"
+              ]
+            },
+            "speech_function": {
+              "enum": [
+                "pain",
+                "interrupt",
+                "orient",
+                "focus",
+                "action",
+                "tension",
+                "collapse",
+                "payoff",
+                "stop",
+                "stamp"
+              ]
+            },
+            "desired_character": {
+              "type": "array",
+              "items": {
+                "enum": [
+                  "concise",
+                  "alert",
+                  "direct",
+                  "conversational",
+                  "controlled"
+                ]
+              }
+            },
+            "voice_execution": {
+              "const": false
+            }
+          }
+        },
+        "silence_candidate": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/silence"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "boundary_ids": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "source_binding": {
+          "$ref": "#/$defs/binding"
+        },
+        "pedagogy_refs": {
+          "$ref": "#/$defs/pedagogy_refs"
+        }
+      }
+    },
+    "up_item": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "item_id",
+        "text",
+        "projection_operation",
+        "source_refs",
+        "action_artifact_refs",
+        "evidence_refs",
+        "review_refs"
+      ],
+      "properties": {
+        "item_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "text": {
+          "type": "string",
+          "minLength": 1
+        },
+        "projection_operation": {
+          "enum": [
+            "implementation_labels_only_v1",
+            "literal_source_v1",
+            "reviewed_boundary_coverage_v1"
+          ]
+        },
+        "source_refs": {
+          "$ref": "#/$defs/up_refs"
+        },
+        "action_artifact_refs": {
+          "$ref": "#/$defs/up_refs"
+        },
+        "evidence_refs": {
+          "$ref": "#/$defs/up_refs"
+        },
+        "review_refs": {
+          "$ref": "#/$defs/up_refs"
+        }
+      }
+    },
+    "up_nullable_item": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/up_item"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "up_presentation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "item_id",
+        "presentation_roles",
+        "delivery_form",
+        "scene",
+        "coverage",
+        "student_obtainment_required",
+        "spoken_readout_required"
+      ],
+      "properties": {
+        "item_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "presentation_roles": {
+          "type": "array",
+          "items": {
+            "enum": [
+              "action_stop",
+              "misuse_prevention",
+              "scope_limit",
+              "candidate_status",
+              "condition",
+              "counterexample_guard"
+            ]
+          }
+        },
+        "delivery_form": {
+          "enum": [
+            "spoken",
+            "screen",
+            "motion_state",
+            "persistent_context",
+            "combined"
+          ]
+        },
+        "scene": {
+          "enum": [
+            "focus",
+            "action",
+            "stop"
+          ]
+        },
+        "coverage": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "source_items",
+            "displayed_expression",
+            "coverage_type",
+            "review_ref",
+            "parts"
+          ],
+          "properties": {
+            "source_items": {
+              "$ref": "#/$defs/up_strings"
+            },
+            "displayed_expression": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "text",
+                "literal_ref",
+                "literal_range",
+                "evidence_refs",
+                "candidate_state"
+              ],
+              "properties": {
+                "text": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "literal_ref": {
+                  "$ref": "#/$defs/up_ref"
+                },
+                "literal_range": {
+                  "type": "array",
+                  "items": {
+                    "type": "integer",
+                    "minimum": 0
+                  }
+                },
+                "evidence_refs": {
+                  "$ref": "#/$defs/up_refs"
+                },
+                "candidate_state": {
+                  "anyOf": [
+                    {
+                      "type": "object"
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                }
+              }
+            },
+            "coverage_type": {
+              "enum": [
+                "explicit_reviewed_presentation",
+                "complete_literal_display"
+              ]
+            },
+            "review_ref": {
+              "$ref": "#/$defs/up_ref"
+            },
+            "parts": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "required": [
+                  "source_ref",
+                  "range",
+                  "mechanism"
+                ],
+                "properties": {
+                  "source_ref": {
+                    "$ref": "#/$defs/up_ref"
+                  },
+                  "range": {
+                    "type": "array",
+                    "items": {
+                      "type": "integer",
+                      "minimum": 0
+                    }
+                  },
+                  "mechanism": {
+                    "enum": [
+                      "literal_display",
+                      "reviewed_equivalent",
+                      "evidence_focus",
+                      "bounded_candidate_state",
+                      "upstream_revalidation"
+                    ]
+                  },
+                  "rationale": {
+                    "type": "string",
+                    "minLength": 1
+                  }
+                },
+                "additionalProperties": false
+              }
+            }
+          }
+        },
+        "student_obtainment_required": {
+          "const": true
+        },
+        "spoken_readout_required": {
+          "const": false
+        }
+      }
+    },
+    "up_primary_action": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "action_id",
+        "classification",
+        "instruction",
+        "action_ref",
+        "output_ref",
+        "evidence_refs",
+        "requires_existing_artifact_ids"
+      ],
+      "properties": {
+        "action_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "classification": {
+          "enum": [
+            "primary",
+            "supporting",
+            "independent_primary_candidate"
+          ]
+        },
+        "instruction": {
+          "$ref": "#/$defs/up_nullable_item"
+        },
+        "action_ref": {
+          "$ref": "#/$defs/up_ref"
+        },
+        "output_ref": {
+          "$ref": "#/$defs/up_ref"
+        },
+        "evidence_refs": {
+          "$ref": "#/$defs/up_refs"
+        },
+        "requires_existing_artifact_ids": {
+          "$ref": "#/$defs/up_strings"
+        }
+      }
+    },
+    "up_ref": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "asset_id",
+        "pointer",
+        "sha"
+      ],
+      "properties": {
+        "asset_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "pointer": {
+          "type": "string",
+          "pattern": "^/"
+        },
+        "sha": {
+          "$ref": "#/$defs/up_sha"
+        }
+      }
+    },
+    "up_refs": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/up_ref"
+      }
+    },
+    "up_sha": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "up_strings": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "availability": {
+            "properties": {
+              "status": {
+                "const": "READY"
+              }
+            }
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "compilation_status": {
+            "const": "PASS"
+          },
+          "copy_review_state": {
+            "const": "EXPLICIT_CURRENT_CREDENTIAL"
+          },
+          "upstream": {
+            "properties": {
+              "status": {
+                "const": "CURRENT_HANDOFFS_VERIFIED"
+              }
+            }
+          },
+          "availability": {
+            "properties": {
+              "gaps": {
+                "maxItems": 0
+              },
+              "issues": {
+                "maxItems": 0
+              }
+            }
+          }
+        }
+      }
+    }
+  ]
+}

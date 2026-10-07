@@ -1,5 +1,7 @@
 # Student POV Copy Realization v0.3
 
+新增显式 Student POV Experience 0.4，正式消费 Pedagogy 0.4 Copy/Motion Handoff，规范学习体验曲线、对象状态、工作分类和认知留白。接口、审核与迁移见 [student-pov-experience.md](student-pov-experience.md)。本页继续描述兼容的 Copy 0.3 链，既有冻结文案、审批和生产索引不被覆盖，也不自动迁移。
+
 Pedagogy Compiler 决定 WHAT TO TEACH；Student POV Copy 决定 HOW IT FEELS TO USE；Motion 决定 HOW IT MOVES；Premiere 决定 HOW IT PLAYS。本层是 `student_pov/`，不是第二个 Pedagogy Compiler。
 
 ```text
