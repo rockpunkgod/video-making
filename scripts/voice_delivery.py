@@ -54,6 +54,30 @@ def validate(path):
     return delivery
 
 
+def pad_to_video_frame(source, destination, fps=24):
+    """Keep every PCM sample and append at most one frame of tail silence.
+
+    Some native clip-placement APIs floor duration to video frames. Do not
+    shorten speech to satisfy that quantization or silently overwrite a take.
+    """
+    source, destination = Path(source).resolve(), Path(destination).resolve()
+    if destination.exists():
+        raise FileExistsError('Preserve existing takes; choose a new padded output')
+    with wave.open(str(source), 'rb') as media:
+        params = media.getparams(); frames = media.getnframes(); rate = media.getframerate()
+        if type(fps) is not int or fps <= 0 or rate % fps or params.sampwidth != 2:
+            raise ValueError('PCM16 and an integer samples-per-video-frame profile required')
+        data = media.readframes(frames)
+    added = (-frames) % (rate // fps)
+    destination.parent.mkdir(parents=True, exist_ok=True)
+    with wave.open(str(destination), 'wb') as out:
+        out.setparams(params); out.writeframes(data + b'\0'*(added*params.nchannels*params.sampwidth))
+    return {'source_sha256': sha256(source), 'output_sha256': sha256(destination),
+            'source_frames': frames, 'output_frames': frames+added, 'sample_rate': rate,
+            'fps': fps, 'added_silent_samples': added, 'padding_seconds': added/rate,
+            'speech_samples_changed': False, 'speech_tempo_changed': False}
+
+
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('delivery', type=Path)
