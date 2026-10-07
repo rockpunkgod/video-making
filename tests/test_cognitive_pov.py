@@ -10,7 +10,8 @@ from core.registry import Registry
 from answer_engine.frozen_export import FrozenAssetExporter
 from answer_engine.method_application_export import FrozenMethodApplicationExporter
 from creative_os.cognitive_pov import build_spec, validate_spec
-from premiere_production.cognitive import check_timeline, caption_cues
+from premiere_production.cognitive import check_timeline, caption_cues, check_pedagogy_binding
+from pedagogy import compile_plan
 from tests.test_execution import fixture, action
 from video_contracts import sha, seal
 
@@ -104,6 +105,28 @@ class CognitivePovTests(unittest.TestCase):
         status = seal(dict(self.status,effective_status='WITHDRAWN'))
         with patch('creative_os.cognitive_pov.validate_excerpt'),self.assertRaises(ValueError):
             build_spec(*self.args(status=status),dict(english=str(self.font),chinese=str(self.font)))
+
+    def test_optional_current_plan_cannot_borrow_another_action_or_omit_required_boundaries(self):
+        plan = compile_plan(self.bundle, self.status,
+            {'method_id': 'G01', 'action_ids': ['route']}, mode='worked_example')
+        spec = self.spec()
+        self.assertEqual(plan['availability']['status'], 'READY')
+        with self.assertRaisesRegex(ValueError, 'Tell Now missing'):
+            check_pedagogy_binding(plan, self.application, spec)
+        # Synthetic structural coverage is not a render or a student credential.
+        spec['nodes'].extend({'kind': 'text', 'space': 'screen', 'text': row['text']}
+                             for row in plan['boundaries']['tell_now'])
+        result = check_pedagogy_binding(plan, self.application, spec)
+        self.assertEqual(result['status'], 'PASS')
+        self.assertEqual(result['actual_visual_review'], 'PENDING')
+        self.assertFalse(result['student_pov_certification'])
+        for edit in (lambda p: p['input_binding'].update(asset_id='another-asset'),
+                     lambda p: p['input_binding'].update(selected_actions_sha='0' * 64),
+                     lambda p: p['replay_request']['selection'].update(action_ids=['another-action']),
+                     lambda p: p.update(method_version='99.0.0')):
+            changed = deepcopy(plan); edit(changed)
+            with self.subTest(edit=edit), self.assertRaisesRegex(ValueError, 'exact frozen asset'):
+                check_pedagogy_binding(changed, self.application, spec)
 
 
 class CognitiveEditorialTests(unittest.TestCase):

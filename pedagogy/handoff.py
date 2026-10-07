@@ -3,6 +3,7 @@ from copy import deepcopy
 
 from video_contracts import pointer, seal, sha, verify_seal
 from .validation import validate_plan
+from .compiler import VERSION
 
 
 def _ready(plan, bundle, status):
@@ -13,7 +14,7 @@ def _ready(plan, bundle, status):
 
 
 def _base(plan, kind):
-    return {'schema_version': '0.1.0', 'kind': kind, 'plan_id': plan['plan_id'],
+    return {'schema_version': VERSION, 'kind': kind, 'plan_id': plan['plan_id'],
         'plan_sha': plan['plan_sha'], 'input_binding': deepcopy(plan['input_binding']),
         'mode': plan['mode'], 'scope': 'method_action_demo', 'public_render_ready': False,
         'generated_at': plan['generated_at'],

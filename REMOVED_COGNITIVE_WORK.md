@@ -1,4 +1,4 @@
-# Removed Cognitive Work — v0.1 audit
+# Removed Cognitive Work — v0.2 audit
 
 本轮把“爽感”限定为有来源的认知工作移除。视觉动效、配乐、字体、快剪、留白或方法名称都不是工作减少证据。
 
@@ -33,7 +33,7 @@ TYPE A 需真正局部排除/判断产物；TYPE B 需实际剩余候选，完�
 | still_required | 后续节点句法、搭配、上下文/内容核验；词形仍未闭合 |
 | “排除全部动名词” | 禁止；现有实际 Stop 明确不允许 |
 | “不用认识单词/不需要词汇” | 未提供当前具体词的安全捷径凭证；阻断 |
-| 首次教学投影 | 两条必要 Stop 未能安全分级，HOLD/PEDAGOGY_OVERLOAD |
+| 首次教学投影 | 十条未知/当前必要 Tell Now 未能安全分级，HOLD/PEDAGOGY_OVERLOAD；未知 Caveat 不因调用方遗漏而被隐藏 |
 | bounded worked_example | 工程冻结投影 READY，公开资格保持 false |
 | Student POV Payoff | HOLD/PAYOFF_UNSUPPORTED，不作为真实成功样例 |
 
@@ -42,3 +42,5 @@ TYPE A 需真正局部排除/判断产物；TYPE B 需实际剩余候选，完�
 ## 调整方向
 
 下一步若上游已有可信的当前动作 work-reduction 记录，可原样冻结并消费。届时核：baseline 与 method 的同一任务、移除的 work IDs、哪些只是延后、实际产物 anchors、当前 Role、必需 Tell Now，以及短文案的语义保真/自然口语。缺任何一项继续 HOLD，传播性不能覆盖 Practical Use。
+
+当前0.2门禁同时要求 baseline 的每个 work_id 有明确去向，remaining_steps 完整对应 deferred/still_required；第一动作明确不可迁移时不放行。新 G01 本地候选位于 student-pov-r4，逐句措辞未改，仅重新绑定 compiler-r3 和完整必要边界。改好表达不能补出缺失的真实工作减少凭证。

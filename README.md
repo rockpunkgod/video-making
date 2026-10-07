@@ -66,10 +66,11 @@ Premiere 完成声音、字幕与最终内部样片。工程成功与教学、�
 
 教学选择与学生视角文案为两个独立增量层：
 [Pedagogy Compiler](docs/pedagogy-compiler.md) 提供 `python -m pedagogy compile|validate|handoff|matrix`；
-[Student POV Copy](docs/student-pov-copy.md) 提供 `python -m student_pov realize|validate`。
+[Student POV Copy](docs/student-pov-copy.md) 提供 `python -m student_pov realize|validate|inspect`。当前 Compiler/Copy 契约为0.2；旧保存件仅可历史检查，不能继承当前消费资格。
 两者只消费冻结资产和当前状态；READY 教学投影不替真实 Payoff、最终文案或学生体验认证。
 本轮 G01 worked_example 投影 READY，新 Student POV 候选因既有基线路径与工作减少凭证缺失 HOLD。
 自然口语规则、现有表达问题和可修改入口见 [文案 Agent 交接说明](docs/student-pov-natural-copy-handoff.md)。
+真实首用、Payoff、案例系列与人工体验的未完成项见 [黄金方法交付状态](docs/golden-method-delivery-status.md)。
 
 完整篇目内部试制另见 [阅读 D 篇生产工作流](docs/reading-d-2025-production.md)：
 显式 ANSWER 宿主审阅纯导出、已接受本地声音配置、持续题目区、原生 AE 场景与 PR 整片交付。

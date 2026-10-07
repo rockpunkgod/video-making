@@ -13,7 +13,7 @@ from core.registry import Registry
 from tests import test_pedagogy as fixture_module
 from video_contracts import seal, sha, read, write, pointer
 from pedagogy import compile_plan, copy_projection
-from student_pov import realize, validate_copy, suppression_qa
+from student_pov import realize, validate_copy, inspect_historical, suppression_qa
 from student_pov.realization import copy_semantics
 from student_pov.payoff import supported_payoff
 from student_pov.qa import planned_scene_observations
@@ -104,17 +104,20 @@ class StudentPOVTests(unittest.TestCase):
         self.assertEqual(copy['copy_audit']['actual_visual_review'], 'PENDING')
         self.assertEqual(copy['copy_audit']['student_experience_review'], 'PENDING')
         self.assertTrue(copy['copy_audit']['payoff_supported'])
-        self.assertFalse(copy['copy_audit']['cognitive_reduction_visible'])
+        self.assertTrue(copy['copy_audit']['cognitive_reduction_visible'])
         self.assertTrue(copy['copy_audit']['student_pov_present'])
         payoff, _ = supported_payoff(p, cp)
         scene_rows = deepcopy(copy['final_script'])
         collapse = next(row for row in scene_rows if row['cognitive_function'] == 'collapse')
-        collapse['screen_copy'] += [row['text'] for row in payoff['baseline_path']]
         arguments = {'first_action_ref': ref(p, '/first_action'), 'payoff_ref': ref(p, '/payoff'),
                      'tell_now_ids': [x['item_id'] for x in p['boundaries']['tell_now']]}
         observed = planned_scene_observations(scene_rows, payoff, **arguments)
         self.assertTrue(observed['cognitive_reduction_visible'])
         self.assertEqual(observed['actual_visual_review'], 'PENDING')
+        before_text = {row['text'] for row in payoff['baseline_path']}
+        for row in scene_rows:
+            row['screen_copy'] = [text for text in row['screen_copy'] if text not in before_text]
+        self.assertFalse(planned_scene_observations(scene_rows, payoff, **arguments)['cognitive_reduction_visible'])
         collapse['removed_work'] = []
         self.assertFalse(planned_scene_observations(scene_rows, payoff, **arguments)['cognitive_reduction_visible'])
         scene_rows = [row for row in scene_rows if row['cognitive_function'] != 'action']
@@ -292,6 +295,103 @@ class StudentPOVTests(unittest.TestCase):
             self.assertEqual(read(root / 'copy.json')['availability']['status'], 'HOLD')
             with patch('sys.argv', ['student_pov', 'realize', str(root / 'request.json')]), self.assertRaises(ValueError):
                 main()
+
+    def test_explicit_payoff_is_delivered_once_and_invalidates_prior_copy_review(self):
+        b, s, p, cp = assets()
+        previous = reviewed_copy(b, s, p, cp)
+        line = {'text': 'SYNTHETIC alternate bounded payoff', 'pedagogy_refs': [ref(p, '/payoff')]}
+        changed = realize(cp, p, b, s, draft_lines={'payoff_line': line},
+            copy_review=previous['realization_request']['copy_review'])
+        delivered = [row for row in changed['final_script'] if row['cognitive_function'] == 'payoff']
+        self.assertEqual(len(delivered), 1)
+        self.assertEqual(delivered[0]['vo'], line['text'])
+        self.assertEqual(delivered[0]['pedagogy_ref'], line['pedagogy_refs'])
+        self.assertEqual(changed['payoff_validation']['final_copy_claim'], line['text'])
+        self.assertNotEqual(changed['final_copy_sha'], previous['final_copy_sha'])
+        self.assertEqual(changed['availability']['status'], 'HOLD')
+        self.assertEqual(reviewed_copy(b, s, p, cp, {'payoff_line': line})['availability']['status'], 'READY')
+
+    def test_blank_action_and_backend_only_or_wrong_purpose_references_are_rejected(self):
+        b, s, p, cp = assets()
+        cases = [
+            {'first_action': {'text': '', 'pedagogy_refs': [ref(p, '/first_action')]}},
+            {'first_action': {'text': ' \n\t ', 'pedagogy_refs': [ref(p, '/first_action')]}},
+            {'cognitive_relief_line': {'text': 'SYNTHETIC unsupported binding', 'pedagogy_refs': [ref(p, '/role')]}},
+            {'payoff_line': {'text': 'SYNTHETIC unsupported binding', 'pedagogy_refs': [ref(p, '/first_action')]}},
+            {'stop_vo': {'text': '先停', 'pedagogy_refs': [ref(p, '/first_signal')]}},
+            {'pain': {'text': 'SYNTHETIC hidden backend', 'pedagogy_refs': [ref(p, '/truth_guard')]}},
+        ]
+        for lines in cases:
+            with self.subTest(lines=lines), self.assertRaises(ValueError):
+                realize(cp, p, b, s, draft_lines=lines)
+
+    def test_every_baseline_work_item_needs_disposition_and_action_must_transfer(self):
+        changes = [
+            (lambda d: d['baseline_path'][0]['work_ids'].append('toy-hidden-work'), 'baseline_work_not_classified'),
+            (lambda d: d.update(first_action_transferable=False), 'first_action_not_transferable'),
+            (lambda d: d['remaining_steps'].append({'work_id': 'toy-unclassified', 'text': 'SYNTHETIC hidden remaining work'}),
+             'deferred_or_still_required_steps_not_recorded'),
+        ]
+        for change, reason in changes:
+            b, s, p, cp = assets(change=change)
+            copy = reviewed_copy(b, s, p, cp)
+            with self.subTest(reason=reason):
+                self.assertEqual(copy['availability']['status'], 'HOLD')
+                self.assertIn('PAYOFF_UNSUPPORTED:' + reason, copy['availability']['gaps'])
+
+    def test_malformed_or_duplicate_work_identifiers_return_hold(self):
+        changes = [
+            (lambda d: d['baseline_path'][0].update(work_ids=[['nested']]), 'unbound_path_steps'),
+            (lambda d: d['cognitive_work'].update(removed=['toy-repeat', 'toy-repeat']), 'invalid_work_dispositions'),
+            (lambda d: d['remaining_steps'][0].update(work_id=[]), 'invalid_work_steps'),
+            (lambda d: d['reduction'].update(before_ids=['alpha', 'alpha', 'gamma']), 'invalid_reduction_ids'),
+        ]
+        for change, reason in changes:
+            b, s, p, cp = assets(change=change)
+            copy = realize(cp, p, b, s)
+            with self.subTest(reason=reason):
+                self.assertEqual(copy['availability']['status'], 'HOLD')
+                self.assertIn('PAYOFF_UNSUPPORTED:' + reason, copy['availability']['gaps'])
+
+    def test_unbound_percentages_and_heat_do_not_pass_with_copy_credential(self):
+        b, s, p, cp = assets()
+        for text in ('80%的人都这样做', '这是全网热门的方法', '这个方法爆火了'):
+            lines = {'pain': {'text': text, 'pedagogy_refs': [ref(p, '/symptom')]}}
+            copy = reviewed_copy(b, s, p, cp, lines)
+            with self.subTest(text=text):
+                self.assertEqual(copy['availability']['status'], 'FAIL')
+                self.assertIn('COPY_LINT:unbound_statistic_or_heat_claim', copy['availability']['issues'])
+
+    def test_ready_schema_requires_action_and_visible_planned_reduction(self):
+        b, s, p, cp = assets()
+        copy = reviewed_copy(b, s, p, cp)
+        for flag in ('first_action_preserved', 'cognitive_reduction_visible', 'student_pov_present'):
+            changed = deepcopy(copy)
+            changed['copy_audit'][flag] = False
+            with self.subTest(flag=flag), self.assertRaisesRegex(ValueError, 'schema'):
+                inspect_historical(reseal_copy(changed))
+
+    def test_legacy_copy_integrity_inspection_does_not_authorize_consumption(self):
+        b, s, p, cp = assets()
+        legacy = reviewed_copy(b, s, p, cp)
+        legacy['schema_version'] = '0.1.0'
+        for field in ('observation_scope', 'actual_visual_review', 'student_experience_review'):
+            legacy['copy_audit'].pop(field)
+        legacy = reseal_copy(legacy)
+        result = inspect_historical(legacy)
+        self.assertEqual(result['contract_status'], 'LEGACY_CONTRACT')
+        self.assertFalse(result['current_upstream_verified'])
+        self.assertFalse(result['consumption_allowed'])
+        with self.assertRaisesRegex(ValueError, 'Historical Student POV Copy contract'):
+            validate_copy(legacy, cp, p, b, s)
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            write(root / 'legacy.json', legacy)
+            write(root / 'inspect.json', {'copy': 'legacy.json'})
+            output = io.StringIO()
+            with patch('sys.argv', ['student_pov', 'inspect', str(root / 'inspect.json')]), contextlib.redirect_stdout(output):
+                main()
+            self.assertIn('consumption blocked', output.getvalue())
 
 
 if __name__ == '__main__':

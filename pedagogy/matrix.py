@@ -1,5 +1,5 @@
 """Explicit frozen assets -> honest golden-method coverage, without scanning."""
-from .compiler import compile_plan
+from .compiler import VERSION, compile_plan
 from .policy import GOLDEN_METHODS
 
 
@@ -27,6 +27,6 @@ def golden_matrix(assets, modes=('first_touch', 'worked_example', 'boundary')):
                 'plan_id': best.get('plan_id') if best else None,
                 'gaps': best['availability']['gaps'] if best else ['no_explicit_valid_frozen_asset'],
                 'blockers': best['availability']['blockers'] if best else []})
-    return {'schema_version': '0.1.0', 'kind': 'pedagogy_golden_matrix',
+    return {'schema_version': VERSION, 'kind': 'pedagogy_golden_matrix',
             'rows': rows, 'plans': plans, 'public_render_ready': False,
             'synthetic_is_not_real_validation': True}

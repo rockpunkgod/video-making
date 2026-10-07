@@ -6,7 +6,7 @@ from video_contracts import now, pointer, review_semantics, seal, sha
 from .sources import FrozenSource
 from . import policy
 
-VERSION = '0.1.0'
+VERSION = '0.2.0'
 FIELD_CANDIDATES = {
     'symptom': ('/student_symptoms/0', '/four_step_card/start', '/trigger_cues/0'),
     'first_signal': ('/four_step_card/start', '/trigger_cues/0'),
@@ -100,9 +100,11 @@ def compile_plan(bundle, status, selection, *, mode='first_touch', audience='fir
         fields_out[key] = _item(source, key, path)
     boundary_paths = [source.method_path + '/stop_rule'] + [
         p + '/' + source.stop_key for p in source.action_paths]
+    boundary_paths += source.caveat_paths()
     for path in request['extra_boundary_refs']:
-        allowed = any(path.startswith(source.method_path + '/' + key)
-                      for key in ('stop_rule', 'anti_rule', 'failure_cases', 'cannot_replace'))
+        allowed = any(path == source.method_path + '/' + key
+                      or path.startswith(source.method_path + '/' + key + '/')
+                      for key in ('stop_rule', 'four_step_card/stop', *policy.CAVEAT_FIELDS))
         allowed |= any(path.startswith(p + '/reviewed_claims/')
                        for p in source.review_paths)
         allowed |= any(path.startswith(p + '/record/reviewed_claims/')
@@ -122,8 +124,6 @@ def compile_plan(bundle, status, selection, *, mode='first_touch', audience='fir
         tier, reason = policy.disclosure(risk, current_stop=current_stop)
         item.update(disclosure_tier=tier, risk=risk, risk_assessment_refs=refs,
                     disclosure_reason=reason, current_action_stop=current_stop)
-        risk_items.append({'item_id': item['item_id'], 'risk': deepcopy(risk),
-                           'tier': tier, 'assessment_refs': refs, 'reason': reason})
         # Identical assertions do not become two different student boundaries.
         # Both original source bindings remain. Different wording is not merged.
         existing = next((x for x in boundaries[tier.lower()] if x['text'] == item['text']), None)
@@ -133,6 +133,9 @@ def compile_plan(bundle, status, selection, *, mode='first_touch', audience='fir
             existing['current_action_stop'] |= current_stop
         else:
             boundaries[tier.lower()].append(item)
+        risk_items.append({'item_id': existing['item_id'] if existing else item['item_id'],
+            'source_refs': deepcopy(item['source_refs']), 'risk': deepcopy(risk),
+            'tier': tier, 'assessment_refs': refs, 'reason': reason})
     for key in policy.ENGINE_FIELDS:
         boundaries['engine_only'].append({'item_id': 'engine-' + key, 'field': key,
             'disclosure_tier': 'ENGINE_ONLY',
@@ -208,7 +211,6 @@ def compile_plan(bundle, status, selection, *, mode='first_touch', audience='fir
         'source_sha': sha(source.source), 'question_sha': sha(source.question),
         'selected_method_sha': sha(review_semantics(source.method)),
         'selected_actions_sha': sha(review_semantics(source.actions)), 'transport': source.transport}
-    first_boundary = current_boundaries[0] if current_boundaries else None
     stamp_path = source.field_path(('/brand_name', '/source_name'))
     method_stamp = _item(source, 'method_stamp', stamp_path) if stamp_path else None
     public_claims = []
@@ -231,7 +233,7 @@ def compile_plan(bundle, status, selection, *, mode='first_touch', audience='fir
         **fields_out, 'student_steps': steps,
         'student_model': {'see': deepcopy(fields_out['symptom']),
             'think': deepcopy(fields_out['first_signal']), 'do': deepcopy(fields_out['first_action']),
-            'check': deepcopy(fields_out['judgment_point']), 'stop': deepcopy(first_boundary)},
+            'check': deepcopy(fields_out['judgment_point']), 'stop': deepcopy(current_boundaries)},
         'evidence_refs': [source.ref(p) for p in source.evidence_paths],
         'boundaries': boundaries, 'omitted_items': omitted, 'followup_content': followup,
         'case_content_matrix': {k: list(v) for k, v in policy.CASE_CONTENT_MATRIX.items()},

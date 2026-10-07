@@ -1,7 +1,7 @@
 """Conservative, versioned disclosure rules; no invented risk scores."""
 import re
 
-VERSION = '0.1.0'
+VERSION = '0.2.0'
 MODES = ('first_touch', 'worked_example', 'counterexample', 'boundary',
          'transfer', 'hard_case', 'review')
 CHANNELS = ('video', 'lesson', 'card', 'wechat')
@@ -26,6 +26,8 @@ ENGINE_FIELDS = ('method_id', 'method_version', 'role', 'review_refs',
 PROHIBITED_CHANGES = ('answer_mutation', 'evidence_addition', 'role_upgrade',
     'stop_removal', 'certainty_upgrade', 'maturity_upgrade',
     'hidden_required_boundary', 'new_case', 'semantic_rewrite')
+CAVEAT_FIELDS = ('anti_rule', 'failure_cases', 'cannot_replace',
+                 'false_triggers', 'caveats', 'boundaries')
 
 
 def surface_text(text):

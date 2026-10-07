@@ -13,7 +13,7 @@ Adobe 工程与最终画面绑定保留在忽略的 `local-data/cognitive-pov-r1
 | 原生 Premiere | PASS engineering | Motion、单段 VO、独立钢琴、原生字幕；软件未代替 PR 混最终片 |
 | 最终媒体 | PASS engineering | 全片解码、48 kHz 双声道、精确采样口播尾部、最终停留原生像素一致 |
 | 字幕 | PASS engineering | 六条实际原生 sidecar 文字与冻结 Copy 一致；最终烧录画面已检查 |
-| Pedagogy Plan | READY worked_example | 当前 r2 Plan 重载验证；first_touch 因边界负荷 HOLD |
+| Pedagogy Plan | HISTORICAL_ONLY | 原 r2 为0.1历史，当前消费被0.2门禁阻断；新 r3 worked_example READY，但旧画面没有覆盖新完整 Tell Now |
 | 新 Student POV Copy | HOLD | 缺已有审阅支持的 baseline / removed_work，不能宣称 Payoff 成功 |
 | 声音一致性 | PENDING human listening | 使用最终接受参考，一次连续生成；ASR 仅辅助对齐 |
 | Human Taste | PENDING | 工程检查不能替用户或真实学生作审美、认知体验判断 |
@@ -31,6 +31,8 @@ Adobe 工程与最终画面绑定保留在忽略的 `local-data/cognitive-pov-r1
 通过真实 Payoff 验收的完整样片；新层的候选脚本、必要证据缺口和人工口语审阅单独交付。
 未来文案变化必须重新绑定 Plan、Copy、VO、字幕、画面和编辑审核，不能复活旧批准。
 
+2026-10-07 完成审计后，Compiler/Copy 契约升级为0.2。G01 新 Plan 完整保留十条 Tell Now；旧20秒 Spec 只覆盖先前的部分边界。可选 Plan 绑定检查新增同一父资产/语义/方法版本/实际动作及逐字 Screen 边界覆盖；旧渲染不能通过换新 Plan SHA 冒充当前完整样片。真实学生视角文案仍 HOLD，旧视频保留为历史视觉证明。
+
 本轮测量的两组原生停留在 18 s 和 19 s 的无损帧相同；这证明静止，
 不证明学生已经读完全部边界。现有 20 秒长度是视觉原型，不拿它覆盖 first_touch 的
 PEDAGOGY_OVERLOAD。强可用性与真实审阅优先于传播和画面冲击。
@@ -44,3 +46,5 @@ generated assets 均 PASS。`git diff --check` 通过；本次提交未改 Core�
 自然口语写作原则与可修改位置另见 [文案 Agent 交接说明](docs/student-pov-natural-copy-handoff.md)。
 它供后续提出表达改进，当前不会覆盖旧最终 Copy 或将 HOLD 候选自动批准。
 收到新的上游撤回/来源状态后，下一次执行必须重新校验；本地快照不会自行实时感知撤回。
+
+0.2审计修复后完整回归628项通过；ANSWER 校验仍为82 methods / 20 source documents / generated assets PASS。当前合同与历史状态分开记录，原音视频和工程文件未改，也未上传；最新真实材料缺口见 [黄金方法交付状态](docs/golden-method-delivery-status.md)。

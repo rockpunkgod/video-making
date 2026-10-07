@@ -8,9 +8,9 @@
 
 现有链路：ANSWER 冻结教学事实 → Pedagogy Compiler / PedagogyPlan → Student POV Copy → Motion / Shot → AE → Premiere。ANSWER 拥有事实、角色与生命周期；Compiler 决定哪些内容现在必须讲；Copy 只改变表达。画面保留克制、典雅的 Swiss 方向，运动、配乐和停顿都为方法动作服务。C端只显示有用的内容与方法名，不显示 R01/G01 等内部编号。
 
-工程层已经有契约、绑定、审计和模拟适配器；还没有接入真实语言模型来自动写自然文案。当前默认实现主要逐字投影 Plan。安全规则完整，不等于写作指导已经足够，更不等于自然口语或学生体验已通过。
+工程层已经有契约、绑定、审计和模拟适配器；还没有接入真实语言模型来自动写自然文案。当前默认实现主要逐字投影 Plan。结构规则与写作指导是两部分；字段通过不等于自然口语或学生体验已通过。
 
-当前真实候选是 G01 的 bounded worked_example。它只到已有名词性功能路线，具体词形仍未闭合；不能排除全部动名词，不能写成已经填出答案。Compiler 投影 READY；新 Copy 因缺少已有 baseline / removed-work 凭证及最终文案审核仍 HOLD。不要用改写来消除事实或凭证缺口。
+当前真实候选是 G01 的 bounded worked_example。它只到已有名词性功能路线，具体词形仍未闭合；不能排除全部动名词，不能写成已经填出答案。Compiler 0.2 投影 READY，未知风险的冻结 Caveat 保守进入十条 Tell Now；first_touch 仍因边界负荷 HOLD。新 Copy 因缺少已有 baseline / removed-work 凭证及最终文案审核仍 HOLD。不要用改写来消除事实或凭证缺口。
 
 ## 已有的“人味”要求，优先改这些
 
@@ -27,9 +27,13 @@
 9. 方法名放在动作价值之后；最后留下学生下一题能调用的第一动作。不要把“记住方法编号”当作记忆目标。
 10. 成功标准是学生能说“下次我先看这个”“做到这里还不能选”，并能尝试第一动作。画面酷、分析详细、程序 lint PASS 都不能替代这个判断。
 
+最直接的原话是：“Student POV 是思考位置，不是第一人称代词密度。”“Copy 应该能对应笔尖动作。”“不要让 VO 重复解释画面已经完成的事情。”这些指导的是思考和表达，不是要求某些词一定出现。原始第十至十二节的“先别”“只看”是示例；改稿时可以提出更自然、同样有来源支持的写法。
+
 ## 当前表达问题与允许质疑的地方
 
-现在的规范对“不能错”和字段完整性写得较具体，对自然措辞、语气与句间衔接写得较少。逐字搬运 Plan 会把内部表述带到口播；机械执行短句原则又容易变成一串“先别 → 只看 → 先停”。“动作语言出现”“没有套话”只是信号，不能证明一句话有人味。
+初版规范对“不能错”和字段完整性写得较具体，对自然措辞、语气与句间衔接写得较少。另一位 Agent 已在 `docs/student-pov-copy.md` 新增“自然口语：写学生怎么想，不写字段怎么读”：从为什么现在说、能否听一次就懂、指代是否清楚入手，要求试念并检查画面锚点。后续审查把普通书面词和重复句式调整为表达倾向，避免它们再次变成禁词表或机械模板；工程 AI/人工 Copy 凭证也与真人听感、Human Taste 分开说明。
+
+逐字搬运 Plan 会把内部表述带到口播；机械执行短句原则又容易变成一串“先别 → 只看 → 先停”。“动作语言出现”“没有套话”只是信号，不能证明一句话有人味。目前没有独立接入的完整自然写作模型提示词；改进对象首先是这份写作规范，然后是显式候选接口，不能只改 lint。
 
 请围绕具体题面改进语气与表达：这句话为什么现在说，学生能否听一次就懂，省略对象后还能不能理解，是否真的适合开口念。允许长短句变化、必要衔接、轻微反应与自然停顿；不用强制每句短指令，也不用硬塞反问、感叹、网络梗或“咱们”。不要预设学生已经认识所有术语，也不要用成串后台术语制造严谨感。
 
@@ -45,7 +49,7 @@
 
 公开仓库内：
 
-- `docs/student-pov-copy.md`：重点“学生体验与文案契约”“VO / Screen / Motion 与 Signature”“Silence 与 Explanation Suppression”。这里是现行说明。
+- `docs/student-pov-copy.md`：首先读“自然口语：写学生怎么想，不写字段怎么读”，再读“学生体验与文案契约”“VO / Screen / Motion 与 Signature”“Silence 与 Explanation Suppression”。这里是现行说明。
 - `student_pov/realization.py` 的 `realize`：消费轻量投影；`adapter.propose` 或显式 `draft_lines` 输入候选表达。可改字段是 pain / interrupt / focus / first_action / cognitive_relief_line / payoff_line / stop_vo / memory_phrase。这里是接口与默认投影，不是完整写作提示词。
 - `student_pov/qa.py` 的 `lint_copy` / `suppression_qa`：确定性禁说与去重复候选，不能判定人味或完整语义真值。
 - `creative/copy-system/student-pov-copy.schema.json`：句子、来源与场景结构。不要为改善语感取消来源、Stop 或审核绑定。
@@ -53,9 +57,11 @@
 
 本机真实材料仅在忽略的目录中，不在 GitHub：
 
-- `local-data/pedagogy/compiler-r2/G01/worked_example.copy.json`：Copy-facing Projection。
-- `local-data/pedagogy/student-pov-r3/G01/draft-lines.json`：最适合开始改写的逐句候选。
+- `local-data/pedagogy/compiler-r3/G01/worked_example.copy.json`：当前 Copy-facing Projection，0.2 契约。
+- `local-data/pedagogy/student-pov-r4/G01/draft-lines.json`：最适合开始改写的逐句候选；本次迁移只重绑来源，没有改措辞。
 - 同目录 `hook-variants.json` / `payoff-variants.json`：开头与结果表达候选，当前均待审。
 - 同目录 `final-script.candidate.json`：VO / Screen / Motion / 来源 / 停顿协调上下文。
+
+原 compiler-r2 / student-pov-r2、r3 仍保留为历史，不能拿旧文案批准或旧20秒视觉样片代替当前十条 Tell Now 的完整覆盖。
 
 若另一位 Agent 只有 GitHub 权限，需要由用户另行提供以上本地投影和候选；不要扫描教学 Markdown、题库或 Registry 补事实。真实题目、口播、视频、声音与工程保持本地，不提交到公开仓库。

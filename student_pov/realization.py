@@ -7,7 +7,7 @@ from pedagogy import validate_handoff
 from .payoff import supported_payoff
 from .qa import lint_copy, planned_scene_observations
 
-VERSION = '0.1.0'
+VERSION = '0.2.0'
 FUNCTIONS = ('pain', 'interrupt', 'focus', 'action', 'collapse', 'payoff', 'stop', 'stamp')
 SIGNATURES = {'R01': 'overgrowth', 'R02': 'relation_rewire', 'R06': 'missing_mass',
               'R09': 'semantic_compression', 'F01': 'axis_regroup', 'G01': 'extract_route_seal'}
@@ -66,18 +66,34 @@ def realize(projection, plan, bundle, status, *, draft_lines=None, copy_review=N
                     'payoff_line', 'stop_vo', 'memory_phrase'}
     if not isinstance(draft_lines, dict) or set(draft_lines) - allowed_keys:
         raise ValueError('Candidate cannot replace boundaries, output, scope, Evidence or method stamp')
+    visible_paths = ('/symptom', '/first_signal', '/first_action', '/judgment_point',
+        '/memory_phrase', '/original_question', '/evidence_refs', '/public_claims', '/payoff',
+        '/boundaries/tell_now', '/answer_scope', '/stop_state', '/student_model/see',
+        '/student_model/think', '/student_model/do', '/student_model/check', '/student_model/stop')
     for row in draft_lines.values():
-        if not isinstance(row, dict) or set(row) != {'text', 'pedagogy_refs'} or not isinstance(row['text'], str):
-            raise ValueError('Copy candidate needs text and existing Pedagogy refs')
+        if (not isinstance(row, dict) or set(row) != {'text', 'pedagogy_refs'}
+                or not isinstance(row['text'], str) or not row['text'].strip()):
+            raise ValueError('Copy candidate needs nonempty text and existing Pedagogy refs')
         if not row['pedagogy_refs']:
             raise ValueError('Every copy candidate needs a source Plan binding')
         for ref in row['pedagogy_refs']:
+            if not any(ref['pointer'] == path or ref['pointer'].startswith(path + '/') for path in visible_paths):
+                raise ValueError('Copy candidate cannot consume undisclosed or backend-only Plan fields')
             if ref != _ref(plan, ref['pointer']):
                 raise ValueError('Copy candidate source Plan binding changed')
     mandatory_refs = {'first_action': '/first_action', 'memory_phrase': '/memory_phrase'}
     for key, required in mandatory_refs.items():
         if key in draft_lines and not any(r['pointer'] == required for r in draft_lines[key]['pedagogy_refs']):
             raise ValueError('Natural copy must preserve its assigned Pedagogy field')
+    payoff_refs = {'/payoff', '/payoff/reviewed_support', '/payoff/reviewed_support/record',
+                   '/payoff/reviewed_support/record/allowed_claim',
+                   '/payoff/reviewed_support/record/cognitive_relief_line'}
+    for key in ('cognitive_relief_line', 'payoff_line'):
+        if key in draft_lines and not any(r['pointer'] in payoff_refs for r in draft_lines[key]['pedagogy_refs']):
+            raise ValueError('Payoff copy must bind its reviewed payoff and allowed claim')
+    if 'stop_vo' in draft_lines and not any(r['pointer'] in ('/boundaries/tell_now', '/stop_state', '/answer_scope')
+            for r in draft_lines['stop_vo']['pedagogy_refs']):
+        raise ValueError('Stop copy must bind the required boundary or bounded output state')
     payoff, payoff_gaps = supported_payoff(plan, projection)
     issues, gaps = [], list(payoff_gaps)
     if plan['mode'] == 'first_touch' and plan['cognitive_load']['metrics']['core_actions'] != 1:
@@ -104,7 +120,7 @@ def realize(projection, plan, bundle, status, *, draft_lines=None, copy_review=N
         script['collapse'].update(before=deepcopy(payoff['baseline_path']), after=deepcopy(payoff['method_path']),
                                  allowed_claim=_line(plan, prefix + 'allowed_claim'))
         script['cognitive_relief_line'] = _line(plan, prefix + 'cognitive_relief_line')
-        script['payoff_line'] = _line(plan, prefix + 'allowed_claim')
+        script['payoff_line'] = deepcopy(script['cognitive_relief_line'])
         for key in ('interrupt', 'focus'):
             if isinstance(payoff.get(key + '_line'), str):
                 script[key] = _line(plan, prefix + key + '_line')
@@ -114,6 +130,10 @@ def realize(projection, plan, bundle, status, *, draft_lines=None, copy_review=N
             script['stop_line']['pedagogy_refs'] += row['pedagogy_refs']
         else:
             script[key] = deepcopy(row)
+    # One short delivered payoff. A caller's explicit payoff_line wins; otherwise
+    # the bound cognitive relief is the spoken choice, never a second narration.
+    if 'payoff_line' not in draft_lines:
+        script['payoff_line'] = deepcopy(script['cognitive_relief_line'])
     all_copy = '\n'.join(row['text'] for key, row in script.items()
                          if isinstance(row, dict) and isinstance(row.get('text'), str))
     issues += ['COPY_LINT:' + flag for flag in lint_copy(all_copy, plan['role'],
@@ -140,8 +160,13 @@ def realize(projection, plan, bundle, status, *, draft_lines=None, copy_review=N
             'removed_work': deepcopy(removed or []), 'output_state': deepcopy(output),
             'silence_after': silence, 'tell_now_boundary_ids': list(boundary_ids or []),
             'notes': 'Deterministic source binding; semantic/natural speech and Human Taste review stay separate'})
+    baseline_text = [r['text'] for r in payoff['baseline_path']] if payoff else []
+    baseline_refs = [_ref(plan, '/payoff/reviewed_support/record/baseline_path')] if payoff else []
     if script['pain']:
-        scene('pain', script['pain']['text'], evidence_text, script['pain']['pedagogy_refs'])
+        scene('pain', script['pain']['text'], evidence_text + baseline_text,
+              script['pain']['pedagogy_refs'] + baseline_refs)
+    elif payoff:
+        scene('pain', None, evidence_text + baseline_text, baseline_refs)
     if script['interrupt']:
         scene('interrupt', script['interrupt']['text'], [], script['interrupt']['pedagogy_refs'])
     if script['focus']:
@@ -157,8 +182,8 @@ def realize(projection, plan, bundle, status, *, draft_lines=None, copy_review=N
     # default groups visual Collapse with its short payoff/silence when possible.
     if payoff:
         sequence[-1]['silence_after'] = 0.5
-        scene('payoff', script['cognitive_relief_line']['text'], [],
-              script['cognitive_relief_line']['pedagogy_refs'], 'settle', silence=0.5)
+        scene('payoff', script['payoff_line']['text'], [],
+              script['payoff_line']['pedagogy_refs'], 'settle', silence=0.5)
     else:
         gaps.append('COGNITIVE_RELIEF_UNAVAILABLE')
     scene('stop', script['stop_line']['text'], [x['text'] for x in projection['must_show_boundary']],
@@ -207,6 +232,10 @@ def realize(projection, plan, bundle, status, *, draft_lines=None, copy_review=N
         'human_taste_review': 'PENDING'}
     if duplicate:
         gaps.append('SCREEN_VOICE_DUPLICATION_REVIEW_REQUIRED')
+    if not audit['student_pov_present']:
+        gaps.append('STUDENT_ACTION_FOCUS_OR_STOP_MISSING')
+    if payoff and not audit['cognitive_reduction_visible']:
+        gaps.append('COGNITIVE_REDUCTION_NOT_VISIBLE_IN_PLAN')
     availability = 'FAIL' if issues else 'HOLD' if gaps else 'READY'
     comparison = {k: deepcopy(payoff[k]) if payoff else []
                   for k in ('baseline_path', 'method_path', 'removed_steps', 'remaining_steps')}
@@ -225,7 +254,7 @@ def realize(projection, plan, bundle, status, *, draft_lines=None, copy_review=N
         'payoff_validation': {'source_payoff_ref': _ref(plan, '/payoff'),
             'actual_reduction': deepcopy(payoff['reduction']) if payoff else None,
             'output_type': plan['role'], 'allowed_claim': payoff['allowed_claim'] if payoff else None,
-            'final_copy_claim': script['cognitive_relief_line']['text'] if script['cognitive_relief_line'] else None,
+            'final_copy_claim': script['payoff_line']['text'] if payoff else None,
             'overclaim': bool(issues), 'transferable_first_action': payoff['first_action_transferable'] if payoff else False,
             'status': 'PASS' if payoff and not issues else 'PAYOFF_UNSUPPORTED',
             'semantic_certification': False},

@@ -6,7 +6,7 @@ from pathlib import Path
 import math
 import re
 
-from video_contracts import read, write, sha
+from video_contracts import read, write, sha, review_semantics
 from creative_os.hero import file_sha
 from ae_production.cognitive_execution import validate_inputs, TEMPLATE
 from .music import verify_gain_keys
@@ -26,6 +26,39 @@ def caption_cues(path):
             raise ValueError('Invalid caption time range')
         rows.append(dict(start=seconds(times[0]), end=seconds(times[1]), text='\n'.join(lines[2:])))
     return rows
+
+
+def check_pedagogy_binding(plan, application, spec):
+    """Bind the optional Plan to this action and its required screen copy.
+
+    This is a structural handoff check, never visual readability, natural
+    speech, student experience or semantic certification.
+    """
+    binding = plan['input_binding']
+    payload = application['payload']
+    action = payload['actual_action']
+    if (plan['availability']['status'] != 'READY' or plan['mode'] != 'worked_example'
+            or binding['transport'] != 'frozen_asset'
+            or binding['asset_id'] != application['parent_asset_id']
+            or binding['semantic_binding_sha'] != application['parent_semantic_sha']
+            or binding['source_sha'] != application['source_sha']
+            or binding['selected_actions_sha'] != sha(review_semantics([action]))
+            or plan['replay_request']['selection']['action_ids'] != [action['execution_id']]
+            or plan['method_id'] != payload['method']['method_id']
+            or plan['method_version'] != payload['method']['version']
+            or plan['role'] != action['role']
+            or spec['parent_asset_id'] != binding['asset_id']
+            or spec['parent_semantic_sha'] != binding['semantic_binding_sha']):
+        raise ValueError('Current worked-example Plan must bind this exact frozen asset, method and action')
+    compact = lambda value: re.sub(r'\s', '', value)
+    screens = {compact(node['text']) for node in spec['nodes']
+               if node['kind'] == 'text' and node['space'] == 'screen'}
+    missing = [row['item_id'] for row in plan['boundaries']['tell_now']
+               if compact(row['text']) not in screens]
+    if missing:
+        raise ValueError('Bound Plan Tell Now missing from frozen screen copy: ' + ', '.join(missing))
+    return {'status': 'PASS', 'observation_scope': 'frozen_screen_structure_only',
+            'actual_visual_review': 'PENDING', 'student_pov_certification': False}
 
 
 def preflight(request):
@@ -91,10 +124,9 @@ def preflight(request):
         from pedagogy import validate_plan
         plan = read(request['pedagogy_plan'])
         validate_plan(plan, read(production['bundle']), read(production['status']))
-        if (plan['plan_sha'] != request['pedagogy_plan_sha'] or plan['availability']['status'] != 'READY'
-                or plan['mode'] != 'worked_example'
-                or plan['method_id'] != read(production['application'])['payload']['method']['method_id']):
+        if plan['plan_sha'] != request['pedagogy_plan_sha']:
             raise ValueError('Current bounded worked-example Plan required')
+        check_pedagogy_binding(plan, read(production['application']), spec)
     return spec, receipt, audio, cues
 
 

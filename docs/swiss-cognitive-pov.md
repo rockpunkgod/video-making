@@ -97,6 +97,8 @@ Premiere 使用安装的官方 MCP 工具导入并核验媒体路径、建立新
 READY worked_example Plan（若请求绑定）、AE 文件、声音、音乐、字幕、序列和包络。
 任何不确定的修改先读实际状态；不盲重试。
 
+可选 Plan 必须绑定同一冻结父资产、语义指纹、方法版本与实际动作，且全部 Tell Now 逐字存在于冻结 Screen 文本；这是本视觉通道当前支持的结构要求，不认证实际阅读效果或自然措辞。旧0.1 Plan 不能继续当前消费，旧20秒样片也未显示新0.2 Plan 的十条 Tell Now；保留为历史视觉证明，不通过换 Plan SHA 继承新 READY。改写后的边界或新 Copy 需重新审核与生成对应展示包，不能挪用旧渲染。
+
 字幕样式在原生界面设置 Noto Sans SC Regular、深墨绿、48 px、无描边/背景/阴影。
 CEP 没有字幕内容读取 API：`create_caption_track` accepted 不等于实际创建已证实。
 因此另导出原生字幕 sidecar 对照冻结文本和时序，并检查实际带字幕视频帧。

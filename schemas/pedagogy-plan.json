@@ -4,13 +4,27 @@
   "title": "Frozen selective-disclosure PedagogyPlan; deterministic projection, not truth certification",
   "type": "object",
   "additionalProperties": false,
-  "allOf": [{"required": ["question_id", "original_question", "method_stamp"]}],
+  "allOf": [
+    {"required": ["question_id", "original_question", "method_stamp"]},
+    {
+      "if": {"properties": {"schema_version": {"const": "0.2.0"}}},
+      "then": {"properties": {
+        "compiler_version": {"const": "0.2.0"}, "policy_version": {"const": "0.2.0"},
+        "student_model": {"properties": {"stop": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/boundary"}}}},
+        "teaching_risk": {"properties": {"items": {"items": {"required": ["source_refs"]}}}}
+      }},
+      "else": {"properties": {
+        "compiler_version": {"const": "0.1.0"}, "policy_version": {"const": "0.1.0"},
+        "student_model": {"properties": {"stop": {"anyOf": [{"$ref": "#/$defs/boundary"}, {"type": "null"}]}}}
+      }}
+    }
+  ],
   "required": ["schema_version", "kind", "compiler_version", "policy_version", "plan_id", "plan_sha", "source_analysis_sha", "input_binding", "method_id", "method_version", "role", "mode", "audience", "channel", "duration_target", "duration_status", "symptom", "first_signal", "first_action", "judgment_point", "memory_phrase", "student_steps", "student_model", "evidence_refs", "boundaries", "omitted_items", "followup_content", "case_content_matrix", "teaching_risk", "compression_audit", "cognitive_load", "answer_scope", "stop_state", "working_rule", "payoff", "prohibited_claims", "public_claims", "source_refs", "truth_guard", "semantic_review", "availability", "release_state", "public_render_ready", "replay_request", "generated_at", "content_sha", "envelope_sha"],
   "properties": {
-    "schema_version": {"const": "0.1.0"},
+    "schema_version": {"enum": ["0.1.0", "0.2.0"], "description": "0.1.0 is retained solely for historical inspection; current consumption requires 0.2.0 source replay."},
     "kind": {"const": "pedagogy_plan"},
-    "compiler_version": {"const": "0.1.0"},
-    "policy_version": {"const": "0.1.0"},
+    "compiler_version": {"enum": ["0.1.0", "0.2.0"]},
+    "policy_version": {"enum": ["0.1.0", "0.2.0"]},
     "plan_id": {"type": "string", "pattern": "^pedagogy:[a-f0-9]{64}$"},
     "plan_sha": {"$ref": "#/$defs/sha"},
     "source_analysis_sha": {"$ref": "#/$defs/sha"},
@@ -32,7 +46,7 @@
     "judgment_point": {"$ref": "#/$defs/nullable_item"},
     "memory_phrase": {"$ref": "#/$defs/nullable_item"},
     "student_steps": {"type": "array", "items": {"type": "object", "additionalProperties": false, "required": ["kind", "item"], "properties": {"kind": {"enum": ["question", "observation", "action", "evidence", "judgment", "stop", "case"]}, "item": {"anyOf": [{"$ref": "#/$defs/item"}, {"$ref": "#/$defs/boundary"}]}}}},
-    "student_model": {"type": "object", "additionalProperties": false, "required": ["see", "think", "do", "check", "stop"], "properties": {"see": {"$ref": "#/$defs/nullable_item"}, "think": {"$ref": "#/$defs/nullable_item"}, "do": {"$ref": "#/$defs/nullable_item"}, "check": {"$ref": "#/$defs/nullable_item"}, "stop": {"anyOf": [{"$ref": "#/$defs/boundary"}, {"type": "null"}]}}},
+    "student_model": {"type": "object", "additionalProperties": false, "required": ["see", "think", "do", "check", "stop"], "properties": {"see": {"$ref": "#/$defs/nullable_item"}, "think": {"$ref": "#/$defs/nullable_item"}, "do": {"$ref": "#/$defs/nullable_item"}, "check": {"$ref": "#/$defs/nullable_item"}, "stop": {"description": "In 0.2.0, the complete ordered Tell Now array, including all current action Stops; no scalar primary-only projection.", "anyOf": [{"type": "array", "items": {"$ref": "#/$defs/boundary"}}, {"$ref": "#/$defs/boundary"}, {"type": "null"}]}}},
     "evidence_refs": {"$ref": "#/$defs/refs"},
     "boundaries": {"type": "object", "additionalProperties": false, "required": ["tell_now", "tell_later", "engine_only"], "properties": {
       "tell_now": {"type": "array", "items": {"$ref": "#/$defs/boundary"}},
@@ -42,7 +56,7 @@
     "omitted_items": {"type": "array", "items": {"$ref": "#/$defs/omission"}},
     "followup_content": {"type": "object", "additionalProperties": false, "required": ["counterexample", "boundary", "transfer", "hard"], "properties": {"counterexample": {"$ref": "#/$defs/followup"}, "boundary": {"$ref": "#/$defs/followup"}, "transfer": {"$ref": "#/$defs/followup"}, "hard": {"$ref": "#/$defs/followup"}}},
     "case_content_matrix": {"type": "object", "additionalProperties": false, "required": ["canonical", "counterexample", "boundary", "transfer", "hard"], "properties": {"canonical": {"const": ["first_touch", "worked_example"]}, "counterexample": {"const": ["counterexample"]}, "boundary": {"const": ["boundary"]}, "transfer": {"const": ["transfer"]}, "hard": {"const": ["hard_case"]}}},
-    "teaching_risk": {"type": "object", "additionalProperties": false, "required": ["levels", "items", "unknown_is_low", "numeric_score"], "properties": {"levels": {"const": ["low", "medium", "high", "unknown"]}, "unknown_is_low": {"const": false}, "numeric_score": {"type": "null"}, "items": {"type": "array", "items": {"type": "object", "additionalProperties": false, "required": ["item_id", "risk", "tier", "assessment_refs", "reason"], "properties": {"item_id": {"type": "string"}, "risk": {"$ref": "#/$defs/risk"}, "tier": {"enum": ["TELL_NOW", "TELL_LATER", "ENGINE_ONLY"]}, "assessment_refs": {"$ref": "#/$defs/refs"}, "reason": {"type": "string"}}}}}},
+    "teaching_risk": {"type": "object", "additionalProperties": false, "required": ["levels", "items", "unknown_is_low", "numeric_score"], "properties": {"levels": {"const": ["low", "medium", "high", "unknown"]}, "unknown_is_low": {"const": false}, "numeric_score": {"type": "null"}, "items": {"type": "array", "items": {"type": "object", "additionalProperties": false, "required": ["item_id", "risk", "tier", "assessment_refs", "reason"], "properties": {"item_id": {"type": "string"}, "source_refs": {"$ref": "#/$defs/refs"}, "risk": {"$ref": "#/$defs/risk"}, "tier": {"enum": ["TELL_NOW", "TELL_LATER", "ENGINE_ONLY"]}, "assessment_refs": {"$ref": "#/$defs/refs"}, "reason": {"type": "string"}}}}}},
     "compression_audit": {"type": "object", "additionalProperties": false, "required": ["included", "omitted", "preserved", "prohibited_changes", "guard_sha", "structural_lint_only", "semantic_truth_certification"], "properties": {"included": {"$ref": "#/$defs/strings"}, "omitted": {"type": "array", "items": {"$ref": "#/$defs/omission"}}, "preserved": {"const": ["evidence", "role", "stop", "certainty", "answer", "maturity"]}, "prohibited_changes": {"$ref": "#/$defs/strings"}, "guard_sha": {"$ref": "#/$defs/sha"}, "structural_lint_only": {"const": true}, "semantic_truth_certification": {"const": false}}},
     "cognitive_load": {"type": "object", "additionalProperties": false, "required": ["budget", "metrics", "status", "exceeded"], "properties": {"budget": {"type": "object", "additionalProperties": {"type": "integer", "minimum": 1}}, "metrics": {"type": "object", "additionalProperties": false, "required": ["core_actions", "primary_boundary", "memory_phrase", "primary_evidence_cluster", "simultaneous_concepts"], "properties": {"core_actions": {"type": "integer", "minimum": 0}, "primary_boundary": {"type": "integer", "minimum": 0}, "memory_phrase": {"type": "integer", "minimum": 0}, "primary_evidence_cluster": {"type": "integer", "minimum": 0}, "simultaneous_concepts": {"type": "integer", "minimum": 0}}}, "status": {"enum": ["PASS", "PEDAGOGY_OVERLOAD", "NOT_FIRST_TOUCH"]}, "exceeded": {"$ref": "#/$defs/strings"}}},
     "answer_scope": {"type": "object", "additionalProperties": false, "required": ["scope", "answer", "may_output_final_answer", "upstream_answer", "upstream_closed", "actual_outputs"], "properties": {"scope": {"const": "method_action_demo"}, "answer": {"type": "null"}, "may_output_final_answer": {"const": false}, "upstream_answer": {}, "upstream_closed": {"type": "boolean"}, "actual_outputs": {"type": "array", "minItems": 1}}},

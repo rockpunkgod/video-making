@@ -5,6 +5,7 @@ from content_os.candidates import engineering_gate, matching_reviews, source_gat
 from video_contracts import (sha, pointer, status_matches, verify_bundle,
                              review_semantics, REVIEW_LEVELS)
 from video_contracts import passage
+from .policy import CAVEAT_FIELDS
 
 
 def _span_valid(question, span):
@@ -129,6 +130,40 @@ class FrozenSource:
             if isinstance(value, str) and value.strip():
                 return path
         return None
+
+    def caveat_paths(self):
+        """Enumerate frozen semantic caveats, without inventing relevance/risk.
+
+        The supported fields are existing text assertions or ordered arrays of
+        text assertions. A structured/empty malformed assertion fails closed;
+        it must not disappear inside the undifferentiated backend guard.
+        """
+        result = []
+        for field in CAVEAT_FIELDS:
+            if field not in self.method:
+                continue
+            value = self.method[field]
+            path = self.method_path + '/' + field
+            if isinstance(value, str) and value.strip():
+                result.append(path)
+            elif isinstance(value, list) and all(isinstance(v, str) and v.strip() for v in value):
+                result += [path + '/' + str(i) for i in range(len(value))]
+            else:
+                raise ValueError('Frozen caveat needs existing nonempty text assertions: ' + path)
+        card = self.method.get('four_step_card')
+        if isinstance(card, dict) and 'stop' in card:
+            if not isinstance(card['stop'], str) or not card['stop'].strip():
+                raise ValueError('Frozen four-step Stop needs an existing text assertion')
+            result.append(self.method_path + '/four_step_card/stop')
+        for review_path, record in zip(self.review_paths, self.review_records):
+            claims = record.get('reviewed_claims', {})
+            if isinstance(claims, dict) and 'boundary' in claims:
+                value = claims['boundary']
+                if not isinstance(value, str) or not value.strip():
+                    raise ValueError('Reviewed boundary needs an existing text assertion')
+                prefix = review_path + ('/record' if self.transport == 'frozen_asset' else '')
+                result.append(prefix + '/reviewed_claims/boundary')
+        return result
 
     def cases(self):
         """Only explicit frozen review credentials create a case-content slot."""

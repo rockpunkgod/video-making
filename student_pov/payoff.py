@@ -20,7 +20,9 @@ def supported_payoff(plan, projection):
     def ids(rows):
         if not isinstance(rows, list) or any(not isinstance(r, dict)
                 or not isinstance(r.get('text'), str) or not r['text'].strip()
-                or not isinstance(r.get('work_ids'), list) for r in rows):
+                or not isinstance(r.get('work_ids'), list) or not r['work_ids']
+                or any(not isinstance(w, str) or not w.strip() for w in r['work_ids'])
+                or len(r['work_ids']) != len(set(r['work_ids'])) for r in rows):
             raise ValueError('Paths need explicit reviewed text and work IDs')
         return {w for row in rows for w in row['work_ids']}
     try:
@@ -30,22 +32,42 @@ def supported_payoff(plan, projection):
     work = record['cognitive_work']
     if not isinstance(work, dict) or set(work) != {'removed', 'deferred', 'still_required'}:
         return None, ['PAYOFF_UNSUPPORTED:cognitive_work_dispositions_required']
-    if any(not isinstance(v, list) or len(v) != len(set(v)) for v in work.values()):
+    if any(not isinstance(v, list) or any(not isinstance(w, str) or not w.strip() for w in v)
+            or len(v) != len(set(v)) for v in work.values()):
         return None, ['PAYOFF_UNSUPPORTED:invalid_work_dispositions']
     removed, deferred, required_work = (set(work[k]) for k in ('removed', 'deferred', 'still_required'))
     if removed & deferred or removed & required_work:
         errors.append('deferred_or_required_work_mislabeled_removed')
-    removed_ids = {r.get('work_id') for r in record['removed_steps']}
+    def step_ids(rows):
+        if not isinstance(rows, list) or any(not isinstance(r, dict)
+                or not isinstance(r.get('work_id'), str) or not r['work_id'].strip()
+                or not isinstance(r.get('text'), str) or not r['text'].strip() for r in rows):
+            raise ValueError('Reviewed work steps need IDs and text')
+        result = [r['work_id'] for r in rows]
+        if len(result) != len(set(result)):
+            raise ValueError('Work step IDs must be unique')
+        return set(result)
+    try:
+        removed_ids = step_ids(record['removed_steps'])
+        remaining_ids = step_ids(record['remaining_steps'])
+    except ValueError:
+        return None, ['PAYOFF_UNSUPPORTED:invalid_work_steps']
     if not removed or removed != removed_ids or not removed <= before_work or removed & after_work:
         errors.append('removed_steps_not_supported_by_paths')
     if not required_work >= after_work:
         errors.append('remaining_method_work_hidden')
-    remaining_ids = {r.get('work_id') for r in record['remaining_steps']}
-    if not remaining_ids >= deferred | required_work:
+    if not before_work <= removed | deferred | required_work:
+        errors.append('baseline_work_not_classified')
+    if remaining_ids != deferred | required_work:
         errors.append('deferred_or_still_required_steps_not_recorded')
     reduction = record['reduction']
     if not isinstance(reduction, dict) or not {'before', 'after', 'unit', 'before_ids', 'after_ids'} <= set(reduction):
         return None, ['PAYOFF_UNSUPPORTED:actual_reduction_shape_required']
+    for key in ('before_ids', 'after_ids'):
+        values = reduction[key]
+        if (not isinstance(values, list) or any(not isinstance(v, str) or not v.strip() for v in values)
+                or len(values) != len(set(values))):
+            return None, ['PAYOFF_UNSUPPORTED:invalid_reduction_ids']
     if (type(reduction['before']) is not int or type(reduction['after']) is not int
             or not reduction['before'] > reduction['after'] > 0
             or reduction['before'] != len(set(reduction['before_ids']))
@@ -109,6 +131,8 @@ def supported_payoff(plan, projection):
         errors.append('allowed_claim_required')
     if not isinstance(record['first_action_transferable'], bool):
         errors.append('transferable_first_action_must_be_explicit')
+    elif not record['first_action_transferable']:
+        errors.append('first_action_not_transferable')
     if record['scope'].get('stage') not in ('current_action', 'current_candidate'):
         errors.append('explicit_bounded_work_scope_required')
     line = record['cognitive_relief_line']

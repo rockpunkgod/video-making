@@ -84,6 +84,10 @@ def lint_copy(text, role, may_answer):
     flags = []
     if re.search(r'一招秒杀|必考|90%的学生|所有.*都必须|做阅读不用背单词|阅读不用词汇', text):
         flags.append('prohibited_or_generalized_claim')
+    # This v0.2 interface has no bound statistics or heat-evidence channel.
+    # Structural path/candidate counts remain allowed; invented rates do not.
+    if re.search(r'\d+(?:\.\d+)?\s*[%％]|热门|爆火|全网都在做', text):
+        flags.append('unbound_statistic_or_heat_claim')
     if role != 'decider' and re.search(r'答案出来|答案就在|直接排|这一招就够|找到.*就能选', text):
         flags.append('role_overclaim')
     if not may_answer and re.search(r'答案出来|答案就在|所以填|词形.*确定了', text):

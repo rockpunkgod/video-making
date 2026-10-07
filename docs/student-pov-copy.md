@@ -1,4 +1,4 @@
-# Student POV Copy Realization v0.1
+# Student POV Copy Realization v0.2
 
 Pedagogy Compiler 决定 WHAT TO TEACH；Student POV Copy 决定 HOW IT FEELS TO USE；Motion 决定 HOW IT MOVES；Premiere 决定 HOW IT PLAYS。本层是 `student_pov/`，不是第二个 Pedagogy Compiler。
 
@@ -17,7 +17,7 @@ Frozen ANSWER + current status
 
 Copy 不改变 Tell Now/Later、Role、答案范围、Evidence、方法适用、是否跳步或 Stop 状态。`validate_handoff` 在入口先重新核验 Plan 与当前冻结资产；first_touch HOLD 不能偷换成 first_touch READY。可以明确选择 READY bounded worked_example。
 
-候选自然表达使用模型无关 adapter.propose(small_projection)，或显式 `draft_lines`。适配器只获得轻量投影，不拿 Registry/自由求解器。每句候选绑定既有 Plan 字段，主动作/记忆句必须引用各自对应字段。新表达没有最终语义保真和自然口语凭证则 HOLD。测试仅使用模拟适配器，不调用 Astra 或外部语言模型。
+候选自然表达使用模型无关 adapter.propose(small_projection)，或显式 `draft_lines`。适配器只获得轻量投影，不拿 Registry/自由求解器。每句候选绑定既有 Plan 字段，主动作/记忆句必须引用各自对应字段。新表达没有最终语义保真和自然口语凭证则 HOLD。写法判据见“自然口语”一节，判据本身不是凭证。测试仅使用模拟适配器，不调用 Astra 或外部语言模型。
 
 ## Baseline、Method Path、Removed Work
 
@@ -47,6 +47,25 @@ Pain 来自既有症状或具体题面结构，不造“90%的学生”。Interr
 
 `cognitive_relief_line` 必须绑定 source_payoff_ref 与 allowed_claim；无凭证时为空或 HOLD 候选。高风险“不用认识词”同时要求具体这一题/这一步/当前判断、具体词的已有 Evidence 和已批准 shortcut；“做阅读不用背单词”总阻断。
 
+### 自然口语：写学生怎么想，不写字段怎么读
+
+绑定保证每句有出处，不保证它像人说的话。逐字搬运 Plan 会把“由 your 限定的是哪种功能”这类内部表述带上口播；机械套短句又会变成一串“先别→只看→先停”。两种都是机器味。本节是写作判据，不是自然口语凭证。
+
+以下是表达倾向，不是新增禁词表或句式校验。具体语境需要时可以使用普通书面词或有目的的重复；是否保留，取决于学生听一次能否理解和这句是否推进当前动作。
+
+写每句前先答三问：为什么是现在说这句（对应哪一个当前可见的题面事实）、学生听一遍能不能懂、去掉对象后还能不能理解。答不上来就先不写。
+
+- 一句一个落点。一句话只推进一个判断或一个动作，多出来的拆句或删掉，不靠连接词往下堆。
+- 说眼睛和笔尖的动作，不说后台术语。“功能、属性、范畴、判定、节点”只在学生此刻确实需要、或题面本身就这么说时出现；动作词仍在看、圈、划、拆、比、对、找、留、排、停之内。
+- 指代要有画面锚点。说“这个空”时画面正圈着这个空；没有锚点的“它、这个、这里”不写。
+- 念一遍再定稿。一口气念得完、不用回读；“由……限定、属于、进行、该、其”若让句子显得搬字段或拗口，就换成更直接的说法。念着别扭就重写，不靠改字段让它过 lint。
+- 允许变化。“先别”“只看”这类阻断/聚焦句可用，但不是每条必须；长短句可换，可有轻微反应、必要衔接或自然停顿，不硬塞反问、感叹、网络梗或“咱们”。
+- 从卡点进，不从课程进。不写“今天我们学习……”，不写课程背景，不虚构学生比例、想法或普遍痛点。
+- 相邻句避免机械套同一句式。保留有助于对比、节奏或记忆的重复；重复开头却没有推进新动作时才重写。一次听不完整的长句先拆短。
+- 方法名放动作价值之后，最后留下下一题能直接调用的第一动作。
+
+这些判据只约束表达。它们不改 Tell Now/Tell Later、Role、答案范围、Evidence、Stop，也不许因“写得顺”补出未认证的认知收益，或把 deferred 说成 removed。判据通过不等于自然口语通过。工程入口接受明确标明 AI 或人工身份、绑定最终文案的外部 Copy 凭证及 natural_speech 检查；它不代签真人听感或 Human Taste，后两项仍需人工反馈。
+
 推荐 FinalScript 每 scene 包含 time_range、cognitive_function、visual_state、student_attention、vo、screen_copy、motion_function、evidence_ref、pedagogy_ref、removed_work、output_state、silence_after、notes。时间按版本化中文4字/秒、英文150词/分估算较长口播/屏幕阅读，不声称真实配音精确匹配。
 
 ## VO / Screen / Motion 与 Signature
@@ -67,7 +86,11 @@ Signature 映射仅协调视觉语法：R01 Overgrowth；R02 Relation Rewire；R
 
 Schema 为 `creative/copy-system/student-pov-copy.schema.json`。CopyAudit 包含第一动作/Role/Evidence/Stop/Tell Now/Payoff、可见压缩、学生操作结构、动作语言、解释密度、专家链泄漏、屏幕口播重复、捷径、禁说、自然口语风险。PASS 仅是 deterministic binding/claim lint；不是完整语义、自然口语或学生体验认证。
 
+当前 Copy 契约为 0.2.0。候选不得引用未披露或后台字段；Payoff 句必须引用 Payoff/allowed_claim，Stop 句必须引用当前边界或有限输出状态，空第一动作直接拒绝。Baseline 中每个 work_id 必须明确归入 removed/deferred/still_required，后两类完整列入 remaining_steps；声明第一动作不可迁移时继续 HOLD。默认在开始场景显示已绑定的 baseline，在 Collapse 显示 method_path 与实际产物。显式 payoff_line 成为唯一口播结果句，并绑定 final_copy_claim；更改它会使旧文案批准失效。无依据百分比、热点表达仍 FAIL，不从原题出现数字反推学生统计。
+
 `copy_audit.observation_scope=planned_scene_structure_only` 明确这些观察只针对生成的 FinalScript。兼容字段 `cognitive_reduction_visible` 要求计划屏幕确实包含有凭证的 before→after 文本，且 Collapse 绑定实际 Output、Evidence 和 removed_work；仅有 Payoff 记录不能判 true。`student_pov_present` 要求场景有来源绑定的第一动作、Evidence 焦点和完整必要 Stop，不再固定为 true。这两个 bool 均不表示实际画面清晰、学生感到轻松或学会了操作。`actual_visual_review`、`student_experience_review` 和 `human_taste_review` 始终 PENDING；外部 Copy 文案凭证也不能自动替它们签字。
+
+READY 要求第一动作保留、计划中可见压缩和完整学生操作结构均成立，且 Payoff/外部文案凭证满足要求。`inspect_historical` 和 `python -m student_pov inspect <request.json>` 仅检查保存件完整性，不核当前上游、不允许消费。历史 0.1 Schema 独立保留；当前 validate/生成消费明确拒绝旧契约，须从新 Plan 与当前冻结源重建，不能修改版本标签或覆盖旧 Copy。
 
 `final_copy_sha` 同时覆盖 script 与逐景 FinalScript；`copy_review` 必须绑定 script_sha/final_copy_sha 并显式确认 semantic_fidelity、natural_speech、layer_division。任何相关文字或场景修改让旧批准无效。AI凭证不升级人工教学认证。Human Taste 14问见 `STUDENT_POV_HUMAN_TASTE_REVIEW.md`，始终等待真实用户/人工意见。
 
@@ -77,6 +100,6 @@ candidate = realize(copy_projection, plan, frozen_bundle, current_status)
 validate_copy(candidate, copy_projection, plan, frozen_bundle, current_status)
 ```
 
-独立 `python -m student_pov realize|validate <request.json>`，只读明确列出的计划/投影/资产/状态和可选 draft_lines/copy_review；不覆盖历史。教学、来源、编辑与公开渲染始终独立，本模块不自动发布。
+独立 `python -m student_pov realize|validate|inspect <request.json>`，只读明确列出的计划/投影/资产/状态和可选 draft_lines/copy_review；inspect 只需指定 copy。命令不覆盖历史。教学、来源、编辑与公开渲染始终独立，本模块不自动发布。
 
-真实 G01 当前缺已有基线路径/removed_work 与自然 Copy 凭证，学生视角层 HOLD；工程化 Contract 合成测试不补这个缺口。Hero 的 native visual proof 可以绑定 READY worked_example，但不能因此声称新 Student POV 层通过了学生验收。详见 `STUDENT_POV_COPY_ACCEPTANCE.md`。
+真实 G01 当前缺已有基线路径/removed_work 与自然 Copy 凭证，学生视角层 HOLD；工程化 Contract 合成测试不补这个缺口。当前本地 Copy 为 student-pov-r4，使用 compiler-r3 的 0.2 Plan，完整保留十条 Tell Now，未改候选措辞。旧20秒 Hero 保留为历史视觉证明；旧 Plan 当前消费被阻断，它也没有覆盖新 Plan 的全部 Tell Now，不能继承新 READY 或声称 Student POV 通过学生验收。详见 `STUDENT_POV_COPY_ACCEPTANCE.md`。

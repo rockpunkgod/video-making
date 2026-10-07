@@ -1,11 +1,16 @@
 """Replay Copy realization against the approved Plan and current upstream."""
 from video_contracts import ROOT, _validator, sha, verify_seal
-from .realization import realize, copy_semantics
+from .realization import VERSION, realize, copy_semantics
 
 
-def validate_copy(copy, projection, plan, bundle, status):
+def inspect_historical(copy):
+    """Check saved copy integrity without granting current consumption."""
     from jsonschema import ValidationError
-    path = ROOT / 'creative' / 'copy-system' / 'student-pov-copy.schema.json'
+    version = copy.get('schema_version')
+    if version not in ('0.1.0', VERSION):
+        raise ValueError('Unsupported Student POV Copy contract version')
+    name = 'student-pov-copy.v0.1.schema.json' if version == '0.1.0' else 'student-pov-copy.schema.json'
+    path = ROOT / 'creative' / 'copy-system' / name
     try:
         _validator(str(path), path.stat().st_mtime_ns).validate(copy)
     except ValidationError as error:
@@ -13,8 +18,20 @@ def validate_copy(copy, projection, plan, bundle, status):
     verify_seal(copy)
     if copy['copy_sha'] != sha(copy_semantics(copy)) or copy['copy_id'] != 'student-pov:' + copy['copy_sha']:
         raise ValueError('Student POV copy binding mismatch')
+    return {'status': 'HISTORICAL_ONLY', 'current_upstream_verified': False,
+            'contract_status': 'CURRENT_CONTRACT' if version == VERSION else 'LEGACY_CONTRACT',
+            'contract_version': version, 'current_contract_version': VERSION,
+            'consumption_allowed': False, 'public_render_ready': False}
+
+
+def validate_copy(copy, projection, plan, bundle, status):
+    inspect_historical(copy)
+    if copy['schema_version'] != VERSION:
+        raise ValueError('Historical Student POV Copy contract ' + copy['schema_version']
+            + ' cannot be consumed by ' + VERSION + '; regenerate from current Pedagogy and frozen inputs')
     expected = realize(projection, plan, bundle, status, **copy['realization_request'])
     if expected != copy:
         raise ValueError('Copy realization changed Pedagogy, Evidence, payoff or required boundaries')
-    return {'status': 'PASS', 'consumption_allowed': copy['availability']['status'] == 'READY',
+    return {'status': 'PASS', 'current_upstream_verified': True,
+            'consumption_allowed': copy['availability']['status'] == 'READY',
             'public_render_ready': False}

@@ -3,17 +3,22 @@ import argparse
 from pathlib import Path
 from video_contracts import read, write
 from .realization import realize
-from .validation import validate_copy
+from .validation import validate_copy, inspect_historical
 
 
 def main():
     parser = argparse.ArgumentParser(description='Student POV Copy realization after approved Pedagogy')
-    parser.add_argument('command', choices=('realize', 'validate'))
+    parser.add_argument('command', choices=('realize', 'validate', 'inspect'))
     parser.add_argument('request')
     args = parser.parse_args()
     path = Path(args.request); request = read(path)
     def load(key):
         return read(path.parent / request[key])
+    if args.command == 'inspect':
+        result = inspect_historical(load('copy'))
+        print('Historical integrity PASS; current upstream not verified; consumption blocked ('
+              + result['contract_status'] + ')')
+        return
     plan, projection, bundle, status = (load(k) for k in ('plan', 'projection', 'bundle', 'status'))
     if args.command == 'validate':
         result = validate_copy(load('copy'), projection, plan, bundle, status)
