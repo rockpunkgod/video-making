@@ -6,6 +6,21 @@ from .validation import validate_plan
 from .compiler import VERSION
 
 
+def inspect_historical_handoff(handoff):
+    """Read a preserved envelope without upgrading its contract or release."""
+    if handoff.get('schema_version') == '0.4.0':
+        from .handoff_v04 import inspect_historical_handoff as inspect
+        return inspect(handoff)
+    verify_seal(handoff)
+    if (handoff.get('schema_version') not in ('0.1.0', '0.2.0', '0.3.0')
+            or handoff.get('kind') not in ('pedagogy_copy_projection', 'pedagogy_motion_projection')
+            or handoff.get('plan_id') != 'pedagogy:' + handoff.get('plan_sha', '')
+            or handoff.get('public_render_ready') is not False):
+        raise ValueError('Invalid historical Pedagogy handoff envelope')
+    return {'status': 'HISTORICAL_ONLY', 'contract_version': handoff['schema_version'],
+            'current_upstream_verified': False, 'consumption_allowed': False, 'public_render_ready': False}
+
+
 def _ready(plan, bundle, status):
     validate_plan(plan, bundle, status)
     if plan['availability']['status'] != 'READY':
@@ -23,6 +38,11 @@ def _base(plan, kind):
 
 def copy_projection(plan, bundle, status):
     _ready(plan, bundle, status)
+    if plan['schema_version'] == '0.4.0':
+        from .handoff_v04 import copy_projection as project, inspect_historical_handoff
+        result = project(plan)
+        inspect_historical_handoff(result)
+        return result
     result = _base(plan, 'pedagogy_copy_projection')
     result.update(hookable_problem=deepcopy(plan['symptom']),
         first_signal=deepcopy(plan['first_signal']), first_action=deepcopy(plan['first_action']),
@@ -48,6 +68,11 @@ def copy_projection(plan, bundle, status):
 
 def motion_projection(plan, bundle, status):
     _ready(plan, bundle, status)
+    if plan['schema_version'] == '0.4.0':
+        from .handoff_v04 import motion_projection as project, inspect_historical_handoff
+        result = project(plan)
+        inspect_historical_handoff(result)
+        return result
     result = _base(plan, 'pedagogy_motion_projection')
     result.update(symptom_object=deepcopy(plan['symptom']),
         action_object=deepcopy(plan['first_action']),
@@ -63,8 +88,10 @@ def motion_projection(plan, bundle, status):
     return seal(result)
 
 
-def validate_handoff(handoff, plan, bundle, status):
+def validate_handoff(handoff, plan, bundle, status, *, required_version=None):
     verify_seal(handoff)
+    if required_version is not None and handoff.get('schema_version') != required_version:
+        raise ValueError('Handoff contract mismatch; recompile and reproject from current frozen inputs')
     kinds = {'pedagogy_copy_projection': copy_projection,
              'pedagogy_motion_projection': motion_projection}
     if handoff.get('kind') not in kinds:

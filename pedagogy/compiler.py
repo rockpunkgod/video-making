@@ -7,6 +7,7 @@ from .sources import FrozenSource
 from . import policy
 
 VERSION = '0.3.0'
+CURRENT_VERSION = '0.4.0'
 FIELD_CANDIDATES = {
     'symptom': ('/student_symptoms/0', '/four_step_card/start', '/trigger_cues/0'),
     'first_signal': ('/four_step_card/start', '/trigger_cues/0'),
@@ -45,6 +46,10 @@ def plan_semantics(plan):
         review = result['replay_request']['boundary_review']
         result['replay_request']['boundary_review'] = {k: v for k, v in review.items()
                                                        if k not in ('generated_at', 'envelope_sha')}
+    if plan.get('schema_version') == CURRENT_VERSION and 'structure_input' in result.get('replay_request', {}):
+        result['replay_request'] = deepcopy(result['replay_request'])
+        result['replay_request']['structure_input'] = {k: v for k, v in result['replay_request']['structure_input'].items()
+                                                     if k not in ('generated_at', 'content_sha', 'envelope_sha')}
     return result
 
 
@@ -89,7 +94,14 @@ def _original_question(source):
 
 def compile_plan(bundle, status, selection, *, mode='first_touch', audience='first_time_student',
                  channel='video', duration_target=30, fields=None, extra_boundary_refs=None,
-                 generated_at=None, boundary_review=None):
+                 generated_at=None, boundary_review=None, contract_version=VERSION, structure_input=None):
+    if contract_version == CURRENT_VERSION:
+        from .v04 import compile_v04
+        return compile_v04(bundle, status, selection, mode=mode, audience=audience, channel=channel,
+            duration_target=duration_target, fields=fields, extra_boundary_refs=extra_boundary_refs,
+            generated_at=generated_at, boundary_review=boundary_review, structure_input=structure_input)
+    if contract_version != VERSION or structure_input is not None:
+        raise ValueError('Explicit supported Pedagogy contract required; structures require 0.4.0')
     if boundary_review is not None:
         from .boundary_review import apply_review
         base = compile_plan(bundle, status, selection, mode=mode, audience=audience, channel=channel,

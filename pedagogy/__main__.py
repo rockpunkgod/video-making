@@ -4,9 +4,9 @@ from pathlib import Path
 
 from video_contracts import read, write
 from .compiler import compile_plan
-from .handoff import copy_projection, motion_projection
+from .handoff import copy_projection, motion_projection, inspect_historical_handoff
 from .matrix import golden_matrix
-from .validation import validate_plan
+from .validation import validate_plan, inspect_historical
 
 
 def _load(request_path):
@@ -25,10 +25,16 @@ def _save(path, value):
 
 def main():
     parser = argparse.ArgumentParser(description='Read-only frozen Pedagogy Compiler')
-    parser.add_argument('command', choices=('compile', 'validate', 'handoff', 'matrix'))
+    parser.add_argument('command', choices=('compile', 'validate', 'handoff', 'matrix', 'inspect', 'inspect-handoff'))
     parser.add_argument('request')
     args = parser.parse_args()
     path, request, load = _load(args.request)
+    if args.command == 'inspect':
+        print(inspect_historical(load('plan')))
+        return
+    if args.command == 'inspect-handoff':
+        print(inspect_historical_handoff(load('handoff')))
+        return
     if args.command == 'matrix':
         assets = []
         for row in request['assets']:
@@ -40,21 +46,25 @@ def main():
     bundle, status = load('bundle'), load('status')
     if args.command == 'compile':
         allowed = {'bundle', 'status', 'selection', 'mode', 'audience', 'channel',
-                   'duration_target', 'fields', 'extra_boundary_refs', 'boundary_review', 'output'}
+                   'duration_target', 'fields', 'extra_boundary_refs', 'boundary_review', 'output',
+                   'contract_version', 'structure_input'}
         if set(request) - allowed:
             raise ValueError('Unknown compile request field')
         kwargs = {k: request[k] for k in ('mode', 'audience', 'channel', 'duration_target',
-                                         'fields', 'extra_boundary_refs') if k in request}
+                                         'fields', 'extra_boundary_refs', 'contract_version') if k in request}
         if 'boundary_review' in request:
             kwargs['boundary_review'] = load('boundary_review')
+        if 'structure_input' in request:
+            kwargs['structure_input'] = load('structure_input')
         plan = compile_plan(bundle, status, request['selection'], **kwargs)
         validate_plan(plan, bundle, status)
         _save(path.parent / request['output'], plan)
         print('PedagogyPlan: ' + plan['availability']['status'] + '; public release remains HOLD')
     elif args.command == 'validate':
-        print(validate_plan(load('plan'), bundle, status)['status'])
+        print(validate_plan(load('plan'), bundle, status, required_version=request.get('contract_version'))['status'])
     else:
         plan = load('plan')
+        validate_plan(plan, bundle, status, required_version=request.get('contract_version'))
         outputs = [(path.parent / request['copy_output'], copy_projection(plan, bundle, status)),
                    (path.parent / request['motion_output'], motion_projection(plan, bundle, status))]
         if any(p.exists() for p, _ in outputs):

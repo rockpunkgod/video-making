@@ -1,0 +1,1958 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://answer.local/schemas/pedagogy-handoff-v04.json",
+  "title": "Narrow Pedagogy Handoff 0.4; source states, no choreography",
+  "$defs": {
+    "sha": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "strings": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "ref": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "asset_id",
+        "pointer",
+        "sha"
+      ],
+      "properties": {
+        "asset_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "pointer": {
+          "type": "string",
+          "pattern": "^/"
+        },
+        "sha": {
+          "$ref": "#/$defs/sha"
+        }
+      }
+    },
+    "refs": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/ref"
+      }
+    },
+    "item": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "item_id",
+        "text",
+        "projection_operation",
+        "source_refs",
+        "action_artifact_refs",
+        "evidence_refs",
+        "review_refs"
+      ],
+      "properties": {
+        "item_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "text": {
+          "type": "string",
+          "minLength": 1
+        },
+        "projection_operation": {
+          "enum": [
+            "implementation_labels_only_v1",
+            "literal_source_v1",
+            "reviewed_boundary_coverage_v1"
+          ]
+        },
+        "source_refs": {
+          "$ref": "#/$defs/refs"
+        },
+        "action_artifact_refs": {
+          "$ref": "#/$defs/refs"
+        },
+        "evidence_refs": {
+          "$ref": "#/$defs/refs"
+        },
+        "review_refs": {
+          "$ref": "#/$defs/refs"
+        }
+      }
+    },
+    "nullable_item": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/item"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "risk": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "frequency",
+        "severity",
+        "current_relevance"
+      ],
+      "properties": {
+        "frequency": {
+          "enum": [
+            "low",
+            "medium",
+            "high",
+            "unknown"
+          ]
+        },
+        "severity": {
+          "enum": [
+            "low",
+            "medium",
+            "high",
+            "unknown"
+          ]
+        },
+        "current_relevance": {
+          "enum": [
+            "low",
+            "medium",
+            "high",
+            "unknown"
+          ]
+        }
+      }
+    },
+    "boundary": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "item_id",
+        "text",
+        "projection_operation",
+        "source_refs",
+        "action_artifact_refs",
+        "evidence_refs",
+        "review_refs",
+        "disclosure_tier",
+        "risk",
+        "risk_assessment_refs",
+        "disclosure_reason",
+        "current_action_stop"
+      ],
+      "properties": {
+        "item_id": {
+          "type": "string"
+        },
+        "text": {
+          "type": "string",
+          "minLength": 1
+        },
+        "projection_operation": {
+          "enum": [
+            "implementation_labels_only_v1",
+            "reviewed_boundary_coverage_v1"
+          ]
+        },
+        "source_refs": {
+          "$ref": "#/$defs/refs"
+        },
+        "action_artifact_refs": {
+          "$ref": "#/$defs/refs"
+        },
+        "evidence_refs": {
+          "$ref": "#/$defs/refs"
+        },
+        "review_refs": {
+          "$ref": "#/$defs/refs"
+        },
+        "disclosure_tier": {
+          "enum": [
+            "TELL_NOW",
+            "TELL_LATER"
+          ]
+        },
+        "risk": {
+          "$ref": "#/$defs/risk"
+        },
+        "risk_assessment_refs": {
+          "$ref": "#/$defs/refs"
+        },
+        "disclosure_reason": {
+          "type": "string"
+        },
+        "current_action_stop": {
+          "type": "boolean"
+        }
+      }
+    },
+    "omission": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "item_id",
+        "reason",
+        "disclosure_tier",
+        "still_exists",
+        "source_refs"
+      ],
+      "properties": {
+        "item_id": {
+          "type": "string"
+        },
+        "reason": {
+          "type": "string"
+        },
+        "disclosure_tier": {
+          "enum": [
+            "TELL_LATER",
+            "ENGINE_ONLY",
+            "BACKEND_GUARD"
+          ]
+        },
+        "still_exists": {
+          "const": true
+        },
+        "source_refs": {
+          "$ref": "#/$defs/refs"
+        },
+        "risk_assessment_refs": {
+          "$ref": "#/$defs/refs"
+        }
+      }
+    },
+    "followup": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "status",
+        "case_ref"
+      ],
+      "properties": {
+        "status": {
+          "enum": [
+            "AVAILABLE",
+            "UNAVAILABLE_EVIDENCE_GAP"
+          ]
+        },
+        "case_ref": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/ref"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      }
+    },
+    "input_binding": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "asset_id",
+        "semantic_binding_sha",
+        "source_sha",
+        "question_sha",
+        "selected_method_sha",
+        "selected_actions_sha",
+        "transport"
+      ],
+      "properties": {
+        "asset_id": {
+          "type": "string"
+        },
+        "semantic_binding_sha": {
+          "$ref": "#/$defs/sha"
+        },
+        "source_sha": {
+          "$ref": "#/$defs/sha"
+        },
+        "question_sha": {
+          "$ref": "#/$defs/sha"
+        },
+        "selected_method_sha": {
+          "$ref": "#/$defs/sha"
+        },
+        "selected_actions_sha": {
+          "$ref": "#/$defs/sha"
+        },
+        "transport": {
+          "enum": [
+            "frozen_asset",
+            "reviewed_passage"
+          ]
+        }
+      }
+    },
+    "work_entry": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "work_id",
+        "text",
+        "source_refs",
+        "action_artifact_refs",
+        "evidence_refs",
+        "review_refs",
+        "scope",
+        "reopen_on_upstream_change"
+      ],
+      "properties": {
+        "work_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "text": {
+          "type": "string",
+          "minLength": 1
+        },
+        "source_refs": {
+          "$ref": "#/$defs/refs"
+        },
+        "action_artifact_refs": {
+          "$ref": "#/$defs/refs"
+        },
+        "evidence_refs": {
+          "$ref": "#/$defs/refs"
+        },
+        "review_refs": {
+          "$ref": "#/$defs/refs"
+        },
+        "scope": {
+          "type": "string",
+          "minLength": 1
+        },
+        "reopen_on_upstream_change": {
+          "const": true
+        }
+      }
+    },
+    "method_work": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "work_id",
+        "text",
+        "source_refs",
+        "action_artifact_refs",
+        "evidence_refs",
+        "review_refs",
+        "output_ref"
+      ],
+      "properties": {
+        "work_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "text": {
+          "type": "string",
+          "minLength": 1
+        },
+        "source_refs": {
+          "$ref": "#/$defs/refs"
+        },
+        "action_artifact_refs": {
+          "$ref": "#/$defs/refs"
+        },
+        "evidence_refs": {
+          "$ref": "#/$defs/refs"
+        },
+        "review_refs": {
+          "$ref": "#/$defs/refs"
+        },
+        "output_ref": {
+          "$ref": "#/$defs/ref"
+        }
+      }
+    },
+    "work_delta": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "baseline_work",
+        "method_work",
+        "removed_work",
+        "deferred_work",
+        "still_required_work",
+        "unsupported_savings",
+        "baseline_kind",
+        "baseline_measured",
+        "learner_transfer_validated",
+        "scope",
+        "status",
+        "gaps"
+      ],
+      "properties": {
+        "baseline_work": {
+          "anyOf": [
+            {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/work_entry"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "method_work": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/method_work"
+          }
+        },
+        "removed_work": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/work_entry"
+          }
+        },
+        "deferred_work": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/work_entry"
+          }
+        },
+        "still_required_work": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/work_entry"
+          }
+        },
+        "unsupported_savings": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "claim_key",
+              "status"
+            ],
+            "properties": {
+              "claim_key": {
+                "type": "string",
+                "minLength": 1
+              },
+              "status": {
+                "const": "UNSUPPORTED"
+              }
+            }
+          }
+        },
+        "baseline_kind": {
+          "enum": [
+            "reviewed_path",
+            "structural_candidate_state",
+            null
+          ]
+        },
+        "baseline_measured": {
+          "type": "boolean"
+        },
+        "learner_transfer_validated": {
+          "const": false
+        },
+        "scope": {
+          "const": "selected_question_and_actual_action"
+        },
+        "status": {
+          "enum": [
+            "HOLD",
+            "SUPPORTED_REVIEWED_STRUCTURE"
+          ]
+        },
+        "gaps": {
+          "$ref": "#/$defs/strings"
+        }
+      }
+    },
+    "primary_action": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "action_id",
+        "classification",
+        "instruction",
+        "action_ref",
+        "output_ref",
+        "evidence_refs",
+        "requires_existing_artifact_ids"
+      ],
+      "properties": {
+        "action_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "classification": {
+          "enum": [
+            "primary",
+            "supporting",
+            "independent_primary_candidate"
+          ]
+        },
+        "instruction": {
+          "$ref": "#/$defs/nullable_item"
+        },
+        "action_ref": {
+          "$ref": "#/$defs/ref"
+        },
+        "output_ref": {
+          "$ref": "#/$defs/ref"
+        },
+        "evidence_refs": {
+          "$ref": "#/$defs/refs"
+        },
+        "requires_existing_artifact_ids": {
+          "$ref": "#/$defs/strings"
+        }
+      }
+    },
+    "cognitive_object": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "object_id",
+        "kind",
+        "source_refs",
+        "before_state",
+        "state",
+        "protected",
+        "reversibility",
+        "restore_state",
+        "validity_scope",
+        "source_work_id"
+      ],
+      "properties": {
+        "object_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "kind": {
+          "type": "string",
+          "minLength": 1
+        },
+        "source_refs": {
+          "$ref": "#/$defs/refs",
+          "minItems": 1
+        },
+        "before_state": {
+          "enum": [
+            "focus",
+            "preserve",
+            "background",
+            "defer",
+            "remove",
+            "unresolved",
+            "resolved",
+            "protected"
+          ]
+        },
+        "state": {
+          "enum": [
+            "focus",
+            "preserve",
+            "background",
+            "defer",
+            "remove",
+            "unresolved",
+            "resolved",
+            "protected"
+          ]
+        },
+        "protected": {
+          "type": "boolean"
+        },
+        "reversibility": {
+          "enum": [
+            "reversible",
+            "irreversible",
+            "not_applicable"
+          ]
+        },
+        "restore_state": {
+          "enum": [
+            "preserve",
+            "focus",
+            null
+          ]
+        },
+        "validity_scope": {
+          "type": "string",
+          "minLength": 1
+        },
+        "source_work_id": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      }
+    },
+    "attention_transition": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "from_scope",
+        "to_scope",
+        "reversibility",
+        "source_refs"
+      ],
+      "properties": {
+        "from_scope": {
+          "$ref": "#/$defs/strings"
+        },
+        "to_scope": {
+          "$ref": "#/$defs/strings"
+        },
+        "reversibility": {
+          "const": "reversible"
+        },
+        "source_refs": {
+          "$ref": "#/$defs/refs",
+          "minItems": 1
+        }
+      }
+    },
+    "cognitive_structure": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "objects",
+        "reality_objects",
+        "focus_objects",
+        "preserved_objects",
+        "backgroundable_objects",
+        "removable_objects",
+        "deferred_objects",
+        "output_objects",
+        "stop_objects",
+        "relations",
+        "attention_transition",
+        "source_binding",
+        "projection_kind",
+        "syntax_recognition_performed",
+        "semantic_truth_certification"
+      ],
+      "properties": {
+        "objects": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/cognitive_object"
+          }
+        },
+        "reality_objects": {
+          "$ref": "#/$defs/strings"
+        },
+        "focus_objects": {
+          "$ref": "#/$defs/strings"
+        },
+        "preserved_objects": {
+          "$ref": "#/$defs/strings"
+        },
+        "backgroundable_objects": {
+          "$ref": "#/$defs/strings"
+        },
+        "removable_objects": {
+          "$ref": "#/$defs/strings"
+        },
+        "deferred_objects": {
+          "$ref": "#/$defs/strings"
+        },
+        "output_objects": {
+          "$ref": "#/$defs/strings"
+        },
+        "stop_objects": {
+          "$ref": "#/$defs/strings"
+        },
+        "relations": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "kind",
+              "from_objects",
+              "to_objects",
+              "source_refs"
+            ],
+            "properties": {
+              "kind": {
+                "type": "string",
+                "minLength": 1
+              },
+              "from_objects": {
+                "$ref": "#/$defs/strings"
+              },
+              "to_objects": {
+                "$ref": "#/$defs/strings"
+              },
+              "source_refs": {
+                "$ref": "#/$defs/refs",
+                "minItems": 1
+              }
+            }
+          }
+        },
+        "attention_transition": {
+          "$ref": "#/$defs/attention_transition"
+        },
+        "source_binding": {
+          "anyOf": [
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "application_id",
+                "semantic_binding_sha"
+              ],
+              "properties": {
+                "application_id": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "semantic_binding_sha": {
+                  "$ref": "#/$defs/sha"
+                }
+              }
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "projection_kind": {
+          "const": "frozen_object_state_projection"
+        },
+        "syntax_recognition_performed": {
+          "const": false
+        },
+        "semantic_truth_certification": {
+          "const": false
+        }
+      }
+    },
+    "presentation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "item_id",
+        "presentation_roles",
+        "delivery_form",
+        "scene",
+        "coverage",
+        "student_obtainment_required",
+        "spoken_readout_required"
+      ],
+      "properties": {
+        "item_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "presentation_roles": {
+          "type": "array",
+          "items": {
+            "enum": [
+              "action_stop",
+              "misuse_prevention",
+              "scope_limit",
+              "candidate_status",
+              "condition",
+              "counterexample_guard"
+            ]
+          }
+        },
+        "delivery_form": {
+          "enum": [
+            "spoken",
+            "screen",
+            "motion_state",
+            "persistent_context",
+            "combined"
+          ]
+        },
+        "scene": {
+          "enum": [
+            "focus",
+            "action",
+            "stop"
+          ]
+        },
+        "coverage": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "source_items",
+            "displayed_expression",
+            "coverage_type",
+            "review_ref",
+            "parts"
+          ],
+          "properties": {
+            "source_items": {
+              "$ref": "#/$defs/strings"
+            },
+            "displayed_expression": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "text",
+                "literal_ref",
+                "literal_range",
+                "evidence_refs",
+                "candidate_state"
+              ],
+              "properties": {
+                "text": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "literal_ref": {
+                  "$ref": "#/$defs/ref"
+                },
+                "literal_range": {
+                  "type": "array",
+                  "items": {
+                    "type": "integer",
+                    "minimum": 0
+                  }
+                },
+                "evidence_refs": {
+                  "$ref": "#/$defs/refs"
+                },
+                "candidate_state": {
+                  "anyOf": [
+                    {
+                      "type": "object"
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                }
+              }
+            },
+            "coverage_type": {
+              "enum": [
+                "explicit_reviewed_presentation",
+                "complete_literal_display"
+              ]
+            },
+            "review_ref": {
+              "$ref": "#/$defs/ref"
+            },
+            "parts": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "required": [
+                  "source_ref",
+                  "range",
+                  "mechanism"
+                ],
+                "properties": {
+                  "source_ref": {
+                    "$ref": "#/$defs/ref"
+                  },
+                  "range": {
+                    "type": "array",
+                    "items": {
+                      "type": "integer",
+                      "minimum": 0
+                    }
+                  },
+                  "mechanism": {
+                    "enum": [
+                      "literal_display",
+                      "reviewed_equivalent",
+                      "evidence_focus",
+                      "bounded_candidate_state",
+                      "upstream_revalidation"
+                    ]
+                  },
+                  "rationale": {
+                    "type": "string",
+                    "minLength": 1
+                  }
+                },
+                "additionalProperties": false
+              }
+            }
+          }
+        },
+        "student_obtainment_required": {
+          "const": true
+        },
+        "spoken_readout_required": {
+          "const": false
+        }
+      }
+    },
+    "first_touch": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "pain",
+        "first_signal",
+        "first_action",
+        "judgment_point",
+        "immediate_output",
+        "stop",
+        "memory_phrase"
+      ],
+      "properties": {
+        "pain": {
+          "$ref": "#/$defs/nullable_item"
+        },
+        "first_signal": {
+          "$ref": "#/$defs/nullable_item"
+        },
+        "first_action": {
+          "$ref": "#/$defs/nullable_item"
+        },
+        "judgment_point": {
+          "$ref": "#/$defs/nullable_item"
+        },
+        "immediate_output": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "output_ref",
+              "value"
+            ],
+            "properties": {
+              "output_ref": {
+                "$ref": "#/$defs/ref"
+              },
+              "value": {}
+            }
+          }
+        },
+        "stop": {
+          "$ref": "#/$defs/strings"
+        },
+        "memory_phrase": {
+          "$ref": "#/$defs/nullable_item"
+        }
+      }
+    },
+    "structural_state": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "objects",
+        "source_refs",
+        "action_artifact_refs",
+        "evidence_refs",
+        "review_refs"
+      ],
+      "properties": {
+        "objects": {
+          "$ref": "#/$defs/strings"
+        },
+        "source_refs": {
+          "$ref": "#/$defs/refs"
+        },
+        "action_artifact_refs": {
+          "$ref": "#/$defs/refs"
+        },
+        "evidence_refs": {
+          "$ref": "#/$defs/refs"
+        },
+        "review_refs": {
+          "$ref": "#/$defs/refs"
+        }
+      }
+    },
+    "compact_work_text": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "work_id",
+        "text",
+        "scope",
+        "source_refs"
+      ],
+      "properties": {
+        "work_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "text": {
+          "type": "string",
+          "minLength": 1
+        },
+        "scope": {
+          "type": "string",
+          "minLength": 1
+        },
+        "source_refs": {
+          "$ref": "#/$defs/refs"
+        }
+      }
+    },
+    "compact_work_state": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "work_id",
+        "scope",
+        "source_refs"
+      ],
+      "properties": {
+        "work_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "scope": {
+          "type": "string",
+          "minLength": 1
+        },
+        "source_refs": {
+          "$ref": "#/$defs/refs"
+        }
+      }
+    },
+    "compact_method_work": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "work_id",
+        "output_ref",
+        "action_artifact_refs",
+        "evidence_refs"
+      ],
+      "properties": {
+        "work_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "output_ref": {
+          "$ref": "#/$defs/ref"
+        },
+        "action_artifact_refs": {
+          "$ref": "#/$defs/refs"
+        },
+        "evidence_refs": {
+          "$ref": "#/$defs/refs"
+        }
+      }
+    },
+    "catalog_ref": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "catalog_ref"
+      ],
+      "properties": {
+        "catalog_ref": {
+          "type": "string",
+          "pattern": "^ref:[a-f0-9]{24}$"
+        }
+      }
+    },
+    "catalog_refs": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/catalog_ref"
+      }
+    },
+    "motion_cognitive_object": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "object_id",
+        "kind",
+        "source_refs",
+        "before_state",
+        "state",
+        "protected",
+        "reversibility",
+        "restore_state",
+        "validity_scope",
+        "source_work_id"
+      ],
+      "properties": {
+        "object_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "kind": {
+          "type": "string",
+          "minLength": 1
+        },
+        "source_refs": {
+          "$ref": "#/$defs/catalog_refs",
+          "minItems": 1
+        },
+        "before_state": {
+          "enum": [
+            "focus",
+            "preserve",
+            "background",
+            "defer",
+            "remove",
+            "unresolved",
+            "resolved",
+            "protected"
+          ]
+        },
+        "state": {
+          "enum": [
+            "focus",
+            "preserve",
+            "background",
+            "defer",
+            "remove",
+            "unresolved",
+            "resolved",
+            "protected"
+          ]
+        },
+        "protected": {
+          "type": "boolean"
+        },
+        "reversibility": {
+          "enum": [
+            "reversible",
+            "irreversible",
+            "not_applicable"
+          ]
+        },
+        "restore_state": {
+          "enum": [
+            "preserve",
+            "focus",
+            null
+          ]
+        },
+        "validity_scope": {
+          "type": "string",
+          "minLength": 1
+        },
+        "source_work_id": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      }
+    },
+    "motion_cognitive_structure": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "objects",
+        "reality_objects",
+        "focus_objects",
+        "preserved_objects",
+        "backgroundable_objects",
+        "removable_objects",
+        "deferred_objects",
+        "output_objects",
+        "stop_objects",
+        "relations",
+        "attention_transition",
+        "source_binding",
+        "projection_kind",
+        "syntax_recognition_performed",
+        "semantic_truth_certification"
+      ],
+      "properties": {
+        "objects": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/motion_cognitive_object"
+          }
+        },
+        "reality_objects": {
+          "$ref": "#/$defs/strings"
+        },
+        "focus_objects": {
+          "$ref": "#/$defs/strings"
+        },
+        "preserved_objects": {
+          "$ref": "#/$defs/strings"
+        },
+        "backgroundable_objects": {
+          "$ref": "#/$defs/strings"
+        },
+        "removable_objects": {
+          "$ref": "#/$defs/strings"
+        },
+        "deferred_objects": {
+          "$ref": "#/$defs/strings"
+        },
+        "output_objects": {
+          "$ref": "#/$defs/strings"
+        },
+        "stop_objects": {
+          "$ref": "#/$defs/strings"
+        },
+        "relations": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "kind",
+              "from_objects",
+              "to_objects",
+              "source_refs"
+            ],
+            "properties": {
+              "kind": {
+                "type": "string",
+                "minLength": 1
+              },
+              "from_objects": {
+                "$ref": "#/$defs/strings"
+              },
+              "to_objects": {
+                "$ref": "#/$defs/strings"
+              },
+              "source_refs": {
+                "$ref": "#/$defs/catalog_refs",
+                "minItems": 1
+              }
+            }
+          }
+        },
+        "attention_transition": {
+          "$ref": "#/$defs/motion_attention_transition"
+        },
+        "source_binding": {
+          "anyOf": [
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "application_id",
+                "semantic_binding_sha"
+              ],
+              "properties": {
+                "application_id": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "semantic_binding_sha": {
+                  "$ref": "#/$defs/sha"
+                }
+              }
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "projection_kind": {
+          "const": "frozen_object_state_projection"
+        },
+        "syntax_recognition_performed": {
+          "const": false
+        },
+        "semantic_truth_certification": {
+          "const": false
+        }
+      }
+    },
+    "motion_attention_transition": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "from_scope",
+        "to_scope",
+        "reversibility",
+        "source_refs"
+      ],
+      "properties": {
+        "from_scope": {
+          "$ref": "#/$defs/strings"
+        },
+        "to_scope": {
+          "$ref": "#/$defs/strings"
+        },
+        "reversibility": {
+          "const": "reversible"
+        },
+        "source_refs": {
+          "$ref": "#/$defs/catalog_refs",
+          "minItems": 1
+        }
+      }
+    },
+    "motion_method_work": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "work_id",
+        "output_ref",
+        "action_artifact_refs",
+        "evidence_refs"
+      ],
+      "properties": {
+        "work_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "output_ref": {
+          "$ref": "#/$defs/catalog_ref"
+        },
+        "action_artifact_refs": {
+          "$ref": "#/$defs/catalog_refs"
+        },
+        "evidence_refs": {
+          "$ref": "#/$defs/catalog_refs"
+        }
+      }
+    }
+  },
+  "oneOf": [
+    {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_version",
+        "kind",
+        "plan_id",
+        "plan_sha",
+        "input_binding",
+        "mode",
+        "scope",
+        "public_render_ready",
+        "generated_at",
+        "consumer_contract",
+        "revalidation_required",
+        "answer_permission",
+        "truth_guard_sha",
+        "content_sha",
+        "envelope_sha",
+        "learning_unit",
+        "primary_action",
+        "supporting_action_refs",
+        "original_question",
+        "original_question_refs",
+        "method_stamp",
+        "work_delta",
+        "payoff",
+        "must_obtain",
+        "evidence_refs",
+        "remaining_object_ids",
+        "do_not_say"
+      ],
+      "properties": {
+        "schema_version": {
+          "const": "0.4.0"
+        },
+        "kind": {
+          "const": "pedagogy_copy_projection"
+        },
+        "plan_id": {
+          "type": "string",
+          "pattern": "^pedagogy:[a-f0-9]{64}$"
+        },
+        "plan_sha": {
+          "$ref": "#/$defs/sha"
+        },
+        "input_binding": {
+          "$ref": "#/$defs/input_binding"
+        },
+        "mode": {
+          "enum": [
+            "first_touch",
+            "worked_example",
+            "counterexample",
+            "boundary",
+            "transfer",
+            "hard_case",
+            "review"
+          ]
+        },
+        "scope": {
+          "const": "method_action_demo"
+        },
+        "public_render_ready": {
+          "const": false
+        },
+        "generated_at": {
+          "type": "string",
+          "minLength": 1
+        },
+        "consumer_contract": {
+          "const": "explicit_v04_adapter_required_current_downstream_unchanged"
+        },
+        "revalidation_required": {
+          "type": "string",
+          "minLength": 1
+        },
+        "answer_permission": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "answer",
+            "may_output_final_answer"
+          ],
+          "properties": {
+            "answer": {
+              "type": "null"
+            },
+            "may_output_final_answer": {
+              "const": false
+            }
+          }
+        },
+        "truth_guard_sha": {
+          "$ref": "#/$defs/sha"
+        },
+        "content_sha": {
+          "$ref": "#/$defs/sha"
+        },
+        "envelope_sha": {
+          "$ref": "#/$defs/sha"
+        },
+        "learning_unit": {
+          "$ref": "#/$defs/first_touch"
+        },
+        "primary_action": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/primary_action"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "supporting_action_refs": {
+          "$ref": "#/$defs/refs"
+        },
+        "original_question": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "question_id",
+            "stem"
+          ],
+          "properties": {
+            "question_id": {
+              "type": "string"
+            },
+            "stem": {
+              "type": "string"
+            },
+            "options": {
+              "type": "object",
+              "additionalProperties": {
+                "type": "string"
+              }
+            },
+            "passage": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "given_word": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "question_type": {
+              "type": [
+                "string",
+                "null"
+              ]
+            }
+          }
+        },
+        "original_question_refs": {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/$defs/ref"
+          },
+          "required": [
+            "question_id",
+            "stem"
+          ],
+          "propertyNames": {
+            "enum": [
+              "question_id",
+              "question_type",
+              "passage",
+              "stem",
+              "options",
+              "given_word"
+            ]
+          }
+        },
+        "method_stamp": {
+          "$ref": "#/$defs/nullable_item"
+        },
+        "work_delta": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "baseline_kind",
+            "baseline_measured",
+            "learner_transfer_validated",
+            "scope",
+            "status",
+            "baseline_work",
+            "removed_work",
+            "deferred_work",
+            "still_required_work",
+            "method_work"
+          ],
+          "properties": {
+            "baseline_kind": {
+              "enum": [
+                "reviewed_path",
+                "structural_candidate_state",
+                null
+              ]
+            },
+            "baseline_measured": {
+              "type": "boolean"
+            },
+            "learner_transfer_validated": {
+              "const": false
+            },
+            "scope": {
+              "const": "selected_question_and_actual_action"
+            },
+            "status": {
+              "const": "SUPPORTED_REVIEWED_STRUCTURE"
+            },
+            "baseline_work": {
+              "anyOf": [
+                {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/$defs/compact_work_text"
+                  }
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "removed_work": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/compact_work_text"
+              }
+            },
+            "deferred_work": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/compact_work_text"
+              }
+            },
+            "still_required_work": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/compact_work_text"
+              }
+            },
+            "method_work": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/compact_method_work"
+              }
+            }
+          }
+        },
+        "payoff": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "structural_before",
+            "structural_after",
+            "allowed_claim",
+            "payoff_scope",
+            "decision_completion"
+          ],
+          "properties": {
+            "structural_before": {
+              "anyOf": [
+                {
+                  "$ref": "#/$defs/structural_state"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "structural_after": {
+              "anyOf": [
+                {
+                  "$ref": "#/$defs/structural_state"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "allowed_claim": {
+              "anyOf": [
+                {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": [
+                    "text",
+                    "source_refs",
+                    "action_artifact_refs",
+                    "evidence_refs",
+                    "review_refs"
+                  ],
+                  "properties": {
+                    "text": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "source_refs": {
+                      "$ref": "#/$defs/refs"
+                    },
+                    "action_artifact_refs": {
+                      "$ref": "#/$defs/refs"
+                    },
+                    "evidence_refs": {
+                      "$ref": "#/$defs/refs"
+                    },
+                    "review_refs": {
+                      "$ref": "#/$defs/refs"
+                    }
+                  }
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "payoff_scope": {
+              "enum": [
+                "local",
+                "candidate_set",
+                "evidence_scope"
+              ]
+            },
+            "decision_completion": {
+              "const": false
+            }
+          }
+        },
+        "must_obtain": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/presentation"
+          }
+        },
+        "evidence_refs": {
+          "$ref": "#/$defs/refs"
+        },
+        "remaining_object_ids": {
+          "$ref": "#/$defs/strings"
+        },
+        "do_not_say": {
+          "$ref": "#/$defs/strings"
+        }
+      }
+    },
+    {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_version",
+        "kind",
+        "plan_id",
+        "plan_sha",
+        "input_binding",
+        "mode",
+        "scope",
+        "public_render_ready",
+        "generated_at",
+        "consumer_contract",
+        "revalidation_required",
+        "answer_permission",
+        "truth_guard_sha",
+        "content_sha",
+        "envelope_sha",
+        "cognitive_structure",
+        "cognitive_reduction",
+        "work_delta",
+        "boundary_obligations",
+        "reference_catalog"
+      ],
+      "properties": {
+        "schema_version": {
+          "const": "0.4.0"
+        },
+        "kind": {
+          "const": "pedagogy_motion_projection"
+        },
+        "plan_id": {
+          "type": "string",
+          "pattern": "^pedagogy:[a-f0-9]{64}$"
+        },
+        "plan_sha": {
+          "$ref": "#/$defs/sha"
+        },
+        "input_binding": {
+          "$ref": "#/$defs/input_binding"
+        },
+        "mode": {
+          "enum": [
+            "first_touch",
+            "worked_example",
+            "counterexample",
+            "boundary",
+            "transfer",
+            "hard_case",
+            "review"
+          ]
+        },
+        "scope": {
+          "const": "method_action_demo"
+        },
+        "public_render_ready": {
+          "const": false
+        },
+        "generated_at": {
+          "type": "string",
+          "minLength": 1
+        },
+        "consumer_contract": {
+          "const": "explicit_v04_adapter_required_current_downstream_unchanged"
+        },
+        "revalidation_required": {
+          "type": "string",
+          "minLength": 1
+        },
+        "answer_permission": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "answer",
+            "may_output_final_answer"
+          ],
+          "properties": {
+            "answer": {
+              "type": "null"
+            },
+            "may_output_final_answer": {
+              "const": false
+            }
+          }
+        },
+        "truth_guard_sha": {
+          "$ref": "#/$defs/sha"
+        },
+        "content_sha": {
+          "$ref": "#/$defs/sha"
+        },
+        "envelope_sha": {
+          "$ref": "#/$defs/sha"
+        },
+        "cognitive_structure": {
+          "$ref": "#/$defs/motion_cognitive_structure"
+        },
+        "cognitive_reduction": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "types",
+            "decision_completion",
+            "source_support_status"
+          ],
+          "properties": {
+            "types": {
+              "type": "array",
+              "items": {
+                "enum": [
+                  "scope_reduction",
+                  "candidate_reduction",
+                  "relation_simplification",
+                  "text_structure_reduction",
+                  "attention_reduction",
+                  "decision_completion",
+                  "none"
+                ]
+              }
+            },
+            "decision_completion": {
+              "const": false
+            },
+            "source_support_status": {
+              "enum": [
+                "HOLD",
+                "SUPPORTED_REVIEWED_STRUCTURE"
+              ]
+            }
+          }
+        },
+        "work_delta": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "baseline_kind",
+            "baseline_measured",
+            "learner_transfer_validated",
+            "scope",
+            "status",
+            "baseline_work",
+            "removed_work",
+            "deferred_work",
+            "still_required_work",
+            "method_work"
+          ],
+          "properties": {
+            "baseline_kind": {
+              "enum": [
+                "reviewed_path",
+                "structural_candidate_state",
+                null
+              ]
+            },
+            "baseline_measured": {
+              "type": "boolean"
+            },
+            "learner_transfer_validated": {
+              "const": false
+            },
+            "scope": {
+              "const": "selected_question_and_actual_action"
+            },
+            "status": {
+              "const": "SUPPORTED_REVIEWED_STRUCTURE"
+            },
+            "baseline_work": {
+              "anyOf": [
+                {
+                  "$ref": "#/$defs/strings",
+                  "uniqueItems": true
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "removed_work": {
+              "$ref": "#/$defs/strings",
+              "uniqueItems": true
+            },
+            "deferred_work": {
+              "$ref": "#/$defs/strings",
+              "uniqueItems": true
+            },
+            "still_required_work": {
+              "$ref": "#/$defs/strings",
+              "uniqueItems": true
+            },
+            "method_work": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/motion_method_work"
+              }
+            }
+          }
+        },
+        "boundary_obligations": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "item_id",
+              "presentation_roles",
+              "delivery_form",
+              "scene",
+              "coverage",
+              "student_obtainment_required"
+            ],
+            "properties": {
+              "item_id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "presentation_roles": {
+                "type": "array",
+                "items": {
+                  "enum": [
+                    "action_stop",
+                    "misuse_prevention",
+                    "scope_limit",
+                    "candidate_status",
+                    "condition",
+                    "counterexample_guard"
+                  ]
+                }
+              },
+              "delivery_form": {
+                "enum": [
+                  "spoken",
+                  "screen",
+                  "motion_state",
+                  "persistent_context",
+                  "combined"
+                ]
+              },
+              "scene": {
+                "enum": [
+                  "focus",
+                  "action",
+                  "stop"
+                ]
+              },
+              "coverage": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "source_items",
+                  "coverage_type",
+                  "review_ref"
+                ],
+                "properties": {
+                  "source_items": {
+                    "$ref": "#/$defs/strings"
+                  },
+                  "coverage_type": {
+                    "enum": [
+                      "explicit_reviewed_presentation",
+                      "complete_literal_display"
+                    ]
+                  },
+                  "review_ref": {
+                    "$ref": "#/$defs/catalog_ref"
+                  }
+                }
+              },
+              "student_obtainment_required": {
+                "const": true
+              }
+            }
+          }
+        },
+        "reference_catalog": {
+          "type": "object",
+          "minProperties": 1,
+          "propertyNames": {
+            "pattern": "^ref:[a-f0-9]{24}$"
+          },
+          "additionalProperties": {
+            "$ref": "#/$defs/ref"
+          }
+        }
+      }
+    }
+  ]
+}
