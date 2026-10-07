@@ -29,6 +29,7 @@ def copy_projection(plan, bundle, status):
         judgment_point=deepcopy(plan['judgment_point']), memory_phrase=deepcopy(plan['memory_phrase']),
         method_stamp=deepcopy(plan['method_stamp']),
         original_question=deepcopy(plan['original_question']),
+        original_question_refs=deepcopy(plan['original_question_refs']),
         must_show_boundary=deepcopy(plan['boundaries']['tell_now']),
         student_model=deepcopy(plan['student_model']),
         payoff_structure=deepcopy(plan['payoff']), do_not_say=deepcopy(plan['prohibited_claims']),

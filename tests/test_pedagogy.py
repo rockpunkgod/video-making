@@ -32,7 +32,8 @@ class PedagogyTests(unittest.TestCase):
         cls.registry = Registry()
         cls.engine = QuestionAnalyzer(cls.registry)
 
-    def assets(self, mid='R12', case=None, unknown_boundary=False, risk=None, defer_caveats=True):
+    def assets(self, mid='R12', case=None, unknown_boundary=False, risk=None, defer_caveats=True,
+               question_change=None):
         q = fixture()
         if mid == 'F01':
             q = seven_chain_fixture()
@@ -51,6 +52,8 @@ class PedagogyTests(unittest.TestCase):
         for a in q['action_executions']:
             if a['method_id'] == mid:
                 a['stop_rule_check'] = 'SYNTHETIC current action Stop' if unknown_boundary else method_stop
+        if question_change:
+            question_change(q)
         analysis = self.engine.analyze(q)
         review = {'question_id': q['question_id'], 'input_sha256': sha(q),
             'analysis_sha256': sha(analysis), 'reviewer_kind': 'AI',
@@ -133,6 +136,31 @@ class PedagogyTests(unittest.TestCase):
         self.assertFalse(p['compression_audit']['semantic_truth_certification'])
         self.assertEqual(p['truth_guard']['method_maturity'], b['methods'][0]['status'])
         self.assertTrue(validate_plan(p, b, s)['consumption_allowed'])
+
+    def test_original_task_whitelist_and_field_bindings_preserve_frozen_text(self):
+        p, b, s = self.plan('G01', mode='worked_example')
+        expected_keys = {'question_id', 'question_type', 'passage', 'stem', 'options', 'given_word'}
+        self.assertEqual(set(p['original_question']), expected_keys)
+        self.assertEqual(set(p['original_question_refs']), expected_keys)
+        for key in expected_keys:
+            binding = p['original_question_refs'][key]
+            self.assertEqual(binding['pointer'], '/source_snapshot/' + key)
+            self.assertEqual(pointer(b, binding['pointer']), p['original_question'][key])
+            self.assertEqual(binding['sha'], sha(p['original_question'][key]))
+            self.assertIn(binding, p['source_refs'])
+        self.assertNotIn('correct_answer', p['original_question'])
+        self.assertNotIn('action_executions', p['original_question'])
+        self.assertNotIn('requested_chain', p['original_question'])
+        cp = copy_projection(p, b, s)
+        self.assertEqual(cp['original_question'], p['original_question'])
+        self.assertEqual(cp['original_question_refs'], p['original_question_refs'])
+        edits = [lambda v: v['original_question'].update(passage='changed'),
+                 lambda v: v['original_question_refs'].pop('given_word'),
+                 lambda v: v['original_question_refs']['passage'].update(sha='0' * 64)]
+        for edit in edits:
+            candidate = deepcopy(p); edit(candidate)
+            with self.subTest(edit=edit), self.assertRaises(ValueError):
+                validate_plan(reseal_plan(candidate), b, s)
 
     def test_resealed_answer_role_stop_evidence_certainty_and_claim_edits_fail(self):
         p, b, s = self.plan()
@@ -352,10 +380,24 @@ class PedagogyTests(unittest.TestCase):
             validate_plan(legacy, b, s)
         with self.assertRaises(ValueError):
             copy_projection(legacy, b, s)
-        self.assertEqual(p['schema_version'], '0.2.0')
+        self.assertEqual(p['schema_version'], '0.3.0')
         self.assertNotEqual(p['plan_sha'], legacy['plan_sha'])
         self.assertTrue(validate_plan(p, b, s)['consumption_allowed'])
-        self.assertEqual(copy_projection(p, b, s)['schema_version'], '0.2.0')
+        self.assertEqual(copy_projection(p, b, s)['schema_version'], '0.3.0')
+
+    def test_v02_plan_preserves_history_without_inheriting_v03_original_task_binding(self):
+        p, b, s = self.plan()
+        legacy = deepcopy(p)
+        legacy.update(schema_version='0.2.0', compiler_version='0.2.0')
+        legacy.pop('original_question_refs')
+        legacy['original_question'] = {key: legacy['original_question'][key]
+            for key in ('question_id', 'stem', 'options')}
+        legacy = reseal_plan(legacy)
+        result = inspect_historical(legacy)
+        self.assertEqual(result['contract_status'], 'LEGACY_CONTRACT')
+        self.assertFalse(result['consumption_allowed'])
+        with self.assertRaisesRegex(ValueError, 'Historical Pedagogy contract'):
+            validate_plan(legacy, b, s)
 
 
 if __name__ == '__main__':

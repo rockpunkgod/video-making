@@ -1,4 +1,4 @@
-# Pedagogy Compiler v0.2
+# Pedagogy Compiler v0.3
 
 Truth Completeness ≠ Teaching Completeness。ANSWER 保留完整 Trigger、Role、实际动作、Output、Evidence、Stop、Review、来源及生命周期；独立 `pedagogy/` 只选择已冻结的表达并记录省略。Renderer 继续投影，Copy/Motion 不再自行决定边界。
 
@@ -38,6 +38,8 @@ copy = copy_projection(plan, frozen_bundle, current_manifest)
 
 投影只允许两种操作：原题和 Evidence 逐字保留；教学字段移除内部方法编号并将内部 `word_answer` 标签显示为“填词答案”。不自由改写、不删除否定/范围/条件、不归并措辞不同的 Stop。自然文案由后续 Copy 候选及独立保真审核处理。
 
+0.3 的 `original_question` 额外保留已有 passage、question_type、given_word 与完整 stem/options，不投影答案或执行元数据。`original_question_refs` 为每个展示字段保存独立冻结引用，Copy 的第一景先展示原题，并让后续动作引用持续题面层。原题、Evidence 中出现的词或统计照录，不作为新增口播 Claim 改写。详见 `docs/original-question-copy-contract.md`。
+
 ## Tell Now / Later / Engine Only
 
 - 当前实际动作 Stop 永远 Tell Now；频率、严重程度、当前相关性都是有限等级 low/medium/high/unknown。
@@ -68,7 +70,7 @@ counterexample / boundary / transfer / hard_case 缺对应已绑定 Case 时为 
 
 `validate_plan(plan,bundle,status)` 重新生成全部投影；单纯重新 seal 不能掩盖答案、Role、Evidence、Stop、成熟度、确定性或披露分层的修改。当前状态缺失/撤回/替代/语义变化/权限变化/动作或审阅依赖失效时消费阻断。`inspect_historical` 只核历史完整性，永不授予当前消费资格。
 
-当前 Compiler、Policy、Plan 与 Handoff 契约版本为 0.2.0。Schema 仍支持完整性检查 0.1.0 历史结构，`inspect_historical` 对它返回 LEGACY_CONTRACT/consumption_allowed=false；`validate_plan` 与 `validate_handoff` 显式阻断旧契约。迁移必须用原冻结资产及当前状态重新 compile，重新生成投影和下游绑定，不能修改旧 Plan 的版本标签或覆盖原文件。旧包既有 Review、源事实、答案、成熟度与历史结果均不被覆盖，旧 Copy/渲染不能继承新 Plan 的 READY。
+当前 Compiler、Plan 与 Handoff 契约版本为 0.3.0，披露 Policy 保持 0.2.0。Schema 支持完整性检查 0.1/0.2 历史结构，`inspect_historical` 对它们返回 LEGACY_CONTRACT/consumption_allowed=false；`validate_plan` 与 `validate_handoff` 显式阻断旧契约。迁移必须用原冻结资产及当前状态重新 compile，重新生成投影和下游绑定，不能修改旧 Plan 的版本标签或覆盖原文件。旧包既有 Review、源事实、答案、成熟度与历史结果均不被覆盖，旧 Copy/渲染不能继承新 Plan 的 READY。
 
 `copy_projection / motion_projection / validate_handoff` 都要求当前提供的上游状态；静态文件不会自行感知外部撤回。收到新状态后，下次消费前重检。Copy 只获得轻量教学字段、已有 Evidence、Do Not Say 和绑定；Motion 只获得认知关系，不指定 AE 特效。
 
@@ -78,6 +80,8 @@ counterexample / boundary / transfer / hard_case 缺对应已绑定 Case 时为 
 
 独立 `python -m pedagogy compile|validate|handoff|matrix <request.json>`；请求显式列 bundle/status/selection，输出不可覆盖历史。同类操作没有自动解题或目录扫描。editable 安装同时提供 `pedagogy-compiler`。
 
-当前真实投影保存在忽略的 `local-data/pedagogy/compiler-r3/`，r1/r2 原文件保留为历史。F01、G01、R02 的 bounded worked_example READY；未补风险凭证，所有已冻结 Caveat 都保守纳入 Tell Now，分别为 9/10/9 条。first_touch 因必要边界过载而 HOLD；独立 boundary Case 缺口为 UNAVAILABLE。R01/R06/R09 未提供可消费的冻结资产，保持缺口。九条 Plan、六个 READY Copy/Motion Handoff 当前源重放通过，原 bundle/status 字节指纹不变；迁移记录位于本地 migration.json。详见 `PEDAGOGY_COMPILER_ACCEPTANCE.md`。
+当前真实投影保存在忽略的 `local-data/pedagogy/compiler-r5/`，此前目录保留为历史。F01、G01、R02 的 bounded worked_example READY；未补风险凭证，所有已冻结 Caveat 都保守纳入 Tell Now，分别为 9/10/9 条。first_touch 因必要边界过载而 HOLD；独立 boundary Case 缺口为 UNAVAILABLE。R01/R06/R09 未提供可消费的冻结资产，保持缺口。九条 Plan、六个 READY Copy/Motion Handoff 当前源重放通过，原 bundle/status 字节指纹不变；迁移记录位于本地 migration.json。详见 `PEDAGOGY_COMPILER_ACCEPTANCE.md`。
 
-新增 Payoff 只携带已有 Review 中的 `reviewed_payoff`，要求同题、同方法版本、同组实际动作及自身 Evidence。缺该记录时 `payoff.reviewed_support=null`；长题面和短 Output 不能自行证明 Removed Cognitive Work。后续系统说明见 `docs/student-pov-copy.md`。
+Payoff 优先携带已有 Review 中的 `reviewed_payoff`，要求同题、同方法版本、同组实际动作及自身 Evidence。后备的 `frozen_candidate_transition` 只投影已有有效局部排除：原候选域、唯一自有 decider 产物、精确审阅范围、未核集合与当前生命周期必须一致。多个决定的先后不明、借用其他方法、已闭合或失效依赖均不可投影；分组、路由不伪造候选淘汰。
+
+每个非空 wrapper 保留 origin、baseline_kind、baseline_measured。机械投影是 `structural_candidate_state / false`，不是观察学生的实际路径；只有本 scope 下一个候选核验任务被有效排除关闭，其他候选与 Stop 仍需要，源变化后可重开。它不证明节省阅读、词汇或时间，不证明学生陌生题迁移，更不授权最终答案。两条通道都无支持时仍为 null；不要求 ANSWER 为适配器另造新 Review。后续说明见 `docs/student-pov-copy.md`。

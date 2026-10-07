@@ -7,7 +7,7 @@ from pedagogy import validate_handoff
 from .payoff import supported_payoff
 from .qa import lint_copy, planned_scene_observations
 
-VERSION = '0.2.0'
+VERSION = '0.3.0'
 FUNCTIONS = ('pain', 'interrupt', 'focus', 'action', 'collapse', 'payoff', 'stop', 'stamp')
 SIGNATURES = {'R01': 'overgrowth', 'R02': 'relation_rewire', 'R06': 'missing_mass',
               'R09': 'semantic_compression', 'F01': 'axis_regroup', 'G01': 'extract_route_seal'}
@@ -35,6 +35,21 @@ def _reading_seconds(text):
     chinese = len(re.findall(r'[\u3400-\u9fff]', text))
     words = len(re.findall(r'[A-Za-z]+(?:[\x27-][A-Za-z]+)*', text))
     return chinese / 4 + words / 2.5
+
+
+def question_screen(question):
+    """Literal task text with its existing choice labels; no answers or IDs."""
+    result = []
+    for key in ('passage', 'stem'):
+        value = question.get(key)
+        if isinstance(value, str) and value.strip():
+            result.append(value)
+    options = question.get('options', {})
+    result += [label + '. ' + options[label] for label in sorted(options)]
+    hint = question.get('given_word')
+    if isinstance(hint, str) and hint.strip() and hint not in result:
+        result.append(hint)
+    return result
 
 
 def _credential(review, script_sha, final_copy_sha):
@@ -149,6 +164,12 @@ def realize(projection, plan, bundle, status, *, draft_lines=None, copy_review=N
             issues.append('UNSCOPED_VOCABULARY_SHORTCUT')
     snippets = projection['evidence_snippets']
     evidence_text = [s['span']['quote'] for s in snippets]
+    original_text = question_screen(projection['original_question'])
+    original_ref = _ref(plan, '/original_question')
+    reality_layer = {'kind': 'original_question', 'question': deepcopy(projection['original_question']),
+        'field_refs': deepcopy(projection['original_question_refs']), 'screen_copy': original_text,
+        'persistent': True, 'fact_mutation_allowed': False, 'pedagogy_ref': original_ref,
+        'visibility_review': 'PENDING'}
     sequence = []
     def scene(function, vo, screen, refs, motion='none', removed=None, output=None,
               boundary_ids=None, silence=0.0):
@@ -159,14 +180,16 @@ def realize(projection, plan, bundle, status, *, draft_lines=None, copy_review=N
             'evidence_ref': deepcopy(plan['evidence_refs']), 'pedagogy_ref': deepcopy(refs),
             'removed_work': deepcopy(removed or []), 'output_state': deepcopy(output),
             'silence_after': silence, 'tell_now_boundary_ids': list(boundary_ids or []),
+            'reality_layer_ref': '/reality_layer',
             'notes': 'Deterministic source binding; semantic/natural speech and Human Taste review stay separate'})
     baseline_text = [r['text'] for r in payoff['baseline_path']] if payoff else []
     baseline_refs = [_ref(plan, '/payoff/reviewed_support/record/baseline_path')] if payoff else []
     if script['pain']:
-        scene('pain', script['pain']['text'], evidence_text + baseline_text,
-              script['pain']['pedagogy_refs'] + baseline_refs)
-    elif payoff:
-        scene('pain', None, evidence_text + baseline_text, baseline_refs)
+        scene('pain', script['pain']['text'], original_text + baseline_text,
+              [original_ref] + script['pain']['pedagogy_refs'] + baseline_refs)
+    else:
+        scene('pain', None, original_text + baseline_text, [original_ref] + baseline_refs)
+    sequence[0]['visual_state'] = 'original_question'
     if script['interrupt']:
         scene('interrupt', script['interrupt']['text'], [], script['interrupt']['pedagogy_refs'])
     if script['focus']:
@@ -208,13 +231,15 @@ def realize(projection, plan, bundle, status, *, draft_lines=None, copy_review=N
     if any(s['event'] not in SILENCE_EVENTS or not 0.3 <= s['duration_seconds'] <= 1 for s in silence):
         issues.append('INVALID_SILENCE_CANDIDATE')
     script_sha = sha(sequence)
-    final_copy_sha = sha({'script': script, 'final_script': sequence})
+    final_copy_sha = sha({'script': script, 'final_script': sequence, 'reality_layer': reality_layer})
     reviewed = _credential(copy_review, script_sha, final_copy_sha)
     if not reviewed:
         gaps.append('FINAL_COPY_SEMANTIC_AND_NATURAL_SPEECH_REVIEW_REQUIRED')
     duplicate = sum(bool(row['vo']) and row['vo'] in row['screen_copy'] for row in sequence)
     boilerplate = sum(bool(row['vo']) and bool(re.search(r'我们可以看到|可以发现|这里说明', row['vo'])) for row in sequence)
     audit = {'first_action_preserved': not bool(draft_lines.get('first_action')) or reviewed,
+        'original_question_first': bool(original_text) and original_ref in sequence[0]['pedagogy_ref']
+            and all(text in sequence[0]['screen_copy'] for text in original_text),
         'role_preserved': True, 'evidence_preserved': True, 'stop_preserved': True,
         'tell_now_preserved': True, 'payoff_supported': payoff is not None,
         **planned_scene_observations(sequence, payoff, first_action_ref=_ref(plan, '/first_action'),
@@ -234,11 +259,17 @@ def realize(projection, plan, bundle, status, *, draft_lines=None, copy_review=N
         gaps.append('SCREEN_VOICE_DUPLICATION_REVIEW_REQUIRED')
     if not audit['student_pov_present']:
         gaps.append('STUDENT_ACTION_FOCUS_OR_STOP_MISSING')
+    if not audit['original_question_first']:
+        gaps.append('ORIGINAL_QUESTION_MISSING_BEFORE_ACTION')
     if payoff and not audit['cognitive_reduction_visible']:
         gaps.append('COGNITIVE_REDUCTION_NOT_VISIBLE_IN_PLAN')
     availability = 'FAIL' if issues else 'HOLD' if gaps else 'READY'
     comparison = {k: deepcopy(payoff[k]) if payoff else []
                   for k in ('baseline_path', 'method_path', 'removed_steps', 'remaining_steps')}
+    comparison.update(support_origin=payoff['support_origin'] if payoff else None,
+        baseline_kind=payoff['baseline_kind'] if payoff else None,
+        baseline_measured=payoff['baseline_measured'] if payoff else None,
+        learner_transfer_validated=payoff['learner_transfer_validated'] if payoff else False)
     copy = {'schema_version': VERSION, 'kind': 'student_pov_copy',
         'source_pedagogy_plan': {'plan_id': plan['plan_id'], 'plan_sha': plan['plan_sha']},
         'source_analysis_sha': plan['source_analysis_sha'], 'question_id': plan['question_id'],
@@ -247,7 +278,8 @@ def realize(projection, plan, bundle, status, *, draft_lines=None, copy_review=N
         'student_path_comparison': comparison,
         'cognitive_work': deepcopy(payoff['cognitive_work']) if payoff else
             {'removed': [], 'deferred': [], 'still_required': []},
-        'script': script, 'final_script': sequence, 'script_sha': script_sha, 'final_copy_sha': final_copy_sha,
+        'script': script, 'final_script': sequence, 'reality_layer': reality_layer,
+        'script_sha': script_sha, 'final_copy_sha': final_copy_sha,
         'silence_candidates': silence, 'tell_now_boundaries': deepcopy(projection['must_show_boundary']),
         'prohibited_claims': deepcopy(projection['do_not_say']), 'evidence_refs': deepcopy(plan['evidence_refs']),
         'source_refs': deepcopy(plan['source_refs']), 'copy_audit': audit,

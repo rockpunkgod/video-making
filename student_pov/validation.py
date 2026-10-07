@@ -7,9 +7,9 @@ def inspect_historical(copy):
     """Check saved copy integrity without granting current consumption."""
     from jsonschema import ValidationError
     version = copy.get('schema_version')
-    if version not in ('0.1.0', VERSION):
+    if version not in ('0.1.0', '0.2.0', VERSION):
         raise ValueError('Unsupported Student POV Copy contract version')
-    name = 'student-pov-copy.v0.1.schema.json' if version == '0.1.0' else 'student-pov-copy.schema.json'
+    name = 'student-pov-copy.v' + version[:3] + '.schema.json' if version != VERSION else 'student-pov-copy.schema.json'
     path = ROOT / 'creative' / 'copy-system' / name
     try:
         _validator(str(path), path.stat().st_mtime_ns).validate(copy)
@@ -18,6 +18,11 @@ def inspect_historical(copy):
     verify_seal(copy)
     if copy['copy_sha'] != sha(copy_semantics(copy)) or copy['copy_id'] != 'student-pov:' + copy['copy_sha']:
         raise ValueError('Student POV copy binding mismatch')
+    final_payload = {'script': copy['script'], 'final_script': copy['final_script']}
+    if version == VERSION:
+        final_payload['reality_layer'] = copy['reality_layer']
+    if copy['script_sha'] != sha(copy['final_script']) or copy['final_copy_sha'] != sha(final_payload):
+        raise ValueError('Student POV final copy lock mismatch')
     return {'status': 'HISTORICAL_ONLY', 'current_upstream_verified': False,
             'contract_status': 'CURRENT_CONTRACT' if version == VERSION else 'LEGACY_CONTRACT',
             'contract_version': version, 'current_contract_version': VERSION,

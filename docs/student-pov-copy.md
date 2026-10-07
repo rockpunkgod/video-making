@@ -1,4 +1,4 @@
-# Student POV Copy Realization v0.2
+# Student POV Copy Realization v0.3
 
 Pedagogy Compiler 决定 WHAT TO TEACH；Student POV Copy 决定 HOW IT FEELS TO USE；Motion 决定 HOW IT MOVES；Premiere 决定 HOW IT PLAYS。本层是 `student_pov/`，不是第二个 Pedagogy Compiler。
 
@@ -21,7 +21,9 @@ Copy 不改变 Tell Now/Later、Role、答案范围、Evidence、方法适用、
 
 ## Baseline、Method Path、Removed Work
 
-Copy 正式消费 `payoff.reviewed_support`。该内容只能是上游已有 Review 的 `reviewed_payoff`：同题/方法版本/实际动作、自己的 Evidence、baseline_path、method_path、removed_steps、remaining_steps、cognitive_work、实际 reduction、allowed_claim、cognitive_relief_line、可转用第一动作声明以及实际 Output anchors。
+实现优先从上游已有 Review 的 `reviewed_payoff` 消费 `payoff.reviewed_support`：同题/方法版本/实际动作、自己的 Evidence、baseline_path、method_path、removed_steps、remaining_steps、cognitive_work、实际 reduction、allowed_claim、cognitive_relief_line、可转用第一动作声明以及实际 Output anchors。它不是用户要求 ANSWER 必须新增的教学 Review。后备的 `frozen_candidate_transition` 可从已有审阅局部排除机械投影真实候选变化；不造 Review，不推断学生常见路径。
+
+`student_path_comparison.support_origin / baseline_kind / baseline_measured / learner_transfer_validated` 随 Copy 保存。机械输入的 baseline 是原候选集合，不是测得的学生路径；唯一自有局部排除可以关闭当前候选核验任务，其他候选和必要 Stop 仍需完成。它始终不声称 baseline 已测量或学生迁移已验证。显式 reviewed_path 也仅搬运源声明，不借 AI 文案凭证升级人工教学认证。
 
 每个 path step 有源中已有 text 与 work_ids；removed 需在 baseline 出现、在当前 method path 消失，不能与 deferred/still_required 混同。reduction 需 before>after>0、ID 数量一致、after IDs 属于 before；Output anchor 必须精确指向当前实际产物及其 hash。算法核绑定和结构，不认证基线路径真实性或推理正确。
 
@@ -56,13 +58,17 @@ Pain 来自既有症状或具体题面结构，不造“90%的学生”。Interr
 写每句前先答三问：为什么是现在说这句（对应哪一个当前可见的题面事实）、学生听一遍能不能懂、去掉对象后还能不能理解。答不上来就先不写。
 
 - 一句一个落点。一句话只推进一个判断或一个动作，多出来的拆句或删掉，不靠连接词往下堆。
-- 说眼睛和笔尖的动作，不说后台术语。“功能、属性、范畴、判定、节点”只在学生此刻确实需要、或题面本身就这么说时出现；动作词仍在看、圈、划、拆、比、对、找、留、排、停之内。
+- 说眼睛和笔尖的动作，不说后台术语。系统自造的名词和公文化的说法（节点、总路线、功能、决策树、空位、待核、词形；产出、判据、复核、检查、核对、定案）换成学生会说的说法：节点→这一步，功能→这个空要填什么，待核→还得再看，产出→只给到，复核→再看一遍，核对→对一下，定案→定死。学生自己就在用的词（抓手、盯住、卡在这儿）照用。这条只管学生会听到的口播和会看到的屏幕字；字段名、notes、来源与审计标记不在其内。
+- 文言小词也要换成口语。不等于→不代表，尚未→还没，不能凭／不凭→不能光看，仍属→还得再，仅……不……→只……不……，任一→随便哪个，本法→这套方法，所剩→剩下。这类词单看不像生造词，凑进一句就成了课文腔，也是“有的口语有的又很书面”的主因。词表是举例，不是按表替换：同一个词在不同句子里说法不一样。
+- 全片语域要一样，不混。不能有的句子口语、有的句子像念课文，也不能一句里前半口语后半书面。只有你自己写的叙述和指令参与拉平；下面几类按原样保留，不参与：方法名和记忆句这类固定叫法（绑定方法身份，不改写）、屏幕上照抄的原文与题面、学生考试会遇到的语法术语（谓语、非谓语、动名词、所有格、单复数）。判法：把叙述和指令连着念一遍，凡是念着像在读材料的句子，拿最顺口的那句当基准拉平，拉不平就整句重写。
 - 指代要有画面锚点。说“这个空”时画面正圈着这个空；没有锚点的“它、这个、这里”不写。
 - 念一遍再定稿。一口气念得完、不用回读；“由……限定、属于、进行、该、其”若让句子显得搬字段或拗口，就换成更直接的说法。念着别扭就重写，不靠改字段让它过 lint。
 - 允许变化。“先别”“只看”这类阻断/聚焦句可用，但不是每条必须；长短句可换，可有轻微反应、必要衔接或自然停顿，不硬塞反问、感叹、网络梗或“咱们”。
 - 从卡点进，不从课程进。不写“今天我们学习……”，不写课程背景，不虚构学生比例、想法或普遍痛点。
 - 相邻句避免机械套同一句式。保留有助于对比、节奏或记忆的重复；重复开头却没有推进新动作时才重写。一次听不完整的长句先拆短。
 - 方法名放动作价值之后，最后留下下一题能直接调用的第一动作。
+
+词表用于选择新表达，不对受保护文本执行批量替换。必要的“词形”等教学对象应保留其含义；“定死”等候选说法也不能增加确定性。冻结题面、Evidence、方法名和必须展示的 Stop 继续按当前契约原样投影。
 
 这些判据只约束表达。它们不改 Tell Now/Tell Later、Role、答案范围、Evidence、Stop，也不许因“写得顺”补出未认证的认知收益，或把 deferred 说成 removed。判据通过不等于自然口语通过。工程入口接受明确标明 AI 或人工身份、绑定最终文案的外部 Copy 凭证及 natural_speech 检查；它不代签真人听感或 Human Taste，后两项仍需人工反馈。
 
@@ -86,13 +92,15 @@ Signature 映射仅协调视觉语法：R01 Overgrowth；R02 Relation Rewire；R
 
 Schema 为 `creative/copy-system/student-pov-copy.schema.json`。CopyAudit 包含第一动作/Role/Evidence/Stop/Tell Now/Payoff、可见压缩、学生操作结构、动作语言、解释密度、专家链泄漏、屏幕口播重复、捷径、禁说、自然口语风险。PASS 仅是 deterministic binding/claim lint；不是完整语义、自然口语或学生体验认证。
 
-当前 Copy 契约为 0.2.0。候选不得引用未披露或后台字段；Payoff 句必须引用 Payoff/allowed_claim，Stop 句必须引用当前边界或有限输出状态，空第一动作直接拒绝。Baseline 中每个 work_id 必须明确归入 removed/deferred/still_required，后两类完整列入 remaining_steps；声明第一动作不可迁移时继续 HOLD。默认在开始场景显示已绑定的 baseline，在 Collapse 显示 method_path 与实际产物。显式 payoff_line 成为唯一口播结果句，并绑定 final_copy_claim；更改它会使旧文案批准失效。无依据百分比、热点表达仍 FAIL，不从原题出现数字反推学生统计。
+当前 Copy 契约为 0.3.0。候选不得引用未披露或后台字段；Payoff 句必须引用 Payoff/allowed_claim，Stop 句必须引用当前边界或有限输出状态，空第一动作直接拒绝。Baseline 中每个 work_id 必须明确归入 removed/deferred/still_required，后两类完整列入 remaining_steps；声明第一动作不可迁移时继续 HOLD。默认在开始场景显示原题及已绑定的 baseline，在 Collapse 显示 method_path 与实际产物。显式 payoff_line 成为唯一口播结果句，并绑定 final_copy_claim；更改它会使旧文案批准失效。无依据百分比、热点表达仍 FAIL；照录原题中的数字、英文词或来源标签不等于新造口播 Claim。
+
+`reality_layer` 保存来自 Plan 的未填答原题、逐字段冻结引用及完整展示文本。第一景先显示原题，所有后续场景引用同一持续题面层，再用已绑定的 Evidence 聚焦。Plan 保留已有 passage/stem/options/given_word，不把 Review 答案、执行记录或方法编号投到题面；题目 ID 留作追溯。结构检查要求原题先出现且不可变，但不代签实际画面的持续可见性或阅读清晰度。详见 `docs/original-question-copy-contract.md`。
 
 `copy_audit.observation_scope=planned_scene_structure_only` 明确这些观察只针对生成的 FinalScript。兼容字段 `cognitive_reduction_visible` 要求计划屏幕确实包含有凭证的 before→after 文本，且 Collapse 绑定实际 Output、Evidence 和 removed_work；仅有 Payoff 记录不能判 true。`student_pov_present` 要求场景有来源绑定的第一动作、Evidence 焦点和完整必要 Stop，不再固定为 true。这两个 bool 均不表示实际画面清晰、学生感到轻松或学会了操作。`actual_visual_review`、`student_experience_review` 和 `human_taste_review` 始终 PENDING；外部 Copy 文案凭证也不能自动替它们签字。
 
-READY 要求第一动作保留、计划中可见压缩和完整学生操作结构均成立，且 Payoff/外部文案凭证满足要求。`inspect_historical` 和 `python -m student_pov inspect <request.json>` 仅检查保存件完整性，不核当前上游、不允许消费。历史 0.1 Schema 独立保留；当前 validate/生成消费明确拒绝旧契约，须从新 Plan 与当前冻结源重建，不能修改版本标签或覆盖旧 Copy。
+READY 要求第一动作保留、原题先展示、计划中可见压缩和完整学生操作结构均成立，且 Payoff/外部文案凭证满足要求。`inspect_historical` 和 `python -m student_pov inspect <request.json>` 仅检查保存件完整性，不核当前上游、不允许消费。历史 0.1/0.2 Copy Schema 独立保留；当前 validate/生成消费明确拒绝旧契约，须从新 Plan 与当前冻结源重建，不能修改版本标签或覆盖旧 Copy。
 
-`final_copy_sha` 同时覆盖 script 与逐景 FinalScript；`copy_review` 必须绑定 script_sha/final_copy_sha 并显式确认 semantic_fidelity、natural_speech、layer_division。任何相关文字或场景修改让旧批准无效。AI凭证不升级人工教学认证。Human Taste 14问见 `STUDENT_POV_HUMAN_TASTE_REVIEW.md`，始终等待真实用户/人工意见。
+`final_copy_sha` 同时覆盖 script、逐景 FinalScript 与 reality_layer；`copy_review` 必须绑定 script_sha/final_copy_sha 并显式确认 semantic_fidelity、natural_speech、layer_division。任何相关文字、题面层或场景修改让旧批准无效。AI凭证不升级人工教学认证。Human Taste 14问见 `STUDENT_POV_HUMAN_TASTE_REVIEW.md`，始终等待真实用户/人工意见。
 
 ```python
 from student_pov import realize, validate_copy

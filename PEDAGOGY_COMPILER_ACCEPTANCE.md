@@ -1,5 +1,21 @@
 # Pedagogy Compiler Acceptance
 
+## 当前 v0.3 增量
+
+2026-10-07：Compiler/Plan/Handoff 0.3.0，披露 Policy 0.2.0。工程冻结投影、原题快照和局部候选状态适配通过；完整首用/迁移/高阶内容与真人教学效果仍为 PARTIAL/PENDING。以下 v0.2 记录保留为历史，不授予当前消费资格。
+
+当前输出为忽略的 `local-data/pedagogy/compiler-r5/`：三份真实输入、九个 Plan、六个 Copy/Motion Handoff 完成源重放，源与此前本地输出字节 hash 不变。F01/G01/R02 的 worked_example 继续 READY；first_touch 继续因9/10/9条必要边界 HOLD；独立 boundary Case 缺口仍如实保留。
+
+原题 whitelist、逐字段引用和 Copy 持续题面层已接通；不输出正确答案或执行元数据到题面。历史0.1/0.2完整性可读、当前消费拒绝，旧批准不能继承新的题面或文案。
+
+R02 的现有审阅动作支持唯一局部排除的4→3结构对照；机械适配检查自己的方法版本、动作、Review、Decision/Evidence生命周期、当前范围及未闭合状态。专门 reviewed_payoff 仍兼容，但不再把它当作必须新增的上游 Review。G01 路由与 F01 分组仍不证明候选淘汰或永久省去后续工作。
+
+`baseline_kind=structural_candidate_state`、`baseline_measured=false`，仅关闭本 scope 的一个候选核验任务；其他候选与 Stop 仍需要，源变化可重开。不证明学习、速度、少读全文、独立人工认证或最终答案。公开资格持续为 false。
+
+当前完整仓库回归647项通过，ANSWER82 methods / 20 source documents / generated assets PASS。本轮新增19项程序控制覆盖原题、历史兼容、机械候选归属/失效/范围及非实测路径标记；全部真实题、文案、声音、视频和工程保持本地。验收只计相应能力，不把 step-kind 近似或通用 worked sequence 算成完整认知负担/迁移/高阶教学验收。
+
+## v0.2 历史记录
+
 日期：2026-10-07。初始基线 `main@adff3939f769d631a7ac6e8fc6d5f939045b3601`；完成审计修复基线 `main@6380ffc`。当前 Compiler/Policy 契约 **0.2.0**。**工程冻结投影通过；真实 first_touch 与完整黄金案例覆盖 PARTIAL。** 当前冻结资产和状态核验不等于独立教学语义、真人首用、效率或公开发布通过。
 
 | 项目 | 结果与证据 |

@@ -6,7 +6,7 @@ from video_contracts import now, pointer, review_semantics, seal, sha
 from .sources import FrozenSource
 from . import policy
 
-VERSION = '0.2.0'
+VERSION = '0.3.0'
 FIELD_CANDIDATES = {
     'symptom': ('/student_symptoms/0', '/four_step_card/start', '/trigger_cues/0'),
     'first_signal': ('/four_step_card/start', '/trigger_cues/0'),
@@ -67,6 +67,19 @@ def _request(selection, fields, extra_boundary_refs):
                      'extra_boundary_refs': extra_boundary_refs})
 
 
+def _original_question(source):
+    """Project the unfilled task, never review answers or analyzer metadata."""
+    values, refs = {}, {}
+    for key in ('question_id', 'question_type', 'passage', 'stem', 'options', 'given_word'):
+        if key not in source.question:
+            continue
+        path = '/payload/passage' if key == 'passage' and source.transport == 'reviewed_passage' \
+            else source.question_path + '/' + key
+        values[key] = deepcopy(pointer(source.bundle, path))
+        refs[key] = source.ref(path)
+    return values, refs
+
+
 def compile_plan(bundle, status, selection, *, mode='first_touch', audience='first_time_student',
                  channel='video', duration_target=30, fields=None, extra_boundary_refs=None,
                  generated_at=None):
@@ -79,6 +92,7 @@ def compile_plan(bundle, status, selection, *, mode='first_touch', audience='fir
         raise ValueError('Finite positive duration target required')
     request = _request(selection, fields or {}, extra_boundary_refs or [])
     source = FrozenSource(bundle, status, request['selection'])
+    original_question, original_question_refs = _original_question(source)
     guard = source.guard()
     fields_out, gaps = {}, []
     for key, candidates in FIELD_CANDIDATES.items():
@@ -173,6 +187,7 @@ def compile_plan(bundle, status, selection, *, mode='first_touch', audience='fir
     student_items = [v for v in fields_out.values() if v] + current_boundaries
     student_items += [s['item'] for s in steps]
     lint = sorted(set(code for item in student_items
+                      if item['projection_operation'] != 'literal_source_v1'
                       for code in policy.claim_lint(item['text'], source.method['primary_role'])))
     metrics = {'core_actions': len(source.actions), 'primary_boundary': len(current_boundaries),
         'memory_phrase': int(fields_out['memory_phrase'] is not None),
@@ -226,7 +241,7 @@ def compile_plan(bundle, status, selection, *, mode='first_touch', audience='fir
         'source_analysis_sha': source.analysis_sha, 'input_binding': source_binding,
         'method_id': source.method['method_id'], 'method_version': source.method['version'], 'role': role,
         'question_id': source.question['question_id'],
-        'original_question': {k: deepcopy(source.question[k]) for k in ('question_id', 'stem', 'options') if k in source.question},
+        'original_question': original_question, 'original_question_refs': original_question_refs,
         'mode': mode, 'audience': audience, 'channel': channel, 'duration_target': duration_target,
         'method_stamp': method_stamp,
         'duration_status': 'editorial_target_not_timing_or_learning_efficacy_certification',
@@ -266,7 +281,8 @@ def compile_plan(bundle, status, selection, *, mode='first_touch', audience='fir
             'visualizable': True, 'performance_claim_allowed': False,
             'reviewed_support': source.payoff_support()},
         'prohibited_claims': prohibited, 'public_claims': public_claims,
-        'source_refs': [source.ref(source.method_path)] + [source.ref(p) for p in source.action_paths],
+        'source_refs': [source.ref(source.method_path)] + [source.ref(p) for p in source.action_paths]
+            + list(original_question_refs.values()),
         'truth_guard': guard,
         'semantic_review': {'level': source.review_level,
                            'independent_human_certified': source.review_level == 'human_certified'},

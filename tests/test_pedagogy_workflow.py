@@ -12,7 +12,7 @@ from core.registry import Registry
 from answer_engine.frozen_export import FrozenAssetExporter
 from tests.test_execution import seven_chain_fixture
 from tests import test_pedagogy as fixture_module
-from video_contracts import sha, seal, read, write
+from video_contracts import sha, seal, read, write, pointer
 from video_contracts import passage
 from pedagogy import compile_plan, validate_plan, copy_projection, validate_handoff
 from pedagogy.__main__ import main
@@ -71,6 +71,10 @@ class PedagogyWorkflowTests(unittest.TestCase):
         self.assertTrue(validate_plan(p, b, s)['consumption_allowed'])
         self.assertEqual(before, sha([b, s]))
         cp = copy_projection(p, b, s)
+        self.assertEqual(cp['original_question']['passage'], b['payload']['passage'])
+        self.assertEqual(cp['original_question_refs']['passage']['pointer'], '/payload/passage')
+        for key, ref in cp['original_question_refs'].items():
+            self.assertEqual(pointer(b, ref['pointer']), cp['original_question'][key])
         validate_handoff(cp, p, b, s)
         with self.assertRaises(ValueError):
             validate_handoff(cp, p, b, passage.status_manifest(b, 'withdrawn', 'WITHDRAWN'))

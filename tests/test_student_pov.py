@@ -14,7 +14,7 @@ from tests import test_pedagogy as fixture_module
 from video_contracts import seal, sha, read, write, pointer
 from pedagogy import compile_plan, copy_projection
 from student_pov import realize, validate_copy, inspect_historical, suppression_qa
-from student_pov.realization import copy_semantics
+from student_pov.realization import copy_semantics, question_screen
 from student_pov.payoff import supported_payoff
 from student_pov.qa import planned_scene_observations
 from student_pov.__main__ import main
@@ -30,9 +30,10 @@ def reseal_copy(copy):
     return seal(copy)
 
 
-def assets(mid='R12', with_payoff=True, change=None, mode='first_touch'):
+def assets(mid='R12', with_payoff=True, change=None, mode='first_touch', question_change=None):
     helper = fixture_module.PedagogyTests(); helper.registry = Registry(); helper.engine = QuestionAnalyzer(helper.registry)
-    b, s, selection = helper.assets(mid if mid in ('R12', 'G01', 'F01') else 'R12')
+    b, s, selection = helper.assets(mid if mid in ('R12', 'G01', 'F01') else 'R12',
+                                   question_change=question_change)
     if mid == 'R01':
         selection = {'method_id': 'R01', 'action_ids': ['choice-B']}
     action_index = next(i for i, a in enumerate(b['analysis']['execution_trace'])
@@ -96,6 +97,10 @@ class StudentPOVTests(unittest.TestCase):
         copy = reviewed_copy(b, s, p, cp)
         self.assertEqual(copy['availability']['status'], 'READY')
         self.assertEqual(copy['payoff_type'], 'TYPE_C')
+        self.assertEqual(copy['student_path_comparison']['support_origin'], 'explicit_reviewed_payoff')
+        self.assertEqual(copy['student_path_comparison']['baseline_kind'], 'reviewed_path')
+        self.assertFalse(copy['student_path_comparison']['baseline_measured'])
+        self.assertFalse(copy['student_path_comparison']['learner_transfer_validated'])
         self.assertEqual(copy['cognitive_work']['removed'], ['toy-repeat'])
         self.assertEqual(copy['cognitive_work']['deferred'], ['word_form'])
         self.assertEqual(copy['payoff_validation']['output_type'], 'locator')
@@ -133,7 +138,87 @@ class StudentPOVTests(unittest.TestCase):
         self.assertEqual(copy['student_path_comparison']['baseline_path'], [])
         self.assertEqual(copy['cognitive_work']['removed'], [])
         self.assertIsNone(copy['script']['cognitive_relief_line'])
+        self.assertIsNone(copy['student_path_comparison']['support_origin'])
+        self.assertIsNone(copy['student_path_comparison']['baseline_kind'])
+        self.assertIsNone(copy['student_path_comparison']['baseline_measured'])
         self.assertEqual(copy['payoff_validation']['status'], 'PAYOFF_UNSUPPORTED')
+
+    def test_mechanical_candidate_state_is_not_observed_or_transfer_certified(self):
+        from tests.test_mechanical_payoff import freeze
+        b, s, selected = freeze()
+        p = compile_plan(b, s, selected, mode='worked_example', duration_target=1000)
+        cp = copy_projection(p, b, s)
+        copy = reviewed_copy(b, s, p, cp)
+        self.assertEqual(copy['availability']['status'], 'READY')
+        comparison = copy['student_path_comparison']
+        self.assertEqual(comparison['support_origin'], 'frozen_candidate_transition')
+        self.assertEqual(comparison['baseline_kind'], 'structural_candidate_state')
+        self.assertFalse(comparison['baseline_measured'])
+        self.assertFalse(comparison['learner_transfer_validated'])
+        self.assertEqual(copy['cognitive_work']['removed'], ['current_candidate_check:D'])
+        self.assertEqual(copy['payoff_type'], 'TYPE_A')
+        self.assertTrue(copy['copy_audit']['cognitive_reduction_visible'])
+        self.assertEqual(copy['copy_audit']['actual_visual_review'], 'PENDING')
+        self.assertFalse(copy['script']['decision_state']['answer_scope']['may_output_final_answer'])
+        self.assertFalse(copy['payoff_validation']['semantic_certification'])
+        self.assertFalse(copy['public_render_ready'])
+        for flag in ('baseline_measured', 'learner_transfer_validated'):
+            changed = deepcopy(copy); changed['student_path_comparison'][flag] = True
+            with self.subTest(flag=flag), self.assertRaisesRegex(ValueError, 'schema'):
+                inspect_historical(reseal_copy(changed))
+
+    def test_original_question_precedes_focus_and_persists_with_exact_refs(self):
+        b, s, p, cp = assets('G01')
+        copy = reviewed_copy(b, s, p, cp)
+        original = question_screen(p['original_question'])
+        layer = copy['reality_layer']
+        self.assertEqual(layer['question'], p['original_question'])
+        self.assertEqual(layer['field_refs'], p['original_question_refs'])
+        self.assertEqual(layer['screen_copy'], original)
+        self.assertTrue(layer['persistent'])
+        self.assertFalse(layer['fact_mutation_allowed'])
+        self.assertEqual(layer['visibility_review'], 'PENDING')
+        first = copy['final_script'][0]
+        self.assertEqual(first['visual_state'], 'original_question')
+        self.assertEqual(first['screen_copy'][:len(original)], original)
+        self.assertIn(ref(p, '/original_question'), first['pedagogy_ref'])
+        self.assertTrue(all(row['reality_layer_ref'] == '/reality_layer' for row in copy['final_script']))
+        self.assertTrue(copy['copy_audit']['original_question_first'])
+        self.assertIn(p['original_question']['given_word'], original)
+        self.assertTrue(all(label + '. ' + text in original
+                            for label, text in p['original_question']['options'].items()))
+        self.assertEqual(copy['final_copy_sha'], sha({'script': copy['script'],
+            'final_script': copy['final_script'], 'reality_layer': layer}))
+
+    def test_resealed_question_or_persistence_edits_cannot_inherit_copy_approval(self):
+        b, s, p, cp = assets()
+        copy = reviewed_copy(b, s, p, cp)
+        edits = [lambda v: v['reality_layer']['question'].update(passage='changed'),
+                 lambda v: v['reality_layer'].update(persistent=False),
+                 lambda v: v['reality_layer']['field_refs']['passage'].update(sha='0' * 64),
+                 lambda v: v['final_script'][0].update(screen_copy=[]),
+                 lambda v: v['final_script'][1].update(reality_layer_ref='/another-layer')]
+        for edit in edits:
+            changed = deepcopy(copy); edit(changed)
+            with self.subTest(edit=edit), self.assertRaises(ValueError):
+                validate_copy(reseal_copy(changed), cp, p, b, s)
+
+    def test_literal_source_statistics_are_displayed_without_new_copy_claims(self):
+        text = 'SYNTHETIC original: 80% in a framework; R02 is a source label.'
+        b, s, p, cp = assets(question_change=lambda q: q.update(passage=q['passage'] + '\n' + text))
+        copy = reviewed_copy(b, s, p, cp)
+        self.assertIn(text, copy['reality_layer']['question']['passage'])
+        self.assertEqual(copy['availability']['status'], 'READY')
+        self.assertEqual(copy['availability']['issues'], [])
+
+    def test_original_task_change_requires_new_bound_final_copy_review(self):
+        b, s, p, cp = assets()
+        previous = reviewed_copy(b, s, p, cp)
+        b, s, p, cp = assets(question_change=lambda q: q.update(stem=q['stem'] + ' SYNTHETIC task revision'))
+        changed = realize(cp, p, b, s, copy_review=previous['realization_request']['copy_review'])
+        self.assertNotEqual(previous['final_copy_sha'], changed['final_copy_sha'])
+        self.assertEqual(changed['availability']['status'], 'HOLD')
+        self.assertIn('FINAL_COPY_SEMANTIC_AND_NATURAL_SPEECH_REVIEW_REQUIRED', changed['availability']['gaps'])
 
     def test_copy_semantic_natural_speech_credential_missing_is_hold(self):
         b, s, p, cp = assets()
@@ -365,7 +450,8 @@ class StudentPOVTests(unittest.TestCase):
     def test_ready_schema_requires_action_and_visible_planned_reduction(self):
         b, s, p, cp = assets()
         copy = reviewed_copy(b, s, p, cp)
-        for flag in ('first_action_preserved', 'cognitive_reduction_visible', 'student_pov_present'):
+        for flag in ('first_action_preserved', 'cognitive_reduction_visible', 'student_pov_present',
+                     'original_question_first'):
             changed = deepcopy(copy)
             changed['copy_audit'][flag] = False
             with self.subTest(flag=flag), self.assertRaisesRegex(ValueError, 'schema'):
@@ -375,8 +461,16 @@ class StudentPOVTests(unittest.TestCase):
         b, s, p, cp = assets()
         legacy = reviewed_copy(b, s, p, cp)
         legacy['schema_version'] = '0.1.0'
+        legacy.pop('reality_layer')
+        legacy['copy_audit'].pop('original_question_first')
+        for key in ('support_origin', 'baseline_kind', 'baseline_measured', 'learner_transfer_validated'):
+            legacy['student_path_comparison'].pop(key)
+        for row in legacy['final_script']:
+            row.pop('reality_layer_ref')
         for field in ('observation_scope', 'actual_visual_review', 'student_experience_review'):
             legacy['copy_audit'].pop(field)
+        legacy['script_sha'] = sha(legacy['final_script'])
+        legacy['final_copy_sha'] = sha({'script': legacy['script'], 'final_script': legacy['final_script']})
         legacy = reseal_copy(legacy)
         result = inspect_historical(legacy)
         self.assertEqual(result['contract_status'], 'LEGACY_CONTRACT')
@@ -392,6 +486,25 @@ class StudentPOVTests(unittest.TestCase):
             with patch('sys.argv', ['student_pov', 'inspect', str(root / 'inspect.json')]), contextlib.redirect_stdout(output):
                 main()
             self.assertIn('consumption blocked', output.getvalue())
+
+    def test_v02_copy_is_historical_and_requires_original_question_regeneration(self):
+        b, s, p, cp = assets()
+        legacy = reviewed_copy(b, s, p, cp)
+        legacy['schema_version'] = '0.2.0'
+        legacy.pop('reality_layer')
+        legacy['copy_audit'].pop('original_question_first')
+        for key in ('support_origin', 'baseline_kind', 'baseline_measured', 'learner_transfer_validated'):
+            legacy['student_path_comparison'].pop(key)
+        for row in legacy['final_script']:
+            row.pop('reality_layer_ref')
+        legacy['script_sha'] = sha(legacy['final_script'])
+        legacy['final_copy_sha'] = sha({'script': legacy['script'], 'final_script': legacy['final_script']})
+        legacy = reseal_copy(legacy)
+        result = inspect_historical(legacy)
+        self.assertEqual(result['contract_status'], 'LEGACY_CONTRACT')
+        self.assertFalse(result['consumption_allowed'])
+        with self.assertRaisesRegex(ValueError, 'Historical Student POV Copy contract'):
+            validate_copy(legacy, cp, p, b, s)
 
 
 if __name__ == '__main__':

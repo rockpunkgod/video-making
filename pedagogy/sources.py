@@ -24,6 +24,7 @@ def _span_valid(question, span):
 class FrozenSource:
     def __init__(self, bundle, status, selection):
         self.bundle = bundle
+        self.status = deepcopy(status)
         if not isinstance(selection, dict) or set(selection) != {'method_id', 'action_ids'}:
             raise ValueError('Explicit method_id and action_ids selection required')
         self.selection = deepcopy(selection)
@@ -206,10 +207,10 @@ class FrozenSource:
                 'method_utility': self.method.get('utility_level', self.method.get('value_level', 'unknown'))}
 
     def payoff_support(self):
-        """Carry a pre-existing explicit work-reduction credential, or nothing.
+        """Prefer explicit credentials, otherwise project a frozen local decision.
 
-        The compiler does not invent a baseline path from a long question, infer
-        saved work from a partition, or turn later work into work removed.
+        A mechanical candidate-state baseline is not a measured learner path.
+        Partitions, unknown decision ordering and later work cannot create it.
         """
         for path, record in zip(self.review_paths, self.review_records):
             support = record.get('reviewed_payoff')
@@ -227,9 +228,13 @@ class FrozenSource:
             if not evidence or not set(evidence) <= set(self.evidence_paths):
                 raise ValueError('Reviewed payoff needs this action\'s own existing evidence')
             prefix = path + ('/record' if self.transport == 'frozen_asset' else '')
+            measured = support.get('baseline_measured', False)
             return {'record': deepcopy(support),
+                    'origin': 'explicit_reviewed_payoff', 'baseline_kind': 'reviewed_path',
+                    'baseline_measured': measured if isinstance(measured, bool) else False,
                     'source_refs': [self.ref(prefix + '/reviewed_payoff')],
                     'action_artifact_refs': [self.ref(p) for p in self.action_paths],
                     'evidence_refs': [self.ref(p) for p in evidence],
                     'review_refs': [self.ref(p) for p in self.review_paths]}
-        return None
+        from .mechanical_payoff import frozen_candidate_transition
+        return frozen_candidate_transition(self.bundle, self.status, self.selection)

@@ -4,26 +4,12 @@
   "title": "Frozen selective-disclosure PedagogyPlan; deterministic projection, not truth certification",
   "type": "object",
   "additionalProperties": false,
-  "allOf": [
-    {"required": ["question_id", "original_question", "method_stamp"]},
-    {
-      "if": {"properties": {"schema_version": {"const": "0.2.0"}}},
-      "then": {"properties": {
-        "compiler_version": {"const": "0.2.0"}, "policy_version": {"const": "0.2.0"},
-        "student_model": {"properties": {"stop": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/boundary"}}}},
-        "teaching_risk": {"properties": {"items": {"items": {"required": ["source_refs"]}}}}
-      }},
-      "else": {"properties": {
-        "compiler_version": {"const": "0.1.0"}, "policy_version": {"const": "0.1.0"},
-        "student_model": {"properties": {"stop": {"anyOf": [{"$ref": "#/$defs/boundary"}, {"type": "null"}]}}}
-      }}
-    }
-  ],
+  "allOf": [{"required": ["question_id", "original_question", "method_stamp"]}, {"if": {"properties": {"schema_version": {"enum": ["0.2.0", "0.3.0"]}}}, "then": {"properties": {"compiler_version": {"enum": ["0.2.0", "0.3.0"]}, "policy_version": {"const": "0.2.0"}, "student_model": {"properties": {"stop": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/boundary"}}}}, "teaching_risk": {"properties": {"items": {"items": {"required": ["source_refs"]}}}}}}, "else": {"properties": {"compiler_version": {"const": "0.1.0"}, "policy_version": {"const": "0.1.0"}, "student_model": {"properties": {"stop": {"anyOf": [{"$ref": "#/$defs/boundary"}, {"type": "null"}]}}}}}}, {"if": {"properties": {"schema_version": {"const": "0.3.0"}}}, "then": {"required": ["original_question_refs"], "properties": {"compiler_version": {"const": "0.3.0"}, "payoff": {"properties": {"reviewed_support": {"anyOf": [{"type": "null"}, {"type": "object", "required": ["origin", "baseline_kind", "baseline_measured"]}]}}}}}, "else": {"properties": {"compiler_version": {"enum": ["0.1.0", "0.2.0"]}}}}],
   "required": ["schema_version", "kind", "compiler_version", "policy_version", "plan_id", "plan_sha", "source_analysis_sha", "input_binding", "method_id", "method_version", "role", "mode", "audience", "channel", "duration_target", "duration_status", "symptom", "first_signal", "first_action", "judgment_point", "memory_phrase", "student_steps", "student_model", "evidence_refs", "boundaries", "omitted_items", "followup_content", "case_content_matrix", "teaching_risk", "compression_audit", "cognitive_load", "answer_scope", "stop_state", "working_rule", "payoff", "prohibited_claims", "public_claims", "source_refs", "truth_guard", "semantic_review", "availability", "release_state", "public_render_ready", "replay_request", "generated_at", "content_sha", "envelope_sha"],
   "properties": {
-    "schema_version": {"enum": ["0.1.0", "0.2.0"], "description": "0.1.0 is retained solely for historical inspection; current consumption requires 0.2.0 source replay."},
+    "schema_version": {"enum": ["0.1.0", "0.2.0", "0.3.0"], "description": "0.1/0.2 are historical-only; current consumption requires 0.3 source replay."},
     "kind": {"const": "pedagogy_plan"},
-    "compiler_version": {"enum": ["0.1.0", "0.2.0"]},
+    "compiler_version": {"enum": ["0.1.0", "0.2.0", "0.3.0"]},
     "policy_version": {"enum": ["0.1.0", "0.2.0"]},
     "plan_id": {"type": "string", "pattern": "^pedagogy:[a-f0-9]{64}$"},
     "plan_sha": {"$ref": "#/$defs/sha"},
@@ -31,7 +17,8 @@
     "input_binding": {"$ref": "#/$defs/input_binding"},
     "method_id": {"type": "string", "minLength": 1},
     "question_id": {"type": "string", "minLength": 1},
-    "original_question": {"type": "object", "additionalProperties": false, "required": ["question_id", "stem"], "properties": {"question_id": {"type": "string"}, "stem": {"type": "string"}, "options": {"type": "object", "additionalProperties": {"type": "string"}}}},
+    "original_question": {"type": "object", "additionalProperties": false, "required": ["question_id", "stem"], "properties": {"question_id": {"type": "string"}, "stem": {"type": "string"}, "options": {"type": "object", "additionalProperties": {"type": "string"}}, "passage": {"type": ["string", "null"]}, "given_word": {"type": ["string", "null"]}, "question_type": {"type": ["string", "null"]}}},
+    "original_question_refs": {"type": "object", "additionalProperties": {"$ref": "#/$defs/ref"}, "required": ["question_id", "stem"], "propertyNames": {"enum": ["question_id", "question_type", "passage", "stem", "options", "given_word"]}},
     "method_version": {"type": "string", "minLength": 1},
     "role": {"enum": ["locator", "interpreter", "reducer", "framework", "decider", "verifier"]},
     "mode": {"enum": ["first_touch", "worked_example", "counterexample", "boundary", "transfer", "hard_case", "review"]},
@@ -62,7 +49,7 @@
     "answer_scope": {"type": "object", "additionalProperties": false, "required": ["scope", "answer", "may_output_final_answer", "upstream_answer", "upstream_closed", "actual_outputs"], "properties": {"scope": {"const": "method_action_demo"}, "answer": {"type": "null"}, "may_output_final_answer": {"const": false}, "upstream_answer": {}, "upstream_closed": {"type": "boolean"}, "actual_outputs": {"type": "array", "minItems": 1}}},
     "stop_state": {"type": "object", "additionalProperties": false, "required": ["state", "stop_applied", "method_stop_ref", "action_stop_refs"], "properties": {"state": {"const": "produced_bounded_action"}, "stop_applied": {"const": false}, "method_stop_ref": {"$ref": "#/$defs/ref"}, "action_stop_refs": {"$ref": "#/$defs/refs"}}},
     "working_rule": {"type": "object", "additionalProperties": false, "required": ["text", "method_id", "version", "role", "scope", "certainty", "source_action_refs", "source_text_refs"], "properties": {"text": {"type": ["string", "null"]}, "method_id": {"type": "string"}, "version": {"type": "string"}, "role": {"type": "string"}, "scope": {"const": "selected_question_and_actual_action"}, "certainty": {"const": "upstream_reviewed_assertion_not_independent_semantic_certification"}, "source_action_refs": {"$ref": "#/$defs/refs"}, "source_text_refs": {"$ref": "#/$defs/refs"}}},
-    "payoff": {"type": "object", "additionalProperties": false, "required": ["before_complexity", "after_structure", "allowed_claim", "visualizable", "performance_claim_allowed", "reviewed_support"], "properties": {"before_complexity": {"$ref": "#/$defs/strings"}, "after_structure": {"type": "array"}, "allowed_claim": {"$ref": "#/$defs/nullable_item"}, "visualizable": {"type": "boolean"}, "performance_claim_allowed": {"const": false}, "reviewed_support": {"anyOf": [{"type": "null"}, {"type": "object", "additionalProperties": false, "required": ["record", "source_refs", "action_artifact_refs", "evidence_refs", "review_refs"], "properties": {"record": {"type": "object"}, "source_refs": {"$ref": "#/$defs/refs"}, "action_artifact_refs": {"$ref": "#/$defs/refs"}, "evidence_refs": {"$ref": "#/$defs/refs"}, "review_refs": {"$ref": "#/$defs/refs"}}}]}}},
+    "payoff": {"type": "object", "additionalProperties": false, "required": ["before_complexity", "after_structure", "allowed_claim", "visualizable", "performance_claim_allowed", "reviewed_support"], "properties": {"before_complexity": {"$ref": "#/$defs/strings"}, "after_structure": {"type": "array"}, "allowed_claim": {"$ref": "#/$defs/nullable_item"}, "visualizable": {"type": "boolean"}, "performance_claim_allowed": {"const": false}, "reviewed_support": {"anyOf": [{"type": "null"}, {"type": "object", "additionalProperties": false, "required": ["record", "source_refs", "action_artifact_refs", "evidence_refs", "review_refs"], "properties": {"record": {"type": "object"}, "source_refs": {"$ref": "#/$defs/refs"}, "action_artifact_refs": {"$ref": "#/$defs/refs"}, "evidence_refs": {"$ref": "#/$defs/refs"}, "review_refs": {"$ref": "#/$defs/refs"}, "origin": {"enum": ["explicit_reviewed_payoff", "frozen_candidate_transition"]}, "baseline_kind": {"enum": ["reviewed_path", "structural_candidate_state"]}, "baseline_measured": {"type": "boolean"}}, "allOf": [{"if": {"required": ["origin"], "properties": {"origin": {"const": "frozen_candidate_transition"}}}, "then": {"properties": {"baseline_kind": {"const": "structural_candidate_state"}, "baseline_measured": {"const": false}}}}, {"if": {"required": ["origin"], "properties": {"origin": {"const": "explicit_reviewed_payoff"}}}, "then": {"properties": {"baseline_kind": {"const": "reviewed_path"}}}}]}]}}},
     "prohibited_claims": {"$ref": "#/$defs/strings"},
     "public_claims": {"type": "array", "items": {"anyOf": [{"$ref": "#/$defs/item"}, {"$ref": "#/$defs/boundary"}]}},
     "source_refs": {"$ref": "#/$defs/refs"},

@@ -148,6 +148,13 @@ def supported_payoff(plan, projection):
             errors.append('vocabulary_shortcut_generalization')
     if errors:
         return None, ['PAYOFF_UNSUPPORTED:' + e for e in sorted(set(errors))]
-    return {**record, 'source_payoff_refs': deepcopy(support['source_refs']),
+    # Keep the input kind explicit: an option-state transition is never a
+    # measured student path or evidence that a learner can transfer the method.
+    return {**record, 'support_origin': support.get('origin'),
+            'baseline_kind': support.get('baseline_kind'),
+            'baseline_measured': support.get('baseline_measured'),
+            'learner_transfer_validated': record.get('learner_transfer_validated') is True
+                and support.get('origin') != 'frozen_candidate_transition',
+            'source_payoff_refs': deepcopy(support['source_refs']),
             'evidence_refs': deepcopy(support['evidence_refs']),
             'action_artifact_refs': deepcopy(support['action_artifact_refs'])}, []

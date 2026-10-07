@@ -10,7 +10,9 @@
 
 工程层已经有契约、绑定、审计和模拟适配器；还没有接入真实语言模型来自动写自然文案。当前默认实现主要逐字投影 Plan。结构规则与写作指导是两部分；字段通过不等于自然口语或学生体验已通过。
 
-当前真实候选是 G01 的 bounded worked_example。它只到已有名词性功能路线，具体词形仍未闭合；不能排除全部动名词，不能写成已经填出答案。Compiler 0.2 投影 READY，未知风险的冻结 Caveat 保守进入十条 Tell Now；first_touch 仍因边界负荷 HOLD。新 Copy 因缺少已有 baseline / removed-work 凭证及最终文案审核仍 HOLD。不要用改写来消除事实或凭证缺口。
+目前同步的是既有 G01 bounded worked_example 草稿。它只到已有名词性功能路线，具体词形仍未闭合；不能排除全部动名词，不能写成已经填出答案。Compiler/Copy 0.3 保留完整原题与持续题面层，未知风险的冻结 Caveat 仍进入十条 Tell Now；first_touch 因边界负荷 HOLD。G01 当前没有受支持的真实工作减少，不因口语改得自然而获得 Payoff。当前定稿已由独立 AI 文本复核，绑定最终文字与逐景脚本；这份凭证不代签真人听感或 Human Taste。
+
+唯一新增的受支持 Golden 完整题型文案选择 R02：既有审阅的局部排除支持当前候选4→3，A/B/C和整题答案未闭合。它来自冻结结构状态，未观察学生原路径或验证提速。绑定独立 AI Copy 文本复核后，R02 内部 Copy 工程 READY，公开资格仍 false。G01 的同步草稿与这个 Golden 样片分别记录，未新做多方法视频。
 
 ## 已有的“人味”要求，优先改这些
 
@@ -57,11 +59,13 @@
 
 本机真实材料仅在忽略的目录中，不在 GitHub：
 
-- `local-data/pedagogy/compiler-r3/G01/worked_example.copy.json`：当前 Copy-facing Projection，0.2 契约。
-- `local-data/pedagogy/student-pov-r4/G01/draft-lines.json`：最适合开始改写的逐句候选；本次迁移只重绑来源，没有改措辞。
+- `local-data/pedagogy/compiler-r5/G01/worked_example.copy.json`：当前 Copy-facing Projection，0.3 契约。
+- `local-data/pedagogy/student-pov-r8/G01/draft-lines.json`：同步最新自然表达判据的当前稿，明确先分从句再看主句、名词性路线不等于确定词形。
 - 同目录 `hook-variants.json` / `payoff-variants.json`：开头与结果表达候选，当前均待审。
 - 同目录 `final-script.candidate.json`：VO / Screen / Motion / 来源 / 停顿协调上下文。
+- 同目录 `RECOMMENDED_FINAL_SCRIPT.md`：便于连续阅读的口播和完整逐景便览；生成与核验以 JSON 为准。
+- 同目录 `copy-review.ai.json`：只覆盖当前最终文案的 AI 文本凭证，明确真人听感、画面、Human Taste 及公开审核待完成。
 
-原 compiler-r2 / student-pov-r2、r3 仍保留为历史，不能拿旧文案批准或旧20秒视觉样片代替当前十条 Tell Now 的完整覆盖。
+G01 同目录 `motion-copy-coordination.json` 绑定已有实际动作指令，记录分开 till 从句、保留主句、提取空位、路线和封界；它不证明这些动作已经渲染。R02 Golden 文案位于 `local-data/pedagogy/student-pov-r8/R02/`。本地阅读入口为 `local-data/pedagogy/CURRENT_COPY.md`，机器入口为 `current-copy.json`。所有此前版本仍保留为历史，不能拿旧文案批准或旧20秒视觉样片代替当前必要边界覆盖。
 
 若另一位 Agent 只有 GitHub 权限，需要由用户另行提供以上本地投影和候选；不要扫描教学 Markdown、题库或 Registry 补事实。真实题目、口播、视频、声音与工程保持本地，不提交到公开仓库。
