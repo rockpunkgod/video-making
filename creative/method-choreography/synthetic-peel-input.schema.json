@@ -1,0 +1,57 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "SYNTHETIC CONTRACT TEST supplied spans; not English parsing",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "kind",
+    "fixture_id",
+    "scenario",
+    "objects"
+  ],
+  "properties": {
+    "kind": {
+      "const": "synthetic_choreography_input"
+    },
+    "fixture_id": {
+      "type": "string",
+      "pattern": "^SYNTHETIC-"
+    },
+    "scenario": {
+      "const": "peel"
+    },
+    "objects": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "object_id",
+          "text",
+          "role",
+          "protected"
+        ],
+        "properties": {
+          "object_id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "text": {
+            "type": "string",
+            "pattern": "^SYNTHETIC "
+          },
+          "role": {
+            "enum": [
+              "core",
+              "modifier"
+            ]
+          },
+          "protected": {
+            "type": "boolean"
+          }
+        }
+      },
+      "minItems": 3
+    }
+  }
+}

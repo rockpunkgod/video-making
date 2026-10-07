@@ -1,0 +1,1980 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Method Choreography v0.1: bound cognitive states, no execution controls",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema",
+    "schema_version",
+    "kind",
+    "binding",
+    "source",
+    "experience_kind",
+    "signature",
+    "problem_state",
+    "attention_entry",
+    "intervention",
+    "object_catalog",
+    "relation_catalog",
+    "states",
+    "operations",
+    "state_transitions",
+    "object_lineage",
+    "collapse",
+    "resolution",
+    "payoff_event",
+    "stop",
+    "memory_closure",
+    "temporal_signature",
+    "answer_permission_ref",
+    "final_answer_allowed",
+    "human_taste_review",
+    "semantic_truth_certification",
+    "public_render_ready",
+    "release_state",
+    "replay_request",
+    "generated_at",
+    "audit",
+    "risks",
+    "compilation_status",
+    "availability",
+    "choreography_sha",
+    "choreography_id",
+    "content_sha",
+    "envelope_sha"
+  ],
+  "properties": {
+    "schema": {
+      "const": "method-choreography/v1"
+    },
+    "schema_version": {
+      "const": "0.1.0"
+    },
+    "kind": {
+      "const": "method_choreography"
+    },
+    "binding": {
+      "$ref": "#/$defs/binding"
+    },
+    "source": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "kind",
+        "current_upstream_verified",
+        "production_eligible",
+        "new_teaching_text_created",
+        "text_parsing_performed"
+      ],
+      "properties": {
+        "kind": {
+          "enum": [
+            "current_v04",
+            "diagnostic_current_v04_hold",
+            "synthetic_contract_test"
+          ]
+        },
+        "current_upstream_verified": {
+          "type": "boolean"
+        },
+        "production_eligible": {
+          "type": "boolean"
+        },
+        "new_teaching_text_created": {
+          "const": false
+        },
+        "text_parsing_performed": {
+          "const": false
+        }
+      }
+    },
+    "experience_kind": {
+      "enum": [
+        "action_demo",
+        "cognitive_payoff"
+      ]
+    },
+    "signature": {
+      "$ref": "#/$defs/signature"
+    },
+    "problem_state": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "state_id",
+        "learner_state_before",
+        "source_refs"
+      ],
+      "properties": {
+        "state_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "learner_state_before": {
+          "type": "string",
+          "minLength": 1
+        },
+        "source_refs": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/reference"
+          },
+          "minItems": 1
+        }
+      }
+    },
+    "attention_entry": {
+      "$ref": "#/$defs/attention"
+    },
+    "intervention": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "transitions",
+        "primary_action_ref"
+      ],
+      "properties": {
+        "transitions": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/transition"
+          },
+          "minItems": 0
+        },
+        "primary_action_ref": {
+          "$ref": "#/$defs/reference"
+        }
+      }
+    },
+    "object_catalog": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/object"
+      },
+      "minItems": 1
+    },
+    "relation_catalog": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/relation"
+      },
+      "minItems": 0
+    },
+    "states": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/state"
+      },
+      "minItems": 2
+    },
+    "operations": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/operation"
+      },
+      "minItems": 1
+    },
+    "state_transitions": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/transition"
+      },
+      "minItems": 1
+    },
+    "object_lineage": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/lineage"
+      },
+      "minItems": 1
+    },
+    "collapse": {
+      "$ref": "#/$defs/collapse"
+    },
+    "resolution": {
+      "$ref": "#/$defs/resolution"
+    },
+    "payoff_event": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/payoff"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "stop": {
+      "$ref": "#/$defs/stop"
+    },
+    "memory_closure": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/memory"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "temporal_signature": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/tempo"
+      },
+      "minItems": 1
+    },
+    "answer_permission_ref": {
+      "$ref": "#/$defs/reference"
+    },
+    "final_answer_allowed": {
+      "const": false
+    },
+    "human_taste_review": {
+      "const": "PENDING"
+    },
+    "semantic_truth_certification": {
+      "const": false
+    },
+    "public_render_ready": {
+      "const": false
+    },
+    "release_state": {
+      "$ref": "#/$defs/release"
+    },
+    "replay_request": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "diagnostic"
+      ],
+      "properties": {
+        "diagnostic": {
+          "type": "boolean"
+        }
+      }
+    },
+    "generated_at": {
+      "type": "string",
+      "minLength": 1
+    },
+    "audit": {
+      "$ref": "#/$defs/audit"
+    },
+    "risks": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      },
+      "minItems": 0,
+      "uniqueItems": true
+    },
+    "compilation_status": {
+      "enum": [
+        "PASS",
+        "FAIL"
+      ]
+    },
+    "availability": {
+      "$ref": "#/$defs/availability"
+    },
+    "choreography_sha": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "choreography_id": {
+      "type": "string",
+      "pattern": "^choreography:[a-f0-9]{64}$"
+    },
+    "content_sha": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "envelope_sha": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    }
+  },
+  "$defs": {
+    "hash": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "reference": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "origin",
+        "artifact_id",
+        "pointer",
+        "sha"
+      ],
+      "properties": {
+        "origin": {
+          "enum": [
+            "pedagogy",
+            "student_experience",
+            "frozen_asset",
+            "method_application",
+            "synthetic"
+          ]
+        },
+        "artifact_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "pointer": {
+          "type": "string",
+          "pattern": "^/"
+        },
+        "sha": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
+        }
+      }
+    },
+    "transition": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "from_state",
+        "operation_id",
+        "to_state",
+        "carry_objects"
+      ],
+      "properties": {
+        "from_state": {
+          "type": "string",
+          "minLength": 1
+        },
+        "operation_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "to_state": {
+          "type": "string",
+          "minLength": 1
+        },
+        "carry_objects": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "minItems": 0,
+          "uniqueItems": true
+        }
+      }
+    },
+    "binding": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "method_id",
+        "method_version",
+        "pedagogy_contract",
+        "pedagogy_plan_sha",
+        "student_contract",
+        "student_experience_sha",
+        "student_final_copy_sha",
+        "copy_handoff_sha",
+        "motion_handoff_sha",
+        "method_application_sha",
+        "parent_asset_id",
+        "parent_semantic_sha",
+        "analysis_sha",
+        "physics_sha",
+        "recipes_sha",
+        "motion_identity_sha",
+        "brand_grammar_sha"
+      ],
+      "properties": {
+        "method_id": {
+          "anyOf": [
+            {
+              "enum": [
+                "R02",
+                "G01"
+              ]
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "method_version": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "pedagogy_contract": {
+          "anyOf": [
+            {
+              "const": "0.4.0"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "pedagogy_plan_sha": {
+          "anyOf": [
+            {
+              "type": "string",
+              "pattern": "^[a-f0-9]{64}$"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "student_contract": {
+          "anyOf": [
+            {
+              "const": "0.4.0"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "student_experience_sha": {
+          "anyOf": [
+            {
+              "type": "string",
+              "pattern": "^[a-f0-9]{64}$"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "student_final_copy_sha": {
+          "anyOf": [
+            {
+              "type": "string",
+              "pattern": "^[a-f0-9]{64}$"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "copy_handoff_sha": {
+          "anyOf": [
+            {
+              "type": "string",
+              "pattern": "^[a-f0-9]{64}$"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "motion_handoff_sha": {
+          "anyOf": [
+            {
+              "type": "string",
+              "pattern": "^[a-f0-9]{64}$"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "method_application_sha": {
+          "anyOf": [
+            {
+              "type": "string",
+              "pattern": "^[a-f0-9]{64}$"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "parent_asset_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "parent_semantic_sha": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
+        },
+        "analysis_sha": {
+          "anyOf": [
+            {
+              "type": "string",
+              "pattern": "^[a-f0-9]{64}$"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "physics_sha": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
+        },
+        "recipes_sha": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
+        },
+        "motion_identity_sha": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
+        },
+        "brand_grammar_sha": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
+        }
+      }
+    },
+    "signature": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "method_id",
+        "signature_id",
+        "motion_identity_version",
+        "brand_principles",
+        "brand_grammar_refs"
+      ],
+      "properties": {
+        "method_id": {
+          "anyOf": [
+            {
+              "enum": [
+                "R02",
+                "G01"
+              ]
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "signature_id": {
+          "enum": [
+            "relation_rewire",
+            "extract_route_seal",
+            "synthetic_peel"
+          ]
+        },
+        "motion_identity_version": {
+          "const": "0.1.0"
+        },
+        "brand_principles": {
+          "const": [
+            "focus",
+            "carry",
+            "transform",
+            "settle",
+            "seal"
+          ]
+        },
+        "brand_grammar_refs": {
+          "type": "array",
+          "items": {
+            "enum": [
+              "magnetic_alignment",
+              "evidence_develop",
+              "focus_breathing",
+              "semantic_carry",
+              "micro_lock",
+              "boundary_seal"
+            ]
+          },
+          "minItems": 1,
+          "uniqueItems": true
+        }
+      }
+    },
+    "object": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "object_id",
+        "kind",
+        "source_work_id",
+        "source_refs",
+        "before_state",
+        "state",
+        "protected",
+        "reversibility",
+        "restore_state",
+        "validity_scope",
+        "origin",
+        "origin_object_id",
+        "source_content_sha"
+      ],
+      "properties": {
+        "object_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "kind": {
+          "type": "string",
+          "minLength": 1
+        },
+        "source_work_id": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "source_refs": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/reference"
+          },
+          "minItems": 1
+        },
+        "before_state": {
+          "enum": [
+            "focus",
+            "preserve",
+            "background",
+            "defer",
+            "remove",
+            "unresolved",
+            "resolved",
+            "protected"
+          ]
+        },
+        "state": {
+          "enum": [
+            "focus",
+            "preserve",
+            "background",
+            "defer",
+            "remove",
+            "unresolved",
+            "resolved",
+            "protected"
+          ]
+        },
+        "protected": {
+          "type": "boolean"
+        },
+        "reversibility": {
+          "enum": [
+            "reversible",
+            "irreversible",
+            "not_applicable"
+          ]
+        },
+        "restore_state": {
+          "anyOf": [
+            {
+              "enum": [
+                "focus",
+                "preserve",
+                "background",
+                "defer",
+                "remove",
+                "unresolved",
+                "resolved",
+                "protected"
+              ]
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "validity_scope": {
+          "type": "string",
+          "minLength": 1
+        },
+        "origin": {
+          "enum": [
+            "pedagogy_cognitive_structure",
+            "frozen_method_application",
+            "synthetic_contract_test"
+          ]
+        },
+        "origin_object_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "source_content_sha": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
+        }
+      }
+    },
+    "relation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "relation_id",
+        "kind",
+        "target_objects",
+        "source_refs",
+        "rewire_supported",
+        "endpoint_mapping"
+      ],
+      "properties": {
+        "relation_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "kind": {
+          "type": "string",
+          "minLength": 1
+        },
+        "target_objects": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "minItems": 0,
+          "uniqueItems": true
+        },
+        "source_refs": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/reference"
+          },
+          "minItems": 1
+        },
+        "rewire_supported": {
+          "type": "boolean"
+        },
+        "endpoint_mapping": {
+          "enum": [
+            "frozen_object_endpoints",
+            "assertion_only_no_actor_span_geometry"
+          ]
+        }
+      }
+    },
+    "consequence": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "active_scope",
+        "foreground_objects",
+        "background_objects",
+        "active_candidate_objects",
+        "active_candidate_count",
+        "relation_state",
+        "route_node_ids",
+        "structural_groups",
+        "unresolved_objects",
+        "output_encountered",
+        "stop_reached",
+        "memory_action_recalled",
+        "re_layout_intent",
+        "settle_allowed_objects"
+      ],
+      "properties": {
+        "active_scope": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "minItems": 0,
+          "uniqueItems": true
+        },
+        "foreground_objects": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "minItems": 0,
+          "uniqueItems": true
+        },
+        "background_objects": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "minItems": 0,
+          "uniqueItems": true
+        },
+        "active_candidate_objects": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "minItems": 0,
+          "uniqueItems": true
+        },
+        "active_candidate_count": {
+          "anyOf": [
+            {
+              "type": "integer",
+              "minimum": 0
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "relation_state": {
+          "enum": [
+            "uncompared",
+            "source_established",
+            "candidate_overlaid",
+            "mismatch_isolated",
+            "reviewed_relation_revealed",
+            "functional_slot_extracted",
+            "existing_route_reached",
+            "not_applicable"
+          ]
+        },
+        "route_node_ids": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "minItems": 0,
+          "uniqueItems": true
+        },
+        "structural_groups": {
+          "type": "array",
+          "items": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 1
+            },
+            "minItems": 0,
+            "uniqueItems": true
+          },
+          "minItems": 0
+        },
+        "unresolved_objects": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "minItems": 0,
+          "uniqueItems": true
+        },
+        "output_encountered": {
+          "type": "boolean"
+        },
+        "stop_reached": {
+          "type": "boolean"
+        },
+        "memory_action_recalled": {
+          "type": "boolean"
+        },
+        "re_layout_intent": {
+          "enum": [
+            "retain_source_space",
+            "focus_existing_objects",
+            "compare_existing_relation",
+            "retain_extracted_origin",
+            "supported_structure_reduction",
+            "preserve_open_unresolved_and_close_current_action",
+            "recall_first_action_not_logo",
+            "suspend_supplied_modifier",
+            "supplied_core_tightens",
+            "restore_same_spans"
+          ]
+        },
+        "settle_allowed_objects": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "minItems": 0,
+          "uniqueItems": true
+        }
+      }
+    },
+    "state": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "state_id",
+        "stage",
+        "object_states",
+        "present_objects",
+        "reality_objects",
+        "reality_layer_present",
+        "consequence",
+        "source_refs"
+      ],
+      "properties": {
+        "state_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "stage": {
+          "enum": [
+            "problem",
+            "attention",
+            "intervention",
+            "collapse",
+            "stop",
+            "memory"
+          ]
+        },
+        "object_states": {
+          "type": "object",
+          "minProperties": 1,
+          "additionalProperties": {
+            "enum": [
+              "focus",
+              "preserve",
+              "background",
+              "defer",
+              "remove",
+              "unresolved",
+              "resolved",
+              "protected"
+            ]
+          }
+        },
+        "present_objects": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "minItems": 0,
+          "uniqueItems": true
+        },
+        "reality_objects": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "minItems": 0,
+          "uniqueItems": true
+        },
+        "reality_layer_present": {
+          "type": "boolean"
+        },
+        "consequence": {
+          "$ref": "#/$defs/consequence"
+        },
+        "source_refs": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/reference"
+          },
+          "minItems": 1
+        }
+      }
+    },
+    "operation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "operation_id",
+        "family",
+        "verb",
+        "target_objects",
+        "preserved_objects",
+        "source_refs",
+        "relation_id",
+        "reversibility",
+        "validity_scope",
+        "temporal_character",
+        "cognitive_changes",
+        "original_content_mutation_allowed"
+      ],
+      "properties": {
+        "operation_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "family": {
+          "enum": [
+            "navigation",
+            "reduction",
+            "comparison",
+            "relationship",
+            "classification",
+            "routing"
+          ]
+        },
+        "verb": {
+          "enum": [
+            "align",
+            "anchor",
+            "attract",
+            "branch",
+            "cluster",
+            "connect",
+            "detach",
+            "extract",
+            "extrude",
+            "float",
+            "fold",
+            "jump",
+            "lock",
+            "mute",
+            "overlay",
+            "peel",
+            "reconnect",
+            "regroup",
+            "resolve",
+            "restore",
+            "return",
+            "reveal",
+            "reveal_difference",
+            "reverse",
+            "rewire",
+            "route",
+            "scan",
+            "seal",
+            "separate",
+            "settle",
+            "split",
+            "tighten"
+          ]
+        },
+        "target_objects": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "minItems": 1,
+          "uniqueItems": true
+        },
+        "preserved_objects": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "minItems": 0,
+          "uniqueItems": true
+        },
+        "source_refs": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/reference"
+          },
+          "minItems": 1
+        },
+        "relation_id": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "reversibility": {
+          "enum": [
+            "reversible",
+            "irreversible",
+            "conditional",
+            "not_applicable"
+          ]
+        },
+        "validity_scope": {
+          "type": "string",
+          "minLength": 1
+        },
+        "temporal_character": {
+          "enum": [
+            "quick",
+            "searching",
+            "measured",
+            "sudden",
+            "settling",
+            "held"
+          ]
+        },
+        "cognitive_changes": {
+          "type": "array",
+          "items": {
+            "enum": [
+              "attention_change",
+              "scope_change",
+              "work_change",
+              "relation_change",
+              "candidate_change",
+              "structure_change",
+              "stop_state"
+            ]
+          },
+          "minItems": 1,
+          "uniqueItems": true
+        },
+        "original_content_mutation_allowed": {
+          "const": false
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "family": {
+                "const": "navigation"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "verb": {
+                "enum": [
+                  "scan",
+                  "jump",
+                  "anchor",
+                  "lock",
+                  "return"
+                ]
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "family": {
+                "const": "reduction"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "verb": {
+                "enum": [
+                  "peel",
+                  "mute",
+                  "fold",
+                  "tighten",
+                  "reveal",
+                  "restore"
+                ]
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "family": {
+                "const": "comparison"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "verb": {
+                "enum": [
+                  "align",
+                  "overlay",
+                  "split",
+                  "extrude",
+                  "reveal_difference"
+                ]
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "family": {
+                "const": "relationship"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "verb": {
+                "enum": [
+                  "connect",
+                  "detach",
+                  "rewire",
+                  "reverse",
+                  "reconnect",
+                  "lock"
+                ]
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "family": {
+                "const": "classification"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "verb": {
+                "enum": [
+                  "float",
+                  "attract",
+                  "regroup",
+                  "cluster",
+                  "separate",
+                  "settle"
+                ]
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "family": {
+                "const": "routing"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "verb": {
+                "enum": [
+                  "extract",
+                  "branch",
+                  "route",
+                  "resolve",
+                  "seal"
+                ]
+              }
+            }
+          }
+        }
+      ]
+    },
+    "lineage": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "object_id",
+        "origin_object_id",
+        "source_content_sha",
+        "states"
+      ],
+      "properties": {
+        "object_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "origin_object_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "source_content_sha": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
+        },
+        "states": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "state_id",
+              "disposition",
+              "content_sha"
+            ],
+            "properties": {
+              "state_id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "disposition": {
+                "enum": [
+                  "focus",
+                  "preserve",
+                  "background",
+                  "defer",
+                  "remove",
+                  "unresolved",
+                  "resolved",
+                  "protected"
+                ]
+              },
+              "content_sha": {
+                "type": "string",
+                "pattern": "^[a-f0-9]{64}$"
+              }
+            }
+          },
+          "minItems": 1
+        }
+      }
+    },
+    "attention": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "transition",
+        "from_scope",
+        "to_scope",
+        "focus_objects",
+        "backgroundable_objects",
+        "source_refs"
+      ],
+      "properties": {
+        "transition": {
+          "$ref": "#/$defs/transition"
+        },
+        "from_scope": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "minItems": 0,
+          "uniqueItems": true
+        },
+        "to_scope": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "minItems": 0,
+          "uniqueItems": true
+        },
+        "focus_objects": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "minItems": 0,
+          "uniqueItems": true
+        },
+        "backgroundable_objects": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "minItems": 0,
+          "uniqueItems": true
+        },
+        "source_refs": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/reference"
+          },
+          "minItems": 1
+        }
+      }
+    },
+    "collapse": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "supported",
+        "reduction_type",
+        "before_ref",
+        "after_ref",
+        "removed",
+        "deferred",
+        "still_required",
+        "scope",
+        "decision_completion",
+        "transition",
+        "work_delta_ref"
+      ],
+      "properties": {
+        "supported": {
+          "type": "boolean"
+        },
+        "reduction_type": {
+          "type": "array",
+          "items": {
+            "enum": [
+              "none",
+              "scope_reduction",
+              "candidate_reduction",
+              "relation_simplification",
+              "structure_reduction",
+              "attention_reduction",
+              "decision_completion"
+            ]
+          },
+          "minItems": 1,
+          "uniqueItems": true
+        },
+        "before_ref": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/reference"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "after_ref": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/reference"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "removed": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "minItems": 0,
+          "uniqueItems": true
+        },
+        "deferred": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "minItems": 0,
+          "uniqueItems": true
+        },
+        "still_required": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "minItems": 0,
+          "uniqueItems": true
+        },
+        "scope": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "decision_completion": {
+          "type": "boolean"
+        },
+        "transition": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/transition"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "work_delta_ref": {
+          "$ref": "#/$defs/reference"
+        }
+      }
+    },
+    "resolution": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "state_id",
+        "output_role",
+        "current_output_ref",
+        "resolved_objects",
+        "unresolved_objects",
+        "allowed_claim_ref",
+        "scope",
+        "may_output_final_answer"
+      ],
+      "properties": {
+        "state_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "output_role": {
+          "enum": [
+            "locator",
+            "interpreter",
+            "reducer",
+            "decider",
+            "framework",
+            "verifier",
+            "synthetic_contract_test"
+          ]
+        },
+        "current_output_ref": {
+          "$ref": "#/$defs/reference"
+        },
+        "resolved_objects": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "minItems": 0,
+          "uniqueItems": true
+        },
+        "unresolved_objects": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "minItems": 0,
+          "uniqueItems": true
+        },
+        "allowed_claim_ref": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/reference"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "scope": {
+          "type": "string",
+          "minLength": 1
+        },
+        "may_output_final_answer": {
+          "const": false
+        }
+      }
+    },
+    "payoff": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "supported",
+        "from_state",
+        "to_state",
+        "payoff_scope",
+        "allowed_claim_ref",
+        "source_refs"
+      ],
+      "properties": {
+        "supported": {
+          "const": true
+        },
+        "from_state": {
+          "type": "string",
+          "minLength": 1
+        },
+        "to_state": {
+          "type": "string",
+          "minLength": 1
+        },
+        "payoff_scope": {
+          "type": "string",
+          "minLength": 1
+        },
+        "allowed_claim_ref": {
+          "$ref": "#/$defs/reference"
+        },
+        "source_refs": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/reference"
+          },
+          "minItems": 1
+        }
+      }
+    },
+    "stop": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "reached_state",
+        "transition",
+        "current_output_ref",
+        "scope",
+        "unresolved_objects",
+        "deferred_objects",
+        "prohibited_transition",
+        "boundary_coverage_ref",
+        "source_refs"
+      ],
+      "properties": {
+        "reached_state": {
+          "type": "string",
+          "minLength": 1
+        },
+        "transition": {
+          "$ref": "#/$defs/transition"
+        },
+        "current_output_ref": {
+          "$ref": "#/$defs/reference"
+        },
+        "scope": {
+          "type": "string",
+          "minLength": 1
+        },
+        "unresolved_objects": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "minItems": 0,
+          "uniqueItems": true
+        },
+        "deferred_objects": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "minItems": 0,
+          "uniqueItems": true
+        },
+        "prohibited_transition": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "from_state",
+              "to",
+              "reason_ref"
+            ],
+            "properties": {
+              "from_state": {
+                "type": "string",
+                "minLength": 1
+              },
+              "to": {
+                "const": "final_answer"
+              },
+              "reason_ref": {
+                "$ref": "#/$defs/reference"
+              }
+            }
+          },
+          "minItems": 1
+        },
+        "boundary_coverage_ref": {
+          "$ref": "#/$defs/reference"
+        },
+        "source_refs": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/reference"
+          },
+          "minItems": 1
+        }
+      }
+    },
+    "memory": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "state_id",
+        "action_pattern",
+        "first_action_ref",
+        "remembered_objects",
+        "memory_phrase_ref",
+        "method_stamp_ref",
+        "name_after_core_action",
+        "student_retention_certified"
+      ],
+      "properties": {
+        "state_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "action_pattern": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "family",
+              "verb"
+            ],
+            "properties": {
+              "family": {
+                "enum": [
+                  "navigation",
+                  "reduction",
+                  "comparison",
+                  "relationship",
+                  "classification",
+                  "routing"
+                ]
+              },
+              "verb": {
+                "type": "string",
+                "minLength": 1
+              }
+            }
+          },
+          "minItems": 1
+        },
+        "first_action_ref": {
+          "$ref": "#/$defs/reference"
+        },
+        "remembered_objects": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "minItems": 0,
+          "uniqueItems": true
+        },
+        "memory_phrase_ref": {
+          "$ref": "#/$defs/reference"
+        },
+        "method_stamp_ref": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/reference"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "name_after_core_action": {
+          "const": true
+        },
+        "student_retention_certified": {
+          "const": false
+        }
+      }
+    },
+    "tempo": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "operation_id",
+        "character"
+      ],
+      "properties": {
+        "operation_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "character": {
+          "enum": [
+            "quick",
+            "searching",
+            "measured",
+            "sudden",
+            "settling",
+            "held"
+          ]
+        }
+      }
+    },
+    "availability": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "status",
+        "gaps",
+        "issues"
+      ],
+      "properties": {
+        "status": {
+          "enum": [
+            "READY",
+            "HOLD",
+            "FAIL"
+          ]
+        },
+        "gaps": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "minItems": 0,
+          "uniqueItems": true
+        },
+        "issues": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "minItems": 0,
+          "uniqueItems": true
+        }
+      }
+    },
+    "release": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "teaching",
+        "source_display",
+        "editorial"
+      ],
+      "properties": {
+        "teaching": {
+          "const": "HOLD"
+        },
+        "source_display": {
+          "const": "HOLD"
+        },
+        "editorial": {
+          "const": "HOLD"
+        }
+      }
+    },
+    "audit": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "object_lineage_preserved",
+        "reversibility_preserved",
+        "unresolved_preserved",
+        "scope_preserved",
+        "stop_preserved",
+        "reality_layer_persistent",
+        "carry_preserved",
+        "genuine_state_transition_count",
+        "signature_distinctiveness",
+        "brand_principles",
+        "deterministic_lint_only",
+        "semantic_truth_certification",
+        "actual_visual_review",
+        "human_taste_review"
+      ],
+      "properties": {
+        "object_lineage_preserved": {
+          "type": "boolean"
+        },
+        "reversibility_preserved": {
+          "type": "boolean"
+        },
+        "unresolved_preserved": {
+          "type": "boolean"
+        },
+        "scope_preserved": {
+          "type": "boolean"
+        },
+        "stop_preserved": {
+          "type": "boolean"
+        },
+        "reality_layer_persistent": {
+          "type": "boolean"
+        },
+        "carry_preserved": {
+          "type": "boolean"
+        },
+        "genuine_state_transition_count": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "signature_distinctiveness": {
+          "anyOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "brand_principles": {
+          "const": [
+            "focus",
+            "carry",
+            "transform",
+            "settle",
+            "seal"
+          ]
+        },
+        "deterministic_lint_only": {
+          "const": true
+        },
+        "semantic_truth_certification": {
+          "const": false
+        },
+        "actual_visual_review": {
+          "const": "PENDING"
+        },
+        "human_taste_review": {
+          "const": "PENDING"
+        }
+      }
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "availability": {
+            "properties": {
+              "status": {
+                "const": "READY"
+              }
+            }
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "source": {
+            "properties": {
+              "kind": {
+                "const": "current_v04"
+              },
+              "current_upstream_verified": {
+                "const": true
+              },
+              "production_eligible": {
+                "const": true
+              }
+            }
+          },
+          "compilation_status": {
+            "const": "PASS"
+          },
+          "risks": {
+            "maxItems": 0
+          },
+          "availability": {
+            "properties": {
+              "gaps": {
+                "maxItems": 0
+              },
+              "issues": {
+                "maxItems": 0
+              }
+            }
+          }
+        }
+      }
+    }
+  ]
+}

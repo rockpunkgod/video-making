@@ -1,0 +1,31 @@
+{
+  "kind": "synthetic_choreography_input",
+  "fixture_id": "SYNTHETIC-PEEL-001",
+  "scenario": "peel",
+  "objects": [
+    {
+      "object_id": "synthetic-core-a",
+      "text": "SYNTHETIC CORE A",
+      "role": "core",
+      "protected": true
+    },
+    {
+      "object_id": "synthetic-modifier-a",
+      "text": "SYNTHETIC MODIFIER A",
+      "role": "modifier",
+      "protected": false
+    },
+    {
+      "object_id": "synthetic-core-b",
+      "text": "SYNTHETIC PROTECTED NEGATION B",
+      "role": "core",
+      "protected": true
+    },
+    {
+      "object_id": "synthetic-modifier-b",
+      "text": "SYNTHETIC MODIFIER B",
+      "role": "modifier",
+      "protected": false
+    }
+  ]
+}

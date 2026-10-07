@@ -1,0 +1,17 @@
+{
+  "version": "0.1.0",
+  "authority": "cognitive_choreography_only_not_teaching_truth",
+  "families": {
+    "navigation": ["scan", "jump", "anchor", "lock", "return"],
+    "reduction": ["peel", "mute", "fold", "tighten", "reveal", "restore"],
+    "comparison": ["align", "overlay", "split", "extrude", "reveal_difference"],
+    "relationship": ["connect", "detach", "rewire", "reverse", "reconnect", "lock"],
+    "classification": ["float", "attract", "regroup", "cluster", "separate", "settle"],
+    "routing": ["extract", "branch", "route", "resolve", "seal"]
+  },
+  "temporal_characters": ["quick", "searching", "measured", "sudden", "settling", "held"],
+  "reversibility": ["reversible", "irreversible", "conditional", "not_applicable"],
+  "object_states": ["focus", "preserve", "background", "defer", "remove", "unresolved", "resolved", "protected"],
+  "principles": ["focus", "carry", "transform", "settle", "seal"],
+  "authority_limits": ["no_text_parsing", "no_new_claim", "no_candidate_inference", "no_pixel_or_frame_timing", "no_voice_or_music_parameters"]
+}

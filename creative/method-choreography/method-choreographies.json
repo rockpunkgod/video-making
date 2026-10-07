@@ -1,0 +1,14 @@
+{
+  "version": "0.1.0",
+  "authority": "cognitive_choreography_only_not_teaching_truth",
+  "motion_identity_version": "0.1.0",
+  "brand_grammar_refs": ["magnetic_alignment", "evidence_develop", "focus_breathing", "semantic_carry", "micro_lock", "boundary_seal"],
+  "recipes": [
+    {"method_id": "R01", "signature_id": "overgrowth", "runtime": "specification_only", "core_pattern": [["comparison", "align"], ["comparison", "extrude"], ["comparison", "reveal_difference"]], "arc": ["similarity", "align", "unmerged_extra_information", "extrude", "isolate", "verify", "resolve_or_stop"], "required_support": ["reviewed_extra_information", "bounded_verification"]},
+    {"method_id": "R02", "signature_id": "relation_rewire", "runtime": "bound_v04_replay", "core_pattern": [["comparison", "align"], ["comparison", "overlay"], ["relationship", "detach"], ["relationship", "rewire"]], "arc": ["surface_similarity", "focus_bound_relation", "establish_source", "overlay_candidate", "detach_mismatch", "reveal_reviewed_relation", "supported_candidate_reduction", "stop"], "required_support": ["own_reviewed_relation", "own_primary_action_output"]},
+    {"method_id": "R06", "signature_id": "missing_mass", "runtime": "specification_only", "core_pattern": [["comparison", "align"], ["reduction", "reveal"]], "arc": ["source_structure", "candidate_structure", "matching_blocks", "absent_mass", "preserve_negative_space", "bounded_judgement"], "required_support": ["reviewed_source_and_candidate_blocks", "no_invented_missing_content"]},
+    {"method_id": "R09", "signature_id": "semantic_compression", "runtime": "specification_only", "core_pattern": [["reduction", "mute"], ["reduction", "fold"], ["reduction", "tighten"]], "arc": ["dense_text", "supplied_periphery", "supplied_object", "supplied_judgement", "supplied_task", "settle"], "required_support": ["already_supplied_compression_fields"]},
+    {"method_id": "F01", "signature_id": "axis_regroup", "runtime": "specification_only", "core_pattern": [["classification", "regroup"], ["classification", "settle"]], "arc": ["same_candidates", "supported_axis", "clusters", "settle", "preserve_all_unexcluded", "return_to_passage"], "required_support": ["already_supplied_axis", "grouping_does_not_eliminate"]},
+    {"method_id": "G01", "signature_id": "extract_route_seal", "runtime": "bound_v04_replay", "core_pattern": [["routing", "extract"], ["routing", "route"], ["routing", "seal"]], "arc": ["sentence", "bound_slot", "extract_functional_slot", "supported_route", "current_node", "seal", "stop_before_unsupported_form"], "required_support": ["reviewed_slot_annotation", "existing_route_selection", "no_automatic_payoff"]}
+  ]
+}
