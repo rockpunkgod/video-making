@@ -1,0 +1,30 @@
+{
+  "kind": "synthetic_ae_visual_research",
+  "fixture_id": "SYNTHETIC-NATIVE-PEEL-001",
+  "not_a_teaching_asset": true,
+  "method_id": null,
+  "production_eligible": false,
+  "public_render_ready": false,
+  "sentence": "The team, after the break, checked the map that the guide had drawn.",
+  "objects": [
+    {"id": "core-subject", "start": 0, "end": 8, "text": "The team", "role": "core", "protected": true},
+    {"id": "aside-time", "start": 8, "end": 26, "text": ", after the break,", "role": "supplied_modifier", "protected": false, "attachment": "core-subject", "pivot": "leading_edge", "disposition": "deferred", "restore_to": "original_source_position"},
+    {"id": "core-verb", "start": 26, "end": 34, "text": " checked", "role": "core", "protected": true},
+    {"id": "core-object", "start": 34, "end": 42, "text": " the map", "role": "core", "protected": true},
+    {"id": "aside-map", "start": 42, "end": 68, "text": " that the guide had drawn.", "role": "supplied_modifier", "protected": false, "attachment": "core-object", "pivot": "leading_edge", "disposition": "deferred", "restore_to": "original_source_position"}
+  ],
+  "context": ["Several routes crossed the valley.", "The map would be used the next morning."],
+  "canvas": {"width": 1920, "height": 1080, "fps": 24, "duration": 27},
+  "palette": {"paper": "#FAF8F2", "ink": "#243530", "fog": "#7E96A8", "muted": "#8C9690", "edge": "#D0D8D0"},
+  "font": {"english": "Georgia", "english_file": "C:/Windows/Fonts/georgia.ttf", "chinese": "NotoSansSC-Regular", "chinese_file": "C:/Windows/Fonts/NotoSansSC-VF.ttf", "size": 48},
+  "screen": {"series": "学霸是怎么做题的？", "marker": "SYNTHETIC · 合成视觉研究", "result": "当前阅读结构", "deferred": "暂存"},
+  "voice": [
+    {"id": "orient", "start": 0.5, "text": "先看完整句子。"},
+    {"id": "target-a", "start": 5.0, "text": "先把中间这一截，放到旁边。"},
+    {"id": "target-b", "start": 11.5, "text": "再把句尾这一截，暂时放开。"},
+    {"id": "tighten", "start": 18.0, "text": "让留下的部分，接起来。"},
+    {"id": "settle", "start": 23.0, "text": "现在，读这一行。"}
+  ],
+  "authority": "all_spans_and_relations_supplied_for_visual_testing_not_english_analysis",
+  "claims": {"english_analysis_certified": false, "method_effectiveness_certified": false, "student_improvement_certified": false, "answer_completion": false}
+}
