@@ -1,0 +1,47 @@
+{
+  "kind": "synthetic_method_relay_visual_research",
+  "version": "0.1.0",
+  "fixture_id": "SYNTHETIC-RELAY-001",
+  "authority": "supplied_visual_objects_and_outcomes_not_english_analysis",
+  "not_a_teaching_asset": true,
+  "production_eligible": false,
+  "public_render_ready": false,
+  "sentence": "The team, after the break, checked the map that the guide had drawn.",
+  "context": ["Several routes crossed the valley.", "The map would be used the next morning."],
+  "stem": "Who checked the map?",
+  "locate_cues": {"stem": {"start": 4, "end": 19, "text": "checked the map"}, "sentence": {"start": 27, "end": 42, "text": "checked the map"}},
+  "objects": [
+    {"id": "core-subject", "start": 0, "end": 8, "text": "The team", "role": "core", "protected": true},
+    {"id": "aside-time", "start": 8, "end": 26, "text": ", after the break,", "role": "supplied_modifier", "protected": false, "attachment": "core-subject", "disposition": "deferred"},
+    {"id": "core-verb", "start": 26, "end": 34, "text": " checked", "role": "core", "protected": true},
+    {"id": "core-object", "start": 34, "end": 42, "text": " the map", "role": "core", "protected": true},
+    {"id": "aside-map", "start": 42, "end": 68, "text": " that the guide had drawn.", "role": "supplied_modifier", "protected": false, "attachment": "core-object", "disposition": "deferred"}
+  ],
+  "attention_cues": [
+    {"object_id": "aside-time", "start": 10, "end": 15, "text": "after"},
+    {"object_id": "aside-map", "start": 43, "end": 47, "text": "that"}
+  ],
+  "options": [
+    {"id": "A", "parts": ["The team", " checked", " the map."], "supplied_state": "matches_supplied_fixture", "difference": null},
+    {"id": "B", "parts": ["The guide", " checked", " the map."], "supplied_state": "conflicts_supplied_fixture", "difference": "subject"},
+    {"id": "C", "parts": ["The team", " drew", " the map."], "supplied_state": "conflicts_supplied_fixture", "difference": "verb"},
+    {"id": "D", "parts": ["The guide", " used", " the map."], "supplied_state": "conflicts_supplied_fixture", "difference": "verb"}
+  ],
+  "trace": [
+    {"id": "locate", "method_id": "R12", "input": ["original-question", "original-passage"], "output": "located-sentence", "object_ids": ["core-subject", "aside-time", "core-verb", "core-object", "aside-map"], "scope": "supplied_visual_location", "stop": "location_is_not_a_candidate_verdict"},
+    {"id": "interpret", "method_id": "R11", "input": ["located-sentence"], "output": "retained-basis", "object_ids": ["core-subject", "core-verb", "core-object"], "scope": "supplied_visual_partition", "stop": "deferred_text_remains_available_no_answer_from_peeling"},
+    {"id": "compare", "method_id": "R02", "input": ["retained-basis", "original-options"], "output": "supplied-comparison", "object_ids": ["core-subject", "core-verb", "core-object"], "scope": "explicit_synthetic_candidate_states", "stop": "no_real_question_or_method_certification"},
+    {"id": "verify", "method_id": null, "input": ["supplied-comparison", "original-passage"], "output": "synthetic-A", "object_ids": ["core-subject", "aside-time", "core-verb", "core-object", "aside-map"], "scope": "visual_only_final_state", "stop": "synthetic_result_not_real_exam_answer"}
+  ],
+  "voice": [
+    {"id": "locate", "text": "题目问谁查了地图。回原文找这件事。"},
+    {"id": "carry", "text": "找到这句，直接留下。中间和句尾，先放到上下。"},
+    {"id": "basis", "text": "人、动作、对象还在。就拿这一行，接着比选项。"},
+    {"id": "compare", "text": "查地图没变，但换了人。再看另外两项，动作也换了。"},
+    {"id": "verify", "text": "A 的人和动作都对应。回原句核一眼，再落定。"}
+  ],
+  "screen": {"series": "学霸这题怎么做？", "marker": "SYNTHETIC / VISUAL-ONLY · 合成技术研究", "fast": "高手节奏演示", "guided": "跟着走一遍", "result": "示意核验 · A"},
+  "font": {"english": "Georgia", "english_file": "C:/Windows/Fonts/georgia.ttf", "chinese": "NotoSansSC-Regular", "chinese_file": "C:/Windows/Fonts/NotoSansSC-VF.ttf", "size": 40},
+  "palette": {"paper": "#FAF8F2", "ink": "#243530", "fog": "#7E96A8", "muted": "#8C9690", "edge": "#D0D8D0", "difference": "#B88A56"},
+  "claims": {"english_analysis_certified": false, "method_effectiveness_certified": false, "student_speed_measured": false, "real_question_answer_closed": false}
+}
