@@ -1,0 +1,16 @@
+{
+  "id": "SYNTHETIC-ATTACHMENT-LAYOUT-R5",
+  "duration": 22,
+  "time_map": [[0, 0], [3, 3.5], [5.6, 4.7], [6.7, 5.5], [7.9, 6.7], [9.65, 7.7], [10.9, 9.2], [11.8, 10.3], [12.9, 10.9], [14.6, 12.25], [15.3, 12.9], [17.5, 14.2], [18.6, 15], [20.55, 16.6], [22.5, 17.5], [27, 22]],
+  "voice_starts": {"orient": 0.5, "target-a": 4.125, "tighten": 7.25, "target-b": 9.625, "settle": 17.25},
+  "attachment_layout": {
+    "scale_percent": 76,
+    "baseline_gap": 96,
+    "connector_hold_seconds": 0.5,
+    "connector_fade_seconds": 0.3
+  },
+  "carrier_rest_opacity": 0,
+  "text_rest_opacity": 72,
+  "context_rest_opacity": 6,
+  "side_rest_opacity": 0
+}

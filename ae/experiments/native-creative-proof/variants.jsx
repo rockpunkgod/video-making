@@ -19,12 +19,30 @@
     freeze(cam.transform.position,0);freeze(cam.transform.pointOfInterest,0);
     // Geometry, parenting, focus target and DOF remain unchanged: camera transform only.
     var d=clone('D_RESTORE');
+    // Capture expression-driven attachment travel before reversing its anchors.
+    // Otherwise a forward-time follow expression would undo the restoration.
+    var baked={};
+    if(binding.presentation_id==='SYNTHETIC-ATTACHMENT-LAYOUT-R5'||binding.presentation_id==='SYNTHETIC-ATTACHMENT-LAYOUT-R5-FAST'){
+        for(var i=1;i<=d.numLayers;i++){
+            var l=d.layer(i),p=l.transform.position;
+            if(l.name.indexOf('HINGE_')!==0||!p.expressionEnabled)continue;
+            var rows=[];
+            for(var j=0;j<=Math.round(src.duration*src.frameRate);j++){
+                var tm=j/src.frameRate;rows.push([6*(src.duration-tm)/src.duration,p.valueAtTime(tm,false)]);
+            }
+            baked[l.name]=rows;
+        }
+    }
     function reverse(p){var rows=[];for(var k=1;k<=p.numKeys;k++)rows.push([6*(src.duration-p.keyTime(k))/src.duration,p.keyValue(k)]);
         if(!rows.length)return;while(p.numKeys)p.removeKey(1);
         for(var k=rows.length-1;k>=0;k--)p.setValueAtTime(rows[k][0],rows[k][1]);}
     for(var i=1;i<=d.numLayers;i++){
         var l=d.layer(i),t=l.transform;
-        reverse(t.position);reverse(t.opacity);
+        if(baked[l.name]){
+            var p=t.position,rows=baked[l.name];p.expression='';while(p.numKeys)p.removeKey(1);
+            for(var k=rows.length-1;k>=0;k--)p.setValueAtTime(rows[k][0],rows[k][1]);
+        }else reverse(t.position);
+        reverse(t.opacity);reverse(t.scale);
         if(l.threeDLayer){reverse(t.yRotation);reverse(t.zRotation);}
         if(l instanceof CameraLayer)reverse(t.pointOfInterest);
     }

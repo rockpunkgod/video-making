@@ -52,7 +52,9 @@ def validate_presentation(presentation, scene):
     """A small presentation overlay, never an alternative source of text or roles."""
     required={'id','duration','time_map','voice_starts','parks','carrier_rest_opacity',
               'text_rest_opacity','context_rest_opacity','side_rest_opacity'}
-    if set(presentation)!=required or presentation['id']!='SYNTHETIC-RHYTHM-TEXTURE-R4':
+    attached=presentation.get('id') in ('SYNTHETIC-ATTACHMENT-LAYOUT-R5','SYNTHETIC-ATTACHMENT-LAYOUT-R5-FAST')
+    if attached:required=(required-{'parks'})|{'attachment_layout'}
+    if set(presentation)!=required or presentation['id'] not in ('SYNTHETIC-RHYTHM-TEXTURE-R4','SYNTHETIC-ATTACHMENT-LAYOUT-R5','SYNTHETIC-ATTACHMENT-LAYOUT-R5-FAST'):
         raise ValueError('Use the explicit synthetic presentation contract')
     def finite(value):
         return type(value) in (int,float) and math.isfinite(value)
@@ -70,13 +72,21 @@ def validate_presentation(presentation, scene):
             or any(not finite(v) or not 0<=v<duration or abs(v*24-round(v*24))>1e-6 for v in starts.values())
             or len(set(starts.values()))!=len(starts)):
         raise ValueError('Only existing exact voice slots may be placed, on video frames')
-    parks=presentation['parks']
-    if set(parks)!={o['id'] for o in scene['objects'] if o['role']=='supplied_modifier'}:
-        raise ValueError('Only supplied deferred modifiers may be parked')
-    for positions in parks.values():
-        if (set(positions)!={'via','rest'} or any(not isinstance(v,list) or len(v)!=3
-                or not all(map(finite,v)) or any(abs(n)>5000 for n in v) for v in positions.values())):
-            raise ValueError('Park geometry must be finite local research coordinates')
+    if attached:
+        layout=presentation['attachment_layout']
+        limits={'scale_percent':(60,90),'baseline_gap':(60,160),
+                'connector_hold_seconds':(.3,1),'connector_fade_seconds':(.15,.8)}
+        if (not isinstance(layout,dict) or set(layout)!=set(limits)
+                or any(not finite(layout[k]) or not lo<=layout[k]<=hi for k,(lo,hi) in limits.items())):
+            raise ValueError('Finite bounded visual layout only; attachment endpoints come from the frozen scene')
+    else:
+        parks=presentation['parks']
+        if set(parks)!={o['id'] for o in scene['objects'] if o['role']=='supplied_modifier'}:
+            raise ValueError('Only supplied deferred modifiers may be parked')
+        for positions in parks.values():
+            if (set(positions)!={'via','rest'} or any(not isinstance(v,list) or len(v)!=3
+                    or not all(map(finite,v)) or any(abs(n)>5000 for n in v) for v in positions.values())):
+                raise ValueError('Park geometry must be finite local research coordinates')
     if any(not finite(presentation[k]) or not 0<=presentation[k]<=100 for k in required if k.endswith('_opacity')):
         raise ValueError('Presentation opacity must be in 0..100')
     return presentation
@@ -161,9 +171,11 @@ def require_research_project(c):
     return path
 
 
-def build(output, revision, recovery_id=None, rhythm_r4=False):
+def build(output, revision, recovery_id=None, rhythm_r4=False, attachment_r5=False, attachment_r5_fast=False):
     output=research_output(output)
-    request=make_request(output,revision,read(HERE/'rhythm-r4.json') if rhythm_r4 else None)
+    if sum((rhythm_r4,attachment_r5,attachment_r5_fast))>1:raise ValueError('Select one explicit visual revision')
+    overlay='attachment-r5-fast.json' if attachment_r5_fast else 'attachment-r5.json' if attachment_r5 else 'rhythm-r4.json' if rhythm_r4 else None
+    request=make_request(output,revision,read(HERE/overlay) if overlay else None)
     c=client();require_research_project(c)
     output.mkdir(parents=True,exist_ok=False)
     write(output/'build-request.json',request)
@@ -256,8 +268,48 @@ def audit(output, comp_id=None, variant='B'):
     if variant=='B' and (camera['dof']!=1 or not camera['focus_expression'] or len(camera['poi'])<4):
         raise ValueError('Physical camera/focus absent')
     if any(v<=0 for _,v in camera['focus_samples']):raise ValueError('Focus behind camera')
+    if variant=='B' and 'attachment_layout' in request.get('presentation',{}):
+        code='var NCP_REQUEST='+json.dumps((output/'build-request.json').as_posix())+';var NCP_COMP='+str(int(comp_id))+';\n'+(HERE/'attachment-audit.jsx').read_text(encoding='utf-8')
+        measured=json.loads(c.call('ae_exec',{'code':code})['content'])
+        verify_attachment_layout(request,measured)
+        result['attachment_layout']=measured
     write(output/('native-audit-'+variant+'.json'),result)
     return result
+
+
+def verify_attachment_layout(request,measured):
+    """Actual native geometry check; it does not certify a grammar relationship."""
+    layout=request['presentation']['attachment_layout']
+    supplied={o['id']:o for o in request['layout'] if o['role']=='supplied_modifier'}
+    if (measured['kind']!='supplied_synthetic_visual_attachment'
+            or measured['spec_sha']!=request['spec_sha'] or measured['scene_sha']!=request['scene_sha']):
+        raise ValueError('Different native attachment layout binding')
+    seen=set()
+    for row in measured['samples']:
+        obj=supplied.get(row['object_id']);phase=row['phase']
+        if (obj is None or (row['object_id'],phase) in seen or row['anchor_id']!=obj['attachment']
+                or row['connector']!={'origin':request['scene_sha'],'anchor_id':obj['attachment'],
+                    'object_id':obj['id'],'kind':'supplied_synthetic_visual_attachment'}):
+            raise ValueError('Connector must keep its original supplied endpoints')
+        seen.add((obj['id'],phase))
+        if phase=='original':
+            if (any(abs(a-b)>1e-4 for a,b in zip(row['pivot'],[obj['x'],540,0]))
+                    or abs(row['scale_percent']-100)>1e-4 or row['connector_opacity']!=0):
+                raise ValueError('Original reading state changed')
+        elif phase in ('park','final','follow'):
+            gap=(-1 if obj['id']=='aside-time' else 1)*layout['baseline_gap']
+            if (abs(row['center_error'])>.01 or abs(row['baseline_gap']-gap)>.01
+                    or abs(row['pivot'][2])>.01 or abs(row['scale_percent']-layout['scale_percent'])>.01
+                    or abs(row['y_rotation'])>.01 or abs(row['z_rotation'])>.01):
+                raise ValueError('Parked text must follow and align with its supplied object')
+            if phase=='final' and (row['connector_opacity']!=0
+                    or abs(row['text_opacity']-request['presentation']['text_rest_opacity'])>.01):
+                raise ValueError('Final reading hierarchy or connector fade failed')
+            if phase in ('park','follow') and row['connector_opacity']<=0:
+                raise ValueError('Temporary relation cue was not visible at landing')
+        else:raise ValueError('Unknown geometry audit phase')
+    expected={(obj,phase) for obj in supplied for phase in ('original','park','final')}|{('aside-time','follow')}
+    if seen!=expected:raise ValueError('Incomplete native attachment/follow audit')
 
 
 def variants(output):
@@ -380,14 +432,17 @@ def render(output, comp_id=None, label='B', start=0, duration=None, recovery_id=
 def main():
     parser=argparse.ArgumentParser(description=__doc__);parser.add_argument('operation',choices=('build','fork','audit','preview','variants','render'))
     parser.add_argument('output');parser.add_argument('--revision',default='r1')
-    parser.add_argument('--rhythm-r4',action='store_true',help='Use the explicit Astra rhythm / texture presentation overlay')
+    visual=parser.add_mutually_exclusive_group()
+    visual.add_argument('--rhythm-r4',action='store_true',help='Use the explicit Astra rhythm / texture presentation overlay')
+    visual.add_argument('--attachment-r5',action='store_true',help='Park supplied fragments above/below their frozen visual anchors')
+    visual.add_argument('--attachment-r5-fast',action='store_true',help='Same vertical layout with faster peeling; preserve reading and final holds')
     parser.add_argument('--recovery-id',help='Exact official ID after native-state reconciliation; never guessed')
     parser.add_argument('--comp-id',type=int);parser.add_argument('--label',default='B')
     parser.add_argument('--start',type=float,default=0);parser.add_argument('--duration',type=float)
     parser.add_argument('--single-frame',action='store_true',help='Use verified native per-script single-frame rendering after a reconciled MFR stall')
     parser.add_argument('--source',help='Existing immutable B revision for the fork operation')
     args=parser.parse_args();output=research_output(args.output)
-    if args.operation=='build':result=build(output,args.revision,args.recovery_id,args.rhythm_r4)
+    if args.operation=='build':result=build(output,args.revision,args.recovery_id,args.rhythm_r4,args.attachment_r5,args.attachment_r5_fast)
     elif args.operation=='fork':
         if not args.source:parser.error('fork requires --source')
         result=fork_controls(output,args.source,args.recovery_id)

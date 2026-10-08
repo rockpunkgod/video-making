@@ -38,7 +38,7 @@
         l.transform.position.setValue(point);l.motionBlur=!!world;return l;
     }
     function null3(cp,name,p) { var n=cp.layers.addNull(cp.duration);n.name=name;n.threeDLayer=true;n.transform.anchorPoint.setValue([0,0,0]);n.transform.position.setValue(p);return n; }
-    var R=load(NCP_REQUEST),S=R.scene,P=R.presentation||null,dest=new File(R.project);
+    var R=load(NCP_REQUEST),S=R.scene,P=R.presentation||null,A=P&&(P.id==='SYNTHETIC-ATTACHMENT-LAYOUT-R5'||P.id==='SYNTHETIC-ATTACHMENT-LAYOUT-R5-FAST')?P.attachment_layout:null,dest=new File(R.project);
     if(dest.exists)throw new Error('Research revision already exists');
     if(S.kind!=='synthetic_ae_visual_research'||S.method_id!==null||S.production_eligible!==false||S.public_render_ready!==false)throw new Error('SYNTHETIC research only');
     app.project.save(dest);
@@ -46,7 +46,7 @@
     var cp=app.project.items.addComp('NATIVE_PEEL_'+R.revision,1920,1080,1,P?P.duration:S.canvas.duration,24);cp.parentFolder=folder;
     cp.renderer='ADBE Advanced 3d';cp.bgColor=rgb(S.palette.paper);cp.motionBlur=true;cp.shutterAngle=100;
     cp.motionBlurSamplesPerFrame=8;cp.motionBlurAdaptiveSampleLimit=32;
-    cp.comment=JSON.stringify({kind:S.kind,scene_sha:R.scene_sha,spec_sha:R.spec_sha,revision:R.revision,production_eligible:false,public_render_ready:false});
+    cp.comment=JSON.stringify({kind:S.kind,scene_sha:R.scene_sha,spec_sha:R.spec_sha,revision:R.revision,presentation_id:P?P.id:null,production_eligible:false,public_render_ready:false});
     cp.layers.addSolid(rgb(S.palette.paper),'PAPER',1920,1080,1,cp.duration);
     text(cp,'SERIES',S.screen.series,36,S.palette.ink,S.font.chinese,[110,125],false);
     text(cp,'RESEARCH_MARKER',S.screen.marker,22,S.palette.muted,S.font.chinese,[110,1015],false);
@@ -74,15 +74,24 @@
             var label=text(cp,'PARK_LABEL_'+n.id,S.screen.deferred,18,S.palette.muted,S.font.chinese,[0,-72,0],true);
             label.parent=hinge;label.transform.position.setValue([0,-72,0]);
             var a=n.id==='aside-time',begin=a?5.6:11.8,release=a?7.9:14.6,park=a?10.7:17.5;
-            setKeys(lip.transform.opacity,[[0,0],[begin,0],[begin+.55,78],[release,78],[park,28],[27,28]],55,32,false);
+            setKeys(lip.transform.opacity,[[0,0],[begin,0],[begin+.55,78],[release,78],[park,A?0:28],[27,A?0:28]],55,32,false);
             setKeys(joint.transform.opacity,[[0,0],[begin,0],[begin+.5,80],[release-.15,80],[release+.35,0],[27,0]],35,65,false);
-            setKeys(label.transform.opacity,[[0,0],[park-.3,0],[park+.25,62],[27,62]],65,40,false);
+            setKeys(label.transform.opacity,A?[[0,0],[park-.3,0],[park+.25,45],[park+.85,0],[27,0]]:[[0,0],[park-.3,0],[park+.25,62],[27,62]],65,40,false);
             setKeys(carrier.transform.opacity,P?[[0,0],[begin,0],[begin+.6,92],[park,92],[park+.6,P.carrier_rest_opacity],[27,P.carrier_rest_opacity]]:[[0,0],[begin,0],[begin+.6,92],[27,92]],45,30,false);
             setKeys(side.transform.opacity,[[0,0],[begin,0],[begin+.6,70],[park,70],[park+.6,P?P.side_rest_opacity:22],[27,P?P.side_rest_opacity:22]],45,30,false);
             setKeys(l.transform.opacity,[[0,100],[park,100],[park+.6,P?P.text_rest_opacity:42],[27,P?P.text_rest_opacity:42]],45,30,false);
             var path=a?[[0,[n.x,540,0]],[6.7,[n.x,540,0]],[7.9,[n.x,540,0]],[9.2,[620,365,160]],[10.7,[1120,340,360]],[27,[1120,340,360]]]
                 :[[0,[n.x,540,0]],[12.9,[n.x,540,0]],[14.6,[n.x,540,0]],[16.0,[1260,680,200]],[17.5,[1000,800,330]],[27,[1000,800,330]]];
-            if(P){path[3][1]=P.parks[n.id].via;path[4][1]=P.parks[n.id].rest;path[5][1]=P.parks[n.id].rest;}
+            if(A){
+                // These are supplied visual anchors, not newly inferred grammar.
+                var anchor=objects[n.attachment],ar=anchor.sourceRectAtTime(0,false),br=l.sourceRectAtTime(0,false);
+                var restX=anchor.transform.position.value[0]+ar.left+ar.width/2-(br.left+br.width/2)*A.scale_percent/100;
+                var restY=540+(a?-1:1)*A.baseline_gap;
+                path[3][1]=[restX+(a?42:65),restY+(a?-38:38),a?95:85];
+                path[4][1]=[restX,restY,0];path[5][1]=[restX,restY,0];
+                setKeys(hinge.transform.scale,[[0,[100,100,100]],[release,[100,100,100]],[park,[A.scale_percent,A.scale_percent,A.scale_percent]],[27,[A.scale_percent,A.scale_percent,A.scale_percent]]],60,30,false);
+                hinge.transform.position.expression='var a=thisComp.layer('+JSON.stringify(n.attachment)+');var delta=sub(a.toWorld([0,0,0],time),a.toWorld([0,0,0],0));add(value,mul(delta,ease(time,'+present(release)+','+present(park)+',0,1)));';
+            }else if(P){path[3][1]=P.parks[n.id].via;path[4][1]=P.parks[n.id].rest;path[5][1]=P.parks[n.id].rest;}
             setKeys(hinge.transform.position,path,67,25,true);
             // Cross the intermediate path point continuously, then settle once.
             // Do not ease to zero at every waypoint of the same transport.
@@ -90,8 +99,8 @@
                 function distance(a,b){var total=0;for(var j=0;j<3;j++)total+=(a[j]-b[j])*(a[j]-b[j]);return Math.sqrt(total);}
                 var speed=.6*Math.min(distance(a0,a1)/(p.keyTime(4)-p.keyTime(3)),distance(a1,a2)/(p.keyTime(5)-p.keyTime(4)));
                 p.setTemporalEaseAtKey(4,[new KeyframeEase(speed,32)],[new KeyframeEase(speed,24)]);}
-            setKeys(hinge.transform.yRotation,a?[[0,0],[6.7,0],[7.9,-55],[9.2,-48],[10.7,-8],[27,-8]]:[[0,0],[12.9,0],[14.6,-52],[16,-37],[17.5,7],[27,7]],64,28,false);
-            setKeys(hinge.transform.zRotation,a?[[0,0],[7.9,0],[9.2,-7],[10.7,-3],[27,-3]]:[[0,0],[14.6,0],[16,6],[17.5,3],[27,3]],60,30,false);
+            setKeys(hinge.transform.yRotation,a?[[0,0],[6.7,0],[7.9,-55],[9.2,-48],[10.7,A?0:-8],[27,A?0:-8]]:[[0,0],[12.9,0],[14.6,-52],[16,-37],[17.5,A?0:7],[27,A?0:7]],64,28,false);
+            setKeys(hinge.transform.zRotation,a?[[0,0],[7.9,0],[9.2,-7],[10.7,A?0:-3],[27,A?0:-3]]:[[0,0],[14.6,0],[16,6],[17.5,A?0:3],[27,A?0:3]],60,30,false);
         }
     }
     var targetX=650;
@@ -121,6 +130,24 @@
     var opt=camera.property('ADBE Camera Options Group');opt.property('ADBE Camera Zoom').setValue(1850);
     opt.property('ADBE Camera Depth of Field').setValue(1);opt.property('ADBE Camera Aperture').setValue(64);opt.property('ADBE Camera Blur Level').setValue(100);
     opt.property('ADBE Camera Focus Distance').expression='var p=thisComp.layer("FOCUS_TARGET").toWorld([0,0,0]);var c=transform.position;var v=normalize(sub(transform.pointOfInterest,c));dot(sub(p,c),v);';
+    if(A){
+        for(i=0;i<R.layout.length;i++)if(R.layout[i].role==='supplied_modifier'){
+            var n=R.layout[i],above=n.id==='aside-time',release=present(above?7.9:14.6),park=present(above?10.7:17.5);
+            var line=cp.layers.addShape();line.name='RELATION_'+n.id;
+            line.comment=JSON.stringify({origin:R.scene_sha,anchor_id:n.attachment,object_id:n.id,kind:'supplied_synthetic_visual_attachment'});
+            line.transform.anchorPoint.setValue([0,0]);line.transform.position.setValue([0,0]);
+            line.property('ADBE Root Vectors Group').addProperty('ADBE Vector Group');
+            line.property('ADBE Root Vectors Group').property(1).property('ADBE Vectors Group').addProperty('ADBE Vector Shape - Group');
+            line.property('ADBE Root Vectors Group').property(1).property('ADBE Vectors Group').addProperty('ADBE Vector Graphic - Stroke');
+            var vectors=line.property('ADBE Root Vectors Group').property(1).property('ADBE Vectors Group');
+            vectors.property('ADBE Vector Graphic - Stroke').property('ADBE Vector Stroke Color').setValue(rgb(S.palette.fog));
+            vectors.property('ADBE Vector Graphic - Stroke').property('ADBE Vector Stroke Width').setValue(1.5);
+            vectors.property('ADBE Vector Shape - Group').property('ADBE Vector Shape').expression=
+                'var a=thisComp.layer('+JSON.stringify(n.attachment)+'),b=thisComp.layer('+JSON.stringify(n.id)+');var ar=a.sourceRectAtTime(time,false),br=b.sourceRectAtTime(time,false);var p=a.toComp([ar.left+ar.width/2,'+(above?'ar.top-8':'ar.top+ar.height+8')+',0]);var q=b.toComp([br.left+br.width/2,'+(above?'br.top+br.height+8':'br.top-8')+',0]);createPath([[p[0],p[1]],[q[0],q[1]]],[],[],false);';
+            var rows=[[0,0],[release+.1,0],[release+.3,62],[park+A.connector_hold_seconds,62],[park+A.connector_hold_seconds+A.connector_fade_seconds,0],[cp.duration,0]];
+            for(var j=0;j<rows.length;j++)line.transform.opacity.setValueAtTime(rows[j][0],rows[j][1]);
+        }
+    }
     cp.openInViewer();app.project.save(dest);
     return JSON.stringify({ok:true,comp_id:cp.id,scene_sha:R.scene_sha,spec_sha:R.spec_sha,project:dest.fsName,renderer:cp.renderer,objects:R.layout.length});
 })();

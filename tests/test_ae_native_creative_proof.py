@@ -92,6 +92,60 @@ class NativeCreativeProofTests(unittest.TestCase):
         proof.validate_render_range('C_FIXED_CAMERA',3.5,7,22)
         with self.assertRaises(ValueError):proof.validate_render_range('B',0,27,22)
 
+    def test_vertical_layout_keeps_r4_timing_voice_and_frozen_supplied_relations(self):
+        r4=json.loads((HERE/'rhythm-r4.json').read_text(encoding='utf-8'))
+        r5=json.loads((HERE/'attachment-r5.json').read_text(encoding='utf-8'))
+        original=deepcopy(self.scene)
+        proof.validate_presentation(r5,self.scene)
+        self.assertEqual(r5['time_map'],r4['time_map'])
+        self.assertEqual(r5['voice_starts'],r4['voice_starts'])
+        self.assertEqual(proof.voice_slots({'scene':self.scene,'presentation':r5}),
+                         proof.voice_slots({'scene':self.scene,'presentation':r4}))
+        self.assertEqual(self.scene,original)
+
+    def test_vertical_layout_cannot_supply_new_attachment_facts_or_unbounded_controls(self):
+        base=json.loads((HERE/'attachment-r5.json').read_text(encoding='utf-8'))
+        for change in ({'anchor_id':'core-verb'},{'scale_percent':101},{'baseline_gap':float('nan')},
+                       {'connector_hold_seconds':-1},{'connector_fade_seconds':0}):
+            bad=deepcopy(base);bad['attachment_layout'].update(change)
+            with self.subTest(change=change),self.assertRaises(ValueError):proof.validate_presentation(bad,self.scene)
+
+    def test_faster_peeling_preserves_reading_holds_and_exact_voice_words(self):
+        r5=json.loads((HERE/'attachment-r5.json').read_text(encoding='utf-8'))
+        fast=json.loads((HERE/'attachment-r5-fast.json').read_text(encoding='utf-8'))
+        proof.validate_presentation(fast,self.scene)
+        normal={'scene':self.scene,'presentation':r5};quick={'scene':self.scene,'presentation':fast}
+        for r in (normal,quick):
+            self.assertEqual(proof.presentation_time(r,3),3.5)
+            self.assertEqual(proof.canvas_duration(r)-proof.presentation_time(r,22.5),4.5)
+        self.assertAlmostEqual(proof.presentation_time(quick,10.9)-proof.presentation_time(quick,5.6),3.5)
+        self.assertAlmostEqual(proof.presentation_time(quick,17.5)-proof.presentation_time(quick,11.8),3.1)
+        self.assertEqual(fast['attachment_layout'],r5['attachment_layout'])
+        self.assertEqual({v['id']:v['text'] for v in proof.voice_slots(quick)},
+                         {v['id']:v['text'] for v in proof.voice_slots(normal)})
+
+    def test_actual_attachment_audit_rejects_misalignment_and_wrong_source_even_with_good_geometry(self):
+        r5=json.loads((HERE/'attachment-r5.json').read_text(encoding='utf-8'))
+        request={'presentation':r5,'scene_sha':sha(self.scene),'spec_sha':sha('SYNTHETIC audit binding'),
+                 'layout':[dict(o,x=i*100) for i,o in enumerate(self.scene['objects'])]}
+        samples=[]
+        for obj in request['layout']:
+            if obj['role']!='supplied_modifier':continue
+            for phase in ('original','park','final')+ (('follow',) if obj['id']=='aside-time' else ()):
+                samples.append({'object_id':obj['id'],'anchor_id':obj['attachment'],'phase':phase,
+                    'connector':{'origin':request['scene_sha'],'anchor_id':obj['attachment'],
+                        'object_id':obj['id'],'kind':'supplied_synthetic_visual_attachment'},
+                    'pivot':[obj['x'],540,0],'scale_percent':100 if phase=='original' else 76,
+                    'center_error':0,'baseline_gap':-96 if obj['id']=='aside-time' else 96,
+                    'y_rotation':0,'z_rotation':0,'text_opacity':72,
+                    'connector_opacity':62 if phase in ('park','follow') else 0})
+        measured={'kind':'supplied_synthetic_visual_attachment','spec_sha':request['spec_sha'],
+                  'scene_sha':request['scene_sha'],'samples':samples}
+        proof.verify_attachment_layout(request,measured)
+        for change in ({'center_error':4},{'anchor_id':'core-verb'},{'baseline_gap':-30}):
+            bad=deepcopy(measured);bad['samples'][1].update(change)
+            with self.subTest(change=change),self.assertRaises(ValueError):proof.verify_attachment_layout(request,bad)
+
     def test_fixed_recordings_can_be_reordered_but_not_added_removed_or_duplicated(self):
         request=self.presentation_fixture();clips=[{'id':v['id']} for v in self.scene['voice']]
         pairs=guide.fixed_clips(request,{'clips':clips})

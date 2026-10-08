@@ -1,10 +1,10 @@
 # AE 原生样片：人工观看记录
 
-上一版 r3 的总体反馈：**部分成立，还需打磨**；用户指定优先改善 **节奏与整体质感**。用户随后授权按 Astra 建议实施，现已完成 **22 秒 r4**。r4 的十二项具体判断与听感均待填写，不继承 r3 认可。对象是 `SYNTHETIC-NATIVE-PEEL-001`，1920×1080、24 fps；它不是 R02 声音 A/B，之前“B 版没明显改善”的声音结论继续有效。
+历史 r3 的总体反馈：**部分成立，还需打磨**；用户指定优先改善 **节奏与整体质感**。r4 按 Astra 建议试制。随后用户提出上下就近归位，并授权实施；本轮又明确只加快**剥离的节奏**，现已完成 **20.25 秒 r5-fast**。这个指示不是看片认可，本轮具体观感与听感仍待填写，不继承旧版本认可。对象是 `SYNTHETIC-NATIVE-PEEL-001`，1920×1080、24 fps；它不是 R02 声音 A/B，之前“B 版没明显改善”的声音结论继续有效。
 
-先静音看 `r4/NATIVE_B.mp4`，再看同素材 `r4/NATIVE_A.mp4`，最后看 `guide-r4/B_FIXED_GUIDE.mp4`。需要时比较 `r4/B_CORE_COMPARISON.mp4` 与同目录 `NATIVE_C_FIXED_CAMERA.mp4`：均对应 B 的 3.5–10.5 秒，开始构图相同，包含真实相机运动。上一版 r3 及 guide-r3 保留用于比较。媒体位于忽略目录 `local-data/ae-native-creative-proof/`，没有上传 GitHub。
+先静音看 `r5-fast/NATIVE_B.mp4`，再看 `guide-r5-fast/B_FIXED_GUIDE.mp4`，与 22 秒 `r4/NATIVE_B.mp4` / `guide-r4/B_FIXED_GUIDE.mp4` 比较。五条录音字节相同，只重新放置，没有变速；当前没有新的 A / C / D 电影，不能把历史对照当作 r5-fast。媒体位于忽略目录 `local-data/ae-native-creative-proof/`，没有上传 GitHub。
 
-此次重点：第一刀是否更容易跟随，接合和旁白是否一致；第二刀是否更利落；后置重复高潮删掉后，17.5–22 秒的结果是否真正落稳；暂存内容是否安静但仍可理解为保留。不要因为片长缩短就直接认定节奏改善。
+此次重点：4.7–8.2 秒第一刀与 9.3–12.4 秒第二刀是否利落且仍能跟随；上 / 下片段是否能追到原锚点，主干收紧时是否保持联系；连接线淡去后是否仍看得懂；15.75–20.25 秒是否看清主干与暂存内容。原句阅读与结果停留不变，不要因为片长缩短就直接认定节奏改善。给定合成锚点不是已认证的英语修饰关系，本次只评视觉。
 
 逐项记录“是 / 部分 / 否”与具体时间点，不能用参数、图层数量或程序 PASS 代替感受。
 
@@ -22,6 +22,9 @@
 | 10. 固定旁白是否增强被带着操作的感觉？ | PENDING | |
 | 11. 是否保留瑞士风的克制、秩序与质感？ | PENDING | |
 | 12. 是否值得扩展为“学霸是怎么做题的？”栏目？ | PENDING | |
+| 13. 上 / 下就近归位是否比侧后暂存更容易理解？ | PENDING | |
+| 14. 加快后两次剥离是否仍能看清转开、抽离与落位？ | PENDING | |
+| 15. 连接线淡去以后，结果文字是否清楚而不显拥挤？ | PENDING | |
 
 额外检查：实时播放流畅度、短暂闪烁、运动模糊、英文词形在转动中是否易跟随、旁白实际听感。Agent 做了覆盖全时段的顺序帧检查，但没有签署这些人工项目。
 
@@ -31,4 +34,4 @@
 - B：部分成立，只继续打磨指出的物理动作 / 镜头 / 引导 / 可读性 / 质感。
 - C：当前实现未达到目标，分别记录导演、执行、自动化、机器或已复现功能限制；不能据此直接写成“AE 做不到”。
 
-历史 r3：`human_viewing_review=PARTIAL_USER_FEEDBACK`。当前 r4：`human_viewing_review=PENDING`；逐项审阅及引导版听感仍为 `PENDING`。`final_voice_accepted=false`；`sample_delivery_allowed=false`；`production_eligible=false`；`public_render_ready=false`。这里可供内部比较的研究影片，不等于真实教学样片的正式交付资格。历史渲染凭证里的 PENDING 保留，后续用户反馈单独记录，不覆盖其生成时状态。
+历史 r3：`human_viewing_review=PARTIAL_USER_FEEDBACK`。历史 r4 与当前 r5-fast：`human_viewing_review=PENDING`；逐项审阅及引导版听感仍为 `PENDING`。`final_voice_accepted=false`；`sample_delivery_allowed=false`；`production_eligible=false`；`public_render_ready=false`。这里可供内部比较的研究影片，不等于真实教学样片的正式交付资格。历史渲染凭证里的 PENDING 保留，后续用户反馈单独记录，不覆盖其生成时状态。
