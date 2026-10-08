@@ -43,7 +43,9 @@
 
 AE 与 PR 操作均先进入独立研究会话，历史产物原字节保留。代码与合成输入只作为增量实验；ANSWER Truth Core、Registry、真实 R02 Evidence / Action / Stop / Role / Frozen Copy 和声音模型均未改。
 
-`human_viewing_review=PENDING`、`listening_review=PENDING`，`final_voice_accepted=false`、`sample_delivery_allowed=false`、`production_eligible=false`、`public_render_ready=false`。两条影片仅供内部视觉对照。Git 只提交工作流、合成 fixture、测试及脱敏报告；工程和媒体均留在忽略目录。本轮未重试此前被自动审批拒绝的旧产物删除，也未覆盖历史保护例外。
+生成时 `human_viewing_review=PENDING`、`listening_review=PENDING` 的凭证保留。用户在 `main@d503d2f37f869bfce651b8fd929b69e79b5e215d` 的本版交付后反馈 **“效果很好”**；追加记录为 `human_viewing_review=POSITIVE_USER_FEEDBACK`，范围仅为 `overall_visual_effect`。**r7-wordcue-final 为后续“词级识别 → 范围确认 → 快速剥离 → 上下归位”的视觉参考基线。** 反馈绑定上表两条实际交付 SHA，不推断用户分别完整观看，也不替代逐项体验或声音审阅；详见 `AE_NATIVE_CREATIVE_PROOF_HUMAN_REVIEW.md`。
+
+`listening_review=PENDING`，`final_voice_accepted=false`、`sample_delivery_allowed=false`、`production_eligible=false`、`public_render_ready=false`。两条影片仅供内部视觉对照。Git 只提交工作流、合成 fixture、测试及脱敏报告；工程和媒体均留在忽略目录。本轮未重试此前被自动审批拒绝的旧产物删除，也未覆盖历史保护例外。
 
 ## r6-sharp 历史记录：单刀更快，间隔保留
 

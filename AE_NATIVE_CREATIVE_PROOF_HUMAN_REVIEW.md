@@ -1,6 +1,19 @@
 # AE 原生样片：人工观看记录
 
-历史 r3 的总体反馈：**部分成立，还需打磨**；用户指定优先改善 **节奏与整体质感**。r4 按 Astra 建议试制，r5-fast 将附属片段上下归位，r6-sharp 只加快单刀、保持间隔。用户进一步提出标志词先亮起，并授权将 Astra 建议做一版。当前 **20.25 秒 r7-wordcue-final** 已加入 after / that 词级提示、整段范围确认、约 0.25 秒断开和约 0.83 秒归位；起刀间隔仍为 4.4 秒。具体观感与听感仍待填写，不继承旧版本认可。对象是 `SYNTHETIC-NATIVE-PEEL-001`，1920×1080、24 fps；它不是 R02 声音 A/B，之前“B 版没明显改善”的声音结论继续有效。
+历史 r3 的总体反馈：**部分成立，还需打磨**；用户指定优先改善 **节奏与整体质感**。r4 按 Astra 建议试制，r5-fast 将附属片段上下归位，r6-sharp 只加快单刀、保持间隔。用户进一步提出标志词先亮起，并授权将 Astra 建议做一版。当前 **20.25 秒 r7-wordcue-final** 已加入 after / that 词级提示、整段范围确认、约 0.25 秒断开和约 0.83 秒归位；起刀间隔仍为 4.4 秒。用户在本版交付后反馈 **“效果很好”**，记录为整体视觉方向认可；逐项观感与听感尚未单独回答。对象是 `SYNTHETIC-NATIVE-PEEL-001`，1920×1080、24 fps；它不是 R02 声音 A/B，之前“B 版没明显改善”的声音结论继续有效。
+
+## r7-wordcue-final：用户整体视觉反馈
+
+- 反馈原文：**“效果很好”**，来自本会话中紧接本版交付的用户回复。
+- 交付代码：`main@d503d2f37f869bfce651b8fd929b69e79b5e215d`。
+- 交付中展示的引导版：`guide-r7-wordcue/B_FIXED_GUIDE.mp4`，SHA-256 `88ce7c96a9f5e637e0c57803431e474ea24a528e51aaad3e109e9759945c74c8`。
+- 同次交付的纯画面：`r7-wordcue-final/NATIVE_B.mp4`，SHA-256 `591fef183547b216182fd9830fbcb72c3412e961bf6520a7a6e9b100cae2fb3f`。用户没有分别评价两个文件，不推断已各自完整观看。
+- `human_viewing_review=POSITIVE_USER_FEEDBACK`，`review_scope=overall_visual_effect`，`visual_direction_baseline=r7-wordcue-final`。
+- 后续视觉参考：**词级识别 → 整段范围确认 → 快速断开 → 上下归位**；单刀果断，两刀之间保留从容的间隔。该参考绑定本次合成呈现，真实教学素材仍须提供冻结的提示词、跨度与关系绑定。
+
+这条总评不替代下列未逐项回答的观看问题，也不签署自然听感、R02 声音实验、教学事实或公开资格。生成时凭证中的 PENDING 保留，用户反馈作为后续记录追加。
+
+## 逐项观看记录
 
 先静音看 `r7-wordcue-final/NATIVE_B.mp4`，再看 `guide-r7-wordcue/B_FIXED_GUIDE.mp4`，与同为 20.25 秒的 r6-sharp 对比。五条录音的字节和出场时间均相同，没有变速；当前没有新的 A / C / D 电影，不能把历史对照当作 r7。媒体位于忽略目录 `local-data/ae-native-creative-proof/`，没有上传 GitHub。
 
@@ -31,10 +44,10 @@
 
 额外检查：实时播放流畅度、短暂闪烁、运动模糊、英文词形在转动中是否易跟随、旁白实际听感。Agent 做了覆盖全时段的顺序帧检查，但没有签署这些人工项目。
 
-当前沿下列 B 方向试制：Astra Max 先只读给出建议，随后由主 Agent 在用户授权后修改并实际重渲染。新一轮只收集观看判断，不自动转入工具系统化或扩展方法。
+当前整体视觉反馈对应下列 A 方向，r7-wordcue-final 作为后续动效参考；逐项观看和引导版听感继续单独记录。Astra Max 先只读给出建议，随后由主 Agent 在用户授权后修改并实际重渲染。本次更新只记录反馈，没有启动 Rig 系统化或扩展方法。
 
 - A：认可目标观感，再提炼 Rig 与执行适配。
 - B：部分成立，只继续打磨指出的物理动作 / 镜头 / 引导 / 可读性 / 质感。
 - C：当前实现未达到目标，分别记录导演、执行、自动化、机器或已复现功能限制；不能据此直接写成“AE 做不到”。
 
-历史 r3：`human_viewing_review=PARTIAL_USER_FEEDBACK`。历史 r4 / r5-fast / r6-sharp 与当前 r7-wordcue-final 的逐项审阅及引导版听感仍为 `PENDING`；用户最新改变要求单独记录，不自签 PASS。`final_voice_accepted=false`；`sample_delivery_allowed=false`；`production_eligible=false`；`public_render_ready=false`。这里可供内部比较的研究影片，不等于真实教学样片的正式交付资格。历史渲染凭证里的 PENDING 保留，后续用户反馈单独记录，不覆盖其生成时状态。
+历史 r3：`human_viewing_review=PARTIAL_USER_FEEDBACK`。当前 r7-wordcue-final：`human_viewing_review=POSITIVE_USER_FEEDBACK`，仅为整体视觉效果的用户认可。历史 r4 / r5-fast / r6-sharp 与当前 r7-wordcue-final 的逐项审阅及引导版听感仍为 `PENDING`。`final_voice_accepted=false`；`sample_delivery_allowed=false`；`production_eligible=false`；`public_render_ready=false`。这里可供内部比较的研究影片，不等于真实教学样片的正式交付资格。历史渲染凭证里的 PENDING 保留，后续用户反馈单独记录，不覆盖其生成时状态。
