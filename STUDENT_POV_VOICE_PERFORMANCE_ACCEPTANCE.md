@@ -1,13 +1,15 @@
 # Student POV Narration Performance v0.1 — R02 A/B
 
 2026-10-08，基线 `main@31a1df7ee10a3a21c221cb791253bdaaa28d7043`。
-已完成内部 A/B 工程与试听交付；人工偏好、口语自然度、表演方向与最终放行仍 PENDING。
+已完成内部 A/B 工程与试听交付。用户反馈「B版没明显改善」，按本轮 Stop Rule
+结束实验；B 不具备冻结资格，完整听感审核与最终放行仍未完成。
 这是现有 GPT-SoVITS v2ProPlus + 独立认知口播计划 + Premiere 节奏控制的增量。
 没有进入 V10、重训、换引擎、启用 Reference Bank 或扩展教学方法。
 
 ## 保留的绑定与基线
 
-Student POV Copy / Pedagogy Compiler 保持 0.3.0，Original Question binding 保留。
+本次历史声音 A/B 绑定 Student POV Copy / Pedagogy Compiler 0.3.0，Original Question binding 保留。
+后续 Copy / Direction 的开发不重绑定这两条旧试听，也不扩大本次反馈的适用范围。
 唯一实验对象为 R02 bounded worked_example；现有 Role、Evidence、Action、Stop、
 TELL_NOW 与局部排除权限未改。G01 仍 HOLD / PAYOFF_UNSUPPORTED。
 
@@ -92,9 +94,36 @@ B 混音峰值约 -7.5 dBFS；编码后四段实际声音相关系数为 0.9979�
 逐 clip 原始/交接音频 SHA、真实参数、实际间隔及 source refs 保存在这些本地 sidecar。
 当前工程核验未替任何备用 Take 选择或自然度审核签字。
 
+## 人工反馈与实验结论
+
+2026-10-08，在 `main@13431adb28aed02b02180e06d006e02281f64c45` 对齐后，
+收到用户反馈：「B版没明显改善」。重新核验上述 comparison SHA 及 A/B 视频、
+工程、纯人声的实际文件 SHA，确认反馈记录绑定这一轮历史输出。
+
+记录结论为 `STOPPED_NO_DEMONSTRATED_IMPROVEMENT`。这条反馈足以触发既定停止规则，
+不等于用户选择 A，也不等于十二问、尾音、Anti-Overacting 或 Melancholic Drift 已通过。
+保留原 PENDING 审核模板；另存绑定 comparison、Frozen Copy 和实际输出的部分反馈及
+停止决定到忽略的 `narration-performance-r1/feedback-2026-10-08/`，更新本地实验索引。
+不补写未回答的问题，不继承旧声音认可，不再继续本轮 Take 或参数扩展。
+
+执行记录给出的诊断是：本次实际可控变量较少。四段声音的 speed_factor 分别为
+1.02 / 0.98 / 1.03 / 0.99；tone、energy、certainty、emphasis 全部 UNREALIZED。
+Premiere 仅在既有画面窗口中安排停顿，长间隔主要来自原读题与 Motion 时间。
+因此，这一轮没有证明认知表演计划能带来可感知的声音改善，不能把写入 Plan 的
+状态枚举视为已经执行的表演能力。
+
+上述证据支持「本次实现没有达到目标」，尚不能判定文案、参考声音或模型能力
+哪个是根因；这些变量没有单独做过对照。当前停止增加功能，不启用 Reference Bank、
+换引擎或重训，也不为追求听感改 Frozen Copy。既有 A/B、模型、音频与工程保留。
+
 ## 检查与停止状态
 
-全仓 715 项回归快照通过；最终增量专项 60 项通过，含额外四项 A/B 对照控制。
+本次反馈落盘只修改本报告与工作流文档，未修改生产代码或审核契约。
+现有听感审核与 A/B 对照专项 9 项通过；当前 844 个受保护文件前后 SHA 一致，
+包括既有教学输入、A/B 音频/视频/工程、生成记录与原 PENDING 审核。
+反馈绑定、停止索引与三个 false 放行字段已核验；凭证留在上述本地反馈目录。
+
+原 A/B 实现阶段全仓 715 项回归快照通过；最终增量专项 60 项通过，含额外四项 A/B 对照控制。
 覆盖用户要求的绑定、改稿失效、不支持语气记录、速度/停顿范围、ID 对齐、
 Take/旧认可隔离、reference 新凭证、尾音配置冲突、Payoff Silence、Stop 完整性、
 新时长重算、公开 false、G01 HOLD 及禁止读 Truth Core/Registry/模型运行时。
@@ -104,7 +133,8 @@ Take/旧认可隔离、reference 新凭证、尾音配置冲突、Payoff Silence
 
 | Review / Release | 本轮状态 |
 | --- | --- |
-| 工程 A/B | READY_FOR_HUMAN_COMPARISON |
+| 工程 A/B | 已完成；历史输出保留 |
+| B 的体验改善 | 用户反馈无明显改善；STOPPED_NO_DEMONSTRATED_IMPROVEMENT |
 | 人工十二问、英文/字母、尾音、音色连续性 | PENDING |
 | NO_MELANCHOLIC_DRIFT | PENDING：有限意图/间隔 lint 无组合提示，尾音观察未知，不代表已通过 |
 | Anti-Overacting | PENDING：不由 Agent 宣称更像真人 |
@@ -113,8 +143,8 @@ Take/旧认可隔离、reference 新凭证、尾音配置冲突、Payoff Silence
 | Sample delivery allowed | false |
 | Public render ready | false |
 
-等待真实 A/B 反馈；没有明显 B 偏好就停止继续堆功能，再判断 Copy、后端、reference
-或是否需要复杂 Voice Layer。即使 B 被偏好，也只具备后续单独冻结资格，不自动发布。
+已收到部分 A/B 反馈并停止实验，完整听感审核继续保留 PENDING。
+本轮没有获得 B 明显更好的人工结论，不冻结 Narration Performance 0.1 或最终声音。
 公开提交只有工作流、Schema、合成测试和本脱敏报告，视频、声音、真实 Copy、模型、
 Adobe 工程及细化凭证都留在忽略的本地目录。
 

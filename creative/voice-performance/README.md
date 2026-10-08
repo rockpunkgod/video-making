@@ -132,3 +132,10 @@ lint 不自动改音频、不把未发现风险写成声音已自然。
 没有明显 B 偏好就停止堆功能，判断 Copy、后端、reference 或复杂度问题。
 B 明显更好只获得后续单独冻结资格；本次实现不自动冻结，也不授予最终声音或公开放行。
 当前始终 final_voice_accepted=false、sample_delivery_allowed=false、public_render_ready=false。
+
+部分外部反馈也可触发实验停止。例如用户只说「B 没明显改善」，先核验 comparison
+及两版实际输出的 SHA，另存原话、适用绑定和停止决定，再更新本地实验索引。
+记录 `STOPPED_NO_DEMONSTRATED_IMPROVEMENT`，不推断用户偏好 A，不补答十二问。
+原 `performance-review.json` 保留 PENDING；完整审核仍遵守 `validate_human_review`
+的显式回答要求。停止实验与听感通过分别记录，部分反馈不能授予任何放行资格。
+当前 R02 实验已依此停止，详见 [验收报告](../../STUDENT_POV_VOICE_PERFORMANCE_ACCEPTANCE.md)。
