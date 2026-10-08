@@ -1,6 +1,6 @@
 {
   "kind": "synthetic_method_relay_visual_research",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "fixture_id": "SYNTHETIC-RELAY-001",
   "authority": "supplied_visual_objects_and_outcomes_not_english_analysis",
   "not_a_teaching_asset": true,
@@ -34,12 +34,22 @@
     {"id": "verify", "method_id": null, "input": ["supplied-comparison", "original-passage"], "output": "synthetic-A", "object_ids": ["core-subject", "aside-time", "core-verb", "core-object", "aside-map"], "scope": "visual_only_final_state", "stop": "synthetic_result_not_real_exam_answer"}
   ],
   "voice": [
-    {"id": "locate", "text": "题目问谁查了地图。回原文找这件事。"},
-    {"id": "carry", "text": "找到这句，直接留下。中间和句尾，先放到上下。"},
-    {"id": "basis", "text": "人、动作、对象还在。就拿这一行，接着比选项。"},
+    {"id": "locate", "text": "题目问谁，先用‘查地图’这件事找原句。"},
+    {"id": "carry", "text": "先抓主要动作，再看是谁做的，把主干读清楚。"},
+    {"id": "basis", "text": "拿这句作依据，选项也按同样三项一一核对。"},
     {"id": "compare", "text": "查地图没变，但换了人。再看另外两项，动作也换了。"},
     {"id": "verify", "text": "A 的人和动作都对应。回原句核一眼，再落定。"}
   ],
+  "guided_method_copy": {
+    "scope": "frozen_general_action_with_synthetic_visual_example_not_case_certification",
+    "clips": [
+      {"id": "locate", "method_id": "R12", "fields": ["core_action", "decision_rule", "stop_rule"]},
+      {"id": "carry", "method_id": "R11", "fields": ["core_action", "decision_rule", "stop_rule"]},
+      {"id": "basis", "method_id": "R02", "fields": ["core_action", "decision_rule", "stop_rule"]}
+    ],
+    "column_labels": [{"part": "subject", "text": "谁"}, {"part": "verb", "text": "做什么"}, {"part": "object", "text": "对象"}],
+    "emphasis": {"object_id": "option-B-subject", "clip_id": "compare", "phrase": "换了人", "window": [31.0, 33.75], "scope": "whole_phrase_observation_window_not_forced_word_alignment"}
+  },
   "screen": {"series": "学霸这题怎么做？", "marker": "SYNTHETIC / VISUAL-ONLY · 合成技术研究", "fast": "高手节奏演示", "guided": "跟着走一遍", "result": "示意核验 · A"},
   "font": {"english": "Georgia", "english_file": "C:/Windows/Fonts/georgia.ttf", "chinese": "NotoSansSC-Regular", "chinese_file": "C:/Windows/Fonts/NotoSansSC-VF.ttf", "size": 40},
   "palette": {"paper": "#FAF8F2", "ink": "#243530", "fog": "#7E96A8", "muted": "#8C9690", "edge": "#D0D8D0", "difference": "#B88A56"},

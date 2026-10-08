@@ -57,5 +57,19 @@
         }
     }
     var task=cp.layer('ORIGINAL_QUESTION'),question={native_layer_id:task.id,text:task.property('Source Text').value.text,source_text_keys:task.property('Source Text').numKeys};
-    return JSON.stringify({spec_sha:binding.spec_sha,trajectory_sha:binding.trajectory_sha,canvas:[cp.width,cp.height,cp.frameRate,cp.duration],question:question,objects:objects,passes:passes,rewind_restore:restored,name_counts:names,visible_internal_method_ids:visibleIds,renderer:cp.renderer,production_eligible:binding.production_eligible,public_render_ready:binding.public_render_ready});
+    var guidance=null;
+    if(R.phase==='full'&&R.fixture.guided_method_copy){
+        var g=R.fixture.guided_method_copy,fast=null,guided=null;
+        for(var i=0;i<R.passes.length;i++){if(R.passes[i].kind==='fast')fast=R.passes[i];if(R.passes[i].kind==='guided')guided=R.passes[i];}
+        guidance={column_labels:[],subject_emphasis:[]};
+        for(var i=0;i<g.column_labels.length;i++){
+            var l=cp.layer('GUIDED_COLUMN_'+g.column_labels[i].part),d=l.property('Source Text').value;
+            guidance.column_labels.push({text:d.text,font:d.font,source_text_keys:l.property('Source Text').numKeys,
+                native_layer_id:l.id,x:l.transform.position.value[0],fast_opacity:l.transform.opacity.valueAtTime(fast.align[1],false),
+                guided_opacity:l.transform.opacity.valueAtTime(guided.align[1],false)});
+        }
+        var mark=cp.layer('DIFFERENCE_'+g.emphasis.object_id),w=g.emphasis.window,times=[w[0]+.25,(w[0]+w[1])/2,w[1]-.25];
+        for(var i=0;i<times.length;i++)guidance.subject_emphasis.push({time:times[i],opacity:mark.transform.opacity.valueAtTime(times[i],false)});
+    }
+    return JSON.stringify({spec_sha:binding.spec_sha,trajectory_sha:binding.trajectory_sha,canvas:[cp.width,cp.height,cp.frameRate,cp.duration],question:question,objects:objects,passes:passes,rewind_restore:restored,name_counts:names,visible_internal_method_ids:visibleIds,renderer:cp.renderer,method_guidance:guidance,production_eligible:binding.production_eligible,public_render_ready:binding.public_render_ready});
 })();

@@ -1,4 +1,75 @@
-# Method Relay × Dual-Pass Creative Proof v0.1
+# Method Relay × Dual-Pass Creative Proof
+
+## v0.1.1：Guided 方法说明增量（当前交付）
+
+2026-10-09，基线 `main@71e05697e6cef2f011e40c9c744b42180b6deaf7`。
+当前含声片为 `local-data/method-relay-dual-pass/pr-r3/METHOD_RELAY_DUAL_PASS.mp4`；
+AE 为 `dual-r4/PROJECT_DUAL.aep`，Premiere 为 `pr-r3/METHOD_RELAY.prproj`。
+仍是 **SYNTHETIC / VISUAL-ONLY** 内部研究，1920×1080、24 fps、46.5 秒、1116 帧。
+旧 P0、r2 全片、旧 take 与上一轮验收记录均保留。
+
+本次按用户确认的 Astra 建议，只替换前三段引导文稿：
+
+| Clip | 新文稿 | PR start–end / 秒 | 末尾补静音 / samples |
+|---|---|---|---|
+| locate | 题目问谁，先用‘查地图’这件事找原句。 | 15.750–18.916667 | 320 |
+| carry | 先抓主要动作，再看是谁做的，把主干读清楚。 | 20.000–24.000 | 1920 |
+| basis | 拿这句作依据，选项也按同样三项一一核对。 | 26.250–30.125 | 1680 |
+
+compare / verify 文稿与原 Producer WAV 逐字、逐字节复用，放置时刻和完整长度不变。
+新增录音仍用同一 GPT-SoVITS v2ProPlus、模型、reference、speed=1、cut3 / 0.28 秒，
+没有训练或换声音系统。三段新录音原长分别 3.16 / 3.96 / 3.84 秒，均适配旧时刻。
+交接仍为 48 kHz PCM16 mono，仅补帧边界静音；没有截断或拉伸语音。
+`voice-r2/generation.json` 明记三段新生成和两段复用的原 delivery / generation SHA，
+没有把组装凭证写成一次生成五段。五段试听均为 PENDING，不继承旧认可。
+
+Guided 比较区增加一次小栏头 **谁 / 做什么 / 对象**（27.000–33.750 秒）；
+三列原生 x 为 478 / 666 / 831，Fast 不显示。预览发现栏头接近背景句，
+已移至独立的列头行后重新构建。B 主体强调持续在 31.000–33.750 秒的
+“换了人”整句观察窗口；这是口播段配合，不声称已有逐词强制对齐。
+Fast、相机路径、镜头顺序、两遍 0.25 秒释放、合成轨迹与总时长不变。
+
+前三段说明逐段绑定已有冻结方法的 `core_action / decision_rule / stop_rule`，
+保存 artifact、版本、semantic SHA、字段 pointer / value SHA 和文稿 SHA。
+当前清单失效或这些绑定改变后拒绝继续制作；旧 0.1.0 冻结请求仍能重放。
+这些是**一般方法动作与边界字段的表达绑定**，不认证合成分区、语法附着或答案。
+原文、候选状态、deferred、真实 R02 的 Evidence / Action / Stop / Role 及 Frozen Copy
+未改动；G01 HOLD 不升级。三句短说明不能替代真实案例的必要边界审核。
+
+实际证据：
+
+- 原生 AE 完整输出 1116 TIFF，queue DONE；归档校验后清除本次 loose 帧。
+  17 个源对象与原题身份延续、99 个回溯属性及 3 个表达式检查继续通过。
+- 新旧 AE 画面前 **15.5 秒的 372 帧解码 hash 全部相同**，包括 Fast 与物理回溯。
+  记录为 `guidance-r3/unchanged-content-proof.json`；两份 director 与 trajectory 也相同。
+- Premiere 原生导出、全片解码通过；与本次 AE 画面对比 **1116 帧**，
+  SSIM 均值 **0.999842885**、最低 **0.999663**。
+  五段实际编码 waveform 相关度 **0.999984897–0.999997897**，AAC 偏移 1024 samples。
+- Agent 查看最终编码的 93 个 2 fps 抽帧（12 张顺序拼图）、3 个完整尺寸关键帧，
+  以及原生栏头 / 主体强调预览。采样中未发现新增叠字或裁边；不代替人工实时观看。
+- 相关 **44 tests PASS**，`git diff --check` 通过；登记的 **655 个受保护文件** hash
+  全部不变，包含教学核心、冻结输入、选定模型 / reference / Profile 与旧交付。
+  没有宣称重跑 ANSWER 全量回归或审核整个磁盘。
+
+| 指纹 | SHA-256 |
+|---|---|
+| 最终含声 MP4 | `a94d36dd3d262a7fd0ced57dd6619dc22adca9687bbc652fe0539804f27856d8` |
+| AE 画面 MP4 | `83eb51404b9717a10cffbc02d457fc0a5ad0e3a57284c1f286cb8606cbc85cf6` |
+| 可编辑 AEP | `49a763f2ba4a5ef4f8b686af96eceeab759aca25b01b0806a70eb69767c8d52c` |
+| 可编辑 PR | `f13cdd1b14627bf50d506850abd5282f7d549e730cf8ea40288243438dcdd87f` |
+| fixture canonical | `5e802d0d9cf9c4f36d3d7767ba480e8f0a4376b5cd5ffb9f05b31c4049d1e566` |
+| 全片 spec | `b01f298cf31addbe309acd253a2e8ae4aec209d97cf2d6e9989139201af872bc` |
+| native TIFF archive | `00e2c98dcb45e3b82fbe1664f1da821f2794a2be0912282b5b5605d455ad6b80` |
+
+当前制作凭证与增量 Manifest 留在忽略目录 `guidance-r3/`；历史根 Manifest 不覆盖。
+用户对 r2 的“这个可以”仅记作有限反馈，并提出补充慢速方法说明。
+本片新增文案、声音与画面的人工体验尚为 PENDING；技术 PASS 不表示自然度或教学认证。
+原 Chopin scratch、片段和 PR duck keys 相同，公开来源权限仍 UNKNOWN / HOLD。
+`final_voice_accepted=false`、`sample_delivery_allowed=false`、
+`production_eligible=false`、`public_render_ready=false`。GitHub 仅提交工作流、合成 fixture
+和脱敏报告，不上传媒体、工程或模型。
+
+## v0.1：上一轮原始验收记录
 
 2026-10-09。基线：`main@a0d1695c10455f37ff5a0f4586e8ef532eddcbf8`。
 结果：**原生工程制作与技术交付完成；人工观看、试听和真实教学认证未通过。**

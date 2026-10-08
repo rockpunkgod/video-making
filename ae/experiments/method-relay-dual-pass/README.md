@@ -1,4 +1,4 @@
-# Method Relay × Dual-Pass Creative Proof 0.1
+# Method Relay × Dual-Pass Creative Proof 0.1.1
 
 One isolated native AE / Premiere research film. Its supplied English sentence,
 partitions, visual attachments and candidate outcomes are **SYNTHETIC / VISUAL-ONLY**.
@@ -13,10 +13,21 @@ aligns with the original options, and verification physically restores the
 original sentence. Seventeen original text objects have unique native layer IDs;
 their Source Text never animates or substitutes a new sentence.
 
-Frozen transports supply only the existing Chinese names 关键词追踪 / 长句拆骨 /
-谁干的陷阱. Their artifact/version/hash/pointer bindings do **not** certify the
-synthetic actions. No solver, raw Registry, teaching Markdown or Reveal scan is
-used. The original R02 bounded case, G01 HOLD and old r7 approval are untouched.
+Frozen transports supply the existing Chinese names 关键词追踪 / 长句拆骨 /
+谁干的陷阱. Version 0.1.1 additionally binds the three short Guided explanations
+to each method's existing `core_action`, `decision_rule` and `stop_rule`, with
+artifact/version/semantic hash, field pointers, value hashes and exact copy hash.
+Those general method fields do **not** certify this synthetic case's spans,
+visual attachments or answer. No solver, raw Registry, teaching Markdown or
+Reveal scan is used. The original R02 bounded case, G01 HOLD and old r7 approval
+are untouched. Frozen 0.1.0 requests and the completed P0 remain replayable.
+
+The Guided increment explains how to locate, read the core and compare the same
+dimensions. Three small 谁 / 做什么 / 对象 headers appear only over the existing
+comparison columns (27.000–33.750 s). The B-subject mark stays visible during
+the supplied observation window for “换了人” (31.000–33.750 s); this is a phrase
+window, not a forced word-alignment receipt. Fast, camera paths, shot order,
+physical release durations and the 46.5 s running time are unchanged.
 
 The full 46.5 s composition uses a shared supplied trace with independent Fast
 and Guided directors. Fast runs 02.500–12.500 with three small Chinese stamps,
@@ -61,7 +72,11 @@ frames. It never rerenders. Unfinished queues require explicit inspection.
 
 Generate the five exact `fixture.voice` texts with the already selected replaceable
 producer into ordinary `voice-delivery/v1`. The experiment does not change that
-contract, weights, reference, copy or tail controls. Then use Premiere:
+contract, weights, reference or tail controls. In the 0.1.1 local revision only
+locate / carry / basis were regenerated; unchanged compare / verify WAV and
+transcript bytes were reused. Its assembly receipt records each source delivery
+and producer receipt SHA separately, rather than claiming a five-clip TTS run.
+All five clips remain PENDING; no previous acceptance transfers. Then use Premiere:
 
 ```powershell
 python ae/experiments/method-relay-dual-pass/editorial.py prepare local-data/method-relay-dual-pass/dual-next local-data/method-relay-dual-pass/pr-next --delivery <delivery.json> --music <existing-local-recording.mp3>

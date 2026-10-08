@@ -86,6 +86,23 @@ def validate_fixture(f):
             or f['options'][0]['supplied_state'] != 'matches_supplied_fixture'
             or any(o['supplied_state'] != 'conflicts_supplied_fixture' for o in f['options'][1:])):
         raise ValueError('Use explicitly supplied synthetic candidate outcomes; never infer answers')
+    guide = f.get('guided_method_copy')
+    if f['version']=='0.1.1' and guide is None:
+        raise ValueError('The revised method copy requires its explicit source-binding contract')
+    if guide is not None:
+        if (guide['scope'] != 'frozen_general_action_with_synthetic_visual_example_not_case_certification'
+                or [(x['id'], x['method_id'], x['fields']) for x in guide['clips']] != [
+                    (cid, mid, ['core_action', 'decision_rule', 'stop_rule'])
+                    for cid, mid in [('locate', 'R12'), ('carry', 'R11'), ('basis', 'R02')]]
+                or guide['column_labels'] != [{'part':p, 'text':t} for p,t in
+                    [('subject','谁'), ('verb','做什么'), ('object','对象')]]):
+            raise ValueError('Bind only these frozen method actions; no invented explanation fields')
+        e = guide['emphasis']; voices = {v['id']:v['text'] for v in f['voice']}
+        if (e['object_id'] != 'option-B-subject' or e['clip_id'] != 'compare'
+                or e['phrase'] not in voices.get(e['clip_id'], '')
+                or len(e['window']) != 2 or any(type(t) not in (int,float) or not math.isfinite(t) for t in e['window'])
+                or not 31 <= e['window'][0] < e['window'][1] <= 34.8):
+            raise ValueError('The supplied comparison phrase needs its own bounded observation window')
     return f
 
 
@@ -108,6 +125,31 @@ def name_snapshots():
                 'asset_id': bundle['asset_id'], 'semantic_binding_sha': bundle['semantic_binding_sha'],
                 'pointer': prefix+str(i)+'/brand_name', 'name_sha': sha(method['brand_name']),
                 'authority': 'frozen_name_projection_only_not_synthetic_method_certification'})
+    return result
+
+
+def explanation_snapshots(fixture):
+    """Read existing structured actions and boundaries, without certifying this synthetic case."""
+    result = []
+    for clip in fixture['guided_method_copy']['clips']:
+        folder = (ROOT/'local-data/video-os/pilot/gaokao-2021-I-q26-R02' if clip['method_id']=='R02'
+                  else ROOT/'local-data/reading-d-2025/frozen-r1')
+        bundle,status=read(folder/'bundle.json'),read(folder/'status.json')
+        if bundle.get('kind')=='frozen_reviewed_passage':
+            passage.require_current(bundle,status);methods=bundle['payload']['methods'];prefix='/payload/methods/'
+        else:
+            if not status_matches(bundle,status):raise ValueError('Explanation source is no longer current')
+            methods=bundle['methods'];prefix='/methods/'
+        index,method=next((i,m) for i,m in enumerate(methods) if m['method_id']==clip['method_id'])
+        fields={key:method[key] for key in clip['fields']}
+        if any(not isinstance(value,str) or not value.strip() for value in fields.values()):
+            raise ValueError('Explicit frozen action and boundary text required')
+        voice=next(v for v in fixture['voice'] if v['id']==clip['id'])
+        result.append({'clip_id':clip['id'],'method_id':clip['method_id'],'version':method['version'],
+            'asset_id':bundle['asset_id'],'semantic_binding_sha':bundle['semantic_binding_sha'],
+            'fields':fields,'refs':[{'pointer':prefix+str(index)+'/'+key,'value_sha':sha(value)} for key,value in fields.items()],
+            'voice_text_sha':sha(voice['text']),'authority':fixture['guided_method_copy']['scope'],
+            'synthetic_case_certified':False})
     return result
 
 
@@ -164,6 +206,8 @@ def make_request(output, phase):
         'layout': layout, 'cue_layout': cues, 'options': options, 'comparison_columns':columns,'method_names': name_snapshots(),
         'trajectory_sha': sha(f['trace']), 'font_shas': {k:file_sha(f['font'][k+'_file']) for k in ('english','chinese')},
         'template_sha': file_sha(HERE/'build.jsx'), 'project': str(output/'METHOD_RELAY.aep')}
+    if phase=='full' and 'guided_method_copy' in f:
+        request['method_explanations']=explanation_snapshots(f)
     if 'locate_cues' in f:
         stem_font=ImageFont.truetype(f['font']['english_file'],38)
         a,b=f['locate_cues']['stem'],f['locate_cues']['sentence']
@@ -183,6 +227,9 @@ def current(output):
             or r['method_names'] != name_snapshots()
             or any(file_sha(r['fixture']['font'][k+'_file']) != v for k,v in r['font_shas'].items())):
         raise ValueError('Frozen source, trajectory, names, font or executed template changed')
+    if r['phase']=='full' and 'guided_method_copy' in r['fixture']:
+        if r.get('method_explanations')!=explanation_snapshots(r['fixture']):
+            raise ValueError('Frozen method action, boundary or its copy binding changed')
     return r
 
 
@@ -293,6 +340,19 @@ def validate_native(r, native):
     if native['visible_internal_method_ids']: raise ValueError('Internal method numbers must not be visible')
     if native['name_counts'] != {m['method_id']:1 for m in r['method_names']}:
         raise ValueError('Each method gets one small name per complete film')
+    if r['phase']=='full' and 'guided_method_copy' in r['fixture']:
+        guide=r['fixture']['guided_method_copy'];actual=native.get('method_guidance') or {}
+        labels=actual.get('column_labels',[])
+        if (len(labels)!=3 or [x['text'] for x in labels]!=[x['text'] for x in guide['column_labels']]
+                or any(x['font']!=r['fixture']['font']['chinese'] or x['source_text_keys']
+                       or abs(x['x']-r['comparison_columns'][expected['part']])>.15
+                       or x['fast_opacity']!=0 or x['guided_opacity']<60
+                       for x,expected in zip(labels,guide['column_labels']))):
+            raise ValueError('The three comparison headers must bind their columns and stay out of Fast')
+        samples=actual.get('subject_emphasis',[])
+        w=guide['emphasis']['window'];times=[w[0]+.25,(w[0]+w[1])/2,w[1]-.25]
+        if len(samples)!=3 or any(x['opacity']<20 or abs(x['time']-t)>.001 for x,t in zip(samples,times)):
+            raise ValueError('Keep actor emphasis across the supplied spoken phrase window')
     return native
 
 

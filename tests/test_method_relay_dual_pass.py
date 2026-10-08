@@ -27,6 +27,7 @@ class MethodRelayTests(unittest.TestCase):
         names = [{'method_id': m, 'name': n} for m, n in
                  [('R12', '关键词追踪'), ('R11', '长句拆骨'), ('R02', '谁干的陷阱')]]
         with patch.object(relay, 'name_snapshots', return_value=names), \
+                patch.object(relay, 'explanation_snapshots', return_value=[{'binding': 'unit frozen projection'}]), \
                 patch.object(relay, 'file_sha', return_value='a'*64), \
                 patch('PIL.ImageFont.truetype', return_value=Mock(getlength=lambda text: len(text)*10)):
             return relay.make_request(relay.LOCAL / 'test', phase)
@@ -44,13 +45,48 @@ class MethodRelayTests(unittest.TestCase):
                    'peels': [{'id': oid, 'onset': 4, 'release': 4.25, 'detach_seconds': .25}
                              for oid in ('aside-time', 'aside-map')]}
                   for p in request['passes']]
-        return {'spec_sha': request['spec_sha'], 'trajectory_sha': request['trajectory_sha'],
+        native = {'spec_sha': request['spec_sha'], 'trajectory_sha': request['trajectory_sha'],
                 'canvas': [1920, 1080, 24, request['duration']], 'objects': objects, 'passes': passes,
                 'name_counts': {m['method_id']: 1 for m in request['method_names']},
                 'visible_internal_method_ids': [], 'renderer': 'ADBE Advanced 3d',
                 'question': {'text': request['fixture']['stem'], 'source_text_keys': 0},
                 'rewind_restore': [{'initial': [100, 100, 100], 'restored': [100, 100, 100]}],
                 'production_eligible': False, 'public_render_ready': False}
+        if request['phase']=='full' and 'guided_method_copy' in request['fixture']:
+            guide=request['fixture']['guided_method_copy'];w=guide['emphasis']['window']
+            native['method_guidance']={'column_labels':[dict(x,font=request['fixture']['font']['chinese'],
+                source_text_keys=0,x=request['comparison_columns'][x['part']],fast_opacity=0,guided_opacity=76)
+                for x in guide['column_labels']], 'subject_emphasis':[{'time':t,'opacity':24}
+                for t in [w[0]+.25,(w[0]+w[1])/2,w[1]-.25]]}
+        return native
+
+    def test_method_copy_requires_frozen_action_and_boundary_fields(self):
+        for mutate in (lambda f:f.pop('guided_method_copy'),
+                       lambda f:f['guided_method_copy']['clips'][1].update(fields=['invented_grammar']),
+                       lambda f:f['guided_method_copy']['emphasis'].update(phrase='a new claim'),
+                       lambda f:f['guided_method_copy']['emphasis'].update(window=[31,99])):
+            f=deepcopy(self.fixture);mutate(f)
+            with self.subTest(mutation=mutate),self.assertRaises(ValueError):relay.validate_fixture(f)
+
+    def test_changed_method_explanation_invalidates_frozen_request(self):
+        r=self.request('full')
+        with TemporaryDirectory() as tmp:
+            out=Path(tmp);write(out/'request.json',r)
+            with patch.object(relay,'name_snapshots',return_value=r['method_names']), \
+                    patch.object(relay,'file_sha',return_value='a'*64), \
+                    patch.object(relay,'explanation_snapshots',return_value=[{'binding':'changed upstream action'}]):
+                with self.assertRaisesRegex(ValueError,'method action'):relay.current(out)
+
+    def test_guidance_labels_and_actor_emphasis_cannot_leak_or_disappear(self):
+        r=self.request('full');good=self.native_fixture(r);relay.validate_native(r,good)
+        for mutate in (lambda n:n['method_guidance']['column_labels'][0].update(fast_opacity=76),
+                       lambda n:n['method_guidance']['column_labels'][1].update(x=999),
+                       lambda n:n['method_guidance']['column_labels'][2].update(text='new answer'),
+                       lambda n:n['method_guidance']['subject_emphasis'][1].update(opacity=0),
+                       lambda n:n['method_guidance']['subject_emphasis'][0].update(time=0),
+                       lambda n:n.pop('method_guidance')):
+            bad=deepcopy(good);mutate(bad)
+            with self.subTest(mutation=mutate),self.assertRaises(ValueError):relay.validate_native(r,bad)
 
     def test_synthetic_cannot_be_promoted_to_teaching_or_public(self):
         for field in ('not_a_teaching_asset', 'production_eligible', 'public_render_ready'):

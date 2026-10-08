@@ -149,12 +149,32 @@
                     keys(l.transform.opacity,across(100,function(p){var fade=o.id==='A'?100:24,t=o.id==='B'?p.compare[1]:p.others[1];return [[p.lift[0],100],[p.lift[1],35],[p.align[0],35],[p.align[1],100],[t-.35,100],[t,fade],[p.end,fade]];}),false);
                     if(o.difference===piece.part){
                         var mark=rect('DIFFERENCE_'+piece.id,piece.width+12,46,S.palette.difference,[0,0,0],true);mark.parent=l;mark.transform.position.setValue([piece.width/2,-15,1]);mark.moveAfter(l);
-                        keys(mark.transform.opacity,across(0,function(p){var t=o.id==='B'?p.compare[0]:p.others[0];return [[t,0],[t+.16,24],[t+.62,24],[t+1.0,0],[p.end,0]];}),false);
+                        keys(mark.transform.opacity,across(0,function(p){
+                            if(p.kind==='guided'&&S.guided_method_copy&&piece.id===S.guided_method_copy.emphasis.object_id){
+                                var w=S.guided_method_copy.emphasis.window;
+                                return [[w[0],0],[w[0]+.16,24],[w[1]-.16,24],[w[1],0],[p.end,0]];
+                            }
+                            var t=o.id==='B'?p.compare[0]:p.others[0];return [[t,0],[t+.16,24],[t+.62,24],[t+1.0,0],[p.end,0]];
+                        }),false);
                     }
                 })(o.pieces[k]);
             }
             keys(label.transform.opacity,across(75,function(p){var t=o.id==='B'?p.compare[1]:p.others[1];return [[t-.35,75],[t,o.id==='A'?100:24],[p.end,o.id==='A'?100:24]];}),false);
         })(R.options[i]);
+    }
+    // Small names for the existing comparison dimensions, in Guided only.
+    // They label the original objects; they add no grammatical attachment or verdict.
+    if(R.phase==='full'&&S.guided_method_copy){
+        var guide=null;for(i=0;i<R.passes.length;i++)if(R.passes[i].kind==='guided')guide=R.passes[i];
+        for(i=0;i<S.guided_method_copy.column_labels.length;i++){
+            var labelSpec=S.guided_method_copy.column_labels[i];
+            var header=text('GUIDED_COLUMN_'+labelSpec.part,labelSpec.text,24,S.palette.muted,[R.comparison_columns[labelSpec.part],610,0],true);
+            var hd=header.property('Source Text').value;hd.font=S.font.chinese;header.property('Source Text').setValue(hd);
+            header.parent=evidence;header.transform.position.setValue([R.comparison_columns[labelSpec.part],610,0]);
+            header.comment=JSON.stringify({kind:'frozen_comparison_dimension_label',part:labelSpec.part,source_refs:R.method_explanations[2].refs,synthetic_case_certified:false});
+            keys(header.transform.opacity,[[0,0],[guide.align[0],0],[guide.align[0]+.25,76],
+                [S.guided_method_copy.emphasis.window[1]-.25,76],[S.guided_method_copy.emphasis.window[1],0],[cp.duration,0]],false);
+        }
     }
     var compareLine=stroke('SOURCE_TO_OPTION',[[0,0],[1,1]],S.palette.fog,false);
     var vv=compareLine.property('ADBE Root Vectors Group').property(1).property('ADBE Vectors Group');
