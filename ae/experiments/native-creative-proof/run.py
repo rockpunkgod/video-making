@@ -52,12 +52,16 @@ def validate_presentation(presentation, scene):
     """A small presentation overlay, never an alternative source of text or roles."""
     required={'id','duration','time_map','voice_starts','parks','carrier_rest_opacity',
               'text_rest_opacity','context_rest_opacity','side_rest_opacity'}
-    attached=presentation.get('id') in ('SYNTHETIC-ATTACHMENT-LAYOUT-R5','SYNTHETIC-ATTACHMENT-LAYOUT-R5-FAST')
+    attached=presentation.get('id') in ('SYNTHETIC-ATTACHMENT-LAYOUT-R5','SYNTHETIC-ATTACHMENT-LAYOUT-R5-FAST','SYNTHETIC-ATTACHMENT-LAYOUT-R6-SHARP')
     if attached:required=(required-{'parks'})|{'attachment_layout'}
-    if set(presentation)!=required or presentation['id'] not in ('SYNTHETIC-RHYTHM-TEXTURE-R4','SYNTHETIC-ATTACHMENT-LAYOUT-R5','SYNTHETIC-ATTACHMENT-LAYOUT-R5-FAST'):
+    sharp=presentation.get('id')=='SYNTHETIC-ATTACHMENT-LAYOUT-R6-SHARP'
+    if sharp:required.add('peel_motion_scale')
+    if set(presentation)!=required or presentation['id'] not in ('SYNTHETIC-RHYTHM-TEXTURE-R4','SYNTHETIC-ATTACHMENT-LAYOUT-R5','SYNTHETIC-ATTACHMENT-LAYOUT-R5-FAST','SYNTHETIC-ATTACHMENT-LAYOUT-R6-SHARP'):
         raise ValueError('Use the explicit synthetic presentation contract')
     def finite(value):
         return type(value) in (int,float) and math.isfinite(value)
+    if sharp and (not finite(presentation['peel_motion_scale']) or not .4<=presentation['peel_motion_scale']<=.8):
+        raise ValueError('Peel motion scale must be finite in 0.4..0.8; other beats use their original clock')
     duration=presentation['duration']
     if not finite(duration) or not 20<=duration<=30 or abs(duration*24-round(duration*24))>1e-6:
         raise ValueError('Presentation duration must fit this proof on video frames')
@@ -102,6 +106,16 @@ def presentation_time(request,time):
     for a,b in zip(rows,rows[1:]):
         if time<=b[0]:return a[1]+(time-a[0])*(b[1]-a[1])/(b[0]-a[0])
     return rows[-1][1]
+
+
+def peel_time(request,object_id,time):
+    """Shorten only the supplied object's physical motion, keeping both onsets."""
+    scale=request.get('presentation',{}).get('peel_motion_scale',1)
+    start,end=(6.7,10.7) if object_id=='aside-time' else (12.9,17.5)
+    shown=presentation_time(request,time)
+    if scale==1 or time<start or time>end:return shown
+    onset=presentation_time(request,start)
+    return onset+scale*(shown-onset)
 
 
 def voice_slots(request):
@@ -171,10 +185,10 @@ def require_research_project(c):
     return path
 
 
-def build(output, revision, recovery_id=None, rhythm_r4=False, attachment_r5=False, attachment_r5_fast=False):
+def build(output, revision, recovery_id=None, rhythm_r4=False, attachment_r5=False, attachment_r5_fast=False, attachment_r6_sharp=False):
     output=research_output(output)
-    if sum((rhythm_r4,attachment_r5,attachment_r5_fast))>1:raise ValueError('Select one explicit visual revision')
-    overlay='attachment-r5-fast.json' if attachment_r5_fast else 'attachment-r5.json' if attachment_r5 else 'rhythm-r4.json' if rhythm_r4 else None
+    if sum((rhythm_r4,attachment_r5,attachment_r5_fast,attachment_r6_sharp))>1:raise ValueError('Select one explicit visual revision')
+    overlay='attachment-r6-sharp.json' if attachment_r6_sharp else 'attachment-r5-fast.json' if attachment_r5_fast else 'attachment-r5.json' if attachment_r5 else 'rhythm-r4.json' if rhythm_r4 else None
     request=make_request(output,revision,read(HERE/overlay) if overlay else None)
     c=client();require_research_project(c)
     output.mkdir(parents=True,exist_ok=False)
@@ -268,6 +282,8 @@ def audit(output, comp_id=None, variant='B'):
     if variant=='B' and (camera['dof']!=1 or not camera['focus_expression'] or len(camera['poi'])<4):
         raise ValueError('Physical camera/focus absent')
     if any(v<=0 for _,v in camera['focus_samples']):raise ValueError('Focus behind camera')
+    if variant=='B' and 'peel_motion_scale' in request.get('presentation',{}):
+        result['peel_timing']=verify_peel_timing(request,result)
     if variant=='B' and 'attachment_layout' in request.get('presentation',{}):
         code='var NCP_REQUEST='+json.dumps((output/'build-request.json').as_posix())+';var NCP_COMP='+str(int(comp_id))+';\n'+(HERE/'attachment-audit.jsx').read_text(encoding='utf-8')
         measured=json.loads(c.call('ae_exec',{'code':code})['content'])
@@ -275,6 +291,26 @@ def audit(output, comp_id=None, variant='B'):
         result['attachment_layout']=measured
     write(output/('native-audit-'+variant+'.json'),result)
     return result
+
+
+def verify_peel_timing(request,native):
+    """Check actual AE transform key times; declared speed alone is not evidence."""
+    # Native readback quantizes sub-frame keys on this host (observed <0.02 ms).
+    # Allow one observed tick, not a frame or a percentage of the motion window.
+    tolerance=1/(24*1024)
+    layers={layer['name']:layer for layer in native['layers']};measured=[]
+    for object_id,source_times in (('aside-time',[0,6.7,7.9,9.2,10.7,27]),
+                                   ('aside-map',[0,12.9,14.6,16,17.5,27])):
+        layer=layers['HINGE_'+object_id]
+        for track,times in (('position',source_times),('yRotation',source_times)):
+            rows=layer[track]
+            if len(rows)!=len(times) or any(not math.isfinite(row[0]) or abs(row[0]-peel_time(request,object_id,t))>tolerance for row,t in zip(rows,times)):
+                raise ValueError('Native peel motion timing does not match its frozen overlay')
+        times=[r[0] for r in layer['position']]
+        measured.append({'object_id':object_id,'onset':times[1],'release':times[2],
+            'landed':times[4],'motion_duration':times[4]-times[1]})
+    return {'motion_scale':request['presentation']['peel_motion_scale'],'native_time_tolerance':tolerance,'objects':measured,
+            'onset_interval':measured[1]['onset']-measured[0]['onset']}
 
 
 def verify_attachment_layout(request,measured):
@@ -436,13 +472,14 @@ def main():
     visual.add_argument('--rhythm-r4',action='store_true',help='Use the explicit Astra rhythm / texture presentation overlay')
     visual.add_argument('--attachment-r5',action='store_true',help='Park supplied fragments above/below their frozen visual anchors')
     visual.add_argument('--attachment-r5-fast',action='store_true',help='Same vertical layout with faster peeling; preserve reading and final holds')
+    visual.add_argument('--attachment-r6-sharp',action='store_true',help='Shorten physical peeling only; keep both onsets, camera, guide and story intervals')
     parser.add_argument('--recovery-id',help='Exact official ID after native-state reconciliation; never guessed')
     parser.add_argument('--comp-id',type=int);parser.add_argument('--label',default='B')
     parser.add_argument('--start',type=float,default=0);parser.add_argument('--duration',type=float)
     parser.add_argument('--single-frame',action='store_true',help='Use verified native per-script single-frame rendering after a reconciled MFR stall')
     parser.add_argument('--source',help='Existing immutable B revision for the fork operation')
     args=parser.parse_args();output=research_output(args.output)
-    if args.operation=='build':result=build(output,args.revision,args.recovery_id,args.rhythm_r4,args.attachment_r5,args.attachment_r5_fast)
+    if args.operation=='build':result=build(output,args.revision,args.recovery_id,args.rhythm_r4,args.attachment_r5,args.attachment_r5_fast,args.attachment_r6_sharp)
     elif args.operation=='fork':
         if not args.source:parser.error('fork requires --source')
         result=fork_controls(output,args.source,args.recovery_id)

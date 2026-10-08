@@ -124,6 +124,53 @@ class NativeCreativeProofTests(unittest.TestCase):
         self.assertEqual({v['id']:v['text'] for v in proof.voice_slots(quick)},
                          {v['id']:v['text'] for v in proof.voice_slots(normal)})
 
+    def test_sharp_peeling_keeps_onsets_story_intervals_camera_clock_and_original_voice_slots(self):
+        fast=json.loads((HERE/'attachment-r5-fast.json').read_text(encoding='utf-8'))
+        sharp=json.loads((HERE/'attachment-r6-sharp.json').read_text(encoding='utf-8'))
+        proof.validate_presentation(sharp,self.scene)
+        self.assertEqual({k:v for k,v in sharp.items() if k not in ('id','peel_motion_scale')},
+                         {k:v for k,v in fast.items() if k!='id'})
+        request={'scene':self.scene,'presentation':sharp}
+        previous={'scene':self.scene,'presentation':fast}
+        self.assertEqual(proof.voice_slots(request),proof.voice_slots(previous))
+        self.assertEqual(proof.canvas_duration(request),20.25)
+        for t in (0,3,5.6,10.9,11.8,17.5,22.5,27):
+            self.assertEqual(proof.presentation_time(request,t),proof.presentation_time(previous,t))
+        self.assertAlmostEqual(proof.peel_time(request,'aside-time',6.7),5.3)
+        self.assertAlmostEqual(proof.peel_time(request,'aside-time',10.7),6.9152)
+        self.assertAlmostEqual(proof.peel_time(request,'aside-map',12.9),9.7)
+        self.assertAlmostEqual(proof.peel_time(request,'aside-map',17.5),11.32)
+        self.assertAlmostEqual(proof.peel_time(request,'aside-map',12.9)-proof.peel_time(request,'aside-time',6.7),4.4)
+
+    def test_sharp_motion_scale_rejects_nonfinite_extreme_and_legacy_injection(self):
+        sharp=json.loads((HERE/'attachment-r6-sharp.json').read_text(encoding='utf-8'))
+        for value in (True,None,float('nan'),float('inf'),.2,1,2):
+            invalid=deepcopy(sharp);invalid['peel_motion_scale']=value
+            with self.subTest(value=value),self.assertRaises(ValueError):proof.validate_presentation(invalid,self.scene)
+        legacy=json.loads((HERE/'attachment-r5-fast.json').read_text(encoding='utf-8'))
+        legacy['peel_motion_scale']=.6
+        with self.assertRaises(ValueError):proof.validate_presentation(legacy,self.scene)
+
+    def test_declared_sharp_speed_requires_actual_native_transform_key_times(self):
+        sharp=json.loads((HERE/'attachment-r6-sharp.json').read_text(encoding='utf-8'))
+        request={'scene':self.scene,'presentation':sharp};layers=[]
+        def native_tick(t):return round(t*24*1024)/(24*1024)
+        for obj,times in (('aside-time',[0,6.7,7.9,9.2,10.7,27]),('aside-map',[0,12.9,14.6,16,17.5,27])):
+            # Explicit synthetic audit rows; not a mocked AE execution or render.
+            layers.append({'name':'HINGE_'+obj,'position':[[native_tick(proof.peel_time(request,obj,t)),[]] for t in times],
+                           'yRotation':[[native_tick(proof.peel_time(request,obj,t)),0] for t in times]})
+        native={'layers':layers}
+        result=proof.verify_peel_timing(request,native)
+        self.assertAlmostEqual(result['onset_interval'],4.4,delta=1/(24*1024))
+        self.assertAlmostEqual(result['objects'][0]['motion_duration'],1.6152,delta=1/(24*1024))
+        self.assertAlmostEqual(result['objects'][1]['motion_duration'],1.62,delta=1/(24*1024))
+        changed=deepcopy(native);changed['layers'][0]['position'][4][0]=8.2
+        with self.assertRaises(ValueError):proof.verify_peel_timing(request,changed)
+        changed=deepcopy(native);changed['layers'][1]['yRotation'][1][0]-=.2
+        with self.assertRaises(ValueError):proof.verify_peel_timing(request,changed)
+        changed=deepcopy(native);changed['layers'][1]['position'][4][0]+=1/24
+        with self.assertRaises(ValueError):proof.verify_peel_timing(request,changed)
+
     def test_actual_attachment_audit_rejects_misalignment_and_wrong_source_even_with_good_geometry(self):
         r5=json.loads((HERE/'attachment-r5.json').read_text(encoding='utf-8'))
         request={'presentation':r5,'scene_sha':sha(self.scene),'spec_sha':sha('SYNTHETIC audit binding'),

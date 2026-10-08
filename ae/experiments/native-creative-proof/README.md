@@ -1,8 +1,8 @@
 # AE Native Creative Proof
 
-一个定制合成视觉研究入口：同一句原文中的两块附属片段绕附着端转开、脱离、暂存；原始核心对象闭合实际间隙，镜头回到稳定阅读面。当前 r5-fast 为 20.25 秒：主干一行，两块分别在给定视觉锚点的上方 / 下方归位；仅加快剥离，保留原句阅读与结果停留。历史 Astra 建议版 r4 为 22 秒，r3 为 27 秒。实际结果及限制见根目录 `AE_NATIVE_CREATIVE_PROOF_ACCEPTANCE.md`。
+一个定制合成视觉研究入口：同一句原文中的两块附属片段绕附着端转开、脱离、暂存；原始核心对象闭合实际间隙，镜头回到稳定阅读面。当前 r6-sharp 为 20.25 秒：两刀的物理运动各约 1.6 秒，保持 r5-fast 的起刀间隔、镜头、主干闭合、原录音与阅读停留。主干一行，两块分别在给定视觉锚点的上方 / 下方归位。历史 r5-fast 为 20.25 秒，Astra 建议版 r4 为 22 秒，r3 为 27 秒。实际结果及限制见根目录 `AE_NATIVE_CREATIVE_PROOF_ACCEPTANCE.md`。
 
-这不是教学分析器、生产 Rig 或 V10。输入中的跨度、视觉附着关系和保护对象全部事先给定；三个呈现参数互斥，省略时仍沿用 27 秒时序。脚本不解析英文、不消费 Registry，不改变真实 Direction 的 `execution_allowed`，也不证明英语分析或方法收益。上 / 下归位只消费原合成锚点，不能把几何归位检查当作真实语法归属认证。`SYNTHETIC` 标识始终显示，教学与公开资格始终为 false。
+这不是教学分析器、生产 Rig 或 V10。输入中的跨度、视觉附着关系和保护对象全部事先给定；四个呈现参数互斥，省略时仍沿用 27 秒时序。脚本不解析英文、不消费 Registry，不改变真实 Direction 的 `execution_allowed`，也不证明英语分析或方法收益。上 / 下归位只消费原合成锚点，不能把几何归位检查当作真实语法归属认证。`SYNTHETIC` 标识始终显示，教学与公开资格始终为 false。
 
 ## 文件职责
 
@@ -12,6 +12,7 @@
 | `rhythm-r4.json` | 单独绑定 Astra 呈现修订：时序、暂存位置与原声音出场时间；不改变冻结 scene |
 | `attachment-r5.json` | 上 / 下就近归位；沿用 r4 的 22 秒时序与原旁白 |
 | `attachment-r5-fast.json` | 相同归位规则，剥离约快两成；保留阅读与结果停留，原录音只重新放置 |
+| `attachment-r6-sharp.json` | 保留 r5-fast 的整条呈现时钟；只将两刀的物理转开 / 运输 / 落位压到 0.6 倍，连接线提前随抽离出现 |
 | `build.jsx` | 本片专用布局、三维附着 Null、薄载体与侧边、不同时间曲线、导向相机、原生景深 |
 | `attachment-audit.jsx` | 原生采样字形中心、随锚点移动的落位、短暂连接线与结果可读层级；不认证英语关系 |
 | `variants.jsx` | 同素材平面对照 A、只固定相机变换的 C、反向恢复检查 D |
@@ -25,8 +26,8 @@
 | --- | --- | --- |
 | 0–3.5 s | 原句正常可读，外围上下文作为参照 | 稳定整体阅读 |
 | 3.5–4.7 s | 明确接近当前句 | 相机和观察目标分别移动，上下文产生视差 |
-| 4.7–8.2 s | 第一块提示、绕端转开、归到原锚点上方；原主语闭合真正空出的间隙，片段跟随 | 用实际 TextLayer 世界中心交接焦点，释放后回到主干 |
-| 8.2–12.4 s | 交接到句尾；9.3 s 开始第二次操作，归到原锚点下方 | 镜头沿操作区域交接；不追逐暂存片段 |
+| 4.7–8.2 s | 原范围提示；5.3–6.915 s 转开并归到原锚点上方，6.9–8.2 s 随原主语闭合真正间隙 | 镜头与焦点方向沿用 r5-fast，释放后回到主干 |
+| 8.2–12.4 s | 原镜头交接；9.3 s 原范围提示，9.7–11.32 s 转开并归到原锚点下方，随后停稳 | 镜头沿操作区域交接；不追逐暂存片段 |
 | 12.4–15.75 s | 核心保持已有结果，阅读轴出现；连接线与载体淡去 | 单次连续返回稳定结果构图，没有退远再推近的第二高潮 |
 | 15.75–20.25 s | 当前阅读结构稳定，外围信息仍保留 | 镜头、核心文字、焦点停稳；附属文字仍清楚可读 |
 
@@ -42,7 +43,9 @@
 | consequence | 片段离开阅读轴后，原主语于 6.9–8.2 s 闭合真正空出的间隙 | 句尾离开阅读轴，主干右界从外围尾段回到原宾语；不安排虚假的第二次接合 |
 | rest state | 上方 96 单位、76% 尺度、72% 文字对比，回到同一阅读面；保留 deferred 与恢复路径 | 下方 96 单位，同一层级；不持续模糊或藏到远处 |
 
-上下落位由世界坐标与原生 `sourceRectAtTime` 字形中心计算；没有修改源文案或输入锚点。连接线按两端实时 `toComp` 坐标绘制，只在抽离与落位时可见，落位后保留 0.5 秒、用 0.3 秒淡去。最终不画箭头或树状结构。近远由本片实际相机观察关系决定，不概括成任何 Z 正负规则。
+上下落位由世界坐标与原生 `sourceRectAtTime` 字形中心计算；没有修改源文案或输入锚点。连接线按两端实时 `toComp` 坐标绘制，抽离时出现，按该版绑定的阶段淡去（r5 落位后保留 0.5 秒、淡去 0.3 秒；r6 提前出现，但保留旧淡去时点）。最终不画箭头或树状结构。近远由本片实际相机观察关系决定，不概括成任何 Z 正负规则。
+
+r6 的 `peel_motion_scale` 只作用于两块对象的 Position / Scale / Y Rotation / Z Rotation 及跟随表达式的释放权重，不压缩整条时间轴。两刀仍在 5.3 / 9.7 秒起动，间隔 4.4 秒；更早落位后维持停留，不提前下一刀。载体退隐、主干闭合、镜头交接与结果阶段使用原时钟；连接线随提前的释放出现，但仍按原阶段淡去。`verify_peel_timing` 读取实际 AE Position / Y Rotation 关键帧核验加速，不能只凭配置中的 0.6 宣称执行成功。本机关键帧存在不足 0.02 ms 的回读量化；校验只允许一个观测时间刻度 1/24576 s，整帧移位仍拒绝。
 
 r3 的节奏问题由实际关键帧确认：主语在约 10.9 秒接近谓语，第二片段离开后核心已连成一行；18.6–20.55 秒主语移约 131 px、谓语和宾语各约 130 px，属于整体再构图，没有新的显著阅读跨度压缩。不能把后段移动当作额外 Cognitive Payoff。用户要求优先打磨节奏与整体质感；r4 删除后置整体平移、重排原旁白，只做一次结果再构图。观看判断不因执行成功而通过。
 
@@ -57,7 +60,7 @@ r3 的节奏问题由实际关键帧确认：主语在约 10.9 秒接近谓语�
 从仓库根目录运行，例如：
 
 ```powershell
-python ae/experiments/native-creative-proof/run.py build local-data/ae-native-creative-proof/r-next --revision r-next --attachment-r5-fast
+python ae/experiments/native-creative-proof/run.py build local-data/ae-native-creative-proof/r-next --revision r-next --attachment-r6-sharp
 python ae/experiments/native-creative-proof/run.py preview local-data/ae-native-creative-proof/r-next
 python ae/experiments/native-creative-proof/run.py render local-data/ae-native-creative-proof/r-next --single-frame
 python ae/experiments/native-creative-proof/run.py variants local-data/ae-native-creative-proof/r-next
@@ -73,7 +76,7 @@ python ae/experiments/native-creative-proof/run.py render local-data/ae-native-c
 python ae/experiments/native-creative-proof/review.py local-data/ae-native-creative-proof/r-next/NATIVE_B.mp4 local-data/ae-native-creative-proof/r-next/full-motion-review
 ```
 
-A 是同输入的简化平面基线：固定相机、取消景深与深度、取消局部转动与薄载体，其余动作目标和结果不变。C 只固定相机 Position / Point of Interest；几何、父级、景深和焦点交接不变。D 把同一批对象的关键帧反向映射到六秒内，第七秒核对原文、原位置和附着父级。r5 的表达式驱动位置先在原锚点尚未反向前按帧采样，再反向位置与尺度，避免正向跟随表达式破坏恢复；D 的焦点同样不使用正向时间表达式。当前 r5-fast 已核验恢复合成，未渲染新的 A / C / D 电影；上面的命令是重放入口。
+A 是同输入的简化平面基线：固定相机、取消景深与深度、取消局部转动与薄载体，其余动作目标和结果不变。C 只固定相机 Position / Point of Interest；几何、父级、景深和焦点交接不变。D 把同一批对象的关键帧反向映射到六秒内，第七秒核对原文、原位置和附着父级。r5 / r6 的表达式驱动位置先在原锚点尚未反向前按帧采样，再反向位置与尺度，避免正向跟随表达式破坏恢复；D 的焦点同样不使用正向时间表达式。当前 r6-sharp 已核验恢复合成，未渲染新的 A / C / D 电影；上面的命令是重放入口。
 
 已完成的 B 快照也可在一个新的空白工程中制作对照，避免继续使用失败的渲染会话。源 `PROJECT_B.aep`、冻结的执行 JSX 与字体绑定必须精确匹配；同目录其它 AEP 或相同字节的另一条路径不能替代这个快照：
 
@@ -92,7 +95,7 @@ python ae/experiments/native-creative-proof/guide.py assemble local-data/ae-nati
 python ae/experiments/native-creative-proof/guide.py export local-data/ae-native-creative-proof/r-next local-data/ae-native-creative-proof/guide-next
 ```
 
-Premiere V1 只有一段完整、按该次绑定时长的画面（r5-fast 为 20.25 秒），A1 放置五个完整声音；没有音乐、音效、切镜或 time-stretch。r5-fast 的五条 WAV 与 guide-r4 字节相同。切换实验前先将旧 PR 工程复制到新目录并打开副本，避免创建新工程时保存历史固定工程；导出后重新回读时间线、核对源路径、编码规格及五条实际声音的波形相关性。波形存在不等于听感通过。
+Premiere V1 只有一段完整、按该次绑定时长的画面（r6-sharp 为 20.25 秒），A1 放置五个完整声音；没有音乐、音效、切镜或 time-stretch。r6-sharp 的五条 WAV 与 guide-r5-fast 字节相同，出场时间也相同。切换实验前先将旧 PR 工程复制到新目录并打开副本，避免创建新工程时保存历史固定工程；导出后重新回读时间线、核对源路径、编码规格及五条实际声音的波形相关性。波形存在不等于听感通过。
 
 ## 凭证与故障
 

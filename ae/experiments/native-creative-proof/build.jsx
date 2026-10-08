@@ -9,8 +9,13 @@
         for(var i=1;i<rows.length;i++)if(t<=rows[i][0])return rows[i-1][1]+(t-rows[i-1][0])*(rows[i][1]-rows[i-1][1])/(rows[i][0]-rows[i-1][0]);
         return P.duration;
     }
-    function setKeys(p, rows, incoming, outgoing, spatial) {
-        for(var k=0;k<rows.length;k++)p.setValueAtTime(present(rows[k][0]),rows[k][1]);
+    function motionTime(id,t) {
+        var shown=present(t),start=id==='aside-time'?6.7:12.9,end=id==='aside-time'?10.7:17.5;
+        if(!M||t<start||t>end)return shown;
+        var onset=present(start);return onset+M*(shown-onset);
+    }
+    function setKeys(p, rows, incoming, outgoing, spatial, motionId) {
+        for(var k=0;k<rows.length;k++)p.setValueAtTime(motionId?motionTime(motionId,rows[k][0]):present(rows[k][0]),rows[k][1]);
         for(var k=1;k<=p.numKeys;k++) {
             var count=p.isSpatial?1:(p.value instanceof Array?p.value.length:1),ins=[],outs=[];
             for(var j=0;j<count;j++){ins.push(new KeyframeEase(0,incoming||55));outs.push(new KeyframeEase(0,outgoing||35));}
@@ -38,7 +43,7 @@
         l.transform.position.setValue(point);l.motionBlur=!!world;return l;
     }
     function null3(cp,name,p) { var n=cp.layers.addNull(cp.duration);n.name=name;n.threeDLayer=true;n.transform.anchorPoint.setValue([0,0,0]);n.transform.position.setValue(p);return n; }
-    var R=load(NCP_REQUEST),S=R.scene,P=R.presentation||null,A=P&&(P.id==='SYNTHETIC-ATTACHMENT-LAYOUT-R5'||P.id==='SYNTHETIC-ATTACHMENT-LAYOUT-R5-FAST')?P.attachment_layout:null,dest=new File(R.project);
+    var R=load(NCP_REQUEST),S=R.scene,P=R.presentation||null,A=P&&(P.id==='SYNTHETIC-ATTACHMENT-LAYOUT-R5'||P.id==='SYNTHETIC-ATTACHMENT-LAYOUT-R5-FAST'||P.id==='SYNTHETIC-ATTACHMENT-LAYOUT-R6-SHARP')?P.attachment_layout:null,M=P?P.peel_motion_scale:null,dest=new File(R.project);
     if(dest.exists)throw new Error('Research revision already exists');
     if(S.kind!=='synthetic_ae_visual_research'||S.method_id!==null||S.production_eligible!==false||S.public_render_ready!==false)throw new Error('SYNTHETIC research only');
     app.project.save(dest);
@@ -89,18 +94,18 @@
                 var restY=540+(a?-1:1)*A.baseline_gap;
                 path[3][1]=[restX+(a?42:65),restY+(a?-38:38),a?95:85];
                 path[4][1]=[restX,restY,0];path[5][1]=[restX,restY,0];
-                setKeys(hinge.transform.scale,[[0,[100,100,100]],[release,[100,100,100]],[park,[A.scale_percent,A.scale_percent,A.scale_percent]],[27,[A.scale_percent,A.scale_percent,A.scale_percent]]],60,30,false);
-                hinge.transform.position.expression='var a=thisComp.layer('+JSON.stringify(n.attachment)+');var delta=sub(a.toWorld([0,0,0],time),a.toWorld([0,0,0],0));add(value,mul(delta,ease(time,'+present(release)+','+present(park)+',0,1)));';
+                setKeys(hinge.transform.scale,[[0,[100,100,100]],[release,[100,100,100]],[park,[A.scale_percent,A.scale_percent,A.scale_percent]],[27,[A.scale_percent,A.scale_percent,A.scale_percent]]],60,30,false,n.id);
+                hinge.transform.position.expression='var a=thisComp.layer('+JSON.stringify(n.attachment)+');var delta=sub(a.toWorld([0,0,0],time),a.toWorld([0,0,0],0));add(value,mul(delta,ease(time,'+motionTime(n.id,release)+','+motionTime(n.id,park)+',0,1)));';
             }else if(P){path[3][1]=P.parks[n.id].via;path[4][1]=P.parks[n.id].rest;path[5][1]=P.parks[n.id].rest;}
-            setKeys(hinge.transform.position,path,67,25,true);
+            setKeys(hinge.transform.position,path,67,25,true,n.id);
             // Cross the intermediate path point continuously, then settle once.
             // Do not ease to zero at every waypoint of the same transport.
             if(P){var p=hinge.transform.position,a0=p.keyValue(3),a1=p.keyValue(4),a2=p.keyValue(5);
                 function distance(a,b){var total=0;for(var j=0;j<3;j++)total+=(a[j]-b[j])*(a[j]-b[j]);return Math.sqrt(total);}
                 var speed=.6*Math.min(distance(a0,a1)/(p.keyTime(4)-p.keyTime(3)),distance(a1,a2)/(p.keyTime(5)-p.keyTime(4)));
                 p.setTemporalEaseAtKey(4,[new KeyframeEase(speed,32)],[new KeyframeEase(speed,24)]);}
-            setKeys(hinge.transform.yRotation,a?[[0,0],[6.7,0],[7.9,-55],[9.2,-48],[10.7,A?0:-8],[27,A?0:-8]]:[[0,0],[12.9,0],[14.6,-52],[16,-37],[17.5,A?0:7],[27,A?0:7]],64,28,false);
-            setKeys(hinge.transform.zRotation,a?[[0,0],[7.9,0],[9.2,-7],[10.7,A?0:-3],[27,A?0:-3]]:[[0,0],[14.6,0],[16,6],[17.5,A?0:3],[27,A?0:3]],60,30,false);
+            setKeys(hinge.transform.yRotation,a?[[0,0],[6.7,0],[7.9,-55],[9.2,-48],[10.7,A?0:-8],[27,A?0:-8]]:[[0,0],[12.9,0],[14.6,-52],[16,-37],[17.5,A?0:7],[27,A?0:7]],64,28,false,n.id);
+            setKeys(hinge.transform.zRotation,a?[[0,0],[7.9,0],[9.2,-7],[10.7,A?0:-3],[27,A?0:-3]]:[[0,0],[14.6,0],[16,6],[17.5,A?0:3],[27,A?0:3]],60,30,false,n.id);
         }
     }
     var targetX=650;
@@ -132,7 +137,7 @@
     opt.property('ADBE Camera Focus Distance').expression='var p=thisComp.layer("FOCUS_TARGET").toWorld([0,0,0]);var c=transform.position;var v=normalize(sub(transform.pointOfInterest,c));dot(sub(p,c),v);';
     if(A){
         for(i=0;i<R.layout.length;i++)if(R.layout[i].role==='supplied_modifier'){
-            var n=R.layout[i],above=n.id==='aside-time',release=present(above?7.9:14.6),park=present(above?10.7:17.5);
+            var n=R.layout[i],above=n.id==='aside-time',release=motionTime(n.id,above?7.9:14.6),park=present(above?10.7:17.5);
             var line=cp.layers.addShape();line.name='RELATION_'+n.id;
             line.comment=JSON.stringify({origin:R.scene_sha,anchor_id:n.attachment,object_id:n.id,kind:'supplied_synthetic_visual_attachment'});
             line.transform.anchorPoint.setValue([0,0]);line.transform.position.setValue([0,0]);
