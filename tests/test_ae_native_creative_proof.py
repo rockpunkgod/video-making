@@ -171,6 +171,68 @@ class NativeCreativeProofTests(unittest.TestCase):
         changed=deepcopy(native);changed['layers'][1]['position'][4][0]+=1/24
         with self.assertRaises(ValueError):proof.verify_peel_timing(request,changed)
 
+    def wordcue_fixture(self):
+        return {'scene':deepcopy(self.scene),'presentation':json.loads((HERE/'attachment-r7-wordcue.json').read_text(encoding='utf-8'))}
+
+    def test_word_cues_require_explicit_exact_synthetic_spans_and_preserve_original_copy(self):
+        request=self.wordcue_fixture();base=sha(request['scene']);p=request['presentation']
+        proof.validate_presentation(p,request['scene'])
+        previous={'scene':self.scene,'presentation':json.loads((HERE/'attachment-r6-sharp.json').read_text(encoding='utf-8'))}
+        self.assertEqual(proof.voice_slots(request),proof.voice_slots(previous))
+        self.assertEqual(p['time_map'],previous['presentation']['time_map'])
+        self.assertEqual(sha(request['scene']),base)
+        changes=(lambda v:v['word_cues'].update(scene_sha=sha('different scene')),
+                 lambda v:v['word_cues'].update(authority='certified_grammar'),
+                 lambda v:v['word_cues']['items'][0].update(text='new claim'),
+                 lambda v:v['word_cues']['items'][0].update(start=0,end=8,text='The team'),
+                 lambda v:v['word_cues']['items'][0].update(object_id='core-subject'),
+                 lambda v:v['word_cues']['items'][0].update(role='decider'),
+                 lambda v:v['word_cues']['items'].__setitem__(1,v['word_cues']['items'][0]))
+        for change in changes:
+            invalid=deepcopy(p);change(invalid)
+            with self.subTest(change=change),self.assertRaises(ValueError):proof.validate_presentation(invalid,self.scene)
+
+    def test_word_cue_timing_requires_confirmation_and_bounded_fast_detach(self):
+        request=self.wordcue_fixture();p=request['presentation']
+        for field,value in (('cue_start',float('nan')),('cue_start',5.1),('handoff',5.25),('scope_ready',5.3)):
+            invalid=deepcopy(p);invalid['word_cues']['items'][0][field]=value
+            with self.subTest(field=field,value=value),self.assertRaises(ValueError):proof.validate_presentation(invalid,self.scene)
+        for value in (True,None,float('inf'),0,.8):
+            invalid=deepcopy(p);invalid['peel_detach_seconds']=value
+            with self.subTest(detach=value),self.assertRaises(ValueError):proof.validate_presentation(invalid,self.scene)
+        self.assertAlmostEqual(proof.peel_time(request,'aside-time',6.7),5.3)
+        self.assertAlmostEqual(proof.peel_time(request,'aside-time',7.9),5.55)
+        self.assertAlmostEqual(proof.peel_time(request,'aside-time',10.7),6.3768)
+        self.assertAlmostEqual(proof.peel_time(request,'aside-map',12.9),9.7)
+        self.assertAlmostEqual(proof.peel_time(request,'aside-map',14.6),9.95)
+        self.assertAlmostEqual(proof.peel_time(request,'aside-map',17.5),10.78)
+        self.assertAlmostEqual(proof.presentation_time(request,10.9),8.2)
+        self.assertEqual(proof.canvas_duration(request),20.25)
+
+    def test_native_word_cue_audit_rejects_wrong_span_parent_or_failed_handoff(self):
+        request=self.wordcue_fixture();request.update(spec_sha=sha('synthetic readback fixture'),scene_sha=sha(self.scene))
+        request['cue_layout']=[dict(c,offset_x=20,width=75,text_sha=sha(c['text'])) for c in request['presentation']['word_cues']['items']]
+        rows=[]
+        for cue in request['cue_layout']:
+            origin={'kind':'supplied_synthetic_word_cue','origin':request['scene_sha'],'object_id':cue['object_id'],
+                'start':cue['start'],'end':cue['end'],'text_sha':cue['text_sha']}
+            samples=[{'phase':phase,'word':28 if phase=='word' else 0,'range':65 if phase=='scope' else 0,
+                'range_scale':100,'joint':65 if phase=='scope' else 0,'carrier':0} for phase in ('word','scope','detached','park')]
+            rows.append({'object_id':cue['object_id'],'origin':origin,'parent':'HINGE_'+cue['object_id'],
+                'range_parent':'HINGE_'+cue['object_id'],'threeD':True,'width':83,'position':[57.5,-18,1],'samples':samples})
+        # Synthetic validator fixture; no native rendering or human PASS is mocked.
+        native={'spec_sha':request['spec_sha'],'scene_sha':request['scene_sha'],'cues':rows}
+        proof.verify_word_cue_readback(request,native)
+        changes=(lambda v:v['cues'][0]['origin'].update(start=0),
+                 lambda v:v['cues'][0].update(parent='HINGE_wrong'),
+                 lambda v:v['cues'][0]['samples'][0].update(range=65),
+                 lambda v:v['cues'][0]['samples'][1].update(word=28),
+                 lambda v:v['cues'][0]['samples'][2].update(joint=65),
+                 lambda v:v['cues'].pop())
+        for change in changes:
+            invalid=deepcopy(native);change(invalid)
+            with self.subTest(change=change),self.assertRaises(ValueError):proof.verify_word_cue_readback(request,invalid)
+
     def test_actual_attachment_audit_rejects_misalignment_and_wrong_source_even_with_good_geometry(self):
         r5=json.loads((HERE/'attachment-r5.json').read_text(encoding='utf-8'))
         request={'presentation':r5,'scene_sha':sha(self.scene),'spec_sha':sha('SYNTHETIC audit binding'),

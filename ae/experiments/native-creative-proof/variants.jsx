@@ -22,7 +22,7 @@
     // Capture expression-driven attachment travel before reversing its anchors.
     // Otherwise a forward-time follow expression would undo the restoration.
     var baked={};
-    if(binding.presentation_id==='SYNTHETIC-ATTACHMENT-LAYOUT-R5'||binding.presentation_id==='SYNTHETIC-ATTACHMENT-LAYOUT-R5-FAST'||binding.presentation_id==='SYNTHETIC-ATTACHMENT-LAYOUT-R6-SHARP'){
+    if(binding.presentation_id==='SYNTHETIC-ATTACHMENT-LAYOUT-R5'||binding.presentation_id==='SYNTHETIC-ATTACHMENT-LAYOUT-R5-FAST'||binding.presentation_id==='SYNTHETIC-ATTACHMENT-LAYOUT-R6-SHARP'||binding.presentation_id==='SYNTHETIC-ATTACHMENT-LAYOUT-R7-WORDCUE'){
         for(var i=1;i<=d.numLayers;i++){
             var l=d.layer(i),p=l.transform.position;
             if(l.name.indexOf('HINGE_')!==0||!p.expressionEnabled)continue;

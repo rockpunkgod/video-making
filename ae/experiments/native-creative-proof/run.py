@@ -52,11 +52,13 @@ def validate_presentation(presentation, scene):
     """A small presentation overlay, never an alternative source of text or roles."""
     required={'id','duration','time_map','voice_starts','parks','carrier_rest_opacity',
               'text_rest_opacity','context_rest_opacity','side_rest_opacity'}
-    attached=presentation.get('id') in ('SYNTHETIC-ATTACHMENT-LAYOUT-R5','SYNTHETIC-ATTACHMENT-LAYOUT-R5-FAST','SYNTHETIC-ATTACHMENT-LAYOUT-R6-SHARP')
+    wordcue=presentation.get('id')=='SYNTHETIC-ATTACHMENT-LAYOUT-R7-WORDCUE'
+    attached=wordcue or presentation.get('id') in ('SYNTHETIC-ATTACHMENT-LAYOUT-R5','SYNTHETIC-ATTACHMENT-LAYOUT-R5-FAST','SYNTHETIC-ATTACHMENT-LAYOUT-R6-SHARP')
     if attached:required=(required-{'parks'})|{'attachment_layout'}
-    sharp=presentation.get('id')=='SYNTHETIC-ATTACHMENT-LAYOUT-R6-SHARP'
+    sharp=wordcue or presentation.get('id')=='SYNTHETIC-ATTACHMENT-LAYOUT-R6-SHARP'
     if sharp:required.add('peel_motion_scale')
-    if set(presentation)!=required or presentation['id'] not in ('SYNTHETIC-RHYTHM-TEXTURE-R4','SYNTHETIC-ATTACHMENT-LAYOUT-R5','SYNTHETIC-ATTACHMENT-LAYOUT-R5-FAST','SYNTHETIC-ATTACHMENT-LAYOUT-R6-SHARP'):
+    if wordcue:required.update(('word_cues','peel_detach_seconds'))
+    if set(presentation)!=required or presentation['id'] not in ('SYNTHETIC-RHYTHM-TEXTURE-R4','SYNTHETIC-ATTACHMENT-LAYOUT-R5','SYNTHETIC-ATTACHMENT-LAYOUT-R5-FAST','SYNTHETIC-ATTACHMENT-LAYOUT-R6-SHARP','SYNTHETIC-ATTACHMENT-LAYOUT-R7-WORDCUE'):
         raise ValueError('Use the explicit synthetic presentation contract')
     def finite(value):
         return type(value) in (int,float) and math.isfinite(value)
@@ -93,7 +95,41 @@ def validate_presentation(presentation, scene):
                 raise ValueError('Park geometry must be finite local research coordinates')
     if any(not finite(presentation[k]) or not 0<=presentation[k]<=100 for k in required if k.endswith('_opacity')):
         raise ValueError('Presentation opacity must be in 0..100')
+    if wordcue:validate_word_cues(presentation,scene)
     return presentation
+
+
+def validate_word_cues(presentation,scene):
+    """Explicit synthetic attention spans; never inferred grammar or permission."""
+    cues=presentation['word_cues']
+    if (not isinstance(cues,dict) or set(cues)!={'authority','scene_sha','items'}
+            or cues['authority']!='supplied_synthetic_word_cues_not_english_analysis'
+            or cues['scene_sha']!=sha(scene) or not isinstance(cues['items'],list)):
+        raise ValueError('Word cues require their exact synthetic source binding')
+    detach=presentation['peel_detach_seconds']
+    if type(detach) not in (int,float) or not math.isfinite(detach) or not .18<=detach<=.35:
+        raise ValueError('Finite conservative detach timing required')
+    supplied={o['id']:o for o in scene['objects'] if o['role']=='supplied_modifier'}
+    if len(cues['items'])!=len(supplied):raise ValueError('One explicit attention cue per supplied fragment')
+    seen=set();previous_end=0;request={'presentation':presentation,'scene':scene}
+    for cue in cues['items']:
+        if not isinstance(cue,dict) or set(cue)!={'object_id','start','end','text','cue_start','handoff','scope_ready'}:
+            raise ValueError('Word cue cannot supply a teaching role or new claim')
+        obj=supplied.get(cue['object_id'])
+        if (obj is None or obj['id'] in seen or type(cue['start']) is not int or type(cue['end']) is not int
+                or not obj['start']<=cue['start']<cue['end']<=obj['end']
+                or not isinstance(cue['text'],str) or scene['sentence'][cue['start']:cue['end']]!=cue['text'] or not cue['text'].strip()):
+            raise ValueError('Attention span must be an exact original fragment substring')
+        seen.add(obj['id'])
+        start,end=(6.7,10.7) if obj['id']=='aside-time' else (12.9,17.5)
+        onset=presentation_time(request,start);land=peel_time(request,obj['id'],end)
+        if (any(type(cue[k]) not in (int,float) or not math.isfinite(cue[k]) for k in ('cue_start','handoff','scope_ready'))
+                or not max(previous_end,presentation_time(request,3))<=cue['cue_start']<cue['handoff']<cue['scope_ready']<onset
+                or not .12<=cue['handoff']-cue['cue_start']<=.6
+                or not .1<=cue['scope_ready']-cue['handoff']<=.3
+                or not .1<=onset-cue['scope_ready']<=.3 or not .6<=land-onset-detach<=1):
+            raise ValueError('Keep word, scope, confirmation and detach in separate bounded beats')
+        previous_end=land
 
 
 def canvas_duration(request):
@@ -115,6 +151,12 @@ def peel_time(request,object_id,time):
     shown=presentation_time(request,time)
     if scale==1 or time<start or time>end:return shown
     onset=presentation_time(request,start)
+    detach=request.get('presentation',{}).get('peel_detach_seconds')
+    if detach is not None:
+        release=presentation_time(request,7.9 if object_id=='aside-time' else 14.6)
+        land=onset+scale*(presentation_time(request,end)-onset)
+        if shown<=release:return onset+detach*(shown-onset)/(release-onset)
+        return onset+detach+(land-onset-detach)*(shown-release)/(presentation_time(request,end)-release)
     return onset+scale*(shown-onset)
 
 
@@ -141,6 +183,11 @@ def make_request(output, revision, presentation=None):
              'project':str(output/'NATIVE_CREATIVE_PROOF.aep')}
     if presentation is not None:
         request['presentation']=validate_presentation(presentation,scene)
+        if 'word_cues' in presentation:
+            by_id={o['id']:o for o in scene['objects']}
+            request['cue_layout']=[dict(cue,
+                offset_x=float(font.getlength(by_id[cue['object_id']]['text'][:cue['start']-by_id[cue['object_id']]['start']])),
+                width=float(font.getlength(cue['text'])),text_sha=sha(cue['text'])) for cue in presentation['word_cues']['items']]
     request['spec_sha']=sha({k:v for k,v in request.items() if k!='project'})
     return request
 
@@ -185,10 +232,10 @@ def require_research_project(c):
     return path
 
 
-def build(output, revision, recovery_id=None, rhythm_r4=False, attachment_r5=False, attachment_r5_fast=False, attachment_r6_sharp=False):
+def build(output, revision, recovery_id=None, rhythm_r4=False, attachment_r5=False, attachment_r5_fast=False, attachment_r6_sharp=False, attachment_r7_wordcue=False):
     output=research_output(output)
-    if sum((rhythm_r4,attachment_r5,attachment_r5_fast,attachment_r6_sharp))>1:raise ValueError('Select one explicit visual revision')
-    overlay='attachment-r6-sharp.json' if attachment_r6_sharp else 'attachment-r5-fast.json' if attachment_r5_fast else 'attachment-r5.json' if attachment_r5 else 'rhythm-r4.json' if rhythm_r4 else None
+    if sum((rhythm_r4,attachment_r5,attachment_r5_fast,attachment_r6_sharp,attachment_r7_wordcue))>1:raise ValueError('Select one explicit visual revision')
+    overlay='attachment-r7-wordcue.json' if attachment_r7_wordcue else 'attachment-r6-sharp.json' if attachment_r6_sharp else 'attachment-r5-fast.json' if attachment_r5_fast else 'attachment-r5.json' if attachment_r5 else 'rhythm-r4.json' if rhythm_r4 else None
     request=make_request(output,revision,read(HERE/overlay) if overlay else None)
     c=client();require_research_project(c)
     output.mkdir(parents=True,exist_ok=False)
@@ -289,6 +336,10 @@ def audit(output, comp_id=None, variant='B'):
         measured=json.loads(c.call('ae_exec',{'code':code})['content'])
         verify_attachment_layout(request,measured)
         result['attachment_layout']=measured
+    if variant=='B' and 'word_cues' in request.get('presentation',{}):
+        code='var NCP_REQUEST='+json.dumps((output/'build-request.json').as_posix())+';var NCP_COMP='+str(int(comp_id))+';\n'+(HERE/'word-cue-audit.jsx').read_text(encoding='utf-8')
+        measured=json.loads(c.call('ae_exec',{'code':code})['content'])
+        verify_word_cue_readback(request,measured);result['word_cues']=measured
     write(output/('native-audit-'+variant+'.json'),result)
     return result
 
@@ -309,8 +360,36 @@ def verify_peel_timing(request,native):
         times=[r[0] for r in layer['position']]
         measured.append({'object_id':object_id,'onset':times[1],'release':times[2],
             'landed':times[4],'motion_duration':times[4]-times[1]})
-    return {'motion_scale':request['presentation']['peel_motion_scale'],'native_time_tolerance':tolerance,'objects':measured,
+    return {'motion_scale':request['presentation']['peel_motion_scale'],'detach_seconds':request['presentation'].get('peel_detach_seconds'),'native_time_tolerance':tolerance,'objects':measured,
             'onset_interval':measured[1]['onset']-measured[0]['onset']}
+
+
+def verify_word_cue_readback(request,measured):
+    if measured['spec_sha']!=request['spec_sha'] or measured['scene_sha']!=request['scene_sha']:
+        raise ValueError('Different native word-cue binding')
+    expected={r['object_id']:r for r in request['cue_layout']};seen=set()
+    for row in measured['cues']:
+        cue=expected.get(row['object_id'])
+        if cue is None or row['object_id'] in seen:raise ValueError('Missing or duplicate native word cue')
+        seen.add(row['object_id'])
+        origin={'kind':'supplied_synthetic_word_cue','origin':request['scene_sha'],
+                'object_id':cue['object_id'],'start':cue['start'],'end':cue['end'],'text_sha':cue['text_sha']}
+        if (row['origin']!=origin or row['parent']!='HINGE_'+cue['object_id']
+                or abs(row['width']-(cue['width']+8))>.01
+                or abs(row['position'][0]-(cue['offset_x']+cue['width']/2))>.01
+                or row['range_parent']!=row['parent'] or not row['threeD']):
+            raise ValueError('Word cue must remain attached to its supplied original span')
+        for sample in row['samples']:
+            if not all(type(sample[k]) in (int,float) and math.isfinite(sample[k]) for k in ('word','range','range_scale','joint','carrier')):
+                raise ValueError('Finite actual cue readback required')
+        phases={s['phase']:s for s in row['samples']}
+        if set(phases)!={'word','scope','detached','park'}:
+            raise ValueError('All recognition phases require actual native readback')
+        if (phases['word']['word']<20 or phases['word']['range']!=0 or phases['word']['carrier']!=0
+                or phases['scope']['word']!=0 or phases['scope']['range']<40 or abs(phases['scope']['range_scale']-100)>.01
+                or any(phases[phase][key]!=0 for phase in ('detached','park') for key in ('word','range','joint'))):
+            raise ValueError('Words must hand off to confirmed scope; preparation cues must retire at detach')
+    if seen!=set(expected):raise ValueError('Native recognition cue incomplete')
 
 
 def verify_attachment_layout(request,measured):
@@ -473,13 +552,14 @@ def main():
     visual.add_argument('--attachment-r5',action='store_true',help='Park supplied fragments above/below their frozen visual anchors')
     visual.add_argument('--attachment-r5-fast',action='store_true',help='Same vertical layout with faster peeling; preserve reading and final holds')
     visual.add_argument('--attachment-r6-sharp',action='store_true',help='Shorten physical peeling only; keep both onsets, camera, guide and story intervals')
+    visual.add_argument('--attachment-r7-wordcue',action='store_true',help='Explicit synthetic word cue, scope confirmation and quick detach')
     parser.add_argument('--recovery-id',help='Exact official ID after native-state reconciliation; never guessed')
     parser.add_argument('--comp-id',type=int);parser.add_argument('--label',default='B')
     parser.add_argument('--start',type=float,default=0);parser.add_argument('--duration',type=float)
     parser.add_argument('--single-frame',action='store_true',help='Use verified native per-script single-frame rendering after a reconciled MFR stall')
     parser.add_argument('--source',help='Existing immutable B revision for the fork operation')
     args=parser.parse_args();output=research_output(args.output)
-    if args.operation=='build':result=build(output,args.revision,args.recovery_id,args.rhythm_r4,args.attachment_r5,args.attachment_r5_fast,args.attachment_r6_sharp)
+    if args.operation=='build':result=build(output,args.revision,args.recovery_id,args.rhythm_r4,args.attachment_r5,args.attachment_r5_fast,args.attachment_r6_sharp,args.attachment_r7_wordcue)
     elif args.operation=='fork':
         if not args.source:parser.error('fork requires --source')
         result=fork_controls(output,args.source,args.recovery_id)

@@ -7,7 +7,8 @@
     var rows=[];
     for(var i=0;i<R.layout.length;i++)if(R.layout[i].role==='supplied_modifier'){
         var n=R.layout[i],l=cp.layer(n.id),h=l.parent,a=cp.layer(n.attachment),line=cp.layer('RELATION_'+n.id);
-        var times=[['original',0],['park',present(n.id==='aside-time'?10.9:17.5)],['final',cp.duration-1/cp.frameRate]];
+        var parked=R.presentation.word_cues?h.transform.position.keyTime(5)+2/cp.frameRate:present(n.id==='aside-time'?10.9:17.5);
+        var times=[['original',0],['park',parked],['final',cp.duration-1/cp.frameRate]];
         if(n.id==='aside-time')times.push(['follow',present(10.7)+Math.min(2/cp.frameRate,(present(10.9)-present(10.7))/2)]);
         for(var j=0;j<times.length;j++){
             var phase=times[j][0],t=times[j][1],hp=h.transform.position.valueAtTime(t,false),ap=a.transform.position.valueAtTime(t,false);

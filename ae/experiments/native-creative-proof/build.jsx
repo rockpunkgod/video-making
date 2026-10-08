@@ -12,7 +12,11 @@
     function motionTime(id,t) {
         var shown=present(t),start=id==='aside-time'?6.7:12.9,end=id==='aside-time'?10.7:17.5;
         if(!M||t<start||t>end)return shown;
-        var onset=present(start);return onset+M*(shown-onset);
+        var onset=present(start);
+        if(W){var released=present(id==='aside-time'?7.9:14.6),land=onset+M*(present(end)-onset),cut=P.peel_detach_seconds;
+            if(shown<=released)return onset+cut*(shown-onset)/(released-onset);
+            return onset+cut+(land-onset-cut)*(shown-released)/(present(end)-released);}
+        return onset+M*(shown-onset);
     }
     function setKeys(p, rows, incoming, outgoing, spatial, motionId) {
         for(var k=0;k<rows.length;k++)p.setValueAtTime(motionId?motionTime(motionId,rows[k][0]):present(rows[k][0]),rows[k][1]);
@@ -22,6 +26,15 @@
             p.setTemporalEaseAtKey(k,ins,outs);
             if(P)p.setInterpolationTypeAtKey(k,KeyframeInterpolationType.BEZIER,KeyframeInterpolationType.BEZIER);
             if(p.isSpatial){p.setSpatialAutoBezierAtKey(k,!!spatial);p.setSpatialContinuousAtKey(k,!!spatial);}
+        }
+    }
+    function shownKeys(p,rows){
+        // These cue times already belong to the presentation clock.
+        for(var k=0;k<rows.length;k++)p.setValueAtTime(rows[k][0],rows[k][1]);
+        for(var k=1;k<=p.numKeys;k++){
+            var count=p.value instanceof Array?p.value.length:1,ins=[],outs=[];
+            for(var j=0;j<count;j++){ins.push(new KeyframeEase(0,45));outs.push(new KeyframeEase(0,30));}
+            p.setTemporalEaseAtKey(k,ins,outs);p.setInterpolationTypeAtKey(k,KeyframeInterpolationType.BEZIER,KeyframeInterpolationType.BEZIER);
         }
     }
     function text(cp,name,copy,size,color,font,point,world) {
@@ -43,7 +56,7 @@
         l.transform.position.setValue(point);l.motionBlur=!!world;return l;
     }
     function null3(cp,name,p) { var n=cp.layers.addNull(cp.duration);n.name=name;n.threeDLayer=true;n.transform.anchorPoint.setValue([0,0,0]);n.transform.position.setValue(p);return n; }
-    var R=load(NCP_REQUEST),S=R.scene,P=R.presentation||null,A=P&&(P.id==='SYNTHETIC-ATTACHMENT-LAYOUT-R5'||P.id==='SYNTHETIC-ATTACHMENT-LAYOUT-R5-FAST'||P.id==='SYNTHETIC-ATTACHMENT-LAYOUT-R6-SHARP')?P.attachment_layout:null,M=P?P.peel_motion_scale:null,dest=new File(R.project);
+    var R=load(NCP_REQUEST),S=R.scene,P=R.presentation||null,W=P&&P.id==='SYNTHETIC-ATTACHMENT-LAYOUT-R7-WORDCUE'?P.word_cues:null,A=P&&(W||P.id==='SYNTHETIC-ATTACHMENT-LAYOUT-R5'||P.id==='SYNTHETIC-ATTACHMENT-LAYOUT-R5-FAST'||P.id==='SYNTHETIC-ATTACHMENT-LAYOUT-R6-SHARP')?P.attachment_layout:null,M=P?P.peel_motion_scale:null,dest=new File(R.project);
     if(dest.exists)throw new Error('Research revision already exists');
     if(S.kind!=='synthetic_ae_visual_research'||S.method_id!==null||S.production_eligible!==false||S.public_render_ready!==false)throw new Error('SYNTHETIC research only');
     app.project.save(dest);
@@ -85,8 +98,40 @@
             setKeys(carrier.transform.opacity,P?[[0,0],[begin,0],[begin+.6,92],[park,92],[park+.6,P.carrier_rest_opacity],[27,P.carrier_rest_opacity]]:[[0,0],[begin,0],[begin+.6,92],[27,92]],45,30,false);
             setKeys(side.transform.opacity,[[0,0],[begin,0],[begin+.6,70],[park,70],[park+.6,P?P.side_rest_opacity:22],[27,P?P.side_rest_opacity:22]],45,30,false);
             setKeys(l.transform.opacity,[[0,100],[park,100],[park+.6,P?P.text_rest_opacity:42],[27,P?P.text_rest_opacity:42]],45,30,false);
+            if(W){
+                // The cue is explicitly supplied research input, not a grammar detector.
+                var cue=null;for(var j=0;j<R.cue_layout.length;j++)if(R.cue_layout[j].object_id===n.id)cue=R.cue_layout[j];
+                if(!cue)throw new Error('Missing explicitly bound word cue');
+                var onset=motionTime(n.id,a?6.7:12.9),cut=motionTime(n.id,release),land=motionTime(n.id,park);
+                var mark=rectangle(cp,'WORD_CUE_'+n.id,cue.width+8,56,S.palette.fog,[0,0,0],true);
+                mark.parent=hinge;mark.transform.position.setValue([cue.offset_x+cue.width/2,-18,1]);mark.moveAfter(l);
+                mark.comment=JSON.stringify({kind:'supplied_synthetic_word_cue',origin:R.scene_sha,object_id:n.id,start:cue.start,end:cue.end,text_sha:cue.text_sha});
+                shownKeys(mark.transform.opacity,[[0,0],[cue.cue_start,0],[cue.cue_start+.055,28],[cue.handoff-.045,28],[cue.handoff+.025,0],[cp.duration,0]]);
+                var range=cp.layers.addShape();range.name='RANGE_CUE_'+n.id;range.threeDLayer=true;range.motionBlur=true;
+                range.parent=hinge;range.transform.anchorPoint.setValue([0,0,0]);range.transform.position.setValue([0,0,-2]);
+                range.property('ADBE Root Vectors Group').addProperty('ADBE Vector Group');
+                range.property('ADBE Root Vectors Group').property(1).property('ADBE Vectors Group').addProperty('ADBE Vector Shape - Group');
+                range.property('ADBE Root Vectors Group').property(1).property('ADBE Vectors Group').addProperty('ADBE Vector Graphic - Stroke');
+                var rv=range.property('ADBE Root Vectors Group').property(1).property('ADBE Vectors Group'),shape=new Shape();
+                shape.vertices=[[0,8],[0,13],[n.width,13],[n.width,8]];shape.closed=false;
+                shape.inTangents=[[0,0],[0,0],[0,0],[0,0]];shape.outTangents=[[0,0],[0,0],[0,0],[0,0]];
+                rv.property('ADBE Vector Shape - Group').property('ADBE Vector Shape').setValue(shape);
+                rv.property('ADBE Vector Graphic - Stroke').property('ADBE Vector Stroke Color').setValue(rgb(S.palette.fog));
+                rv.property('ADBE Vector Graphic - Stroke').property('ADBE Vector Stroke Width').setValue(1.6);
+                shownKeys(range.transform.scale,[[0,[0,100,100]],[cue.handoff+.025,[0,100,100]],[cue.scope_ready,[100,100,100]],[cp.duration,[100,100,100]]]);
+                shownKeys(range.transform.opacity,[[0,0],[cue.handoff+.04,0],[cue.scope_ready,65],[onset,65],[onset+1/24,0],[cp.duration,0]]);
+                // Replace the old delayed preparation clock, not the original text.
+                var props=[lip,joint,label,carrier,side,l];for(var j=0;j<props.length;j++)while(props[j].transform.opacity.numKeys)props[j].transform.opacity.removeKey(1);
+                shownKeys(joint.transform.opacity,[[0,0],[cue.handoff+.04,0],[cue.scope_ready,65],[onset,65],[onset+1/24,0],[cp.duration,0]]);
+                shownKeys(carrier.transform.opacity,[[0,0],[onset,0],[onset+.035,85],[land,70],[land+.125,0],[cp.duration,0]]);
+                shownKeys(lip.transform.opacity,[[0,0],[onset,0],[onset+.035,78],[cut,78],[land,0],[cp.duration,0]]);
+                shownKeys(side.transform.opacity,[[0,0],[onset,0],[onset+.035,70],[cut,70],[land,0],[cp.duration,0]]);
+                shownKeys(label.transform.opacity,[[0,0],[land+.08,0],[land+.25,40],[land+.8,0],[cp.duration,0]]);
+                shownKeys(l.transform.opacity,[[0,100],[land,100],[land+.15,P.text_rest_opacity],[cp.duration,P.text_rest_opacity]]);
+            }
             var path=a?[[0,[n.x,540,0]],[6.7,[n.x,540,0]],[7.9,[n.x,540,0]],[9.2,[620,365,160]],[10.7,[1120,340,360]],[27,[1120,340,360]]]
                 :[[0,[n.x,540,0]],[12.9,[n.x,540,0]],[14.6,[n.x,540,0]],[16.0,[1260,680,200]],[17.5,[1000,800,330]],[27,[1000,800,330]]];
+            if(W)path[2][1]=[n.x+(a?0:-8),540+(a?-56:56),32];
             if(A){
                 // These are supplied visual anchors, not newly inferred grammar.
                 var anchor=objects[n.attachment],ar=anchor.sourceRectAtTime(0,false),br=l.sourceRectAtTime(0,false);
@@ -137,7 +182,7 @@
     opt.property('ADBE Camera Focus Distance').expression='var p=thisComp.layer("FOCUS_TARGET").toWorld([0,0,0]);var c=transform.position;var v=normalize(sub(transform.pointOfInterest,c));dot(sub(p,c),v);';
     if(A){
         for(i=0;i<R.layout.length;i++)if(R.layout[i].role==='supplied_modifier'){
-            var n=R.layout[i],above=n.id==='aside-time',release=motionTime(n.id,above?7.9:14.6),park=present(above?10.7:17.5);
+            var n=R.layout[i],above=n.id==='aside-time',release=motionTime(n.id,above?7.9:14.6),park=W?Math.max(motionTime(n.id,above?10.7:17.5),above?present(10.9):0):present(above?10.7:17.5);
             var line=cp.layers.addShape();line.name='RELATION_'+n.id;
             line.comment=JSON.stringify({origin:R.scene_sha,anchor_id:n.attachment,object_id:n.id,kind:'supplied_synthetic_visual_attachment'});
             line.transform.anchorPoint.setValue([0,0]);line.transform.position.setValue([0,0]);
