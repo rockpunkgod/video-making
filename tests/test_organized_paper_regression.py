@@ -8,6 +8,39 @@ from scripts.run_organized_paper_regression import admission_issue, convert, val
 from scripts.ingest_exam_sources import freeze_json, sha
 
 class OrganizedRegressionTests(unittest.TestCase):
+    def test_reading_option_next_passage_requires_review_not_automatic_trimming(self):
+        for boundary in ('B\n', 'C\n', 'D\n', '第二节 七选五(共5小题)\n'):
+            content = 'Which?\nNormal answer.\n'+boundary+'Next passage begins here.'
+            q = {'question_id': 'test-Q23', 'question_type': 'reading', 'stem': 'Which?',
+                 'passage': 'Normal answer.', 'options': {'D': content[7:]}}
+            fields = {}
+            for name, text in (('/stem', q['stem']), ('/passage', q['passage']), ('/options/D', q['options']['D'])):
+                start = content.index(text)
+                fields[name] = [{'start': start, 'end': start+len(text), 'quote': text}]
+            value = {'paper_id': 'test-paper', 'source_sha256': sha(b'PDF'),
+                     'reviewer_agent': '/root/source_worker', 'reference_read': False,
+                     'phase': 'low_model_source_transcription_no_answers',
+                     'inputs': {'paper_id': 'test-paper', 'questions': [q]},
+                     'source_bindings': [{'question_id': q['question_id'], 'fields': fields}]}
+            dossier = {'paper_id': 'test-paper', 'source_sha256': sha(b'PDF'), 'document_text': content}
+            with self.subTest(boundary=boundary), self.assertRaisesRegex(ValueError, 'source review required'):
+                validate_transcription(value, dossier)
+            self.assertEqual(q['options']['D'], content[7:])
+
+    def test_wrapped_long_reading_option_without_section_marker_is_not_trimmed(self):
+        value, dossier = self.transcription()
+        q = value['inputs']['questions'][0]
+        q['question_type'] = 'reading'
+        option = 'A complete candidate with detailed qualifications and conditions. '*5+'\nThe same candidate continues on another printed line.'
+        start = len(dossier['document_text'])+1
+        dossier['document_text'] += '\n'+option
+        q['options']['D'] = option
+        value['source_bindings'][0]['fields']['/options/D'] = [
+            {'start': start, 'end': start+len(option), 'quote': option}]
+        # Ordinary wrap/length is not enough to declare a source-boundary error.
+        result = validate_transcription(value, dossier)
+        self.assertEqual(result['questions'][0]['options']['D'], option)
+
     def source_batch(self, root, extension='.docx', transcription_extension=None, changed=False):
         value, dossier = self.transcription()
         dossier['source_extension'] = extension

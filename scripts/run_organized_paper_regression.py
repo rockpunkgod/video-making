@@ -143,6 +143,14 @@ def validate_transcription(value, dossier, dataset_root=None):
             raise ValueError('Printed question number metadata must be a positive number')
         normalized['questions'][index].pop('printed_number', None)
         normalized['questions'][index]['question_type'] = TRANSCRIPTION_KINDS.get(q.get('question_type'),q.get('question_type'))
+        if normalized['questions'][index]['question_type'] == '阅读理解':
+            # A copied span may still swallow the next passage. This narrow
+            # structural guard requests review; it never trims source text or
+            # certifies the English completeness of the remaining options.
+            next_section = re.compile(r'\n\s*(?:[BCD]\s*\n|第二节\s*七选五[^\n]*\n)')
+            for option in q.get('options', {}).values():
+                if next_section.search(option):
+                    raise ValueError('Reading option contains a possible next-passage/section boundary; source review required')
         validate_schema('question-input', normalized['questions'][index])
         binding = by_id[q['question_id']]
         fields = binding.get('fields')
