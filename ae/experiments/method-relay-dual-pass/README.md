@@ -181,3 +181,54 @@ python -m unittest tests.test_source_evidence_acquisition tests.test_method_rela
 
 See `SOURCE_EVIDENCE_ACQUISITION_ACCEPTANCE.md` and
 `SOURCE_EVIDENCE_ACQUISITION_HUMAN_REVIEW.md` for the actual evidence and limits.
+
+
+### Physical attention refinement (request 0.2.14)
+
+After the 0.2.8 4K preview the user marked focus, search rhythm and hit-to-lift
+all as needing revision, with moderately stronger physicality. Astra recommends
+and root implements a causal lead/follow: interior camera nodes carry velocity,
+with Fast/Guided row nodes delayed 1/2 frames; acquisition brakes before the
+existing flash. Lift begins with the same sentence moving 24 design units out
+of the plane; the background and camera wait 1/2 frames, and foreground scaling
+waits 2/3 frames. Existing end poses, lens strength and 20-second timing remain.
+No bounce, extra zoom, annotation or new evidence is introduced.
+
+The motion profile is spec-bound. Native audit reads actual departure poses,
+background hold and nonzero Bezier camera carry velocity. A failed first build
+exposed a repeated first-row pose; that redundant interior key was removed in
+a fresh project. Portable checks reject synchronous reflow/background movement
+and camera row stops; prior 0.2.8 4K requests remain replayable. Technical checks
+do not establish improved human experience, and no P2 integration is allowed
+before review of the exact new movie.
+
+
+An intermediate draft used a temporary paper-colored native plane, bound to the
+same sentence's actual glyph bounds, behind all retained text layers and 20
+design units deeper. It has no border, shadow or independent movement. It
+exists only during Lift and leaves after the background is clear. Its geometry
+is sampled from native glyph transforms at at least 96 Hz during Lift; only the
+production helper is baked, not the teaching objects or live focus target.
+
+Native readback checks its actual position, extent, color, layer order and
+0/100/0 visibility. Source words acquire no masks. A projected per-word mask
+experiment proved too expensive and failed preview, so that production path is
+removed. Intermediate failed builds remain isolated local research artifacts.
+Preview transport failures are retained before inspecting public host status;
+there is no automatic capture or render retry. Completed 0.2.8 and 0.2.9 request
+contracts remain replayable; uncompleted intermediate contracts are not promoted.
+
+Astra's two-frame check of that draft found no foreground washout or background-through-text,
+but notices a narrow cleared band at the early Lift frame. Continuous human
+review must judge whether this feels natural; engineering checks do not settle
+that aesthetic question.
+
+
+The user's latest instruction supersedes the paper-plane draft: the extracted
+sentence has a transparent background. Request 0.2.14 creates no sentence paper
+plane and adds no masks to source glyphs. Only the unselected source retires
+from opacity 28 to 0 at departure, stays absent during reflow, then returns to
+28 over the last two frames after its projection has cleared the foreground.
+Original selected text stays fully visible. Native readback verifies this
+separation and rejects a paper background or foreground opacity loss. Source
+content, final positions, static reading holds and overall duration are unchanged.

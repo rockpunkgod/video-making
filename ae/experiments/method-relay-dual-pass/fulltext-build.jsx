@@ -18,6 +18,38 @@
             p.setTemporalEaseAtKey(i,es,es);p.setInterpolationTypeAtKey(i,KeyframeInterpolationType.BEZIER,KeyframeInterpolationType.BEZIER);
             if(p.isSpatial){p.setSpatialAutoBezierAtKey(i,false);p.setSpatialContinuousAtKey(i,false);}
         }}
+    // Carry velocity through adjacent reading rows; only acquisition and holds stop.
+    function cameraKeys(property,rows){
+        var adjusted=[];
+        for(var i=0;i<rows.length;i++){
+            var t=rows[i][0];
+            for(var j=0;j<R.director.passes.length;j++){
+                var pass=R.director.passes[j],lag=(pass.kind==='fast'?1:2)/24;
+                if(t>pass.scan[0]&&t<pass.hit[0])t+=lag;
+                if(Math.abs(t-pass.lift[0])<.00001)t+=(pass.kind==='fast'?1:2)/24;
+            }
+            adjusted.push([t,rows[i][1]]);
+        }
+        adjusted.sort(function(a,b){return a[0]-b[0];});
+        var filtered=[];
+        for(var i=0;i<adjusted.length;i++){
+            var row=adjusted[i],interior=false;
+            for(var j=0;j<R.director.passes.length;j++)if(row[0]>R.director.passes[j].scan[0]&&row[0]<R.director.passes[j].hit[0])interior=true;
+            var same=filtered.length>0;if(same)for(var axis=0;axis<row[1].length;axis++)if(Math.abs(row[1][axis]-filtered[filtered.length-1][1][axis])>.001)same=false;
+            if(interior&&same)continue;
+            filtered.push(row);
+        }
+        keys(property,filtered,false);
+        for(var k=2;k<property.numKeys;k++){
+            var t=property.keyTime(k),inside=false;
+            for(var j=0;j<R.director.passes.length;j++)if(t>R.director.passes[j].scan[0]&&t<R.director.passes[j].hit[0])inside=true;
+            if(!inside)continue;
+            var a=property.keyValue(k-1),b=property.keyValue(k),c=property.keyValue(k+1),da=0,db=0;
+            for(var axis=0;axis<a.length;axis++){da+=Math.pow(b[axis]-a[axis],2);db+=Math.pow(c[axis]-b[axis],2);}
+            var speed=Math.min(Math.sqrt(da)/(t-property.keyTime(k-1)),Math.sqrt(db)/(property.keyTime(k+1)-t));
+            property.setTemporalEaseAtKey(k,[new KeyframeEase(speed,22)],[new KeyframeEase(speed,22)]);
+        }
+    }
     function union(ids,lift){var mn=[1e9,1e9,1e9],mx=[-1e9,-1e9,-1e9];for(var i=0;i<ids.length;i++){
         var id=ids[i],r=rects[id],p=lift?physical(R.lift_positions[id]):words[id].transform.position.valueAtTime(0,false),s=(lift?32/24:1)*S;
         var a=[p[0]+r.left*s,p[1]+r.top*s,p[2]],b=[p[0]+(r.left+r.width)*s,p[1]+(r.top+r.height)*s,p[2]];
@@ -40,9 +72,9 @@
         var w=R.words[i],l=text(w.id,w.text,24,w.position,true,w.chinese);words[w.id]=l;handles[w.id]=l.id;rects[w.id]=l.sourceRectAtTime(0,false);
         l.comment=JSON.stringify({id:w.id,start:w.start,end:w.end,text_sha:w.text_sha,source_sha:R.source.passage_sha});
         var selected=!!R.lift_positions[w.id];
-        if(selected){keys(l.transform.position,across(physical(w.position),function(p){return [[p.lift[0],physical(w.position)],[p.lift[1],physical(R.lift_positions[w.id])],[p.end,physical(R.lift_positions[w.id])]];}));
-            keys(l.transform.scale,across([100*S,100*S,100*S],function(p){return [[p.lift[0],[100*S,100*S,100*S]],[p.lift[1],[100*S*32/24,100*S*32/24,100*S*32/24]],[p.end,[100*S*32/24,100*S*32/24,100*S*32/24]]];}));}
-        keys(l.transform.opacity,across(0,function(p){return [[p.overview[0],0],[p.source_reveal_end,100],[p.hit[0],100],[p.lock[1],selected?100:28],[p.end,selected?100:28]];}));
+        if(selected){keys(l.transform.position,across(physical(w.position),function(p){var depart=p.lift[0]+(p.kind==='fast'?1:2)/24;var lead=physical([w.position[0],w.position[1],-24]);return [[p.lift[0],physical(w.position)],[depart,lead],[p.lift[1],physical(R.lift_positions[w.id])],[p.end,physical(R.lift_positions[w.id])]];}));
+            keys(l.transform.scale,across([100*S,100*S,100*S],function(p){return [[p.lift[0]+(p.kind==='fast'?2:3)/24,[100*S,100*S,100*S]],[p.lift[1],[100*S*32/24,100*S*32/24,100*S*32/24]],[p.end,[100*S*32/24,100*S*32/24,100*S*32/24]]];}));}
+        keys(l.transform.opacity,across(0,function(p){var rows=[[p.overview[0],0],[p.source_reveal_end,100],[p.hit[0],100],[p.lock[1],selected?100:28]];if(!selected)rows=rows.concat([[p.lift[0],28],[p.lift[0]+(p.kind==='fast'?1:2)/24,0],[p.lift[1]-2/24,0],[p.lift[1],28]]);rows.push([p.end,selected?100:28]);return rows;}));
     }
     var allIds=[];for(var i=0;i<R.words.length;i++)allIds.push(R.words[i].id);
     var whole=union(allIds,false),hit=union(R.hit_ids,false),scope=union(R.target_ids,false),lifted=union(R.target_ids,true),lineBoxes=[];
@@ -61,8 +93,8 @@
         var w=R.words[i];if(R.lift_positions[w.id])continue;
         var destination=[column+(w.position[0]*S-column)*backgroundWordScale,backgroundOrigin+(w.position[1]*S-whole.min[1])*backgroundWordScale,style.background_z];
         retreatPositions[w.id]=destination;
-        keys(words[w.id].transform.position,across(physical(w.position),function(p){return [[p.lift[0],physical(w.position)],[p.lift[1],destination],[p.end,destination]];}));
-        keys(words[w.id].transform.scale,across([100*S,100*S,100*S],function(p){return [[p.lift[0],[100*S,100*S,100*S]],[p.lift[1],[100*S*backgroundWordScale,100*S*backgroundWordScale,100*S*backgroundWordScale]],
+        keys(words[w.id].transform.position,across(physical(w.position),function(p){return [[p.lift[0]+(p.kind==='fast'?1:2)/24,physical(w.position)],[p.lift[1],destination],[p.end,destination]];}));
+        keys(words[w.id].transform.scale,across([100*S,100*S,100*S],function(p){return [[p.lift[0]+(p.kind==='fast'?1:2)/24,[100*S,100*S,100*S]],[p.lift[1],[100*S*backgroundWordScale,100*S*backgroundWordScale,100*S*backgroundWordScale]],
             [p.end,[100*S*backgroundWordScale,100*S*backgroundWordScale,100*S*backgroundWordScale]]];}));
     }
     // Invisible geometric cursor binds the lens path; it never annotates the page.
@@ -106,7 +138,7 @@
         +'for(var i=0;i<names.length;i++){var l=thisComp.layer(names[i]),r=l.sourceRectAtTime(time,false),a=l.toWorld([r.left,r.top,0]),b=l.toWorld([r.left+r.width,r.top+r.height,0]);'
         +'for(var j=0;j<3;j++){lo[j]=Math.min(lo[j],a[j],b[j]);hi[j]=Math.max(hi[j],a[j],b[j]);}}return [(lo[0]+hi[0])/2,(lo[1]+hi[1])/2,(lo[2]+hi[2])/2];})();';
     var camera=cp.layers.addCamera('GUIDED_CAMERA',[cp.width/2,cp.height/2]);camera.autoOrient=AutoOrientType.CAMERA_OR_POINT_OF_INTEREST;
-    keys(camera.transform.position,cameraRows,true);keys(camera.transform.pointOfInterest,lookRows,true);
+    cameraKeys(camera.transform.position,cameraRows);cameraKeys(camera.transform.pointOfInterest,lookRows);
     var opt=camera.property('ADBE Camera Options Group');opt.property('ADBE Camera Zoom').setValue(style.zoom);opt.property('ADBE Camera Depth of Field').setValue(1);
     keys(opt.property('ADBE Camera Aperture'),apertureRows,false);opt.property('ADBE Camera Blur Level').setValue(100);
     opt.property('ADBE Camera Focus Distance').expression='var p=thisComp.layer("FOCUS_TARGET").toWorld([0,0,0]);dot(sub(p,transform.position),normalize(sub(transform.pointOfInterest,transform.position)));';

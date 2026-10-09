@@ -83,8 +83,13 @@ def make_request(output,bundle_path,status_path,question_id,question_cue,hit_cue
     for id,start,end in (('QUESTION_PREFIX',0,cue['start']),('QUESTION_KEYWORD',cue['start'],cue['end']),('QUESTION_SUFFIX',cue['end'],len(qtext))):
         question_parts.append({'id':id,'start':start,'end':end,'text':qtext[start:end],'text_sha':sha(qtext[start:end]),
                                'position':[150+float(ImageFont.truetype(ep,34).getlength(qtext[:start])),203]})
-    r={'kind':'frozen_full_passage_location_visual_research','version':'0.2.8','source':source,
+    r={'kind':'frozen_full_passage_location_visual_research','version':'0.2.14','source':source,
         'canvas':[3840,2160,24,20],'render_scale':2,
+        'motion_profile':{'version':'0.1.0','camera_lag_frames':{'fast':1,'guided':2},
+            'departure_depth':24,'background_delay_frames':{'fast':1,'guided':2},
+            'foreground_scale_delay_frames':{'fast':2,'guided':3},
+            'scan_carry_influence':22,'bounce':False,'extra_zoom':False,
+            'foreground_background':'transparent','background_clear':'fade_out_during_reflow'},
         'bundle_path':str(bundle_path),'status_path':str(status_path),
         'bundle_file_sha':relay.file_sha(bundle_path),'status_file_sha':relay.file_sha(status_path),
         'words':words,'trailing_space':source['passage'][cursor:],'lines':lines,'target_ids':[w['id'] for w in target],
@@ -112,6 +117,14 @@ def validate(r):
     source=r['source'];text=source['passage']
     if (r['canvas']!=[3840,2160,24,20] or r['render_scale']!=2 or r['director']!=direction()
             or r['spec_sha']!=sha({k:v for k,v in r.items() if k not in ('project','bundle_path','status_path','spec_sha')})
+            or (r.get('version')!='0.2.8' and r.get('motion_profile')!={'version':'0.1.0','camera_lag_frames':{'fast':1,'guided':2},
+                'departure_depth':24,'background_delay_frames':{'fast':1,'guided':2},
+                'foreground_scale_delay_frames':{'fast':2,'guided':3},
+                'scan_carry_influence':22,'bounce':False,'extra_zoom':False,
+                **({'sentence_occlusion':'unadorned_bound_paper_plane','geometry_sampling':'96hz_lift_only',
+                    'plane_depth_offset':20} if r.get('version')=='0.2.13' else {}),
+                **({'foreground_background':'transparent','background_clear':'fade_out_during_reflow'} if r.get('version')=='0.2.14' else {})})
+            or r.get('version') not in ('0.2.8','0.2.9','0.2.13','0.2.14')
             or source['answer'] is not None or source['method_certification'] is not False
             or any(r[k] is not False for k in ('final_voice_accepted','production_eligible','public_render_ready'))):
         raise ValueError('Only frozen-source visual location, without answer or release promotion')
@@ -145,6 +158,9 @@ def current(output):
 
 
 def validate_native(r,n):
+    if n.get('background_cutouts'):raise ValueError('Original source glyphs must not acquire editorial masks')
+    if r.get('motion_profile',{}).get('foreground_background')=='transparent' and any(p.get('sentence_occlusion') for p in n['passes']):
+        raise ValueError('Extracted sentence must have no paper plane')
     """Compare actual Adobe readback with frozen words, spans and same-object poses."""
     if (n['spec_sha']!=r['spec_sha'] or n['canvas']!=r['canvas'] or len(n['words'])!=len(r['words'])
             or n['renderer']!='ADBE Advanced 3d' or n['draft3d'] is not False or n['resolution_factor']!=[1,1]
@@ -263,13 +279,45 @@ def validate_native(r,n):
                 raise ValueError('Full source cannot preselect evidence, substitute words or lose its rewind')
 
 
+def validate_motion(r, rows):
+    if len(rows)!=2:raise ValueError('Both passes need native physical-motion readback')
+    for p,m in zip(r['director']['passes'],rows):
+        a=m['foreground_original'];b=m['foreground_departure']
+        if (m['kind']!=p['kind'] or abs(m['departure_time']-p['lift'][0]-(1 if p['kind']=='fast' else 2)/24)>.0001
+                or any(abs(a[j]-b[j])>.05 for j in (0,1)) or abs(b[2]-a[2]+24*r['render_scale'])>.05
+                or any(abs(x-y)>.05 for x,y in zip(m['background_original'],m['background_departure']))):
+            raise ValueError('Original sentence must leave the plane before reflow or background retreat')
+        if r.get('motion_profile',{}).get('sentence_occlusion') and m.get('sentence_plane_index',0)<=m.get('last_sentence_text_index',0):
+            raise ValueError('Paper occlusion must be behind every original sentence layer')
+        if r.get('motion_profile',{}).get('background_clear') and (m.get('background_opacity_before')!=28 or m.get('background_opacity_departure')!=0 or m.get('foreground_opacity_departure')!=100):
+            raise ValueError('Only background may retire while transparent original sentence stays fully visible')
+        carries=m['camera_carries']
+        if not carries or any(not k['bezier'] or k['speed']<=0 or abs(k['influence']-22)>.01 for k in carries):
+            raise ValueError('Reading camera must carry nonzero velocity through interior rows')
+
+
+def validate_sentence_plane(r, passes):
+    for row in passes:
+        o=row.get('sentence_occlusion')
+        if not o:raise ValueError('Missing native sentence occlusion')
+        center=o['expected_center'];size=o['expected_bounds_size'];scale=r['render_scale']
+        if (any(abs(o['position'][j]-center[j]-(r.get('motion_profile',{}).get('plane_depth_offset',2)*scale if j==2 else 0))>.05 for j in range(3))
+                or any(abs(o['size'][j]-size[j]-8*scale)>.05 for j in range(2))
+                or [o['opacity_before'],o['opacity_mid'],o['opacity_after']]!=[0,100,0]
+                or o.get('enabled') is not (r['motion_profile']['sentence_occlusion']=='unadorned_bound_paper_plane') or o['position_error'] or o['size_error'] or o['stroke'] or o['effect_count'] or not o['threeD']
+                or any(abs(a-b)>.0001 for a,b in zip(o['fill'],[.973,.969,.949]))):
+            raise ValueError('Sentence paper must provide bound, temporary, unadorned occlusion')
+
+
 def audit(output):
     r=current(output);c=relay.client();identity=read(output/'identity.json')
     if relay.file_sha(identity['data_file'])!=identity['native_data_sha']:
         raise ValueError('The original native geometry sidecar changed')
     code='var FULLTEXT_COMP='+str(identity['comp_id'])+';\n'+(HERE/'fulltext-audit.jsx').read_text(encoding='utf-8')
     n=json.loads(c.call('ae_exec',{'code':code})['content']);write(output/'native-audit.json',n);validate_native(r,n)
-    expr=c.call('ae_validateExpressions',{'comp_id':str(identity['comp_id']),'sample_times':[3.75,14.75,19.5],'max_results':1500})
+    if r.get('motion_profile'):validate_motion(r,n.get('motion',[]))
+    if r.get('motion_profile',{}).get('sentence_occlusion'):validate_sentence_plane(r,n['passes'])
+    expr=c.call('ae_validateExpressions',{'comp_id':str(identity['comp_id']),'sample_times':[3.75,14.75,18.875,19.5],'max_results':1500})
     write(output/'expressions.json',expr)
     if not expr.get('valid') or expr.get('truncated'):raise ValueError('Native expression validation incomplete')
     return n
@@ -284,9 +332,14 @@ def preview(output,without_guide=False):
         mutation_call(c,'ae_exec',{'code':prefix+'.enabled=false;"hidden for lens test";'},output,90)
     try:
         result=c.call('ae_previewFrame',{'comp_id':str(identity['comp_id']),
-            'times':[.3,1,1.8,2.5,3.5,4,4.75,6.8,8.5,9.8,11,12.2,14.3,15.2,16.5,19.8],
+            'times':[.3,1,2.5,3.5,4,6.8,8.5,9.8,11,14.3,15.2,18.7083333333,18.875,19.0416666667,19.125,19.8],
             'layout':'grid','grid_max_side':2048,'out_dir':str(folder)},timeout=180)
         write(output/('preview'+suffix+'.json'),result)
+    except Exception as error:
+        write(output/('preview'+suffix+'-failure.json'),{'spec_sha':r['spec_sha'],
+            'error_type':type(error).__name__,'error':str(error),'state':'uncertain',
+            'next_action':'inspect_public_host_status_and_partial_frames_before_new_capture'})
+        raise
     finally:
         if enabled is not None:
             mutation_call(c,'ae_exec',{'code':prefix+'.enabled='+json.dumps(enabled)+';JSON.stringify('+prefix+'.enabled);'},output,90)

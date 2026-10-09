@@ -409,6 +409,53 @@ class FullPassageTests(unittest.TestCase):
             bad=self.native();bad[key]=True
             with self.subTest(key=key),self.assertRaises(ValueError):fulltext.validate_native(self.r,bad)
 
+    def test_transparent_sentence_rejects_a_paper_background(self):
+        bad=self.native();bad['passes'][0]['sentence_occlusion']={'enabled':True}
+        with self.assertRaises(ValueError):fulltext.validate_native(self.r,bad)
+
+    def test_source_glyphs_never_acquire_editorial_masks(self):
+        bad=self.native();bad['background_cutouts']=[{'id':self.r['target_ids'][0],'count':1}]
+        with self.assertRaises(ValueError):fulltext.validate_native(self.r,bad)
+
+    def test_sentence_plane_requires_bound_unadorned_temporary_occlusion(self):
+        o={'position':[100,200,40],'size':[516,56],'expected_center':[100,200,0],
+           'expected_bounds_size':[500,40],'opacity_before':0,'opacity_mid':100,'opacity_after':0,
+           'position_error':'','size_error':'','stroke':False,'effect_count':0,'threeD':True,
+           'fill':[.973,.969,.949],'enabled':True}
+        fulltext.validate_sentence_plane(dict(self.r,motion_profile={'sentence_occlusion':'unadorned_bound_paper_plane','plane_depth_offset':20}),[{'sentence_occlusion':o}])
+        for key,value in [('position',[101,200,40]),('size',[600,56]),('opacity_mid',50),
+                          ('opacity_after',100),('enabled',False),('stroke',True),('effect_count',1),('fill',[1,0,0])]:
+            bad=deepcopy(o);bad[key]=value
+            with self.subTest(key=key),self.assertRaises(ValueError):
+                fulltext.validate_sentence_plane(dict(self.r,motion_profile={'sentence_occlusion':'unadorned_bound_paper_plane','plane_depth_offset':20}),[{'sentence_occlusion':bad}])
+        with self.assertRaises(ValueError):fulltext.validate_sentence_plane(dict(self.r,motion_profile={'sentence_occlusion':'unadorned_bound_paper_plane','plane_depth_offset':20}),[{}])
+
+    def test_previous_motion_take_replays_without_new_occlusion(self):
+        prior=deepcopy(self.r);prior['version']='0.2.9';prior['motion_profile'].pop('foreground_background');prior['motion_profile'].pop('background_clear')
+        prior['spec_sha']=sha({k:v for k,v in prior.items() if k not in ('spec_sha','project','bundle_path','status_path')})
+        fulltext.validate(prior)
+
+    def test_prior_4k_request_remains_replayable_without_new_motion_profile(self):
+        prior=deepcopy(self.r);prior['version']='0.2.8';prior.pop('motion_profile')
+        prior['spec_sha']=sha({k:v for k,v in prior.items() if k not in ('spec_sha','project','bundle_path','status_path')})
+        fulltext.validate(prior)
+
+    def test_motion_readback_rejects_synchronous_reflow_and_row_stops(self):
+        rows=[]
+        for p in self.r['director']['passes']:
+            rows.append({'kind':p['kind'],'departure_time':p['lift'][0]+(1 if p['kind']=='fast' else 2)/24,
+                'foreground_original':[10,20,0],'foreground_departure':[10,20,-48],
+                'background_original':[100,200,0],'background_departure':[100,200,0],
+                'camera_carries':[{'bezier':True,'speed':90,'influence':22}],
+                'sentence_plane_index':300,'last_sentence_text_index':299,
+                'background_opacity_before':28,'background_opacity_departure':0,'foreground_opacity_departure':100})
+        fulltext.validate_motion(self.r,rows)
+        for field,value in (('foreground_departure',[11,20,-48]),('foreground_departure',[10,20,0]),
+                            ('background_departure',[100,201,0]),('foreground_opacity_departure',80),('background_opacity_departure',28),('camera_carries',[]),
+                            ('camera_carries',[{'bezier':True,'speed':0,'influence':22}])):
+            bad=deepcopy(rows);bad[0][field]=value
+            with self.subTest(field=field,value=value),self.assertRaises(ValueError):fulltext.validate_motion(self.r,bad)
+
     def test_output_diagnostic_path_does_not_change_spec(self):
         bad=deepcopy(self.r);bad['project']='moved/project.aep';bad['bundle_path']='moved/bundle.json';bad['status_path']='moved/status.json'
         fulltext.validate(bad);self.assertEqual(self.r['spec_sha'],bad['spec_sha'])

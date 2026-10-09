@@ -77,3 +77,91 @@ Do not transfer the first synthetic A/B feedback, old overall approval or Astra'
 design recommendation to the new full-source movie. New human status stays
 PENDING until feedback on that exact movie arrives. P2 integration remains
 blocked by the user's explicit requirement to review acquisition first.
+
+
+## User revision after the first 4K preview
+
+The user marked the r12 Guided movie
+`0ec32619408a51924b80eb5382501c8b4a8eaa93cfa06665e7cf8c4d6e3a815f`
+as **NEEDS_REVISION**. Exact feedback: “仍需修改，请指出具体位置”,
+“物理感可适当加强一点，这个有点僵硬”, and “都有” in response to
+focus, search rhythm/camera movement, and hit-to-sentence extraction choices.
+No exact problem timestamp was supplied. These are requests to improve all
+three areas, not a human PASS or permission to integrate the full film.
+
+Astra's frame/code review attributes stiffness to linear row-node velocity
+changes and simultaneous foreground/background lift with a linear camera.
+Root's second review accepts a bounded refinement: focus precedes the camera,
+row joins retain velocity, acquisition brakes without extra zoom, and the same
+sentence leaves the plane before background retreat and reflow. Lens strength,
+all original words, cue and evidence bindings, final poses and 20-second timing
+are preserved. The first new build's native carry check caught a redundant
+first-row key with zero speed; a fresh project removes it. No failed build is
+represented as an accepted take.
+
+The next exact movie requires its own visual review; sound remains deferred,
+P2 remains HOLD and all release flags remain false.
+
+
+## Transparent-foreground refinement — current delivery
+
+Baseline is main@1c34c8e76ddee9be893317d52a47577740f71b67. The latest user
+instruction, “把提取出来的那一段的字背景变成透明的”, supersedes the
+intermediate paper-plane direction. The current isolated output is
+`local-data/method-relay-dual-pass/fulltext-acquisition-r22-4k`.
+
+Request 0.2.14 uses motion profile 0.1.0. The reading focus leads the camera by
+1 Fast / 2 Guided frames at internal row nodes; the camera carries nonzero
+Bezier velocity instead of stopping on each row. Acquisition settles in its
+existing window before the original brief filled highlight. Lift starts with
+the same original sentence departing 24 design depth units before background
+retreat/reflow. The original sentence has no paper plane, border, shadow or
+editorial mask and stays fully visible. Unselected source opacity retires from
+28 to 0 at departure, then returns to 28 over the last two Lift frames after
+clearance. This changes presentation only.
+
+The native 20-second timing, five-paragraph overview, literal cue, evidence
+span, word IDs/strings, lens strength, final positions and reading holds are
+unchanged from the first 4K request. Same-object provenance, question binding
+and current supplied status are revalidated. No peel, teaching conclusion,
+new method action, voice or music is added.
+
+Native audit reads actual camera carry, sentence departure, background hold
+and opacity, foreground opacity and absence of source masks/paper planes.
+A first build's zero-speed row node and a later background-through-text defect
+were found before delivery. Paper-plane drafts and an expensive projected-mask
+experiment are superseded; the latter failed preview and is absent from the
+current producer. Failed/partial captures remain local and do not count as
+completed previews. The current full native preview includes the formerly
+problematic 18.875 and 19.042 second positions.
+
+All 85 relevant portable tests PASS, including exact legacy request replay,
+wrong source masks, foreground paper, opacity loss and row-stop rejection.
+The 773-file input audit remains PASS: 769 unchanged, four already-authorized
+workflow changes, no missing or unexpected modifications. Separate byte checks
+keep the first 4K project and all three first 4K movies unchanged.
+
+Engineering rendering does not certify first-person naturalness, teaching
+validity or human taste. New visual review remains PENDING; the earlier viewed
+Guided take remains NEEDS_REVISION. P2 full-film integration remains HOLD.
+`final_voice_accepted=false`, `production_eligible=false`,
+`public_render_ready=false`; listening review remains DEFERRED_BY_USER.
+
+Exact current spec SHA: `132e308e36f67e422acef6ce8d704d8fd798c1c9f5d09cc495dfa5e8e6813d96`.
+
+Native four-span render DONE, 480 frames, 3840 × 2160 / 24 fps; 403055 ms total.
+
+| Movie | Duration / frames | SHA-256 |
+|---|---|---|
+| `FULLTEXT_LOCATION.mp4` | 20 s / 480 | `49b933c9330932d2592e5d1e45bf41cfa0f4cfd5edbbd15892ca81219e5052c4` |
+| `FULLTEXT_FAST.mp4` | 7 s / 168 | `7dceea4f40c605623cba919c649a05143a49f38005f64d3232fa9b64589fdba4` |
+| `FULLTEXT_GUIDED.mp4` | 12 s / 288 | `4731195ccf29c4680789c31107ca66826e94d28bfacd3e1a771b7ddbd38097a5` |
+
+Native project SHA: `ffdcba6c98658e795fc804d04982c6bfda60e4a98649626c0dcc317700c66b51`.
+Native TIFF archive SHA: `c57f724b3769a7a0ad22e57cbab5ccd7ce8993133d0f41c5b1c3d94586c25562`.
+Executed template SHA: `c250ed76861c94707b2d3301be4b6f391221238eb023c1f0f8900554948a893e`.
+
+All 480 encoded frames decode at native 4K. Local review boards sample 228
+chronological frames, including dense hit/Lock/Lift samples. Root inspects
+actual decoded early Lift, source recovery and final pose; this is technical
+frame review, not human continuous-motion approval.

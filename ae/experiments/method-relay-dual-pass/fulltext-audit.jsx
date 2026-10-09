@@ -1,9 +1,9 @@
 (function(){
     var cp=AEMCP.compById(FULLTEXT_COMP),binding=JSON.parse(cp.comment),file=new File(binding.data_file);file.encoding='UTF-8';file.open('r');var b=JSON.parse(file.read());file.close();
     if(b.spec_sha!==binding.spec_sha)throw new Error('Native geometry sidecar binding differs');
-    var words=[],handles={},passes=[],probes=[],annotations=[],questionParts=[],questionHandles={},optionTexts={},guards={};
+    var words=[],handles={},passes=[],probes=[],annotations=[],questionParts=[],questionHandles={},optionTexts={},guards={},occluder=null,cutouts=[];
     for(var i=1;i<=cp.numLayers;i++){
-        var l=cp.layer(i);if(l.name==='TEMP_GEOMETRY_PROBE')probes.push(l.id);
+        var l=cp.layer(i);if(l.name==='SENTENCE_PAPER_PLANE')occluder=l;if(l.name==='TEMP_GEOMETRY_PROBE')probes.push(l.id);
         if(l.name.indexOf('SCOPE_')===0||l.name==='SERIES'||l.name==='P0_BADGE')annotations.push(l.name);
         if(l.name==='PAPER_TOP_GUARD'||l.name==='PAPER_FOOT_GUARD'){
             var masks=l.property('ADBE Mask Parade'),mask=masks.property(1),shape=mask.property('ADBE Mask Shape'),feather=mask.property('ADBE Mask Feather');
@@ -19,6 +19,7 @@
                 font_size:l.property('Source Text').value.fontSize});questionHandles[m.id]=l.id;}
         if(l.name.indexOf('ORIGINAL_OPTION_')===0)optionTexts[l.name.replace('ORIGINAL_OPTION_','')]=l.property('Source Text').value.text;
         if(l.name.indexOf('source-word-')===0){var d=l.property('Source Text').value,m=JSON.parse(l.comment);
+            var masks=l.property('ADBE Mask Parade');if(masks.numProperties){var mask=masks.property(1);cutouts.push({id:m.id,count:masks.numProperties,mode:mask.maskMode===MaskMode.SUBTRACT?'subtract':'other',expression_error:mask.property('ADBE Mask Shape').expressionError});}
             words.push({id:m.id,layer_id:l.id,text:d.text,start:m.start,end:m.end,text_sha:m.text_sha,source_sha:m.source_sha,
                 source_text_keys:l.property('Source Text').numKeys,font_size:d.fontSize,threeD:l.threeDLayer,rect:l.sourceRectAtTime(0,false),
                 position:l.transform.position.valueAtTime(0,false),anchor:l.transform.anchorPoint.value,scale:l.transform.scale.valueAtTime(0,false),
@@ -50,6 +51,12 @@
             mark_position:mark.transform.position.valueAtTime(p.hit[1],false),
             mark_size:mark.property('ADBE Root Vectors Group').property(1).property('ADBE Vectors Group').property('ADBE Vector Shape - Rect').property('ADBE Vector Rect Size').value,
             mark_strokes:mark.property('ADBE Root Vectors Group').property(1).property('ADBE Vectors Group').property('ADBE Vector Graphic - Stroke')?1:0,
+            sentence_occlusion:occluder?{enabled:occluder.enabled,position:occluder.transform.position.valueAtTime(liftTime,false),size:occluder.property('ADBE Root Vectors Group').property(1).property('ADBE Vectors Group').property('ADBE Vector Shape - Rect').property('ADBE Vector Rect Size').valueAtTime(liftTime,false),
+                expected_center:[(lo[0]+hi[0])/2,(lo[1]+hi[1])/2,(lo[2]+hi[2])/2],expected_bounds_size:[hi[0]-lo[0],hi[1]-lo[1]],
+                opacity_before:occluder.transform.opacity.valueAtTime(p.lift[0],false),opacity_mid:occluder.transform.opacity.valueAtTime(liftTime,false),opacity_after:occluder.transform.opacity.valueAtTime(p.lift[1]+1/24,false),
+                position_error:occluder.transform.position.expressionError,size_error:occluder.property('ADBE Root Vectors Group').property(1).property('ADBE Vectors Group').property('ADBE Vector Shape - Rect').property('ADBE Vector Rect Size').expressionError,
+                fill:occluder.property('ADBE Root Vectors Group').property(1).property('ADBE Vectors Group').property('ADBE Vector Graphic - Fill').property('ADBE Vector Fill Color').value,
+                stroke:!!occluder.property('ADBE Root Vectors Group').property(1).property('ADBE Vectors Group').property('ADBE Vector Graphic - Stroke'),effect_count:occluder.property('ADBE Effect Parade').numProperties,threeD:occluder.threeDLayer}:null,
             lift_focus:{time:liftTime,actual_sentence_center:[(lo[0]+hi[0])/2,(lo[1]+hi[1])/2,(lo[2]+hi[2])/2],
                 focus:cp.layer('FOCUS_TARGET').transform.position.valueAtTime(liftTime,false),error:cp.layer('FOCUS_TARGET').transform.position.expressionError},
             apertures:{overview:opt.property('ADBE Camera Aperture').valueAtTime(p.overview[0],false),scan:opt.property('ADBE Camera Aperture').valueAtTime(p.scan[0],false),
@@ -61,8 +68,24 @@
             for(var id in optionTexts)oo[id]=cp.layer('ORIGINAL_OPTION_'+id).transform.opacity.valueAtTime(times[phase],false);
             states[phase]={question_opacity:qo,option_opacity:oo};}passes[passes.length-1].mental_state=states;
     }
+    var motion=[];
+    for(var i=0;i<b.director.passes.length;i++){
+        var p=b.director.passes[i],delay=(p.kind==='fast'?1:2)/24,t=p.lift[0]+delay;
+        var foregroundId=null;for(var id in b.handles)if(b.retreat_positions[id]===undefined){foregroundId=id;break;}var lead=cp.layer(foregroundId);
+        var lastTextIndex=0;for(var id in b.handles)if(b.retreat_positions[id]===undefined)lastTextIndex=Math.max(lastTextIndex,cp.layer(id).index);
+        var foreground=lead.transform.position.valueAtTime(t,false),original=lead.transform.position.valueAtTime(p.lift[0],false);
+        var backgroundId=null;for(var id in b.retreat_positions){backgroundId=id;break;}var back=cp.layer(backgroundId),before=back.transform.position.valueAtTime(p.lift[0],false),after=back.transform.position.valueAtTime(t,false);
+        var position=cp.layer('GUIDED_CAMERA').transform.position,carries=[];
+        for(var k=2;k<position.numKeys;k++)if(position.keyTime(k)>p.scan[0]&&position.keyTime(k)<p.hit[0])
+            carries.push({time:position.keyTime(k),speed:position.keyOutTemporalEase(k)[0].speed,influence:position.keyOutTemporalEase(k)[0].influence,
+                bezier:position.keyOutInterpolationType(k)===KeyframeInterpolationType.BEZIER});
+        motion.push({kind:p.kind,departure_time:t,foreground_original:original,foreground_departure:foreground,
+            background_original:before,background_departure:after,camera_carries:carries,
+            background_opacity_before:back.transform.opacity.valueAtTime(p.lift[0],false),background_opacity_departure:back.transform.opacity.valueAtTime(t,false),foreground_opacity_departure:lead.transform.opacity.valueAtTime(t,false),
+            sentence_plane_index:occluder?occluder.index:null,last_sentence_text_index:lastTextIndex});
+    }
     return JSON.stringify({kind:b.kind,spec_sha:b.spec_sha,canvas:[cp.width,cp.height,cp.frameRate,cp.duration],renderer:cp.renderer,draft3d:cp.draft3d,resolution_factor:cp.resolutionFactor,
-        words:words,handles:handles,initial_handles:b.handles,passes:passes,geometry:{whole:b.whole,hit:b.hit,scope:b.scope,lifted:b.lifted,line_boxes:b.line_boxes,space:b.geometry_space},
+        motion:motion,background_cutouts:cutouts,words:words,handles:handles,initial_handles:b.handles,passes:passes,geometry:{whole:b.whole,hit:b.hit,scope:b.scope,lifted:b.lifted,line_boxes:b.line_boxes,space:b.geometry_space},
         question_parts:questionParts,question_handles:questionHandles,initial_question_handles:b.question_handles,option_texts:optionTexts,viewport_guards:guards,
         temporary_probes:probes,annotation_layers:annotations,visible_attention_cursor:cp.layer('READING_GUIDE').enabled,
         new_method_certification:b.new_method_certification,public_render_ready:b.public_render_ready});
