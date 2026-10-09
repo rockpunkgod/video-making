@@ -5,7 +5,7 @@ teaching review is performed here. This plan alone cannot authorize rendering.
 """
 from video_contracts import sha
 
-VERSION = '0.1.0'
+VERSION = '0.1.1'
 DEFAULT = {'transfer': 4, 'activation': 5, 'recognition': 7, 'retirement': 3}
 LIMITS = {'transfer': (3, 240), 'activation': (4, 6),
           'recognition': (6, 9), 'retirement': (2, 3)}
@@ -23,15 +23,16 @@ class RecognitionTimingOverflow(ValueError):
 def schedule(candidate_ids, acquired_id, frame_range, policy=None, event_policies=None):
     """Schedule supplied IDs without choosing words or assigning correspondence.
 
-The caller supplies an already bound sequence ending at its acquired ID.
+The caller supplies an already bound sequence, optionally ending at its acquired ID.
+None retains an unresolved result, including an empty eligible sequence.
 Frame ranges are half-open at 24 fps. The acquired expression remains active;
 retirement is attention departure, never an excluded option or sentence.
 """
     if not isinstance(candidate_ids, (list, tuple)) or not isinstance(frame_range, (list, tuple)):
         raise ValueError('Explicit candidate sequence and frame pair required')
     ids = list(candidate_ids)
-    if (not ids or any(not isinstance(i, str) or not i.strip() for i in ids)
-            or len(set(ids)) != len(ids) or acquired_id != ids[-1]):
+    if (any(not isinstance(i, str) or not i.strip() for i in ids)
+            or len(set(ids)) != len(ids) or (acquired_id is not None and (not ids or acquired_id != ids[-1]))):
         raise ValueError('Explicit unique ordered IDs ending at supplied acquired ID required')
     if (len(frame_range) != 2 or any(type(i) is not int for i in frame_range)
             or not 0 <= frame_range[0] < frame_range[1]):
@@ -50,6 +51,7 @@ retirement is attention departure, never an excluded option or sentence.
         if policies[current]['transfer'] < policies[previous]['retirement']:
             raise ValueError('Previous highlight must retire before next activation')
     needed = sum(p['transfer']+p['activation']+p['recognition'] for p in policies.values())
+    if ids and acquired_id is None: needed += policies[ids[-1]]['retirement']
     available = frame_range[1] - frame_range[0]
     if needed > available:
         raise RecognitionTimingOverflow(needed, available)
@@ -72,7 +74,8 @@ retirement is attention departure, never an excluded option or sentence.
             'acquired_id': acquired_id, 'required_frames': needed,
             'remaining_frames': available - needed, 'unallocated_window': unallocated,
             'requires_director_timing_alignment': unallocated[0] != unallocated[1],
-            'anchor': 'supplied_final_recognition_end',
+            'anchor': 'supplied_final_recognition_end' if acquired_id is not None else 'unresolved_scan_end',
+            'outcome': 'acquired' if acquired_id is not None else 'unresolved',
             'transfer_geometry_verified': False,
             'authority': 'timing_only_not_POS_or_correspondence_certification',
             'requires_bound_upstream_inputs': True, 'render_ready': False,

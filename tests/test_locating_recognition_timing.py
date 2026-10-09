@@ -44,7 +44,7 @@ class RecognitionTimingTests(unittest.TestCase):
         self.assertEqual(len(ids), 7)
 
     def test_no_implicit_candidate_selection_or_reordering(self):
-        for ids, acquired in (([], None), (['a', 'a'], 'a'), (['a', 'b'], 'a'),
+        for ids, acquired in (([], 'missing'), (['a', 'a'], 'a'), (['a', 'b'], 'a'),
                               (['a', 'b'], 'unknown'), ([''], '')):
             with self.subTest(ids=ids), self.assertRaises(ValueError):
                 timing.schedule(ids, acquired, [0, 100])
@@ -82,6 +82,20 @@ class RecognitionTimingTests(unittest.TestCase):
         a = timing.schedule(['a', 'b'], 'b', [100, 200])
         self.assertEqual(a, timing.schedule(['a', 'b'], 'b', [100, 200]))
         self.assertNotEqual(a['plan_sha'], timing.schedule(['a', 'b'], 'b', [101, 201])['plan_sha'])
+
+    def test_unresolved_retires_last_without_implicit_acquisition(self):
+        p=timing.schedule(['a','b'],None,[0,35])
+        self.assertEqual(p['required_frames'],35)
+        self.assertEqual(p['events'][-1]['retirement'],[32,35])
+        self.assertEqual(p['outcome'],'unresolved')
+        self.assertIsNone(p['acquired_id'])
+        with self.assertRaises(timing.RecognitionTimingOverflow):
+            timing.schedule(['a','b'],None,[0,34])
+
+    def test_empty_search_has_no_fake_event(self):
+        p=timing.schedule([],None,[0,40])
+        self.assertEqual(p['events'],[])
+        self.assertEqual(p['outcome'],'unresolved')
 
 
 if __name__ == '__main__':

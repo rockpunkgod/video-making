@@ -1,0 +1,352 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Reviewed Locating Trace v0.1 input",
+  "$defs": {
+    "span": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "field": {
+          "enum": [
+            "stem",
+            "passage"
+          ]
+        },
+        "start": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "end": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "quote": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "field",
+        "start",
+        "end",
+        "quote"
+      ]
+    }
+  },
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "binding": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "asset_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "semantic_binding_sha": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
+        },
+        "passage_sha": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
+        },
+        "source_sha": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
+        },
+        "review_sha": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
+        },
+        "question_id": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "asset_id",
+        "semantic_binding_sha",
+        "passage_sha",
+        "source_sha",
+        "review_sha",
+        "question_id"
+      ]
+    },
+    "strategy": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "relation_category": {
+          "type": "string",
+          "minLength": 1
+        },
+        "selection_rule": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "relation_category",
+        "selection_rule"
+      ]
+    },
+    "target": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "retained_information": {
+          "$ref": "#/$defs/span"
+        },
+        "search_expression": {
+          "$ref": "#/$defs/span"
+        },
+        "contextual_classification": {
+          "type": "string",
+          "minLength": 1
+        },
+        "search_role": {
+          "type": "string",
+          "minLength": 1
+        },
+        "review_ref": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "retained_information",
+        "search_expression",
+        "contextual_classification",
+        "search_role",
+        "review_ref"
+      ]
+    },
+    "candidates": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "field": {
+            "enum": [
+              "stem",
+              "passage"
+            ]
+          },
+          "start": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "end": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "quote": {
+            "type": "string",
+            "minLength": 1
+          },
+          "candidate_id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "question_id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "scan_order": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "contextual_classification": {
+            "type": "string",
+            "minLength": 1
+          },
+          "attention_eligibility": {
+            "type": "boolean"
+          },
+          "recognition_state": {
+            "enum": [
+              "inspected_continue",
+              "acquired",
+              "unresolved",
+              "not_eligible"
+            ]
+          },
+          "review_ref": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "required": [
+          "field",
+          "start",
+          "end",
+          "quote",
+          "candidate_id",
+          "question_id",
+          "scan_order",
+          "contextual_classification",
+          "attention_eligibility",
+          "recognition_state",
+          "review_ref"
+        ]
+      }
+    },
+    "acquisition": {
+      "anyOf": [
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "candidate_id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "correspondence_basis": {
+              "type": "string",
+              "minLength": 1
+            },
+            "sentence": {
+              "$ref": "#/$defs/span"
+            },
+            "evidence": {
+              "$ref": "#/$defs/span"
+            },
+            "source_evidence_ref": {
+              "type": "string",
+              "minLength": 1
+            },
+            "allowed_conclusion": {
+              "const": "locate_for_further_inspection"
+            },
+            "review_ref": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "required": [
+            "candidate_id",
+            "correspondence_basis",
+            "sentence",
+            "evidence",
+            "source_evidence_ref",
+            "allowed_conclusion",
+            "review_ref"
+          ]
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "review": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "reviewer": {
+          "type": "string",
+          "minLength": 1
+        },
+        "reviewer_kind": {
+          "enum": [
+            "ai_host",
+            "human"
+          ]
+        },
+        "status": {
+          "enum": [
+            "reviewed"
+          ]
+        },
+        "material_sha": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
+        },
+        "request_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "request_sha": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
+        },
+        "independent_human_certified": {
+          "type": "boolean"
+        },
+        "independent_human_review": {
+          "enum": [
+            "pass",
+            "pending",
+            "not_applicable"
+          ]
+        },
+        "assertions": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "ref": {
+                "type": "string",
+                "minLength": 1
+              },
+              "subject": {
+                "type": "string",
+                "minLength": 1
+              },
+              "subject_sha": {
+                "type": "string",
+                "pattern": "^[a-f0-9]{64}$"
+              },
+              "question_id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "rationale": {
+                "type": "string",
+                "minLength": 1
+              },
+              "evidence": {
+                "type": "array",
+                "minItems": 1,
+                "items": {
+                  "$ref": "#/$defs/span"
+                }
+              }
+            },
+            "required": [
+              "ref",
+              "subject",
+              "subject_sha",
+              "question_id",
+              "rationale",
+              "evidence"
+            ]
+          }
+        }
+      },
+      "required": [
+        "reviewer",
+        "reviewer_kind",
+        "status",
+        "material_sha",
+        "request_ref",
+        "request_sha",
+        "independent_human_certified",
+        "independent_human_review",
+        "assertions"
+      ]
+    }
+  },
+  "required": [
+    "binding",
+    "strategy",
+    "target",
+    "candidates",
+    "acquisition",
+    "review"
+  ]
+}
