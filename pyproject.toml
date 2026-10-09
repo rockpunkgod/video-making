@@ -10,6 +10,7 @@ requires-python = ">=3.10"
 dependencies = ["PyYAML>=6.0,<7", "jsonschema>=4,<5", "Pillow>=12,<13"]
 
 [project.optional-dependencies]
+organized-exams = ["pypdf>=6,<7"]
 scratch-voice = ["edge-tts>=7.2.8,<8"]
 passage-captions = ["fonttools>=4.50,<5"]
 

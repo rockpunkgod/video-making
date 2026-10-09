@@ -1,0 +1,117 @@
+# 一张试卷一个独立代理：真题案例与整卷回归
+
+适用本轮用户指定的 `D:\英语资料（已整理）`，不是对原 ANSWER 的重写。
+
+## 派发与目录
+
+每份题面候选使用一个实际独立 subagent。最多三卷并发，完成后再派下一卷。
+清单是 204 份来源候选，不是 204 套已认证、互不重复的官方真题。
+`scripts.organized_paper_queue` 的 SQLite 只记录真实派发；它本身不会创建代理。
+待派、正在审阅、代理已返回报告要分开。报告返回不等于完整试卷或方法 Case 通过。
+报告有修订时，由协调者显式登记 `record-report PAPER_ID --outcome PARTIAL --report-file review-v2.json`。
+队列核对试卷 ID、来源 SHA 和真实 reviewer_agent，保留旧文件，不自动挑选最新版。
+
+每个代理只修改自己的 `local-data/organized-pdfs/paper-runs/<paper_id>/`。
+主代理另行复核汇总，不让代理改共享 Registry、原 ANSWER、既有交付包或其他卷的冻结稿。
+文件编辑使用 apply_patch；生成的结构化产物使用不可覆写的 freeze_json。
+有错另存显式版本和撤回原因，不覆盖历史。
+
+清单/哈希采用轻量档，结构及工程回归采用中档，完整英语证据和方法边界审阅采用高档。
+一卷的语义代理可以复用公共工具，但不能把工具跑完当成自己已经审过全文。
+
+## 现有入口
+
+- `source-manifest.json`：406 个文件的来源清单，题面、答案、混合及待分类分开。
+- `originals/snapshot.json`：全部原文件的私有字节冻结；复制答案字节不等于读取答案正文。
+- `pages/<source_sha256>.json`：题面逐页原文，未纠错，未 OCR 覆盖。
+- `case-bank-v4/source-bank.json`：按 paper_id 找每卷案例文件、显示投影和来源指纹。
+- `case-bank-v4/papers/<paper_id>.json`：原始整卷文本及精确原文引用。
+- `case-bank-v4/question-inputs/<paper_id>.json`：部分可投影结构；不是全部题已可用。
+- `answer-source-links.json`：文件名配对而非答案认证；不含答案正文。
+- `ocr/<source_sha256>.json`：23 页中文 OCR 转录旁路；英文误识别明显，不能直接充当可信盲评题面。
+
+公共机械入口：
+
+```powershell
+python -X utf8 -m scripts.run_organized_paper_regression PAPER_ID
+```
+
+此入口只跑通用结构子集。历史单选仍路由未知，不能当语法填空。
+当前有效子集报告目录为 `mechanical-intake-v4-2`。
+`mechanical-intake-v4` 缺少提示词传递，`mechanical-intake-v4-1` 尚未拦截正文/说明数字；
+两者保留为失效历史，不能用于当前覆盖和方法触发统计。
+v4 案例库的叶记录本身也可能含误切数字或未细分任务，数量只是解析候选数。
+例如“填入 1 个适当单词”、价格、百分比不是自动可用空位。
+公共回归入口拦截说明/页码数字与无明确空标的数字，留给每卷代理核实，绝不删原文。
+阅读、写作、图形题及缺损结构须代理独立绑定后，用现有 QuestionAnalyzer/PaperAnalyzer 跑。
+不能用子集回归报告声称整卷全部题型通过。所有 source-level 记录仍未登记为正式方法 Case。
+
+## 每卷必须实际做
+
+1. 完整读该卷所有题面页，并检查页码、题号、文章、选项、空位、提示词、写作任务与续写段首。
+   使用 PDF skill；若涉及解题/方法，完整读对应 Skill 及其要求的课程模块。
+   原文错字保留；版式页眉仅可从显示投影剔除，记录被排除的原始 start/end/quote。
+   图形选项、图画作文和广告图须渲染目视核验，不能凭文本层声称内容完整。
+   听力无音频、历史改错/翻译等未支持类型单独登记，不硬塞六型。
+2. 从题面独立建立逐题输入与 source-structure。字段来源用精确单段或多段源跨度绑定。
+   不从答案补题。所有可忠实转换的笔试题实际运行 QuestionAnalyzer 和 PaperAnalyzer。
+   先冻结输入、预测、版本和指纹。无语义 provider 的 unresolved 不是已认证 safe_abstention。
+3. 从真实触发中挑最多三个优先六黄金方法的候选，不为数量强套。
+   先冻结自己的 source-only AI 语义观察、动作及产物，再揭晓答案。
+   允许辅助动作或有界排除未闭合；不要借整题答案给所有参与方法信用。
+   尽可能将动作记录实际送入引擎，保存执行ID、own output、role、evidence spans、Stop。
+4. 冻结后才读取本卷精确配对的答案/解析。配对仍需题号和全文核验。
+   官方来源未经认证时 official_answer=null，third_party_reference 单列。
+   解析和答案串矛盾、缺页、图形缺失都标待核，不修改盲稿或反推方法。
+5. 输出 review.json，顶层 paper_id、source_sha256、reviewer_agent。
+   分列工程回归、AI题面审阅、第三方参考对照、source gap、typed产物、方法候选与正式登记。
+   正式 Case 注册和成熟度变更由另一个授权审阅流程执行，此处不可自动填槽。
+   Report 中记录当前 v4 与独立原题绑定的差异，以便后续显式解析修订。
+
+## 证据和刹车优先
+
+R01 先确认同一完整断言，才可拆 A+B；不同对象不是自动“加戏”。
+找不到原词不是无间接依据，B 有合理文本支持时停止此理由的排除。
+R02 保留主体、完整动作和对象，不为制造主体错换而过度限定一个多义动词。
+R06 比全文任务及范围，不把缺关键词当缺主旨。
+R09 只产对象、核心判断、全文结构任务的骨架卡；入口不是三个万能取词步骤。
+F01 只产初次三维暂定分组；每维覆盖全部 A-G，一维无区分度要明说。
+句型轴比较完整句、半句、祈使、疑问等真实结构；But 等转折标志不能被包装为句型差异。
+相关代词尚未回填时只能标暂定，分出组不等于实际减掉候选，更不能据分组定答案。
+G01 先按空位功能走决策树，不按括号原词性强进入动词路线。
+定位、解释、缩小、决定、核验职责分清；只剩一个选项也不自动正确。
+
+## 不得混记的统计
+
+AI 宿主不是人审。不能写 human judgement、真人 First-use 或学生速度收益。
+独立代理在看参考卷之前的观察，可以记 agent_before_reference_read；不能自动称新留出集。
+若父代理或旧材料已透露某题答案提示，逐题记 exposure，排除相应 clean-blind 统计。
+已揭晓旧卷的重新跑题不变成新增盲测。需要修正身份或归因时另存绑定原 SHA 的附录。
+真实原题入库数、解析完整题数、方法候选数、正式 Method Case 数和真人研究人数分开。
+实用性优先于传播；没有独立实效证据，不升级 validated/stable/Efficient/Signature。
+
+全部全文与答案保留私有目录。未核再发行权限，不上传公开仓库。
+
+## 从目录到逐卷报告
+
+依赖由 `pyproject.toml` 的 `organized-exams` 可选组声明。按以下顺序运行本地入口：
+
+```powershell
+& .\scripts\inventory_organized_sources.ps1
+python -X utf8 -m scripts.freeze_organized_originals
+python -X utf8 -m scripts.freeze_organized_pdf_pages --kind questions
+python -X utf8 -m scripts.link_organized_answer_sources
+python -X utf8 -m scripts.build_organized_question_cases
+python -X utf8 -m scripts.organized_paper_queue init
+python -X utf8 -m scripts.run_organized_paper_regression all
+```
+
+目录清单和原文件快照可重复验证，但不得原地重写成另一批来源。
+题面提取与文件名配对都不读取解析正文。OCR 是旁路转录，不能覆盖原始文本层。
+题面候选全部跑过通用机械入口后，仍须实际逐卷派发，不能把这一步算作 204 个代理报告。
+每卷报告必须分别记录全部源任务、忠实引擎输入、方法候选、正式 Case 四项计数。
+源任务含听力和未支持的历史题型；方法候选至多三个的限制绝不限制全卷源题入库。
+
+协调者的第二次动作审阅另存 `coordinator-reviews/`，并用 SHA 绑定附录关联原卷，
+不覆盖盲稿、参考对照或初审意见。揭晓后的显示投影修复或动作修订必须明确标时，
+不能重新计算为题面初次盲测。附录指出的限权、撤回或修订须随初审一起读取。
