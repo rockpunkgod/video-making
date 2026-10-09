@@ -708,3 +708,55 @@ Fast output is byte-identical to the explicitly accepted r27 Fast movie
 Post-render native cache purge confirmed rendering=false before clearing
 transient caches. Native media encoding completed without another render.
 These results preserve Fast evidence and do not confer Guided human approval.
+
+
+## Locating-expression recognition timing preparation
+
+Baseline main@6807837. recognition_timing.py implements deterministic frame
+scheduling for explicitly supplied IDs and per-expression editing durations.
+It does not parse English, assign POS, choose spans, judge synonymy or eliminate
+candidates. It does not create or authorize a native render.
+
+After the user clarified that camera progression must follow locating-keyword
+recognition, Astra revised its prior uniform-camera recommendation. The next
+creative target is quick approach, early gentle deceleration, slower recognition,
+continuous departure and final acquisition settle. Same-row candidates chiefly
+move focal attention; the page should not restart for every expression.
+Camera, focus, highlight and subtle magnification must share recognition events.
+The prior r28 uniform middle is technical continuity evidence, not the final
+creative solution, and its human review is NEEDS_REVISION.
+
+The provisional timing helper supports editor-supplied durations per ID.
+Default 4/5/7/3 transfer/activation/recognition/retirement frames are uniform
+trial values only, not a recommended identical production template. Cross-row
+transfer must use actual distance; the helper accepts longer explicitly supplied
+transfers but marks transfer_geometry_verified=false. Recognition durations
+are explicit per candidate, not inferred difficulty from text length.
+
+Scheduling works back from the supplied final-recognition-end frame. Previous
+highlight retirement overlaps the next transfer and must complete before the
+next activation. The acquired expression is not automatically retired as failed.
+Unused lead-in remains unallocated for real reading-route alignment; it is not
+filled with an idle hold at the end. Overflow reports exact required additional
+frames without dropping candidates or compressing recognition. Candidate count,
+route or timing changes require explicit director/voice/shot binding updates.
+
+98 relevant portable tests pass. Counterexamples cover IDs, ordering, invalid
+frames, compressed recognition, replay hashes, per-expression timing and its
+binding, retirement/transfer overlap and explicit overflow. Synthetic seven-ID
+input at uniform trial durations requires 112 frames in a 102-frame window,
+reporting 10 extra frames. This does not state a real candidate count for q33.
+
+Current frozen bundle/status file hashes remain unchanged. No reviewed ordered
+candidate POS spans or correspondence sequence was found in the current q33
+export or adjacent frozen trajectories. Required inputs are the exact question
+locating-keyword span/classification, ordered candidate passage spans with
+classifications, source/review binding and acquired-expression correspondence
+support. These must be supplied frozen before consumption. The retained question
+phrase is not silently reduced to another keyword.
+
+Timing plans remain render_ready=false and public_render_ready=false, requiring
+upstream, geometry and director bindings. This is not an implemented real-question
+recognition animation. No new video, ANSWER Review, teaching fact, Registry change,
+voice or full-film integration occurs here. The user r28 revision request remains
+open; P2 integration is HOLD. Real source and media remain ignored local data.

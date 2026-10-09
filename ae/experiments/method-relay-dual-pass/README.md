@@ -312,3 +312,16 @@ Guided output remains independent of prior Fast acceptance.
 After completed native rendering, transient AE caches are purged while the
 queue is idle before encoding verified frames. This limits competition for
 memory; original media, projects and frozen inputs are retained.
+
+
+### Locating-expression recognition timing preparation
+
+recognition_timing.py schedules supplied candidate IDs in frame intervals:
+editor-supplied transfer and slower recognition durations per expression.
+Uniform defaults are trial values only. Actual geometry must drive transfer
+duration, and camera/focus/highlight must share the same recognition events. Retirement clears the highlight; it never eliminates a sentence or
+option. Final acquired identity and order must be caller supplied. Overflow
+requires explicit retiming; unused frames are left unallocated. The 0.1.0
+policy is provisional and every timing plan remains non-renderable until
+upstream span/classification/correspondence and director bindings exist.
+This module does not tag English or provide a real q33 recognition sequence.
