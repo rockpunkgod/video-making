@@ -232,3 +232,25 @@ from opacity 28 to 0 at departure, stays absent during reflow, then returns to
 Original selected text stays fully visible. Native readback verifies this
 separation and rejects a paper background or foreground opacity loss. Source
 content, final positions, static reading holds and overall duration are unchanged.
+
+### Sentence attention v0.1 — request 0.2.15
+
+The current experiment adds restrained same-object sentence magnification.
+Literal punctuation and paragraph breaks group existing source word IDs;
+these groups are visual units, not newly certified semantic spans. Native
+glyph geometry maps them to the actual focus path, including the final row's
+shortened scan. A sentence beyond that path never activates.
+
+One shared quintic smootherstep envelope affects the original sentence's
+position and scale: four frames to enter, six to retire. Maximum gain is 1.5%
+Fast / 2% Guided. Measured same-line glyph gaps lower this ceiling, reserving
+two design pixels and room for the neighboring sentence's own expansion.
+Multi-line sentences share one envelope and anchor; no per-word bounce,
+reflow, extra camera zoom, paper backing or new narration is added.
+The acquired sentence holds its attention gain into Lift, then smoothly joins
+the existing final size and position at Lift completion. The page overview
+and rewind retain their original geometry. Native audit records actual scale
+ratios as well as expression errors; declaring the intent alone cannot pass.
+The physical departure audit uses pre-expression transforms for the original
+depth-first movement, while attention and sentence-focus audits inspect the
+result after expressions. Visual smoothness still needs human movie review.

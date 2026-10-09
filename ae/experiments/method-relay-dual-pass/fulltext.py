@@ -17,6 +17,19 @@ from video_contracts.passage import require_current
 HERE=Path(__file__).resolve().parent
 
 
+def sentence_groups(words):
+    """Literal punctuation groups for visual attention; no semantic inference."""
+    groups=[];current=[]
+    for word in words:
+        if current and '\n' in word['gap_before']:
+            groups.append(current);current=[]
+        current.append(word['id'])
+        if re.search(r'[.!?][\"\u201d\u2019)]*$',word['text']):
+            groups.append(current);current=[]
+    if current:groups.append(current)
+    return groups
+
+
 def project(bundle,status,question_id,question_cue,hit_cue):
     require_current(bundle,status);p=bundle['payload']
     qi,q=next((i,q) for i,q in enumerate(p['questions']) if q['question_id']==question_id)
@@ -83,7 +96,7 @@ def make_request(output,bundle_path,status_path,question_id,question_cue,hit_cue
     for id,start,end in (('QUESTION_PREFIX',0,cue['start']),('QUESTION_KEYWORD',cue['start'],cue['end']),('QUESTION_SUFFIX',cue['end'],len(qtext))):
         question_parts.append({'id':id,'start':start,'end':end,'text':qtext[start:end],'text_sha':sha(qtext[start:end]),
                                'position':[150+float(ImageFont.truetype(ep,34).getlength(qtext[:start])),203]})
-    r={'kind':'frozen_full_passage_location_visual_research','version':'0.2.14','source':source,
+    r={'kind':'frozen_full_passage_location_visual_research','version':'0.2.15','source':source,
         'canvas':[3840,2160,24,20],'render_scale':2,
         'motion_profile':{'version':'0.1.0','camera_lag_frames':{'fast':1,'guided':2},
             'departure_depth':24,'background_delay_frames':{'fast':1,'guided':2},
@@ -109,6 +122,10 @@ def make_request(output,bundle_path,status_path,question_id,question_cue,hit_cue
                                  'width':float(ImageFont.truetype(ep,34).getlength(question_cue))},
         'project':str(output/'FULLTEXT_LOCATION.aep'),'template_sha':relay.file_sha(HERE/'fulltext-build.jsx'),
         'human_visual_review':'PENDING','final_voice_accepted':False,'production_eligible':False,'public_render_ready':False}
+    r['sentence_attention']={'version':'0.1.0','groups':sentence_groups(words),
+        'max_gain':{'fast':.015,'guided':.02},'enter_frames':4,'exit_frames':6,
+        'curve':'quintic_smootherstep','collision_reserve':2,
+        'identity':'same_source_words','background':'transparent'}
     r['spec_sha']=sha({k:v for k,v in r.items() if k not in ('project','bundle_path','status_path')})
     validate(r);return r
 
@@ -123,11 +140,15 @@ def validate(r):
                 'scan_carry_influence':22,'bounce':False,'extra_zoom':False,
                 **({'sentence_occlusion':'unadorned_bound_paper_plane','geometry_sampling':'96hz_lift_only',
                     'plane_depth_offset':20} if r.get('version')=='0.2.13' else {}),
-                **({'foreground_background':'transparent','background_clear':'fade_out_during_reflow'} if r.get('version')=='0.2.14' else {})})
-            or r.get('version') not in ('0.2.8','0.2.9','0.2.13','0.2.14')
+                **({'foreground_background':'transparent','background_clear':'fade_out_during_reflow'} if r.get('version') in ('0.2.14','0.2.15') else {})})
+            or r.get('version') not in ('0.2.8','0.2.9','0.2.13','0.2.14','0.2.15')
             or source['answer'] is not None or source['method_certification'] is not False
             or any(r[k] is not False for k in ('final_voice_accepted','production_eligible','public_render_ready'))):
         raise ValueError('Only frozen-source visual location, without answer or release promotion')
+    if r['version']=='0.2.15' and r.get('sentence_attention')!={'version':'0.1.0','groups':sentence_groups(r['words']),
+            'max_gain':{'fast':.015,'guided':.02},'enter_frames':4,'exit_frames':6,
+            'curve':'quintic_smootherstep','collision_reserve':2,'identity':'same_source_words','background':'transparent'}:
+        raise ValueError('Sentence attention must preserve literal groups and bounded smooth gain')
     reconstructed=''.join(w['gap_before']+w['text'] for w in r['words'])+r['trailing_space']
     if reconstructed!=text or any(text[w['start']:w['end']]!=w['text'] or sha(w['text'])!=w['text_sha'] for w in r['words']):
         raise ValueError('Every word and whitespace in every original paragraph must survive')
@@ -317,10 +338,25 @@ def audit(output):
     n=json.loads(c.call('ae_exec',{'code':code})['content']);write(output/'native-audit.json',n);validate_native(r,n)
     if r.get('motion_profile'):validate_motion(r,n.get('motion',[]))
     if r.get('motion_profile',{}).get('sentence_occlusion'):validate_sentence_plane(r,n['passes'])
+    if r.get('sentence_attention'):validate_attention(r,n.get('sentence_attention',[]))
     expr=c.call('ae_validateExpressions',{'comp_id':str(identity['comp_id']),'sample_times':[3.75,14.75,18.875,19.5],'max_results':1500})
     write(output/'expressions.json',expr)
     if not expr.get('valid') or expr.get('truncated'):raise ValueError('Native expression validation incomplete')
     return n
+
+
+def validate_attention(r,rows):
+    if not rows:raise ValueError('Missing actual native sentence magnification')
+    groups=r['sentence_attention']['groups']
+    for row in rows:
+        if row['ids'] not in groups or row['scale_error'] or row['position_error'] or not 0<=row['gain_cap']<=.02:
+            raise ValueError('Sentence identity, smooth transforms or clearance invalid')
+        for sample in row['samples']:
+            ratios=[a/b for a,b in zip(sample['actual'],sample['base'])]
+            if any(not 1-.00001<=v<=1.02001 for v in ratios) or max(ratios)-min(ratios)>.00001:
+                raise ValueError('Magnification must remain small and uniform')
+    if not any(a>b+.01 for row in rows for s in row['samples'] for a,b in zip(s['actual'],s['base'])):
+        raise ValueError('Intent is not enough: native magnification must actually execute')
 
 
 def preview(output,without_guide=False):

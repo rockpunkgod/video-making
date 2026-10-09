@@ -461,4 +461,25 @@ class FullPassageTests(unittest.TestCase):
         fulltext.validate(bad);self.assertEqual(self.r['spec_sha'],bad['spec_sha'])
 
 
+class SentenceAttentionTests(unittest.TestCase):
+    def test_literal_groups_do_not_split_at_layout_wrap(self):
+        words=[{'id':'a','text':'A','gap_before':''}, {'id':'b','text':'sentence.','gap_before':' '},
+               {'id':'c','text':'Next','gap_before':' '}, {'id':'d','text':'one!','gap_before':' '}]
+        self.assertEqual(fulltext.sentence_groups(words),[['a','b'],['c','d']])
+        words[1]['text']='sentence';words[2]['gap_before']='\n'
+        self.assertEqual(fulltext.sentence_groups(words),[['a','b'],['c','d']])
+
+    def test_native_intent_alone_cannot_pass(self):
+        r={'sentence_attention':{'groups':[['a','b']]}}
+        row={'ids':['a','b'],'gain_cap':.02,'scale_error':'','position_error':'',
+             'samples':[{'time':1,'base':[200]*3,'actual':[204]*3}]}
+        fulltext.validate_attention(r,[row])
+        for field,value in [('ids',['unbound']),('gain_cap',.1),('scale_error','failed')]:
+            bad=deepcopy(row);bad[field]=value
+            with self.subTest(field=field),self.assertRaises(ValueError):fulltext.validate_attention(r,[bad])
+        for scale in ([200]*3,[220]*3,[204,203,204]):
+            bad=deepcopy(row);bad['samples'][0]['actual']=scale
+            with self.subTest(scale=scale),self.assertRaises(ValueError):fulltext.validate_attention(r,[bad])
+
+
 if __name__=='__main__':unittest.main()

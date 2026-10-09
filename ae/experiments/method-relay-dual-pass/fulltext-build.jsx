@@ -144,6 +144,56 @@
     opt.property('ADBE Camera Focus Distance').expression='var p=thisComp.layer("FOCUS_TARGET").toWorld([0,0,0]);dot(sub(p,transform.position),normalize(sub(transform.pointOfInterest,transform.position)));';
     var hitLine=filledMark('ACQUIRED_WORDS',hit.max[0]-hit.min[0]+8*S,hit.max[1]-hit.min[1]+8*S,[hit.center[0],hit.center[1],S],true);
     keys(hitLine.transform.opacity,across(0,function(p){return [[p.hit[0],0],[p.hit_flash[0],0],[p.hit_flash[0]+(p.hit_flash[1]-p.hit_flash[0])/3,85],[p.hit[1],0],[p.end,0]];}));
+    // One smooth attention envelope per literal sentence, never per word.
+    // Native glyph clearance caps the gain; the page and camera are not scaled.
+    var attention=[];
+    if(R.sentence_attention){
+        var cfg=R.sentence_attention;
+        for(var gi=0;gi<cfg.groups.length;gi++){
+            var ids=cfg.groups[gi],box=union(ids,false),members={},cap=.02;
+            for(var wi=0;wi<ids.length;wi++)members[ids[wi]]=true;
+            for(var wi=0;wi<R.words.length;wi++){
+                var w=R.words[wi];if(!members[w.id])continue;
+                var rr=rects[w.id],left=w.position[0]*S+rr.left*S,right=left+rr.width*S;
+                for(var ni=0;ni<R.words.length;ni++){
+                    var other=R.words[ni];if(members[other.id]||other.line!==w.line)continue;
+                    var nr=rects[other.id],nl=other.position[0]*S+nr.left*S,ne=nl+nr.width*S;
+                    var gap=nl>=right?nl-right:(ne<=left?left-ne:-1);
+                    var outward=nl>=right?right-box.center[0]:box.center[0]-left;
+                    if(gap>=0&&outward>0)cap=Math.min(cap,Math.max(0,(gap-cfg.collision_reserve*S)*.45/outward));
+                }
+            }
+            var windows=[];
+            for(var pi=0;pi<visits.length;pi++){
+                var pass=R.director.passes[pi],visit=visits[pi],begin=1e9,end=-1,selected=false;
+                for(var wi=0;wi<ids.length;wi++)if(R.lift_positions[ids[wi]])selected=true;
+                for(var li=0;li<visit.lines.length;li++){
+                    var v=visit.lines[li],line=R.lines[v.line_id],low=1e9,high=-1e9;
+                    for(var wi=0;wi<line.word_ids.length;wi++){
+                        var id=line.word_ids[wi];if(!members[id])continue;
+                        var pos=words[id].transform.position.valueAtTime(0,false),rr=rects[id];
+                        low=Math.min(low,pos[0]+rr.left*S);high=Math.max(high,pos[0]+(rr.left+rr.width)*S);
+                    }
+                    if(high<low)continue;
+                    var leftFocus=v.bounds.min[0]+style.reader_length/2;
+                    var rightFocus=li===visit.lines.length-1?v.bounds.min[0]+16*S+style.reader_length/2:v.bounds.max[0]-style.reader_length/2;
+                    if(low>rightFocus||high<leftFocus)continue;
+                    var span=Math.max(1,rightFocus-leftFocus),duration=v.end-1/24-v.start;
+                    begin=Math.min(begin,v.start+Math.max(0,(low-leftFocus)/span)*duration);
+                    end=Math.max(end,v.start+Math.min(1,(high-leftFocus)/span)*duration);
+                }
+                if(end>=begin)windows.push([begin,selected?pass.lift[0]:Math.min(end,pass.hit[0]),selected?pass.lift[1]:Math.min(end+cfg.exit_frames/24,pass.hit[0]),Math.min(cap,cfg.max_gain[pass.kind])]);
+            }
+            if(!windows.length)continue;
+            var expression='var W='+JSON.stringify(windows)+';function smooth(x){x=Math.max(0,Math.min(1,x));return x*x*x*(x*(x*6-15)+10);}var gain=0;for(var i=0;i<W.length;i++){var w=W[i];if(time>=w[0]&&time<w[2])gain=Math.max(gain,w[3]*smooth((time-w[0])/('+cfg.enter_frames+'/24))*(1-smooth((time-w[1])/Math.max(1/24,w[2]-w[1]))));}';
+            for(var wi=0;wi<ids.length;wi++){
+                var l=words[ids[wi]];
+                l.transform.scale.expression=expression+'value*(1+gain);';
+                l.transform.position.expression=expression+'var anchor='+JSON.stringify(box.center)+';value+(value-anchor)*gain;';
+            }
+            attention.push({ids:ids,anchor:box.center,gain_cap:cap,windows:windows});
+        }
+    }
     // Extend the outer mask edges off-canvas: two-sided feather must not reveal
     // source glyphs again at the image boundary after their inner-edge fade.
     for(var guardName in R.viewport_guards){var guard=R.viewport_guards[guardName];
@@ -162,7 +212,7 @@
     var data={kind:R.kind,spec_sha:R.spec_sha,whole:whole,hit:hit,scope:scope,lifted:lifted,
         director:R.director,line_boxes:lineBoxes,scan_visits:visits,handles:handles,question_handles:questionHandles,
         retreat_positions:retreatPositions,background_word_scale:backgroundWordScale,lift_look:liftLook,
-        geometry_space:'native_sourceRect_scaled_plus_unparented_translation',new_method_certification:false,public_render_ready:false};
+        sentence_attention:attention,geometry_space:'native_sourceRect_scaled_plus_unparented_translation',new_method_certification:false,public_render_ready:false};
     var sidecar=new File(dest.parent.fsName+'/native-geometry.json');sidecar.encoding='UTF-8';sidecar.open('w');sidecar.write(JSON.stringify(data));sidecar.close();
     cp.comment=JSON.stringify({kind:R.kind,spec_sha:R.spec_sha,semantic_binding_sha:R.source.semantic_binding_sha,data_file:sidecar.fsName,public_render_ready:false});
     cp.openInViewer();app.project.save(dest);return JSON.stringify({ok:true,comp_id:cp.id,spec_sha:R.spec_sha,project:dest.fsName,data_file:sidecar.fsName});

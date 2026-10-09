@@ -392,3 +392,61 @@ Guided comparison SHA: `1e7c69913f85e268435e4b965d3ff4fed81f93a92b19ed139e83e923
 This is an editorial comparison of actual native renders, not a new AE take.
 Human review remains PENDING and P2 integration remains HOLD. No current user
 acceptance is inferred from the previous approved synthetic relay footage.
+
+
+## Sentence attention — current 4K experiment
+
+Baseline: main@ccfd972. User requested Apple-like restrained magnification,
+with smoothness the priority, and explicitly authorized implementation.
+Current take: local `fulltext-acquisition-r24-4k`, request 0.2.15.
+
+Original sentence words share one quintic envelope and geometric anchor.
+Fast gain is capped at 1.5%, Guided at 2%; native same-line glyph clearance
+reduces the first and target sentences to approximately 0.396% and 0.430%.
+This is not a uniform 2% enlargement. Entry is four frames, ordinary exit six;
+the acquired sentence retains gain until Lift and retires it through that
+movement, reaching the original final pose. No bounce, page zoom, text reflow,
+source masks, paper backing or new voice is added. Literal punctuation groups
+are editorial visual units, not new semantic or evidence certification.
+
+An initial draft's timing used the full last-row width. Native inspection
+led to a fresh project with windows constrained to the actual shortened focus
+path; the subsequent unvisited sentence does not activate. Old projects and
+movies are preserved. Existing source, evidence, word/claim identity, question,
+camera route, 20-second timing, final positions and frozen files are verified
+unchanged against r22. No ANSWER or Registry write occurs.
+
+87 portable tests pass. Native audit and expression validation pass; native
+scale ratios prove actual execution rather than an intent-only record. The
+depth-first movement is checked before the attention expression, with actual
+sentence focus and magnification checked after expressions.
+
+Astra's read-only second review finds the shared multi-line envelope and
+Lift transition suitable for a conservative first trial. It notes a roughly
+1.3-frame lag of the Fast short-sentence peak after focus leaves: continuous
+mathematically, but a possible original-speed listening-free visual issue.
+This observation is not user approval. Smoothness and the visibility of gains
+limited by glyph clearance remain human review questions.
+
+Human visual review PENDING; listening DEFERRED_BY_USER; P2 integration HOLD.
+`final_voice_accepted=false`, `production_eligible=false`,
+`public_render_ready=false`. No full-film integration or teaching promotion.
+
+Spec SHA: `3f80fab16ad1db8145e11355a3e58cc71852390a1ab3ec8de6c3743b326428bb`.
+Semantic binding SHA (unchanged): `e1f06096dc5feb3238ed39e041b481579df8a30d59dabf67c3f001d4a5cd3961`.
+Native render: 480 frames, 3840 × 2160 / 24 fps; 754003 ms.
+
+`FULLTEXT_LOCATION.mp4`: 480 frames; SHA `7cc9daaee829991f02fc290ec8b1c145ad4d016d9d81c36dc984817b12db1f77`.
+
+`FULLTEXT_FAST.mp4`: 168 frames; SHA `761ab86dc01874a26ba1e5672f992284209c718212f8ae929785f362d72978fb`.
+
+`FULLTEXT_GUIDED.mp4`: 288 frames; SHA `7ed1deaaee78b3b1d4896faee7f9d4cfd1705a4ad42944b4d9338d2c8f92dab5`.
+
+AEP SHA: `928f4607fb890b3bdadce2710b09ce3510409f70a35003330ba53ab8ca92d524`.
+Template SHA: `2e088de0a8b218f84dbc55bf336a9abd0771e18df934eea8188c19b924b949d8`.
+
+All 480 encoded frames decode at native 4K; local chronology boards sample
+228 frames. Root inspected boards 02, 03, 11, 17 and 19 for scan, acquisition,
+transparent Lift and final-pose defects. No obvious overlap or paper backing
+appears in those inspected samples. This sparse technical frame inspection
+does not prove original-speed smoothness or replace human visual review.
