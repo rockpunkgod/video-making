@@ -44,7 +44,9 @@ def extract_native(archive,manifest,first,end,folder):
 
 
 def encode_frames(folder,first,count,target,width=1920,height=1080):
-    subprocess.run(['ffmpeg','-v','error','-n','-framerate','24','-start_number',str(first),
+    # Bound TIFF decoding independently: default decoder parallelism can exhaust
+    # memory on native 4K frames while Adobe retains its scene cache.
+    subprocess.run(['ffmpeg','-v','error','-n','-threads','1','-filter_threads','1','-framerate','24','-start_number',str(first),
         '-i',str(folder/'FRAME_%05d.tif'),'-frames:v',str(count),'-an','-c:v','libx264',
         '-threads','4','-crf','16','-pix_fmt','yuv420p',str(target)],check=True)
     return verify_movie(target,count,width,height)

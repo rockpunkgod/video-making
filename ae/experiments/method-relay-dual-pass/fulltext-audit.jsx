@@ -17,7 +17,7 @@
             var w=a.windows[wi];
             for(var ti=0;ti<4;ti++){
                 var t=ti===0?w[0]:(ti===1?Math.min(w[0]+4/24,(w[0]+w[1])/2):(ti===2?w[1]:w[2]));
-                samples.push({time:t,base:l.transform.scale.valueAtTime(t,true),actual:l.transform.scale.valueAtTime(t,false)});
+                samples.push({time:t,base:l.transform.scale.valueAtTime(t,true),actual:l.transform.scale.valueAtTime(t,false),base_position:l.transform.position.valueAtTime(t,true),actual_position:l.transform.position.valueAtTime(t,false)});
             }
         }
         attention.push({ids:a.ids,anchor:a.anchor,gain_cap:a.gain_cap,windows:a.windows,samples:samples,

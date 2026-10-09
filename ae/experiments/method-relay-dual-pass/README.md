@@ -273,3 +273,19 @@ single envelope. Native readback verifies every visited adjacent row, actual
 endpoints and numerical endpoint velocity. New short-row coverage regressions
 reject a window that smooths only part of the original return. These checks
 do not substitute for original-speed human visual review.
+
+
+### Baseline-locked attention revision
+
+Request 0.2.18 keeps the accepted 0.2.17 focal row handoffs and all shot times.
+Sentence attention 0.2.0 caps Fast at 0.8% and Guided at 1.2%, further limited
+by native glyph clearance, with eight-frame entry and ten-frame exit using
+quintic smootherstep. Attention changes scale and horizontal spacing only;
+original baseline Y and depth Z stay equal to their pre-expression values.
+This removes attention-induced upward/depth displacement without removing the
+separate, previously established transparent sentence Lift. No spring,
+overshoot, whole-page zoom, new words, voice or teaching facts are introduced.
+Native audit verifies actual baseline/depth invariance and bounded gain.
+Older completed requests retain their original attention behavior for replay.
+Silky perception still requires human visual review; technical PASS is not
+approval for full-film integration.

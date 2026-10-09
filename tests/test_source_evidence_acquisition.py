@@ -503,5 +503,16 @@ class SentenceAttentionTests(unittest.TestCase):
             bad=deepcopy(row);bad['samples'][0]['actual']=scale
             with self.subTest(scale=scale),self.assertRaises(ValueError):fulltext.validate_attention(r,[bad])
 
+    def test_baseline_locked_attention_rejects_vertical_or_depth_pop(self):
+        r={'sentence_attention':{'groups':[['a']], 'position_mode':'baseline_locked'}}
+        row={'ids':['a'],'gain_cap':.012,'scale_error':'','position_error':'',
+             'samples':[{'base':[200]*3,'actual':[202]*3,
+                         'base_position':[300,500,0],'actual_position':[301,500,0]}]}
+        fulltext.validate_attention(r,[row])
+        for axis in (1,2):
+            bad=deepcopy(row);bad['samples'][0]['actual_position'][axis]+=1
+            with self.subTest(axis=axis),self.assertRaises(ValueError):
+                fulltext.validate_attention(r,[bad])
+
 
 if __name__=='__main__':unittest.main()

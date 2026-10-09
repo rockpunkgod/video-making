@@ -505,3 +505,54 @@ inspected boards 02, 03, 14, 15 and 26 for the Fast short joins, Guided row
 handoffs and final transparent Lift. No obvious glyph collision or paper
 backing appears in these samples. This technical inspection does not certify
 original-speed smoothness; current human review remains PENDING.
+
+
+## In-place attention refinement — current delivery
+
+Baseline main@0d6b024. User feedback rejected the attention enlargement's
+perceived upward pop and explicitly retained the smooth row switching.
+Current isolated take is local fulltext-acquisition-r27-4k, request 0.2.18.
+
+Attention 0.2.0 preserves original baseline Y and depth Z while gently scaling
+original glyphs and adjusting horizontal spacing. Fast gain is capped at 0.8%,
+Guided at 1.2%, with native clearance reducing these where necessary. Entry
+uses eight frames and retirement ten frames, quintic smootherstep without
+spring or overshoot. Actual sentence Lift remains a separate unchanged action.
+All fourteen focal row handoffs, camera route, source content, evidence,
+question cue, shot times and total duration are unchanged from r26.
+
+89 portable tests pass, including rejection of vertical/depth displacement.
+Native transform readback verifies zero baseline/depth delta and actual gain
+at most 1.2%; native audit and expression validation pass. Eleven native preview
+samples cover short Fast joins, a Guided return and transparent Lift. Encoded
+frames are inspected separately. These checks do not establish perceptual
+silkiness or human visual acceptance.
+
+Old r26 movie and project hashes and frozen bundle/status hashes remain intact.
+No ANSWER/Registry writes, new teaching claim, voice, music or full-film
+integration. New visual review PENDING; listening DEFERRED_BY_USER; P2 HOLD.
+final_voice_accepted=false, production_eligible=false, public_render_ready=false.
+Workflow only is committed; real source, projects and videos stay local.
+
+Spec SHA: `3b1a4ac46be49b9a31f47c7996a8d2741e0391e2a076a43c81cf31d3cfabd202`.
+Semantic binding: `e1f06096dc5feb3238ed39e041b481579df8a30d59dabf67c3f001d4a5cd3961`.
+Native render: 480 frames, 3840 × 2160 / 24 fps; 684856 ms.
+
+`FULLTEXT_LOCATION.mp4`: SHA `1defa0b56b2c2e657354873021781c9799317c955f51c7c4cd2952098567cb17`.
+
+`FULLTEXT_FAST.mp4`: SHA `0433b6dbc3d2ba62cc332576e6b6d43d199a0870cd03bd8ba7503c3b025fa3d9`.
+
+`FULLTEXT_GUIDED.mp4`: SHA `d09f5819896a12127808cb214b037a7f28a6808aff7cb1763682720fcfa75b6a`.
+
+Native AEP SHA: `e5cbac9474d4fab57814eb3f3005c4193c333919ea731a90659781c4960e315e`.
+Executed template SHA: `bc163d7c63b513865beb41a7340bd48561286bfc8790fe7fae6da6bccc451562`.
+
+Encoding recovery: initial H.264 encoding exhausted available memory; all
+480 completed native TIFF frames and their verified archive were retained.
+The producer now bounds TIFF decoder and filter parallelism independently.
+After saving the current AE project and purging transient AE caches while
+rendering was idle, encoding resumed from hash-verified frames without another
+native render. CRF, encoder settings, dimensions, cadence and shot timing
+remained unchanged. Three outputs passed complete stream decode. Twenty-four
+selected encoded native frames were inspected on two chronology boards;
+continuous-motion human review remains PENDING.

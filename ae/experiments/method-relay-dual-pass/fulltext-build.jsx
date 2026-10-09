@@ -205,7 +205,7 @@
             for(var wi=0;wi<ids.length;wi++){
                 var l=words[ids[wi]];
                 l.transform.scale.expression=expression+'value*(1+gain);';
-                l.transform.position.expression=expression+'var anchor='+JSON.stringify(box.center)+';value+(value-anchor)*gain;';
+                l.transform.position.expression=expression+'var anchor='+JSON.stringify(box.center)+';'+(cfg.position_mode==='baseline_locked'?'[value[0]+(value[0]-anchor[0])*gain,value[1],value[2]];':'value+(value-anchor)*gain;');
             }
             attention.push({ids:ids,anchor:box.center,gain_cap:cap,windows:windows});
         }
