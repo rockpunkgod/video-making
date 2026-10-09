@@ -1,4 +1,5 @@
 import unittest
+import json
 from copy import deepcopy
 from pathlib import Path
 from tempfile import TemporaryDirectory
@@ -7,6 +8,47 @@ from scripts.run_organized_paper_regression import admission_issue, convert, val
 from scripts.ingest_exam_sources import freeze_json, sha
 
 class OrganizedRegressionTests(unittest.TestCase):
+    def source_batch(self, root, extension='.docx', transcription_extension=None, changed=False):
+        value, dossier = self.transcription()
+        dossier['source_extension'] = extension
+        value['source_document_sha256'] = sha((json.dumps(dossier, ensure_ascii=False, indent=2)+'\n').encode('utf-8'))
+        if transcription_extension is not None:
+            value['source_extension'] = transcription_extension
+        bank = root/'case-bank'
+        freeze_json(bank/'papers/test-paper.json', dossier)
+        freeze_json(root/'transcription.json', value)
+        freeze_json(bank/'source-bank.json', {'sources': []})
+        source = root/'originals/files'/(dossier['source_sha256']+extension)
+        source.parent.mkdir(parents=True)
+        source.write_bytes(b'CHANGED' if changed else b'PDF')
+        return bank, root/'transcription.json'
+
+    def test_docx_original_replays_without_derivative_pdf_or_semantic_claim(self):
+        with TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            bank, path = self.source_batch(root)
+            summary = run_transcription_batch([path], root/'replay', bank)
+            report = json.loads((root/summary['papers'][0]['report']).read_text(encoding='utf-8'))
+            self.assertEqual(report['source_extension'], '.docx')
+            self.assertEqual(report['source_sha256'], sha(b'PDF'))
+            self.assertFalse(report['limits']['whole_paper_acceptance'])
+            self.assertEqual(summary['papers'][0]['engine_answer_count'], 0)
+            self.assertFalse((root/'originals/files'/(sha(b'PDF')+'.pdf')).exists())
+
+    def test_source_extension_mismatch_unsupported_or_changed_fails_before_engine(self):
+        for extension, claimed, changed, error in [
+                ('.docx', '.pdf', False, 'extensions differ'),
+                ('.exe', None, False, 'Unsupported'),
+                ('.docx', None, True, 'source fingerprint')]:
+            with self.subTest(extension=extension, claimed=claimed, changed=changed), TemporaryDirectory() as temporary:
+                root = Path(temporary)
+                bank, path = self.source_batch(root, extension, claimed, changed)
+                with patch('scripts.run_organized_paper_regression.QuestionAnalyzer') as analyzer:
+                    with self.assertRaisesRegex(ValueError, error):
+                        run_transcription_batch([path], root/'replay', bank)
+                    analyzer.assert_not_called()
+                self.assertFalse((root/'replay').exists())
+
     def entry(self,text,quote,kind='grammar_fill'):
         start=text.index(quote)
         return {'question_id':'gaokao-2024-test-S12-Q56','question_type':kind,

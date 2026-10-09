@@ -244,21 +244,29 @@ def run_transcription_batch(paths, output_root, bank_root=None, analyzer=None):
         if value.get('source_document_sha256') != sha(dossier_raw):
             raise ValueError('Frozen source dossier fingerprint differs')
         inputs = validate_transcription(value, dossier, dataset)
-        pdf = dataset/'originals/files'/(value['source_sha256']+'.pdf')
-        if sha(pdf.read_bytes()) != value['source_sha256']:
-            raise ValueError('Frozen original PDF fingerprint differs')
-        prepared.append((path, raw, value, inputs))
+        # New private batches may preserve a Word original. Never validate a
+        # derivative PDF as though it had the supplied DOCX's byte identity.
+        extension = original.get('source_extension', '.pdf')
+        if extension not in {'.pdf', '.docx'}:
+            raise ValueError('Unsupported frozen original source extension')
+        if value.get('source_extension', extension) != extension:
+            raise ValueError('Transcription and original source extensions differ')
+        source = dataset/'originals/files'/(value['source_sha256']+extension)
+        if sha(source.read_bytes()) != value['source_sha256']:
+            raise ValueError('Frozen original source fingerprint differs')
+        prepared.append((path, raw, value, inputs, extension))
     if not prepared or len({x[2]['paper_id'] for x in prepared}) != len(prepared):
         raise ValueError('Batch papers are empty or duplicated')
     analyzer = analyzer or QuestionAnalyzer(Registry())
     fingerprints = runtime_hashes()
     results = []
-    for path, raw, value, inputs in prepared:
+    for path, raw, value, inputs, extension in prepared:
         predictions = [analyzer.analyze(deepcopy(q)) for q in inputs['questions']]
         paper = PaperAnalyzer(analyzer).analyze(deepcopy(inputs))
         if predictions != paper['questions'] or any(p['answer'] is not None for p in predictions):
             raise ValueError('Source-only replay disagrees or unexpectedly declares an answer')
         report = {'paper_id':value['paper_id'], 'source_sha256':value['source_sha256'],
+                  'source_extension':extension,
                   'phase':'source_transcription_engine_replay_not_semantic_acceptance',
                   'transcription_path':path.relative_to(dataset).as_posix(),
                   'transcription_sha256':sha(raw), 'reviewer_agent':value['reviewer_agent'],

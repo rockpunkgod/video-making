@@ -233,7 +233,7 @@ class VisualTranscriptionTests(unittest.TestCase):
         bank, value, sidecar, pdf = self.sidecar_batch()
         pdf.write_bytes(b'OTHER')
         with patch('scripts.run_organized_paper_regression.QuestionAnalyzer') as analyzer:
-            with self.assertRaisesRegex(ValueError, 'PDF fingerprint'):
+            with self.assertRaisesRegex(ValueError, 'source fingerprint'):
                 self.run_sidecar(bank, value, sidecar)
             analyzer.assert_not_called()
         self.assertFalse((self.root / 'replay').exists())
