@@ -52,6 +52,8 @@ class Registry:
                 try: case=load(path)
                 except OSError as exc: raise ValueError('Missing or unreadable case: '+path) from exc
                 validate_schema('case',case)
+                if case['status']=='reviewed_real_exam_case':
+                    raise ValueError('Private real exam Case cannot enter public case inventory')
                 if case['case_id'] in ids: raise ValueError('Duplicate case ID: '+case['case_id'])
                 ids.add(case['case_id'])
                 if (case['method_id'],case['case_type'],case['question_type'],case['method_role'],case['expected_output'])!=(mid,kind,m['question_type'],m['primary_role'],m['output_type']):
@@ -63,7 +65,7 @@ class Registry:
             raise ValueError('Case index and method slots disagree')
         return records
 
-    def case_coverage(self):
+    def case_coverage(self, private_catalog=None):
         """Report missing slots as gaps, never manufacture case records."""
         records=self.case_inventory(); methods=[]
         for mid,m in self.methods.items():
@@ -82,12 +84,16 @@ class Registry:
         core=[m for m in methods if m['core_required']]
         formal=[m for m in methods if m['method_type']=='method']
         missing=lambda subset:sum(s['registration']=='unregistered' for m in subset for s in m['slots'])
-        return {'scope':'registration and recorded provenance status only; no full-question, semantic or learner validation certification',
+        result={'scope':'registration and recorded provenance status only; no full-question, semantic or learner validation certification',
                 'required_case_types':list(CASE_TYPES),'method_count':len(methods),'registered_case_count':len(records),
                 'unregistered_slot_count':missing(methods),'core_method_count':len(core),'core_unregistered_slot_count':missing(core),
                 'formal_method_count':len(formal),'formal_unregistered_slot_count':missing(formal),
                 'formal_methods_with_missing_slots':sum(not m['registration_complete'] for m in formal),
                 'registration_complete':all(m['registration_complete'] for m in core),'methods':methods}
+        if private_catalog is not None:
+            from .real_cases import coverage_overlay
+            return coverage_overlay(result,private_catalog)
+        return result
 
     def validate(self):
         self.case_inventory()

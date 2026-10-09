@@ -25,7 +25,8 @@ def main():
     sub=commands.add_parser('release-check'); sub.add_argument('input')
     sub=commands.add_parser('release-bindings'); sub.add_argument('input')
     commands.add_parser('validate')
-    commands.add_parser('case-coverage')
+    sub=commands.add_parser('case-coverage'); sub.add_argument('--private-catalog')
+    sub=commands.add_parser('register-real-case'); sub.add_argument('request'); sub.add_argument('--dataset',required=True)
     args=parser.parse_args()
     if args.command == 'export-method-application':
         from answer_engine.method_application_export import FrozenMethodApplicationExporter
@@ -38,11 +39,14 @@ def main():
         request = load_request(args.input)
         result = exporter.export(request) if args.command == 'export-asset' else exporter.status(request)
         print(json.dumps(result, ensure_ascii=False, indent=2)); return
+    if args.command=='register-real-case':
+        from core.real_cases import register
+        print(json.dumps(register(args.dataset,args.request),ensure_ascii=False,indent=2)); return
     r=Registry()
     if args.command=='validate':
         from scripts.generate_assets import generate
         result = r.validate(); result.update(generate(check=True))
-    elif args.command=='case-coverage': result=r.case_coverage()
+    elif args.command=='case-coverage': result=r.case_coverage(args.private_catalog)
     elif args.command in {'release-check','release-bindings'}:
         from core.release import read_json,check_release,release_bindings
         r.validate(); review=read_json(args.input); validate_schema('method-release',review)

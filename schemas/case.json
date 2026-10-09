@@ -90,7 +90,8 @@
       "enum": [
         "verified_course_example",
         "source_pattern_only",
-        "evidence_gap"
+        "evidence_gap",
+        "reviewed_real_exam_case"
       ]
     },
     "notes": {
@@ -115,5 +116,20 @@
     "status",
     "notes"
   ],
-  "additionalProperties": true
+  "additionalProperties": true,
+  "allOf": [
+    {
+      "if": {"properties": {"status": {"const": "reviewed_real_exam_case"}}},
+      "then": {
+        "required": ["registration_key", "frozen_refs", "review_scope", "learner_validation", "redistribution_rights"],
+        "properties": {
+          "registration_key": {"type": "array", "prefixItems": [{"type": "string"}, {"type": "string"}, {"enum": ["canonical", "counterexample", "boundary", "transfer", "hard"]}, {"type": "string"}], "minItems": 4, "maxItems": 4},
+          "frozen_refs": {"type": "object", "required": ["blind", "reveal", "action", "case_review"]},
+          "review_scope": {"const": "private_AI_reviewed"},
+          "learner_validation": {"const": "pending_real_participant_validation"},
+          "redistribution_rights": {"const": "not_verified"}
+        }
+      }
+    }
+  ]
 }

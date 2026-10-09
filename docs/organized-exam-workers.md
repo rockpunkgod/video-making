@@ -133,3 +133,34 @@ python -X utf8 -m scripts.run_organized_paper_regression all
 协调者的第二次动作审阅另存 `coordinator-reviews/`，并用 SHA 绑定附录关联原卷，
 不覆盖盲稿、参考对照或初审意见。揭晓后的显示投影修复或动作修订必须明确标时，
 不能重新计算为题面初次盲测。附录指出的限权、撤回或修订须随初审一起读取。
+
+## 独立 Case Review 后的私有登记
+
+逐卷代理的候选不是正式 Case。协调者可在六项动作审阅通过后登记完整原题绑定的私有研究 Case；
+没有真人数据不妨碍保存已核的题面动作，但不能因此升级方法成熟度、效率等级或 Signature。
+传播阶段先验收，实用性阶段拥有否决权；本登记不替代任一真人阶段。
+
+```powershell
+python -m answer_engine register-real-case coordinator-reviews/REGISTRATION/REQUEST.json --dataset local-data/organized-pdfs
+python -m answer_engine case-coverage --private-catalog local-data/organized-pdfs
+```
+
+REQUEST 是相对私有 dataset 的路径，不是公开 Case 文件。请求必须指向保留原字节的盲稿/原题指针、
+原 PDF、完整文本字段逐段源跨度、揭晓原件、独立动作重放与第二审阅者的 Case Review。
+揭晓后的修订只加动作注释，不能改冻结的题干、全文、选项、提示词或首句；不重算新盲测。
+存在揭晓适配器时，它的原对照 JSON 和参考 PDF 也须同时绑定字节指纹。
+独立审阅逐项核触发、动作、证据、主要职责、Stop 和案例类型，并绑定该方法自己的执行 ID。
+辅助分组/骨架不领取其他方法或整题答案信用。工具核一致性与可重放，不认证审阅者身份或英语语义。
+
+登记键是 `canonical_question_id + method_id + case_type + method_version`。
+已有题沿用仓库稳定 ID，已有短 Case 的完整补证须明确复用 Case ID、原 Case 指纹和独立匹配记录。
+同键重登拒绝；另一个 PDF 版本只能显式核对来源别名，不增加 Case 数。题号/文件名相似不作同题证据。
+同一冻结题面核心指纹只能对应一个 canonical ID，重新封装盲稿元数据也不能换名绕过登记去重。
+该指纹包含原题 ID、题型及全部核心题面字段；不是只凭某段文字相同合并不同题。
+原题全文复用已有冻结输入，Catalog 只存引用与方法动作证据；所有内容仍在私有目录。
+
+`real-case-catalog/catalog-NNNNNN.json` 为仅追加的版本链，重新读取时检查历史前缀、上游字节、
+完整字段绑定、当前 Analyzer/图/执行链重放及遗失/孤立文件。失败时停下并另存修订，不覆盖历史。
+`case-coverage` 默认仍只返回公开 Registry；显式私有参数才叠加 `private_registered_case_count`，
+不会把公开占位或模式记录改成完整案例，也不会授予释放资格。
+状态 `reviewed_real_exam_case` 限于私有 AI 动作复核，真人状态始终单列。
