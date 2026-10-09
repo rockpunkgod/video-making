@@ -3,7 +3,7 @@ from pathlib import Path
 import tempfile
 import unittest
 
-from scripts.organized_paper_queue import assign, advance_semantic, connect, initialize, paper_label, record_report, snapshot
+from scripts.organized_paper_queue import assign, advance_semantic, resume_transcription, connect, initialize, paper_label, record_report, snapshot
 from scripts.ingest_exam_sources import freeze_json, sha
 
 class PaperQueueTests(unittest.TestCase):
@@ -55,6 +55,21 @@ class PaperQueueTests(unittest.TestCase):
             self.assertEqual((root/'paper/review.json').read_bytes(),original)
             db.close()
 
+    def test_explicit_stage_report_keeps_nested_selection_without_copying_report(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root=Path(tmp); db=connect(root/'q.sqlite')
+            row={'relative_path':'2021年高考英语试卷（北京）（空白卷）.pdf','extension':'.pdf',
+                 'sha256':'a'*64,'filename_claim':'questions_only'}
+            initialize(db,{'files':[row]}); pid='gaokao-2021-beijing-v01'
+            assign(db,pid,'/root/paper','gpt-6-sol','medium',str(root/'paper'))
+            freeze_json(root/'paper/semantic-r1/review-v1.json',{
+                'paper_id':pid,'source_sha256':'a'*64,'reviewer_agent':'/root/paper'})
+            record_report(db,pid,'PARTIAL','semantic-r1/review-v1.json')
+            stored=db.execute('SELECT * FROM papers WHERE paper_id=?',(pid,)).fetchone()
+            self.assertEqual(stored['report_file'],'semantic-r1/review-v1.json')
+            self.assertFalse((root/'paper/review-v1.json').exists())
+            db.close()
+
     def test_manifest_drift_cannot_rewrite_ids(self):
         with tempfile.TemporaryDirectory() as tmp:
             db=connect(Path(tmp)/'q.sqlite')
@@ -62,6 +77,35 @@ class PaperQueueTests(unittest.TestCase):
                  'sha256':'a'*64,'filename_claim':'questions_only'}
             initialize(db,{'files':[row]})
             with self.assertRaises(ValueError): initialize(db,{'files':[{**row,'sha256':'b'*64}]})
+            db.close()
+
+    def test_source_resume_preserves_identity_and_cannot_relabel_semantic_work(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root=Path(tmp); db=connect(root/'q.sqlite')
+            row={'relative_path':'2026年高考英语试卷（北京）（空白卷）.pdf','extension':'.pdf',
+                 'sha256':'a'*64,'filename_claim':'questions_only'}
+            initialize(db,{'files':[row]}); pid='gaokao-2026-beijing-v01'
+            assign(db,pid,'/root/old_source','gpt-6-luna','low',str(root/'paper'))
+            for previous,task,reason in [('/root/wrong','/root/resumed','absent'),
+                                         ('/root/old_source','/root/old_source','absent'),
+                                         ('/root/old_source','/root/resumed','')]:
+                with self.assertRaises(ValueError):
+                    resume_transcription(db,pid,previous,task,'gpt-6-luna','medium',reason)
+            resume_transcription(db,pid,'/root/old_source','/root/resumed','gpt-6-luna','medium',
+                                 'Prior worker absent from checked live tree; reuse unfinished source files')
+            current=db.execute('SELECT * FROM papers WHERE paper_id=?',(pid,)).fetchone()
+            self.assertEqual(current['agent_task'],'/root/resumed')
+            self.assertEqual(current['state'],'running')
+            events=list(db.execute('SELECT event,detail FROM events ORDER BY sequence'))
+            self.assertEqual([e[0] for e in events],['agent_assigned','transcription_agent_resumed'])
+            self.assertEqual(json.loads(events[-1][1])['previous_transcription_assignment']['agent_task'],'/root/old_source')
+            db.execute('INSERT INTO events(recorded_at,paper_id,event,detail) VALUES (?,?,?,?)',
+                       ('test',pid,'semantic_agent_assigned','{}')); db.commit()
+            with self.assertRaisesRegex(ValueError,'semantic review'):
+                resume_transcription(db,pid,'/root/resumed','/root/later','gpt-6-luna','low','absent')
+            db.execute('UPDATE papers SET state=? WHERE paper_id=?',('reviewed',pid)); db.commit()
+            with self.assertRaisesRegex(ValueError,'exact active'):
+                resume_transcription(db,pid,'/root/resumed','/root/later','gpt-6-luna','low','absent')
             db.close()
 
     def test_semantic_stage_binds_preflighted_bytes_and_preserves_low_agent_history(self):

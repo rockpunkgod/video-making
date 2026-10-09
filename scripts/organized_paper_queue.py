@@ -114,6 +114,34 @@ def assign(db, paper_id, task, model, effort, directory=None):
     db.commit()
 
 
+def resume_transcription(db, paper_id, previous_task, task, model, effort, reason):
+    """Record an actual replacement after a source worker is no longer live.
+
+    The coordinator must check the live collaboration tree first. The ledger
+    cannot attest agent liveness; it preserves the reason and original identity.
+    It cannot resume an already returned report or an answer-aware semantic job.
+    """
+    row = db.execute('SELECT * FROM papers WHERE paper_id=?',(paper_id,)).fetchone()
+    if not row or row['state'] != 'running' or row['agent_task'] != previous_task or \
+            not isinstance(task,str) or not task.startswith('/root/') or task == previous_task:
+        raise ValueError('Resume requires the exact active source assignment and a distinct actual agent')
+    if not isinstance(reason,str) or not reason.strip():
+        raise ValueError('Explicit source-worker resume reason required')
+    if db.execute('SELECT 1 FROM events WHERE paper_id=? AND event=?',
+                  (paper_id,'semantic_agent_assigned')).fetchone():
+        raise ValueError('Cannot relabel a semantic review as source transcription')
+    detail={'previous_transcription_assignment':{
+                'agent_task':row['agent_task'],'model':row['model'],'reasoning_effort':row['reasoning_effort']},
+            'actual_agent_task':task,'model':model,'reasoning_effort':effort,
+            'reason':reason.strip(),'source_sha256':row['source_sha256'],
+            'transcription_completed':False,'semantic_review_completed':False}
+    db.execute('UPDATE papers SET agent_task=?,model=?,reasoning_effort=? WHERE paper_id=?',
+               (task,model,effort,paper_id))
+    db.execute('INSERT INTO events(recorded_at,paper_id,event,detail) VALUES (?,?,?,?)',
+               (now(),paper_id,'transcription_agent_resumed',json.dumps(detail)))
+    db.commit()
+
+
 def advance_semantic(db, paper_id, task, model, effort, transcription, replay):
     """Bind an actually spawned second-stage agent; preserve first-stage history."""
     from hashlib import sha256
@@ -149,8 +177,8 @@ def advance_semantic(db, paper_id, task, model, effort, transcription, replay):
 def selected_report(row, filename=None):
     """Select an explicit immutable revision, never silently pick newest glob."""
     filename = filename or row['report_file']
-    if not re.fullmatch(r'review(?:-v[1-9][0-9]*)?\.json', filename):
-        raise ValueError('Use an explicit review.json or review-vN.json basename')
+    if not re.fullmatch(r'(?:[A-Za-z0-9_-]+/)*review(?:-v[1-9][0-9]*)?\.json', filename):
+        raise ValueError('Use an explicit review.json or review-vN.json within named stage directories')
     directory = Path(row['report_directory']).resolve()
     report = (directory / filename).resolve()
     if not report.is_relative_to(directory):
@@ -171,7 +199,8 @@ def record_report(db, paper_id, outcome, filename='review.json'):
     # Completion means the scoped agent review returned, not formal Case approval.
     addenda=verify_addenda(row['report_directory'],row['source_sha256'])
     db.execute('UPDATE papers SET state=?,report_sha256=?,review_outcome=?,report_addenda=?,report_file=? WHERE paper_id=?',
-               ('reviewed',sha256(data).hexdigest(),outcome,json.dumps(addenda),report.name,paper_id))
+               ('reviewed',sha256(data).hexdigest(),outcome,json.dumps(addenda),
+                report.relative_to(Path(row['report_directory']).resolve()).as_posix(),paper_id))
     db.execute('INSERT INTO events(recorded_at,paper_id,event,detail) VALUES (?,?,?,?)',
                (now(),paper_id,'agent_report_recorded',json.dumps({'report':str(report),'outcome':outcome})))
     db.commit()
@@ -205,6 +234,8 @@ def main():
     advance = sub.add_parser('advance-semantic'); advance.add_argument('paper_id'); advance.add_argument('agent_task')
     advance.add_argument('--model',required=True); advance.add_argument('--effort',required=True)
     advance.add_argument('--transcription',type=Path,required=True); advance.add_argument('--replay',type=Path,required=True)
+    resume = sub.add_parser('resume-transcription'); resume.add_argument('paper_id'); resume.add_argument('previous_agent_task'); resume.add_argument('agent_task')
+    resume.add_argument('--model',required=True); resume.add_argument('--effort',required=True); resume.add_argument('--reason',required=True)
     complete = sub.add_parser('record-report'); complete.add_argument('paper_id'); complete.add_argument('--outcome',choices=('PASS','PARTIAL','SOURCE_GAP'),required=True)
     complete.add_argument('--report-file',default='review.json',help='Explicit frozen revision; historical files are preserved')
     supplement = sub.add_parser('attach-addenda'); supplement.add_argument('paper_id')
@@ -213,6 +244,7 @@ def main():
         if args.command=='init': initialize(db,json.loads(args.manifest.read_text(encoding='utf-8-sig')))
         elif args.command=='assign': assign(db,args.paper_id,args.agent_task,args.model,args.effort,args.report_directory)
         elif args.command=='advance-semantic': advance_semantic(db,args.paper_id,args.agent_task,args.model,args.effort,args.transcription,args.replay)
+        elif args.command=='resume-transcription': resume_transcription(db,args.paper_id,args.previous_agent_task,args.agent_task,args.model,args.effort,args.reason)
         elif args.command=='record-report': record_report(db,args.paper_id,args.outcome,args.report_file)
         elif args.command=='attach-addenda': attach_addenda(db,args.paper_id)
         print(json.dumps(snapshot(db,args.limit if args.command=='list' else 0),ensure_ascii=False,indent=2))

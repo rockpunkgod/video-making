@@ -10,6 +10,11 @@
 待派、正在审阅、代理已返回报告要分开。报告返回不等于完整试卷或方法 Case 通过。
 报告有修订时，由协调者显式登记 `record-report PAPER_ID --outcome PARTIAL --report-file review-v2.json`。
 队列核对试卷 ID、来源 SHA 和真实 reviewer_agent，保留旧文件，不自动挑选最新版。
+阶段目录中的报告也须显式选版，例如 `--report-file semantic-r1/review-v1.json`；不复制成另一份报告。
+
+用户当前指定优先 2026 年：先完成选定的Ⅰ/Ⅱ卷转写批次，再启动对应案例与整卷语义审阅；
+历史卷既有报告保留，尚未派发的历史批次后置。年份和文件名只是来源声明，不认证官方身份。
+同年异版本先核题面身份；重复副本只补来源，改写版保留差异，带答案版本隔离。
 
 每个代理只修改自己的 `local-data/organized-pdfs/paper-runs/<paper_id>/`。
 主代理另行复核汇总，不让代理改共享 Registry、原 ANSWER、既有交付包或其他卷的冻结稿。
@@ -54,6 +59,19 @@ python -X utf8 -m scripts.run_organized_paper_regression all --transcriptions SO
 字段逐字绑定不证明文章或选项边界在语义上完整，仍须下一段独立核验。
 输出为 source-only 工程回放，不是新盲测、自动解题、safe abstention 认证、正式 Case 或整卷验收。
 听力、缺图/缺页、不支持任务、缺学生稿等保留单独缺口，不被“这批跑完”掩盖。
+
+文本层损坏时，另存 `origin=visual_transcription_sidecar` 的逐页视觉转录，绑定原 dossier 的路径/字节 SHA，
+每页绑定实际私有 PNG 与 SHA，全文必须按页序逐字连接。`source_document_ref` 显式选该旁路；
+旧 dossier 和原 PDF 不覆盖。工具检查文件、指纹和跨度一致性，不自动认证视觉转录的英语正确性。
+只剩数字的真实语填空须附 `blank_marker_visual_check`，核源 PDF、题号、页码及 PNG 指纹；
+不能凭价格/正文数字制造空位，也不能为了通过校验添加原图没有的下划线或占位符。
+显示投影只删已记录的印刷页码；物理页码与印刷页码不同须显式视觉确认对应关系。
+预填答题框不是未知学生稿，source-only 转写禁止传入 `student_draft`。
+`reference_read=false` 不表示从未见答案：`source_answer_exposure` 独立保留，回放不认证 clean blind。
+
+如原转写代理确已不在实时代理列表且未返回冻结转写，可实际创建接续代理后使用
+`resume-transcription PAPER_ID PREVIOUS_TASK ACTUAL_TASK --model MODEL --effort EFFORT --reason REASON`。
+队列保留旧身份与接续原因；接续不是新试卷、语义完成或新盲测。不能把已进入语义阶段的作业退标为转写。
 
 第二段再从已校验题面建立方法动作与题面预测，冻结后才揭晓参考；普通结构及工程回归采用中档，
 完整英语证据、主旨范围、间接支持和高误用成本的 Stop 审阅按需提升档位。

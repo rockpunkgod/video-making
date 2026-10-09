@@ -76,7 +76,22 @@ def runtime_hashes():
     return result
 
 
-def validate_transcription(value, dossier):
+def check_visual_reference(row, dataset_root):
+    """Bind an actual private render file; this does not authenticate its meaning."""
+    if dataset_root is None or not isinstance(row, dict) or type(row.get('page_number')) is not int or row['page_number']<1:
+        raise ValueError('Visual source check requires a private dataset and actual page number')
+    if not isinstance(row.get('rendered_path'),str) or not isinstance(row.get('rendered_sha256'),str):
+        raise ValueError('Visual source check requires an explicit render and fingerprint')
+    root=Path(dataset_root).resolve(); path=Path(row['rendered_path'])
+    path=(path if path.is_absolute() else root/path).resolve()
+    if not path.is_relative_to(root) or not path.is_file() or path.suffix.lower()!='.png':
+        raise ValueError('Visual source render is missing or outside private dataset')
+    raw=path.read_bytes()
+    if sha(raw)!=row['rendered_sha256'] or not raw.startswith(b'\x89PNG\r\n\x1a\n'):
+        raise ValueError('Visual source render fingerprint or PNG signature differs')
+
+
+def validate_transcription(value, dossier, dataset_root=None):
     """Check source fidelity, not completeness, English semantics or answers.
 
     Low-model transcription is deliberately not a Case or blind prediction.
@@ -107,8 +122,12 @@ def validate_transcription(value, dossier):
         raise ValueError('One exact source binding required per question')
     by_id = {x['question_id']: x for x in bindings}
     content = dossier['document_text']
-    layout = re.compile(r'\s*第\s*\d+\s*页\s*(?:[|/｜]\s*|[，,]\s*)?共\s*\d+\s*页\s*')
-    allowed = set(MATERIAL_FIELDS) - {'student_symptoms', 'original_images'} | {'task_type', 'printed_number'}
+    layout = re.compile(
+        r'\s*(?:英语试[题卷]\s*)?第\s*\d+\s*页\s*'
+        r'(?:(?:[|/｜，,]\s*)?共\s*\d+\s*页|'
+        r'[（(]\s*共\s*\d+\s*页\s*[）)])\s*')
+    # An answer printed inside a response box is not an unseen student's draft.
+    allowed = set(MATERIAL_FIELDS) - {'student_symptoms', 'original_images', 'student_draft'} | {'task_type', 'printed_number'}
     def span(row):
         if not isinstance(row, dict) or type(row.get('start')) is not int or type(row.get('end')) is not int:
             raise ValueError('Integer source span required')
@@ -137,7 +156,14 @@ def validate_transcription(value, dossier):
         for row in excluded:
             a, b = span(row)
             if not layout.fullmatch(content[a:b]):
-                raise ValueError('Only recorded printed pagination may be deleted')
+                if row.get('kind')!='printed_pagination' or not re.fullmatch(r'\s*\d+\s*',content[a:b]) or \
+                        int(content[a:b])!=row.get('printed_page_number',row.get('page_number')):
+                    raise ValueError('Only recorded printed pagination may be deleted')
+                # Physical and printed page numbers can differ (e.g. a cover),
+                # but that mapping needs an explicit visual confirmation.
+                if row.get('printed_page_number',row.get('page_number')) != row.get('page_number') and row.get('confirmed') is not True:
+                    raise ValueError('Different printed pagination and render page needs visual confirmation')
+                check_visual_reference(row,dataset_root)
             exclusions.add((a, b))
         for field, text in leaves.items():
             rows = fields[field]
@@ -158,8 +184,15 @@ def validate_transcription(value, dossier):
                 raise ValueError('Transcribed field is not an exact source projection')
         if normalized['questions'][index]['question_type'] == '语法填空':
             stem_spans = fields.get('/stem', [])
-            if len(stem_spans) != 1 or not re.fullmatch(r'[_＿]+\s*\d+\s*[_＿]+',q.get('stem','').strip()):
+            marker=re.fullmatch(r'[_＿]*\s*(\d+)\s*[_＿]*',q.get('stem','').strip())
+            if len(stem_spans) != 1 or not marker:
                 raise ValueError('Grammar input must bind its particular printed blank marker')
+            if not re.search(r'[_＿]',q['stem']):
+                visual=binding.get('blank_marker_visual_check')
+                if not isinstance(visual,dict) or visual.get('confirmed') is not True or \
+                        visual.get('printed_number')!=int(marker[1]) or visual.get('source_sha256')!=value['source_sha256']:
+                    raise ValueError('Space-delimited digit needs explicit source-PDF blank confirmation')
+                check_visual_reference(visual,dataset_root)
             tail = content[stem_spans[0]['end']:]
             hint = re.match(r'[_＿]*\s*[（(]\s*([A-Za-z]+(?:[ -][A-Za-z]+){0,2})\s*[）)]',tail)
             supplied = q.get('given_word','').strip('()（） \t\r\n')
@@ -184,11 +217,33 @@ def run_transcription_batch(paths, output_root, bank_root=None, analyzer=None):
         pid = value.get('paper_id')
         if not isinstance(pid, str) or not re.fullmatch(r'[A-Za-z0-9_-]+', pid):
             raise ValueError('Safe explicit paper ID required')
-        dossier_path = bank_root/'papers'/(pid+'.json')
-        dossier_raw = dossier_path.read_bytes(); dossier = json.loads(dossier_raw)
+        original_path = bank_root/'papers'/(pid+'.json')
+        original_raw = original_path.read_bytes(); original = json.loads(original_raw)
+        document_ref=value.get('source_document_ref')
+        if document_ref is not None:
+            if not isinstance(document_ref,dict) or not isinstance(document_ref.get('path'),str) or Path(document_ref['path']).is_absolute():
+                raise ValueError('Visual source document needs a private relative reference')
+            dossier_path=(dataset/document_ref['path']).resolve()
+            if not dossier_path.is_relative_to(dataset):
+                raise ValueError('Visual source document escaped private dataset')
+            dossier_raw=dossier_path.read_bytes(); dossier=json.loads(dossier_raw)
+            if document_ref.get('sha256')!=sha(dossier_raw) or dossier.get('origin')!='visual_transcription_sidecar' or \
+                    dossier.get('original_dossier_ref')!={'path':original_path.resolve().relative_to(dataset).as_posix(),'sha256':sha(original_raw)}:
+                raise ValueError('Visual sidecar must bind preserved original text-layer dossier')
+            pages=dossier.get('pages')
+            if not isinstance(pages,list) or not pages or any(not isinstance(p,dict) or not isinstance(p.get('text'),str) for p in pages):
+                raise ValueError('Visual sidecar requires explicit transcribed pages')
+            for page in pages: check_visual_reference(page,dataset)
+            numbers=[p['page_number'] for p in pages]
+            if numbers!=sorted(set(numbers)) or dossier.get('document_text')!='\n'.join(p['text'] for p in pages):
+                raise ValueError('Visual source page order or joined text differs')
+            if dossier.get('source_sha256')!=original['source_sha256'] or dossier.get('paper_id')!=original['paper_id']:
+                raise ValueError('Visual sidecar has a different original PDF identity')
+        else:
+            dossier_path=original_path; dossier_raw=original_raw; dossier=original
         if value.get('source_document_sha256') != sha(dossier_raw):
             raise ValueError('Frozen source dossier fingerprint differs')
-        inputs = validate_transcription(value, dossier)
+        inputs = validate_transcription(value, dossier, dataset)
         pdf = dataset/'originals/files'/(value['source_sha256']+'.pdf')
         if sha(pdf.read_bytes()) != value['source_sha256']:
             raise ValueError('Frozen original PDF fingerprint differs')
@@ -208,6 +263,9 @@ def run_transcription_batch(paths, output_root, bank_root=None, analyzer=None):
                   'transcription_path':path.relative_to(dataset).as_posix(),
                   'transcription_sha256':sha(raw), 'reviewer_agent':value['reviewer_agent'],
                   'source_document_sha256':value['source_document_sha256'],
+                  'source_document_ref':value.get('source_document_ref'),
+                  'source_answer_exposure':deepcopy(value.get('source_answer_exposure')),
+                  'visual_fidelity_certified':False,
                   'printed_number_metadata_retained_in_transcription_not_engine':True,
                   'source_type_mapping':[
                       {'question_id':q['question_id'], 'source_type':q['question_type'],
@@ -219,6 +277,7 @@ def run_transcription_batch(paths, output_root, bank_root=None, analyzer=None):
                   'limits':{'source_authenticity':'unverified', 'source_completeness_certified':False,
                             'whole_paper_semantic_review':False, 'whole_paper_acceptance':False,
                             'safe_abstention':None, 'new_blind_sample':False,
+                            'clean_blind_certified':False,
                             'formal_method_cases_registered':0, 'human_participants':0}}
         dest = output_root/value['paper_id']/'transcription-engine-replay.json'
         freeze_json(dest, report)
