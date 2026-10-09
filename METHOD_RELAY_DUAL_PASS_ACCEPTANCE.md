@@ -63,7 +63,11 @@ Fast、相机路径、镜头顺序、两遍 0.25 秒释放、合成轨迹与总�
 
 当前制作凭证与增量 Manifest 留在忽略目录 `guidance-r3/`；历史根 Manifest 不覆盖。
 用户对 r2 的“这个可以”仅记作有限反馈，并提出补充慢速方法说明。
-本片新增文案、声音与画面的人工体验尚为 PENDING；技术 PASS 不表示自然度或教学认证。
+2026-10-09，用户对本片反馈“可以可以，效果很好”，并明确“听感先不管”。
+整体视觉体验记录为 `USER_ACCEPTED_OVERALL_VISUAL_PREVIEW`，绑定上方最终含声 MP4 SHA；
+画面、动作接棒与节奏保留为本片已认可方向。逐项问题未回答，不推定每项 PASS。
+听感仍为 PENDING / DEFERRED_BY_USER；不改原声音生成凭证，也不推定声音自然度通过。
+新增独立人工视觉凭证，原媒体与制作凭证保持原状；此认可不扩展为真实教学认证。
 原 Chopin scratch、片段和 PR duck keys 相同，公开来源权限仍 UNKNOWN / HOLD。
 `final_voice_accepted=false`、`sample_delivery_allowed=false`、
 `production_eligible=false`、`public_render_ready=false`。GitHub 仅提交工作流、合成 fixture
