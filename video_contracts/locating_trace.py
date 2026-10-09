@@ -40,7 +40,8 @@ def validate_packet(packet, bundle, status):
             raise ValueError('Exact half-open source span required')
 
     assertions = {a['ref']: a for a in review['assertions']}
-    if review['reviewer_kind'] != 'human' and review.get('independent_human_certified', False):
+    if review['reviewer_kind'] != 'human' and (review.get('independent_human_certified', False)
+                                             or review.get('independent_human_review') == 'pass'):
         raise ValueError('AI review cannot claim human certification')
     if len(assertions) != len(review['assertions']):
         raise ValueError('Duplicate review assertion identity')

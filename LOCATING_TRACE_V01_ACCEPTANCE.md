@@ -27,3 +27,33 @@ Astra 已完成只读设计评审，root 二审后修正同题 evidence 绑定�
 
 后续仍须：上游明确审阅与冻结→真实 Guided 接线及边界连续性回读→4K B/A-B
 及局部片段→Fast 保护验证→绑定影片 SHA 的人工反馈。全任务保持未完成。
+
+## 后续进度：真实 q33 上游标注已冻结
+
+本节更新此前 UPSTREAM_REVIEW_PENDING 状态；原提议和审阅历史均保留。
+本轮用户明确授权 ANSWER/Host 标注与 AI 工程审阅流程，root 在该流程中
+对目标、逐候选资格和 acquired 关系逐项作出显式 AI 自审凭证，纯导出器不生成判断。
+零独立人审，零新增方法信用，不修改旧 ANSWER Truth、Registry、R11 动作或答案。
+
+真实定位 Trace semantic SHA：
+`ab29550646734304bc4a46cb96bb2e31ba15629468b14b5309494076359e41bf`。
+现有上游请求 SHA 保持原值。来源和 Trace 初始状态 ACTIVE；semantic_review=ai_reviewed，
+independent_human_certified=false，公开资格仍 false。
+
+四项提议中一项背景表达 not_eligible，三项实际进入序列：两次 inspected_continue 后
+一次 acquired。命中绑定已有完整条件句及同题 Segment evidence，不授予定案权。
+正文从第一行进入；三个识别窗口分别为 8、7、9 帧，均使用相同认知时间表，
+未丢候选或压缩窗口来规避 Overflow。总扫描窗口为绝对帧 [252,360)，尾部原时码保留。
+
+新增适配把原生入口状态与基线绑定，避免从估算首词中心直接跳入；
+既有 baseline-locked magnification 只重绑 Guided 窗口，Fast 保留原表达式数值字面量，
+避免重新序列化原生浮点数带来的无意变化。所有新写入预先另存新项目。
+
+112 项相关 portable 回归通过。真实工程已打开并回读入口；实际 patch 尚未执行：
+此前先执行的 Fast 原对象 168 帧读回在 120 秒后超时，官方 recovery ID `23q880`，
+桥接 degraded 且 sentinelInFlight=true。没有重发该读回、执行补丁或启动渲染。
+程序测试 PASS 不冒充 AE 行为或运动连续性 PASS。
+
+旧冻结文件、r27 Fast 影片及工程、r28 Guided 影片保护 SHA 复核未变。
+当前具体剩余项：桥接恢复后的状态确认与分批核验、真实 patch 原生执行、连续性
+与 Focus/DOF/高亮回读、Fast 内容保护比较、原生 4K B 及 A/B/局部片段、影片 Human Review。

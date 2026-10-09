@@ -15,12 +15,29 @@
         source.push({id:w.id,layer_id:l.id});
     }
     var focus=cp.layer('FOCUS_TARGET'),camera=cp.layer('GUIDED_CAMERA'),start=P.frame_range[0]/24,end=P.frame_range[1]/24;
+    if(P.entry_state){var props=[focus.transform.position,camera.transform.position,camera.transform.pointOfInterest],expected=[P.entry_state.focus,P.entry_state.camera,P.entry_state.look];
+        for(var i=0;i<3;i++){var actual=props[i].valueAtTime(start,false);for(var a=0;a<3;a++)if(Math.abs(actual[a]-expected[i][a])>.001)throw Error('Native entry state changed');}}
+    app.project.save(dest); // all subsequent writes belong to a fresh project
     function pathExpression(rows){return 'function tracePath(t){var R='+JSON.stringify(rows)+';var frame=t*24;for(var i=1;i<R.length;i++){var a=R[i-1],b=R[i];if(frame<=b.frame){var d=b.frame-a.frame,u=Math.max(0,(frame-a.frame)/d),u3=u*u*u,u4=u3*u,u5=u4*u,q=6*u5-15*u4+10*u3,h0=u-6*u3+8*u4-3*u5,h1=-4*u3+7*u4-3*u5;return a.center*(1-q)+b.center*q+a.velocity*(d*h0)+b.velocity*(d*h1);}}return R[R.length-1].center;}';}
     function wrap(prop,body){var old=(prop.expression||'value').replace(/;\s*$/,'');prop.expression='(function(){if(time<'+start+'||time>'+end+')return ('+old+');'+pathExpression(P.rows)+body+'})();';}
     wrap(focus.transform.position,'return tracePath(time);');
     var column=camera.transform.pointOfInterest.valueAtTime(start,true)[0],S=P.render_scale;
-    wrap(camera.transform.pointOfInterest,'var p=tracePath(time);return ['+column+',p[1]+'+(P.camera_style.reading_offset*S)+',0];');
-    wrap(camera.transform.position,'var p=tracePath(time);return ['+(column+20*S)+',p[1]+'+((P.camera_style.reading_offset+P.camera_style.camera_tilt_offset)*S)+','+(P.camera_style.scan_depth*S)+'];');
+    var lookOffset=P.entry_state?P.entry_state.look[1]-P.rows[0].center[1]:P.camera_style.reading_offset*S;
+    var cameraOffset=P.entry_state?P.entry_state.camera[1]-P.rows[0].center[1]:(P.camera_style.reading_offset+P.camera_style.camera_tilt_offset)*S;
+    wrap(camera.transform.pointOfInterest,'var p=tracePath(time);return ['+column+',p[1]+'+lookOffset+',0];');
+    wrap(camera.transform.position,'var p=tracePath(time);return ['+(column+20*S)+',p[1]+'+cameraOffset+','+(P.camera_style.scan_depth*S)+'];');
+    // Rebind the existing low-gain baseline-locked envelopes to the same clock.
+    var attentionGroups=P.attention_groups||[];
+    for(var gi=0;gi<attentionGroups.length;gi++){
+        var group=attentionGroups[gi];for(var wi=0;wi<group.ids.length;wi++){
+            var l=cp.layer(group.ids[wi]),props=[l.transform.scale,l.transform.position];
+            for(var pi=0;pi<props.length;pi++)if(props[pi].expression){
+                var old=props[pi].expression;if(old.indexOf('var W=')!==0)throw Error('Unsupported legacy attention expression');
+                props[pi].expression=old.replace(/^var W=(\[[\s\S]*?\]);function smooth/,
+                    function(match,original){return 'var W=time<'+start+'?'+original+':'+JSON.stringify(group.windows)+';function smooth';});
+            }
+        }
+    }
     var marks=[];
     for(var i=0;i<P.plan.targets.length;i++){
         var target=P.plan.targets[i],e=P.plan.clock.events[i],l=cp.layers.addShape();l.name='LOCATING_TRANSIENT_'+target.candidate_id;l.threeDLayer=true;
@@ -41,6 +58,7 @@
     var errors=[];for(var i=1;i<=cp.numLayers;i++){var l=cp.layer(i);if(l.name.indexOf('LOCATING_TRANSIENT_')===0&&l.transform.opacity.expressionError)errors.push(l.transform.opacity.expressionError);}
     for(var i=0;i<3;i++){var prop=i===0?focus.transform.position:(i===1?camera.transform.position:camera.transform.pointOfInterest);if(prop.expressionError)errors.push(prop.expressionError);}
     if(errors.length)throw Error(JSON.stringify(errors));
+    binding.locating_patch_sha=P.patch_sha;binding.locating_patch_file=f.fsName;cp.comment=JSON.stringify(binding);
     app.project.save(dest);
     return JSON.stringify({patch_sha:P.patch_sha,comp_id:cp.id,canvas:[cp.width,cp.height,cp.frameRate],
         source_objects:source,marks:marks,expression_errors:errors,native_execution:'PATCH_EXECUTED_NOT_RENDER_REVIEW',public_render_ready:false});

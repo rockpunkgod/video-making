@@ -75,8 +75,19 @@ Canonical JSON 复用 `video_contracts.sha`：UTF-8、排序键、无无意义�
 复用原 `locating-input-request-r1/upstream-locating-request.json`。
 新资料在忽略的 `local-data/method-relay-dual-pass/locating-trace-v01/`：
 `review/` 保存提议工作表；`native/` 保存合成执行凭证；`receipts/` 保存保护指纹。
-四条候选只是提议，不是要求凑四个，也不已获准高亮。Reviewer 可以逐项拒绝或修订。
-当前 `UPSTREAM_REVIEW_PENDING`；不伪造 q33 B、R12 Action 或真实轨迹闭环。
+四条原始候选工作表保持提议历史，不自动变成审阅。随后本轮获授权的 ANSWER/Host AI
+逐项完成显式审阅：一项背景表达未获准注意，三项成为内部工程辨认序列。
+审阅、原工作表及纯冻结分别保存于不同文件。保留原题记忆信息，另明确审阅有限定位词，
+不由 Renderer 偷换搜索任务。AI 自审记录不代表独立人审、真实眼动或方法实效。
+当前 q33 Trace 已冻结；原生执行未完成，尚无 B 成片，不添加 R12 Action 或答案信用。
+
+纯导出入口兼容既有请求尚未包含新增 source_sha 的情况：核验原请求已有的 asset、
+semantic、passage、review 指纹，完整 source_sha 由冻结 Bundle 与当前 Status 另行验证。
+不会为了本模块改写既有请求。
+
+原生读取 Fast 全部原对象的 168 帧表达式结果触发 120 秒超时，桥接进入 degraded/
+sentinelInFlight 状态。该步骤是只读，补丁尚未执行。必须等待桥接恢复并读回实际状态，
+不能盲目重发。后续将拆分属性核验，保留原生保护与媒体复用证据。
 
 ```text
 python -m unittest tests.test_locating_trace tests.test_locating_recognition_timing tests.test_source_evidence_acquisition tests.test_method_relay_dual_pass tests.test_ae_native_creative_proof

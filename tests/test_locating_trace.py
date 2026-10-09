@@ -1,5 +1,10 @@
 """Explicitly synthetic reviewed traces; no English effectiveness certification."""
 from copy import deepcopy
+import importlib.util
+from pathlib import Path
+from unittest.mock import patch
+from tempfile import TemporaryDirectory
+import sys
 import unittest
 from jsonschema import ValidationError
 from video_contracts import sha, seal
@@ -7,6 +12,11 @@ from video_contracts.passage import export_bundle, status_manifest, material as 
 from video_contracts.locating_trace import source_binding, material, freeze, trace_status, require_trace
 from creative_os.locating_attention import build_plan, timing, map_span
 from tests.test_reviewed_passage import fixture as passage_fixture
+from video_contracts import write
+from answer_engine.reviewed_locating_export import main as export_main
+_native_spec=importlib.util.spec_from_file_location('locating_native_test',
+    Path(__file__).resolve().parents[1]/'ae/experiments/method-relay-dual-pass/locating_native.py')
+native=importlib.util.module_from_spec(_native_spec);_native_spec.loader.exec_module(native)
 
 
 def fixture(acquired=True):
@@ -97,6 +107,23 @@ class LocatingTraceTests(unittest.TestCase):
         p,b,s,g=fixture();p['review']['assertions'].pop()
         with self.assertRaises(ValueError):freeze(p,b,s,'one')
 
+    def test_export_accepts_original_request_binding_without_new_source_field(self):
+        p,b,s,g=fixture()
+        request={'question_id':p['binding']['question_id'],
+                 'binding':{k:p['binding'][k] for k in ('asset_id','semantic_binding_sha','passage_sha','review_sha')}}
+        request['request_sha']=sha(request);p['review']['request_sha']=request['request_sha']
+        with TemporaryDirectory() as temp:
+            root=Path(temp)
+            for name,v in [('review',p),('bundle',b),('status',s),('request',request)]:write(root/(name+'.json'),v)
+            args=['export']+[str(root/(name+'.json')) for name in ('review','bundle','status')]+[str(root/'new'),'--request',str(root/'request.json')]
+            with patch.object(sys,'argv',args):export_main()
+            self.assertTrue((root/'new/trace.json').exists())
+            with patch.object(sys,'argv',args),self.assertRaises(ValueError):export_main()
+
+    def test_ai_cannot_claim_independent_human_review_pass(self):
+        p,b,s,g=fixture();p['review']['independent_human_review']='pass'
+        with self.assertRaises(ValueError):freeze(p,b,s,'one')
+
     def test_repeated_token_mapping_uses_offsets(self):
         p,b,s,g=fixture(False)
         self.assertEqual(map_span(p['candidates'][1],g['words'],b['payload']['passage'])[0]['id'],'2')
@@ -127,6 +154,35 @@ class LocatingTraceTests(unittest.TestCase):
         r['material_sha']=sha(passage_material(other));b=export_bundle(other,'one');s=status_manifest(b,'one')
         p['binding']=source_binding(b,'synthetic-1');p['acquisition']['source_evidence_ref']='/payload/review/segments/3/evidence/0';rebind(p)
         with self.assertRaises(ValueError):freeze(p,b,s,'one')
+
+    def test_native_adapter_preserves_bound_hit_and_tail(self):
+        p,b,s,g=fixture();t=freeze(p,b,s,'one');ts=trace_status(t,'one')
+        request={'spec_sha':sha('synthetic original'),'source':{'asset_id':b['asset_id'],
+            'passage_sha':g['passage_sha']},'words':[], 'hit_ids':['0'],'target_ids':['0'],
+            'render_scale':2,'camera_style':{},'director':{'passes':[{'end':7},
+                {'scan':[10.5,14.75],'hit_settle_end':15,'lock':[15.5,16.5],'lift':[18.5,19.5]}]}}
+        audit={'spec_sha':request['spec_sha'],'canvas':[3840,2160,24],
+               'handles':{'0':100,'1':101,'2':102},'initial_handles':{'0':100,'1':101,'2':102},
+               'words':[],'sentence_attention':[{'ids':['0'],'gain_cap':.004,
+                   'windows':[[1.5,6,6.65,.004],[10.5,18.5,19.5,.004]]}]}
+        for w in g['words']:
+            original={k:w[k] for k in ('id','start','end','text','line')};original['text_sha']=sha(w['text']);request['words'].append(original)
+            audit['words'].append({**original,'layer_id':w['layer_id'],'source_sha':g['passage_sha'],
+                'source_text_keys':0,'parent':None,'anchor':[0,0,0],'position':w['min'],
+                'scale':[100,100,100],'rect':{'left':0,'top':0,'width':80,'height':40}})
+        a=native.prepare(t,ts,b,s,request,audit,[252,360])
+        self.assertEqual(a['plan']['handoff']['handoff_to_lift'],[444,468])
+        self.assertEqual(a['plan']['targets'][0]['word_ids'],['0'])
+        self.assertEqual(a['attention_groups'][0]['windows'][0],[1.5,6,6.65,.004])
+        self.assertEqual(a['rows'][0]['frame'],252)
+        bad=deepcopy(request);bad['hit_ids']=['2']
+        with self.assertRaises(ValueError):native.prepare(t,ts,b,s,bad,audit,[252,360])
+        with self.assertRaises(ValueError):native.prepare(t,ts,b,s,request,audit,[252,362])
+        with TemporaryDirectory() as temp:
+            path=Path(temp)/'new.aep';code=native.script(a,Path(temp)/'patch.json',path)
+            self.assertNotIn('LOCATING_PATCH_PATH',code)
+            path.touch()
+            with self.assertRaises(ValueError):native.script(a,Path(temp)/'patch.json',path)
 
 
 if __name__=='__main__':unittest.main()

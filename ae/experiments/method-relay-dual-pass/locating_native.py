@@ -12,7 +12,7 @@ HERE=Path(__file__).resolve().parent
 
 
 def prepare(trace, trace_status, bundle, status, request, native_audit, frame_range,
-            recognition_frames=None):
+            recognition_frames=None, entry_state=None):
     geometry=native_geometry(request,native_audit)
     plan=build_plan(trace,trace_status,bundle,status,geometry,frame_range,recognition_frames)
     if request['source']['asset_id']!=plan['source_binding']['asset_id']:
@@ -32,6 +32,10 @@ def prepare(trace, trace_status, bundle, status, request, native_audit, frame_ra
         plan['handoff']['handoff_to_lift']=[round(x*24) for x in guided['lift']]
     plan.pop('plan_sha');plan['plan_sha']=sha(plan)
     rows=[{'frame':frame_range[0],'center':plan['first_source_center']}]
+    if entry_state is not None:
+        if entry_state['base_spec_sha']!=request['spec_sha'] or entry_state['frame']!=frame_range[0]:
+            raise ValueError('Current original native entry state required')
+        rows[0]['center']=entry_state['focus']
     by_id={w['id']:w for w in geometry['words']}
     previous_line=0
     for index,(target,event) in enumerate(zip(plan['targets'],plan['clock']['events'])):
@@ -65,10 +69,23 @@ def prepare(trace, trace_status, bundle, status, request, native_audit, frame_ra
                 right=(b['center'][axis]-row['center'][axis])/(b['frame']-row['frame'])
                 if left*right>0: velocity[axis]=2*left*right/(left+right)
         row['velocity']=velocity
+    attention=[]
+    for group in native_audit.get('sentence_attention',[]):
+        windows=[]
+        for target,event in zip(plan['targets'],plan['clock']['events']):
+            if not set(target['word_ids']).intersection(group['ids']):continue
+            begin=max(frame_range[0],event['activation'][0]-8)/24
+            end=(plan['handoff']['handoff_to_lift'][0] if target['recognition_state']=='acquired' else event['recognition'][1])/24
+            finish=(plan['handoff']['handoff_to_lift'][1] if target['recognition_state']=='acquired' else event['retirement'][1]+7)/24
+            if windows and begin<=windows[-1][2]:
+                windows[-1][1]=max(windows[-1][1],end);windows[-1][2]=max(windows[-1][2],finish)
+            else:windows.append([begin,end,finish,min(group['gain_cap'],.012)])
+        attention.append({'ids':group['ids'],'windows':[w for w in group['windows'] if w[0]<frame_range[0]/24]+windows})
     payload={'kind':'locating_native_patch','version':'0.1.0','plan':plan,'rows':rows,
         'base_spec_sha':request['spec_sha'],'native_audit_sha':sha(native_audit),
         'geometry':geometry,'camera_style':request['camera_style'],'render_scale':request['render_scale'],
         'frame_range':frame_range,'fast_end_frame':round(request['director']['passes'][0]['end']*24),
+        'entry_state':entry_state,'attention_groups':attention,
         'native_execution':'PENDING','human_visual_review':'PENDING','public_render_ready':False}
     return {**payload,'patch_sha':sha(payload)}
 

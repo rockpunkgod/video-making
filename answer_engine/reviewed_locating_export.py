@@ -15,7 +15,8 @@ def main():
     request_sha=sha({k:v for k,v in request.items() if k!='request_sha'})
     if (request.get('request_sha')!=request_sha or packet['review']['request_sha']!=request_sha
             or request['question_id']!=packet['binding']['question_id']
-            or any(request['binding'][k]!=v for k,v in packet['binding'].items() if k!='question_id')):
+            or any(request['binding'].get(k)!=packet['binding'].get(k)
+                   for k in ('asset_id','semantic_binding_sha','passage_sha','review_sha'))):
         raise ValueError('Review must bind the existing source request')
     trace = freeze(packet, read(a.bundle), read(a.status), now())
     write(out/'trace.json', trace); write(out/'status.json', trace_status(trace, now()))
