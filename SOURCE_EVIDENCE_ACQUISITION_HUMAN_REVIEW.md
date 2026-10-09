@@ -316,3 +316,25 @@ native render. CRF, encoder settings, dimensions, cadence and shot timing
 remained unchanged. Three outputs passed complete stream decode. Twenty-four
 selected encoded native frames were inspected on two chronology boards;
 continuous-motion human review remains PENDING.
+
+
+## Human acceptance — r27 Guided attention
+
+On 2026-10-09, after the current 12-second native 4K Guided preview was
+presented, the user replied “可以可以”. This is external human visual PASS
+for the displayed r27 Guided acquisition clip, request 0.2.18, spec SHA
+`3b1a4ac46be49b9a31f47c7996a8d2741e0391e2a076a43c81cf31d3cfabd202`.
+Reviewed movie SHA:
+`d09f5819896a12127808cb214b037a7f28a6808aff7cb1763682720fcfa75b6a`.
+
+The accepted visual baseline is subtle baseline-locked magnification with
+smooth row switching, brief filled keyword highlights, transparent extraction
+and the original-source attention route. Preserve this behavior in subsequent
+integration work. Local human-visual-review.json records the exact user feedback
+and movie binding separately from generation receipts, which retain their
+historical PENDING state.
+
+This feedback is scoped to the displayed Guided clip. Fast and the integrated
+full film have no new human PASS; the existing two-clip integration gate is
+unchanged. Listening remains deferred. Teaching certification and source,
+editorial and public-release states are unchanged; public_render_ready=false.
