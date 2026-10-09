@@ -247,6 +247,12 @@ class VisualTranscriptionTests(unittest.TestCase):
         value['inputs']['questions'][0]['student_draft'] = 'arrived'
         with self.assertRaisesRegex(ValueError, 'cannot contain answers'):
             validate_transcription(value, dossier, self.root)
+        # student_text is the actual Engine material field, not student_draft.
+        value, dossier = self.grammar()
+        value['inputs']['questions'][0]['student_text'] = 'arrived'
+        value['source_bindings'][0]['fields']['/student_text'] = [source_span(dossier['document_text'], 'arrived')]
+        with self.assertRaisesRegex(ValueError, 'cannot contain answers'):
+            validate_transcription(value, dossier, self.root)
 
 
 if __name__ == '__main__':

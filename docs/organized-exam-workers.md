@@ -66,7 +66,8 @@ python -X utf8 -m scripts.run_organized_paper_regression all --transcriptions SO
 只剩数字的真实语填空须附 `blank_marker_visual_check`，核源 PDF、题号、页码及 PNG 指纹；
 不能凭价格/正文数字制造空位，也不能为了通过校验添加原图没有的下划线或占位符。
 显示投影只删已记录的印刷页码；物理页码与印刷页码不同须显式视觉确认对应关系。
-预填答题框不是未知学生稿，source-only 转写禁止传入 `student_draft`。
+题目给定首句、称呼、落款和续写段首属于题面约束，不自动构成答案污染。
+真正的预填解答也不是未知学生稿，source-only 转写禁止传入引擎的 `student_text`（以及 `student_draft`）。
 `reference_read=false` 不表示从未见答案：`source_answer_exposure` 独立保留，回放不认证 clean blind。
 
 如原转写代理确已不在实时代理列表且未返回冻结转写，可实际创建接续代理后使用

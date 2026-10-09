@@ -127,7 +127,7 @@ def validate_transcription(value, dossier, dataset_root=None):
         r'(?:(?:[|/｜，,]\s*)?共\s*\d+\s*页|'
         r'[（(]\s*共\s*\d+\s*页\s*[）)])\s*')
     # An answer printed inside a response box is not an unseen student's draft.
-    allowed = set(MATERIAL_FIELDS) - {'student_symptoms', 'original_images', 'student_draft'} | {'task_type', 'printed_number'}
+    allowed = set(MATERIAL_FIELDS) - {'student_symptoms', 'original_images', 'student_text', 'student_draft'} | {'task_type', 'printed_number'}
     def span(row):
         if not isinstance(row, dict) or type(row.get('start')) is not int or type(row.get('end')) is not int:
             raise ValueError('Integer source span required')
