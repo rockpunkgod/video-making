@@ -95,12 +95,14 @@ def build_plan(trace, trace_status, bundle, status, geometry, frame_range, recog
             'sentence_confirm':[end,end+confirm_frames],
             'handoff_to_lift':[end+confirm_frames,end+confirm_frames+lift_frames],
             'source_evidence_ref':a['source_evidence_ref']}
-    payload={'kind':'locating_attention_plan','version':'0.1.0','mode':'guided','fps':24,
+    payload={'kind':'locating_attention_plan','version':'0.1.1','mode':'guided','fps':24,
         'trace_sha':trace['semantic_binding_sha'],'geometry_sha':sha(geometry),
         'source_binding':packet['binding'],'clock':clock,'targets':targets,'events':events,'handoff':handoff,
         'first_source_center':words[0]['center'],'outcome':clock['outcome'],
         'filtered_candidates':[{'candidate_id':c['candidate_id'],'reason':'not_attention_eligible'}
             for c in packet['candidates'] if c['candidate_id'] not in ids],
         'entry':'original_first_line','highlight':'transient_filled','magnification':'baseline_locked_existing',
+        'highlight_palette':{'question':[.95,.74,.43],'comparison':[.64,.79,.90],
+                             'acquired':[.95,.74,.43]},
         'authority':'presentation_only','human_visual_review':'PENDING','public_render_ready':False}
     return {**payload,'plan_sha':sha(payload)}

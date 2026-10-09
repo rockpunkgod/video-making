@@ -57,7 +57,8 @@ Canonical JSON 复用 `video_contracts.sha`：UTF-8、排序键、无无意义�
 无 acquired 时最后项退色；空候选无占位命中。剩余时间分配至接近路程，不尾部填等待。
 
 `locating_native.prepare` / `script` 是现有 fulltext rig 的薄适配。
-统一轨迹表驱动 Focus、Camera、短暂填充高亮；同行主要转移 Focus，跨行运输 Camera。
+统一候选事件时钟驱动 Focus、Camera、短暂填充高亮；Focus 保留真实逐行路线，
+Camera 使用独立、单调的纵向运输曲线，不复制行内字形中心与回行的波动。
 使用已有原字对象、轻微放大与透明 Lift，不新建替代句子。
 适配只作用 Guided；新输出目录与工程不得覆盖 r27/r28。
 
@@ -79,7 +80,9 @@ Canonical JSON 复用 `video_contracts.sha`：UTF-8、排序键、无无意义�
 逐项完成显式审阅：一项背景表达未获准注意，三项成为内部工程辨认序列。
 审阅、原工作表及纯冻结分别保存于不同文件。保留原题记忆信息，另明确审阅有限定位词，
 不由 Renderer 偷换搜索任务。AI 自审记录不代表独立人审、真实眼动或方法实效。
-当前 q33 Trace 已冻结；原生执行未完成，尚无 B 成片，不添加 R12 Action 或答案信用。
+当前 q33 Trace 已冻结并已执行真实原生补丁；r2 已生成诊断成片，
+Astra 只读审阅指出相机碎波动与填色遮字，新修正版正在核验。
+不添加 R12 Action 或答案信用，不继承旧 Human Review。
 
 纯导出入口兼容既有请求尚未包含新增 source_sha 的情况：核验原请求已有的 asset、
 semantic、passage、review 指纹，完整 source_sha 由冻结 Bundle 与当前 Status 另行验证。
@@ -94,3 +97,41 @@ python -m unittest tests.test_locating_trace tests.test_locating_recognition_tim
 ```
 
 以上包含两种不同合成结构：单项命中、跨行重复词仍未命中。它们不认证英语方法实效。
+
+## Guided 高亮颜色与原字保护
+
+新呈现计划记录版本化 palette：题干线索橙色 `[0.95,0.74,0.43]`；
+比较中蓝色 `[0.64,0.79,0.90]`；只有上游明确 acquired 的候选，
+在其 recognition 窗口结束后转橙色。仍为低饱和短暂填充，不画下划线。
+“蓝→橙”只表达定位已取得依据，不授予定案或排除权限。
+
+填色放入原文词对象所在的 3D 层组，层序在全部原词之后，Z 在字后；
+避免新顶层被 2D overlay 隔离而遮淡原字。AE 颜色表达式显式输出 RGBA。
+原生验证逐帧检查 palette、层序、深度与 opacity，不能只看 JSON。
+规则默认作用新 Guided；已认可 Fast 的旧色与原表达式保留。
+
+相机与焦点分别回读验证，不再强制 Camera Y = Focus Y + offset。
+逐帧运输不反向，识别事件共用时钟；边界速度连续性只证明技术衔接，
+不能代替实际连续影片的流畅度审核。
+
+`locating_render.py <render-config.json>` 消费当前 source/trace 状态、补丁与
+原生运动回读，分批渲染 4K TIFF 并生成 SHA 清单、归档及无声 B。
+每批开始和编码前重查状态，禁止旧工程覆盖或未绑定工程渲染。
+`locating_comparison.py <render-config.json> <old-guided.mp4> <old-sha> <new-output>`
+复用相同 request 的 A，输出完整 B、扫描、识别循环、命中到透明提取片段及 A/B。
+独立视频全部原生 4K；对照画布为 4K，两侧内容明确缩至 1080p，不冒充全幅原生。
+循环是原片段三次剪辑重复，不是额外阅读事件。Human Review 绑定 B movie SHA。
+
+## 内存故障边界
+
+真实 r5 渲染出现 AE 导出错误与内存耗尽反馈。`purge_between_chunks` 不能保证
+3D renderer 分配完全释放；不能因此盲目循环重试或自动沿用失败回执。
+`locating_render` 在 Windows 每批开始前要求至少 12 GiB 可用物理内存。
+`ae_production.memory_guard` 用 Windows Job 限制新启动的原生进程树，并监测
+系统可用内存和超时；只回收自己启动的进程，不处理已存在的 Adobe 会话。
+原生 aerender 的短区间独立实例实验结果另行记录，未经帧核验不视为 render PASS。
+
+用户指出 8 GiB 停止线仍过于激进后，当前保护规则收紧：系统可用物理内存
+至少 12 GiB；新启动进程树内存预算最多 10 GiB。低于余量线禁止启动下一批，
+受保护进程运行期间低于线则终止其自己启动的进程树。显式配置 8 GiB/14 GiB
+也会被拒绝，不靠默认值覆盖旧危险配置。阈值不是已证明的稳定性修复。

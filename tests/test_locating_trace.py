@@ -171,18 +171,94 @@ class LocatingTraceTests(unittest.TestCase):
                 'source_text_keys':0,'parent':None,'anchor':[0,0,0],'position':w['min'],
                 'scale':[100,100,100],'rect':{'left':0,'top':0,'width':80,'height':40}})
         a=native.prepare(t,ts,b,s,request,audit,[252,360])
+        self.assertEqual(a,native.prepare(t,ts,b,s,request,audit,[252,360]))
         self.assertEqual(a['plan']['handoff']['handoff_to_lift'],[444,468])
         self.assertEqual(a['plan']['targets'][0]['word_ids'],['0'])
         self.assertEqual(a['attention_groups'][0]['windows'][0],[1.5,6,6.65,.004])
         self.assertEqual(a['rows'][0]['frame'],252)
+        self.assertIn('camera_rows',a)
+        self.assertEqual(a['plan']['highlight_palette']['question'],a['plan']['highlight_palette']['acquired'])
+        self.assertNotEqual(a['plan']['highlight_palette']['comparison'],a['plan']['highlight_palette']['acquired'])
+        camera_y=[native.camera_at(a,f/24)[1] for f in range(252,361)]
+        self.assertTrue(all(y>=x-.00001 for x,y in zip(camera_y,camera_y[1:])))
+        self.assertLessEqual(len(a['camera_rows']),len(a['rows']))
         bad=deepcopy(request);bad['hit_ids']=['2']
         with self.assertRaises(ValueError):native.prepare(t,ts,b,s,bad,audit,[252,360])
         with self.assertRaises(ValueError):native.prepare(t,ts,b,s,request,audit,[252,362])
         with TemporaryDirectory() as temp:
             path=Path(temp)/'new.aep';code=native.script(a,Path(temp)/'patch.json',path)
             self.assertNotIn('LOCATING_PATCH_PATH',code)
+            self.assertIn('l.moveAfter(back)',code)
+            self.assertIn('4*S',code)
             path.touch()
             with self.assertRaises(ValueError):native.script(a,Path(temp)/'patch.json',path)
+
+    def test_reference_path_has_matching_endpoint_velocity(self):
+        p={'rows':[{'frame':0,'center':[0,0,0],'velocity':[0,0,0]},
+                   {'frame':12,'center':[50,20,0],'velocity':[2,1,0]},
+                   {'frame':24,'center':[100,40,0],'velocity':[0,0,0]}]}
+        dt=1e-5;a=native.focus_at(p,.5-dt);b=native.focus_at(p,.5);c=native.focus_at(p,.5+dt)
+        for axis in range(3):self.assertAlmostEqual((b[axis]-a[axis])/dt,(c[axis]-b[axis])/dt,places=4)
+        p['focus_entry']={'frames':[-12,0],'from':[-50,-20,0],'to':[0,0,0]}
+        self.assertEqual(native.focus_at(p,-.5),[-50,-20,0])
+        self.assertEqual(native.focus_at(p,0),[0,0,0])
+
+    def test_native_readback_cannot_omit_frames_or_fake_camera_clock(self):
+        import math
+        p={'patch_sha':sha('synthetic native patch'),'rows':[
+            {'frame':0,'center':[0,0,0],'velocity':[0,0,0]},
+            {'frame':10,'center':[0,10,0],'velocity':[0,0,0]}],
+            'frame_range':[0,10],'entry_state':{'focus':[0,0,0],'camera':[0,20,-100],'look':[0,10,0]},
+            'plan':{'targets':[],'clock':{'events':[]},'handoff':None}}
+        rows=[]
+        for frame in range(11):
+            f=native.focus_at(p,frame/24);cam=[0,f[1]+20,-100];look=[0,f[1]+10,0];v=[x-y for x,y in zip(look,cam)]
+            rows.append({'time':frame/24,'focus':f,'camera':cam,'look':look,
+                'focus_distance':sum((x-y)*z/math.dist(v,[0,0,0]) for x,y,z in zip(f,cam,v)),'marks':[]})
+        a={'patch_binding':{'locating_patch_sha':p['patch_sha']},'canvas':[3840,2160,24],
+           'rows':rows,'boundaries':[],'errors':[],'lift':[]}
+        self.assertEqual(native.validate_motion(p,a)['frame_count'],11)
+        for change in (lambda v:v['rows'].pop(),lambda v:v['rows'][4]['camera'].__setitem__(1,400),
+                       lambda v:v['rows'][4].update(focus_distance=10000),
+                       lambda v:v.update(canvas=[1920,1080,24])):
+            bad=deepcopy(a);change(bad)
+            with self.assertRaises(ValueError):native.validate_motion(p,bad)
+
+    def test_camera_transport_does_not_copy_reading_return_excursions(self):
+        p={'rows':[{'frame':0,'center':[0,0,0],'velocity':[0,0,0]},
+                   {'frame':5,'center':[100,40,0],'velocity':[0,0,0]},
+                   {'frame':10,'center':[0,35,0],'velocity':[0,0,0]},
+                   {'frame':20,'center':[50,100,0],'velocity':[0,0,0]}],
+           'camera_rows':[{'frame':0,'center':[0,0,0],'velocity':[0,0,0]},
+                          {'frame':20,'center':[0,100,0],'velocity':[0,0,0]}]}
+        ys=[native.camera_at(p,f/240)[1] for f in range(201)]
+        self.assertTrue(all(b>=a for a,b in zip(ys,ys[1:])))
+        self.assertNotEqual(native.camera_at(p,5/24)[1],native.focus_at(p,5/24)[1])
+
+    def test_native_palette_and_behind_ink_are_enforced(self):
+        palette={'question':[.95,.74,.43],'comparison':[.64,.79,.90],'acquired':[.95,.74,.43]}
+        p={'patch_sha':sha('synthetic color proof'),'rows':[
+            {'frame':0,'center':[0,0,0],'velocity':[0,0,0]},
+            {'frame':10,'center':[0,0,0],'velocity':[0,0,0]}],
+            'frame_range':[0,10],'entry_state':None,'geometry':{'words':[{'max':[1,1,0]}]},
+            'plan':{'highlight_palette':palette,'targets':[{'candidate_id':'c','recognition_state':'acquired'}],
+                'clock':{'events':[{'activation':[2,4],'recognition':[4,7]}]},'handoff':None}}
+        rows=[]
+        for f in range(11):
+            color=palette['acquired'] if f>=7 else palette['comparison']
+            rows.append({'time':f/24,'focus':[0,0,0],'camera':[0,0,-100],'focus_distance':100,
+                'question_color':palette['question']+[1],
+                'marks':[{'name':'LOCATING_TRANSIENT_c','opacity':0 if f<2 else 85,
+                    'color':color+[1],'index':10,'position':[0,0,8]}]})
+        a={'patch_binding':{'locating_patch_sha':p['patch_sha']},'canvas':[3840,2160,24],
+            'rows':rows,'source_indices':[2,3,4],'boundaries':[],'errors':[],'lift':[]}
+        self.assertEqual(native.validate_motion(p,a)['frame_count'],11)
+        for change in (lambda x:x['rows'][8]['marks'][0].update(color=palette['comparison']),
+                       lambda x:x['rows'][4]['marks'][0].update(index=1),
+                       lambda x:x['rows'][4]['marks'][0].update(position=[0,0,-8]),
+                       lambda x:x['rows'][4].update(question_color=palette['comparison'])):
+            bad=deepcopy(a);change(bad)
+            with self.assertRaises(ValueError):native.validate_motion(p,bad)
 
 
 if __name__=='__main__':unittest.main()
