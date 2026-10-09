@@ -64,6 +64,9 @@ V9.1 增量视频模块：见 [G01 Hero 工作流](docs/cinematic-hero-workflow.
 纯导出已有动作与语义跨度，在持续原题中执行注意力镜头和可逆拆解；AE 输出动效，
 Premiere 完成声音、字幕与最终内部样片。工程成功与教学、来源、编辑及 Human Taste 分开记录。
 
+新制横版预览、内部粗成片与正式交付统一 **3840×2160、16:9**，见
+[4K 交付规格](docs/video-resolution.md)。原生画面与实际编码尺寸一起核验，历史版本保留原始绑定。
+
 教学选择与学生视角文案为两个独立增量层：
 [Pedagogy Compiler](docs/pedagogy-compiler.md) 提供 `python -m pedagogy compile|validate|handoff|matrix`；
 [Student POV Copy](docs/student-pov-copy.md) 提供 `python -m student_pov realize|validate|inspect`。当前 Compiler/Copy 契约为0.3；[原题展示契约](docs/original-question-copy-contract.md)绑定未填答题面、持续题面层和最终文案指纹。旧保存件仅可历史检查，不能继承当前消费资格。

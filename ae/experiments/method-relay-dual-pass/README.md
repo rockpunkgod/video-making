@@ -155,6 +155,14 @@ python ae/experiments/method-relay-dual-pass/fulltext.py render <same-directory>
 Outputs are silent native-picture movies: 7 s Fast, 12 s Guided and a 20 s
 continuous research preview, together with an editable AEP, executed template,
 native glyph/identity/focus readbacks, expression audit and verified TIFF archive.
+New full-source outputs are uniformly 3840×2160 / 24 fps under the
+[`4K delivery policy`](../../../docs/video-resolution.md). The AE comp and native
+text/camera scene are rendered at full 4K; the same design layout and timing are
+preserved. Encoding verifies the actual 4K frame dimensions. Existing approval
+and historical artifacts keep their original resolution and hashes.
+The 20 s native render uses four contiguous 5 s queue spans to stay within the
+public execution timeout. Each DONE result binds its comp, time span and complete
+frame sequence before joining all 480 frames; no frame cadence or timing changes.
 New media and actual question material stay in ignored local data. If rendering
 fails or times out, retain the official failure evidence and inspect the native
 queue before recovery; the command refuses an existing frame directory and

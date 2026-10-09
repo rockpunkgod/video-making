@@ -15,11 +15,12 @@
                 size:[l.source.width,l.source.height],color:l.source.mainSource.color};}
         if(l.name==='QUESTION_PREFIX'||l.name==='QUESTION_KEYWORD'||l.name==='QUESTION_SUFFIX'){
             var m=JSON.parse(l.comment);questionParts.push({id:m.id,text:l.property('Source Text').value.text,start:m.start,end:m.end,text_sha:m.text_sha,
-                source_text_keys:l.property('Source Text').numKeys,position:l.transform.position.value});questionHandles[m.id]=l.id;}
+                source_text_keys:l.property('Source Text').numKeys,position:l.transform.position.value,scale:l.transform.scale.value,
+                font_size:l.property('Source Text').value.fontSize});questionHandles[m.id]=l.id;}
         if(l.name.indexOf('ORIGINAL_OPTION_')===0)optionTexts[l.name.replace('ORIGINAL_OPTION_','')]=l.property('Source Text').value.text;
         if(l.name.indexOf('source-word-')===0){var d=l.property('Source Text').value,m=JSON.parse(l.comment);
             words.push({id:m.id,layer_id:l.id,text:d.text,start:m.start,end:m.end,text_sha:m.text_sha,source_sha:m.source_sha,
-                source_text_keys:l.property('Source Text').numKeys,threeD:l.threeDLayer,rect:l.sourceRectAtTime(0,false),
+                source_text_keys:l.property('Source Text').numKeys,font_size:d.fontSize,threeD:l.threeDLayer,rect:l.sourceRectAtTime(0,false),
                 position:l.transform.position.valueAtTime(0,false),anchor:l.transform.anchorPoint.value,scale:l.transform.scale.valueAtTime(0,false),
                 parent:l.parent?l.parent.id:null,rotation:l.property('ADBE Transform Group').property('ADBE Rotate Z').value,
                 x_rotation:l.property('ADBE Transform Group').property('ADBE Rotate X').value,y_rotation:l.property('ADBE Transform Group').property('ADBE Rotate Y').value});handles[m.id]=l.id;}
@@ -60,7 +61,7 @@
             for(var id in optionTexts)oo[id]=cp.layer('ORIGINAL_OPTION_'+id).transform.opacity.valueAtTime(times[phase],false);
             states[phase]={question_opacity:qo,option_opacity:oo};}passes[passes.length-1].mental_state=states;
     }
-    return JSON.stringify({kind:b.kind,spec_sha:b.spec_sha,canvas:[cp.width,cp.height,cp.frameRate,cp.duration],renderer:cp.renderer,draft3d:cp.draft3d,
+    return JSON.stringify({kind:b.kind,spec_sha:b.spec_sha,canvas:[cp.width,cp.height,cp.frameRate,cp.duration],renderer:cp.renderer,draft3d:cp.draft3d,resolution_factor:cp.resolutionFactor,
         words:words,handles:handles,initial_handles:b.handles,passes:passes,geometry:{whole:b.whole,hit:b.hit,scope:b.scope,lifted:b.lifted,line_boxes:b.line_boxes,space:b.geometry_space},
         question_parts:questionParts,question_handles:questionHandles,initial_question_handles:b.question_handles,option_texts:optionTexts,viewport_guards:guards,
         temporary_probes:probes,annotation_layers:annotations,visible_attention_cursor:cp.layer('READING_GUIDE').enabled,

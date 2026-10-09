@@ -238,67 +238,73 @@ class FullPassageTests(unittest.TestCase):
         return r
 
     def native(self):
-        r=self.r;rows=[]
+        r=self.r;rows=[];scale=r['render_scale'];physical=lambda values:[v*scale for v in values]
         for i,w in enumerate(r['words']):
             rows.append(dict(w,layer_id=i+10,source_sha=r['source']['passage_sha'],source_text_keys=0,threeD=True,
-                             rect={'left':0,'top':-20,'width':len(w['text'])*12,'height':24},anchor=[0,0,0],scale=[100]*3,
+                             position=physical(w['position']),font_size=24,
+                             rect={'left':0,'top':-20,'width':len(w['text'])*12,'height':24},anchor=[0,0,0],scale=[100*scale]*3,
                              parent=None,rotation=0,x_rotation=0,y_rotation=0))
         actual={w['id']:w for w in rows}
         def box(ids,lift=False):
             low=[math.inf]*3;high=[-math.inf]*3
             for id in ids:
-                w=actual[id];p=r['lift_positions'][id] if lift else w['position'];rect=w['rect'];s=32/24 if lift else 1
+                w=actual[id];p=physical(r['lift_positions'][id]) if lift else w['position'];rect=w['rect'];s=(32/24 if lift else 1)*scale
                 for j,(v,size) in enumerate(((0,rect['width']),(-20,24),(0,0))):
                     low[j]=min(low[j],p[j]+v*s);high[j]=max(high[j],p[j]+(v+size)*s)
             return {'min':low,'max':high,'center':[(x+y)/2 for x,y in zip(low,high)]}
         g={k:box(ids,lift) for k,ids,lift in [('whole',list(actual),False),('hit',r['hit_ids'],False),
                                              ('scope',r['target_ids'],False),('lifted',r['target_ids'],True)]}
         g['line_boxes']=[box(line['word_ids']) for line in r['lines']];column=g['whole']['center'][0]
-        style=r['camera_style'];bg_projection=1950/(1980+style['background_z'])
-        bg_word_scale=min(style['background_max_word_scale'],355/((g['whole']['max'][1]-g['whole']['min'][1])*bg_projection))
-        origin=g['lifted']['center'][1]+120/(1950/1840)+50/bg_projection
+        style={k:(v if k in ('background_max_word_scale','reader_opacity') else
+                  {a:b*scale for a,b in v.items()} if k=='aperture' else v*scale) for k,v in r['camera_style'].items()}
+        bg_projection=style['zoom']/(1980*scale+style['background_z'])
+        bg_word_scale=min(style['background_max_word_scale'],(style['background_bottom']-style['background_top'])/
+                          ((g['whole']['max'][1]-g['whole']['min'][1])*bg_projection))
+        origin=g['lifted']['center'][1]+120*scale/(1950/1840)+50*scale/bg_projection
         handles={w['id']:w['layer_id'] for w in rows};passes=[]
         for p in r['director']['passes']:
             samples=[]
             for i in r['scan_line_ids']:
                 b=g['line_boxes'][i]
-                reader=[b['min'][0]+10,b['max'][1]+6,1];camera=[column+20,b['center'][1]+250,-1500]
-                look=[column,b['center'][1]+30,0];focus=[reader[0]+40,b['center'][1],0]
+                reader=[b['min'][0]+10*scale,b['max'][1]+6*scale,scale];camera=[column+20*scale,b['center'][1]+250*scale,-1500*scale]
+                look=[column,b['center'][1]+30*scale,0];focus=[reader[0]+40*scale,b['center'][1],0]
                 forward=[a-c for a,c in zip(look,camera)];norm=math.sqrt(sum(v*v for v in forward))
                 samples.append({'reader':reader,'reader_opacity':0,'camera':camera,'look':look,'focus':focus,'aperture':style['aperture']['scan'],
                                 'focus_distance':sum((a-c)*v/norm for a,c,v in zip(focus,camera,forward))})
             poses=[]
             for w in rows:
                 id=w['id'];initial=w['position'];selected=id in r['lift_positions']
-                destination=r['lift_positions'].get(id,[column+(initial[0]-column)*bg_word_scale,
-                    origin+(initial[1]-g['whole']['min'][1])*bg_word_scale,style['background_z']])
+                destination=physical(r['lift_positions'][id]) if selected else [column+(initial[0]-column)*bg_word_scale,
+                    origin+(initial[1]-g['whole']['min'][1])*bg_word_scale,style['background_z']]
                 poses.append({'id':id,'initial':initial,'restored':initial,'at_lift':destination,
                               'pre_hit_opacity':100,'lift_opacity':100 if selected else 28,
-                              'restored_scale':[100]*3,'lifted_scale':[100*32/24 if selected else 100*bg_word_scale]*3})
+                              'restored_scale':[100*scale]*3,'lifted_scale':[(100*32/24 if selected else 100*bg_word_scale)*scale]*3})
             passes.append({'kind':p['kind'],'visited_lines':r['scan_line_ids'],'pre_hit_mark':0,'peak_hit_mark':85,
                            'hit_mark':0,'lift_handles':handles,'positions':poses,'scan_samples':samples,
-                           'camera':{'dof':1,'aperture':style['aperture']['hit'],'zoom':1950,'focus_error':'','focus_distance':1500},
+                           'camera':{'dof':1,'aperture':style['aperture']['hit'],'zoom':style['zoom'],'focus_error':'','focus_distance':1500*scale},
                            'apertures':style['aperture'],
                            'lift_focus':{'actual_sentence_center':[900,500,-70],'focus':[900,500,-70],'error':''},
-                           'mark_position':[g['hit']['center'][0],g['hit']['center'][1],1],
-                           'mark_size':[g['hit']['max'][0]-g['hit']['min'][0]+8,g['hit']['max'][1]-g['hit']['min'][1]+8],'mark_strokes':0})
+                           'mark_position':[g['hit']['center'][0],g['hit']['center'][1],scale],
+                           'mark_size':[g['hit']['max'][0]-g['hit']['min'][0]+8*scale,g['hit']['max'][1]-g['hit']['min'][1]+8*scale],'mark_strokes':0})
             passes[-1]['mental_state']={phase:{'question_opacity':values,
                 'option_opacity':{id:100 if phase=='initial' else 0 for id in r['source']['question']['options']}}
                 for phase,values in [('initial',{'QUESTION_PREFIX':100,'QUESTION_KEYWORD':100,'QUESTION_SUFFIX':100}),
                                      ('scan',{'QUESTION_PREFIX':0,'QUESTION_KEYWORD':60,'QUESTION_SUFFIX':0}),
                                      ('before_lift',{'QUESTION_PREFIX':0,'QUESTION_KEYWORD':60,'QUESTION_SUFFIX':0}),
                                      ('lifted',{'QUESTION_PREFIX':0,'QUESTION_KEYWORD':0,'QUESTION_SUFFIX':0})]}
-        return {'spec_sha':r['spec_sha'],'canvas':[1920,1080,24,20],'renderer':'ADBE Advanced 3d','draft3d':False,
+        return {'spec_sha':r['spec_sha'],'canvas':r['canvas'],'renderer':'ADBE Advanced 3d','draft3d':False,'resolution_factor':[1,1],
                 'words':rows,'handles':handles,'initial_handles':handles,
                 'passes':passes,'geometry':g,'temporary_probes':[],'annotation_layers':[],'visible_attention_cursor':False,
-                'question_parts':[dict(p,source_text_keys=0,position=p['position']+[0]) for p in r['question_parts']],
+                'question_parts':[dict(p,source_text_keys=0,font_size=34,scale=[100*scale,100*scale,100],
+                                       position=physical(p['position'])+[0]) for p in r['question_parts']],
                 'question_handles':{p['id']:700+i for i,p in enumerate(r['question_parts'])},
                 'initial_question_handles':{p['id']:700+i for i,p in enumerate(r['question_parts'])},
                 'option_texts':{id:id+'. '+text for id,text in r['source']['question']['options'].items()},
-                'viewport_guards':{name:{'vertices':[[0,g['top']],[1920,g['top']],[1920,g['bottom']],[0,g['bottom']]],
-                    'feather':[0,g['feather']],'mask_keys':0,'feather_keys':0,'mask_count':1,'mask_add':True,'inverted':False,
+                'viewport_guards':{name:{'vertices':[[0,g['top']*scale],[r['canvas'][0],g['top']*scale],[r['canvas'][0],g['bottom']*scale],[0,g['bottom']*scale]],
+                    'feather':[0,g['feather']*scale],'mask_keys':0,'feather_keys':0,'mask_count':1,'mask_add':True,'inverted':False,
                     'mask_opacity':100,'layer_opacity':100,'enabled':True,'threeD':False,'parent':None,'rotation':0,
-                    'position':[960,540,0],'anchor':[960,540,0],'scale':[100,100,100],'size':[1920,1080],
+                    'position':[r['canvas'][0]/2,r['canvas'][1]/2,0],'anchor':[r['canvas'][0]/2,r['canvas'][1]/2,0],
+                    'scale':[100,100,100],'size':r['canvas'][:2],
                     'color':[.973,.969,.949]} for name,g in r['viewport_guards'].items()},
                 'new_method_certification':False,'public_render_ready':False}
 
@@ -366,6 +372,31 @@ class FullPassageTests(unittest.TestCase):
                          lambda g:g.update(position=[960,600,0])):
             bad=self.native();mutation(bad['viewport_guards']['PAPER_FOOT_GUARD'])
             with self.subTest(mutation=mutation),self.assertRaises(ValueError):fulltext.validate_native(self.r,bad)
+
+    def test_4k_requires_native_canvas_text_camera_and_full_resolution(self):
+        self.assertEqual(self.r['canvas'][:2],[3840,2160])
+        for mutation in (lambda n:n.update(canvas=[1920,1080,24,20]),lambda n:n.update(resolution_factor=[2,2]),
+                         lambda n:n['words'][0].update(scale=[100,100,100]),lambda n:n['words'][0].update(font_size=12),
+                         lambda n:n['passes'][0]['camera'].update(zoom=1950),lambda n:n['question_parts'][0].update(scale=[100,100,100])):
+            bad=self.native();mutation(bad)
+            with self.subTest(mutation=mutation),self.assertRaises(ValueError):fulltext.validate_native(self.r,bad)
+
+    def test_native_chunks_bind_done_comp_and_exact_contiguous_spans(self):
+        for first in (0,120,240,360):
+            paths=[Path('FRAME_'+str(i).zfill(5)+'.tif') for i in range(first,first+120)]
+            native={'done':True,'comp_id':42,'start':first/24,'duration':5}
+            fulltext.validate_render_chunk(native,paths,first,120,42)
+            for change in ({'done':False},{'comp_id':43},{'start':first/24+.1},{'duration':4.9}):
+                bad=dict(native,**change)
+                with self.subTest(first=first,change=change),self.assertRaises(ValueError):
+                    fulltext.validate_render_chunk(bad,paths,first,120,42)
+
+    def test_native_chunk_rejects_missing_gapped_or_foreign_frames(self):
+        native={'done':True,'comp_id':42,'start':5,'duration':5}
+        paths=[Path('FRAME_'+str(i).zfill(5)+'.tif') for i in range(120,240)]
+        for bad in (paths[:-1],paths[:-1]+[Path('FRAME_00241.tif')],paths[:-1]+[Path('OTHER_00239.tif')]):
+            with self.subTest(last=bad[-1]),self.assertRaises(ValueError):
+                fulltext.validate_render_chunk(native,bad,120,120,42)
 
     def test_keyword_flash_begins_only_after_camera_settle(self):
         for p in self.r['director']['passes']:

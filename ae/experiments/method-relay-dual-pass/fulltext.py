@@ -83,7 +83,8 @@ def make_request(output,bundle_path,status_path,question_id,question_cue,hit_cue
     for id,start,end in (('QUESTION_PREFIX',0,cue['start']),('QUESTION_KEYWORD',cue['start'],cue['end']),('QUESTION_SUFFIX',cue['end'],len(qtext))):
         question_parts.append({'id':id,'start':start,'end':end,'text':qtext[start:end],'text_sha':sha(qtext[start:end]),
                                'position':[150+float(ImageFont.truetype(ep,34).getlength(qtext[:start])),203]})
-    r={'kind':'frozen_full_passage_location_visual_research','version':'0.2.7','source':source,
+    r={'kind':'frozen_full_passage_location_visual_research','version':'0.2.8','source':source,
+        'canvas':[3840,2160,24,20],'render_scale':2,
         'bundle_path':str(bundle_path),'status_path':str(status_path),
         'bundle_file_sha':relay.file_sha(bundle_path),'status_file_sha':relay.file_sha(status_path),
         'words':words,'trailing_space':source['passage'][cursor:],'lines':lines,'target_ids':[w['id'] for w in target],
@@ -109,7 +110,8 @@ def make_request(output,bundle_path,status_path,question_id,question_cue,hit_cue
 
 def validate(r):
     source=r['source'];text=source['passage']
-    if (r['director']!=direction() or r['spec_sha']!=sha({k:v for k,v in r.items() if k not in ('project','bundle_path','status_path','spec_sha')})
+    if (r['canvas']!=[3840,2160,24,20] or r['render_scale']!=2 or r['director']!=direction()
+            or r['spec_sha']!=sha({k:v for k,v in r.items() if k not in ('project','bundle_path','status_path','spec_sha')})
             or source['answer'] is not None or source['method_certification'] is not False
             or any(r[k] is not False for k in ('final_voice_accepted','production_eligible','public_render_ready'))):
         raise ValueError('Only frozen-source visual location, without answer or release promotion')
@@ -144,9 +146,9 @@ def current(output):
 
 def validate_native(r,n):
     """Compare actual Adobe readback with frozen words, spans and same-object poses."""
-    if (n['spec_sha']!=r['spec_sha'] or n['canvas']!=[1920,1080,24,20] or len(n['words'])!=len(r['words'])
-            or n['renderer']!='ADBE Advanced 3d' or n['draft3d'] is not False
-            or any(w['source_text_keys'] or not w['threeD'] for w in n['words'])
+    if (n['spec_sha']!=r['spec_sha'] or n['canvas']!=r['canvas'] or len(n['words'])!=len(r['words'])
+            or n['renderer']!='ADBE Advanced 3d' or n['draft3d'] is not False or n['resolution_factor']!=[1,1]
+            or any(w['source_text_keys'] or w['font_size']!=24 or not w['threeD'] for w in n['words'])
             or len({w['layer_id'] for w in n['words']})!=len(n['words']) or n['temporary_probes'] or n['handles']!=n['initial_handles']
             or n['new_method_certification'] is not False or n['public_render_ready'] is not False
             or [p['kind'] for p in n['passes']]!=[p['kind'] for p in r['director']['passes']]
@@ -159,19 +161,21 @@ def validate_native(r,n):
     # AE expression values and spatial interpolation differ by < 0.02 world px
     # in this native readback. Only geometry permits 0.05 px; text/spans stay exact.
     close=lambda a,b:len(a)==len(b) and all(abs(x-y)<.05 for x,y in zip(a,b))
+    scale=r['render_scale'];physical=lambda values:[v*scale for v in values]
+    width,height=r['canvas'][:2];center=[width/2,height/2]
     guards=n['viewport_guards']
     if set(guards)!=set(r['viewport_guards']):raise ValueError('Missing native paper edge coverage')
     for name,expected in r['viewport_guards'].items():
         a=guards[name]
-        vertices=[[0,expected['top']],[1920,expected['top']],[1920,expected['bottom']],[0,expected['bottom']]]
+        vertices=[[0,expected['top']*scale],[width,expected['top']*scale],[width,expected['bottom']*scale],[0,expected['bottom']*scale]]
         if (len(a['vertices'])!=4 or any(not close(actual,expected_vertex) for actual,expected_vertex in zip(a['vertices'],vertices))
-                or a['feather']!=[0,expected['feather']] or a['mask_keys'] or a['feather_keys']
+                or a['feather']!=[0,expected['feather']*scale] or a['mask_keys'] or a['feather_keys']
                 or a['mask_count']!=1 or a['mask_add'] is not True or a['inverted'] is not False
                 or a['mask_opacity']!=100 or a['layer_opacity']!=100 or a['enabled'] is not True
                 or a['threeD'] is not False or a['parent'] is not None or a['rotation']
-                or not close(a['position'][:2],[960,540]) or any(a['position'][2:])
-                or not close(a['anchor'][:2],[960,540]) or any(a['anchor'][2:])
-                or not close(a['scale'][:2],[100,100]) or a['size']!=[1920,1080]
+                or not close(a['position'][:2],center) or any(a['position'][2:])
+                or not close(a['anchor'][:2],center) or any(a['anchor'][2:])
+                or not close(a['scale'][:2],[100,100]) or a['size']!=[width,height]
                 or not close(a['color'],[.973,.969,.949])):
             raise ValueError('Feathered viewport guards must extend beyond the frame without text returning at its edges')
     question={p['id']:p for p in r['question_parts']};native_question={p['id']:p for p in n['question_parts']}
@@ -180,23 +184,24 @@ def validate_native(r,n):
     for id,p in question.items():
         a=native_question[id]
         if (any(a[k]!=p[k] for k in ('text','start','end','text_sha')) or a['source_text_keys']
-                or not close(a['position'][:2],p['position']) or any(a['position'][2:])):
+                or a['font_size']!=34 or not close(a['scale'],[100*scale,100*scale,100])
+                or not close(a['position'][:2],physical(p['position'])) or any(a['position'][2:])):
             raise ValueError('The mental anchor cannot paraphrase or replace the frozen question')
     if n['option_texts']!={id:id+'. '+text for id,text in r['source']['question']['options'].items()}:
         raise ValueError('Original options cannot be rewritten or silently removed')
     for w in r['words']:
         a=actual[w['id']]
         if (any(a[k]!=w[k] for k in ('text','start','end','text_sha')) or a['source_sha']!=r['source']['passage_sha']
-                or not close(a['position'],w['position']) or not close(a['anchor'],[0,0,0])
-                or not close(a['scale'],[100,100,100]) or a['parent'] is not None
+                or not close(a['position'],physical(w['position'])) or not close(a['anchor'],[0,0,0])
+                or not close(a['scale'],[100*scale]*3) or a['parent'] is not None
                 or any(a[k] for k in ('rotation','x_rotation','y_rotation'))):
             raise ValueError('Native literal text, source span or initial transform differs')
     def box(ids,lift=False):
         low=[math.inf]*3;high=[-math.inf]*3
         for id in ids:
-            a=actual[id];rect=a['rect'];pos=r['lift_positions'][id] if lift else a['position'];scale=32/24 if lift else 1
+            a=actual[id];rect=a['rect'];pos=physical(r['lift_positions'][id]) if lift else a['position'];glyph_scale=(32/24 if lift else 1)*scale
             for j,(v,size) in enumerate(((rect['left'],rect['width']),(rect['top'],rect['height']),(0,0))):
-                low[j]=min(low[j],pos[j]+v*scale);high[j]=max(high[j],pos[j]+(v+size)*scale)
+                low[j]=min(low[j],pos[j]+v*glyph_scale);high[j]=max(high[j],pos[j]+(v+size)*glyph_scale)
         return {'min':low,'max':high,'center':[(x+y)/2 for x,y in zip(low,high)]}
     geom=n['geometry']
     for key,ids,lift in (('whole',list(actual),False),('hit',r['hit_ids'],False),('scope',r['target_ids'],False),('lifted',r['target_ids'],True)):
@@ -207,12 +212,14 @@ def validate_native(r,n):
         computed=box(line['word_ids'])
         if any(not close(computed[k],b[k]) for k in computed):raise ValueError('Native reading line differs')
     column=geom['whole']['center'][0]
-    style=r['camera_style'];whole=geom['whole'];lifted=geom['lifted'];foreground_scale=style['zoom']/(1980-140)
-    lift_look=[lifted['center'][0],lifted['center'][1]+(540-style['foreground_screen_y'])/foreground_scale,-140]
-    background_projection=style['zoom']/(1980+style['background_z'])
+    style={k:(v if k in ('background_max_word_scale','reader_opacity') else
+              {a:b*scale for a,b in v.items()} if k=='aperture' else v*scale) for k,v in r['camera_style'].items()}
+    whole=geom['whole'];lifted=geom['lifted'];foreground_scale=style['zoom']/((1980-140)*scale)
+    lift_look=[lifted['center'][0],lifted['center'][1]+(center[1]-style['foreground_screen_y'])/foreground_scale,-140*scale]
+    background_projection=style['zoom']/(1980*scale+style['background_z'])
     background_word_scale=min(style['background_max_word_scale'],(style['background_bottom']-style['background_top'])/
                               ((whole['max'][1]-whole['min'][1])*background_projection))
-    background_origin=lift_look[1]+(style['background_top']-540)/background_projection
+    background_origin=lift_look[1]+(style['background_top']-center[1])/background_projection
     for p in n['passes']:
         for phase,expected in (('initial',{'QUESTION_PREFIX':100,'QUESTION_KEYWORD':100,'QUESTION_SUFFIX':100}),
                                ('scan',{'QUESTION_PREFIX':0,'QUESTION_KEYWORD':60,'QUESTION_SUFFIX':0}),
@@ -222,21 +229,21 @@ def validate_native(r,n):
             if state['question_opacity']!=expected or any(v!=(100 if phase=='initial' else 0) for v in state['option_opacity'].values()):
                 raise ValueError('Scan may retain only the exact extracted cue; evidence takes over during Lift')
         c=p['camera']
-        if (c['dof']!=1 or c['aperture']!=style['aperture']['hit'] or c['zoom']!=1950 or c['focus_error']
+        if (c['dof']!=1 or c['aperture']!=style['aperture']['hit'] or c['zoom']!=style['zoom'] or c['focus_error']
                 or not math.isfinite(c['focus_distance']) or c['focus_distance']<=0
                 or p['apertures']!=style['aperture']):
             raise ValueError('Actual native reading focus is unavailable')
         if p['lift_focus']['error'] or not close(p['lift_focus']['actual_sentence_center'],p['lift_focus']['focus']):
             raise ValueError('Lift focus must follow the actual moving sentence, not its future destination')
-        if (not close(p['mark_position'],[geom['hit']['center'][0],geom['hit']['center'][1],1])
-                or not close(p['mark_size'],[geom['hit']['max'][0]-geom['hit']['min'][0]+8,geom['hit']['max'][1]-geom['hit']['min'][1]+8])
+        if (not close(p['mark_position'],[geom['hit']['center'][0],geom['hit']['center'][1],scale])
+                or not close(p['mark_size'],[geom['hit']['max'][0]-geom['hit']['min'][0]+8*scale,geom['hit']['max'][1]-geom['hit']['min'][1]+8*scale])
                 or p['mark_strokes']!=0):
             raise ValueError('Keyword feedback must be the original brief filled highlight, never an underline')
         if len(p['scan_samples'])!=len(r['scan_line_ids']):raise ValueError('Missing actual line visits')
         for index,sample in zip(r['scan_line_ids'],p['scan_samples']):
             b=geom['line_boxes'][index]
-            if (not close([sample['reader'][1]],[b['max'][1]+6]) or not b['min'][0]-.01<=sample['reader'][0]<=b['max'][0]+.01
-                    or not close([sample['camera'][0],sample['look'][0]],[column+20,column])
+            if (not close([sample['reader'][1]],[b['max'][1]+6*scale]) or not b['min'][0]-.01<=sample['reader'][0]<=b['max'][0]+.01
+                    or not close([sample['camera'][0],sample['look'][0]],[column+20*scale,column])
                     or not close(sample['focus'],[sample['reader'][0]+style['reader_length']/2,b['center'][1],0])
                     or sample['reader_opacity']!=0):
                 raise ValueError('Scan must follow actual reading rows, not jump the camera sideways to evidence')
@@ -247,12 +254,12 @@ def validate_native(r,n):
         if set(a['id'] for a in p['positions'])!=set(actual):raise ValueError('Missing original object poses')
         for a in p['positions']:
             selected=a['id'] in r['lift_positions'];initial=actual[a['id']]['position']
-            expected=r['lift_positions'].get(a['id'],[column+(initial[0]-column)*background_word_scale,
-                       background_origin+(initial[1]-whole['min'][1])*background_word_scale,style['background_z']])
+            expected=physical(r['lift_positions'][a['id']]) if selected else [column+(initial[0]-column)*background_word_scale,
+                       background_origin+(initial[1]-whole['min'][1])*background_word_scale,style['background_z']]
             if (not close(a['initial'],initial) or not close(a['restored'],initial) or not close(a['at_lift'],expected)
                     or a['pre_hit_opacity']!=100 or a['lift_opacity']!=(100 if selected else 28)
-                    or not close(a['restored_scale'],[100]*3)
-                    or not close(a['lifted_scale'],[100*32/24 if selected else 100*background_word_scale]*3)):
+                    or not close(a['restored_scale'],[100*scale]*3)
+                    or not close(a['lifted_scale'],[(100*32/24 if selected else 100*background_word_scale)*scale]*3)):
                 raise ValueError('Full source cannot preselect evidence, substitute words or lose its rewind')
 
 
@@ -304,14 +311,47 @@ def build(output,**kwargs):
     write(output/'identity.json',identity);return audit(output)
 
 
+def validate_render_chunk(native, paths, start_frame, count, comp_id):
+    """Bind each completed native time span before joining its frame sequence."""
+    if (native.get('done') is not True or native.get('comp_id')!=comp_id
+            or abs(native.get('start',-1)-start_frame/24)>.0001
+            or abs(native.get('duration',-1)-count/24)>.0001 or len(paths)!=count):
+        raise ValueError('Native chunk does not match its directed time span')
+    numbers=[]
+    for path in paths:
+        match=re.fullmatch(r'FRAME_(\d{5})\.tif',path.name)
+        if not match:raise ValueError('Unexpected native frame name')
+        numbers.append(int(match[1]))
+    if numbers!=list(range(numbers[0],numbers[0]+count)):
+        raise ValueError('Native chunk has a frame gap')
+
+
 def render(output):
     r=current(output);audit(output);identity=read(output/'identity.json');c=relay.client();folder=output/'native-frames'
     folder.mkdir(exist_ok=False)
-    code='''(function(){var cp=AEMCP.compById(COMP);for(var i=1;i<=app.project.renderQueue.numItems;i++)if(app.project.renderQueue.item(i).render&&app.project.renderQueue.item(i).status===RQItemStatus.QUEUED)throw new Error('Unrelated queued render');var q=app.project.renderQueue.items.add(cp),o=q.outputModule(1),preset=null;for(var j=0;j<o.templates.length;j++)if(o.templates[j].indexOf('TIFF')!==-1){preset=o.templates[j];break;}if(!preset)throw new Error('Native TIFF required');o.applyTemplate(preset);o.file=new File(DEST);q.timeSpanStart=0;q.timeSpanDuration=20;app.project.save();app.setMultiFrameRenderingConfig(false,100);var begin=(new Date()).getTime();app.project.renderQueue.render();app.project.save();return JSON.stringify({done:q.status===RQItemStatus.DONE,comp_id:cp.id,start:q.timeSpanStart,duration:q.timeSpanDuration,preset:preset,render_ms:(new Date()).getTime()-begin});})();'''
-    code=code.replace('COMP',str(identity['comp_id'])).replace('DEST',json.dumps((folder/'FRAME_[#####].tif').as_posix()))
-    result=mutation_call(c,'ae_exec',{'code':code,'checkpoint_label':'before-fulltext-native-render','timeout_sec':600},output,630)
-    write(output/'native-render.json',result);native=json.loads(result['content'])
-    if native['done'] is not True:raise ValueError('Native render incomplete; inspect before any recovery')
+    code='''(function(){var cp=AEMCP.compById(COMP);for(var i=1;i<=app.project.renderQueue.numItems;i++)if(app.project.renderQueue.item(i).render&&app.project.renderQueue.item(i).status===RQItemStatus.QUEUED)throw new Error('Unrelated queued render');var q=app.project.renderQueue.items.add(cp),o=q.outputModule(1),preset=null;for(var j=0;j<o.templates.length;j++)if(o.templates[j].indexOf('TIFF')!==-1){preset=o.templates[j];break;}if(!preset)throw new Error('Native TIFF required');o.applyTemplate(preset);o.file=new File(DEST);q.timeSpanStart=START;q.timeSpanDuration=5;app.project.save();app.setMultiFrameRenderingConfig(false,100);var begin=(new Date()).getTime();app.project.renderQueue.render();app.project.save();return JSON.stringify({done:q.status===RQItemStatus.DONE,comp_id:cp.id,start:q.timeSpanStart,duration:q.timeSpanDuration,preset:preset,render_ms:(new Date()).getTime()-begin});})();'''
+    # Four contiguous native spans stay within the public execution timeout.
+    # Render at full resolution; join frames without changing cadence or timing.
+    segments=[]
+    for first in (0,120,240,360):
+        part=output/('native-part-'+str(first).zfill(5));part.mkdir(exist_ok=False)
+        script=code.replace('COMP',str(identity['comp_id'])).replace('DEST',json.dumps((part/'FRAME_[#####].tif').as_posix())).replace('START',str(first/24))
+        result=mutation_call(c,'ae_exec',{'code':script,'checkpoint_label':'before-fulltext-native-render-'+str(first),'timeout_sec':600},output,630)
+        write(output/('native-render-'+str(first).zfill(5)+'.json'),result);segment=json.loads(result['content'])
+        chunk_paths=sorted(part.glob('*.tif'));validate_render_chunk(segment,chunk_paths,first,120,identity['comp_id'])
+        transfers=[(path,folder/('FRAME_'+str(first+i).zfill(5)+'.tif')) for i,path in enumerate(chunk_paths)]
+        for source,target in transfers:
+            if (source.resolve().parent!=part.resolve() or target.resolve().parent!=folder.resolve()
+                    or not source.resolve().is_relative_to(relay.LOCAL) or not target.resolve().is_relative_to(relay.LOCAL)
+                    or target.exists()):raise ValueError('Unsafe generated native frame transfer')
+        for source,target in transfers:shutil.move(str(source),str(target))
+        part.rmdir();segments.append(segment)
+        write(output/'native-render-segments.json',segments)
+        print(json.dumps({'native_frames_completed':first+120,'total_frames':480,'resolution':r['canvas'][:2]}),flush=True)
+    native={'done':True,'comp_id':identity['comp_id'],'start':0,'duration':20,'preset':segments[0]['preset'],
+            'render_ms':sum(s['render_ms'] for s in segments),'segments':segments,
+            'batching_reason':'public_ae_exec_timeout_limit_600s; contiguous native 5s spans'}
+    write(output/'native-render.json',{'ok':True,'contentType':'json','content':json.dumps(native)})
     paths=sorted(folder.glob('*.tif'))
     if [p.name for p in paths]!=['FRAME_'+str(i).zfill(5)+'.tif' for i in range(480)]:raise ValueError('Native frames incomplete')
     manifest={p.name:relay.file_sha(p) for p in paths};archive=output/'NATIVE_TIFF_FULLTEXT.zip'
@@ -324,7 +364,7 @@ def render(output):
     import acquisition_ab as ab
     movies={}
     for name,start,count in (('FULLTEXT_LOCATION',0,480),('FULLTEXT_FAST',0,168),('FULLTEXT_GUIDED',192,288)):
-        movies[name]=ab.encode_frames(folder,start,count,output/(name+'.mp4'))
+        movies[name]=ab.encode_frames(folder,start,count,output/(name+'.mp4'),width=r['canvas'][0],height=r['canvas'][1])
     for p in paths:
         if p.resolve().parent!=folder.resolve() or not p.resolve().is_relative_to(relay.LOCAL):raise ValueError('Unsafe generated frame path')
     for p in paths:p.unlink()

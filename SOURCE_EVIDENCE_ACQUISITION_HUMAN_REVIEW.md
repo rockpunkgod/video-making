@@ -49,6 +49,17 @@ unchanged. Astra checked the new native 2.5/15.2 s frames and complete 9.8 s
 overview: the edge defect is absent and all five paragraphs remain visible.
 This repair review does not approve the new continuous movie.
 
+The user subsequently required uniform 3840×2160 delivery. The new
+`fulltext-acquisition-r12-4k` take retains the same literal content, shot timing,
+reading path and proportions, with native 4K text, camera and lens scaling.
+Historical files stay bound to their original sizes and SHAs. Resolution does
+not transfer human approval; the new actual 4K movie needs its own feedback.
+The current 12 s Guided movie SHA is
+`0ec32619408a51924b80eb5382501c8b4a8eaa93cfa06665e7cf8c4d6e3a815f`;
+its request SHA is
+`93c7bb890bdd52084ab86833645b52bb41306659b84232060eab0cf4580d7f4e`.
+Its human review remains **PENDING**.
+
 Agent frame review and technical checks may find geometric defects. They cannot
 claim the continuous movement feels like first-person problem solving. The next
 human review must bind the actual new movie SHA and answer these questions:

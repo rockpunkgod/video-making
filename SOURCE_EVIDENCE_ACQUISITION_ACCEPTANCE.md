@@ -57,6 +57,8 @@ creative representation, not a claim to measure gaze, memory or reading speed.
    certified R12 action. It is deliberately limited to acquisition and literal
    original-word Lift. It is not a like-for-like replacement A/B for the synthetic
    sentence and does not join a real sentence to synthetic peeling.
+   Its 4K successor is `fulltext-acquisition-r12-4k`; the 1080p research file stays
+   separate. The later 4K section records the successor's actual bindings.
 
 All directories above are relative to ignored
 `local-data/method-relay-dual-pass`. Actual questions, projects, previews, movies,
@@ -109,9 +111,9 @@ holds are 3 Fast frames and 9 Guided frames. These may still feel fleeting and
 remain a human-review question. The filled hit pulse starts one native frame
 after camera settling, not during navigation. No answer, VO or music is added.
 
-## Native AE evidence
+## Native AE evidence — preserved 1080p precursor
 
-The final request version is `0.2.7`; stable spec SHA is
+The r11 precursor request version is `0.2.7`; stable spec SHA is
 `f51c5d724572955c68ba169dda51b5853364d495270c2b0394cd82c50e15ae34`.
 Native build, audit, official preview and TIFF render completed successfully.
 The render receipt records native queue DONE and 250,634 ms render time.
@@ -173,18 +175,78 @@ Executed build-template SHA:
 Separate loop receipts record literal three-repeat Fast/Guided copies, 504 and
 864 frames respectively. They retain 24 fps, no sound and no encoded slowdown.
 
+## Native 4K delivery — current take
+
+The user subsequently requested uniform 4K clarity. This increment follows
+`main@13fdb5acf4fc3b549d9adaa1d2508faae35262db`; the project-wide future horizontal
+delivery policy is [3840×2160, 16:9](docs/video-resolution.md).
+The current request is version `0.2.8`, spec SHA
+`93c7bb890bdd52084ab86833645b52bb41306659b84232060eab0cf4580d7f4e`.
+Its isolated directory is `fulltext-acquisition-r12-4k`.
+
+The saved resolution binding compares fourteen exact request fields against r11:
+source, original words/whitespace, lines, target IDs, question fragments, retained
+information, hit IDs, reading order, lift layout, director, camera design and paper
+guards. These fields and teaching semantic SHA remain unchanged. The original
+r11 project and movies retain their hashes. No older take is overwritten.
+
+AE creates a native 3840×2160 comp with `resolutionFactor=[1,1]`. Native text
+objects and world-space layout, lens, focus, filled highlight and masks scale
+together by two from the original design coordinates. The actual camera zoom is
+3900; native apertures are 3200/1600/720/60 for scan/hit/Lock/Lift. Native readbacks
+check both the 4K canvas and actual transforms, rather than accepting canvas size
+alone. Composition, lexical content, reading progression and timing are retained.
+
+Four contiguous native queue spans, 0–5/5–10/10–15/15–20 s, all finished DONE.
+This keeps each public execution within its 600 s timeout without lowering
+resolution. Each result binds the original comp, exact span and complete ordered
+frame sequence before joining. Total native render time was **417,313 ms**.
+All 480 native TIFF frames were hashed and the archive bytes verified before
+removing only this run's loose TIFF files. Encoding consumes those 4K native
+frames without resizing, drawing substitute motion or changing frame cadence.
+
+All three encoded movies fully decode at **3840×2160 / 24 fps**, with zero audio
+streams. Their exact current bindings are:
+
+| Output | Frames / duration | SHA-256 |
+| --- | --- | --- |
+| `FULLTEXT_LOCATION.mp4` | 480 / 20 s | `a5bfbe91b10af41386b99feddb4f95e510bac27bccc14eb78f65f8c62b91da00` |
+| `FULLTEXT_FAST.mp4` | 168 / 7 s | `b7e86e24a4922942d87d38b6ff855e6d30b1d81aac31183c502030079c116845` |
+| `FULLTEXT_GUIDED.mp4` | 288 / 12 s | `0ec32619408a51924b80eb5382501c8b4a8eaa93cfa06665e7cf8c4d6e3a815f` |
+
+Editable native 4K project SHA:
+`2ac1b2dd8ef8ead53590a35f9f812f54baf0691f1c82dcc0c7421316176d0b14`.
+Native 4K archive SHA:
+`e52f3e69975531aa5fbdea1ce4aeede732ef7e19bf98c45175298cdd3dbe1bcd`.
+Native frame manifest SHA:
+`fecffb6c7a26e636ad64a79e447cae5ed6755802702c4fa44d0a21795b723587`.
+Executed 4K build-template SHA:
+`d035fe3506a76bb7c3cfa776315344445e6e202e8b70e10558931bc86e7dcc11`.
+
+Separate 4K loop receipts verify three literal repeats, 504 Fast frames / 21 s
+and 864 Guided frames / 36 s. They retain 24 fps, original speed and no audio.
+
+These are new presentation/media bindings. They do not alter the frozen teaching
+binding, confer a reviewed locator action, certify a complete method relay or
+transfer earlier human approval. Current human visual review remains PENDING.
+Sound remains deferred; P2 integration and public release remain HOLD.
+
 ## Review and regression evidence
 
-All 480 encoded frames were decoded in both completed r10 and final r11.
+All 480 encoded frames were decoded in completed r10, r11 and current 4K r12.
 Nineteen chronological boards per take sample 228 positions at 24 fps around
 hit/Lock/Lift and 6 fps elsewhere, preserving original aspect ratio. Root and
 Astra inspected the r10 sequence and found the edge defect; final r11 inspection
 checks its repair and unchanged acquisition sequence separately from human
-continuous playback. Technical frame review checks complete overview, keyword-only retained
+continuous playback. For r12, root inspected six selected chronological boards
+and five original 3840×2160 encoded frames covering the complete-source overview,
+2.5/15.208/16.125 s frame edges and 19.792 s foreground Lift. No bottom-edge
+glyph return or foreground/source overlap was found in these checks.
+Technical frame review checks complete overview, keyword-only retained
 information, reading progression, delayed highlight, condition retention and
 same-object Lift. It cannot approve the feeling of first-person problem solving.
 
-The following regression run passed **76 tests**:
+The latest 4K regression run passed **79 tests**:
 
 ```powershell
 python -m unittest tests.test_source_evidence_acquisition tests.test_method_relay_dual_pass tests.test_ae_native_creative_proof
@@ -196,6 +258,8 @@ focus, question-cue continuity, hidden guides, highlight timing, complete overvi
 range-only rendering, old-request compatibility, feathered boundary coverage and
 exact new human approval for full synthetic rendering. Portable tests do not
 replace the native receipts.
+The added 4K checks reject a canvas-only conversion, half-resolution render,
+unscaled native text/camera, mismatched queue spans and missing/gapped frames.
 
 Protected input audit checks 773 pre-existing files: 769 remain byte-for-byte
 unchanged and four authorized workflow files changed. There are no missing or
