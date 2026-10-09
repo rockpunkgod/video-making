@@ -520,3 +520,32 @@ upstream, geometry and director bindings. This is not an implemented real-questi
 recognition animation. No new video, ANSWER Review, teaching fact, Registry change,
 voice or full-film integration occurs here. The user r28 revision request remains
 open; P2 integration is HOLD. Real source and media remain ignored local data.
+
+
+## Concrete upstream locating-input handoff
+
+Current main@0ab3eb4. The existing raw host-review packet and frozen q33 export
+were inspected for structured locating annotations. Both preserve only the
+existing q33 R11 interpreter action; neither contains an ordered candidate
+POS/attention classification and correspondence sequence. No teaching Markdown,
+Registry content or free solving was used to fill this missing input.
+
+A concrete local teaching_issue_candidate request is prepared at
+local-data/method-relay-dual-pass/locating-input-request-r1/upstream-locating-request.json.
+Request SHA `cb7cddf62c98af23507238843f3333def6595520ef3b0c0073e8f6dc031ca26f`.
+It binds the current asset, source/review hashes, literal question cue, literal
+hit and existing acquired evidence. It requests: the exact question locating
+keyword and classification; ordered original-passage candidate spans with
+classification/eligibility and reviewed relevance; acquired correspondence
+support; and a new frozen delivery plus current status. No candidate words or
+new classifications are proposed. Existing q33 answer/Action/Evidence/Stop/Role
+and Registry facts must remain intact; no extra method receives credit.
+
+The supplied upstream status is ACTIVE and both frozen file hashes remain
+unchanged. No Review, source update, new render, voice change or public release
+was created. Rendering the user-requested keyword-driven sequence now requires
+these upstream annotations, not further unbound video-side scaffolding. The
+user's boundary that Video OS only emits teaching_issue_candidate and does not
+automatically create teaching Review remains in force. P2 integration is HOLD;
+public_render_ready=false. The request stays local; only sanitized handoff
+status is committed.
