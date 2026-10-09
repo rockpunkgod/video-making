@@ -40,8 +40,8 @@ def render(config):
         current(config);count=min(config.get('chunk_frames',96),last-start)
         if os.name=='nt':
             from ae_production.memory_guard import available_memory
-            minimum=config.get('minimum_free_gib',12)
-            if not 12<=minimum<=20:raise ValueError('At least 12 GiB system memory reserve required')
+            minimum=config.get('minimum_free_gib',1)
+            if not 1<=minimum<=20:raise ValueError('At least 1 GiB system memory reserve required')
             if available_memory()<minimum*2**30:
                 raise RuntimeError('Low free memory; next native batch not started')
         part=out/('part-'+str(start));part.mkdir()

@@ -126,12 +126,16 @@ python -m unittest tests.test_locating_trace tests.test_locating_recognition_tim
 
 真实 r5 渲染出现 AE 导出错误与内存耗尽反馈。`purge_between_chunks` 不能保证
 3D renderer 分配完全释放；不能因此盲目循环重试或自动沿用失败回执。
-`locating_render` 在 Windows 每批开始前要求至少 12 GiB 可用物理内存。
+`locating_render` 在 Windows 每批开始前要求至少 1 GiB 可用物理内存。
 `ae_production.memory_guard` 用 Windows Job 限制新启动的原生进程树，并监测
 系统可用内存和超时；只回收自己启动的进程，不处理已存在的 Adobe 会话。
 原生 aerender 的短区间独立实例实验结果另行记录，未经帧核验不视为 render PASS。
 
-用户指出 8 GiB 停止线仍过于激进后，当前保护规则收紧：系统可用物理内存
-至少 12 GiB；新启动进程树内存预算最多 10 GiB。低于余量线禁止启动下一批，
-受保护进程运行期间低于线则终止其自己启动的进程树。显式配置 8 GiB/14 GiB
-也会被拒绝，不靠默认值覆盖旧危险配置。阈值不是已证明的稳定性修复。
+当前保护规则按用户明确配置：系统可用物理内存至少 1 GiB；新启动进程树
+内存预算最多 10 GiB。低于余量线禁止启动下一批，受保护进程运行期间
+低于线则终止其自己启动的进程树。显式配置低于 1 GiB 或超过 10 GiB
+进程预算会被拒绝。阈值不是已证明的稳定性修复。
+
+最新用户指令覆盖此前 12 GiB 方案：当前系统可用物理内存停止线为 1 GiB，
+启动前与运行中使用同一阈值。新进程树上限仍为 10 GiB，未解除超时、
+工程保护或当前上游状态核验。12/8 GiB 记录保留为历史，不是当前默认值。

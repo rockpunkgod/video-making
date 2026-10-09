@@ -10,12 +10,12 @@ from ae_production.memory_guard import guarded_run
 class MemoryGuardTests(unittest.TestCase):
     def test_invalid_limits_are_rejected(self):
         with self.assertRaises(ValueError):guarded_run([],None,limit_gib=30)
-        with self.assertRaises(ValueError):guarded_run([],None,minimum_free_gib=8)
+        with self.assertRaises(ValueError):guarded_run([],None,minimum_free_gib=0)
         with self.assertRaises(ValueError):guarded_run([],None,limit_gib=14)
 
     @unittest.skipUnless(os.name=='nt','native Windows job guard')
     def test_low_free_memory_never_launches_process(self):
-        with patch('ae_production.memory_guard.available_memory',return_value=2**30), \
+        with patch('ae_production.memory_guard.available_memory',return_value=2**29), \
                 patch('ae_production.memory_guard.subprocess.Popen') as launch:
             with self.assertRaises(RuntimeError):guarded_run(['unused'],None)
             launch.assert_not_called()

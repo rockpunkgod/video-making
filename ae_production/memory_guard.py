@@ -37,8 +37,8 @@ def available_memory():
     return status.free_physical
 
 
-def guarded_run(command,log_path,limit_gib=10,minimum_free_gib=12,timeout=240):
-    if (os.name!='nt' or not 4<=limit_gib<=10 or not 12<=minimum_free_gib<=20
+def guarded_run(command,log_path,limit_gib=10,minimum_free_gib=1,timeout=240):
+    if (os.name!='nt' or not 4<=limit_gib<=10 or not 1<=minimum_free_gib<=20
             or not 1<=timeout<=600):raise ValueError('Conservative explicit memory/time limits required')
     threshold=int(minimum_free_gib*2**30)
     initial=available_memory()
