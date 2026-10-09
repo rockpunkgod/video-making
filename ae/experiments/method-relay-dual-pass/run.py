@@ -179,7 +179,33 @@ def voice_slots(request=None):
     return [dict(v, start=t) for v, t in zip(f['voice'], (15.75, 20, 26.25, 31, 40))]
 
 
-def make_request(output, phase):
+def acquisition_plan(request):
+    """Astra-directed attention path, bound to supplied literal spans only."""
+    if request['phase'] != 'full' or 'locate_geometry' not in request:
+        raise ValueError('Acquisition v0.2 requires the complete literal-cue dual proof')
+    stages = ('target', 'enter', 'browse', 'hit', 'confirm')
+    fast = ([1.5,2.25], [2.25,2.625], [2.625,2.875], [2.875,3], [3,3.2])
+    guided = ([16,16.875], [16.875,17.5], [17.5,18.125], [18.125,18.5], [18.5,19.125])
+    return {'version':'0.2.0','decision_author':'astra_creative_advice','second_reviewer':'root',
+        'authority':'supplied_visual_location_not_reader_performance_measurement',
+        'cue_refs':{k:dict(v,text_sha=sha(v['text'])) for k,v in request['fixture']['locate_cues'].items()},
+        'passes':[dict(kind=kind, **dict(zip(stages, times)),
+            settle=[times[-1][1],p['locate'][1]],lift=p['lift'],
+            context_retire=[times[3][0],times[-1][1]])
+            for kind,times,p in zip(('fast','guided'),(fast,guided),request['passes'])],
+        'complete_fast_action':[1.5,12.5], 'duration_changed':False,
+        'transcript_changed':False, 'source_objects_replaced':False,
+        'public_render_ready':False}
+
+
+def validate_acquisition(request):
+    if request.get('native_acquisition_geometry') and 'source_acquisition' not in request:
+        raise ValueError('Native acquisition geometry requires its literal-cue director')
+    if 'source_acquisition' in request and request['source_acquisition'] != acquisition_plan(request):
+        raise ValueError('Exact literal-cue and ordered acquisition director binding required')
+
+
+def make_request(output, phase, acquisition_v2=False):
     from PIL import ImageFont
     f = validate_fixture(read(HERE/'synthetic-relay.json'))
     font = ImageFont.truetype(f['font']['english_file'], f['font']['size'])
@@ -215,12 +241,16 @@ def make_request(output, phase):
             'stem_width':float(stem_font.getlength(a['text'])),
             'source_x':190+float(font.getlength(f['sentence'][:b['start']])),
             'source_width':float(font.getlength(b['text']))}
+    if acquisition_v2:
+        request['source_acquisition']=acquisition_plan(request)
+        request['native_acquisition_geometry']=True
     request['spec_sha'] = sha({k:v for k,v in request.items() if k != 'project'})
     return request
 
 
 def current(output):
     r = read(output/'request.json'); validate_fixture(r['fixture'])
+    validate_acquisition(r)
     if (r['fixture_sha'] != sha(r['fixture']) or r['trajectory_sha'] != sha(r['fixture']['trace'])
             or r['spec_sha'] != sha({k:v for k,v in r.items() if k not in ('project','spec_sha')})
             or file_sha(output/'executed-template.jsx') != r['template_sha']
@@ -250,11 +280,11 @@ def require_p0(output):
             'movie_sha':receipt['output_sha'],'project_sha':receipt['project_sha']}
 
 
-def build(output, phase, p0=None):
+def build(output, phase, p0=None, acquisition_v2=False):
     proof=require_p0(p0) if phase=='full' and p0 is not None else None
     if phase=='full' and proof is None:raise ValueError('Supply the completed P0 relay before building the dual pass')
     output = local(output); output.mkdir(parents=True, exist_ok=False)
-    r = make_request(output, phase)
+    r = make_request(output, phase, acquisition_v2)
     if proof is not None:
         r['p0_proof']=proof;r['spec_sha']=sha({k:v for k,v in r.items() if k not in ('project','spec_sha')})
     write(output/'request.json', r)
@@ -289,7 +319,94 @@ def audit(output):
     return native
 
 
+def close_vectors(actual, expected, tolerance=.01):
+    return (len(actual)==len(expected) and all(math.isfinite(x) and abs(x-y)<=tolerance
+                                              for x,y in zip(actual,expected)))
+
+
+def native_acquisition_geometry(r, acquisition, handles):
+    """Cross-check toWorld against actual native glyph rects and initial transforms."""
+    g=acquisition.get('geometry') or {}
+    if (g.get('space')!='native_toWorld' or g.get('sample_time')!=0
+            or g.get('cue_refs')!=r['source_acquisition']['cue_refs']
+            or g.get('probe_retained') is not False or acquisition.get('temporary_probes')!=[]):
+        raise ValueError('Native text geometry and literal cue provenance required')
+    rects=acquisition.get('native_source_rects',[])
+    expected={o['id'] for o in r['layout']}|{'EVIDENCE_LOCATION_CUE','CONTEXT_BEFORE'}
+    if len(rects)!=len(expected) or {x['name'] for x in rects}!=expected:
+        raise ValueError('Read native glyphs and the independent highlight rectangle')
+    bounds={}
+    for row in rects:
+        box=row['rect'];offset=[0,0,0]
+        for parent in row['parents']:
+            if (not close_vectors(parent['scale'],[100,100,100]) or parent['rotation']!=0
+                    or parent['x_rotation']!=0 or parent['y_rotation']!=0):
+                raise ValueError('Initial readback must agree with the translation-only source plane')
+            offset=[a+b-c for a,b,c in zip(offset,parent['position'],parent['anchor'])]
+        bounds[row['name']]={'min':[offset[0]+box['left'],offset[1]+box['top'],offset[2]],
+                            'max':[offset[0]+box['left']+box['width'],offset[1]+box['top']+box['height'],offset[2]]}
+    for field,expected_names in (('keyword_layers',['core-verb','core-object']),
+                                 ('sentence_layers',[o['id'] for o in r['layout']])):
+        rows=g[field]
+        if [x['name'] for x in rows]!=expected_names:
+            raise ValueError('Geometry must measure the actual source objects')
+        for row in rows:
+            if row['layer_id']!=handles[row['name']] or any(not close_vectors(row[k],bounds[row['name']][k]) for k in ('min','max')):
+                raise ValueError('Stored toWorld geometry does not match native text')
+        aggregate=g['keyword' if field=='keyword_layers' else 'sentence']
+        mn=[min(x['min'][i] for x in rows) for i in range(3)]
+        mx=[max(x['max'][i] for x in rows) for i in range(3)]
+        if any(not close_vectors(aggregate[k],v) for k,v in (('min',mn),('max',mx),('center',[(a+b)/2 for a,b in zip(mn,mx)]))):
+            raise ValueError('Camera target must come from the measured glyph union')
+    marker=g['marker_after'];hit=g['keyword']
+    if any(not close_vectors(marker[k],bounds['EVIDENCE_LOCATION_CUE'][k]) for k in ('min','max')):
+        raise ValueError('Highlight readback differs from its measured shape')
+    if any(abs(marker['min'][i]-(hit['min'][i]-4))>.01 or abs(marker['max'][i]-(hit['max'][i]+4))>.01 for i in (0,1)):
+        raise ValueError('The highlight must cover the exact glyph union with a 4 px margin')
+    projections=g.get('projections',[])
+    if len(projections)!=2:
+        raise ValueError('Read native toComp projections at both acquisition handoffs')
+    for row,plan,p in zip(projections,r['source_acquisition']['passes'],r['passes']):
+        times=[plan['enter'][1],plan['hit'][1],plan['confirm'][1],p['lift'][1]]
+        if row['kind']!=p['kind'] or len(row['samples'])!=len(times):
+            raise ValueError('Projection readback missing')
+        for sample,time in zip(row['samples'],times):
+            b=sample['source']
+            if (abs(sample['time']-time)>.001 or not all(math.isfinite(v) for k in ('min','max') for v in b[k])
+                    or b['min'][0]<100 or b['max'][0]>1820 or b['min'][1]<165 or b['max'][1]>930):
+                raise ValueError('Acquisition text clips outside the readable native viewport')
+    return g
+
+
+def validate_acquisition_camera(actual, plan, hit):
+    depth=-2000 if plan['kind']=='fast' else -1940
+    for key in ('lock_camera','settled_camera'):
+        c=actual[key]
+        if (not close_vectors(c['look'],hit) or not close_vectors(c['focus'],hit)
+                or not close_vectors(c['position'],[hit[0]+30,hit[1]+15,depth])):
+            raise ValueError('Camera and focus must acquire and hold the actual keyword')
+    c=actual['lift_camera'];depth=-1960 if plan['kind']=='fast' else -1880
+    if (not close_vectors(c['position'],[820,410,depth]) or not close_vectors(c['look'],[800,420,-140])
+            or not close_vectors(c['focus'],[800,420,-140])):
+        raise ValueError('Lift must reach the accepted camera before the first word cue')
+    for key in ('lock_camera','settled_camera','lift_camera'):
+        c=actual[key];distance=math.dist(c['focus'],c['position'])
+        if (c['dof']!=1 or c['zoom']!=1950 or c['aperture']!=40 or c['focus_error']
+                or abs(c['focus_distance']-distance)>.02):
+            raise ValueError('Read actual native DOF and focus distance, without obscuring the source')
+    curves=actual.get('curves',[]);times=[plan['enter'][0],plan['enter'][1],plan['browse'][1],plan['hit'][1]]
+    if len(curves)!=3:
+        raise ValueError('Read actual camera and focus curves')
+    for keys in curves:
+        if (len(keys)!=4 or any(abs(key['time']-time)>.001 for key,time in zip(keys,times))
+                or keys[0]['out_speed']!=0 or keys[-1]['in_speed']!=0
+                or any(keys[i]['out_speed']<=0 for i in (1,2))
+                or keys[1]['out_influence']!=25 or keys[-1]['in_influence']!=70):
+            raise ValueError('Navigate must continue through Browse and decelerate into Lock')
+
+
 def validate_native(r, native):
+    validate_acquisition(r)
     if (native['spec_sha'] != r['spec_sha'] or native['trajectory_sha'] != r['trajectory_sha']
             or native['canvas'] != [1920,1080,24,r['duration']]
             or native['renderer'] != 'ADBE Advanced 3d'
@@ -353,6 +470,52 @@ def validate_native(r, native):
         w=guide['emphasis']['window'];times=[w[0]+.25,(w[0]+w[1])/2,w[1]-.25]
         if len(samples)!=3 or any(x['opacity']<20 or abs(x['time']-t)>.001 for x,t in zip(samples,times)):
             raise ValueError('Keep actor emphasis across the supplied spoken phrase window')
+    if 'source_acquisition' in r:
+        a=native.get('source_acquisition')
+        if not a or a['version']!='0.2.0' or len(a['passes'])!=2:
+            raise ValueError('Read the actual acquisition states, not just the intended timeline')
+        geometry=native_acquisition_geometry(r,a,handles) if r.get('native_acquisition_geometry') else None
+        for actual,plan in zip(a['passes'],r['source_acquisition']['passes']):
+            if actual['kind']!=plan['kind'] or actual['pre_hit']['source_mark']!=0 or actual['pre_hit']['sentence_scope']!=0:
+                raise ValueError('Source evidence cannot be marked before the directed hit')
+            if any(c['opacity']<99.9 or c['font_size']!=40 or c['z']!=0 for c in actual['pre_hit']['contexts']):
+                raise ValueError('Do not preselect evidence by degrading its context')
+            if actual['hit']['source_mark']<15 or actual['hit']['sentence_scope']!=0:
+                raise ValueError('Word-group hit precedes whole-sentence confirmation')
+            if actual['confirm']['sentence_scope']<40 or actual['confirm']['reader_guide']!=0:
+                raise ValueError('Reading guide must hand off to the acquired sentence')
+            center=r['locate_geometry']['source_x']+r['locate_geometry']['source_width']/2
+            end=r['layout'][-1]['x']+r['layout'][-1]['width']
+            left,y=190,472
+            if geometry:
+                center=geometry['keyword']['center'][0];left=geometry['sentence']['min'][0]
+                end=geometry['sentence']['max'][0];y=geometry['sentence']['max'][1]+9
+                validate_acquisition_camera(actual,plan,geometry['keyword']['center'])
+            if (len(actual['scope_start'])!=2 or len(actual['scope_end'])!=2
+                    or any(not close_vectors(v,[center,y]) for v in actual['scope_start'])
+                    or any(not close_vectors(v,expected) for v,expected in zip(actual['scope_end'],[[left,y],[end,y]]))):
+                raise ValueError('Confirm the whole original sentence outward from the literal hit')
+            if any(c['font_size']!=32 or abs(c['opacity']-15)>.001 or abs(c['z']-expected)>.001
+                   for c,expected in zip(actual['confirm']['contexts'],(130,180))):
+                raise ValueError('Context must converge to the accepted later composition')
+            if actual['peel']['source_mark']!=0 or actual['peel']['reader_guide']!=0 or actual['peel']['sentence_scope']!=0:
+                raise ValueError('Search markings must not compete with the first peel')
+        restoration=a['rewind_restore']
+        if (len(restoration)!=2 or any(x['opacity']!=100 or x['font_size']!=40 or x['z']!=0
+                                      for x in restoration)):
+            raise ValueError('Restore the new unselected source context before Guided')
+        if any(a['rewind_marks'][k]!=0 for k in ('source_mark','sentence_scope','reader_guide')):
+            raise ValueError('Clear acquisition markings before Guided')
+        if (len(a['focus_restore'])!=2 or [x['name'] for x in a['focus_restore']]!=['FOCUS_TARGET','GUIDED_CAMERA']
+                or any(abs(x-y)>.001 for row in a['focus_restore'] for x,y in zip(row['initial'],row['restored']))):
+            raise ValueError('Restore focus and camera direction before Guided')
+        for state in a['passes']:
+            for phase in ('pre_hit','hit','confirm','peel'):
+                if len(state[phase]['contexts'])!=2:
+                    raise ValueError('Read both contexts at each acquisition handoff')
+                for c,text in zip(state[phase]['contexts'],r['fixture']['context']):
+                    if c['text']!=text or any(value!=text for value in c['key_texts']):
+                        raise ValueError('Context styling cannot substitute source characters')
     return native
 
 
@@ -362,31 +525,65 @@ def preview(output):
     for p in r['passes']:
         times += [p['locate'][1],p['lift'][1],p['peel_a'][2],p['peel_a'][4],p['peel_b'][4],p['align'][1],p['compare'][1],p['verify'][1]]
     if len(times)>16: times=times[1:]
+    if 'source_acquisition' in r:
+        times=[]
+        for a,p in zip(r['source_acquisition']['passes'],r['passes']):
+            times += [a['target'][0]+.3,a['enter'][0]+.05,a['enter'][1]-.02,a['browse'][1]-.02,
+                      a['hit'][1]-.02,sum(a['confirm'])/2,sum(p['lift'])/2,p['peel_b'][4]+.15]
     result = c.call('ae_previewFrame', {'comp_id':str(identity['comp_id']), 'times':times,
         'layout':'grid', 'grid_max_side':2048, 'out_dir':str(folder)}, timeout=180)
     # Never print inline base64; paths and native capture receipt are sufficient.
     write(output/'preview.json', result); return result
 
 
+ACQUISITION_RANGES={'FAST_ACQUISITION':(36,150),'GUIDED_ACQUISITION':(384,625)}
+
+
+def render_span(r,label):
+    if label in ACQUISITION_RANGES:
+        if not r.get('native_acquisition_geometry'):
+            raise ValueError('Acquisition P0 ranges require the geometry-bound v0.2 request')
+        start,end=ACQUISITION_RANGES[label]
+        return {'start':start/24,'duration':(end-start)/24,'frame_range':[start,end],'frames':end-start}
+    if label != ('P0' if r['phase']=='p0' else 'DUAL'):
+        raise ValueError('Exact directed complete phase or acquisition P0 range required')
+    return {'start':0,'duration':r['duration'],'frame_range':[0,round(r['duration']*24)],'frames':round(r['duration']*24)}
+
+
+def require_acquisition_review(output,r,label):
+    if not r.get('native_acquisition_geometry') or label in ACQUISITION_RANGES:
+        return
+    review=read(output/'acquisition-human-review.json')
+    expected={}
+    for key in ACQUISITION_RANGES:
+        receipt=read(output/('render-receipt-'+key+'.json'))
+        if receipt['spec_sha']!=r['spec_sha'] or file_sha(receipt['output'])!=receipt['output_sha']:
+            raise ValueError('Human review requires the current P0 movies')
+        expected[key]=receipt['output_sha']
+    if (review.get('spec_sha')!=r['spec_sha'] or review.get('reviewer_type')!='human'
+            or review.get('status')!='PASS' or not review.get('feedback')
+            or review.get('p0_clip_shas')!=expected):
+        raise ValueError('P2 requires explicit human visual approval bound to both new P0 movies')
+
+
 def render(output, label='P0'):
     r = current(output); audit(output); identity = read(output/'identity.json'); c = client()
-    if label != ('P0' if r['phase']=='p0' else 'DUAL'):
-        raise ValueError('Exact complete-phase render label required')
+    span=render_span(r,label);require_acquisition_review(output,r,label)
     target=output/(label+'.mp4'); frames=output/('frames-'+label)
     if target.exists() or frames.exists(): raise FileExistsError('Never overwrite a previous film')
     frames.mkdir()
-    code='''(function(){var cp=AEMCP.compById(COMP);for(var i=1;i<=app.project.renderQueue.numItems;i++){var e=app.project.renderQueue.item(i);if(e.render&&e.status===RQItemStatus.QUEUED)throw new Error('Unrelated queued render');}var q=app.project.renderQueue.items.add(cp),o=q.outputModule(1),preset=null;for(var j=0;j<o.templates.length;j++)if(o.templates[j].indexOf('TIFF')!==-1){preset=o.templates[j];break;}if(!preset)throw new Error('Native TIFF unavailable');o.applyTemplate(preset);o.file=new File(DEST);q.timeSpanStart=0;q.timeSpanDuration=DURATION;app.project.save();app.setMultiFrameRenderingConfig(false,100);var begin=(new Date()).getTime();app.project.renderQueue.render();app.project.save();return JSON.stringify({done:q.status===RQItemStatus.DONE,renderer:cp.renderer,preset:preset,render_ms:(new Date()).getTime()-begin,comp_id:cp.id});})();'''
-    code=code.replace('COMP',str(identity['comp_id'])).replace('DEST',json.dumps((frames/'FRAME_[#####].tif').as_posix())).replace('DURATION',str(r['duration']))
+    code='''(function(){var cp=AEMCP.compById(COMP);for(var i=1;i<=app.project.renderQueue.numItems;i++){var e=app.project.renderQueue.item(i);if(e.render&&e.status===RQItemStatus.QUEUED)throw new Error('Unrelated queued render');}var q=app.project.renderQueue.items.add(cp),o=q.outputModule(1),preset=null;for(var j=0;j<o.templates.length;j++)if(o.templates[j].indexOf('TIFF')!==-1){preset=o.templates[j];break;}if(!preset)throw new Error('Native TIFF unavailable');o.applyTemplate(preset);o.file=new File(DEST);q.timeSpanStart=START;q.timeSpanDuration=DURATION;app.project.save();app.setMultiFrameRenderingConfig(false,100);var begin=(new Date()).getTime();app.project.renderQueue.render();app.project.save();return JSON.stringify({done:q.status===RQItemStatus.DONE,renderer:cp.renderer,preset:preset,render_ms:(new Date()).getTime()-begin,comp_id:cp.id,start:q.timeSpanStart,duration:q.timeSpanDuration});})();'''
+    code=code.replace('COMP',str(identity['comp_id'])).replace('DEST',json.dumps((frames/'FRAME_[#####].tif').as_posix())).replace('START',str(span['start'])).replace('DURATION',str(span['duration']))
     # Native render resets Undo; a surrounding Undo group can cause a modal.
     native = mutation_call(c,'ae_exec',{'code':code,
         'checkpoint_label':'before-relay-render-'+label,'timeout_sec':600},output,630)
-    write(output/'native-render.json',native)
+    write(output/('native-render-'+label+'.json' if label in ACQUISITION_RANGES else 'native-render.json'),native)
     return package_render(output,label,json.loads(native['content']))
 
 
 def finish(output,label,recovery_id):
     """Reconcile a completed queue after an official uncertain dispatch. Never rerender."""
-    r=current(output);failure=read(output/'last-mutation-failure.json')
+    r=current(output);span=render_span(r,label);require_acquisition_review(output,r,label);failure=read(output/'last-mutation-failure.json')
     if (not recovery_id or failure['tool']!='ae_exec'
             or failure['result'].get('recoveryId')!=recovery_id):
         raise ValueError('Use the exact issued recovery ID from the recorded render failure')
@@ -396,24 +593,27 @@ def finish(output,label,recovery_id):
     identity=read(output/'identity.json');c=client()
     code='''(function(){var cp=AEMCP.compById(COMP),q=null,expected=new File(PROJECT),dir=new Folder(DIR);
     if(!app.project.file||app.project.file.fsName!==expected.fsName||JSON.parse(cp.comment).spec_sha!==SPEC)throw new Error('Wrong frozen project');
-    for(var i=1;i<=app.project.renderQueue.numItems;i++){var candidate=app.project.renderQueue.item(i);if(candidate.comp.id===cp.id&&candidate.status===RQItemStatus.DONE&&Math.abs(candidate.timeSpanStart)<.0001&&Math.abs(candidate.timeSpanDuration-DURATION)<.0001&&candidate.outputModule(1).file.parent.fsName===dir.fsName)q=candidate;}
+    for(var i=1;i<=app.project.renderQueue.numItems;i++){var candidate=app.project.renderQueue.item(i);if(candidate.comp.id===cp.id&&candidate.status===RQItemStatus.DONE&&Math.abs(candidate.timeSpanStart-START)<.0001&&Math.abs(candidate.timeSpanDuration-DURATION)<.0001&&candidate.outputModule(1).file.parent.fsName===dir.fsName)q=candidate;}
     if(!q)throw new Error('No completed native queue matching frozen frames');app.project.save(expected);
-    return JSON.stringify({done:true,renderer:cp.renderer,preset:null,render_ms:null,comp_id:cp.id,output_module_file:q.outputModule(1).file.fsName,reconciled_completed_queue:true,no_rerender:true});})();'''
+    return JSON.stringify({done:true,renderer:cp.renderer,preset:null,render_ms:null,comp_id:cp.id,start:q.timeSpanStart,duration:q.timeSpanDuration,output_module_file:q.outputModule(1).file.fsName,reconciled_completed_queue:true,no_rerender:true});})();'''
     for key,value in {'COMP':str(identity['comp_id']),'PROJECT':json.dumps(Path(r['project']).as_posix()),
-                      'DIR':json.dumps(frames.as_posix()),'SPEC':json.dumps(r['spec_sha']),'DURATION':str(r['duration'])}.items():
+                      'DIR':json.dumps(frames.as_posix()),'SPEC':json.dumps(r['spec_sha']),'START':str(span['start']),'DURATION':str(span['duration'])}.items():
         code=code.replace(key,value)
     result=mutation_call(c,'ae_execRecover',{'recoveryId':recovery_id,'retryMode':'continue',
         'code':code,'undo_group_name':'Reconcile completed Method Relay render','timeout_sec':90},output,120)
-    write(output/'native-render.json',result);audit(output)
+    write(output/('native-render-'+label+'.json' if label in ACQUISITION_RANGES else 'native-render.json'),result);audit(output)
     return package_render(output,label,json.loads(result['content']))
 
 
 def package_render(output,label,rendered):
     r=current(output);target=output/(label+'.mp4');frames=output/('frames-'+label)
-    if label != ('P0' if r['phase']=='p0' else 'DUAL') or target.exists():
-        raise ValueError('Package the correct complete phase without overwriting a movie')
+    span=render_span(r,label);require_acquisition_review(output,r,label)
+    if target.exists():raise ValueError('Package without overwriting a previous movie')
+    if label in ACQUISITION_RANGES and (abs(rendered.get('start',-1)-span['start'])>.0001
+            or abs(rendered.get('duration',-1)-span['duration'])>.0001):
+        raise ValueError('Native queue must render the exact directed P0 frame range')
     paths=sorted(frames.glob('*.tif'))
-    expected=round(r['duration']*24); matches=[re.fullmatch(r'(.*?)(\d+)\.tif',p.name) for p in paths]
+    expected=span['frames']; matches=[re.fullmatch(r'(.*?)(\d+)\.tif',p.name) for p in paths]
     if (not rendered['done'] or len(paths)!=expected or any(x is None for x in matches)):
         raise ValueError('Incomplete native frame sequence')
     first=int(matches[0][2])
@@ -430,25 +630,29 @@ def package_render(output,label,rendered):
         for name,expected_sha in manifest.items():
             with z.open(name) as f:
                 if hashlib.file_digest(f,'sha256').hexdigest()!=expected_sha: raise ValueError('Native archive mismatch')
-    write(output/'native-frame-shas.json',manifest)
+    manifest_file=output/('native-frame-shas-'+label+'.json' if label in ACQUISITION_RANGES else 'native-frame-shas.json')
+    write(manifest_file,manifest)
     for p in paths:
         if p.resolve().parent!=frames.resolve() or not p.resolve().is_relative_to(LOCAL): raise ValueError('Unsafe generated frame path')
     for p in paths:p.unlink()
     receipt={'kind':'synthetic_native_method_relay','phase':r['phase'],'spec_sha':r['spec_sha'],
         'trajectory_sha':r['trajectory_sha'],'project':str(snapshot),'project_sha':file_sha(snapshot),
-        'output':str(target),'output_sha':file_sha(target),'duration':r['duration'],'frames':expected,
-        'native':rendered,'archive_sha':file_sha(archive),'frame_manifest_sha':file_sha(output/'native-frame-shas.json'),
+        'output':str(target),'output_sha':file_sha(target),'duration':span['duration'],'frames':expected,
+        'absolute_span':[span['start'],span['start']+span['duration']],'frame_range':span['frame_range'],
+        'native':rendered,'archive_sha':file_sha(archive),'frame_manifest_sha':file_sha(manifest_file),
         'human_viewing_review':'PENDING','production_eligible':False,'public_render_ready':False}
-    write(output/'render-receipt.json',receipt);return receipt
+    receipt_file=output/('render-receipt-'+label+'.json' if label in ACQUISITION_RANGES else 'render-receipt.json')
+    write(receipt_file,receipt);return receipt
 
 
 def main():
     p=argparse.ArgumentParser(description=__doc__);p.add_argument('operation',choices=('build','audit','preview','render','finish'))
-    p.add_argument('output');p.add_argument('--phase',choices=('p0','full'),default='p0');p.add_argument('--label',choices=('P0','DUAL'),default='P0')
+    p.add_argument('output');p.add_argument('--phase',choices=('p0','full'),default='p0');p.add_argument('--label',choices=('P0','DUAL',*ACQUISITION_RANGES),default='P0')
     p.add_argument('--p0',help='Completed native P0 directory; required for full assembly')
+    p.add_argument('--acquisition-v2',action='store_true',help='Independent v0.2 source evidence acquisition director')
     p.add_argument('--recovery-id',help='Exact server-issued render failure ID; finish reconciles existing DONE queue only')
     a=p.parse_args();output=local(a.output)
-    if a.operation=='build':result=build(output,a.phase,a.p0)
+    if a.operation=='build':result=build(output,a.phase,a.p0,a.acquisition_v2)
     elif a.operation=='render':result=render(output,a.label)
     elif a.operation=='finish':result=finish(output,a.label,a.recovery_id)
     else:result=globals()[a.operation](output)

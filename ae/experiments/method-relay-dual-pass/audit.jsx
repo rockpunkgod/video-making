@@ -58,6 +58,55 @@
     }
     var task=cp.layer('ORIGINAL_QUESTION'),question={native_layer_id:task.id,text:task.property('Source Text').value.text,source_text_keys:task.property('Source Text').numKeys};
     var guidance=null;
+    var acquisition=null;
+    if(R.source_acquisition){
+        function contexts(t){var rows=[],ns=['CONTEXT_BEFORE','CONTEXT_AFTER'];
+            for(var k=0;k<ns.length;k++){var l=cp.layer(ns[k]),d=l.property('Source Text').valueAtTime(t,false),texts=[];
+                for(var j=1;j<=l.property('Source Text').numKeys;j++)texts.push(l.property('Source Text').keyValue(j).text);
+                rows.push({name:ns[k],text:d.text,native_layer_id:l.id,font_size:d.fontSize,color:d.fillColor,
+                    opacity:l.transform.opacity.valueAtTime(t,false),z:l.transform.position.valueAtTime(t,false)[2],key_texts:texts});}return rows;}
+        function marks(t){return {source_mark:cp.layer('EVIDENCE_LOCATION_CUE').transform.opacity.valueAtTime(t,false),
+            sentence_scope:cp.layer('LOCATED_SENTENCE').transform.opacity.valueAtTime(t,false),
+            reader_guide:cp.layer('SOURCE_READING_GUIDE').transform.opacity.valueAtTime(t,false),contexts:contexts(t)};}
+        acquisition={version:'0.2.0',passes:[],rewind_restore:contexts(R.rewind[1]),rewind_marks:marks(R.rewind[1]),focus_restore:[]};
+        function curve(prop,t){var k=prop.nearestKeyIndex(t);if(Math.abs(prop.keyTime(k)-t)>.0001)throw new Error('Missing acquisition curve key');
+            var a=prop.keyInTemporalEase(k)[0],b=prop.keyOutTemporalEase(k)[0];
+            return {time:t,in_speed:a.speed,out_speed:b.speed,in_influence:a.influence,out_influence:b.influence};}
+        function cameraState(t){var camera=cp.layer('GUIDED_CAMERA'),opt=camera.property('ADBE Camera Options Group');
+            return {time:t,position:camera.transform.position.valueAtTime(t,false),look:camera.transform.pointOfInterest.valueAtTime(t,false),
+                focus:cp.layer('FOCUS_TARGET').transform.position.valueAtTime(t,false),
+                focus_distance:opt.property('ADBE Camera Focus Distance').valueAtTime(t,false),focus_error:opt.property('ADBE Camera Focus Distance').expressionError,
+                aperture:opt.property('ADBE Camera Aperture').valueAtTime(t,false),dof:opt.property('ADBE Camera Depth of Field').valueAtTime(t,false),
+                zoom:opt.property('ADBE Camera Zoom').valueAtTime(t,false)};}
+        if(R.native_acquisition_geometry){
+            acquisition.geometry=binding.acquisition_geometry;
+            acquisition.native_source_rects=[];acquisition.temporary_probes=[];
+            var ns=[];for(var k=0;k<R.layout.length;k++)ns.push(R.layout[k].id);ns=ns.concat(['EVIDENCE_LOCATION_CUE','CONTEXT_BEFORE']);
+            for(var k=0;k<ns.length;k++){
+                var l=cp.layer(ns[k]),r=l.sourceRectAtTime(0,false),parents=[],p=l;
+                while(p){parents.push({name:p.name,position:p.transform.position.valueAtTime(0,false),anchor:p.transform.anchorPoint.valueAtTime(0,false),
+                    scale:p.transform.scale.valueAtTime(0,false),rotation:p.transform.zRotation.valueAtTime(0,false),
+                    x_rotation:p.transform.xRotation.valueAtTime(0,false),y_rotation:p.transform.yRotation.valueAtTime(0,false)});p=p.parent;}
+                acquisition.native_source_rects.push({name:l.name,layer_id:l.id,rect:{left:r.left,top:r.top,width:r.width,height:r.height},parents:parents});
+            }
+            for(var k=1;k<=cp.numLayers;k++)if(cp.layer(k).name==='TEMP_GEOMETRY_PROBE')acquisition.temporary_probes.push(cp.layer(k).id);
+        }
+        for(var i=0;i<R.source_acquisition.passes.length;i++){
+            var a=R.source_acquisition.passes[i],path=cp.layer('LOCATED_SENTENCE').property('ADBE Root Vectors Group').property(1).property('ADBE Vectors Group').property('ADBE Vector Shape - Group').property('ADBE Vector Shape');
+            var row={kind:a.kind,pre_hit:marks(a.hit[0]-1/24),hit:marks(a.hit[1]),
+                confirm:marks(a.confirm[1]),peel:marks(R.passes[i].peel_a[0]),
+                scope_start:path.valueAtTime(a.confirm[0],false).vertices,scope_end:path.valueAtTime(a.confirm[1],false).vertices};
+            if(R.native_acquisition_geometry){
+                row.lock_camera=cameraState(a.hit[1]);row.settled_camera=cameraState(a.settle[1]);row.lift_camera=cameraState(R.passes[i].lift[1]);
+                row.curves=[];var props=[cp.layer('GUIDED_CAMERA').transform.position,cp.layer('GUIDED_CAMERA').transform.pointOfInterest,cp.layer('FOCUS_TARGET').transform.position],times=[a.enter[0],a.enter[1],a.browse[1],a.hit[1]];
+                for(var k=0;k<props.length;k++){var keys=[];for(var j=0;j<times.length;j++)keys.push(curve(props[k],times[j]));row.curves.push(keys);}
+            }
+            acquisition.passes.push(row);
+        }
+        var fp=[['FOCUS_TARGET','ADBE Position'],['GUIDED_CAMERA','ADBE Point of Interest']];
+        for(var i=0;i<fp.length;i++){var l=cp.layer(fp[i][0]),p=i===0?l.transform.position:l.transform.pointOfInterest;
+            acquisition.focus_restore.push({name:fp[i][0],property:fp[i][1],initial:p.valueAtTime(0,false),restored:p.valueAtTime(R.rewind[1],false)});}
+    }
     if(R.phase==='full'&&R.fixture.guided_method_copy){
         var g=R.fixture.guided_method_copy,fast=null,guided=null;
         for(var i=0;i<R.passes.length;i++){if(R.passes[i].kind==='fast')fast=R.passes[i];if(R.passes[i].kind==='guided')guided=R.passes[i];}
@@ -71,5 +120,5 @@
         var mark=cp.layer('DIFFERENCE_'+g.emphasis.object_id),w=g.emphasis.window,times=[w[0]+.25,(w[0]+w[1])/2,w[1]-.25];
         for(var i=0;i<times.length;i++)guidance.subject_emphasis.push({time:times[i],opacity:mark.transform.opacity.valueAtTime(times[i],false)});
     }
-    return JSON.stringify({spec_sha:binding.spec_sha,trajectory_sha:binding.trajectory_sha,canvas:[cp.width,cp.height,cp.frameRate,cp.duration],question:question,objects:objects,passes:passes,rewind_restore:restored,name_counts:names,visible_internal_method_ids:visibleIds,renderer:cp.renderer,method_guidance:guidance,production_eligible:binding.production_eligible,public_render_ready:binding.public_render_ready});
+    return JSON.stringify({spec_sha:binding.spec_sha,trajectory_sha:binding.trajectory_sha,canvas:[cp.width,cp.height,cp.frameRate,cp.duration],question:question,objects:objects,passes:passes,rewind_restore:restored,name_counts:names,visible_internal_method_ids:visibleIds,renderer:cp.renderer,method_guidance:guidance,source_acquisition:acquisition,production_eligible:binding.production_eligible,public_render_ready:binding.public_render_ready});
 })();

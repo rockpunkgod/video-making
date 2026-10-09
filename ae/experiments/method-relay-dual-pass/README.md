@@ -105,3 +105,71 @@ Tests exercise binding, protected spans, deferred work, predecessor outputs,
 native object substitution, alignment, replay restoration and exact pending voice
 delivery. Portable unit fixtures are not evidence that Adobe rendered successfully.
 See the acceptance report for the actual local render/export receipts and limits.
+
+## Source Evidence Acquisition 0.2
+
+The acquisition experiment remains P0/P1, separate from full-film integration.
+The first silent A/B keeps the accepted 0.1.1 picture as A, and renders only
+native Fast/Guided acquisition ranges for B. `acquisition_ab.py` verifies the old
+user-feedback → Premiere picture-preservation → native TIFF archive chain before
+encoding comparisons at the same absolute frame times. It never manufactures A
+from an unapproved newer take or slows an encoded movie.
+
+```powershell
+python ae/experiments/method-relay-dual-pass/run.py build local-data/method-relay-dual-pass/acquisition-next --phase full --p0 <completed-p0> --acquisition-v2
+python ae/experiments/method-relay-dual-pass/run.py render local-data/method-relay-dual-pass/acquisition-next --label FAST_ACQUISITION
+python ae/experiments/method-relay-dual-pass/run.py render local-data/method-relay-dual-pass/acquisition-next --label GUIDED_ACQUISITION
+python ae/experiments/method-relay-dual-pass/acquisition_ab.py <accepted-native-directory> local-data/method-relay-dual-pass/acquisition-next <fresh-comparison-directory> --accepted-pr <accepted-pr-directory> --review <exact-old-user-feedback.json>
+```
+
+The user requested entry into the **complete original passage**, then clarified
+that the picture should represent the solver's current attention and retained
+information. The three supplied synthetic sentences cannot stand in for a full
+article. Their comparisons and unchanged peel handover remain synthetic research,
+with the new B review `NEEDS_REVISION`; that feedback never approves integration.
+
+`fulltext.py` is one bounded real-source location experiment in the same module.
+It consumes an existing frozen reviewed-passage bundle and its current provided
+status. It uses an already reviewed evidence span as the endpoint, not a newly
+certified locator action. There is no solver, paraphrase, new action review,
+option judgment, new method, VO, music or Premiere edit in this P0.
+
+The first frame shows the complete original question. Its three exact source
+spans join to the same frozen stem; the same keyword object remains in its
+original reading position during scanning, while the other stem spans and
+options leave the current view. The real full passage is first established in
+overview, then the camera follows actual line order from the first paragraph.
+Native depth of field carries attention; the reading cursor is an invisible
+geometry helper. There are no underlines, range marks, step labels or persistent
+lecture headings. A short filled keyword highlight follows the camera settle.
+The complete existing evidence sentence takes over the retained cue during Lift,
+using the original word layers. The source background retreats into a separate
+reading band rather than overlapping the lifted sentence.
+
+```powershell
+python ae/experiments/method-relay-dual-pass/fulltext.py build <fresh-local-data-directory> --bundle <frozen-bundle.json> --status <current-provided-status.json> --question <frozen-question-id> --question-cue <literal-stem-span> --hit-cue <literal-existing-evidence-span>
+python ae/experiments/method-relay-dual-pass/fulltext.py preview <same-directory>
+python ae/experiments/method-relay-dual-pass/fulltext.py render <same-directory>
+```
+
+Outputs are silent native-picture movies: 7 s Fast, 12 s Guided and a 20 s
+continuous research preview, together with an editable AEP, executed template,
+native glyph/identity/focus readbacks, expression audit and verified TIFF archive.
+New media and actual question material stay in ignored local data. If rendering
+fails or times out, retain the official failure evidence and inspect the native
+queue before recovery; the command refuses an existing frame directory and
+never retries a render automatically.
+
+Only the original synthetic experiment exposes a full `DUAL` render command.
+For new acquisition inputs it requires an exact new human review bound to the
+two new P0 movie hashes and spec SHA. A full-source location preview cannot
+certify a multi-method relay or splice a real sentence into synthetic peeling.
+Old visual approval, new parameter values and program PASS do not establish
+first-person experience. Human review remains PENDING and all release flags false.
+
+```powershell
+python -m unittest tests.test_source_evidence_acquisition tests.test_method_relay_dual_pass tests.test_ae_native_creative_proof
+```
+
+See `SOURCE_EVIDENCE_ACQUISITION_ACCEPTANCE.md` and
+`SOURCE_EVIDENCE_ACQUISITION_HUMAN_REVIEW.md` for the actual evidence and limits.
