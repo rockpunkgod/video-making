@@ -289,3 +289,26 @@ Native audit verifies actual baseline/depth invariance and bounded gain.
 Older completed requests retain their original attention behavior for replay.
 Silky perception still requires human visual review; technical PASS is not
 approval for full-film integration.
+
+
+### Guided camera transport revision
+
+Request 0.2.19 separates Guided lens transport from focal reading events.
+During Guided scan start through hit-settle, camera position and point of
+interest share one normalized monotonic trajectory. Six-frame quintic
+velocity ramps at entry/exit enclose a uniform-speed middle, replacing
+rowwise speed resets. The literal source, focus row handoffs, attention
+magnification, camera column/depth, endpoint views, Fast behavior and shot
+times remain unchanged. The native audit reads all 109 transport frames,
+checks actual executed poses, middle velocity and endpoint settling.
+
+This implements the camera-speed step only. Same-POS locating candidates,
+source spans and correspondence evidence must be upstream supplied before
+candidate recognition highlights can be rendered; the renderer does not
+infer grammar or synonymy. A local teaching_issue_candidate records missing
+inputs without creating any ANSWER review. Human review for the revised
+Guided output remains independent of prior Fast acceptance.
+
+After completed native rendering, transient AE caches are purged while the
+queue is idle before encoding verified frames. This limits competition for
+memory; original media, projects and frozen inputs are retained.

@@ -648,3 +648,63 @@ bound candidate spans and correspondence inputs second; trial attention
 highlights third. No new render or camera change has been executed in this
 advisory step. Full-film integration remains HOLD for the open Guided revision;
 listening remains deferred and public_render_ready=false.
+
+
+## Guided transport execution — r28 current preview
+
+Baseline main@b3e7fef. Astra recommended independent smooth lens transport
+and a later rapid-attention/slow-recognition trial. Root second review now
+implements the camera-speed part only in request 0.2.19, local isolated
+fulltext-acquisition-r28-4k. Original r27 approvals remain in their history;
+this new Guided output does not inherit visual acceptance.
+
+Guided camera position and point of interest use the integral of quintic
+velocity ramps: six frames entry, constant-speed middle, six frames exit,
+from 10.5s to the existing 15s hit-settle. Native original endpoint poses,
+column center and depth remain fixed. This removes rowwise camera-speed
+resets while retaining the independent literal line-order focal path,
+accepted small baseline-locked magnification and transparent original-word
+Lift. No shot times, total duration, source text, question cue, Evidence,
+Action, Stop, Role, voice or music are changed. Fast transport is untouched.
+
+91 portable tests pass, including monotonic bounded progression, uniform
+middle, invalid ramp durations, actual frame omissions, pose resets, depth
+change, expression error and endpoint speed. Native audit samples all 109
+transport frames and measures actual executed camera poses and velocity;
+expression validation passes. Eleven native preview samples and 24 selected
+encoded native frames are inspected. All movie streams fully decode.
+These checks establish execution, not subjective smoothness.
+
+Current frozen q33 export does not provide a reviewed sequence of same-POS
+locating-candidate spans or correspondence decisions. A local
+teaching-issue-candidate.json records these missing inputs with no proposed
+candidate words or new teaching claim. No ANSWER Review is created and no
+upstream teaching or Registry material is changed. Candidate recognition
+highlighting remains unimplemented pending explicitly supplied input; the
+new movie must not be described as that full proposed comparison sequence.
+
+Old r27 movie/project hashes and frozen bundle/status hashes verify unchanged.
+Human visual review PENDING for new Guided; P2 integration HOLD; listening
+deferred. final_voice_accepted=false, production_eligible=false,
+public_render_ready=false. Workflow, synthetic tests and sanitized evidence
+only go to GitHub; source and Adobe/media files stay ignored local data.
+
+Spec SHA: `03c35f2c02d0e8353835edc424bcd2e477e64698c3c8e5e98b265ba61aa7c783`.
+Semantic binding: `e1f06096dc5feb3238ed39e041b481579df8a30d59dabf67c3f001d4a5cd3961`.
+Measured native middle speed: 107.570872587082–107.570872587628 world pixels/s.
+Native render: 480 frames, 3840 × 2160 /24fps; 739204ms.
+
+`FULLTEXT_LOCATION.mp4`: SHA `b5b5876541ec97f7bd253403737f8e6719f90e741544de83460bf199fbc64224`.
+
+`FULLTEXT_FAST.mp4`: SHA `0433b6dbc3d2ba62cc332576e6b6d43d199a0870cd03bd8ba7503c3b025fa3d9`.
+
+`FULLTEXT_GUIDED.mp4`: SHA `8957390e4575eff694e9015df7d1969a9579bfdd8513ad3d6026d65e566a70a4`.
+
+Native AEP SHA: `b0de84689c82b9b5b17054a804b2f02167d51a341971487b03a4eb014b2a919e`.
+Executed template SHA: `7f7bbb3b9da542542f5fd99166dbb63748844d40eaedf77e2e596a19bffd02ec`.
+
+Fast output is byte-identical to the explicitly accepted r27 Fast movie
+(SHA `0433b6dbc3d2ba62cc332576e6b6d43d199a0870cd03bd8ba7503c3b025fa3d9`).
+Post-render native cache purge confirmed rendering=false before clearing
+transient caches. Native media encoding completed without another render.
+These results preserve Fast evidence and do not confer Guided human approval.

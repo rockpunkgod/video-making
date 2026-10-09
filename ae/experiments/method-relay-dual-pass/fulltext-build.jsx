@@ -155,6 +155,17 @@
         +'for(var j=0;j<3;j++){lo[j]=Math.min(lo[j],a[j],b[j]);hi[j]=Math.max(hi[j],a[j],b[j]);}}return [(lo[0]+hi[0])/2,(lo[1]+hi[1])/2,(lo[2]+hi[2])/2];})();';
     var camera=cp.layers.addCamera('GUIDED_CAMERA',[cp.width/2,cp.height/2]);camera.autoOrient=AutoOrientType.CAMERA_OR_POINT_OF_INTEREST;
     cameraKeys(camera.transform.position,cameraRows);cameraKeys(camera.transform.pointOfInterest,lookRows);
+    var guidedTransport=null;
+    if(R.guided_camera_transport){
+        var p=R.director.passes[1],cfg=R.guided_camera_transport;
+        guidedTransport={start:p.scan[0],end:p.hit_settle_end};
+        var properties=[camera.transform.position,camera.transform.pointOfInterest],names=['position','look'];
+        for(var ci=0;ci<properties.length;ci++){
+            var property=properties[ci],a=property.valueAtTime(guidedTransport.start,true),b=property.valueAtTime(guidedTransport.end,true);
+            guidedTransport[names[ci]+'_start']=a;guidedTransport[names[ci]+'_end']=b;
+            property.expression='(function(){var start='+guidedTransport.start+',end='+guidedTransport.end+';if(time<start||time>end)return value;var t=time-start,T=end-start,a='+cfg.enter_frames+'/24,b='+cfg.exit_frames+'/24,E=T-(a+b)/2;function I(u){return Math.pow(u,6)-3*Math.pow(u,5)+2.5*Math.pow(u,4);}var q=t<a?a*I(t/a)/E:(t>T-b?1-b*I((T-t)/b)/E:(t-a/2)/E);var first='+JSON.stringify(a)+',last='+JSON.stringify(b)+';return first+(last-first)*q;})();';
+        }
+    }
     var opt=camera.property('ADBE Camera Options Group');opt.property('ADBE Camera Zoom').setValue(style.zoom);opt.property('ADBE Camera Depth of Field').setValue(1);
     keys(opt.property('ADBE Camera Aperture'),apertureRows,false);opt.property('ADBE Camera Blur Level').setValue(100);
     opt.property('ADBE Camera Focus Distance').expression='var p=thisComp.layer("FOCUS_TARGET").toWorld([0,0,0]);dot(sub(p,transform.position),normalize(sub(transform.pointOfInterest,transform.position)));';
@@ -228,7 +239,7 @@
     var data={kind:R.kind,spec_sha:R.spec_sha,whole:whole,hit:hit,scope:scope,lifted:lifted,
         director:R.director,line_boxes:lineBoxes,scan_visits:visits,handles:handles,question_handles:questionHandles,
         retreat_positions:retreatPositions,background_word_scale:backgroundWordScale,lift_look:liftLook,
-        row_handoffs:handoffs,sentence_attention:attention,geometry_space:'native_sourceRect_scaled_plus_unparented_translation',new_method_certification:false,public_render_ready:false};
+        guided_camera_transport:guidedTransport,row_handoffs:handoffs,sentence_attention:attention,geometry_space:'native_sourceRect_scaled_plus_unparented_translation',new_method_certification:false,public_render_ready:false};
     var sidecar=new File(dest.parent.fsName+'/native-geometry.json');sidecar.encoding='UTF-8';sidecar.open('w');sidecar.write(JSON.stringify(data));sidecar.close();
     cp.comment=JSON.stringify({kind:R.kind,spec_sha:R.spec_sha,semantic_binding_sha:R.source.semantic_binding_sha,data_file:sidecar.fsName,public_render_ready:false});
     cp.openInViewer();app.project.save(dest);return JSON.stringify({ok:true,comp_id:cp.id,spec_sha:R.spec_sha,project:dest.fsName,data_file:sidecar.fsName});

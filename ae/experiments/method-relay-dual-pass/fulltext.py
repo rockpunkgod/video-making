@@ -96,7 +96,7 @@ def make_request(output,bundle_path,status_path,question_id,question_cue,hit_cue
     for id,start,end in (('QUESTION_PREFIX',0,cue['start']),('QUESTION_KEYWORD',cue['start'],cue['end']),('QUESTION_SUFFIX',cue['end'],len(qtext))):
         question_parts.append({'id':id,'start':start,'end':end,'text':qtext[start:end],'text_sha':sha(qtext[start:end]),
                                'position':[150+float(ImageFont.truetype(ep,34).getlength(qtext[:start])),203]})
-    r={'kind':'frozen_full_passage_location_visual_research','version':'0.2.18','source':source,
+    r={'kind':'frozen_full_passage_location_visual_research','version':'0.2.19','source':source,
         'canvas':[3840,2160,24,20],'render_scale':2,
         'motion_profile':{'version':'0.1.0','camera_lag_frames':{'fast':1,'guided':2},
             'departure_depth':24,'background_delay_frames':{'fast':1,'guided':2},
@@ -128,6 +128,8 @@ def make_request(output,bundle_path,status_path,question_id,question_cue,hit_cue
         'identity':'same_source_words','background':'transparent'}
     r['row_handoff']={'version':'0.1.0','half_frames':{'fast':1,'guided':2},
         'max_row_fraction':.5,'curve':'quintic_hermite','preserve_endpoint_velocity':True}
+    r['guided_camera_transport']={'version':'0.1.0','enter_frames':6,'exit_frames':6,
+        'curve':'integrated_quintic_velocity','scope':'guided_scan_to_hit_settle','fast_unchanged':True}
     r['spec_sha']=sha({k:v for k,v in r.items() if k not in ('project','bundle_path','status_path')})
     validate(r);return r
 
@@ -142,8 +144,8 @@ def validate(r):
                 'scan_carry_influence':22,'bounce':False,'extra_zoom':False,
                 **({'sentence_occlusion':'unadorned_bound_paper_plane','geometry_sampling':'96hz_lift_only',
                     'plane_depth_offset':20} if r.get('version')=='0.2.13' else {}),
-                **({'foreground_background':'transparent','background_clear':'fade_out_during_reflow'} if r.get('version') in ('0.2.14','0.2.15','0.2.16','0.2.17','0.2.18') else {})})
-            or r.get('version') not in ('0.2.8','0.2.9','0.2.13','0.2.14','0.2.15','0.2.16','0.2.17','0.2.18')
+                **({'foreground_background':'transparent','background_clear':'fade_out_during_reflow'} if r.get('version') in ('0.2.14','0.2.15','0.2.16','0.2.17','0.2.18','0.2.19') else {})})
+            or r.get('version') not in ('0.2.8','0.2.9','0.2.13','0.2.14','0.2.15','0.2.16','0.2.17','0.2.18','0.2.19')
             or source['answer'] is not None or source['method_certification'] is not False
             or any(r[k] is not False for k in ('final_voice_accepted','production_eligible','public_render_ready'))):
         raise ValueError('Only frozen-source visual location, without answer or release promotion')
@@ -151,14 +153,17 @@ def validate(r):
             'max_gain':{'fast':.015,'guided':.02},'enter_frames':4,'exit_frames':6,
             'curve':'quintic_smootherstep','collision_reserve':2,'identity':'same_source_words','background':'transparent'}:
         raise ValueError('Sentence attention must preserve literal groups and bounded smooth gain')
-    if r['version']=='0.2.18' and r.get('sentence_attention')!={'version':'0.2.0','groups':sentence_groups(r['words']),
+    if r['version'] in ('0.2.18','0.2.19') and r.get('sentence_attention')!={'version':'0.2.0','groups':sentence_groups(r['words']),
             'max_gain':{'fast':.008,'guided':.012},'enter_frames':8,'exit_frames':10,
             'position_mode':'baseline_locked','curve':'quintic_smootherstep','collision_reserve':2,
             'identity':'same_source_words','background':'transparent'}:
         raise ValueError('Attention must use subtle baseline-locked magnification without lift')
-    if r['version'] in ('0.2.16','0.2.17','0.2.18') and r.get('row_handoff')!={'version':'0.1.0','half_frames':{'fast':1,'guided':2},
+    if r['version'] in ('0.2.16','0.2.17','0.2.18','0.2.19') and r.get('row_handoff')!={'version':'0.1.0','half_frames':{'fast':1,'guided':2},
             'max_row_fraction':.25 if r['version']=='0.2.16' else .5,'curve':'quintic_hermite','preserve_endpoint_velocity':True}:
         raise ValueError('Row handoff must preserve velocity in a bounded focal window')
+    if r['version']=='0.2.19' and r.get('guided_camera_transport')!={'version':'0.1.0','enter_frames':6,'exit_frames':6,
+            'curve':'integrated_quintic_velocity','scope':'guided_scan_to_hit_settle','fast_unchanged':True}:
+        raise ValueError('Guided transport must preserve endpoints and accepted Fast behavior')
     reconstructed=''.join(w['gap_before']+w['text'] for w in r['words'])+r['trailing_space']
     if reconstructed!=text or any(text[w['start']:w['end']]!=w['text'] or sha(w['text'])!=w['text_sha'] for w in r['words']):
         raise ValueError('Every word and whitespace in every original paragraph must survive')
@@ -322,6 +327,8 @@ def validate_motion(r, rows):
             raise ValueError('Paper occlusion must be behind every original sentence layer')
         if r.get('motion_profile',{}).get('background_clear') and (m.get('background_opacity_before')!=28 or m.get('background_opacity_departure')!=0 or m.get('foreground_opacity_departure')!=100):
             raise ValueError('Only background may retire while transparent original sentence stays fully visible')
+        if r.get('guided_camera_transport') and p['kind']=='guided':
+            continue  # Actual expression-driven transport is audited separately.
         carries=m['camera_carries']
         if not carries or any(not k['bezier'] or k['speed']<=0 or abs(k['influence']-22)>.01 for k in carries):
             raise ValueError('Reading camera must carry nonzero velocity through interior rows')
@@ -348,12 +355,51 @@ def audit(output):
     n=json.loads(c.call('ae_exec',{'code':code})['content']);write(output/'native-audit.json',n);validate_native(r,n)
     if r.get('motion_profile'):validate_motion(r,n.get('motion',[]))
     if r.get('motion_profile',{}).get('sentence_occlusion'):validate_sentence_plane(r,n['passes'])
+    if r.get('guided_camera_transport'):validate_transport(r,n.get('guided_camera_transport'))
     if r.get('sentence_attention'):validate_attention(r,n.get('sentence_attention',[]))
     if r.get('row_handoff'):validate_handoffs(r,n.get('row_handoffs',[]))
     expr=c.call('ae_validateExpressions',{'comp_id':str(identity['comp_id']),'sample_times':[3.75,14.75,18.875,19.5],'max_results':1500})
     write(output/'expressions.json',expr)
     if not expr.get('valid') or expr.get('truncated'):raise ValueError('Native expression validation incomplete')
     return n
+
+
+
+def transport_progress(t,duration,enter,exit):
+    """Integral of smooth velocity ramps with one constant-speed middle."""
+    if duration<=0 or enter<=0 or exit<=0 or enter+exit>=duration:
+        raise ValueError('Transport ramps must fit inside a positive duration')
+    def integral(u):return u**6-3*u**5+2.5*u**4
+    t=max(0,min(duration,t));effective=duration-(enter+exit)/2
+    if t<enter:return enter*integral(t/enter)/effective
+    if t>duration-exit:return 1-exit*integral((duration-t)/exit)/effective
+    return (t-enter/2)/effective
+
+
+def validate_transport(r,row):
+    if not row or row.get('position_error') or row.get('look_error'):
+        raise ValueError('Missing actual smooth Guided camera transport')
+    p=next(p for p in r['director']['passes'] if p['kind']=='guided')
+    start=p['scan'][0];end=p['hit_settle_end'];cfg=r['guided_camera_transport']
+    if row['start']!=start or row['end']!=end or len(row['samples'])!=round((end-start)*24)+1:
+        raise ValueError('Every Guided transport frame must be audited')
+    a=cfg['enter_frames']/24;b=cfg['exit_frames']/24
+    for i,sample in enumerate(row['samples']):
+        t=start+i/24
+        if abs(sample['time']-t)>.00001:raise ValueError('Incomplete or reordered transport frames')
+        q=transport_progress(t-start,end-start,a,b)
+        for key in ('position','look'):
+            first=row[key+'_start'];last=row[key+'_end']
+            expected=[x+(y-x)*q for x,y in zip(first,last)]
+            if any(abs(x-y)>.01 for x,y in zip(expected,sample[key])):
+                raise ValueError('Camera must execute continuous bounded progression, not rowwise resets')
+            if abs(first[0]-last[0])>.01 or abs(first[2]-last[2])>.01:
+                raise ValueError('Guided scan cannot change column center or depth')
+    middle=[s['speed'] for s in row['samples'] if start+a+1/24<=s['time']<=end-b-1/24]
+    if not middle or min(middle)<=0 or max(middle)-min(middle)>.05:
+        raise ValueError('Middle transport must carry uniform actual camera speed')
+    if row['samples'][0]['speed']>.05 or row['samples'][-1]['speed']>.05:
+        raise ValueError('Camera must settle smoothly at transport endpoints')
 
 
 def validate_attention(r,rows):
@@ -379,7 +425,7 @@ def validate_handoffs(r,rows):
     if [(h['kind'],h['from_line'],h['to_line']) for h in rows]!=expected:
         raise ValueError('Every visited row boundary needs a native focal handoff')
     for h in rows:
-        if r.get('version') in ('0.2.17','0.2.18') and (h['start']>h['original_return_start']+.00001 or h['end']<h['original_return_end']-.00001):
+        if r.get('version') in ('0.2.17','0.2.18','0.2.19') and (h['start']>h['original_return_start']+.00001 or h['end']<h['original_return_end']-.00001):
             raise ValueError('Do not leave the old one-frame return outside the smooth window')
         if h['error'] or not 0<h['end']-h['start']<=2*r['row_handoff']['half_frames'][h['kind']]/24+.00001:
             raise ValueError('Invalid focal handoff window or expression')
@@ -476,6 +522,11 @@ def render(output):
             'render_ms':sum(s['render_ms'] for s in segments),'segments':segments,
             'batching_reason':'public_ae_exec_timeout_limit_600s; contiguous native 5s spans'}
     write(output/'native-render.json',{'ok':True,'contentType':'json','content':json.dumps(native)})
+    # Completed native frames are the encoding source; release transient AE
+    # caches so H.264 does not compete with the finished scene for memory.
+    purge=mutation_call(c,'ae_exec',{'code':"(function(){if(app.project.renderQueue.rendering)throw new Error('Render active');app.purge(PurgeTarget.ALL_CACHES);return JSON.stringify({rendering:false,purged:'transient_AE_caches'});})();",
+        'checkpoint_label':'before-post-render-cache-purge','timeout_sec':120},output,150)
+    write(output/'post-render-cache-purge.json',purge)
     paths=sorted(folder.glob('*.tif'))
     if [p.name for p in paths]!=['FRAME_'+str(i).zfill(5)+'.tif' for i in range(480)]:raise ValueError('Native frames incomplete')
     manifest={p.name:relay.file_sha(p) for p in paths};archive=output/'NATIVE_TIFF_FULLTEXT.zip'

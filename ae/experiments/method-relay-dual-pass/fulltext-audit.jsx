@@ -2,6 +2,17 @@
     var cp=AEMCP.compById(FULLTEXT_COMP),binding=JSON.parse(cp.comment),file=new File(binding.data_file);file.encoding='UTF-8';file.open('r');var b=JSON.parse(file.read());file.close();
     if(b.spec_sha!==binding.spec_sha)throw new Error('Native geometry sidecar binding differs');
     var words=[],handles={},passes=[],probes=[],annotations=[],questionParts=[],questionHandles={},optionTexts={},guards={},occluder=null,cutouts=[],attention=[],handoffs=[];
+    var transport=null;
+    if(b.guided_camera_transport){
+        var g=b.guided_camera_transport,camera=cp.layer('GUIDED_CAMERA'),position=camera.transform.position,look=camera.transform.pointOfInterest,samples=[],dt=1/2400;
+        for(var frame=0;frame<=Math.round((g.end-g.start)*24);frame++){
+            var t=g.start+frame/24,x=position.valueAtTime(Math.max(g.start,t-dt),false),y=position.valueAtTime(Math.min(g.end,t+dt),false),d=0;
+            for(var axis=0;axis<3;axis++)d+=Math.pow(y[axis]-x[axis],2);
+            samples.push({time:t,position:position.valueAtTime(t,false),look:look.valueAtTime(t,false),speed:Math.sqrt(d)/(Math.min(g.end,t+dt)-Math.max(g.start,t-dt))});
+        }
+        transport={start:g.start,end:g.end,position_start:g.position_start,position_end:g.position_end,look_start:g.look_start,look_end:g.look_end,
+            samples:samples,position_error:position.expressionError,look_error:look.expressionError};
+    }
     if(b.row_handoffs)for(var hi=0;hi<b.row_handoffs.length;hi++){
         var h=b.row_handoffs[hi],property=cp.layer('FOCUS_TARGET').transform.position,dt=1/2400;
         var a=property.valueAtTime(h.start,false),b0=property.valueAtTime(h.end,false),a1=property.valueAtTime(h.start+dt,false),b1=property.valueAtTime(h.end-dt,false),va=[],vb=[];
@@ -106,7 +117,7 @@
             sentence_plane_index:occluder?occluder.index:null,last_sentence_text_index:lastTextIndex});
     }
     return JSON.stringify({kind:b.kind,spec_sha:b.spec_sha,canvas:[cp.width,cp.height,cp.frameRate,cp.duration],renderer:cp.renderer,draft3d:cp.draft3d,resolution_factor:cp.resolutionFactor,
-        motion:motion,row_handoffs:handoffs,sentence_attention:attention,background_cutouts:cutouts,words:words,handles:handles,initial_handles:b.handles,passes:passes,geometry:{whole:b.whole,hit:b.hit,scope:b.scope,lifted:b.lifted,line_boxes:b.line_boxes,space:b.geometry_space},
+        motion:motion,guided_camera_transport:transport,row_handoffs:handoffs,sentence_attention:attention,background_cutouts:cutouts,words:words,handles:handles,initial_handles:b.handles,passes:passes,geometry:{whole:b.whole,hit:b.hit,scope:b.scope,lifted:b.lifted,line_boxes:b.line_boxes,space:b.geometry_space},
         question_parts:questionParts,question_handles:questionHandles,initial_question_handles:b.question_handles,option_texts:optionTexts,viewport_guards:guards,
         temporary_probes:probes,annotation_layers:annotations,visible_attention_cursor:cp.layer('READING_GUIDE').enabled,
         new_method_certification:b.new_method_certification,public_render_ready:b.public_render_ready});

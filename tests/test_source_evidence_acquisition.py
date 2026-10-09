@@ -515,4 +515,41 @@ class SentenceAttentionTests(unittest.TestCase):
                 fulltext.validate_attention(r,[bad])
 
 
+class GuidedTransportTests(unittest.TestCase):
+    def fixture(self):
+        r={'director':{'passes':[{'kind':'guided','scan':[10.5,14.75],'hit_settle_end':15}]},
+           'guided_camera_transport':{'enter_frames':6,'exit_frames':6}}
+        row={'start':10.5,'end':15,'position_start':[100,300,-3000],'position_end':[100,750,-3000],
+             'look_start':[80,100,0],'look_end':[80,550,0],'position_error':'','look_error':'','samples':[]}
+        for frame in range(109):
+            t=frame/24;q=fulltext.transport_progress(t,4.5,.25,.25)
+            speed=0 if t in (0,4.5) else 450/4.25 if .25<=t<=4.25 else 50
+            row['samples'].append({'time':10.5+t,'speed':speed,
+                'position':[100,300+450*q,-3000],'look':[80,100+450*q,0]})
+        return r,row
+
+    def test_progress_is_bounded_monotonic_and_has_uniform_middle(self):
+        values=[fulltext.transport_progress(i/240,4.5,.25,.25) for i in range(1081)]
+        self.assertEqual((values[0],values[-1]),(0,1))
+        self.assertTrue(all(0<=a<=b<=1 for a,b in zip(values,values[1:])))
+        middle=[values[i+1]-values[i] for i in range(100,900)]
+        self.assertLess(max(middle)-min(middle),1e-12)
+        for duration,a,b in ((0,.25,.25),(1,0,.25),(.5,.25,.25)):
+            with self.assertRaises(ValueError):fulltext.transport_progress(.1,duration,a,b)
+
+    def test_native_transport_rejects_resets_or_missing_frames(self):
+        r,row=self.fixture();fulltext.validate_transport(r,row)
+        for field in ('position','look'):
+            bad=deepcopy(row);bad['samples'][50][field][1]+=3
+            with self.subTest(field=field),self.assertRaises(ValueError):fulltext.validate_transport(r,bad)
+        for change in ('missing','speed','depth','error','endpoint'):
+            bad=deepcopy(row)
+            if change=='missing':bad['samples'].pop()
+            elif change=='speed':bad['samples'][50]['speed']=1
+            elif change=='depth':bad['position_end'][2]+=1
+            elif change=='error':bad['position_error']='failed'
+            else:bad['samples'][0]['speed']=10
+            with self.subTest(change=change),self.assertRaises(ValueError):fulltext.validate_transport(r,bad)
+
+
 if __name__=='__main__':unittest.main()
