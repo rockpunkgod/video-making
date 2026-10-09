@@ -338,3 +338,73 @@ This feedback is scoped to the displayed Guided clip. Fast and the integrated
 full film have no new human PASS; the existing two-clip integration gate is
 unchanged. Listening remains deferred. Teaching certification and source,
 editorial and public-release states are unchanged; public_render_ready=false.
+
+
+## Scoped Fast acceptance and reopened Guided camera pacing
+
+The user explicitly approved the r27 Fast preview: “可以，快版也通过”.
+Movie SHA `0433b6dbc3d2ba62cc332576e6b6d43d199a0870cd03bd8ba7503c3b025fa3d9`;
+spec SHA `3b1a4ac46be49b9a31f47c7996a8d2741e0391e2a076a43c81cf31d3cfabd202`.
+This preserves Fast approval without treating it as acceptance of subsequent
+Guided camera concerns. Local review history retains both explicit approvals.
+
+The user subsequently identified scan camera speed changes as unnatural and
+jerky, and proposed a Guided attention rhythm: rapid transition between
+predicates, slower recognition with brief highlights and comparison against
+the retained question keyword, until the corresponding expression appears.
+Whole-film integration remains HOLD while this Guided revision is open.
+
+Read-only sampling of the actual r27 native camera obtained 117 frame samples
+between 10.4167 and 15.25 seconds. Inside the scan (10.6–14.65 seconds),
+central-difference speed ranges from 14.4836 to 359.6330 native world pixels/s,
+with a peak at 11.9167 seconds. Scan camera depth is constant; the issue
+concerns uneven vertical transport, not continued depth zoom. This is measured
+motion evidence, not a perceptual metric or a proof of the proposed fix.
+
+Preserve accepted baseline-locked magnification, smooth focal row handoffs and
+Fast pacing. No new render or teaching inference is authorized by this report.
+Existing q33 export binds the hit expression and complete evidence sentence,
+but provides no reviewed sequence of predicate spans or q33 R12 action.
+Video-side timing may not invent those labels or synonym judgments. Astra
+creative review is requested; any implementation must retain source bindings,
+original objects and release separation. No ANSWER/Registry or frozen input
+changes. Sound remains deferred and public_render_ready=false.
+
+
+Terminology correction from the user: attention candidates are not restricted
+to predicates. They are locating expressions of the same part of speech as
+the retained question keyword. Fast transport and slower recognition apply
+to these candidate expressions. Same POS is not semantic correspondence or
+answer evidence. The current frozen export has no reviewed per-candidate POS
+and correspondence bindings; this remains a creative direction requiring
+those inputs rather than a newly certified grammar or solving rule.
+
+
+## Astra direction and root second review — locating expressions
+
+Astra recommends separating lens transport from attention rhythm. For Guided
+only, replace per-row camera speed resets with one continuous monotonic
+longitudinal progression, near-uniform through the middle, with gentle entry
+and final acquisition deceleration. Retain column center, depth of field and
+endpoint framing. Fast remains the explicitly accepted take.
+
+After upstream supplies candidate source spans and correspondence evidence,
+trial attention intervals at 24 fps: 3–5 frames focal transfer; 4–6 frames
+brief filled-highlight activation; 5–7 frames recognition dwell; 2–3 frames
+retirement. Only one passage expression is active at a time; the literal
+question keyword stays quietly present. Camera transport does not stop at
+every candidate. Preserve existing hit (14.75–15.5s), full-sentence confirmation
+(15.5–16.5s), subtle attention magnification and transparent Lift.
+
+Root second review accepts this as a bounded creative direction, with these
+constraints: same POS does not establish synonymy; the visual layer cannot
+choose or certify candidate spans; viewed candidates cannot be crossed out or
+presented as excluded answers. No VO grammar lecture, visible POS labels,
+annotation underlines, extra zoom or modification of the retained question
+phrase. Suggested durations are trial values, not human-approved motion.
+
+Execution order: isolate the Guided camera-speed fix first; obtain explicitly
+bound candidate spans and correspondence inputs second; trial attention
+highlights third. No new render or camera change has been executed in this
+advisory step. Full-film integration remains HOLD for the open Guided revision;
+listening remains deferred and public_render_ready=false.
