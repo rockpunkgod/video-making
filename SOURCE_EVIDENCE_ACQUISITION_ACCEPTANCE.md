@@ -377,3 +377,18 @@ All 480 encoded frames decode at native 4K. Local review boards sample 228
 chronological frames, including dense hit/Lock/Lift samples. Root inspects
 actual decoded early Lift, source recovery and final pose; this is technical
 frame review, not human continuous-motion approval.
+
+### Current-take comparison
+
+The isolated r22 delivery now also has silent Fast and Guided comparisons
+against the first native-4K r12 take, in its local `comparison-r12-r22` folder.
+Left is r12; right is r22. Both retain the same absolute frame times and real
+speed. The diagnostic canvas is 3840 × 2160, with each source equally reduced
+to 1920 × 1080; inspect the separate native-4K movies for full text detail.
+Fast is 168 frames; Guided is 288 frames, both 24 fps with no audio. Full decode
+and before/after hashes verify that the source movies remain untouched.
+Fast comparison SHA: `84b775f4fd616d653afb00ca198b06dd74351b6fc773cae9e672e18da81c67a9`.
+Guided comparison SHA: `1e7c69913f85e268435e4b965d3ff4fed81f93a92b19ed139e83e923fd72abe4`.
+This is an editorial comparison of actual native renders, not a new AE take.
+Human review remains PENDING and P2 integration remains HOLD. No current user
+acceptance is inferred from the previous approved synthetic relay footage.
