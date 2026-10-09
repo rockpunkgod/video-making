@@ -1,5 +1,14 @@
 # Method Relay × Dual-Pass Creative Proof 0.1.1
 
+Current increment: Locating Trace v0.1 uses separately reviewed upstream spans,
+Recognition Timing 0.1.1 and native geometry. The real q33 Guided r6 completed
+12 seconds at native 3840×2160/24fps and received movie-bound user visual PASS.
+The earlier synthetic proof and provisional preparation notes below are history;
+they do not certify real English facts. Fast remains protected. Sound is deferred,
+publication remains blocked, and all real assets stay in ignored local data.
+See [Locating Trace](../../../docs/locating-trace.md) and
+[acceptance](../../../LOCATING_TRACE_V01_ACCEPTANCE.md).
+
 One isolated native AE / Premiere research film. Its supplied English sentence,
 partitions, visual attachments and candidate outcomes are **SYNTHETIC / VISUAL-ONLY**.
 This is a renderer/director experiment, not an English analyzer, new teaching

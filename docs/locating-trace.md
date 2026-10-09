@@ -3,6 +3,14 @@
 本模块消费上游明确审阅的定位表达，不选择英语词汇，不推断词性、同义、答案或方法信用。
 审阅对象与呈现调度分离：ANSWER/Host 决定哪些跨度值得注意；导演决定怎样呈现。
 
+## 当前真实验收
+
+q33 的 r6 Guided B 已完成 12 秒原生 4K/24fps 无声输出，用户反馈“画面通过”。
+审核绑定 movie SHA `10a064990b12e632b306cb4a4eb5fa4605a506d437d5542cff24960faae157f4`；
+不继承旧版本认可。完整 A/B、扫描、识别循环、命中至透明提取片段及回执保留本地。
+通用模块与本轮定位画面通过，声音暂缓，公开资格仍 false；详见
+[最终验收](../LOCATING_TRACE_V01_ACCEPTANCE.md)。全文集成未开始。
+
 ## 上游工作流
 
 1. 读取当前冻结 Passage Bundle、Status 和既有 locating input request。
@@ -122,20 +130,25 @@ python -m unittest tests.test_locating_trace tests.test_locating_recognition_tim
 独立视频全部原生 4K；对照画布为 4K，两侧内容明确缩至 1080p，不冒充全幅原生。
 循环是原片段三次剪辑重复，不是额外阅读事件。Human Review 绑定 B movie SHA。
 
-## 内存故障边界
+## 内存故障边界与当前配置
 
 真实 r5 渲染出现 AE 导出错误与内存耗尽反馈。`purge_between_chunks` 不能保证
 3D renderer 分配完全释放；不能因此盲目循环重试或自动沿用失败回执。
-`locating_render` 在 Windows 每批开始前要求至少 1 GiB 可用物理内存。
-`ae_production.memory_guard` 用 Windows Job 限制新启动的原生进程树，并监测
-系统可用内存和超时；只回收自己启动的进程，不处理已存在的 Adobe 会话。
-原生 aerender 的短区间独立实例实验结果另行记录，未经帧核验不视为 render PASS。
 
-当前保护规则按用户明确配置：系统可用物理内存至少 1 GiB；新启动进程树
-内存预算最多 10 GiB。低于余量线禁止启动下一批，受保护进程运行期间
-低于线则终止其自己启动的进程树。显式配置低于 1 GiB 或超过 10 GiB
-进程预算会被拒绝。阈值不是已证明的稳定性修复。
+当前按用户明确要求，优先让任务使用可用 RAM，不设固定 10 GiB 进程上限；
+系统可用物理内存停止线为 1 GiB。新 worker 的 Job 预算默认按“启动时可用
+内存减余量”计算，不复用已占用内存。显式小预算仍可用于历史重放。
 
-最新用户指令覆盖此前 12 GiB 方案：当前系统可用物理内存停止线为 1 GiB，
-启动前与运行中使用同一阈值。新进程树上限仍为 10 GiB，未解除超时、
-工程保护或当前上游状态核验。12/8 GiB 记录保留为历史，不是当前默认值。
+`locating_render` 在 Windows 每批启动前检查余量；新的 Windows 原生渲染必须给定当前 AE PID/window
+以启用运行中监测；旧渲染配置需补当前运行身份，原 Frozen Request 不变。监测检测内存不足后请求 Escape 中止当前 render，不终止
+用户既有 AE。窗口与 PID 必须匹配；监测失联或请求中止时不放行下一批。
+每批保存实际峰值/最低余量/停止原因。监测自己的 worker 时以 Windows Job
+约束其进程树，不处理已经存在的 Adobe 会话或删除任何磁盘资产。
+
+真实恢复先核验用户已打开的空白 AE，打开原生 ae-mcp 面板恢复公共接口，
+再原生调用 `setMemoryUsageLimits(20,96)`，MFR off。该调用允许大部分 RAM，
+不声明绕过系统内存竞争或修复分配泄漏。另存工程并检查旧 AEP SHA 未变。
+先完成 24 帧实际 4K TIFF/MP4 及逐帧 SHA 检验，再使用相同设置分批补齐。
+
+旧 8/12 GiB 余量、10/14 GiB 固定预算及超时实验保留于验收报告作为历史，
+不能误认为当前默认。所有渲染仍需有效上游状态与新 Human Review。

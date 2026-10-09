@@ -33,7 +33,11 @@ def current(config):
 
 
 def render(config):
-    patch=current(config);out=relay.local(config['output']);out.mkdir(exist_ok=False,parents=True)
+    patch=current(config)
+    if os.name=='nt' and any(type(config.get(k)) is not int or config[k]<=0
+                            for k in ('ae_process_id','ae_window_handle')):
+        raise ValueError('Live AE PID/window required for runtime memory monitoring')
+    out=relay.local(config['output']);out.mkdir(exist_ok=False,parents=True)
     write(out/'render-input.json',config);c=relay.client();first,last=config['frames'];chunks=[]
     folder=out/'native-frames';folder.mkdir()
     for start in range(first,last,config.get('chunk_frames',96)):
@@ -55,8 +59,19 @@ def render(config):
             purge=mutation_call(c,'ae_exec',{'code':"(function(){if(app.project.renderQueue.rendering)throw Error('Render active');app.purge(PurgeTarget.ALL_CACHES);return JSON.stringify({purged:'transient_AE_caches'});})();",
                 'checkpoint_label':'before-locating-batch-cache-purge','timeout_sec':120},out,150)
             write(out/('pre-chunk-purge-'+str(start)+'.json'),purge)
-        result=mutation_call(c,'ae_exec',{'code':code,'checkpoint_label':'before-locating-render-'+str(start),
-                                        'timeout_sec':600},out,630)
+        if config.get('ae_process_id') and os.name=='nt':
+            from ae_production.memory_guard import monitor_existing_render
+            with monitor_existing_render(config['ae_process_id'],config['ae_window_handle'],
+                    config.get('minimum_free_gib',1),config.get('process_limit_gib')) as memory:
+                try:
+                    result=mutation_call(c,'ae_exec',{'code':code,'checkpoint_label':'before-locating-render-'+str(start),
+                                                    'timeout_sec':600},out,630)
+                finally:write(out/('memory-monitor-'+str(start)+'.json'),memory)
+            if memory.get('abort_requested') or memory.get('monitor_error'):
+                raise RuntimeError('Native render memory monitor stopped or lost monitoring; inspect before retry')
+        else:
+            result=mutation_call(c,'ae_exec',{'code':code,'checkpoint_label':'before-locating-render-'+str(start),
+                                            'timeout_sec':600},out,630)
         write(out/('native-render-'+str(start)+'.json'),result);chunk=json.loads(result['content'])
         paths=sorted(part.glob('*.tif'));fulltext.validate_render_chunk(chunk,paths,start,count,config['comp_id'])
         for index,path in enumerate(paths):

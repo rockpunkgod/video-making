@@ -8,6 +8,8 @@ from ctypes import wintypes
 import os
 import subprocess
 import time
+import threading
+from contextlib import contextmanager
 
 
 class MemoryStatus(ctypes.Structure):
@@ -37,8 +39,74 @@ def available_memory():
     return status.free_physical
 
 
-def guarded_run(command,log_path,limit_gib=10,minimum_free_gib=1,timeout=240):
-    if (os.name!='nt' or not 4<=limit_gib<=10 or not 1<=minimum_free_gib<=20
+class ProcessCounters(ctypes.Structure):
+    _fields_=[('size',wintypes.DWORD),('page_faults',wintypes.DWORD)]+[
+        (name,ctypes.c_size_t) for name in ('peak_working','working','peak_paged','paged',
+            'peak_nonpaged','nonpaged','pagefile','peak_pagefile','private')]
+
+
+def process_memory(pid):
+    kernel=ctypes.WinDLL('kernel32',use_last_error=True)
+    kernel.OpenProcess.argtypes=[wintypes.DWORD,wintypes.BOOL,wintypes.DWORD]
+    kernel.OpenProcess.restype=wintypes.HANDLE;kernel.CloseHandle.argtypes=[wintypes.HANDLE]
+    handle=kernel.OpenProcess(0x1000|0x10,False,pid)
+    if not handle:raise ctypes.WinError(ctypes.get_last_error())
+    try:
+        counter=ProcessCounters();counter.size=ctypes.sizeof(counter)
+        api=ctypes.WinDLL('psapi',use_last_error=True)
+        api.GetProcessMemoryInfo.argtypes=[wintypes.HANDLE,ctypes.c_void_p,wintypes.DWORD]
+        if not api.GetProcessMemoryInfo(handle,ctypes.byref(counter),counter.size):raise ctypes.WinError(ctypes.get_last_error())
+        return counter.private,counter.working
+    finally:kernel.CloseHandle(handle)
+
+
+def stop_reason(free,private,minimum_free_gib=1,limit_gib=None):
+    if free<minimum_free_gib*2**30:return 'LOW_SYSTEM_MEMORY'
+    if limit_gib is not None and private>limit_gib*2**30:return 'RENDER_PROCESS_BUDGET'
+    return None
+
+
+@contextmanager
+def monitor_existing_render(pid,hwnd,minimum_free_gib=1,limit_gib=None):
+    """Request Escape for this render; never terminate an existing AE process."""
+    if (os.name!='nt' or type(pid) is not int or pid<=0 or type(hwnd) is not int or hwnd<=0
+            or not 1<=minimum_free_gib<=20 or (limit_gib is not None and not 1<=limit_gib<=256)):
+        raise ValueError('Explicit Windows memory reserve and process budget required')
+    user=ctypes.WinDLL('user32',use_last_error=True)
+    user.GetWindowThreadProcessId.argtypes=[wintypes.HWND,ctypes.POINTER(wintypes.DWORD)]
+    owner=wintypes.DWORD();user.GetWindowThreadProcessId(hwnd,ctypes.byref(owner))
+    if owner.value!=pid:raise ValueError('Live render window and PID must match')
+    user.GetLastActivePopup.argtypes=[wintypes.HWND];user.GetLastActivePopup.restype=wintypes.HWND
+    user.PostMessageW.argtypes=[wintypes.HWND,wintypes.UINT,wintypes.WPARAM,wintypes.LPARAM]
+    record={'minimum_free_bytes':available_memory(),'peak_private_bytes':0,'peak_working_bytes':0,
+        'stop_reason':None,'abort_requested':False,'existing_process_terminated':False}
+    ended=threading.Event()
+    def watch():
+        while not ended.is_set():
+            try:
+                free=available_memory();private,working=process_memory(pid)
+                record['minimum_free_bytes']=min(record['minimum_free_bytes'],free)
+                record['peak_private_bytes']=max(record['peak_private_bytes'],private)
+                record['peak_working_bytes']=max(record['peak_working_bytes'],working)
+                reason=stop_reason(free,private,minimum_free_gib,limit_gib)
+                if reason:
+                    record['stop_reason']=reason
+                    popup=user.GetLastActivePopup(hwnd)
+                    for window in set([hwnd,popup]):
+                        if window:
+                            user.PostMessageW(window,0x100,27,1)
+                            user.PostMessageW(window,0x101,27,0xC0000001)
+                    record['abort_requested']=True;return
+            except Exception as error:
+                record['monitor_error']=str(error);return
+            ended.wait(.25)
+    thread=threading.Thread(target=watch,daemon=True);thread.start()
+    try:yield record
+    finally:ended.set();thread.join(timeout=2)
+
+
+def guarded_run(command,log_path,limit_gib=None,minimum_free_gib=1,timeout=240):
+    if (os.name!='nt' or (limit_gib is not None and not 1<=limit_gib<=256) or not 1<=minimum_free_gib<=20
             or not 1<=timeout<=600):raise ValueError('Conservative explicit memory/time limits required')
     threshold=int(minimum_free_gib*2**30)
     initial=available_memory()
@@ -56,7 +124,9 @@ def guarded_run(command,log_path,limit_gib=10,minimum_free_gib=1,timeout=240):
         # KILL_ON_JOB_CLOSE | JOB_MEMORY. A renderer allocation failure is safer
         # than allowing this experimental child tree to exhaust the workstation.
         limits.basic.flags=0x2000|0x200
-        limits.job_memory=int(limit_gib*2**30)
+        # New workers receive current available RAM minus the explicit system
+        # reserve; no fixed 10 GiB ceiling. Never budget memory already in use.
+        limits.job_memory=initial-threshold if limit_gib is None else min(int(limit_gib*2**30),initial-threshold)
         if not kernel.SetInformationJobObject(job,9,ctypes.byref(limits),ctypes.sizeof(limits)):
             raise ctypes.WinError(ctypes.get_last_error())
         with open(log_path,'xb') as log:

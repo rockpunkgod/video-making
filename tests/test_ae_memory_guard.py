@@ -4,14 +4,24 @@ import sys
 from tempfile import TemporaryDirectory
 import unittest
 from unittest.mock import patch
-from ae_production.memory_guard import guarded_run
+from ae_production.memory_guard import guarded_run,stop_reason,monitor_existing_render
 
 
 class MemoryGuardTests(unittest.TestCase):
     def test_invalid_limits_are_rejected(self):
-        with self.assertRaises(ValueError):guarded_run([],None,limit_gib=30)
+        with self.assertRaises(ValueError):guarded_run([],None,limit_gib=0)
         with self.assertRaises(ValueError):guarded_run([],None,minimum_free_gib=0)
-        with self.assertRaises(ValueError):guarded_run([],None,limit_gib=14)
+        with self.assertRaises(ValueError):guarded_run([],None,limit_gib=300)
+
+    def test_runtime_stop_lines_are_user_configured(self):
+        self.assertEqual(stop_reason(2**29,2**30),'LOW_SYSTEM_MEMORY')
+        self.assertIsNone(stop_reason(2**30,10*2**30))
+        self.assertIsNone(stop_reason(4*2**30,20*2**30))
+        self.assertEqual(stop_reason(4*2**30,11*2**30,limit_gib=10),'RENDER_PROCESS_BUDGET')
+
+    def test_monitor_requires_a_real_window_identity(self):
+        with self.assertRaises(ValueError):
+            with monitor_existing_render(0,0):pass
 
     @unittest.skipUnless(os.name=='nt','native Windows job guard')
     def test_low_free_memory_never_launches_process(self):
