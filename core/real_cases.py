@@ -110,9 +110,13 @@ def text_leaves(question):
 
 
 def frozen_question(blind, request):
-    if blind.get('pass') not in {'blind', 'host_reviewed_blind'} and blind.get('phase') not in {
+    phases = {
             'agent_before_reference_read_source_only_freeze',
-            'source_only_before_reference_read'}:
+            'source_only_before_reference_read',
+            'agent_before_reference_read'}
+    if ('phase' in blind and blind['phase'] not in phases) or \
+            ('pass' in blind and blind['pass'] not in {'blind', 'host_reviewed_blind'}) or \
+            ('phase' not in blind and 'pass' not in blind):
         raise ValueError('Prediction is not a frozen pre-reveal pass')
     question = pointer(blind, request.get('blind_question_pointer'))
     if not isinstance(question, dict) or question.get('question_id') != request['question_id']:
@@ -170,10 +174,21 @@ def source_check(root, source, question, blind):
         raise ValueError('Private rights and unverified reference authority required')
 
 
-def _review_checks(review, method, request, blind):
+def _review_checks(review, method, request, blind, frozen_question):
     if review.get('stage') != 'post_reveal_case_review' or review.get('reviewer_kind') != 'AI':
         raise ValueError('Independent post-reveal Case Review required')
-    paper_agent = blind.get('reviewer_agent') or blind.get('paper_agent')
+    explicit = [blind[key] for key in ('reviewer_agent', 'paper_agent') if key in blind]
+    if explicit:
+        if any(not isinstance(agent, str) or not agent.strip() for agent in explicit) or \
+                len(set(explicit)) != 1:
+            raise ValueError('Frozen paper agent identity is blank or conflicting')
+        paper_agent = explicit[0]
+    else:
+        agents = {row['reviewer'] for field in ('action_executions', 'relations')
+                  for row in (frozen_question.get(field) if isinstance(frozen_question.get(field), list) else [])
+                  if isinstance(row, dict) and isinstance(row.get('reviewer'), str)
+                  and row['reviewer'].strip()}
+        paper_agent = next(iter(agents)) if len(agents) == 1 else None
     if not paper_agent or review.get('paper_agent') != paper_agent or \
             not review.get('reviewer') or review.get('reviewer') == paper_agent or \
             review.get('independent_from_paper_agent') is not True:
@@ -268,7 +283,7 @@ def validate_request(root, request, registry=None):
     elif not all(isinstance(x.get('output'),dict) and x['output'].get('kind') for x in own):
         raise ValueError('Own typed produced action is required')
     review = artifact(root, request['case_review'])
-    _review_checks(review, method, request, blind)
+    _review_checks(review, method, request, blind, question)
     if request['case_type']=='counterexample' and not review.get('negative_trigger_confirmed'):
         raise ValueError('Counterexample needs explicit negative trigger review')
     if request['case_type']=='boundary' and not review.get('boundary_stop_confirmed'):

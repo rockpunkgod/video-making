@@ -95,6 +95,74 @@ class PrivateRealCaseTest(unittest.TestCase):
     def _analysis(self):
         return json.loads((self.root/'action.json').read_text(encoding='utf-8'))['analysis']
 
+    def _legacy_request(self, *, phase='agent_before_reference_read', reviewers=('first-ai',),
+                        top=None, action_reviewer=None):
+        question=json.loads(json.dumps(self.question))
+        question['action_executions']=[{'reviewer':name} for name in reviewers[:1]]
+        question['relations']=[{'reviewer':name} for name in reviewers[1:]]
+        blind={'phase':phase,'exam_id':'synthetic-001',
+               'source_sha256':self.request['source']['pdf_sha256'],
+               'typed_method_actions':[{'annotated_input':question}]}
+        if top is not None: blind.update(top)
+        blind_ref=put(self.root,'legacy-blind.json',blind)
+        reveal=json.loads((self.root/'reveal.json').read_text(encoding='utf-8'))
+        reveal['prediction_sha256']=blind_ref['sha256']
+        reveal_ref=put(self.root,'legacy-reveal.json',reveal)
+        action=json.loads((self.root/'action.json').read_text(encoding='utf-8'))
+        action['mechanical_prediction_sha256']=blind_ref['sha256']
+        if action_reviewer is not None:
+            action['question']['action_executions']=[{'reviewer':action_reviewer}]
+        action_ref=put(self.root,'legacy-action.json',action)
+        review=json.loads((self.root/'review.json').read_text(encoding='utf-8'))
+        review.update(paper_agent='first-ai',blind_sha256=blind_ref['sha256'],
+                      reveal_sha256=reveal_ref['sha256'],action_sha256=action_ref['sha256'])
+        review_ref=put(self.root,'legacy-review.json',review)
+        request=json.loads(json.dumps(self.request))
+        request.update(blind=blind_ref,blind_question_pointer='/typed_method_actions/0/annotated_input',
+                       reveal=reveal_ref,action=action_ref,case_review=review_ref)
+        return request
+
+    def test_legacy_source_only_phase_and_unique_frozen_question_author_register(self):
+        request=self._legacy_request(reviewers=('first-ai','first-ai'),action_reviewer='later-ai')
+        ref=put(self.root,'legacy-request.json',request)
+        with patch('core.real_cases.validate_schema'),patch('core.real_cases.validate_graph'), \
+                patch('core.real_cases.validate_execution_trace'), \
+                patch('core.real_cases.QuestionAnalyzer.analyze',return_value=self._analysis()):
+            record=register(self.root,ref['path'])
+            self.assertEqual(record['status'],real_cases.STATUS)
+            self.assertEqual(load_catalog(self.root)['revision'],1)
+
+    def test_legacy_phase_and_paper_author_fail_closed(self):
+        for phase in ('unknown_phase','after_reference_read'):
+            with self.subTest(phase=phase):
+                request=self._legacy_request(phase=phase)
+                with self.assertRaisesRegex(ValueError,'pre-reveal pass'):
+                    validate_request(self.root,request,self.registry)
+        for reviewers,top in (((),None),(('first-ai','other-ai'),None),
+                              (('first-ai',),{'reviewer_agent':''}),
+                              (('first-ai',),{'paper_agent':'  '}),
+                              (('first-ai',),{'reviewer_agent':'first-ai','paper_agent':'other-ai'})):
+            with self.subTest(reviewers=reviewers,top=top):
+                request=self._legacy_request(reviewers=reviewers,top=top)
+                with patch('core.real_cases.validate_schema'),patch('core.real_cases.validate_graph'), \
+                        patch('core.real_cases.validate_execution_trace'), \
+                        patch('core.real_cases.QuestionAnalyzer.analyze',return_value=self._analysis()):
+                    with self.assertRaisesRegex(ValueError,'paper agent|Case reviewer'):
+                        validate_request(self.root,request,self.registry)
+
+    def test_explicit_frozen_author_takes_priority_over_question_labels(self):
+        request=self._legacy_request(reviewers=('other-ai',),top={'paper_agent':'first-ai'})
+        with patch('core.real_cases.validate_schema'),patch('core.real_cases.validate_graph'), \
+                patch('core.real_cases.validate_execution_trace'), \
+                patch('core.real_cases.QuestionAnalyzer.analyze',return_value=self._analysis()):
+            validate_request(self.root,request,self.registry)
+        request=self._legacy_request(reviewers=('other-ai',),action_reviewer='first-ai')
+        with patch('core.real_cases.validate_schema'),patch('core.real_cases.validate_graph'), \
+                patch('core.real_cases.validate_execution_trace'), \
+                patch('core.real_cases.QuestionAnalyzer.analyze',return_value=self._analysis()):
+            with self.assertRaisesRegex(ValueError,'Case reviewer'):
+                validate_request(self.root,request,self.registry)
+
     def test_registration_overlay_and_no_duplicate(self):
         before = self.registry.case_coverage()
         with patch('core.real_cases.validate_schema'), patch('core.real_cases.validate_graph'), patch('core.real_cases.validate_execution_trace'), \

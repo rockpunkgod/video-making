@@ -113,6 +113,39 @@ def assign(db, paper_id, task, model, effort, directory=None):
                (now(),paper_id,'agent_assigned',json.dumps({'actual_agent_task':task,'model':model,'reasoning_effort':effort})))
     db.commit()
 
+
+def advance_semantic(db, paper_id, task, model, effort, transcription, replay):
+    """Bind an actually spawned second-stage agent; preserve first-stage history."""
+    from hashlib import sha256
+    row = db.execute('SELECT * FROM papers WHERE paper_id=?',(paper_id,)).fetchone()
+    if not row or row['state'] != 'running' or not task.startswith('/root/') or task == row['agent_task']:
+        raise ValueError('A distinct actually assigned semantic agent and active transcription required')
+    path = Path(transcription).resolve()
+    if not path.is_relative_to(Path(row['report_directory']).resolve()):
+        raise ValueError('Transcription must belong to this assigned paper directory')
+    raw = path.read_bytes(); value = json.loads(raw)
+    replay_path = Path(replay).resolve(); replay_raw = replay_path.read_bytes(); result = json.loads(replay_raw)
+    fingerprint = sha256(raw).hexdigest()
+    if value.get('paper_id') != paper_id or value.get('source_sha256') != row['source_sha256'] or \
+            value.get('reviewer_agent') != row['agent_task'] or value.get('reference_read') is not False or \
+            value.get('phase') != 'low_model_source_transcription_no_answers':
+        raise ValueError('Source-only transcription must bind the original actual agent and source')
+    if result.get('paper_id') != paper_id or result.get('source_sha256') != row['source_sha256'] or \
+            result.get('transcription_sha256') != fingerprint or \
+            result.get('phase') != 'source_transcription_engine_replay_not_semantic_acceptance':
+        raise ValueError('Explicit preflighted replay must bind the exact transcription bytes')
+    old = {'agent_task':row['agent_task'], 'model':row['model'], 'reasoning_effort':row['reasoning_effort']}
+    detail = {'previous_transcription_assignment':old, 'actual_agent_task':task,
+              'model':model, 'reasoning_effort':effort,
+              'transcription_file':str(path), 'transcription_sha256':fingerprint,
+              'replay_file':str(replay_path), 'replay_sha256':sha256(replay_raw).hexdigest(),
+              'semantic_review_completed':False, 'new_blind_sample':False}
+    db.execute('UPDATE papers SET agent_task=?,model=?,reasoning_effort=? WHERE paper_id=?',
+               (task,model,effort,paper_id))
+    db.execute('INSERT INTO events(recorded_at,paper_id,event,detail) VALUES (?,?,?,?)',
+               (now(),paper_id,'semantic_agent_assigned',json.dumps(detail)))
+    db.commit()
+
 def selected_report(row, filename=None):
     """Select an explicit immutable revision, never silently pick newest glob."""
     filename = filename or row['report_file']
@@ -169,6 +202,9 @@ def main():
     listing = sub.add_parser('list'); listing.add_argument('--limit',type=int,default=10)
     bind = sub.add_parser('assign'); bind.add_argument('paper_id'); bind.add_argument('agent_task')
     bind.add_argument('--model',required=True); bind.add_argument('--effort',required=True); bind.add_argument('--report-directory')
+    advance = sub.add_parser('advance-semantic'); advance.add_argument('paper_id'); advance.add_argument('agent_task')
+    advance.add_argument('--model',required=True); advance.add_argument('--effort',required=True)
+    advance.add_argument('--transcription',type=Path,required=True); advance.add_argument('--replay',type=Path,required=True)
     complete = sub.add_parser('record-report'); complete.add_argument('paper_id'); complete.add_argument('--outcome',choices=('PASS','PARTIAL','SOURCE_GAP'),required=True)
     complete.add_argument('--report-file',default='review.json',help='Explicit frozen revision; historical files are preserved')
     supplement = sub.add_parser('attach-addenda'); supplement.add_argument('paper_id')
@@ -176,6 +212,7 @@ def main():
     with connect(args.queue) as db:
         if args.command=='init': initialize(db,json.loads(args.manifest.read_text(encoding='utf-8-sig')))
         elif args.command=='assign': assign(db,args.paper_id,args.agent_task,args.model,args.effort,args.report_directory)
+        elif args.command=='advance-semantic': advance_semantic(db,args.paper_id,args.agent_task,args.model,args.effort,args.transcription,args.replay)
         elif args.command=='record-report': record_report(db,args.paper_id,args.outcome,args.report_file)
         elif args.command=='attach-addenda': attach_addenda(db,args.paper_id)
         print(json.dumps(snapshot(db,args.limit if args.command=='list' else 0),ensure_ascii=False,indent=2))

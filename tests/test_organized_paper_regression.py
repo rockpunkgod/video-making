@@ -1,5 +1,10 @@
 import unittest
-from scripts.run_organized_paper_regression import admission_issue, convert
+from copy import deepcopy
+from pathlib import Path
+from tempfile import TemporaryDirectory
+from unittest.mock import patch
+from scripts.run_organized_paper_regression import admission_issue, convert, validate_transcription, run_transcription_batch
+from scripts.ingest_exam_sources import freeze_json, sha
 
 class OrganizedRegressionTests(unittest.TestCase):
     def entry(self,text,quote,kind='grammar_fill'):
@@ -30,5 +35,121 @@ class OrganizedRegressionTests(unittest.TestCase):
         q=convert(entry,'Why?')
         self.assertEqual(q['question_type'],'未知')
         self.assertEqual(q['options'],{'A':'Maybe'})
+
+    def transcription(self):
+        content='Which?\nAlpha.\n第1页 | 共2页\nBeta.\nYes\nNo'
+        q={'question_id':'test-Q1','question_type':'未知','stem':'Which?',
+           'passage':'Alpha.\nBeta.','options':{'A':'Yes','B':'No'}}
+        def span(text):
+            start=content.index(text)
+            return {'start':start,'end':start+len(text),'quote':text}
+        dossier={'paper_id':'test-paper','source_sha256':sha(b'PDF'),'document_text':content}
+        value={'paper_id':'test-paper','source_sha256':dossier['source_sha256'],
+               'reviewer_agent':'/root/low_transcriber','reference_read':False,
+               'phase':'low_model_source_transcription_no_answers',
+               'inputs':{'paper_id':'test-paper','questions':[q]},
+               'source_bindings':[{'question_id':'test-Q1','fields':{
+                   '/stem':[span('Which?')],'/passage':[span('Alpha.\n'),span('Beta.')],
+                   '/options/A':[span('Yes')],'/options/B':[span('No')]},
+                   'display_exclusions':[span('第1页 | 共2页\n')]}]}
+        return value,dossier
+
+    def test_low_transcription_exact_source_and_recorded_pagination(self):
+        value,dossier=self.transcription()
+        inputs=validate_transcription(value,dossier)
+        self.assertEqual(inputs,value['inputs'])
+        inputs['questions'][0]['stem']='changed'
+        self.assertEqual(value['inputs']['questions'][0]['stem'],'Which?')
+
+    def test_low_transcription_normalizes_section_code_without_rewriting_frozen_material(self):
+        value,dossier=self.transcription(); value['inputs']['questions'][0]['question_type']='single_choice'
+        value['inputs']['questions'][0]['printed_number']='1'
+        inputs=validate_transcription(value,dossier)
+        self.assertEqual(inputs['questions'][0]['question_type'],'未知')
+        self.assertEqual(value['inputs']['questions'][0]['question_type'],'single_choice')
+        self.assertNotIn('printed_number',inputs['questions'][0])
+        self.assertEqual(value['inputs']['questions'][0]['printed_number'],'1')
+        for field in ('stem','passage','options'):
+            self.assertEqual(inputs['questions'][0][field],value['inputs']['questions'][0][field])
+
+    def test_low_transcription_rejects_answer_actions_and_reference_read(self):
+        for field,content in [('answer','A'),('observations',[]),('relations',[]),('original_images',[])]:
+            value,dossier=self.transcription(); value['inputs']['questions'][0][field]=content
+            with self.subTest(field=field),self.assertRaisesRegex(ValueError,'cannot contain'):
+                validate_transcription(value,dossier)
+        value,dossier=self.transcription(); value['reference_read']=True
+        with self.assertRaisesRegex(ValueError,'source-only'):
+            validate_transcription(value,dossier)
+
+    def test_low_transcription_rejects_missing_duplicate_reordered_or_changed_binding(self):
+        value,dossier=self.transcription()
+        variants=[]
+        missing=deepcopy(value); del missing['source_bindings'][0]['fields']['/options/B']; variants.append(missing)
+        duplicate=deepcopy(value); duplicate['inputs']['questions']*=2; variants.append(duplicate)
+        reordered=deepcopy(value); reordered['source_bindings'][0]['fields']['/passage'].reverse(); variants.append(reordered)
+        changed=deepcopy(value); changed['source_bindings'][0]['fields']['/stem'][0]['quote']='Which!'; variants.append(changed)
+        for item in variants:
+            with self.subTest(item=item),self.assertRaises(ValueError): validate_transcription(item,dossier)
+
+    def test_low_transcription_cannot_delete_article_or_unrecorded_layout(self):
+        value,dossier=self.transcription(); value['source_bindings'][0]['display_exclusions']=[]
+        with self.assertRaisesRegex(ValueError,'Unrecorded'):
+            validate_transcription(value,dossier)
+        value,dossier=self.transcription()
+        # Even an accurately quoted deletion cannot remove arbitrary article text.
+        row=value['source_bindings'][0]['display_exclusions'][0]
+        dossier['document_text']=dossier['document_text'].replace(row['quote'],'Important evidence.\n')
+        # Rebuild accurate spans to show the rejection is about deletion type.
+        content=dossier['document_text']
+        for rows in value['source_bindings'][0]['fields'].values():
+            for s in rows:
+                s['start']=content.index(s['quote']); s['end']=s['start']+len(s['quote'])
+        row.update(start=content.index('Important'),end=content.index('Beta.'),quote='Important evidence.\n')
+        with self.assertRaisesRegex(ValueError,'pagination'):
+            validate_transcription(value,dossier)
+
+    def test_low_transcription_requires_prompt_from_its_own_grammar_blank(self):
+        value,dossier=self.transcription(); content='___61___ (poor) studied'
+        dossier['document_text']=content
+        q={'question_id':'test-Q1','question_type':'grammar_fill','stem':'___61___','passage':content}
+        value['inputs']['questions']=[q]
+        fields={'/stem':[{'start':0,'end':8,'quote':'___61___'}],
+                '/passage':[{'start':0,'end':len(content),'quote':content}]}
+        value['source_bindings']=[{'question_id':'test-Q1','fields':fields,'display_exclusions':[]}]
+        with self.assertRaisesRegex(ValueError,'prompt word missing'):
+            validate_transcription(value,dossier)
+        q['given_word']='poor'; fields['/given_word']=[{'start':10,'end':14,'quote':'poor'}]
+        self.assertEqual(validate_transcription(value,dossier)['questions'][0]['given_word'],'poor')
+
+    def test_low_batch_preflights_all_sources_before_analyzer_or_writes(self):
+        with TemporaryDirectory() as temp:
+            root=Path(temp); bank=root/'case-bank-v4'; paths=[]
+            for n in (1,2):
+                value,dossier=self.transcription(); pid='paper-'+str(n)
+                value['paper_id']=dossier['paper_id']=value['inputs']['paper_id']=pid
+                doc=bank/'papers'/(pid+'.json'); freeze_json(doc,dossier)
+                value['source_document_sha256']=sha(doc.read_bytes())
+                if n==2: value['source_document_sha256']='0'*64
+                path=root/(pid+'.json'); freeze_json(path,value); paths.append(path)
+            pdf=root/'originals/files'/(sha(b'PDF')+'.pdf'); pdf.parent.mkdir(parents=True); pdf.write_bytes(b'PDF')
+            with patch('scripts.run_organized_paper_regression.QuestionAnalyzer') as analyzer:
+                with self.assertRaisesRegex(ValueError,'dossier fingerprint'):
+                    run_transcription_batch(paths,root/'replay',bank)
+                analyzer.assert_not_called()
+            self.assertFalse((root/'replay').exists())
+
+    def test_low_batch_runs_real_question_and_paper_analyzers_without_answer_claim(self):
+        with TemporaryDirectory() as temp:
+            root=Path(temp); bank=root/'case-bank-v4'; value,dossier=self.transcription()
+            doc=bank/'papers/test-paper.json'; freeze_json(doc,dossier)
+            value['source_document_sha256']=sha(doc.read_bytes())
+            path=root/'transcription.json'; freeze_json(path,value)
+            pdf=root/'originals/files'/(sha(b'PDF')+'.pdf'); pdf.parent.mkdir(parents=True); pdf.write_bytes(b'PDF')
+            summary=run_transcription_batch([path],root/'replay',bank)
+            self.assertEqual(summary['papers'][0]['input_count'],1)
+            self.assertEqual(summary['papers'][0]['engine_answer_count'],0)
+            self.assertFalse(summary['whole_paper_acceptance'])
+            self.assertEqual(summary['new_blind_samples'],0)
+            self.assertIsNone(summary['new_question_count'])
 
 if __name__=='__main__': unittest.main()

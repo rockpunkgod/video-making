@@ -3,7 +3,8 @@ from pathlib import Path
 import tempfile
 import unittest
 
-from scripts.organized_paper_queue import assign, connect, initialize, paper_label, record_report, snapshot
+from scripts.organized_paper_queue import assign, advance_semantic, connect, initialize, paper_label, record_report, snapshot
+from scripts.ingest_exam_sources import freeze_json, sha
 
 class PaperQueueTests(unittest.TestCase):
     def test_human_labels_preserve_region_volume_season(self):
@@ -61,6 +62,32 @@ class PaperQueueTests(unittest.TestCase):
                  'sha256':'a'*64,'filename_claim':'questions_only'}
             initialize(db,{'files':[row]})
             with self.assertRaises(ValueError): initialize(db,{'files':[{**row,'sha256':'b'*64}]})
+            db.close()
+
+    def test_semantic_stage_binds_preflighted_bytes_and_preserves_low_agent_history(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root=Path(tmp); db=connect(root/'q.sqlite')
+            row={'relative_path':'2021年高考英语试卷（北京）（空白卷）.pdf','extension':'.pdf',
+                 'sha256':'a'*64,'filename_claim':'questions_only'}
+            initialize(db,{'files':[row]}); pid='gaokao-2021-beijing-v01'
+            assign(db,pid,'/root/transcribe','gpt-6-luna','low',str(root/'paper'))
+            source=root/'paper/transcription.json'
+            freeze_json(source,{'paper_id':pid,'source_sha256':'a'*64,'reviewer_agent':'/root/transcribe',
+                                'reference_read':False,'phase':'low_model_source_transcription_no_answers'})
+            replay=root/'replay.json'
+            result={'paper_id':pid,'source_sha256':'a'*64,'transcription_sha256':'0'*64,
+                    'phase':'source_transcription_engine_replay_not_semantic_acceptance'}
+            freeze_json(replay,result)
+            with self.assertRaisesRegex(ValueError,'exact transcription'):
+                advance_semantic(db,pid,'/root/semantic','gpt-6-sol','medium',source,replay)
+            self.assertEqual(db.execute('SELECT agent_task FROM papers').fetchone()[0],'/root/transcribe')
+            result['transcription_sha256']=sha(source.read_bytes()); good=root/'replay-v2.json'; freeze_json(good,result)
+            advance_semantic(db,pid,'/root/semantic','gpt-6-sol','medium',source,good)
+            self.assertEqual(db.execute('SELECT agent_task FROM papers').fetchone()[0],'/root/semantic')
+            self.assertEqual(snapshot(db)['counts'],{'running':1})
+            events=list(db.execute('SELECT event,detail FROM events ORDER BY sequence'))
+            self.assertEqual([e[0] for e in events],['agent_assigned','semantic_agent_assigned'])
+            self.assertEqual(json.loads(events[-1][1])['previous_transcription_assignment']['agent_task'],'/root/transcribe')
             db.close()
 
 if __name__=='__main__': unittest.main()

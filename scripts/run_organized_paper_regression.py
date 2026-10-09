@@ -12,10 +12,13 @@ from pathlib import Path
 import re
 
 from core.analyzer import QuestionAnalyzer, PaperAnalyzer
-from core.registry import Registry, ROOT
+from core.registry import Registry, ROOT, validate_schema
+from core.real_cases import MATERIAL_FIELDS, text_leaves
 from scripts.ingest_exam_sources import freeze_json, sha
 
 KINDS={'single_choice':'未知','cloze':'完形填空','seven_five':'七选五','grammar_fill':'语法填空'}
+TRANSCRIPTION_KINDS = dict(KINDS, reading='阅读理解', application_writing='应用文',
+                           continuation_writing='读后续写', unknown='未知')
 
 def projection(value):
     # The parser records any removed printed pagination lines separately.
@@ -72,6 +75,162 @@ def runtime_hashes():
                 result[path.relative_to(ROOT).as_posix()]=sha(path.read_bytes())
     return result
 
+
+def validate_transcription(value, dossier):
+    """Check source fidelity, not completeness, English semantics or answers.
+
+    Low-model transcription is deliberately not a Case or blind prediction.
+    Every displayed text field must be copied from exact source spans. Only
+    explicitly recorded pagination deletions may separate those spans.
+    """
+    if value.get('phase') != 'low_model_source_transcription_no_answers' or \
+            value.get('reference_read') is not False:
+        raise ValueError('Expected source-only transcription, not answer-aware annotations')
+    if value.get('paper_id') != dossier.get('paper_id') or \
+            value.get('source_sha256') != dossier.get('source_sha256'):
+        raise ValueError('Transcription and frozen source identity differ')
+    if not isinstance(value.get('source_sha256'), str) or not re.fullmatch(r'[0-9a-f]{64}', value['source_sha256']):
+        raise ValueError('Frozen original source fingerprint required')
+    if not isinstance(value.get('reviewer_agent'), str) or not value['reviewer_agent'].startswith('/root/'):
+        raise ValueError('Actual transcription agent label required')
+    inputs = value.get('inputs')
+    if not isinstance(inputs, dict) or inputs.get('paper_id') != value['paper_id'] or \
+            not isinstance(inputs.get('questions'), list) or not inputs['questions']:
+        raise ValueError('Explicit nonempty paper inputs required')
+    questions = inputs['questions']
+    ids = [q.get('question_id') for q in questions if isinstance(q, dict)]
+    if len(ids) != len(questions) or any(not isinstance(x, str) or not x for x in ids) or len(set(ids)) != len(ids):
+        raise ValueError('Transcription question IDs are absent or duplicated')
+    bindings = value.get('source_bindings')
+    if not isinstance(bindings, list) or any(not isinstance(x, dict) for x in bindings) or \
+            len(bindings) != len(ids) or {x.get('question_id') for x in bindings} != set(ids):
+        raise ValueError('One exact source binding required per question')
+    by_id = {x['question_id']: x for x in bindings}
+    content = dossier['document_text']
+    layout = re.compile(r'\s*第\s*\d+\s*页\s*(?:[|/｜]\s*|[，,]\s*)?共\s*\d+\s*页\s*')
+    allowed = set(MATERIAL_FIELDS) - {'student_symptoms', 'original_images'} | {'task_type', 'printed_number'}
+    def span(row):
+        if not isinstance(row, dict) or type(row.get('start')) is not int or type(row.get('end')) is not int:
+            raise ValueError('Integer source span required')
+        a, b = row['start'], row['end']
+        if not 0 <= a < b <= len(content) or row.get('quote') != content[a:b]:
+            raise ValueError('Source span does not reproduce original bytes as text')
+        return a, b
+    normalized = deepcopy(inputs)
+    for index, q in enumerate(questions):
+        if set(q) - allowed:
+            raise ValueError('Transcription cannot contain answers, semantic actions or unbound image claims')
+        if 'printed_number' in q and not re.fullmatch(r'[1-9][0-9]*',str(q['printed_number'])):
+            raise ValueError('Printed question number metadata must be a positive number')
+        normalized['questions'][index].pop('printed_number', None)
+        normalized['questions'][index]['question_type'] = TRANSCRIPTION_KINDS.get(q.get('question_type'),q.get('question_type'))
+        validate_schema('question-input', normalized['questions'][index])
+        binding = by_id[q['question_id']]
+        fields = binding.get('fields')
+        leaves = text_leaves(q)
+        if not leaves or not isinstance(fields, dict) or set(fields) != set(leaves):
+            raise ValueError('Every nonempty core text field must have an exact binding')
+        excluded = binding.get('display_exclusions', [])
+        if not isinstance(excluded, list):
+            raise ValueError('Explicit display exclusion list required')
+        exclusions = set()
+        for row in excluded:
+            a, b = span(row)
+            if not layout.fullmatch(content[a:b]):
+                raise ValueError('Only recorded printed pagination may be deleted')
+            exclusions.add((a, b))
+        for field, text in leaves.items():
+            rows = fields[field]
+            if not isinstance(rows, list) or not rows:
+                raise ValueError('Field source spans required')
+            previous = None
+            copied = []
+            for row in rows:
+                a, b = span(row)
+                if previous is not None:
+                    if a < previous:
+                        raise ValueError('Source spans overlap or reorder text')
+                    if a > previous and (previous, a) not in exclusions:
+                        raise ValueError('Unrecorded non-pagination source deletion')
+                copied.append(row['quote'])
+                previous = b
+            if ''.join(copied) != text:
+                raise ValueError('Transcribed field is not an exact source projection')
+        if normalized['questions'][index]['question_type'] == '语法填空':
+            stem_spans = fields.get('/stem', [])
+            if len(stem_spans) != 1 or not re.fullmatch(r'[_＿]+\s*\d+\s*[_＿]+',q.get('stem','').strip()):
+                raise ValueError('Grammar input must bind its particular printed blank marker')
+            tail = content[stem_spans[0]['end']:]
+            hint = re.match(r'[_＿]*\s*[（(]\s*([A-Za-z]+(?:[ -][A-Za-z]+){0,2})\s*[）)]',tail)
+            supplied = q.get('given_word','').strip('()（） \t\r\n')
+            if (hint and supplied != hint[1].strip()) or (not hint and supplied):
+                raise ValueError('Grammar prompt word missing or different from the target blank')
+    return normalized
+
+
+def run_transcription_batch(paths, output_root, bank_root=None, analyzer=None):
+    """Preflight the entire explicit batch before running its source-only replay."""
+    bank_root = Path(bank_root or ROOT/'local-data/organized-pdfs/case-bank-v4')
+    dataset = bank_root.parent.resolve()
+    output_root = Path(output_root).resolve()
+    if not output_root.is_relative_to(dataset):
+        raise ValueError('Keep exam output inside its explicitly selected private dataset')
+    prepared = []
+    for path in paths:
+        path = Path(path).resolve()
+        if not path.is_relative_to(dataset):
+            raise ValueError('Transcription must stay inside its private dataset')
+        raw = path.read_bytes(); value = json.loads(raw)
+        pid = value.get('paper_id')
+        if not isinstance(pid, str) or not re.fullmatch(r'[A-Za-z0-9_-]+', pid):
+            raise ValueError('Safe explicit paper ID required')
+        dossier_path = bank_root/'papers'/(pid+'.json')
+        dossier_raw = dossier_path.read_bytes(); dossier = json.loads(dossier_raw)
+        if value.get('source_document_sha256') != sha(dossier_raw):
+            raise ValueError('Frozen source dossier fingerprint differs')
+        inputs = validate_transcription(value, dossier)
+        pdf = dataset/'originals/files'/(value['source_sha256']+'.pdf')
+        if sha(pdf.read_bytes()) != value['source_sha256']:
+            raise ValueError('Frozen original PDF fingerprint differs')
+        prepared.append((path, raw, value, inputs))
+    if not prepared or len({x[2]['paper_id'] for x in prepared}) != len(prepared):
+        raise ValueError('Batch papers are empty or duplicated')
+    analyzer = analyzer or QuestionAnalyzer(Registry())
+    fingerprints = runtime_hashes()
+    results = []
+    for path, raw, value, inputs in prepared:
+        predictions = [analyzer.analyze(deepcopy(q)) for q in inputs['questions']]
+        paper = PaperAnalyzer(analyzer).analyze(deepcopy(inputs))
+        if predictions != paper['questions'] or any(p['answer'] is not None for p in predictions):
+            raise ValueError('Source-only replay disagrees or unexpectedly declares an answer')
+        report = {'paper_id':value['paper_id'], 'source_sha256':value['source_sha256'],
+                  'phase':'source_transcription_engine_replay_not_semantic_acceptance',
+                  'transcription_path':path.relative_to(dataset).as_posix(),
+                  'transcription_sha256':sha(raw), 'reviewer_agent':value['reviewer_agent'],
+                  'source_document_sha256':value['source_document_sha256'],
+                  'printed_number_metadata_retained_in_transcription_not_engine':True,
+                  'source_type_mapping':[
+                      {'question_id':q['question_id'], 'source_type':q['question_type'],
+                       'engine_type':mapped['question_type']}
+                      for q,mapped in zip(value['inputs']['questions'],inputs['questions'])
+                      if q['question_type'] != mapped['question_type']],
+                  'inputs':inputs, 'predictions':predictions, 'paper_analysis':paper,
+                  'runtime_sha256':fingerprints,
+                  'limits':{'source_authenticity':'unverified', 'source_completeness_certified':False,
+                            'whole_paper_semantic_review':False, 'whole_paper_acceptance':False,
+                            'safe_abstention':None, 'new_blind_sample':False,
+                            'formal_method_cases_registered':0, 'human_participants':0}}
+        dest = output_root/value['paper_id']/'transcription-engine-replay.json'
+        freeze_json(dest, report)
+        results.append({'paper_id':value['paper_id'], 'input_count':len(predictions),
+                        'engine_answer_count':0, 'formal_case_count':0,
+                        'report':dest.relative_to(dataset).as_posix(), 'report_sha256':sha(dest.read_bytes())})
+    summary = {'phase':'source_transcription_batch_replay', 'papers':results,
+               'source_completeness_certified':False, 'whole_paper_acceptance':False,
+               'new_question_count':None, 'new_blind_samples':0, 'human_participants':0}
+    freeze_json(output_root/'transcription-batch-summary.json', summary)
+    return summary
+
 def run_paper(bank_root, source, output_root, analyzer=None, fingerprints=None):
     bank_root=Path(bank_root); output_root=Path(output_root)
     input_path=bank_root/source['question_input_file']
@@ -119,7 +278,13 @@ def main():
     parser.add_argument('paper_id',help='Human paper ID, or all for an initial corpus smoke pass')
     parser.add_argument('--bank-root',type=Path,default=ROOT/'local-data/organized-pdfs/case-bank-v4')
     parser.add_argument('--output-root',type=Path,default=ROOT/'local-data/organized-pdfs/mechanical-intake-v4-2')
+    parser.add_argument('--transcriptions',type=Path,nargs='+',help='Explicit low-model source-only files; verify the whole batch before replay')
     args=parser.parse_args(); index=json.loads((args.bank_root/'source-bank.json').read_text(encoding='utf-8'))
+    if args.transcriptions:
+        if args.paper_id != 'all':
+            parser.error('Use all with the explicit --transcriptions batch, not a conflicting paper selector')
+        print(json.dumps(run_transcription_batch(args.transcriptions,args.output_root,args.bank_root),ensure_ascii=False,indent=2))
+        return
     sources=[s for s in index['sources'] if args.paper_id=='all' or s['paper_id']==args.paper_id]
     if not sources: raise ValueError('Unknown paper ID')
     analyzer=QuestionAnalyzer(Registry()); fingerprints=runtime_hashes(); summaries=[]
