@@ -96,7 +96,7 @@ def make_request(output,bundle_path,status_path,question_id,question_cue,hit_cue
     for id,start,end in (('QUESTION_PREFIX',0,cue['start']),('QUESTION_KEYWORD',cue['start'],cue['end']),('QUESTION_SUFFIX',cue['end'],len(qtext))):
         question_parts.append({'id':id,'start':start,'end':end,'text':qtext[start:end],'text_sha':sha(qtext[start:end]),
                                'position':[150+float(ImageFont.truetype(ep,34).getlength(qtext[:start])),203]})
-    r={'kind':'frozen_full_passage_location_visual_research','version':'0.2.15','source':source,
+    r={'kind':'frozen_full_passage_location_visual_research','version':'0.2.17','source':source,
         'canvas':[3840,2160,24,20],'render_scale':2,
         'motion_profile':{'version':'0.1.0','camera_lag_frames':{'fast':1,'guided':2},
             'departure_depth':24,'background_delay_frames':{'fast':1,'guided':2},
@@ -126,6 +126,8 @@ def make_request(output,bundle_path,status_path,question_id,question_cue,hit_cue
         'max_gain':{'fast':.015,'guided':.02},'enter_frames':4,'exit_frames':6,
         'curve':'quintic_smootherstep','collision_reserve':2,
         'identity':'same_source_words','background':'transparent'}
+    r['row_handoff']={'version':'0.1.0','half_frames':{'fast':1,'guided':2},
+        'max_row_fraction':.5,'curve':'quintic_hermite','preserve_endpoint_velocity':True}
     r['spec_sha']=sha({k:v for k,v in r.items() if k not in ('project','bundle_path','status_path')})
     validate(r);return r
 
@@ -140,15 +142,18 @@ def validate(r):
                 'scan_carry_influence':22,'bounce':False,'extra_zoom':False,
                 **({'sentence_occlusion':'unadorned_bound_paper_plane','geometry_sampling':'96hz_lift_only',
                     'plane_depth_offset':20} if r.get('version')=='0.2.13' else {}),
-                **({'foreground_background':'transparent','background_clear':'fade_out_during_reflow'} if r.get('version') in ('0.2.14','0.2.15') else {})})
-            or r.get('version') not in ('0.2.8','0.2.9','0.2.13','0.2.14','0.2.15')
+                **({'foreground_background':'transparent','background_clear':'fade_out_during_reflow'} if r.get('version') in ('0.2.14','0.2.15','0.2.16','0.2.17') else {})})
+            or r.get('version') not in ('0.2.8','0.2.9','0.2.13','0.2.14','0.2.15','0.2.16','0.2.17')
             or source['answer'] is not None or source['method_certification'] is not False
             or any(r[k] is not False for k in ('final_voice_accepted','production_eligible','public_render_ready'))):
         raise ValueError('Only frozen-source visual location, without answer or release promotion')
-    if r['version']=='0.2.15' and r.get('sentence_attention')!={'version':'0.1.0','groups':sentence_groups(r['words']),
+    if r['version'] in ('0.2.15','0.2.16','0.2.17') and r.get('sentence_attention')!={'version':'0.1.0','groups':sentence_groups(r['words']),
             'max_gain':{'fast':.015,'guided':.02},'enter_frames':4,'exit_frames':6,
             'curve':'quintic_smootherstep','collision_reserve':2,'identity':'same_source_words','background':'transparent'}:
         raise ValueError('Sentence attention must preserve literal groups and bounded smooth gain')
+    if r['version'] in ('0.2.16','0.2.17') and r.get('row_handoff')!={'version':'0.1.0','half_frames':{'fast':1,'guided':2},
+            'max_row_fraction':.25 if r['version']=='0.2.16' else .5,'curve':'quintic_hermite','preserve_endpoint_velocity':True}:
+        raise ValueError('Row handoff must preserve velocity in a bounded focal window')
     reconstructed=''.join(w['gap_before']+w['text'] for w in r['words'])+r['trailing_space']
     if reconstructed!=text or any(text[w['start']:w['end']]!=w['text'] or sha(w['text'])!=w['text_sha'] for w in r['words']):
         raise ValueError('Every word and whitespace in every original paragraph must survive')
@@ -339,6 +344,7 @@ def audit(output):
     if r.get('motion_profile'):validate_motion(r,n.get('motion',[]))
     if r.get('motion_profile',{}).get('sentence_occlusion'):validate_sentence_plane(r,n['passes'])
     if r.get('sentence_attention'):validate_attention(r,n.get('sentence_attention',[]))
+    if r.get('row_handoff'):validate_handoffs(r,n.get('row_handoffs',[]))
     expr=c.call('ae_validateExpressions',{'comp_id':str(identity['comp_id']),'sample_times':[3.75,14.75,18.875,19.5],'max_results':1500})
     write(output/'expressions.json',expr)
     if not expr.get('valid') or expr.get('truncated'):raise ValueError('Native expression validation incomplete')
@@ -357,6 +363,27 @@ def validate_attention(r,rows):
                 raise ValueError('Magnification must remain small and uniform')
     if not any(a>b+.01 for row in rows for s in row['samples'] for a,b in zip(s['actual'],s['base'])):
         raise ValueError('Intent is not enough: native magnification must actually execute')
+
+
+def validate_handoffs(r,rows):
+    expected=[(p['kind'],a,b) for p in r['director']['passes']
+              for a,b in zip(r['scan_line_ids'],r['scan_line_ids'][1:])]
+    if [(h['kind'],h['from_line'],h['to_line']) for h in rows]!=expected:
+        raise ValueError('Every visited row boundary needs a native focal handoff')
+    for h in rows:
+        if r.get('version')=='0.2.17' and (h['start']>h['original_return_start']+.00001 or h['end']<h['original_return_end']-.00001):
+            raise ValueError('Do not leave the old one-frame return outside the smooth window')
+        if h['error'] or not 0<h['end']-h['start']<=2*r['row_handoff']['half_frames'][h['kind']]/24+.00001:
+            raise ValueError('Invalid focal handoff window or expression')
+        for actual,expected in (('actual_a','expected_a'),('actual_b','expected_b')):
+            if any(abs(a-b)>.05 for a,b in zip(h[actual],h[expected])):
+                raise ValueError('Focal handoff cannot move its endpoints')
+        for actual,expected in (('actual_va','expected_va'),('actual_vb','expected_vb')):
+            if any(abs(a-b)>20+.05*abs(b) for a,b in zip(h[actual],h[expected])):
+                raise ValueError('Focal handoff must retain endpoint velocity')
+        low,high=sorted([h['actual_a'][1],h['actual_b'][1]])
+        if not low-.05<=h['midpoint'][1]<=high+.05:
+            raise ValueError('Row focus must progress between the actual neighboring rows')
 
 
 def preview(output,without_guide=False):

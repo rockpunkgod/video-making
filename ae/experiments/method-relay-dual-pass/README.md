@@ -254,3 +254,22 @@ ratios as well as expression errors; declaring the intent alone cannot pass.
 The physical departure audit uses pre-expression transforms for the original
 depth-first movement, while attention and sentence-focus audits inspect the
 result after expressions. Visual smoothness still needs human movie review.
+
+### Continuous row handoff — request 0.2.17
+
+Row returns previously moved the focus from line-end to the following line's
+start in one frame. The current refinement replaces each such interval with
+a bounded quintic Hermite transition, matching both endpoint positions and
+incoming/outgoing velocities. Fast uses two frames, Guided up to four, with
+the half-window limited to half of the shorter neighboring row's dwell.
+The window must cover the complete original one-frame return. A preliminary
+quarter-row cap left two Fast short-row joins outside the window; that partial
+draft was stopped and is not a completed delivery.
+
+Only focal handoffs change. Existing sentence gains, text geometry, camera
+route, reading order, highlights, transparent Lift, final poses and 20-second
+timing remain bound to the preceding take. Multi-line sentences keep their
+single envelope. Native readback verifies every visited adjacent row, actual
+endpoints and numerical endpoint velocity. New short-row coverage regressions
+reject a window that smooths only part of the original return. These checks
+do not substitute for original-speed human visual review.

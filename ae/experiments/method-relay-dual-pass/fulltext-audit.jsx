@@ -1,7 +1,16 @@
 (function(){
     var cp=AEMCP.compById(FULLTEXT_COMP),binding=JSON.parse(cp.comment),file=new File(binding.data_file);file.encoding='UTF-8';file.open('r');var b=JSON.parse(file.read());file.close();
     if(b.spec_sha!==binding.spec_sha)throw new Error('Native geometry sidecar binding differs');
-    var words=[],handles={},passes=[],probes=[],annotations=[],questionParts=[],questionHandles={},optionTexts={},guards={},occluder=null,cutouts=[],attention=[];
+    var words=[],handles={},passes=[],probes=[],annotations=[],questionParts=[],questionHandles={},optionTexts={},guards={},occluder=null,cutouts=[],attention=[],handoffs=[];
+    if(b.row_handoffs)for(var hi=0;hi<b.row_handoffs.length;hi++){
+        var h=b.row_handoffs[hi],property=cp.layer('FOCUS_TARGET').transform.position,dt=1/2400;
+        var a=property.valueAtTime(h.start,false),b0=property.valueAtTime(h.end,false),a1=property.valueAtTime(h.start+dt,false),b1=property.valueAtTime(h.end-dt,false),va=[],vb=[];
+        for(var axis=0;axis<3;axis++){va.push((a1[axis]-a[axis])/dt);vb.push((b0[axis]-b1[axis])/dt);}
+        handoffs.push({kind:h.kind,from_line:h.from_line,to_line:h.to_line,start:h.start,end:h.end,
+            original_return_start:h.original_return_start,original_return_end:h.original_return_end,
+            expected_a:h.a,expected_b:h.b,expected_va:h.va,expected_vb:h.vb,actual_a:a,actual_b:b0,actual_va:va,actual_vb:vb,
+            midpoint:property.valueAtTime((h.start+h.end)/2,false),error:property.expressionError});
+    }
     if(b.sentence_attention)for(var ai=0;ai<b.sentence_attention.length;ai++){
         var a=b.sentence_attention[ai],l=cp.layer(a.ids[0]),samples=[];
         for(var wi=0;wi<a.windows.length;wi++){
@@ -97,7 +106,7 @@
             sentence_plane_index:occluder?occluder.index:null,last_sentence_text_index:lastTextIndex});
     }
     return JSON.stringify({kind:b.kind,spec_sha:b.spec_sha,canvas:[cp.width,cp.height,cp.frameRate,cp.duration],renderer:cp.renderer,draft3d:cp.draft3d,resolution_factor:cp.resolutionFactor,
-        motion:motion,sentence_attention:attention,background_cutouts:cutouts,words:words,handles:handles,initial_handles:b.handles,passes:passes,geometry:{whole:b.whole,hit:b.hit,scope:b.scope,lifted:b.lifted,line_boxes:b.line_boxes,space:b.geometry_space},
+        motion:motion,row_handoffs:handoffs,sentence_attention:attention,background_cutouts:cutouts,words:words,handles:handles,initial_handles:b.handles,passes:passes,geometry:{whole:b.whole,hit:b.hit,scope:b.scope,lifted:b.lifted,line_boxes:b.line_boxes,space:b.geometry_space},
         question_parts:questionParts,question_handles:questionHandles,initial_question_handles:b.question_handles,option_texts:optionTexts,viewport_guards:guards,
         temporary_probes:probes,annotation_layers:annotations,visible_attention_cursor:cp.layer('READING_GUIDE').enabled,
         new_method_certification:b.new_method_certification,public_render_ready:b.public_render_ready});

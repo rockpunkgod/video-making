@@ -450,3 +450,58 @@ All 480 encoded frames decode at native 4K; local chronology boards sample
 transparent Lift and final-pose defects. No obvious overlap or paper backing
 appears in those inspected samples. This sparse technical frame inspection
 does not prove original-speed smoothness or replace human visual review.
+
+
+## Row handoff refinement — current delivery
+
+Baseline main@ec066f9. The user marked the preceding sentence-attention take
+as needing refinement specifically at row-to-row transitions. Current output
+is isolated in local `fulltext-acquisition-r26-4k`, request 0.2.17.
+
+The previous focal return jumped from line-end to next line-start in one
+frame. Fourteen actual adjacent-row boundaries now use quintic Hermite
+transitions: two frames Fast, four Guided, preserving endpoint position and
+velocity. All windows include the entire former one-frame interval. Native
+audit measures actual endpoints/velocity and rejects incomplete coverage.
+Astra caught two short-row windows clipped by a preliminary quarter-row cap;
+that partial draft was stopped, confirmed idle in AE before fresh construction,
+and does not count as completed delivery. The half-row cap fixes both joins.
+
+Sentence magnification amounts and shared multi-line envelopes, original
+words/spans, frozen evidence, question cue, camera route, total timing and
+transparent Lift remain unchanged from r24. Original r24 media/project hashes
+and frozen bundle/status file hashes are verified unchanged. No new teaching
+fact, ANSWER/Registry write, voice, music or full-film integration is introduced.
+
+88 relevant portable tests pass, including missing joins, endpoint/velocity
+mismatch and incomplete short-row coverage. Native audit and expression
+validation pass. Eleven native preview samples inspect both formerly clipped
+Fast joins, a Guided return and transparent Lift. Full encoded frame decode
+and dense row-boundary boards are technical evidence, not human taste approval.
+Sentence activation still uses the established reading clock; any perceived
+phase mismatch between that clock and the new focal handoff needs original-speed
+human review. No increase in magnification or blur is claimed.
+
+Human visual review PENDING; listening DEFERRED_BY_USER; P2 integration HOLD.
+`final_voice_accepted=false`, `production_eligible=false`,
+`public_render_ready=false`. Videos and Adobe files remain local only.
+
+Spec SHA: `c6f7d8ef7e20bb88c9f81aa02590dc5371453218ae753ff061f4b58dc71edbe1`.
+Semantic binding (unchanged): `e1f06096dc5feb3238ed39e041b481579df8a30d59dabf67c3f001d4a5cd3961`.
+Native 4K render: 480 frames, 3840 × 2160 / 24 fps; 662593 ms.
+
+`FULLTEXT_LOCATION.mp4`: 480 frames; SHA `fff858f8f7e1a9b892cebdddbe764d1eed8b608f10aa20f44de0ca8445668f7e`.
+
+`FULLTEXT_FAST.mp4`: 168 frames; SHA `955279515b570de34b5d4455cbfd6e7302d9bc8e30600e775c0bb99ff97aa302`.
+
+`FULLTEXT_GUIDED.mp4`: 288 frames; SHA `60ea73e0e576b685c188fecb9a25d3261a4e340ce9ade767e5e62e98bbd3ae3b`.
+
+Native AEP SHA: `3b6d74181951a7c3bf8df541ddca6ebf46ef1447d7865b03aced7c744ba2de87`.
+Executed template SHA: `6698b1113cd55766fca483b3b1170296cc9811270bf55a2bbc0a6ddce8723732`.
+
+All 480 encoded frames decode at native resolution. The chronological boards
+sample 315 frames, with dense coverage around all 14 row boundaries. Root
+inspected boards 02, 03, 14, 15 and 26 for the Fast short joins, Guided row
+handoffs and final transparent Lift. No obvious glyph collision or paper
+backing appears in these samples. This technical inspection does not certify
+original-speed smoothness; current human review remains PENDING.

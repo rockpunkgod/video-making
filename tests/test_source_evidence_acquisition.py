@@ -462,6 +462,28 @@ class FullPassageTests(unittest.TestCase):
 
 
 class SentenceAttentionTests(unittest.TestCase):
+    def test_row_handoff_requires_all_boundaries_and_matching_velocity(self):
+        r={'director':{'passes':[{'kind':'fast'},{'kind':'guided'}]},'scan_line_ids':[0,1],
+           'row_handoff':{'half_frames':{'fast':1,'guided':2}}}
+        rows=[{'kind':kind,'from_line':0,'to_line':1,'start':1,'end':1+2*frames/24,
+               'error':'','expected_a':[100,100,0],'actual_a':[100,100,0],
+               'expected_b':[10,130,0],'actual_b':[10,130,0],
+               'expected_va':[100,0,0],'actual_va':[100,0,0],
+               'expected_vb':[100,0,0],'actual_vb':[100,0,0],'midpoint':[55,115,0]}
+              for kind,frames in [('fast',1),('guided',2)]]
+        fulltext.validate_handoffs(r,rows)
+        current=deepcopy(r);current['version']='0.2.17'
+        covered=deepcopy(rows)
+        for h in covered:h['original_return_start']=1;h['original_return_end']=1+1/24
+        fulltext.validate_handoffs(current,covered)
+        clipped=deepcopy(covered);clipped[0]['start']=1.01
+        with self.assertRaises(ValueError):fulltext.validate_handoffs(current,clipped)
+        with self.assertRaises(ValueError):fulltext.validate_handoffs(r,rows[:1])
+        for field,value in [('actual_va',[10000,0,0]),('actual_a',[101,100,0]),
+                            ('midpoint',[55,150,0]),('error','invalid'),('end',2)]:
+            bad=deepcopy(rows);bad[0][field]=value
+            with self.subTest(field=field),self.assertRaises(ValueError):fulltext.validate_handoffs(r,bad)
+
     def test_literal_groups_do_not_split_at_layout_wrap(self):
         words=[{'id':'a','text':'A','gap_before':''}, {'id':'b','text':'sentence.','gap_before':' '},
                {'id':'c','text':'Next','gap_before':' '}, {'id':'d','text':'one!','gap_before':' '}]

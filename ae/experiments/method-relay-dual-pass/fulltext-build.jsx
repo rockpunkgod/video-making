@@ -132,8 +132,24 @@
     }
     keys(reader.transform.position,readerRows,true);keys(reader.transform.opacity,readerAlpha,true);
     var focus=cp.layers.addNull(20);focus.name='FOCUS_TARGET';focus.threeDLayer=true;focus.transform.anchorPoint.setValue([0,0,0]);keys(focus.transform.position,focusRows,true);
+    var handoffs=[];
+    if(R.row_handoff)for(var pi=0;pi<visits.length;pi++){
+        var visit=visits[pi],pass=R.director.passes[pi];
+        for(var li=1;li<visit.lines.length;li++){
+            var previous=visit.lines[li-1],next=visit.lines[li],boundary=next.start;
+            var half=Math.min(R.row_handoff.half_frames[pass.kind]/24,
+                R.row_handoff.max_row_fraction*Math.min(previous.end-previous.start,next.end-next.start));
+            var begin=boundary-half,end=boundary+half,dt=1/2400;
+            var a=focus.transform.position.valueAtTime(begin,true),b=focus.transform.position.valueAtTime(end,true);
+            var aa=focus.transform.position.valueAtTime(begin-dt,true),bb=focus.transform.position.valueAtTime(end+dt,true);
+            var va=[],vb=[];for(var axis=0;axis<3;axis++){va.push((a[axis]-aa[axis])/dt);vb.push((bb[axis]-b[axis])/dt);}
+            if(begin>boundary-1/24+.00001)throw new Error('Focal handoff must cover the complete original one-frame return');
+            handoffs.push({kind:pass.kind,from_line:previous.line_id,to_line:next.line_id,start:begin,end:end,
+                original_return_start:boundary-1/24,original_return_end:boundary,a:a,b:b,va:va,vb:vb});
+        }
+    }
     var liftWindows=[];for(var i=0;i<R.director.passes.length;i++)liftWindows.push([R.director.passes[i].lift[0],R.director.passes[i].end]);
-    focus.transform.position.expression='(function(){var windows='+JSON.stringify(liftWindows)+';var active=false;for(var i=0;i<windows.length;i++)if(time>=windows[i][0]&&time<=windows[i][1])active=true;if(!active)return value;'
+    focus.transform.position.expression='(function(){var H='+JSON.stringify(handoffs)+';for(var i=0;i<H.length;i++){var h=H[i];if(time>=h.start&&time<=h.end){var d=h.end-h.start,u=(time-h.start)/d,u3=u*u*u,u4=u3*u,u5=u4*u,q=6*u5-15*u4+10*u3,h0=u-6*u3+8*u4-3*u5,h1=-4*u3+7*u4-3*u5;return h.a*(1-q)+h.b*q+h.va*(d*h0)+h.vb*(d*h1);}}var windows='+JSON.stringify(liftWindows)+';var active=false;for(var i=0;i<windows.length;i++)if(time>=windows[i][0]&&time<=windows[i][1])active=true;if(!active)return value;'
         +'var names='+JSON.stringify(R.target_ids)+';var lo=[1e9,1e9,1e9],hi=[-1e9,-1e9,-1e9];'
         +'for(var i=0;i<names.length;i++){var l=thisComp.layer(names[i]),r=l.sourceRectAtTime(time,false),a=l.toWorld([r.left,r.top,0]),b=l.toWorld([r.left+r.width,r.top+r.height,0]);'
         +'for(var j=0;j<3;j++){lo[j]=Math.min(lo[j],a[j],b[j]);hi[j]=Math.max(hi[j],a[j],b[j]);}}return [(lo[0]+hi[0])/2,(lo[1]+hi[1])/2,(lo[2]+hi[2])/2];})();';
@@ -212,7 +228,7 @@
     var data={kind:R.kind,spec_sha:R.spec_sha,whole:whole,hit:hit,scope:scope,lifted:lifted,
         director:R.director,line_boxes:lineBoxes,scan_visits:visits,handles:handles,question_handles:questionHandles,
         retreat_positions:retreatPositions,background_word_scale:backgroundWordScale,lift_look:liftLook,
-        sentence_attention:attention,geometry_space:'native_sourceRect_scaled_plus_unparented_translation',new_method_certification:false,public_render_ready:false};
+        row_handoffs:handoffs,sentence_attention:attention,geometry_space:'native_sourceRect_scaled_plus_unparented_translation',new_method_certification:false,public_render_ready:false};
     var sidecar=new File(dest.parent.fsName+'/native-geometry.json');sidecar.encoding='UTF-8';sidecar.open('w');sidecar.write(JSON.stringify(data));sidecar.close();
     cp.comment=JSON.stringify({kind:R.kind,spec_sha:R.spec_sha,semantic_binding_sha:R.source.semantic_binding_sha,data_file:sidecar.fsName,public_render_ready:false});
     cp.openInViewer();app.project.save(dest);return JSON.stringify({ok:true,comp_id:cp.id,spec_sha:R.spec_sha,project:dest.fsName,data_file:sidecar.fsName});
