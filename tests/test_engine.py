@@ -156,7 +156,19 @@ class AnalyzerTest(unittest.TestCase):
         with self.assertRaises(ValueError): self.a.analyze(q)
     def test_paragraph_scope_not_full_text_coverage(self):
         out=self.a.analyze({'question_id':'q','question_type':'阅读理解','stem':'mainly','task_type':'paragraph_main_idea'})
-        self.assertNotIn('R06',[x['method_id'] for x in out['method_matches']])
+        self.assertEqual([x['method_id'] for x in out['method_matches']],['R16'])
+        self.assertIsNone(out['answer'])
+    def test_reviewed_paragraph_observation_cannot_force_full_text_method(self):
+        for mid in ('R06','R09'):
+            q={'question_id':'q','question_type':'阅读理解','stem':'first paragraph mainly','task_type':'paragraph_main_idea',
+               'observations':[{'method_id':mid,'evidence':[span('stem','first paragraph mainly')],'reviewed':True}]}
+            with self.subTest(method_id=mid),self.assertRaisesRegex(ValueError,'Full-text'):
+                self.a.analyze(q)
+    def test_whole_text_tasks_keep_existing_framework_and_coverage_entry(self):
+        for task in ('main_idea','purpose','title'):
+            out=self.a.analyze({'question_id':'q','question_type':'阅读理解','stem':'whole text','task_type':task})
+            with self.subTest(task=task):
+                self.assertEqual([x['method_id'] for x in out['method_matches']],['R09','R06'])
     def test_unknown_type_abstains(self):
         out=self.a.analyze({'question_id':'q','question_type':'未知','stem':'unclear'})
         self.assertEqual(out['status'],'unsupported_type')
@@ -193,7 +205,7 @@ class AnalyzerTest(unittest.TestCase):
     def test_punctuation_does_not_break_spoken_symptom(self):
         self.assertEqual([x['method_id'] for x in symptom_route('语法填空','不知道，谓语还是非谓语？',self.r)],['G12'])
     def test_paragraph_symptom_never_claims_whole_text_coverage(self):
-        self.assertNotIn('R06',[x['method_id'] for x in symptom_route('阅读理解','这段主旨二选一',self.r)])
+        self.assertEqual([x['method_id'] for x in symptom_route('阅读理解','这段主旨二选一',self.r)],['R16'])
     def test_specific_symptom_not_preempted_by_generic_entry(self):
         out=self.a.analyze({'question_id':'specific','question_type':'阅读理解','stem':'','student_symptoms':['定位句看不懂']})
         self.assertEqual(out['method_chain'][0]['method_id'],'R11')

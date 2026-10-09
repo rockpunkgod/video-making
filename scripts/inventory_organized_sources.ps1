@@ -18,10 +18,13 @@ if (-not (Test-Path -LiteralPath $SourceRoot -PathType Container)) {
     throw "Source directory not found: $SourceRoot"
 }
 
-$resolvedRoot = (Resolve-Path -LiteralPath $SourceRoot).Path.TrimEnd('\')
+$pathSeparators = [char[]]@([IO.Path]::DirectorySeparatorChar, [IO.Path]::AltDirectorySeparatorChar)
+$resolvedRoot = (Resolve-Path -LiteralPath $SourceRoot).Path.TrimEnd($pathSeparators)
 $resolvedOutputPath = [System.IO.Path]::GetFullPath($OutputPath)
-if ($resolvedOutputPath.Equals($resolvedRoot, [StringComparison]::OrdinalIgnoreCase) -or
-    $resolvedOutputPath.StartsWith($resolvedRoot + '\', [StringComparison]::OrdinalIgnoreCase)) {
+$pathComparison = if ([IO.Path]::DirectorySeparatorChar -eq '\') { [StringComparison]::OrdinalIgnoreCase } else { [StringComparison]::Ordinal }
+$sourcePrefix = $resolvedRoot + [IO.Path]::DirectorySeparatorChar
+if ($resolvedOutputPath.Equals($resolvedRoot, $pathComparison) -or
+    $resolvedOutputPath.StartsWith($sourcePrefix, $pathComparison)) {
     throw 'Inventory output must be outside the supplied source directory'
 }
 $existingManifest = $null
@@ -36,7 +39,7 @@ if (-not (Test-Path -LiteralPath $outputDirectory -PathType Container)) {
 $items = @(
     Get-ChildItem -LiteralPath $resolvedRoot -File -Recurse -Force | ForEach-Object {
         $file = $_
-        $relativePath = $file.FullName.Substring($resolvedRoot.Length).TrimStart('\')
+        $relativePath = $file.FullName.Substring($resolvedRoot.Length).TrimStart($pathSeparators)
         $title = [System.IO.Path]::GetFileNameWithoutExtension($file.Name)
 
         $claimsAnswers = $title -match '(解析|答案|参考答案|答题卡|answer|solution)'

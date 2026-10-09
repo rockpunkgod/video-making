@@ -38,4 +38,18 @@ class OrganizedInventoryTests(unittest.TestCase):
             self.assertNotEqual(self.invoke(source,output).returncode,0)
             self.assertFalse(output.exists())
 
+    def test_source_prefix_sibling_is_not_inside_source(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root=Path(tmp); source=root/'source'; source.mkdir()
+            output=root/'source-other/manifest.json'
+            result=self.invoke(source,output)
+            self.assertEqual(result.returncode,0,result.stderr.decode('utf-8',errors='replace'))
+            self.assertTrue(output.is_file())
+
+    def test_output_equal_to_source_is_rejected(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            source=Path(tmp)/'source'; source.mkdir()
+            self.assertNotEqual(self.invoke(source,source).returncode,0)
+            self.assertTrue(source.is_dir())
+
 if __name__=='__main__': unittest.main()
