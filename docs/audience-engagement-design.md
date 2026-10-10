@@ -1,5 +1,17 @@
 # Audience Engagement Design v0.1
 
+## v0.2 extension
+
+The v0.1 direction contract and existing tests remain supported. New `schema_version=0.2.0` directions use PROBLEM, CURIOSITY, ORIENTATION, SEARCH, RECOGNITION, ANTICIPATION, COMPARISON, DISCOVERY, PAYOFF, PROGRESSION and RECALL. Every beat adds `viewer_state` and explicit `editorial_signals`; all other frozen bindings and restrictions remain intact.
+
+`viewer_state` contains current_problem, information_already_seen, current_attention_object, viewer_expectation, viewer_task, unresolved_question and next_information_gain. Seen information is a list of earlier beat IDs within that same question, preventing future or cross-question references; all other entries are editorial descriptions. These states are designed viewing tasks, not measured mental states or new teaching claims.
+
+`editorial_signals` requires booleans hook_link_clear, payoff_leaked, reading_space, motion_without_gain, repeated_explanation, method_name_dominates, voice_over_hold and information_overload. They are declared editing concerns, not observations of retention or comprehension. Local replay without new information and subsequent questions without novelty also generate concrete issues: episode/question/beat, type, reason, viewer cost, recommended edit and source constraints. No aesthetic PASS is returned.
+
+`director_handoff` validates the audience plan against current frozen inputs and binds each beat to explicitly named existing Adaptive scenes sharing its source refs. It carries only suggestions and planned scene ranges. It does not execute Adobe, alter native events or manufacture export times. Playback meanings map to existing Fast Pass, Local Replay, Guided Inline, Observation Hold and Payoff Hold; Action/Attention/Comprehension clocks remain in the existing production system.
+
+Release observations, final-cut reviews and rule evolution are separate from this Director. See [Audience Learning Loop](audience-learning-loop.md), [upstream mapping](cheat-on-content-integration.md) and [architecture audit](../AUDIENCE_ENGAGEMENT_ARCHITECTURE_AUDIT.md). The original v0.1 reference below describes the retained compatibility contract.
+
 **Purpose:** Design viewer attention, curiosity, participation, new information, cognitive release and the transition between questions in a FREE_SHOWCASE episode. This is a creative editorial layer, not a solver, retention predictor, extra pedagogy gate or TTS/motion engine.
 
 ## Integration
