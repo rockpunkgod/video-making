@@ -393,7 +393,8 @@ class ActualMediaTests(unittest.TestCase):
             target=Path(folder)/'synthetic.mp4'
             subprocess.run(['ffmpeg','-v','error','-f','lavfi','-i','color=c=black:s=3840x2160:r=24',
                 '-f','lavfi','-i','anullsrc=r=48000:cl=stereo','-t','0.125','-c:v','libx264','-preset','ultrafast',
-                '-threads','2','-pix_fmt','yuv420p','-c:a','aac',str(target)],check=True)
+                '-threads','2','-pix_fmt','yuv420p','-c:a','aac',
+                '-metadata','title=英语有画说',str(target)],check=True)
             self.assertTrue(inspect_media(target)['full_decode'])
             picture=Path(folder)/'picture.mp4'
             subprocess.run(['ffmpeg','-v','error','-i',str(target),'-an','-c:v','copy',str(picture)],check=True)

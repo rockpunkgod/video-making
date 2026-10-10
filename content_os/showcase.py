@@ -34,7 +34,7 @@ def file_sha(path):
 def inspect_media(path):
     """Inspect and fully decode the actual export; no manifest-only PASS."""
     probe = subprocess.run(['ffprobe', '-v', 'error', '-show_streams', '-show_format',
-        '-of', 'json', str(path)], capture_output=True, text=True, check=True)
+        '-of', 'json', str(path)], capture_output=True, text=True, encoding='utf-8', check=True)
     value = json.loads(probe.stdout)
     video = next(s for s in value['streams'] if s['codec_type'] == 'video')
     audio = [s for s in value['streams'] if s['codec_type'] == 'audio']
