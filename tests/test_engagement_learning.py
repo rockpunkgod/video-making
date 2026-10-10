@@ -14,7 +14,7 @@ from creative_os.audience_engagement import design_engagement, validate_engageme
 from content_os.engagement_learning import (AudienceLearning, initial_rubric, inspect_final_cut,
     learning_template, bind_media_beats, validate_mapping)
 from content_os.showcase import file_sha
-from video_contracts import sha, validate
+from video_contracts import sha, validate, seal
 
 
 class _Clock(datetime):
@@ -87,7 +87,30 @@ class LearningTests(unittest.TestCase):
         return self.loop.retrospective(obs,{'H1':{'status':'INCONCLUSIVE','reason':'总播放量无法判断第二题效果',
             'evidence_refs':['metric:views'],'next_director_edit':'下一期只压缩已知解释并继续记录反馈'}})
 
-    def second_retro(self):
+    def second_retro(self, *, same_sources=False):
+        if not same_sources:
+            from tests import test_video_os as video_fixtures
+            from content_os.candidates import make_candidate
+            from content_os.director import build_draft, finalize_copy
+            from content_os.polisher import IdentityPolisher, polish
+            control=video_fixtures.VideoOSTest();control.setUp()
+            control.req['question']['question_id']='synthetic-third-problem'
+            control.req['question']['stem']+=' independent third synthetic task'
+            control.req['analysis']=control.engine.analyze(control.req['question'])
+            control.req['reviews'][0].update(question_id=control.req['question']['question_id'],
+                input_sha256=sha(control.req['question']),analysis_sha256=sha(control.req['analysis']))
+            bundle,statuses=control.assets()
+            candidate=make_candidate([bundle],[{'asset_id':bundle['asset_id'],'method_id':'R12','action_ids':['loc']}],statuses)
+            self.episode=deepcopy(self.episode);self.statuses={**self.statuses,**statuses}
+            question=self.episode['questions'][1]
+            question['question_id']=bundle['source_snapshot']['question_id']
+            question['package']=finalize_copy(polish(build_draft(candidate,self.statuses),IdentityPolisher()))
+            ref={'asset_id':bundle['asset_id'],'pointer':'/source_snapshot/stem','sha':sha(bundle['source_snapshot']['stem'])}
+            for beat in question['narrative_beats']:beat['source_refs']=[deepcopy(ref)]
+            action=bundle['analysis']['execution_trace'][0]
+            question['payoff']['action_refs']=[{'asset_id':bundle['asset_id'],'pointer':'/analysis/execution_trace/0','sha':sha(action)}]
+            question['payoff']['output_shas']=[sha(action['output'])]
+            self.spec['hypotheses'][0]['affected_question']=question['question_id']
         self.spec['episode_id']='synthetic-episode-2';self.spec['experiment_id']='synthetic-experiment-2'
         self.media=self.root/'synthetic-second.mp4'
         if self.inspection['media_audit']['duration'] == 30:
@@ -139,13 +162,13 @@ class LearningTests(unittest.TestCase):
             '-f','lavfi','-i','anullsrc=r=48000:cl=stereo','-t','0.125','-c:v','libx264','-preset','ultrafast',
             '-threads','2','-pix_fmt','yuv420p','-c:a','aac',str(self.media)],check=True)
         self.inspection=inspect_final_cut(self.episode,self.statuses,self.copy,self.timeline,self.assets,self.media)
-        before=sha([self.episode,self.statuses]);ident=self.freeze();frozen=deepcopy(self.loop.get(ident))
+        source_inputs=[self.episode,self.statuses];before=sha(source_inputs);ident=self.freeze();frozen=deepcopy(self.loop.get(ident))
         pub=self.publish(ident);obs=self.loop.performance(pub,self.observation(pub));retro=self.retro(obs)
         other=self.second_retro();proposal=self.loop.propose_rule(self.proposal([retro,other]))
         self.loop.activate_rule(proposal,self.review(proposal))
         candidates=self.loop.director_candidates();self.assertEqual(len(candidates),1)
         self.assertEqual(candidates[0]['future_validation'],'PENDING_HOLDOUT')
-        self.assertEqual(self.loop.get(ident),frozen);self.assertEqual(sha([self.episode,self.statuses]),before)
+        self.assertEqual(self.loop.get(ident),frozen);self.assertEqual(sha(source_inputs),before)
         self.assertTrue(all(r['payload']['data_label']=='SYNTHETIC TEST ONLY' for r in self.loop.records()))
         self.assertTrue(all(r['payload']['public_render_ready'] is False for r in self.loop.records()))
 
@@ -195,6 +218,37 @@ class LearningTests(unittest.TestCase):
         self.assertIsNone(obs['metrics']['saves']);self.assertIn('saves',obs['missing_fields'])
         self.assertEqual(self.loop.get(self.retro(obsid))['beat_analysis'],'UNAVAILABLE')
         self.assertEqual(learning_template('q')['retention'],'UNKNOWN')
+
+    def test_csv_file_hash_cannot_replace_missing_source(self):
+        pred=self.freeze();pub=self.publish(pred);meta=self.observation(pub);meta.pop('metrics')
+        csvfile=self.root/'no-source.csv'
+        csvfile.write_text('metric,value,numerator,denominator,unit\nviews,20,20,,count\n',encoding='utf-8')
+        for source in ('','   ',None):
+            with self.subTest(source=source),self.assertRaisesRegex(ValueError,'source'):
+                self.loop.import_csv(pub,csvfile,{**meta,'source':source})
+
+    def test_retrospective_cannot_override_frozen_hypothesis_or_identity(self):
+        pred=self.freeze();original=deepcopy(self.loop.get(pred));pub=self.publish(pred)
+        obs=self.loop.performance(pub,self.observation(pub))
+        judgement={'status':'INCONCLUSIVE','reason':'总播放量不能验证具体片段',
+            'evidence_refs':['metric:views'],'next_director_edit':'继续收集实际观看反馈'}
+        for key,value in (('frozen_hypothesis',{'claim':'改写原始判断'}),('hypothesis_id','H-other')):
+            with self.subTest(key=key),self.assertRaisesRegex(ValueError,'field'):
+                self.loop.retrospective(obs,{'H1':{**judgement,key:value}})
+        self.assertEqual(self.loop.get(pred),original)
+        self.assertEqual(self.loop.get(self.retro(obs))['rows'][0]['frozen_hypothesis'],original['hypotheses'][0])
+
+    def test_renamed_recut_episode_is_not_cross_episode_evidence(self):
+        pred=self.freeze();pub=self.publish(pred);obs=self.loop.performance(pub,self.observation(pub));retro=self.retro(obs)
+        # Change packaging and export bytes, while retaining the same source problems.
+        self.episode['viewer_question']='Same problems, new opening'
+        self.episode['method_recall']='Same problems, new ending'
+        other=self.second_retro(same_sources=True)
+        proposal=self.loop.propose_rule(self.proposal([retro,other]))
+        self.assertEqual(self.loop.get(proposal)['state'],'SINGLE_EPISODE_OBSERVATION')
+        with self.assertRaisesRegex(ValueError,'Single'):
+            self.loop.activate_rule(proposal,self.review(proposal))
+        self.assertEqual(self.loop.director_candidates(),[])
 
     def test_performance_rejects_sources_times_platform_version_window_ratios(self):
         pred=self.freeze();pub=self.publish(pred);original=self.observation(pub)
@@ -286,6 +340,25 @@ class LearningTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError,'Stale'):validate_mapping(mapping,plan,self.episode,changed,settings,self.media)
         tampered=deepcopy(mapping);tampered['ranges'][0]['actual_media']['end_frame']=99
         with self.assertRaises(ValueError):validate_mapping(tampered,plan,self.episode,sequence,settings,self.media)
+        # Recomputing a JSON seal cannot rebind the human-reviewed frame anchors.
+        tampered=seal(tampered)
+        with self.assertRaisesRegex(ValueError,'anchor'):
+            validate_mapping(tampered,plan,self.episode,sequence,settings,self.media)
+        anchors=deepcopy(mapping);anchors['frame_anchors'][0]['end_frame']=99
+        with self.assertRaisesRegex(ValueError,'anchor'):
+            validate_mapping(seal(anchors),plan,self.episode,sequence,settings,self.media)
+        pred=self.freeze();pub=self.publish(pred);observation=self.observation(pub)
+        observation['retention_curve']={'source':'SYNTHETIC TEST ONLY','time_basis':'MEDIA_SECONDS',
+            'media_sha':file_sha(self.media),'points':[
+                {'second':.5,'rate':.8,'numerator':8,'denominator':10},
+                {'second':1.5,'rate':.7,'numerator':7,'denominator':10}]}
+        observed=self.loop.performance(pub,observation)
+        result=self.loop.get(self.loop.beat_retrospective(observed,mapping,plan,self.episode,
+            self.statuses,d,sequence,settings,self.media))
+        self.assertEqual([p['second'] for p in result['rows'][0]['observed_samples']],[.5])
+        self.assertEqual([p['second'] for p in result['rows'][1]['observed_samples']],[1.5])
+        self.assertEqual(result['rows'][2]['status'],'UNAVAILABLE')
+        self.assertTrue(all(r['causal_attribution']=='NOT_ESTABLISHED' for r in result['rows']))
         credential['watched_final']=False
         with self.assertRaisesRegex(ValueError,'human'):bind_media_beats(plan,self.episode,self.statuses,d,self.media,sequence,settings,[],ranges,credential)
 

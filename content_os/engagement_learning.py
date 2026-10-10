@@ -10,6 +10,7 @@ from datetime import datetime, timezone, timedelta
 import json
 import math
 from pathlib import Path
+import re
 import sqlite3
 import subprocess
 from urllib.parse import urlparse
@@ -90,6 +91,20 @@ def cut_bindings(episode, copy, timeline, assets, media):
         'final_media_sha': file_sha(media) if media and Path(media).is_file() else None}
 
 
+def episode_identity(episode):
+    """Group recuts/aliases by source problems, independent of editorial labels."""
+    def normalized(value):
+        if isinstance(value, dict): return {k: normalized(v) for k, v in value.items()}
+        if isinstance(value, list): return [normalized(v) for v in value]
+        return re.sub(r'\s+', ' ', value).strip() if isinstance(value, str) else value
+    problems = []
+    for question in episode['questions']:
+        snapshot = next(b['source_snapshot'] for b in question['package']['source_items']
+            if b['source_snapshot']['question_id'] == question['question_id'])
+        problems.append(sha(normalized({k: snapshot[k] for k in ('stem', 'passage', 'options') if k in snapshot})))
+    return sha(sorted(problems))
+
+
 def encoded_frames(media):
     value = json.loads(subprocess.check_output(['ffprobe','-v','error','-select_streams','v:0',
         '-count_frames','-show_entries','stream=nb_read_frames,r_frame_rate','-of','json',str(media)],encoding='utf-8'))
@@ -138,24 +153,8 @@ def inspect_final_cut(episode, statuses, copy, timeline, assets, media):
     return result
 
 
-def bind_media_beats(plan, episode, statuses, direction, media, sequence, settings,
-                     voices, ranges, credential):
-    """Consume verified Premiere readback, actual export and human frame anchors.
-
-    Half-open frame ranges; each anchor names its actual native clip. A master
-    picture clip may cover several beats. Its subranges require human verification
-    against the export, not interpolation of director estimates.
-    """
-    from creative_os.audience_engagement import validate_engagement
-    from premiere_production.cinema import audit_timeline
-    validate_engagement(plan, episode, statuses, direction)
-    probe = inspect_media(media)
-    total = encoded_frames(media)
-    audit_timeline(sequence, settings, voices, total/24)
-    bindings = {'episode_sha': sha(episode), 'engagement_plan_sha': sha(plan),
-        'native_timeline_sha': sha(sequence), 'settings_sha': sha(settings),
-        'media_sha': file_sha(media), 'ranges_sha': sha(ranges)}
-    human_credential(credential, bindings)
+def media_ranges(plan, sequence, ranges, total, media_sha):
+    """Derive output only from the exact human-bound native frame anchors."""
     clips = [c for track in sequence['videoTracks'] for c in track['clips']]
     expected = {(q['question_id'], b['beat_id']) for q in plan['questions'] for b in q['beats']}
     keys = [(r['question_id'], r['beat_id']) for r in ranges]
@@ -163,6 +162,8 @@ def bind_media_beats(plan, episode, statuses, direction, media, sequence, settin
         raise ValueError('Exact per-question beat anchors required')
     rows = []
     for row in ranges:
+        if set(row) != {'question_id','beat_id','start_frame','end_frame','native_clip_id'}:
+            raise ValueError('Unexpected actual frame anchor field')
         a, b = row['start_frame'], row['end_frame']
         if type(a) is not int or type(b) is not int or not 0 <= a < b <= total:
             raise ValueError('Actual frame range invalid')
@@ -174,9 +175,32 @@ def bind_media_beats(plan, episode, statuses, direction, media, sequence, settin
             raise ValueError('Beat anchor lies outside its actual native clip')
         rows.append({'question_id': row['question_id'], 'beat_id': row['beat_id'],
             'actual_media': {'start_frame': a, 'end_frame': b, 'fps': 24,
-                             'media_sha': bindings['media_sha']}})
+                             'media_sha': media_sha}})
+    return rows
+
+
+def bind_media_beats(plan, episode, statuses, direction, media, sequence, settings,
+                     voices, ranges, credential):
+    """Consume verified Premiere readback, actual export and human frame anchors.
+
+    Half-open frame ranges; each anchor names its actual native clip. A master
+    picture clip may cover several beats. Its subranges require human verification
+    against the export, not interpolation of director estimates.
+    """
+    from creative_os.audience_engagement import validate_engagement
+    from premiere_production.cinema import audit_timeline
+    validate_engagement(plan, episode, statuses, direction)
+    inspect_media(media)
+    total = encoded_frames(media)
+    audit_timeline(sequence, settings, voices, total/24)
+    bindings = {'episode_sha': sha(episode), 'engagement_plan_sha': sha(plan),
+        'native_timeline_sha': sha(sequence), 'settings_sha': sha(settings),
+        'media_sha': file_sha(media), 'ranges_sha': sha(ranges)}
+    human_credential(credential, bindings)
+    rows = media_ranges(plan, sequence, ranges, total, bindings['media_sha'])
     return seal({'schema_version': VERSION, 'kind': 'actual_media_beat_mapping',
-        'bindings': bindings, 'ranges': rows, 'credential': deepcopy(credential),
+        'bindings': bindings, 'frame_anchors': deepcopy(ranges),
+        'ranges': rows, 'credential': deepcopy(credential),
         'status': 'VERIFIED_DECLARED_FRAME_ANCHORS', 'public_render_ready': False})
 
 
@@ -188,6 +212,11 @@ def validate_mapping(mapping, plan, episode, sequence, settings, media):
             'media_sha': file_sha(media)}.items()):
         raise ValueError('Stale actual media mapping; rebind changed timeline/export')
     human_credential(mapping['credential'], b)
+    anchors = mapping.get('frame_anchors')
+    if not isinstance(anchors, list) or sha(anchors) != b['ranges_sha']:
+        raise ValueError('Actual frame anchors do not match the human review binding')
+    if mapping['ranges'] != media_ranges(plan, sequence, anchors, encoded_frames(media), b['media_sha']):
+        raise ValueError('Actual media ranges changed from the reviewed frame anchors')
     return True
 
 
@@ -293,7 +322,7 @@ class AudienceLearning:
             if any(inspection['bindings'][k] != bindings[k] for k in bindings if k != 'final_media_sha'):
                 raise ValueError('Final-cut inspection binds another version')
             bindings = deepcopy(inspection['bindings'])
-        payload = {**deepcopy(spec), **bindings,
+        payload = {**deepcopy(spec), **bindings, 'episode_identity_sha': episode_identity(episode),
             'prediction_status': 'FROZEN_FINAL_CUT' if final else 'PRE_PRODUCTION_HYPOTHESIS',
             'prediction_created_at': now(), 'publication_status': 'NOT_REGISTERED_AT_FREEZE',
             'confidence': 'LOW_EDITORIAL_JUDGEMENT',
@@ -407,6 +436,7 @@ class AudienceLearning:
 
         Empty value is missing, never zero. Exact source file SHA is retained.
         """
+        text_fields(metadata, ('source',))
         metrics = {}
         with Path(path).open(encoding='utf-8-sig', newline='') as stream:
             reader = csv.DictReader(stream)
@@ -497,12 +527,14 @@ class AudienceLearning:
         available = {'metric:'+k for k in METRICS if observation['metrics'].get(k) is not None} | {r['id'] for r in feedback}
         rows = []
         for hid, row in judgements.items():
+            if set(row) != {'status','reason','next_director_edit','evidence_refs'}:
+                raise ValueError('Unexpected retrospective judgement field')
             text_fields(row, ('reason','next_director_edit'))
             if row['status'] not in ('INCONCLUSIVE','CONSISTENT','CONTRADICTED'):
                 raise ValueError('No automatic causal verification')
             if not set(row['evidence_refs']) <= available: raise ValueError('Judgement cites unavailable evidence')
             if row['status'] != 'INCONCLUSIVE' and not row['evidence_refs']: raise ValueError('Evidence required')
-            rows.append({'hypothesis_id': hid, 'frozen_hypothesis': hypotheses[hid], **deepcopy(row),
+            rows.append({**deepcopy(row), 'hypothesis_id': hid, 'frozen_hypothesis': deepcopy(hypotheses[hid]),
                 'status_scope':'DESCRIPTIVE_NOT_CAUSAL', 'confidence':'LOW',
                 'source_constraints':'保留必要 Evidence、Stop、Role 与实际动作范围；由 Director 审阅建议'})
         beat_status = 'UNAVAILABLE'
@@ -534,6 +566,16 @@ class AudienceLearning:
         return self._save('beat_retrospective', {'performance_id':performance_id,
             'mapping_sha':sha(mapping),'status':'DESCRIPTIVE_SAMPLES_ONLY' if curve else 'UNAVAILABLE','rows':rows})
 
+    def sample_identities(self, retrospective_ids):
+        identities, media = set(), set()
+        for ident in retrospective_ids:
+            retro = self.get(ident, 'retrospective')
+            pred = self.get(retro['prediction_id'], 'prediction')
+            # Never backfill identity into an immutable historical prediction.
+            text_fields(pred, ('episode_identity_sha', 'final_media_sha'))
+            identities.add(pred['episode_identity_sha']); media.add(pred['final_media_sha'])
+        return identities, media
+
     def propose_rule(self, proposal):
         text_fields(proposal, ('rule_kind','rule','source','applicable_conditions','proposer'))
         if set(proposal) != {'rule_kind','rule','source','applicable_conditions','proposer','supporting_retros',
@@ -543,7 +585,7 @@ class AudienceLearning:
         supporting, opposing = proposal['supporting_retros'], proposal['opposing_retros']
         if not supporting or set(supporting) & set(opposing): raise ValueError('Evidence and explicit counterexamples required')
         for ident in supporting + opposing: self.get(ident, 'retrospective')
-        episodes = {self.get(i, 'retrospective')['episode_id'] for i in supporting}
+        episodes, media = self.sample_identities(supporting)
         if proposal['rule_kind']=='EVALUATION_RULE':
             rubric = proposal['new_rubric']; validate('audience-rubric', rubric)
             if not proposal['change_log'] or rubric.get('weights') is not None:
@@ -552,7 +594,7 @@ class AudienceLearning:
                 raise ValueError('New rubric requires new version')
         elif proposal['new_rubric'] is not None: raise ValueError('Creative pattern is not a rubric')
         return self._save('proposal', {**deepcopy(proposal), 'confidence':'LOW',
-            'state':'CROSS_EPISODE_CANDIDATE' if len(episodes)>1 else 'SINGLE_EPISODE_OBSERVATION',
+            'state':'CROSS_EPISODE_CANDIDATE' if len(episodes)>1 and len(media)>1 else 'SINGLE_EPISODE_OBSERVATION',
             'effective_version':None})
 
     def activate_rule(self, proposal_id, review):
@@ -566,8 +608,8 @@ class AudienceLearning:
         if (review['reviewer_kind'] != 'human' or review.get('origin') != 'external_human' or review.get('status') != 'pass'
                 or review['reviewer']==proposal['proposer'] or review['bindings']!=bindings):
             raise ValueError('Independent external human/editorial review required')
-        supports = [self.get(i,'retrospective') for i in proposal['supporting_retros']]
-        if len({r['episode_id'] for r in supports}) < 2:
+        episodes, media = self.sample_identities(proposal['supporting_retros'])
+        if len(episodes) < 2 or len(media) < 2:
             raise ValueError('Single episode/comment cannot establish a reusable rule')
         samples = proposal['supporting_retros'] + proposal['opposing_retros']
         if not set(samples) <= set(review['replay']): raise ValueError('Replay all supporting and opposing historical samples')

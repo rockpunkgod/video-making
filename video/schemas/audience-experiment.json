@@ -25,6 +25,10 @@
       "type": "string",
       "pattern": "^[0-9a-f]{64}$"
     },
+    "episode_identity_sha": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
     "final_copy_sha": {
       "type": "string",
       "pattern": "^[0-9a-f]{64}$"
