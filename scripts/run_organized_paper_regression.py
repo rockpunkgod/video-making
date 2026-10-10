@@ -207,7 +207,7 @@ def validate_transcription(value, dossier, dataset_root=None):
                 visual=binding.get('blank_marker_visual_check')
                 if not isinstance(visual,dict) or visual.get('confirmed') is not True or \
                         visual.get('printed_number')!=marker_number or visual.get('source_sha256')!=value['source_sha256']:
-                    raise ValueError('Non-underlined blank marker needs explicit source visual confirmation')
+                    raise ValueError('Non-underlined blank marker needs blank confirmation with explicit source visual confirmation')
                 check_visual_reference(visual,dataset_root)
             tail = content[stem_spans[0]['end']:]
             hint = re.match(r'[_＿]*\s*[（(]\s*([A-Za-z]+(?:[ -][A-Za-z]+){0,2})\s*[）)]',tail)

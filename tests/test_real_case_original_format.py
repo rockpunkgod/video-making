@@ -58,6 +58,35 @@ class OriginalFormatTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError,'fingerprint'):
             source_check(self.root,request['source'],self.fixture.question,blind)
 
+    def test_top_source_hash_can_bind_field_only_question_metadata(self):
+        request,blind=self.word_request()
+        fingerprint=request['source']['original_sha256']
+        blind['source_sha256']=fingerprint
+        blind['source_bindings'][request['question_id']]={'fields':{'synthetic_metadata':True}}
+        source_check(self.root,request['source'],self.fixture.question,blind)
+        # An unrelated truthy object is not sufficient without either identity.
+        blind.pop('source_sha256')
+        with self.assertRaisesRegex(ValueError,'fingerprint required'):
+            source_check(self.root,request['source'],self.fixture.question,blind)
+
+    def test_question_source_hash_cannot_conflict_with_top_hash(self):
+        request,blind=self.word_request()
+        blind['source_sha256']=request['source']['original_sha256']
+        for fingerprint in ('0'*64,None,''):
+            with self.subTest(fingerprint=fingerprint):
+                blind['source_bindings'][request['question_id']]['source_sha256']=fingerprint
+                with self.assertRaisesRegex(ValueError,'fingerprint mismatch'):
+                    source_check(self.root,request['source'],self.fixture.question,blind)
+
+    def test_blind_source_bindings_and_question_entries_require_objects(self):
+        request,blind=self.word_request()
+        blind['source_sha256']=request['source']['original_sha256']
+        for bindings in ([],None,'invalid',{request['question_id']:[]}):
+            with self.subTest(bindings=bindings):
+                blind['source_bindings']=bindings
+                with self.assertRaisesRegex(ValueError,'source binding'):
+                    source_check(self.root,request['source'],self.fixture.question,blind)
+
     def test_original_format_is_not_inferred_or_laundered(self):
         request,blind=self.word_request()
         for edit in ({'source_format':'pdf'}, {'source_format':'unknown'},

@@ -274,10 +274,14 @@ def source_check(root, source, question, blind):
     if 'source_sha256' in blind and top_source != fingerprint:
         raise ValueError('Frozen blind top-level source '+('original' if generic else 'PDF')+' fingerprint mismatch')
     bindings = blind.get('source_bindings', {})
+    if not isinstance(bindings, dict):
+        raise ValueError('Frozen blind source bindings must be keyed by question ID')
     existing = bindings.get(question['question_id'], {})
-    if existing and existing.get('source_sha256') != fingerprint:
+    if not isinstance(existing, dict):
+        raise ValueError('Frozen blind question source binding must be an object')
+    if 'source_sha256' in existing and existing['source_sha256'] != fingerprint:
         raise ValueError('Frozen blind source original fingerprint mismatch')
-    if top_source is None and not existing:
+    if top_source is None and existing.get('source_sha256') != fingerprint:
         raise ValueError('Frozen blind source '+('original' if generic else 'PDF')+' fingerprint required')
     if source.get('usage_status') != 'local_research_only' or source.get('answer_authority') not in {
             'third_party_unverified','user_supplied_unverified'}:
