@@ -74,10 +74,23 @@ def validate_experience(beats, source, events):
             raise ValueError('Guided replay needs distinct decision/reading value')
         clocks = beat['clocks']
         for key in ('action', 'attention', 'comprehension'):
+            if key == 'action' and clocks[key] is None:
+                continue  # A stationary reading beat has no physical action.
             a, b = clocks[key]
             if type(a) is not int or type(b) is not int or not 0 <= a <= b:
                 raise ValueError('Versioned integer frame clocks required')
     return beats
+
+
+def map_event(mapping, first_frame, end_frame):
+    """Map a concrete native event; do not invent motion from VO timing."""
+    if type(first_frame) is not int or type(end_frame) is not int or first_frame >= end_frame:
+        raise ValueError('Native integer-frame event required')
+    if first_frame not in mapping:
+        raise ValueError('Native event is absent from the cut')
+    a = mapping.index(first_frame)
+    b = next((i for i, frame in enumerate(mapping) if frame >= end_frame), len(mapping))
+    return [a, b]
 
 
 def fit_voice(mapping, placements, durations, safe_holds, fps=FPS):

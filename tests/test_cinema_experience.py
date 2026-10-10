@@ -9,6 +9,11 @@ c=importlib.util.module_from_spec(spec);spec.loader.exec_module(c)
 
 
 class CinemaTests(unittest.TestCase):
+    def test_native_event_is_mapped_through_inserted_reading_holds(self):
+        mapping=[0,1,1,1,2,3,4]
+        self.assertEqual(c.map_event(mapping,1,3),[1,5])
+        with self.assertRaises(ValueError):c.map_event(mapping,9,10)
+
     def test_changed_source_invalidates_editorial_binding(self):
         source={'semantic_binding_sha':'synthetic','text':'SYNTHETIC ONLY'}
         ref=c.reference(source,'/text')

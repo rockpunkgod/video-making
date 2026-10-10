@@ -12,7 +12,13 @@ Generate new narration from an explicitly reviewed scratch script with the curre
 
 `cinema.jsx` builds a new 4K24 AE derivative in an isolated copy. It retains the original source comp and word objects, hides obsolete silent-preview metadata and adds source-bound captions. Never overwrite accepted projects or infer new audience approval from object readback.
 
-Keep Premiere clips, narration, ducked music and optional minimal tactile SFX separately editable. Importing an XML or finding an audio stream is insufficient: inspect actual native timeline paths, complete speech placement and final encoded waveform correlation. A silent native export is a failed take. A separately assembled playable proof must be labelled as such; it does not certify the native Premiere export.
+Resolve imported Premiere items by actual absolute media path, never by duplicate display names. Create a fresh native sequence and place narration with explicit seconds converted from versioned frame coordinates. Inspect a complete live timeline before export. `premiere_production/cinema.py` verifies native placement and actual encoded waveform correlation. Bind an installed Adobe encoding preset explicitly when automatic discovery fails.
+
+Keep source narration, ducked music and tactile SFX stems. The current registered bridge creates three audio tracks and has no track-add operation; stereo beds occupy two tracks. The minimal-SFX version therefore uses a derived music/SFX bed while individual narration remains editable. Original stems and their hashes remain available. Independent native SFX-track editing is a remaining adapter capability gap.
+
+After a mutation times out, reconcile against fresh host state before continuing. A mismatched or unavailable readback remains unresolved. Missing coordinate conversion, shifted/truncated speech and incomplete timeline pagination are rejected before an export can be accepted.
+
+Guided copy uses normal task-specific prompts: direct attention to the relevant condition, compare the actual samples and check the displayed qualifier. Convey scope through the concrete source and check; avoid generic defensive warnings. Updated copy requires new transcript-bound takes, captions, timing and pending human reviews. Stationary reading has a null Action Clock; concrete movement windows reference the native event table. Attention and comprehension allocations remain editorial intentions.
 
 Release gates remain independent: cinematic engagement, guided understanding, independent transfer, human listening, teaching certification, actual displayed-source rights and final editorial approval. No fresh transfer exercise is invented when upstream authority is absent. Internal review files do not confer publication permission.
 

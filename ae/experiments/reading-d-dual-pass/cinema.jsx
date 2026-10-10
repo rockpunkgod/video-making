@@ -26,7 +26,7 @@
     for(i=0;i<r.captions.length;i++){
         var row=r.captions[i],t=comp.layers.addText(wrap(row.text));t.name='BOUND_SCRATCH_CAPTION_'+row.id;t.inPoint=row.start_frame/24;t.outPoint=row.end_frame/24;
         var prop=t.property('ADBE Text Properties').property('ADBE Text Document'),d=prop.value;d.font='NotoSansSC-Regular';d.fontSize=64;d.fillColor=[40/255,44/255,46/255];d.applyFill=true;d.applyStroke=true;d.strokeColor=[1,1,1];d.strokeWidth=2;d.justification=ParagraphJustification.CENTER_JUSTIFY;d.autoLeading=false;d.leading=76;prop.setValue(d);
-        var rect=t.sourceRectAtTime(t.inPoint,false);t.property('ADBE Transform Group').property('ADBE Anchor Point').setValue([0,rect.top+rect.height]);t.property('ADBE Transform Group').property('ADBE Position').setValue([1920,2102]);
+        var rect=t.sourceRectAtTime(t.inPoint,false);t.property('ADBE Transform Group').property('ADBE Anchor Point').setValue([0,rect.top+rect.height]);t.property('ADBE Transform Group').property('ADBE Position').setValue([1920,r.caption_bottom || 2102]);
         t.comment=JSON.stringify({source_refs:row.source_refs,script_sha:r.script_sha,human_review:'PENDING'});checks.push({id:row.id,text:prop.value.text,font:prop.value.font,width:rect.width,height:rect.height});
     }
     var bad=0;for(i=0;i<r.frame_mapping.length;i++)if(Math.round(remap.valueAtTime(i/24,false)*24)!==r.frame_mapping[i])bad++;
