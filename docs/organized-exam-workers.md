@@ -206,6 +206,10 @@ REQUEST 是相对私有 dataset 的路径，不是公开 Case 文件。请求必
 旧 PDF 请求继续沿用 `pdf_path`、`pdf_sha256` 和 `question_binding.pdf_sha256_pointer`，不改历史字节。
 新格式请求使用 `original_path`、`original_sha256`、`source_format=pdf|docx|doc`，
 以及 `question_binding.original_sha256_pointer`；独立审阅对应绑定 `source_original_sha256`。
+冻结卷的 `source_sha256` 可统一绑定该卷全部核心题面；若另有 `source_bindings`，它必须是按题 ID 索引的字典，
+逐题条目也是字典。顶层或逐题指纹只要声明就必须匹配原件；没有顶层指纹时，该题必须有自己的匹配指纹。
+条目只有 `fields` 而没有重复指纹时，可使用已核的顶层指纹，不能凭非空条目替代来源身份。
+语法输入中 `given_word:null` 表示已确认无提示词，字段缺失则是尚未标注；两者不是可事后互换的冻结材料。
 两套字段不能混用。入口核路径扩展名、原件字节指纹及格式标记，DOCX 还核 Word 文档 XML、包内容类型与主文档关系，
 DOC 使用 `organized-exams` 可选依赖解析 OLE 容器并核 WordDocument / Table 流和 Word FIB 标记；
 这些检查不认证题源官方身份、逐字语义或源题完整性，转换件仍只作另存视觉旁路。
