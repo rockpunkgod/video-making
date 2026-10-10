@@ -52,7 +52,7 @@ First-use/Transfer is deliberately not an input. Approval claims no method matur
 
 The unit is **one core method → one episode → two or three independently bound real questions**. Method organizes the episode; question drives narrative; action drives motion. Establish/Variation/optional Amplification are editorial roles, not certified transfer. Each question has original task, observation, first action, necessary helpers, evidence, judgment, payoff and lawful closure. Helpers retain attribution; no question borrows another question's Review.
 
-Use shared Signature Motion with independent choreography. First-question replay may be fuller; later replay is optional. Approximately 90–180 seconds is an editorial starting point, never a hard gate. Approximately 20–45 seconds is for derivatives, which require renewed scope/display/editorial/media review. If only one supported question exists, report the missing second source.
+Use shared Signature Motion with independent choreography. First-question replay may be fuller; later replay is optional. The user sets no duration requirement or upper limit. Earlier duration targets and ranges are obsolete as constraints; timings only describe the evolving cut. Derivatives require renewed scope/display/editorial/media review. If only one supported question exists, report the missing second source.
 
 ## Lightweight interfaces
 
