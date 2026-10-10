@@ -206,10 +206,12 @@ REQUEST 是相对私有 dataset 的路径，不是公开 Case 文件。请求必
 旧 PDF 请求继续沿用 `pdf_path`、`pdf_sha256` 和 `question_binding.pdf_sha256_pointer`，不改历史字节。
 新格式请求使用 `original_path`、`original_sha256`、`source_format=pdf|docx|doc`，
 以及 `question_binding.original_sha256_pointer`；独立审阅对应绑定 `source_original_sha256`。
-两套字段不能混用。入口核路径扩展名、原件字节指纹及格式标记，DOCX 还核 Word 文档 XML；
+两套字段不能混用。入口核路径扩展名、原件字节指纹及格式标记，DOCX 还核 Word 文档 XML、包内容类型与主文档关系，
+DOC 使用 `organized-exams` 可选依赖解析 OLE 容器并核 WordDocument / Table 流和 Word FIB 标记；
 这些检查不认证题源官方身份、逐字语义或源题完整性，转换件仍只作另存视觉旁路。
 存在揭晓适配器时，它的原对照 JSON 和参考原件也须同时绑定字节指纹：旧版 `reference_pdf_ref`，
 新版 `reference_original_ref={path,sha256,format}`。不能同时给两套参考原件字段。
+新版原对照 JSON 也须包含相同 `reference_original_ref`，防止分别绑定两个无关文件。
 独立审阅逐项核触发、动作、证据、主要职责、Stop 和案例类型，并绑定该方法自己的执行 ID。
 辅助分组/骨架不领取其他方法或整题答案信用。工具核一致性与可重放，不认证审阅者身份或英语语义。
 
@@ -218,6 +220,8 @@ REQUEST 是相对私有 dataset 的路径，不是公开 Case 文件。请求必
 同键重登拒绝；另一个 PDF/Word 版本只能显式核对来源别名，不增加 Case 数。题号/文件名相似不作同题证据。
 新格式来源别名使用 `old_original_sha256` / `new_original_sha256`，显式复用原 `case_id`，
 独立审阅确认 `source_alias_reconciled=true`；旧 PDF 别名链保持兼容，不迁移或重写历史。
+新版别名还核全部核心题面字段，仅允许 Unicode/空白显示差异，不能凭 canonical ID 声明合并内容不同的题；
+实质版本差异另存待复核，不靠改 ID、哈希或审阅标志绕过同题约束。
 同一冻结题面核心指纹只能对应一个 canonical ID，重新封装盲稿元数据也不能换名绕过登记去重。
 该指纹包含原题 ID、题型及全部核心题面字段；不是只凭某段文字相同合并不同题。
 原题全文复用已有冻结输入，Catalog 只存引用与方法动作证据；所有内容仍在私有目录。

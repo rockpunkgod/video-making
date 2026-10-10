@@ -10,6 +10,7 @@ import io
 import json
 from pathlib import Path
 import re
+import unicodedata
 from zipfile import BadZipFile, ZipFile
 import xml.etree.ElementTree as ET
 
@@ -155,12 +156,39 @@ def check_original(root, path, fingerprint, fmt):
         raise ValueError('Original source is not PDF bytes')
     if fmt == 'doc' and not raw.startswith(bytes.fromhex('d0cf11e0a1b11ae1')):
         raise ValueError('Original source is not legacy Word bytes')
+    if fmt == 'doc':
+        try:
+            import olefile
+        except ImportError as exc:
+            raise ValueError('Legacy Word validation requires the organized-exams optional dependencies') from exc
+        try:
+            with olefile.OleFileIO(io.BytesIO(raw), raise_defects=olefile.DEFECT_FATAL) as container:
+                if not container.exists('WordDocument') or not any(container.exists(name) for name in ('0Table','1Table')):
+                    raise ValueError('Legacy Word container lacks document/table streams')
+                if container.openstream('WordDocument').read(2) != b'\xec\xa5':
+                    raise ValueError('Legacy Word document stream lacks Word FIB signature')
+        except OSError as exc:
+            raise ValueError('Original source is not a readable legacy Word container') from exc
     if fmt == 'docx':
         try:
             with ZipFile(io.BytesIO(raw)) as archive:
                 document = ET.fromstring(archive.read('word/document.xml'))
                 if document.tag != '{http://schemas.openxmlformats.org/wordprocessingml/2006/main}document':
                     raise ValueError('Original DOCX lacks a Word document root')
+                types=ET.fromstring(archive.read('[Content_Types].xml'))
+                rels=ET.fromstring(archive.read('_rels/.rels'))
+                ct='{http://schemas.openxmlformats.org/package/2006/content-types}'
+                rel='{http://schemas.openxmlformats.org/package/2006/relationships}'
+                main_type='application/vnd.openxmlformats-officedocument.wordprocessingml.document.main+xml'
+                office_rel='http://schemas.openxmlformats.org/officeDocument/2006/relationships/officeDocument'
+                if types.tag!=ct+'Types' or not any(
+                        n.get('PartName')=='/word/document.xml' and n.get('ContentType')==main_type
+                        for n in types.findall(ct+'Override')):
+                    raise ValueError('Original DOCX lacks a Word main-part content type')
+                if rels.tag!=rel+'Relationships' or not any(
+                        n.get('Type')==office_rel and n.get('Target') in {'word/document.xml','/word/document.xml'}
+                        and n.get('TargetMode','Internal')=='Internal' for n in rels.findall(rel+'Relationship')):
+                    raise ValueError('Original DOCX lacks an internal office-document relationship')
         except (BadZipFile, KeyError, ET.ParseError) as exc:
             raise ValueError('Original source is not DOCX Word bytes') from exc
 
@@ -185,6 +213,26 @@ def alias_reconciles(alias, original, request):
     return not any(k in alias for k in other) and alias.get('case_id') == original['case_id'] and \
         alias.get(old_key) == source_digest(original['source']) and \
         alias.get(new_key) == source_digest(request['source'])
+
+
+def check_alias_material(root, original, request):
+    """New aliases must match all core fields, not just a claimed canonical ID."""
+    if not source_identity(request['source'])[3]:
+        return  # Preserve legacy alias requests byte-for-byte and their contract.
+    previous=artifact(root,original['registration_request_ref'])
+    old=frozen_question(artifact(root,previous['blind']),previous)
+    new=frozen_question(artifact(root,request['blind']),request)
+    def normalized(value):
+        if isinstance(value,str):
+            return re.sub(r'\s+','',unicodedata.normalize('NFKC',value))
+        if isinstance(value,dict): return {k:normalized(v) for k,v in value.items()}
+        if isinstance(value,list): return [normalized(v) for v in value]
+        return value
+    def identity(q):
+        core=material(q); core.pop('question_id',None)
+        return normalized(core)
+    if identity(old)!=identity(new):
+        raise ValueError('Source alias full question material differs; explicit separate review required')
 
 
 def source_check(root, source, question, blind):
@@ -307,7 +355,7 @@ def validate_request(root, request, registry=None):
     if has_comparison:
         comparison_ref=reveal['original_comparison_ref']
         reference_ref=reveal[reference_keys[0]]
-        artifact(root,comparison_ref)
+        comparison=artifact(root,comparison_ref)
         if not isinstance(reference_ref,dict) or not isinstance(reference_ref.get('sha256'),str) or \
                 not HEX64.fullmatch(reference_ref['sha256']):
             raise ValueError('Reveal reference original fingerprint required')
@@ -316,6 +364,8 @@ def validate_request(root, request, registry=None):
                 Path(reference_ref['path']).suffix.lower()!='.'+reference_fmt:
             raise ValueError('Reveal reference original format mismatch')
         check_original(root,reference_ref['path'],reference_ref['sha256'],reference_fmt)
+        if reference_keys[0]=='reference_original_ref' and comparison.get('reference_original_ref')!=reference_ref:
+            raise ValueError('Original comparison does not bind the exact reference original')
     if reveal.get('exam_id',reveal.get('paper_id')) != exam_id or reveal.get('prediction_sha256') != request['blind']['sha256']:
         raise ValueError('Reveal does not bind frozen blind prediction')
     matches = [q for q in reveal.get('questions', []) if q.get('question_id') == request['question_id']]
@@ -500,6 +550,7 @@ def load_catalog(dataset):
                     review.get('source_alias_reconciled') is not True or \
                     source_digest(request['source'])==source_digest(original['source']):
                 raise ValueError('Source alias reconciliation mismatch')
+            check_alias_material(root,original,request)
             if any(a['registration_key']==alias['registration_key'] and
                    alias_digest(a)==alias_digest(alias) for a in preceding_aliases):
                 raise ValueError('Duplicate source alias')
@@ -538,6 +589,7 @@ def register(dataset, request_path):
             if not alias_reconciles(alias,record,request) or \
                     review.get('source_alias_reconciled') is not True:
                 raise ValueError('Same question/method/type/version already registered; explicit source alias reconciliation required')
+            check_alias_material(root,record,request)
             if source_digest(request['source'])==source_digest(record['source']) or any(
                     a['registration_key']==key and alias_digest(a)==source_digest(request['source'])
                     for a in catalog['aliases']):

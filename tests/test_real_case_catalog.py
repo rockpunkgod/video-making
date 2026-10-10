@@ -33,6 +33,14 @@ def word_bytes(text):
     buf=io.BytesIO()
     with ZipFile(buf,'w') as archive:
         archive.writestr('word/document.xml',ET.tostring(document))
+        archive.writestr('[Content_Types].xml',
+            '<Types xmlns="http://schemas.openxmlformats.org/package/2006/content-types">'
+            '<Override PartName="/word/document.xml" ContentType="application/vnd.openxmlformats-officedocument.wordprocessingml.document.main+xml"/>'
+            '</Types>')
+        archive.writestr('_rels/.rels',
+            '<Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships">'
+            '<Relationship Id="rId1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/officeDocument" Target="word/document.xml"/>'
+            '</Relationships>')
     return buf.getvalue()
 
 
@@ -443,13 +451,14 @@ class PrivateRealCaseTest(unittest.TestCase):
         blind=put(self.root,'typed-blind.json',{'phase':'source_only_before_reference_read',
                   'paper_id':'synthetic-typed-paper','reviewer_agent':'synthetic-paper-agent',
                   'source_sha256':pdf_hash,'questions':[original]})
-        comparison=put(self.root,'typed-comparison.json',{'synthetic_reference':'A',
-                          'authority':'third_party_unverified'})
         reference_pdf_path=self.root/('typed-reference.'+fmt)
         reference_pdf_path.write_bytes(word_bytes('Synthetic reference') if fmt=='docx' else b'%PDF synthetic third-party reference fixture')
         reference_pdf={'path':reference_pdf_path.name,
                        'sha256':digest(reference_pdf_path.read_bytes())}
         if fmt=='docx': reference_pdf['format']='docx'
+        comparison_value={'synthetic_reference':'A','authority':'third_party_unverified'}
+        if fmt=='docx': comparison_value['reference_original_ref']=reference_pdf
+        comparison=put(self.root,'typed-comparison.json',comparison_value)
         reveal=put(self.root,'typed-reveal.json',{'paper_id':'synthetic-typed-paper',
                    'prediction_sha256':blind['sha256'],
                    'original_comparison_ref':comparison,
