@@ -20,7 +20,9 @@
 核实包内路径、名称编码和原件指纹，题面、解析、音频分开绑定。真实模拟/诊断题可以研究，
 但不能把学届、文件名或附件称呼当作官方高考真题认证。
 Word 题面保留 DOCX 原件；dossier 显式记录 `source_extension=.docx`，回放核原件字节而非转换 PDF。
-旧 PDF dossier 未写扩展名时仍默认 `.pdf`；只有 `.pdf` 与 `.docx` 可进入转写批次。
+旧 PDF dossier 未写扩展名时仍默认 `.pdf`；`.pdf`、`.docx` 与 `.doc` 可进入转写批次。
+旧版 `.doc` 仍核原件的 `.doc` 字节指纹；只读转换所得 PDF/DOCX 及图片是检查旁路，
+另存转换链和指纹，不用转换件替换原 dossier 的来源身份，也不把格式支持当成转写正确。
 Word 自动题号、表格及图片另须目视核实，精确跨度或程序运行均不等于来源内容完整。
 
 每个代理只修改自己的 `local-data/organized-pdfs/paper-runs/<paper_id>/`。

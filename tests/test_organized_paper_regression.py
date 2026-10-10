@@ -71,8 +71,10 @@ class OrganizedRegressionTests(unittest.TestCase):
     def test_source_extension_mismatch_unsupported_or_changed_fails_before_engine(self):
         for extension, claimed, changed, error in [
                 ('.docx', '.pdf', False, 'extensions differ'),
+                ('.doc', '.docx', False, 'extensions differ'),
                 ('.exe', None, False, 'Unsupported'),
-                ('.docx', None, True, 'source fingerprint')]:
+                ('.docx', None, True, 'source fingerprint'),
+                ('.doc', None, True, 'source fingerprint')]:
             with self.subTest(extension=extension, claimed=claimed, changed=changed), TemporaryDirectory() as temporary:
                 root = Path(temporary)
                 bank, path = self.source_batch(root, extension, claimed, changed)
@@ -81,6 +83,19 @@ class OrganizedRegressionTests(unittest.TestCase):
                         run_transcription_batch([path], root/'replay', bank)
                     analyzer.assert_not_called()
                 self.assertFalse((root/'replay').exists())
+
+    def test_legacy_doc_preserves_original_identity_not_conversion_identity(self):
+        with TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            bank, path = self.source_batch(root, '.doc', '.doc')
+            summary = run_transcription_batch([path], root/'replay', bank)
+            report = json.loads((root/summary['papers'][0]['report']).read_text(encoding='utf-8'))
+            self.assertEqual(report['source_extension'], '.doc')
+            self.assertEqual(report['source_sha256'], sha(b'PDF'))
+            self.assertFalse(report['limits']['source_completeness_certified'])
+            self.assertFalse(report['limits']['whole_paper_acceptance'])
+            self.assertFalse((root/'originals/files'/(sha(b'PDF')+'.docx')).exists())
+            self.assertFalse((root/'originals/files'/(sha(b'PDF')+'.pdf')).exists())
 
     def entry(self,text,quote,kind='grammar_fill'):
         start=text.index(quote)

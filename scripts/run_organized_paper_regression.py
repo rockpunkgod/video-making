@@ -253,9 +253,9 @@ def run_transcription_batch(paths, output_root, bank_root=None, analyzer=None):
             raise ValueError('Frozen source dossier fingerprint differs')
         inputs = validate_transcription(value, dossier, dataset)
         # New private batches may preserve a Word original. Never validate a
-        # derivative PDF as though it had the supplied DOCX's byte identity.
+        # derivative PDF/DOCX as though it had the supplied Word's byte identity.
         extension = original.get('source_extension', '.pdf')
-        if extension not in {'.pdf', '.docx'}:
+        if extension not in {'.pdf', '.docx', '.doc'}:
             raise ValueError('Unsupported frozen original source extension')
         if value.get('source_extension', extension) != extension:
             raise ValueError('Transcription and original source extensions differ')
