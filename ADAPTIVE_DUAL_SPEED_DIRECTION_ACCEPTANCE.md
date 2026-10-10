@@ -67,7 +67,12 @@ assets and are not the delivered pilot.
   text/font/source/canvas and motion audits pass; 13,993 actual keys were checked.
   Sixteen current native frame previews were inspected. A zero-Z native readback
   representation for actual 2D screen layers is normalized without accepting
-  wrong X/Y, nonzero depth or 3D mismatches. Full native video remains required.
+  wrong X/Y, nonzero depth or 3D mismatches. The complete native render subsequently
+  finished all 5,648 frames in 24 successful batches. The memory monitor observed
+  at least 5.20 GiB free, with no abort or monitor error; the saved native project
+  matches the render receipt. Four actual rendered frames were additionally
+  inspected against the original-task, evidence and caption bindings. Complete
+  picture encoding and final Premiere video remain required.
 - Reading uses the same original glyphs in paragraph close-ups. Background
   material is subordinate; critical original sentences, rather than accumulated
   Chinese lists, drive the two comparisons.
@@ -101,6 +106,7 @@ media must still be inspected; passing synthetic tests is not a completed film.
 | Two supported same-method real sources and independent provenance | PASS for internal consumption |
 | Episode direction, A/B storyboard, complete VO and new timing | Authored; human quality PENDING |
 | Adaptive local replay/inline guidance and original-object continuity | Native audit and current frame inspection PASS; final playback pending |
+| Complete native 4K/24 frame rendering | PASS — 5,648 frames, 24 completed batches |
 | 4K actual MP4 | NOT YET DELIVERED |
 | Final editable AE/PR and replay handoff | In progress |
 | Final native Premiere timing/audio/media readback | PENDING |
@@ -109,8 +115,8 @@ media must still be inspected; passing synthetic tests is not a completed film.
 | Source display, editorial and recording-rights release | PENDING |
 | Public render ready | **false** |
 
-The next required actions are to finish the current native refinement, audit and
-inspect it, render actual 4K frames, assemble the exact voice clips in Premiere,
+The next required actions are to verify and encode the completed native frames,
+assemble the exact voice clips in Premiere,
 export and fully verify the resulting media, then update this report with the
 actual artifacts and independent review bindings. No next episode or paid course
 development is implied by internal production success.
