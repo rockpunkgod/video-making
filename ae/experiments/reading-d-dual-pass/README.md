@@ -1,5 +1,36 @@
 # Frozen real-question continuation
 
+The incremental `reading_pacing.py` / `reading_pacing.jsx` review derivative adds
+explicit reading holds and Chinese review captions to a verified native sequence.
+The historical 94-second assembly remains the replay baseline. A local recipe
+names each hold frame, duration and reading purpose, plus literal spans from the
+existing frozen copy. Preparation checks all native frame bytes and requires the
+hold frame and its two neighbours to have identical RGB pixels. No native motion
+frame is removed, interpolated or slowed. Transient highlights must remain outside
+the selected plateaus; the local review records that check separately.
+
+Caption projection is not copy rewriting or teaching certification. Each caption
+retains its source segment, field hash, literal span and evidence/action/decision
+references. Line wrapping changes layout only. Captions occupy the independent
+bottom review zone; current dependencies and caption file hashes are rechecked
+before encoding. WAV/voice delivery and Premiere interfaces are unchanged.
+
+```powershell
+python ae/experiments/reading-d-dual-pass/reading_pacing.py prepare local-data/reading-d-dual-pass/BASELINE local-data/reading-d-dual-pass/NEW_REVISION local-data/reading-d-dual-pass/LOCAL_RECIPE.json
+python ae/experiments/reading-d-dual-pass/reading_pacing.py render local-data/reading-d-dual-pass/NEW_REVISION
+python ae/experiments/reading-d-dual-pass/reading_pacing.py build-native local-data/reading-d-dual-pass/NEW_REVISION
+```
+
+The encoded review uses the original native TIFFs via same-volume hardlinks and
+an explicit frame map, without duplicating the large image sequence on disk.
+The new editable AE master retains the historical composition as one source and
+adds frame-bound remapping plus independently bound text layers. Native remapping
+is checked at every output frame using integer frame indices (AE stores times at
+finite precision). Native text and encoded subtitle appearance are not claimed
+pixel-identical. Neither output inherits prior visual, editorial or release approval.
+Native errors use the official recovery ID and reconcile the partial owned master;
+removing the final time-remap key is avoided because AE disables the property.
+
 This incremental experiment continues the accepted native locating composition.
 It consumes the existing frozen passage review and locating trace; it does not
 read Registry, solve questions, create Reviews or add grammatical partitions.

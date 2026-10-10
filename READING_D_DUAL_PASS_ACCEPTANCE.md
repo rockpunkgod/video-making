@@ -101,3 +101,57 @@ encoding route; a new native Premiere handoff was not verified this round.
 
 Only workflow, synthetic tests and this sanitized report are committed. Real
 assets and movies stay local. Unrelated concurrent changes are excluded.
+
+## Reading holds and review captions — incremental revision
+
+Baseline: `e28e615910ebf5e05f1053c3dedf324bc0e763a0`. User feedback says both
+passes are too fast and requests subtitles for review. Astra recommends extending
+settled reading/comparison moments while retaining crisp movement and the accepted
+7/12-second locating windows. This recommendation does not constitute user approval.
+
+The new silent 4K review lasts **136 seconds / 3,264 frames / 24 fps**. The original
+2,256 native frames remain in order; 1,008 additional frames are explicitly declared
+reading holds. Each hold matches both adjacent native RGB frames. The too-short
+Fast hard-water plateau failed the stationary-neighbour check, so its extra time
+was reassigned to the two-sample comparison. No zoom, transient highlight, camera
+transition or physical action is stretched. The previous movie remains unchanged.
+
+| Stage | New seconds |
+| --- | --- |
+| Original question | 0–11 |
+| Fast locating | 11–18 |
+| Fast application | 18–45.5 |
+| Replay entry | 45.5–48.5 |
+| Guided locating | 48.5–60.5 |
+| Guided application | 60.5–136 |
+
+Twenty Chinese review captions use literal existing frozen-copy excerpts.
+They retain source spans and source field hashes, including evidence/action/decision
+references; they are an explicit review projection, not newly certified narration.
+Generic warning reminders are not introduced. The full frozen source, qualifiers,
+Role and Stop remain bound and unchanged. SRT/ASS and an editable AE caption master
+are local. The encoded subtitle overlay uses the bottom review zone; ten sampled
+encoded frames show readable Chinese without covering the focal evidence. This
+sampled inspection does not certify every frame or continuous viewing experience.
+
+Engineering: **143 relevant tests PASS**, JSX syntax PASS, every native input
+frame SHA checked, zero missing encoded frames, full decode PASS, zero audio streams.
+The new AE master has 3,264 remap keys; its sampled value at every frame resolves
+to the expected source frame index. Native font is NotoSansSC-Regular with no
+substitution and caption bounds remain inside the allocated review zone. Native
+caption appearance is not certified pixel-identical to the encoded ASS overlay.
+Frozen bundle, status, original locating project and original question request
+retain their protected hashes. The bridge checkpoint save updated the baseline
+project envelope; byte identity of that AEP is therefore **not claimed**. The
+prior movie, native frame manifest and all teaching inputs remain unchanged.
+
+The initial native build hit AE's disabled time-remap property after its final key
+was removed. Official recovery reconciled the single partial timing layer; the
+corrected workflow retains one key before adding the frame map. The saved new
+project and the final encoded movie pass their separate audits.
+
+Movie SHA-256:
+`7b010f719d31009fb0d8ddd09715594e61c4c7c1fc64a7eba6b5a7d5f272d4c2`.
+Human full-film pacing/caption review remains **PENDING**; audio **DEFERRED**;
+strict two-method relay **HOLD**. `final_voice_accepted=false`,
+`sample_delivery_allowed=false`, `public_render_ready=false`.
