@@ -6,9 +6,12 @@ identity, redistribution rights, or learner outcomes. It never writes public cas
 from __future__ import annotations
 
 import hashlib
+import io
 import json
 from pathlib import Path
 import re
+from zipfile import BadZipFile, ZipFile
+import xml.etree.ElementTree as ET
 
 from .registry import ROOT, CASE_TYPES, Registry, validate_schema
 from .analyzer import QuestionAnalyzer
@@ -126,19 +129,78 @@ def frozen_question(blind, request):
     return question
 
 
+def source_identity(source):
+    """Keep legacy PDF requests intact; new requests name the actual original."""
+    generic = any(k in source for k in ('original_path', 'original_sha256', 'source_format'))
+    if generic:
+        if any(k in source for k in ('pdf_path', 'pdf_sha256')):
+            raise ValueError('Ambiguous original/PDF source identity')
+        fmt = source.get('source_format')
+        if fmt not in {'pdf', 'docx', 'doc'}:
+            raise ValueError('Explicit supported original source format required')
+        path, fingerprint = source.get('original_path'), source.get('original_sha256')
+    else:
+        fmt, path, fingerprint = 'pdf', source.get('pdf_path'), source.get('pdf_sha256')
+    if not isinstance(fingerprint, str) or not HEX64.fullmatch(fingerprint):
+        raise ValueError('Source original sha256 required')
+    if not isinstance(path, str) or Path(path).suffix.lower() != '.'+fmt:
+        raise ValueError('Original source extension differs from declared format')
+    return path, fingerprint, fmt, generic
+
+
+def check_original(root, path, fingerprint, fmt):
+    """Reject renamed derivatives; format checks do not certify source meaning."""
+    _, raw = private_file(root, path, fingerprint)
+    if fmt == 'pdf' and not raw.startswith(b'%PDF'):
+        raise ValueError('Original source is not PDF bytes')
+    if fmt == 'doc' and not raw.startswith(bytes.fromhex('d0cf11e0a1b11ae1')):
+        raise ValueError('Original source is not legacy Word bytes')
+    if fmt == 'docx':
+        try:
+            with ZipFile(io.BytesIO(raw)) as archive:
+                document = ET.fromstring(archive.read('word/document.xml'))
+                if document.tag != '{http://schemas.openxmlformats.org/wordprocessingml/2006/main}document':
+                    raise ValueError('Original DOCX lacks a Word document root')
+        except (BadZipFile, KeyError, ET.ParseError) as exc:
+            raise ValueError('Original source is not DOCX Word bytes') from exc
+
+
+def source_digest(source):
+    return source_identity(source)[1]
+
+
+def alias_digest(alias):
+    keys = [key for key in ('source_pdf_sha256', 'source_original_sha256') if key in alias]
+    if len(keys) != 1:
+        raise ValueError('Ambiguous or missing source alias fingerprint')
+    return alias[keys[0]]
+
+
+def alias_reconciles(alias, original, request):
+    if not isinstance(alias, dict):
+        return False
+    generic = source_identity(request['source'])[3]
+    old_key, new_key = ('old_original_sha256', 'new_original_sha256') if generic else ('old_pdf_sha256', 'new_pdf_sha256')
+    other = ('old_pdf_sha256', 'new_pdf_sha256') if generic else ('old_original_sha256', 'new_original_sha256')
+    return not any(k in alias for k in other) and alias.get('case_id') == original['case_id'] and \
+        alias.get(old_key) == source_digest(original['source']) and \
+        alias.get(new_key) == source_digest(request['source'])
+
+
 def source_check(root, source, question, blind):
     if not isinstance(source, dict):
         raise ValueError('Source binding required')
-    if not isinstance(source.get('pdf_sha256'),str) or not HEX64.fullmatch(source['pdf_sha256']):
-        raise ValueError('Source PDF sha256 required')
-    private_file(root, source.get('pdf_path'), source['pdf_sha256'])
+    path, fingerprint, fmt, generic = source_identity(source)
+    check_original(root, path, fingerprint, fmt)
     binding = source.get('question_binding')
     if not isinstance(binding, dict):
         raise ValueError('Exact source question binding required')
     document = artifact(root, {'path': binding.get('document_path'),
                                'sha256': binding.get('document_sha256')})
-    if pointer(document,binding.get('pdf_sha256_pointer')) != source['pdf_sha256']:
-        raise ValueError('Frozen source text is not bound to source PDF fingerprint')
+    pointer_key = 'original_sha256_pointer' if generic else 'pdf_sha256_pointer'
+    other_key = 'pdf_sha256_pointer' if generic else 'original_sha256_pointer'
+    if other_key in binding or pointer(document,binding.get(pointer_key)) != fingerprint:
+        raise ValueError('Frozen source text is not bound to original source fingerprint')
     content = pointer(document, binding.get('text_pointer'))
     field_bindings = binding.get('fields')
     leaves = text_leaves(question)
@@ -151,7 +213,7 @@ def source_check(root, source, question, blind):
         pieces=[]
         for span in spans:
             start, end, quote = span.get('start'), span.get('end'), span.get('quote')
-            if not isinstance(start,int) or not isinstance(end,int) or start<0 or end<=start or \
+            if type(start) is not int or type(end) is not int or start<0 or end<=start or end>len(content) or \
                     content[start:end]!=quote or not quote:
                 raise ValueError('Exact source span replay failed: '+field)
             pieces.append(quote)
@@ -161,14 +223,14 @@ def source_check(root, source, question, blind):
     if source.get('exam_id') != exam_id or source.get('question_id') != question['question_id']:
         raise ValueError('Source exam/question identity mismatch')
     top_source = blind.get('source_sha256')
-    if 'source_sha256' in blind and top_source != source['pdf_sha256']:
-        raise ValueError('Frozen blind top-level source PDF fingerprint mismatch')
+    if 'source_sha256' in blind and top_source != fingerprint:
+        raise ValueError('Frozen blind top-level source '+('original' if generic else 'PDF')+' fingerprint mismatch')
     bindings = blind.get('source_bindings', {})
     existing = bindings.get(question['question_id'], {})
-    if existing and existing.get('source_sha256') != source.get('pdf_sha256'):
-        raise ValueError('Frozen blind source PDF fingerprint mismatch')
+    if existing and existing.get('source_sha256') != fingerprint:
+        raise ValueError('Frozen blind source original fingerprint mismatch')
     if top_source is None and not existing:
-        raise ValueError('Frozen blind source PDF fingerprint required')
+        raise ValueError('Frozen blind source '+('original' if generic else 'PDF')+' fingerprint required')
     if source.get('usage_status') != 'local_research_only' or source.get('answer_authority') not in {
             'third_party_unverified','user_supplied_unverified'}:
         raise ValueError('Private rights and unverified reference authority required')
@@ -239,17 +301,21 @@ def validate_request(root, request, registry=None):
     source_check(root, request['source'], question, blind)
     reveal = artifact(root, request['reveal'])
     has_comparison='original_comparison_ref' in reveal
-    has_reference_pdf='reference_pdf_ref' in reveal
-    if has_comparison != has_reference_pdf:
-        raise ValueError('Reveal adapter requires both original comparison and reference PDF bindings')
+    reference_keys=[k for k in ('reference_pdf_ref', 'reference_original_ref') if k in reveal]
+    if len(reference_keys)>1 or has_comparison != bool(reference_keys):
+        raise ValueError('Reveal adapter requires both original comparison and one reference original binding')
     if has_comparison:
         comparison_ref=reveal['original_comparison_ref']
-        reference_pdf_ref=reveal['reference_pdf_ref']
+        reference_ref=reveal[reference_keys[0]]
         artifact(root,comparison_ref)
-        if not isinstance(reference_pdf_ref,dict) or not isinstance(reference_pdf_ref.get('sha256'),str) or \
-                not HEX64.fullmatch(reference_pdf_ref['sha256']):
-            raise ValueError('Reveal reference PDF fingerprint required')
-        private_file(root,reference_pdf_ref.get('path'),reference_pdf_ref['sha256'])
+        if not isinstance(reference_ref,dict) or not isinstance(reference_ref.get('sha256'),str) or \
+                not HEX64.fullmatch(reference_ref['sha256']):
+            raise ValueError('Reveal reference original fingerprint required')
+        reference_fmt='pdf' if reference_keys[0]=='reference_pdf_ref' else reference_ref.get('format')
+        if reference_fmt not in {'pdf','docx','doc'} or not isinstance(reference_ref.get('path'),str) or \
+                Path(reference_ref['path']).suffix.lower()!='.'+reference_fmt:
+            raise ValueError('Reveal reference original format mismatch')
+        check_original(root,reference_ref['path'],reference_ref['sha256'],reference_fmt)
     if reveal.get('exam_id',reveal.get('paper_id')) != exam_id or reveal.get('prediction_sha256') != request['blind']['sha256']:
         raise ValueError('Reveal does not bind frozen blind prediction')
     matches = [q for q in reveal.get('questions', []) if q.get('question_id') == request['question_id']]
@@ -293,7 +359,10 @@ def validate_request(root, request, registry=None):
             review.get('replay_analysis_sha256') != json_digest(analysis) or \
             sorted(review.get('own_execution_ids', [])) != sorted(x['execution_id'] for x in own):
         raise ValueError('Case Review does not bind typed action and graph')
-    if review.get('source_pdf_sha256') != request['source']['pdf_sha256'] or \
+    generic=source_identity(request['source'])[3]
+    review_source_key='source_original_sha256' if generic else 'source_pdf_sha256'
+    other_source_key='source_pdf_sha256' if generic else 'source_original_sha256'
+    if other_source_key in review or review.get(review_source_key) != source_digest(request['source']) or \
             review.get('source_document_sha256') != request['source']['question_binding']['document_sha256']:
         raise ValueError('Case Review source version mismatch')
     if review.get('pre_reveal_prediction_unchanged') is not True or review.get('answer_backfit_excluded') is not True or \
@@ -425,16 +494,14 @@ def load_catalog(dataset):
             if alias.get('registration_key') != [request['canonical_question_id'],request['method_id'],
                                                   request['case_type'],request['method_version']] or \
                     tuple(alias['registration_key']) not in seen_keys or \
-                    alias.get('source_pdf_sha256') != request['source']['pdf_sha256'] or \
+                    alias_digest(alias) != source_digest(request['source']) or \
                     original is None or not isinstance(source_alias,dict) or \
-                    source_alias.get('case_id')!=original['case_id'] or \
-                    source_alias.get('old_pdf_sha256')!=original['source']['pdf_sha256'] or \
-                    source_alias.get('new_pdf_sha256')!=request['source']['pdf_sha256'] or \
+                    not alias_reconciles(source_alias,original,request) or \
                     review.get('source_alias_reconciled') is not True or \
-                    request['source']['pdf_sha256']==original['source']['pdf_sha256']:
+                    source_digest(request['source'])==source_digest(original['source']):
                 raise ValueError('Source alias reconciliation mismatch')
             if any(a['registration_key']==alias['registration_key'] and
-                   a['source_pdf_sha256']==alias['source_pdf_sha256'] for a in preceding_aliases):
+                   alias_digest(a)==alias_digest(alias) for a in preceding_aliases):
                 raise ValueError('Duplicate source alias')
         preceding_refs=refs
         preceding_aliases=aliases
@@ -468,20 +535,19 @@ def register(dataset, request_path):
         record = artifact(root, ref)
         if record['registration_key'] == key:
             alias=request.get('source_alias')
-            if not isinstance(alias,dict) or alias.get('case_id')!=record['case_id'] or \
-                    alias.get('old_pdf_sha256')!=record['source']['pdf_sha256'] or \
-                    alias.get('new_pdf_sha256')!=request['source']['pdf_sha256'] or \
+            if not alias_reconciles(alias,record,request) or \
                     review.get('source_alias_reconciled') is not True:
                 raise ValueError('Same question/method/type/version already registered; explicit source alias reconciliation required')
-            if request['source']['pdf_sha256']==record['source']['pdf_sha256'] or any(
-                    a['registration_key']==key and a['source_pdf_sha256']==request['source']['pdf_sha256']
+            if source_digest(request['source'])==source_digest(record['source']) or any(
+                    a['registration_key']==key and alias_digest(a)==source_digest(request['source'])
                     for a in catalog['aliases']):
                 raise ValueError('Duplicate source alias')
             next_revision=catalog['revision']+1
             revision={'revision':next_revision,'previous_sha256':catalog['sha256'],
                       'cases':catalog['cases'],'aliases':catalog['aliases']+[
                           {'case_id':record['case_id'],'registration_key':key,
-                           'source_pdf_sha256':request['source']['pdf_sha256'],
+                           ('source_original_sha256' if source_identity(request['source'])[3] else 'source_pdf_sha256'):
+                               source_digest(request['source']),
                            'registration_request_ref':request_ref}]}
             target=root/CATALOG/f'catalog-{next_revision:06d}.json'
             with target.open('xb') as stream:

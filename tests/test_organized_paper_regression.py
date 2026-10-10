@@ -211,6 +211,33 @@ class OrganizedRegressionTests(unittest.TestCase):
         q['given_word']='poor'; fields['/given_word']=[{'start':10,'end':14,'quote':'poor'}]
         self.assertEqual(validate_transcription(value,dossier)['questions'][0]['given_word'],'poor')
 
+    def test_parenthesized_grammar_blank_preserves_marker_prompt_and_visual_check(self):
+        for marker in ('（1）', '(1)'):
+            with self.subTest(marker=marker), TemporaryDirectory() as temp:
+                root=Path(temp); png=root/'page.png'
+                png.write_bytes(b'\x89PNG\r\n\x1a\nSYNTHETIC STRUCTURAL FIXTURE ONLY')
+                value,dossier=self.transcription(); content=marker+'  (harm) in synthetic context'
+                dossier['document_text']=content
+                q={'question_id':'test-Q1','question_type':'grammar_fill','stem':marker,
+                   'passage':content,'given_word':'harm'}
+                value['inputs']['questions']=[q]
+                hint_start=content.index('harm')
+                fields={'/stem':[{'start':0,'end':len(marker),'quote':marker}],
+                        '/passage':[{'start':0,'end':len(content),'quote':content}],
+                        '/given_word':[{'start':hint_start,'end':hint_start+4,'quote':'harm'}]}
+                binding={'question_id':'test-Q1','fields':fields,'display_exclusions':[]}
+                value['source_bindings']=[binding]
+                with self.assertRaisesRegex(ValueError,'visual confirmation'):
+                    validate_transcription(value,dossier,root)
+                binding['blank_marker_visual_check']={'confirmed':True,'printed_number':1,
+                    'source_sha256':value['source_sha256'],'page_number':1,
+                    'rendered_path':'page.png','rendered_sha256':sha(png.read_bytes())}
+                mapped=validate_transcription(value,dossier,root)['questions'][0]
+                self.assertEqual((mapped['stem'],mapped['given_word']),(marker,'harm'))
+                del q['given_word']; del fields['/given_word']
+                with self.assertRaisesRegex(ValueError,'prompt word missing'):
+                    validate_transcription(value,dossier,root)
+
     def test_low_batch_preflights_all_sources_before_analyzer_or_writes(self):
         with TemporaryDirectory() as temp:
             root=Path(temp); bank=root/'case-bank-v4'; paths=[]

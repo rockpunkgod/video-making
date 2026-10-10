@@ -192,14 +192,22 @@ def validate_transcription(value, dossier, dataset_root=None):
                 raise ValueError('Transcribed field is not an exact source projection')
         if normalized['questions'][index]['question_type'] == '语法填空':
             stem_spans = fields.get('/stem', [])
-            marker=re.fullmatch(r'[_＿]*\s*(\d+)\s*[_＿]*',q.get('stem','').strip())
-            if len(stem_spans) != 1 or not marker:
+            printed=q.get('stem','').strip()
+            marker=re.fullmatch(r'[_＿]*\s*(\d+)\s*[_＿]*',printed)
+            parenthesized=re.fullmatch(r'(?:\(\s*(\d+)\s*\)|（\s*(\d+)\s*）)',printed)
+            if parenthesized:
+                marker_number=int(parenthesized[1] or parenthesized[2])
+            elif marker:
+                marker_number=int(marker[1])
+            else:
+                marker_number=None
+            if len(stem_spans) != 1 or marker_number is None:
                 raise ValueError('Grammar input must bind its particular printed blank marker')
             if not re.search(r'[_＿]',q['stem']):
                 visual=binding.get('blank_marker_visual_check')
                 if not isinstance(visual,dict) or visual.get('confirmed') is not True or \
-                        visual.get('printed_number')!=int(marker[1]) or visual.get('source_sha256')!=value['source_sha256']:
-                    raise ValueError('Space-delimited digit needs explicit source-PDF blank confirmation')
+                        visual.get('printed_number')!=marker_number or visual.get('source_sha256')!=value['source_sha256']:
+                    raise ValueError('Non-underlined blank marker needs explicit source visual confirmation')
                 check_visual_reference(visual,dataset_root)
             tail = content[stem_spans[0]['end']:]
             hint = re.match(r'[_＿]*\s*[（(]\s*([A-Za-z]+(?:[ -][A-Za-z]+){0,2})\s*[）)]',tail)

@@ -72,7 +72,8 @@ python -X utf8 -m scripts.run_organized_paper_regression all --transcriptions SO
 文本层损坏时，另存 `origin=visual_transcription_sidecar` 的逐页视觉转录，绑定原 dossier 的路径/字节 SHA，
 每页绑定实际私有 PNG 与 SHA，全文必须按页序逐字连接。`source_document_ref` 显式选该旁路；
 旧 dossier 和原 PDF 不覆盖。工具检查文件、指纹和跨度一致性，不自动认证视觉转录的英语正确性。
-只剩数字的真实语填空须附 `blank_marker_visual_check`，核源 PDF、题号、页码及 PNG 指纹；
+没有下划线的真实语填空（裸数字或完整 `(1)` / `（1）`）须附 `blank_marker_visual_check`，
+核原件身份、题号、页码及 PNG 指纹；括号空标整段原样绑定，不能只截中间数字而丢掉右括号；
 不能凭价格/正文数字制造空位，也不能为了通过校验添加原图没有的下划线或占位符。
 显示投影只删已记录的印刷页码；物理页码与印刷页码不同须显式视觉确认对应关系。
 题目给定首句、称呼、落款和续写段首属于题面约束，不自动构成答案污染。
@@ -200,15 +201,23 @@ python -m answer_engine case-coverage --private-catalog local-data/organized-pdf
 ```
 
 REQUEST 是相对私有 dataset 的路径，不是公开 Case 文件。请求必须指向保留原字节的盲稿/原题指针、
-原 PDF、完整文本字段逐段源跨度、揭晓原件、独立动作重放与第二审阅者的 Case Review。
+原 PDF/Word、完整文本字段逐段源跨度、揭晓原件、独立动作重放与第二审阅者的 Case Review。
 揭晓后的修订只加动作注释，不能改冻结的题干、全文、选项、提示词或首句；不重算新盲测。
-存在揭晓适配器时，它的原对照 JSON 和参考 PDF 也须同时绑定字节指纹。
+旧 PDF 请求继续沿用 `pdf_path`、`pdf_sha256` 和 `question_binding.pdf_sha256_pointer`，不改历史字节。
+新格式请求使用 `original_path`、`original_sha256`、`source_format=pdf|docx|doc`，
+以及 `question_binding.original_sha256_pointer`；独立审阅对应绑定 `source_original_sha256`。
+两套字段不能混用。入口核路径扩展名、原件字节指纹及格式标记，DOCX 还核 Word 文档 XML；
+这些检查不认证题源官方身份、逐字语义或源题完整性，转换件仍只作另存视觉旁路。
+存在揭晓适配器时，它的原对照 JSON 和参考原件也须同时绑定字节指纹：旧版 `reference_pdf_ref`，
+新版 `reference_original_ref={path,sha256,format}`。不能同时给两套参考原件字段。
 独立审阅逐项核触发、动作、证据、主要职责、Stop 和案例类型，并绑定该方法自己的执行 ID。
 辅助分组/骨架不领取其他方法或整题答案信用。工具核一致性与可重放，不认证审阅者身份或英语语义。
 
 登记键是 `canonical_question_id + method_id + case_type + method_version`。
 已有题沿用仓库稳定 ID，已有短 Case 的完整补证须明确复用 Case ID、原 Case 指纹和独立匹配记录。
-同键重登拒绝；另一个 PDF 版本只能显式核对来源别名，不增加 Case 数。题号/文件名相似不作同题证据。
+同键重登拒绝；另一个 PDF/Word 版本只能显式核对来源别名，不增加 Case 数。题号/文件名相似不作同题证据。
+新格式来源别名使用 `old_original_sha256` / `new_original_sha256`，显式复用原 `case_id`，
+独立审阅确认 `source_alias_reconciled=true`；旧 PDF 别名链保持兼容，不迁移或重写历史。
 同一冻结题面核心指纹只能对应一个 canonical ID，重新封装盲稿元数据也不能换名绕过登记去重。
 该指纹包含原题 ID、题型及全部核心题面字段；不是只凭某段文字相同合并不同题。
 原题全文复用已有冻结输入，Catalog 只存引用与方法动作证据；所有内容仍在私有目录。

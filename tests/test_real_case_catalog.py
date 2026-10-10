@@ -1,10 +1,13 @@
 """Synthetic contract fixtures only; no real exam or learner evidence."""
 import hashlib
+import io
 import json
 from pathlib import Path
 from tempfile import TemporaryDirectory
 import unittest
 from unittest.mock import patch
+from zipfile import ZipFile
+import xml.etree.ElementTree as ET
 
 import core.real_cases as real_cases
 from core.real_cases import (digest, json_digest, load_catalog,
@@ -19,6 +22,18 @@ def put(root, name, value):
     raw = (json.dumps(value, ensure_ascii=False)+'\n').encode()
     path.write_bytes(raw)
     return {'path': name, 'sha256': digest(raw)}
+
+
+def word_bytes(text):
+    """Minimal synthetic OOXML contract fixture, not a real exam."""
+    w='{http://schemas.openxmlformats.org/wordprocessingml/2006/main}'
+    document=ET.Element(w+'document'); body=ET.SubElement(document,w+'body')
+    run=ET.SubElement(ET.SubElement(body,w+'p'),w+'r')
+    ET.SubElement(run,w+'t').text=text
+    buf=io.BytesIO()
+    with ZipFile(buf,'w') as archive:
+        archive.writestr('word/document.xml',ET.tostring(document))
+    return buf.getvalue()
 
 
 class PrivateRealCaseTest(unittest.TestCase):
@@ -406,11 +421,19 @@ class PrivateRealCaseTest(unittest.TestCase):
                              {'canonical','transfer'})
 
     def test_real_analyzer_schema_graph_trace_end_to_end_synthetic(self):
+        self._real_pipeline_original('pdf')
+
+    def test_word_original_real_analyzer_schema_graph_trace_end_to_end_synthetic(self):
+        self._real_pipeline_original('docx')
+
+    def _real_pipeline_original(self, fmt):
         """No mocks: exercises the real typed R01 pipeline with program-only text."""
         q=fixture(); method=self.registry.methods['R01']
         original=material(q)
-        self.root.joinpath('typed-source.pdf').write_bytes(b'%PDF synthetic typed pipeline fixture')
-        pdf_hash=digest(self.root.joinpath('typed-source.pdf').read_bytes())
+        source_name='typed-source.'+fmt
+        self.root.joinpath(source_name).write_bytes(
+            word_bytes('Synthetic typed pipeline fixture') if fmt=='docx' else b'%PDF synthetic typed pipeline fixture')
+        pdf_hash=digest(self.root.joinpath(source_name).read_bytes())
         leaves={'/stem':q['stem'],'/passage':q['passage'],
                 '/options/A':q['options']['A'],'/options/B':q['options']['B']}
         text=' | '.join(leaves.values())
@@ -422,14 +445,15 @@ class PrivateRealCaseTest(unittest.TestCase):
                   'source_sha256':pdf_hash,'questions':[original]})
         comparison=put(self.root,'typed-comparison.json',{'synthetic_reference':'A',
                           'authority':'third_party_unverified'})
-        reference_pdf_path=self.root/'typed-reference.pdf'
-        reference_pdf_path.write_bytes(b'%PDF synthetic third-party reference fixture')
-        reference_pdf={'path':'typed-reference.pdf',
+        reference_pdf_path=self.root/('typed-reference.'+fmt)
+        reference_pdf_path.write_bytes(word_bytes('Synthetic reference') if fmt=='docx' else b'%PDF synthetic third-party reference fixture')
+        reference_pdf={'path':reference_pdf_path.name,
                        'sha256':digest(reference_pdf_path.read_bytes())}
+        if fmt=='docx': reference_pdf['format']='docx'
         reveal=put(self.root,'typed-reveal.json',{'paper_id':'synthetic-typed-paper',
                    'prediction_sha256':blind['sha256'],
                    'original_comparison_ref':comparison,
-                   'reference_pdf_ref':reference_pdf,
+                   ('reference_original_ref' if fmt=='docx' else 'reference_pdf_ref'):reference_pdf,
                    'questions':[{'question_id':q['question_id'],'reference_answer':'A',
                                  'answer_authority':'third_party_unverified'}]})
         analysis=QuestionAnalyzer(self.registry).analyze(q)
@@ -455,23 +479,25 @@ class PrivateRealCaseTest(unittest.TestCase):
                   'action_analysis_sha256':json_digest(analysis),
                   'evidence_graph_sha256':json_digest(analysis['evidence_graph']),
                   'replay_analysis_sha256':json_digest(analysis),
-                  'own_execution_ids':own,'source_pdf_sha256':pdf_hash,
+                  'own_execution_ids':own,('source_original_sha256' if fmt=='docx' else 'source_pdf_sha256'):pdf_hash,
                   'source_document_sha256':doc['sha256'],
                   'pre_reveal_prediction_unchanged':True,'answer_backfit_excluded':True,
                   'own_method_credit_only':True,'trigger':'synthetic reviewed trigger',
                   'action':'synthetic typed decision','evidence':[{'synthetic_program_only':True}]})
         request={'question_id':q['question_id'],'canonical_question_id':q['question_id'],
                  'method_id':'R01','method_version':method['version'],'case_type':'canonical',
-                 'source':{'pdf_path':'typed-source.pdf','pdf_sha256':pdf_hash,
+                 'source':{('original_path' if fmt=='docx' else 'pdf_path'):source_name,
+                           ('original_sha256' if fmt=='docx' else 'pdf_sha256'):pdf_hash,
                            'exam_id':'synthetic-typed-paper','question_id':q['question_id'],
                            'usage_status':'local_research_only','answer_authority':'third_party_unverified',
                            'question_binding':{'document_path':doc['path'],
                                                'document_sha256':doc['sha256'],
-                                               'pdf_sha256_pointer':'/source_sha256',
+                                               ('original_sha256_pointer' if fmt=='docx' else 'pdf_sha256_pointer'):'/source_sha256',
                                                'text_pointer':'/document_text','fields':fields}},
                  'blind':blind,'blind_question_pointer':'/questions/0',
                  'question_input_sha256':json_digest(original),'reveal':reveal,
                  'action':action,'case_review':review}
+        if fmt=='docx': request['source']['source_format']='docx'
         req=put(self.root,'typed-request.json',request)
         result=register(self.root,req['path'])
         self.assertEqual(result['review_scope'],'private_AI_reviewed')
