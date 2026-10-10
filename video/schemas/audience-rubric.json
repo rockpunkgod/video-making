@@ -1,0 +1,95 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "properties": {
+    "schema_version": {
+      "const": "0.2.0"
+    },
+    "rubric_version": {
+      "type": "string",
+      "minLength": 1
+    },
+    "content_profile": {
+      "const": "FREE_SHOWCASE"
+    },
+    "priority": {
+      "const": "Experience First"
+    },
+    "base_dimensions": {
+      "const": [
+        "Hook",
+        "Engagement",
+        "Narrative",
+        "Cognitive Payoff",
+        "Visual Impact",
+        "Voice Performance",
+        "Memorability",
+        "Shareability"
+      ]
+    },
+    "hard_gates": {
+      "const": [
+        "Truth",
+        "Source Rights",
+        "No Fabricated Claims",
+        "No Unsupported Final Answer"
+      ]
+    },
+    "dimensions": {
+      "type": "object",
+      "minProperties": 1,
+      "additionalProperties": {
+        "type": "object",
+        "properties": {
+          "parent": {
+            "enum": [
+              "Hook",
+              "Engagement",
+              "Narrative",
+              "Cognitive Payoff",
+              "Visual Impact",
+              "Voice Performance",
+              "Memorability",
+              "Shareability"
+            ]
+          },
+          "definition": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "required": [
+          "parent",
+          "definition"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "shareability_parent": {
+      "const": "Shareability"
+    },
+    "weights": {
+      "type": "null"
+    },
+    "confidence": {
+      "const": "LOW_EDITORIAL_JUDGEMENT"
+    },
+    "public_render_ready": {
+      "const": false
+    }
+  },
+  "required": [
+    "schema_version",
+    "rubric_version",
+    "content_profile",
+    "priority",
+    "base_dimensions",
+    "hard_gates",
+    "dimensions",
+    "shareability_parent",
+    "weights",
+    "confidence",
+    "public_render_ready"
+  ],
+  "additionalProperties": false
+}

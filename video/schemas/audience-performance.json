@@ -1,0 +1,88 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "required": [
+    "source",
+    "collected_at",
+    "window_start",
+    "window_end",
+    "window_label",
+    "platform",
+    "cut_version",
+    "is_real_observation",
+    "metrics",
+    "retention_curve",
+    "missing_fields"
+  ],
+  "properties": {
+    "source": {
+      "type": "string",
+      "minLength": 1
+    },
+    "is_real_observation": {
+      "type": "boolean"
+    },
+    "window_label": {
+      "enum": [
+        "T+3",
+        "T+7",
+        "T+30",
+        "CUSTOM"
+      ]
+    },
+    "metrics": {
+      "type": "object",
+      "additionalProperties": {
+        "anyOf": [
+          {
+            "type": "null"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "value": {
+                "type": "number",
+                "minimum": 0
+              },
+              "numerator": {
+                "type": "number",
+                "minimum": 0
+              },
+              "denominator": {
+                "anyOf": [
+                  {
+                    "type": "number",
+                    "exclusiveMinimum": 0
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "unit": {
+                "enum": [
+                  "ratio",
+                  "seconds",
+                  "count"
+                ]
+              }
+            },
+            "required": [
+              "value",
+              "numerator",
+              "denominator",
+              "unit"
+            ],
+            "additionalProperties": false
+          }
+        ]
+      }
+    },
+    "retention_curve": {
+      "type": [
+        "object",
+        "null"
+      ]
+    }
+  }
+}

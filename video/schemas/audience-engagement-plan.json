@@ -1,0 +1,207 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "kind",
+    "content_profile",
+    "episode_sha",
+    "direction_sha",
+    "questions",
+    "quality_audit",
+    "human_review",
+    "public_render_ready"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "0.2.0"
+    },
+    "kind": {
+      "const": "audience_engagement_design"
+    },
+    "content_profile": {
+      "const": "FREE_SHOWCASE"
+    },
+    "episode_sha": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "direction_sha": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "questions": {
+      "type": "array",
+      "minItems": 2,
+      "maxItems": 3,
+      "items": {
+        "type": "object",
+        "required": [
+          "question_id",
+          "beats",
+          "payoff_scope"
+        ],
+        "properties": {
+          "question_id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "beats": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "type": "object",
+              "required": [
+                "beat_id",
+                "engagement_function",
+                "viewer_state",
+                "editorial_signals",
+                "bound_source_beat_sha",
+                "source_refs"
+              ],
+              "properties": {
+                "beat_id": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "engagement_function": {
+                  "enum": [
+                    "PROBLEM",
+                    "CURIOSITY",
+                    "ORIENTATION",
+                    "SEARCH",
+                    "RECOGNITION",
+                    "ANTICIPATION",
+                    "COMPARISON",
+                    "DISCOVERY",
+                    "PAYOFF",
+                    "PROGRESSION",
+                    "RECALL"
+                  ]
+                },
+                "viewer_state": {
+                  "type": "object",
+                  "required": [
+                    "current_problem",
+                    "information_already_seen",
+                    "current_attention_object",
+                    "viewer_expectation",
+                    "viewer_task",
+                    "unresolved_question",
+                    "next_information_gain"
+                  ],
+                  "properties": {
+                    "current_problem": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "current_attention_object": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "viewer_expectation": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "viewer_task": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "unresolved_question": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "next_information_gain": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "information_already_seen": {
+                      "type": "array",
+                      "items": {
+                        "type": "string",
+                        "minLength": 1
+                      },
+                      "uniqueItems": true
+                    }
+                  },
+                  "additionalProperties": false
+                },
+                "editorial_signals": {
+                  "type": "object",
+                  "required": [
+                    "hook_link_clear",
+                    "payoff_leaked",
+                    "reading_space",
+                    "motion_without_gain",
+                    "repeated_explanation",
+                    "method_name_dominates",
+                    "voice_over_hold",
+                    "information_overload"
+                  ],
+                  "additionalProperties": {
+                    "type": "boolean"
+                  }
+                },
+                "source_refs": {
+                  "type": "array",
+                  "minItems": 1
+                },
+                "bound_source_beat_sha": {
+                  "type": "string",
+                  "pattern": "^[0-9a-f]{64}$"
+                }
+              }
+            }
+          },
+          "payoff_scope": {
+            "enum": [
+              "locate",
+              "interpret",
+              "group",
+              "reduce",
+              "verify",
+              "answer"
+            ]
+          }
+        }
+      }
+    },
+    "quality_audit": {
+      "type": "object",
+      "required": [
+        "issues",
+        "scope"
+      ],
+      "properties": {
+        "scope": {
+          "const": "editorial_hypothesis_not_human_taste"
+        },
+        "issues": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "issue",
+              "reason",
+              "viewer_cost",
+              "recommended_edit",
+              "source_constraints",
+              "status"
+            ],
+            "properties": {
+              "status": {
+                "const": "EDITORIAL_SUGGESTION"
+              }
+            }
+          }
+        }
+      }
+    },
+    "human_review": {
+      "const": "PENDING"
+    },
+    "public_render_ready": {
+      "const": false
+    }
+  }
+}
