@@ -1,0 +1,471 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "properties": {
+    "schema_version": {
+      "const": "1.0.0"
+    },
+    "policy": {
+      "const": "free_showcase_v1"
+    },
+    "package": {
+      "type": "object"
+    },
+    "scope": {
+      "type": "object",
+      "properties": {
+        "content_scope": {
+          "enum": [
+            "full_solution",
+            "method_action_demo",
+            "boundary_demo",
+            "anti_rule_demo",
+            "challenge",
+            "method_comparison"
+          ]
+        },
+        "result": {
+          "enum": [
+            "locate",
+            "interpret",
+            "group",
+            "reduce",
+            "verify",
+            "answer"
+          ]
+        },
+        "claim_validity": {
+          "enum": [
+            "PASS",
+            "PENDING",
+            "FAIL"
+          ]
+        },
+        "claim_ids": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "uniqueItems": true
+        },
+        "required_qualifiers": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "required": [
+        "content_scope",
+        "result",
+        "claim_validity",
+        "claim_ids",
+        "required_qualifiers"
+      ],
+      "additionalProperties": false
+    },
+    "final_copy": {
+      "type": "object",
+      "properties": {
+        "hook": {
+          "type": "string"
+        },
+        "voiceover": {
+          "type": "array",
+          "items": {
+            "type": "object"
+          }
+        },
+        "subtitles": {
+          "type": "array",
+          "items": {
+            "type": "object"
+          }
+        },
+        "visual_text": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "memory": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "hook",
+        "voiceover",
+        "subtitles",
+        "visual_text",
+        "memory"
+      ],
+      "additionalProperties": false
+    },
+    "source_display": {
+      "type": "object",
+      "properties": {
+        "excerpt_ids": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "displayed_text_sha": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "pattern": "^[a-f0-9]{64}$"
+        },
+        "displayed_image_sha": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "pattern": "^[a-f0-9]{64}$"
+        },
+        "attribution_text": {
+          "type": "string"
+        },
+        "materials": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "path": {
+                "type": "string"
+              },
+              "sha256": {
+                "type": "string",
+                "pattern": "^[a-f0-9]{64}$"
+              }
+            },
+            "required": [
+              "path",
+              "sha256"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "rights": {
+          "type": "object",
+          "properties": {
+            "question": {
+              "enum": [
+                "approved",
+                "unknown",
+                "internal_only",
+                "denied"
+              ]
+            },
+            "images": {
+              "enum": [
+                "approved",
+                "unknown",
+                "internal_only",
+                "denied"
+              ]
+            },
+            "music": {
+              "enum": [
+                "approved",
+                "unknown",
+                "internal_only",
+                "denied"
+              ]
+            },
+            "voice": {
+              "enum": [
+                "approved",
+                "unknown",
+                "internal_only",
+                "denied"
+              ]
+            }
+          },
+          "required": [
+            "question",
+            "images",
+            "music",
+            "voice"
+          ],
+          "additionalProperties": false
+        }
+      },
+      "required": [
+        "excerpt_ids",
+        "displayed_text_sha",
+        "displayed_image_sha",
+        "attribution_text",
+        "materials",
+        "rights"
+      ],
+      "additionalProperties": false
+    },
+    "media": {
+      "type": "object",
+      "properties": {
+        "path": {
+          "type": "string"
+        },
+        "sha256": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "pattern": "^[a-f0-9]{64}$"
+        },
+        "picture_sha": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "pattern": "^[a-f0-9]{64}$"
+        },
+        "audio_assets": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "path": {
+                "type": "string"
+              },
+              "sha256": {
+                "type": "string",
+                "pattern": "^[a-f0-9]{64}$"
+              }
+            },
+            "required": [
+              "path",
+              "sha256"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "production_receipt_sha": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "pattern": "^[a-f0-9]{64}$"
+        }
+      },
+      "required": [
+        "path",
+        "sha256",
+        "picture_sha",
+        "audio_assets",
+        "production_receipt_sha"
+      ],
+      "additionalProperties": false
+    },
+    "reviews": {
+      "type": "object",
+      "properties": {
+        "teaching_claim": {
+          "$ref": "#/$defs/review"
+        },
+        "source_display": {
+          "$ref": "#/$defs/review"
+        },
+        "editorial": {
+          "$ref": "#/$defs/review"
+        },
+        "final_media": {
+          "$ref": "#/$defs/review"
+        }
+      },
+      "additionalProperties": false
+    },
+    "content_profile": {
+      "const": "FREE_SHOWCASE"
+    }
+  },
+  "required": [
+    "schema_version",
+    "policy",
+    "package",
+    "scope",
+    "final_copy",
+    "source_display",
+    "media",
+    "reviews",
+    "content_profile"
+  ],
+  "additionalProperties": false,
+  "$defs": {
+    "review": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "type": "object",
+      "properties": {
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "policy": {
+          "const": "free_showcase_v1"
+        },
+        "kind": {
+          "enum": [
+            "teaching_claim",
+            "source_display",
+            "editorial",
+            "final_media"
+          ]
+        },
+        "review_id": {
+          "type": "string"
+        },
+        "reviewer": {
+          "type": "string"
+        },
+        "reviewer_kind": {
+          "enum": [
+            "human",
+            "AI",
+            "ai_host"
+          ]
+        },
+        "origin": {
+          "enum": [
+            "external_human",
+            "agent_authored"
+          ]
+        },
+        "reviewed_at": {
+          "type": "string"
+        },
+        "status": {
+          "enum": [
+            "pending",
+            "pass",
+            "fail"
+          ]
+        },
+        "bindings": {
+          "type": "object",
+          "properties": {
+            "policy": {
+              "const": "free_showcase_v1"
+            },
+            "version": {
+              "const": "1.0.0"
+            },
+            "teaching_sha": {
+              "type": [
+                "string",
+                "null"
+              ],
+              "pattern": "^[a-f0-9]{64}$"
+            },
+            "scope_sha": {
+              "type": [
+                "string",
+                "null"
+              ],
+              "pattern": "^[a-f0-9]{64}$"
+            },
+            "final_copy_sha": {
+              "type": [
+                "string",
+                "null"
+              ],
+              "pattern": "^[a-f0-9]{64}$"
+            },
+            "source_display_sha": {
+              "type": [
+                "string",
+                "null"
+              ],
+              "pattern": "^[a-f0-9]{64}$"
+            },
+            "picture_sha": {
+              "type": [
+                "string",
+                "null"
+              ],
+              "pattern": "^[a-f0-9]{64}$"
+            },
+            "audio_sha": {
+              "type": [
+                "string",
+                "null"
+              ],
+              "pattern": "^[a-f0-9]{64}$"
+            },
+            "final_media_sha": {
+              "type": [
+                "string",
+                "null"
+              ],
+              "pattern": "^[a-f0-9]{64}$"
+            },
+            "upstream_sha": {
+              "type": [
+                "string",
+                "null"
+              ],
+              "pattern": "^[a-f0-9]{64}$"
+            },
+            "production_receipt_sha": {
+              "type": [
+                "string",
+                "null"
+              ],
+              "pattern": "^[a-f0-9]{64}$"
+            },
+            "content_profile": {
+              "const": "FREE_SHOWCASE"
+            }
+          },
+          "required": [
+            "policy",
+            "version",
+            "teaching_sha",
+            "scope_sha",
+            "final_copy_sha",
+            "source_display_sha",
+            "picture_sha",
+            "audio_sha",
+            "final_media_sha",
+            "upstream_sha",
+            "production_receipt_sha",
+            "content_profile"
+          ],
+          "additionalProperties": false
+        },
+        "checks": {
+          "type": "object",
+          "additionalProperties": {
+            "enum": [
+              "pending",
+              "pass",
+              "fail"
+            ]
+          }
+        },
+        "evidence_notes": {
+          "type": "string"
+        },
+        "content_profile": {
+          "const": "FREE_SHOWCASE"
+        }
+      },
+      "required": [
+        "schema_version",
+        "policy",
+        "kind",
+        "review_id",
+        "reviewer",
+        "reviewer_kind",
+        "origin",
+        "reviewed_at",
+        "status",
+        "bindings",
+        "checks",
+        "evidence_notes",
+        "content_profile"
+      ],
+      "additionalProperties": false
+    }
+  }
+}

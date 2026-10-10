@@ -1,0 +1,235 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "properties": {
+    "schema_version": {
+      "const": "1.0.0"
+    },
+    "kind": {
+      "const": "method_centered_episode"
+    },
+    "method": {
+      "type": "object",
+      "properties": {
+        "method_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "version": {
+          "type": "string",
+          "minLength": 1
+        },
+        "theme": {
+          "type": "string",
+          "minLength": 1
+        },
+        "signature_motion": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "method_id",
+        "version",
+        "theme",
+        "signature_motion"
+      ],
+      "additionalProperties": false
+    },
+    "viewer_question": {
+      "type": "string",
+      "minLength": 1
+    },
+    "questions": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "question_id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "editorial_role": {
+            "enum": [
+              "establish",
+              "variation",
+              "amplification"
+            ]
+          },
+          "package": {
+            "type": "object"
+          },
+          "narrative_beats": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "beat_id": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "function": {
+                  "enum": [
+                    "original_task",
+                    "observe",
+                    "first_action",
+                    "attention",
+                    "helper",
+                    "evidence_alignment",
+                    "judgement",
+                    "payoff",
+                    "closure"
+                  ]
+                },
+                "viewer_sees": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "action": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "source_refs": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "asset_id": {
+                        "type": "string",
+                        "minLength": 1
+                      },
+                      "pointer": {
+                        "type": "string",
+                        "minLength": 1
+                      },
+                      "sha": {
+                        "type": "string",
+                        "pattern": "^[a-f0-9]{64}$"
+                      }
+                    },
+                    "required": [
+                      "asset_id",
+                      "pointer",
+                      "sha"
+                    ],
+                    "additionalProperties": false
+                  },
+                  "minItems": 1
+                }
+              },
+              "required": [
+                "beat_id",
+                "function",
+                "viewer_sees",
+                "action",
+                "source_refs"
+              ],
+              "additionalProperties": false
+            },
+            "minItems": 1
+          },
+          "payoff": {
+            "type": "object",
+            "properties": {
+              "result_scope": {
+                "enum": [
+                  "locate",
+                  "interpret",
+                  "group",
+                  "reduce",
+                  "verify",
+                  "answer"
+                ]
+              },
+              "action_refs": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "asset_id": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "pointer": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "sha": {
+                      "type": "string",
+                      "pattern": "^[a-f0-9]{64}$"
+                    }
+                  },
+                  "required": [
+                    "asset_id",
+                    "pointer",
+                    "sha"
+                  ],
+                  "additionalProperties": false
+                },
+                "minItems": 1
+              },
+              "output_shas": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "pattern": "^[a-f0-9]{64}$"
+                },
+                "minItems": 1
+              },
+              "allowed_claim": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "required": [
+              "result_scope",
+              "action_refs",
+              "output_shas",
+              "allowed_claim"
+            ],
+            "additionalProperties": false
+          },
+          "helper_methods": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 1
+            }
+          }
+        },
+        "required": [
+          "question_id",
+          "editorial_role",
+          "package",
+          "narrative_beats",
+          "payoff",
+          "helper_methods"
+        ],
+        "additionalProperties": false
+      },
+      "minItems": 2,
+      "maxItems": 3
+    },
+    "method_recall": {
+      "type": "string",
+      "minLength": 1
+    },
+    "duration_policy": {
+      "const": "reading_narration_and_action_determine_duration"
+    },
+    "public_render_ready": {
+      "const": false
+    }
+  },
+  "required": [
+    "schema_version",
+    "kind",
+    "method",
+    "viewer_question",
+    "questions",
+    "method_recall",
+    "duration_policy",
+    "public_render_ready"
+  ],
+  "additionalProperties": false
+}

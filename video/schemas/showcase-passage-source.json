@@ -1,0 +1,42 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "kind",
+    "bundle",
+    "question_id",
+    "segment_ids",
+    "action_ids"
+  ],
+  "properties": {
+    "kind": {
+      "const": "free_showcase_passage/v1"
+    },
+    "bundle": {
+      "type": "object"
+    },
+    "question_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "segment_ids": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "action_ids": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    }
+  }
+}
