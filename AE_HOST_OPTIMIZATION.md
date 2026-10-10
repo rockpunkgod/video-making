@@ -58,3 +58,13 @@ The subsequent complete 4K/24 production render finished all **5,648 frames in 2
 5. Keep host settings, native operation results, final-media checks and human reviews separate. These settings are the current tested configuration, not a claim of universal optimality.
 
 Private backups, screenshots, audio, questions, Adobe projects and frames remain in ignored local directories. Only workflow code and this sanitized report are committed.
+
+## Follow-up host audit — 2026-10-10 23:17–23:20, Asia/Shanghai
+
+The current AE 26.0x67 session responded to the existing CEP bridge: bridge state OK, no pending calls and no degraded timestamp. A read-only native execution confirmed rendering stopped, the open project clean, MFR enabled, CPU reservation 0%, disk cache 250 GB at the configured G-volume location, and idle frame caching disabled. The shared Adobe memory-balancer file still reserves exactly 3 GiB for other applications. No additional settings changes or restart were needed; the already verified configuration remains active.
+
+System free physical memory was approximately 7.07 GiB. The G cache volume had approximately 480 GiB free; C had approximately 32.3 GiB free. The active Windows page file is approximately 31.4 GiB, with approximately 1.35 GiB in use and 5.74 GiB observed peak usage. The GPU reported about 4.17 GiB used of 7.96 GiB and 52°C at that sample. These are point-in-time readings, not sustained-load measurements. The Turbo power plan remains active. There is no evidence here supporting a larger cache allocation, disabling the page file, or bypassing AE's native reserved-memory minimum.
+
+Windows Application events for the preceding two days include an AE crash at 00:43 on October 10: AfterFX 26.0.0.67, faulting module `ucrtbase.dll`, exception `0xc0000409`, WER classification BEX64. The event identifies the failure location and exception; it does not prove RAM exhaustion, a GPU defect, or a particular plug-in fault. No later matching crash was returned by the bounded event query (up to 80 application events with IDs 1000/1001). Further attribution would require the corresponding dump and call stack. Replacing the runtime DLL, disabling all plug-ins, or updating drivers without that evidence was not justified.
+
+The earlier 5,648-frame native render remains the full-production stability check. This follow-up verifies the live configuration and bridge without interrupting shared Adobe production, purging active caches, changing project content, or presenting an unexplained timeout as a crash. Private native readback is retained outside Git in the host-follow-up directory.
