@@ -162,12 +162,25 @@ def package(folder):
         raise ValueError('Native render no longer binds the full current episode')
     verify_rendered_frames(folder,receipt)
     subprocess.run(['ffmpeg','-v','error','-n','-framerate','24','-start_number','0','-i',str(frames/'FRAME_%05d.tif'),
-      '-frames:v',str(receipt['frames']),'-an','-c:v','libx264','-preset','fast','-crf','16','-threads','6','-pix_fmt','yuv420p',str(target)],check=True)
+      '-frames:v',str(receipt['frames']),'-an','-vf','scale=out_color_matrix=bt709:out_range=tv',
+      '-c:v','libx264','-preset','fast','-crf','16','-threads','6','-pix_fmt','yuv420p',
+      '-color_range','tv','-colorspace','bt709','-color_primaries','bt709','-color_trc','bt709',
+      '-x264-params','colorprim=bt709:transfer=bt709:colormatrix=bt709',
+      '-movflags','+write_colr',str(target)],check=True)
     subprocess.run(['ffmpeg','-v','error','-xerror','-i',str(target),'-f','null','-'],check=True)
     probe=json.loads(subprocess.check_output(['ffprobe','-v','error','-show_streams','-of','json',str(target)]))['streams'][0]
     if [probe['width'],probe['height'],probe['r_frame_rate'],int(probe['nb_frames'])]!=[3840,2160,'24/1',receipt['frames']]:raise ValueError('Encoded picture profile changed')
+    # Inspect a decoded frame: stream summaries can omit primaries/transfer.
+    color=json.loads(subprocess.check_output(['ffprobe','-v','error','-select_streams','v:0',
+      '-read_intervals','%+#1','-show_frames','-show_entries',
+      'frame=color_range,color_space,color_primaries,color_transfer','-of','json',str(target)]))['frames'][0]
+    if [color.get(k) for k in ('color_range','color_space','color_primaries','color_transfer')]!=['tv','bt709','bt709','bt709']:
+        raise ValueError('Encoded picture Rec.709 color binding missing')
     write(folder/'PICTURE_RECEIPT.json',{'native_receipt_sha':sha(receipt),'output':str(target),'output_sha':file_sha(target),
-      'duration':receipt['duration'],'frames':receipt['frames'],'full_decode':'PASS','public_render_ready':False})
+      'duration':receipt['duration'],'frames':receipt['frames'],'full_decode':'PASS',
+      'color_policy':'RGB_to_limited_BT709_with_explicit_primaries_transfer_and_matrix',
+      'decoded_color':{k:color[k] for k in ('color_range','color_space','color_primaries','color_transfer')},
+      'public_render_ready':False})
     return {'picture':str(target),'frames':receipt['frames']}
 
 

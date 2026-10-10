@@ -89,6 +89,14 @@ assets and are not the delivered pilot.
 - Premiere's CEP connection is live-verified; a separate working project and
   source-path-verified audio imports exist. The prior accepted Premiere project
   bytes were verified unchanged when making the new project.
+- A first complete native Premiere export was read back unchanged and fully
+  decoded at 4K/24 with 5,648 frames. All 15 encoded voices were found at their
+  bound times (minimum correlation 0.9999; one consistent 1,024-sample codec
+  offset). A subsequent pixel check found an untagged RGB/YUV color handoff:
+  the warm paper shifted slightly green in Premiere. A separate color-corrected
+  revision is being produced; the earlier export is retained as an internal
+  comparison, not the current handoff. Packaging now explicitly converts and
+  signals limited-range Rec.709, and checks decoded-frame color metadata.
 
 ## Verification and remaining work
 
@@ -96,6 +104,11 @@ Relevant production regression: **83 tests passed**. Separate affected product
 and episode regression: **37 tests passed**. Native-frame tests reject changed,
 missing or unexpected frames, wrong transfer bindings/order, stale receipts and
 invalid batch sizes before packaging or host execution.
+
+Latest focused regression: **20 tests passed**, including an actual 4K RGB TIFF
+to H.264 round trip with synthetic warm-paper, blue, orange and dark patches.
+The decoded colors remain within three RGB values per channel, explicit Rec.709
+metadata is required, and a completed picture cannot be silently overwritten.
 
 The native audit checks actual text/fonts/source lineage, motion keys, lifetimes,
 canvas/timing and caption protection. Actual native frame receipts and encoded
@@ -107,7 +120,7 @@ media must still be inspected; passing synthetic tests is not a completed film.
 | Episode direction, A/B storyboard, complete VO and new timing | Authored; human quality PENDING |
 | Adaptive local replay/inline guidance and original-object continuity | Native audit and current frame inspection PASS; final playback pending |
 | Complete native 4K/24 frame rendering | PASS — 5,648 frames, 24 completed batches |
-| 4K actual MP4 | NOT YET DELIVERED |
+| 4K actual MP4 | First complete internal export verified; color-corrected handoff IN PROGRESS |
 | Final editable AE/PR and replay handoff | In progress |
 | Final native Premiere timing/audio/media readback | PENDING |
 | Human viewing comparison with the former fixed structure | PENDING; not a controlled same-question experiment |
