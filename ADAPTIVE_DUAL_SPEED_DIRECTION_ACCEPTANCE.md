@@ -62,9 +62,12 @@ request, source bindings, timing reconciliation and upstream check are recorded
 there. Earlier failed or rejected attempts remain separate; they are not approved
 assets and are not the delivered pilot.
 
-- Native 4K/24 construction completed for the preceding cut: 615 authored text
-  objects plus the existing rig/camera/paper/binding layers. The latest context
-  refinement still requires final native readback and actual frame inspection.
+- Native 4K/24 construction and the latest context refinement completed: 615
+  authored text objects plus the existing rig/camera/paper/binding layers. Native
+  text/font/source/canvas and motion audits pass; 13,993 actual keys were checked.
+  Sixteen current native frame previews were inspected. A zero-Z native readback
+  representation for actual 2D screen layers is normalized without accepting
+  wrong X/Y, nonzero depth or 3D mismatches. Full native video remains required.
 - Reading uses the same original glyphs in paragraph close-ups. Background
   material is subordinate; critical original sentences, rather than accumulated
   Chinese lists, drive the two comparisons.
@@ -97,7 +100,7 @@ media must still be inspected; passing synthetic tests is not a completed film.
 |---|---|
 | Two supported same-method real sources and independent provenance | PASS for internal consumption |
 | Episode direction, A/B storyboard, complete VO and new timing | Authored; human quality PENDING |
-| Adaptive local replay/inline guidance and original-object continuity | Built; latest native/motion inspection in progress |
+| Adaptive local replay/inline guidance and original-object continuity | Native audit and current frame inspection PASS; final playback pending |
 | 4K actual MP4 | NOT YET DELIVERED |
 | Final editable AE/PR and replay handoff | In progress |
 | Final native Premiere timing/audio/media readback | PENDING |
