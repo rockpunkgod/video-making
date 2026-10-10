@@ -4,6 +4,8 @@
 
 Inspected main: `64ee8188c857359f22f8cb0ce9e52bd701d2a6b3` (local and freshly fetched origin). PR #1 is OPEN, Draft, NOT MERGED; head `ccd1f78cd523157f3a75b4061c781d3992a71f9c`. Its four commits add only the planning module, documentation and synthetic tests. The earlier stub smoke test was not production acceptance.
 
+Final alignment refresh found `main@b85cf51612964b005dbfa0b009bd033e5053170b` (native Rec.709 picture handoff). It is merged without conflicts; aligned implementation HEAD is `557a69736373526b1577150ff0809a6bf6efcd5e`. The upstream executor/color test changes are inherited from main, not recreated by Audience Learning.
+
 The shared main worktree contains concurrent cognitive-design and reading-continuity edits. They were preserved. New isolated worktree: `video-making-audience-v02`, branch `feat/audience-engagement-design-v02`. It starts from PR #1 and merges the inspected main without conflicts (`6cf1fb391e43e6c74a6a872ac5635eff6b15116b`). A separate v0.2 Draft PR against main incorporates the v0.1 foundations and supersedes its implementation proposal; #1 remains a historical Draft until the owner decides its disposition. Neither is treated as accepted or merged.
 
 ## Actual v0.1 review
