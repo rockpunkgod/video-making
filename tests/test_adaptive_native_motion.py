@@ -13,13 +13,14 @@ from video_contracts import write
 
 @unittest.skipUnless(shutil.which('node'), 'JS verifier checks require Node')
 class NativePositionReadbackTest(unittest.TestCase):
-    def check_position(self, actual, *, space='screen', three_d=False):
+    def check_position(self, actual, *, space='screen', three_d=False,
+                       track='position', expected=None):
         with tempfile.TemporaryDirectory() as directory:
             folder = Path(directory)
             node = {'node_id': 'synthetic-record', 'text': 'SYNTHETIC',
                     'font': 'SyntheticFont', 'origin_object_id': 'synthetic-origin',
                     'source_refs': [], 'space': space, 'in_point': 0,
-                    'out_point': 1, 'tracks': {'position': [[0, [10, 20]]]}}
+                    'out_point': 1, 'tracks': {track: [[0, expected or [10, 20]]]}}
             request = {'project': str(folder/'synthetic.aep'),
                        'spec': {'spec_sha': 'synthetic', 'canvas': {'duration': 1},
                                 'camera': {'position': []}, 'nodes': [node]}}
@@ -46,14 +47,14 @@ global.File = function(){this.open=()=>true;this.close=()=>{};
 global.PropertyValueType={COLOR:1};
 const empty={numKeys:0};
 const record={threeDLayer:config.three_d,inPoint:0,outPoint:1,
- transform:{position:{numKeys:1,propertyValueType:2,
+ transform:{[config.track]:{numKeys:1,propertyValueType:2,
  keyTime:()=>0,keyValue:()=>config.actual}}};
 global.AEMCP={compById:()=>({layer:(name)=>name==='COGNITIVE_ATTENTION'
  ? {transform:{position:empty}}:record})};
 process.stdout.write(eval(config.code));
 '''
                 result = subprocess.run(['node', '-e', setup, json.dumps({
-                    'request': request, 'actual': actual, 'three_d': three_d,
+                    'request': request, 'actual': actual, 'three_d': three_d, 'track':track,
                     'code': code})], capture_output=True, text=True, check=True)
                 return {'content': result.stdout}
 
@@ -68,6 +69,20 @@ process.stdout.write(eval(config.code));
     def test_wrong_screen_xy_remains_rejected(self):
         with self.assertRaisesRegex(ValueError, 'motion/timing'):
             self.check_position([11, 20, 0])
+
+    def test_2d_scale_unused_z_is_native_100(self):
+        self.assertEqual(self.check_position([56,56,100],track='scale',
+            expected=[56,56,56])['canvas'],'4K24')
+
+    def test_2d_scale_wrong_xy_or_non_native_z_rejected(self):
+        for actual in ([57,56,100],[56,56,99]):
+            with self.subTest(actual=actual), self.assertRaisesRegex(ValueError,'motion/timing'):
+                self.check_position(actual,track='scale',expected=[56,56,56])
+
+    def test_real_3d_scale_z_remains_checked(self):
+        with self.assertRaisesRegex(ValueError,'motion/timing'):
+            self.check_position([56,56,100],space='world',three_d=True,
+                track='scale',expected=[56,56,56])
 
     def test_nonzero_screen_depth_remains_rejected(self):
         with self.assertRaisesRegex(ValueError, 'motion/timing'):

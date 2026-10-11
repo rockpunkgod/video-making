@@ -34,3 +34,20 @@ Whole voice clips determine caption and editorial placement; reading and cogniti
 holds are not mechanically sped up. Final Premiere timing/media receipts must be
 renewed after picture or voice changes. Human viewing, listening, source rights
 and release approvals remain separate. `public_render_ready` remains false.
+
+An authored episode may supply `spec.preview_times` instead of the original
+episode's scene names. Points must be within its actual duration (at most 32).
+Native key readback is batched in 48-node groups, with a small JSON input per
+group, so ExtendScript does not repeatedly parse the entire episode. Two-dimensional
+screen scale checks compare the visible X/Y dimensions when AE returns its fixed,
+unused Z=100; real 3D scale remains fully checked. Preview requests use pages of
+at most 16 frames, matching the native bridge limit. Progress receipts are partial;
+only the completed audit is a PASS.
+
+For candidate decisions, `spec.events` binds the exact frozen action and its
+output. The existing adapter checks observation → decision → confirmation timing
+and mechanically projects the remaining candidate set. An optional
+`spec.answer_confirmations` also requires upstream full closure, the candidate's
+own check and completion of all provided candidate actions. Retention alone does
+not collapse the working set. This is an engineering readback, not semantic truth
+certification or proof of a successful viewing experience.

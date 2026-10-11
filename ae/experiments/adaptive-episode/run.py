@@ -24,6 +24,9 @@ def current(folder):
     if validate_episode(episode,statuses)['engineering_status']!='PASS':
         raise ValueError('Current frozen episode dependency invalid')
     bundles={b['asset_id']:b for q in episode['questions'] for b in q['package']['source_items']}
+    if s.get('events'):
+        from ae_production.candidate_motion import audit_candidate_events
+        audit_candidate_events(s['events'],bundles,s.get('answer_confirmations',()))
     ids=set()
     for n in s['nodes']:
         if n['node_id'] in ids:raise ValueError('Duplicate native object identity')
@@ -79,13 +82,28 @@ def audit(folder):
     # Audit the actual motion and caption protection, not just the text manifest.
     code='''(function(){var f=new File(REQUEST);f.encoding='UTF-8';f.open('r');var s=JSON.parse(f.read()).spec;f.close();var cp=AEMCP.compById(COMP),errors=[],checked=0;
       function equal(a,b){if(a instanceof Array){if(!(b instanceof Array)||a.length!==b.length)return false;for(var j=0;j<a.length;j++)if(!equal(a[j],b[j]))return false;return true;}return Math.abs(a-b)<0.0001;}
-      function verify(p,rows,name,screenPosition){if(!p||p.numKeys!==rows.length){errors.push(name+': key count');return;}for(var k=1;k<=p.numKeys;k++){var actual=p.keyValue(k),expected=rows[k-1][1];if(p.propertyValueType===PropertyValueType.COLOR&&actual.length===4&&expected.length===3&&Math.abs(actual[3]-1)<0.0001)actual=actual.slice(0,3);if(screenPosition&&actual instanceof Array&&expected instanceof Array&&actual.length===3&&expected.length===2&&Math.abs(actual[2])<0.0001)actual=actual.slice(0,2);if(Math.abs(p.keyTime(k)-rows[k-1][0])>0.0001||!equal(actual,expected))errors.push(name+': key '+k);checked++;}}
+      function verify(p,rows,name,screenPosition,screenScale){if(!p||p.numKeys!==rows.length){errors.push(name+': key count');return;}for(var k=1;k<=p.numKeys;k++){var actual=p.keyValue(k),expected=rows[k-1][1];if(p.propertyValueType===PropertyValueType.COLOR&&actual.length===4&&expected.length===3&&Math.abs(actual[3]-1)<0.0001)actual=actual.slice(0,3);if(screenPosition&&actual instanceof Array&&expected instanceof Array&&actual.length===3&&expected.length===2&&Math.abs(actual[2])<0.0001)actual=actual.slice(0,2);if(screenScale&&actual instanceof Array&&expected instanceof Array&&actual.length===3&&expected.length===3&&Math.abs(actual[2]-100)<0.0001){actual=actual.slice(0,2);expected=expected.slice(0,2);}if(Math.abs(p.keyTime(k)-rows[k-1][0])>0.0001||!equal(actual,expected))errors.push(name+': key '+k);checked++;}}
       verify(cp.layer('COGNITIVE_ATTENTION').transform.position,s.camera.position,'camera');
-      for(var i=0;i<s.nodes.length;i++){var n=s.nodes[i],l=cp.layer(n.node_id);if(Math.abs(l.inPoint-n.in_point)>0.0001||Math.abs(l.outPoint-n.out_point)>0.0001)errors.push(n.node_id+': lifetime');for(var name in n.tracks){var p=null;if(name==='position'||name==='scale'||name==='opacity')p=l.transform[name];else if(name==='color')p=l.property('ADBE Text Properties').property('ADBE Text Animators').property(1).property('ADBE Text Animator Properties').property('ADBE Text Fill Color');else continue;verify(p,n.tracks[name],n.node_id+': '+name,name==='position'&&n.space==='screen'&&l.threeDLayer===false);}}
+      for(var i=0;i<s.nodes.length;i++){var n=s.nodes[i],l=cp.layer(n.node_id);if(Math.abs(l.inPoint-n.in_point)>0.0001||Math.abs(l.outPoint-n.out_point)>0.0001)errors.push(n.node_id+': lifetime');for(var name in n.tracks){var p=null;if(name==='position'||name==='scale'||name==='opacity')p=l.transform[name];else if(name==='color')p=l.property('ADBE Text Properties').property('ADBE Text Animators').property(1).property('ADBE Text Animator Properties').property('ADBE Text Fill Color');else continue;verify(p,n.tracks[name],n.node_id+': '+name,name==='position'&&n.space==='screen'&&l.threeDLayer===false,name==='scale'&&n.space==='screen'&&l.threeDLayer===false);}}
       if(s.inline_captions){var band=cp.layer('CAPTION_PAPER'),top=band.transform.position.value[1]-band.source.height/2;if(s.caption_safe_top!==undefined&&Math.abs(top-s.caption_safe_top)>0.001)errors.push('caption safe area');for(var i=0;i<s.nodes.length;i++){var n=s.nodes[i],l=cp.layer(n.node_id);if(n.node_id.indexOf('caption:')===0&&l.index>band.index)errors.push('caption hidden behind band');if(n.node_id.indexOf('source:')===0&&l.index<band.index)errors.push('source above caption protection');}}
       return JSON.stringify({checked_keys:checked,errors:errors});})();'''
-    code=code.replace('REQUEST',json.dumps((folder/'native-request.json').as_posix())).replace('COMP',str(identity['comp_id']))
-    motion=json.loads(c.call('ae_exec',{'code':code,'timeout_sec':120},timeout=150)['content'])
+    code=code.replace('COMP',str(identity['comp_id']))
+    # Bound native reads as well as writes. Large text scenes can exceed the
+    # bridge deadline when every key is read in one synchronous JSX program.
+    motion={'checked_keys':0,'errors':[],'batches':[]}
+    for first in range(0,len(r['spec']['nodes']),48):
+        last=min(first+48,len(r['spec']['nodes']))
+        # Bound the file parsed by ExtendScript too. Slicing after parsing the
+        # entire episode repeats a large synchronous JSON parse in every call.
+        chunk_file=folder/'native-audit-input.json'
+        write(chunk_file,{'spec':{**{k:v for k,v in r['spec'].items()
+                                  if k in ('camera','inline_captions','caption_safe_top')},
+                                 'nodes':r['spec']['nodes'][first:last]}})
+        chunk=code.replace('REQUEST',json.dumps(chunk_file.as_posix()))
+        part=json.loads(c.call('ae_exec',{'code':chunk,'timeout_sec':120},timeout=150)['content'])
+        motion['checked_keys']+=part['checked_keys'];motion['errors'].extend(part['errors'])
+        motion['batches'].append({'first_node':first,'end_node':last,'checked_keys':part['checked_keys']})
+        write(folder/'native-motion-audit-progress.json',motion)
     write(folder/'native-motion-audit.json',motion)
     if motion['errors']:raise ValueError('Native motion/timing/caption audit failed: '+str(motion['errors'][:3]))
     return {'native_objects':len(r['spec']['nodes']),'canvas':'4K24','source_and_fonts':'PASS'}
@@ -93,14 +111,22 @@ def audit(folder):
 
 def preview(folder):
     r=current(folder);identity=read(folder/'native-identity.json');c=client();out=folder/'previews';out.mkdir(exist_ok=True)
-    direction=read(folder/'DIRECTION_REALIZED.json');scenes={v['scene_id']:v for v in direction['scenes']}
-    points=[('a-entry',3),('a-options',2),('a-p1',4),('a-p3',5),('a-p4',5),('a-p5',5),
-            ('a-connect',1),('a-connect-replay',4),('a-payoff',1),('b-entry',3),
-            ('b-p2',5),('b-p4',5),('b-p3',6),('b-p1',6),('b-scope',5),('b-payoff',1)]
-    times=[min(scenes[sid]['time_range'][0]+offset,scenes[sid]['time_range'][1]-1/24) for sid,offset in points]
-    result=c.call('ae_previewFrame',{'comp_id':str(identity['comp_id']),
-        'times':times,
-        'layout':'grid','grid_max_side':2048,'out_dir':str(out)},timeout=220)
+    times=r['spec'].get('preview_times')
+    if times is None:
+        direction=read(folder/'DIRECTION_REALIZED.json');scenes={v['scene_id']:v for v in direction['scenes']}
+        points=[('a-entry',3),('a-options',2),('a-p1',4),('a-p3',5),('a-p4',5),('a-p5',5),
+                ('a-connect',1),('a-connect-replay',4),('a-payoff',1),('b-entry',3),
+                ('b-p2',5),('b-p4',5),('b-p3',6),('b-p1',6),('b-scope',5),('b-payoff',1)]
+        times=[min(scenes[sid]['time_range'][0]+offset,scenes[sid]['time_range'][1]-1/24) for sid,offset in points]
+    if (not isinstance(times,list) or not times or len(times)>32
+            or any(type(t) not in (int,float) or not 0<=t<r['spec']['canvas']['duration'] for t in times)):
+        raise ValueError('Preview points must identify frames within the authored episode')
+    result=[]
+    for first in range(0,len(times),16):
+        page=out/('page-'+str(first//16+1));page.mkdir(exist_ok=True)
+        result.append(c.call('ae_previewFrame',{'comp_id':str(identity['comp_id']),
+            'times':times[first:first+16],
+            'layout':'grid','grid_max_side':2048,'out_dir':str(page)},timeout=220))
     write(folder/'preview-receipt.json',result);return {'preview':str(out)}
 
 
