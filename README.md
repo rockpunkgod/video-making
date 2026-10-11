@@ -1,98 +1,117 @@
-# ANSWER Method Engine · video-making
+# video-making
 
-Video Production OS v0.1 的冻结消费接口、分级门禁与本地运行说明见 [Video OS](docs/video-os.md)，基线见 [video-os-baseline](docs/video-os-baseline.md)。工程试制通过不代表独立教学认证或公开视频放行。
+**把真实做题过程拍成可观看、可追溯的认知动作影片。**
 
-V8 AE 增量模块见 [AE Production Layer](ae/README.md) 与 [真实预览验收](AE_MVP_ACCEPTANCE.md)：仅消费冻结 Video Package，使用官方 JUNKDOGE MCP 操作 AE，真实素材和三个内部预览保留在忽略的本地目录。
+以 ANSWER 的冻结教学资产为基础，连接教学选择、学生第一视角文案、导演、声音和原生 AE → Premiere 制作。观众先看到原题，再跟随注意力和实际动作，看到证据如何改变当前判断。
 
-Swiss Academic Motion v0.2 的中文入口、品牌色、方法动作节奏和平台投影见 [视觉收敛报告](AE_VISUAL_DIRECTION_REVIEW.md) 与 [视觉版本迁移](ae/design/V0.2_MIGRATION.md)。v0.1 保留；视觉工程检查不替代人工审美或公开发布审核。
+**方法组织整期，题目驱动叙事，动作推动镜头，证据支撑判断，认知突破产生爽感。**
 
-ANSWER is an evidence-grounded Gaokao English method and question-analysis system.
+## 产品方向
 
-以课程证据为根基，把高考英语方法转化为可触发、可执行、可验证、可迁移的考试决策系统。成果另存于本仓库；`rockpunkgod/ANSWER` 源仓库未修改。
+| 产品 | 第一目标 | 内容组织 |
+|---|---|---|
+| **FREE_SHOWCASE · Experience First** | 观看体验、认知爽感、传播力 | 一种核心方法贯穿一期；优先用 2–3 道不同真实题目形成递进，每题独立完成做题叙事 |
+| **PAID_MASTERY · Rigour First** | 方法掌握、独立执行、迁移 | 系统覆盖适用条件、动作、边界、反例、组合、练习与反馈 |
 
-支持六题型注册、学生卡点导航、方法组合、原文跨度证据图、单题/整卷结构化分析、学生/微信/机器/内容导出、真实观察数据评估。82项包含子动作、内部规则与训练框架，不是82个核心品牌。六个黄金方法有完整独立首次接触稿；所有项保持 candidate+Useful。
+当前制作重点是 FREE_SHOWCASE 内部样片。片长由阅读、动作、思考和口播决定，**没有时长上限**。Fast Pass、局部 Guided Replay 和现场引导按每题需要安排，不机械重复整题两遍。
 
-当前是可运行的证据与流程约束核心，不是自由文本自动解题器：无外部语义审阅时不猜答案；审阅记录会检查跨度、角色、路径与冲突，但不把结构检查冒充语义证明。完整作文语义批改/评分仍由兼容Skill宿主执行，可通过writing_review进入统一结构与原顺序输出，分数仅为外部建议。未验证提速、传播效果或Signature。
+两种产品共用真实性和来源底线，使用各自的质量审核标准。详见[双轨内容策略](docs/content-profiles.md)与[自适应双速导演验收](ADAPTIVE_DUAL_SPEED_DIRECTION_ACCEPTANCE.md)。
 
-## 使用
+## 制作链路
 
-开发其他模块或使用独立交付文件夹，先读[模块开发交接入口](docs/module-integration.md)：接口、版本、示例、数据排除范围和尚未验证能力。
+```mermaid
+flowchart TD
+    A[ANSWER · 冻结资产与当前状态] --> B[Pedagogy Compiler · 教学选择]
+    B --> C[Student POV · 文案与认知体验]
+    C --> D[Creative Direction · 逐题叙事与镜头]
+    C --> E[Narration Performance · 口播交付意图]
+    D --> F[After Effects · 原生认知动效]
+    E --> G[可替换声音 Producer · voice-delivery/v1]
+    F --> H[Premiere · 节奏、配音、音乐与声音设计]
+    G --> H
+    H --> I[内部成片与独立审核]
+```
 
-完整仓库内使用 Python 3.10+：
+ANSWER 提供教学事实与生命周期。Video OS 只消费冻结结构化输出和显式状态清单，不从 Registry、教学 Markdown 或原始题库补推断；教学疑点交回上游。认知设计研究辅助呈现决策，不成为第二个教学事实源。
+
+公开放行绑定当前依赖、最终文案、实际展示内容和最终媒体，要求教学、来源与编辑审核同时通过。工程检查、真人观看、试听、教学效果和传播结果分别记录。
+
+## 当前进展 · 2026-10-11
+
+| 模块或产出 | 当前状态 |
+|---|---|
+| Frozen Asset / Video OS | 冻结导出、状态投影、引用绑定、分层门禁与失效传播已有实现 |
+| Pedagogy / Student POV | 0.3 兼容链保留；0.4 Plan / Handoff 与体验层通过显式契约接入 |
+| 第一视角画面 | Swiss Cognitive POV、注意力扫读、透明提取、物理剥离、方法接力与局部重放持续迭代 |
+| 声音消费 | 稳定使用 `voice-delivery/v1`；当前 Producer 为 GPT-SoVITS，口播计划与 Premiere 节奏控制独立 |
+| 知识辅助改稿 | Astra 完成选题、分镜与文案改稿；根代理复核冻结动作、证据与结论范围，见[改稿记录](COGNITIVE_DESIGN_CREATIVE_REVISION.md) |
+| 最新双题试制 | R06 主题，两道不同真实题；原生 AE **9,051 帧、3840×2160、24 fps**，完整带字幕纯画面已封装并全片解码核验，时长 **6 分 17.125 秒** |
+| 最新声音与成片 | 19 条逐字配音及音乐素材已准备；新版原生 Premiere 合成与最终有声交付待完成，试听暂缓 |
+| 人工体验与公开资格 | 新双题版完整观看审核待进行；`public_render_ready=false` |
+
+本轮双题片的第一题展示已有的局部候选排除，第二题逐项消费已有动作后才呈现上游闭合答案。候选保留不直接变成定案，辅助动作不借用主方法归因。此轮未修改 ANSWER、Registry 或冻结教学事实。
+
+最新画面封装是知识辅助改稿之后的制作进展；历史验收文件保留各自日期、输入与阶段，不将旧版本认可移给新版。当前进展不等于新影片的人工观看或听感通过。
+
+## 视觉与声音
+
+- **Swiss Cognitive POV**：克制、典雅、有张力；构图和运动服务正在发生的认知动作。
+- **第一视角做题**：原题先出现，下一步强调的对象提前可见；画面呈现当前注意和记住的信息。
+- **有据的视觉事件**：抽离、重组、比较、候选收缩与证据锁定发生在实际动作节点。
+- **统一高亮**：题干关键词橙色，比对过程蓝色，命中橙色；用短暂高亮表达注意力。
+- **统一 4K 横版**：新制预览和交付使用 3840×2160、16:9，核验原生与实际编码规格。
+- **声音服务思考**：进入、搜索、执行、判断、释放和收束；新 take 单独试听，不继承旧声音认可。
+
+入口：[第一视角电影化做题](docs/first-person-solving-cinema.md) · [Swiss Cognitive POV](docs/swiss-cognitive-pov.md) · [Motion Identity](creative/motion-identity/motion-identity.md) · [口播表演层](creative/voice-performance/README.md) · [4K 规格](docs/video-resolution.md)。
+
+## 模块导航
+
+| 入口 | 用途 |
+|---|---|
+| [Video OS](docs/video-os.md) | 冻结消费、评分、生产包、发布审核与上游失效 |
+| [Pedagogy Compiler](docs/pedagogy-compiler.md) | 第一动作、教学选择、Work Delta、Payoff 与边界交接 |
+| [Student POV Copy](docs/student-pov-copy.md) / [体验层](docs/student-pov-experience.md) | 自然执行语言、认知路径、Copy Audit 与体验编排 |
+| [原题绑定](docs/original-question-copy-contract.md) | 未填答原题、持续题面与最终文案指纹 |
+| [Creative OS](creative/README.md) / [Cognitive Direction](docs/cognitive-direction-v02.md) | 冻结文案、叙事、动作和镜头规划 |
+| [AE Production](ae/README.md) / [原生 Episode 执行器](ae/experiments/adaptive-episode/README.md) | 官方桥接、原生工程、关键帧审计、分批渲染和画面封装 |
+| [Voice Packs](voicepacks/README.md) / [声音试听交付](docs/student-pov-voice-preview.md) | 可替换 Producer、逐字文稿、音频指纹与试听状态 |
+| [Premiere 配置记录](PREMIERE_SETUP_ACCEPTANCE.md) | 原生编辑连接与配置验收 |
+| [模块交接](docs/module-integration.md) | ANSWER 源码接口、兼容与开发交接 |
+
+认知设计知识库及自动接入的增量仍在本地并行开发；当前公开首页通过已提交的改稿记录说明实际消费与证据范围。
+
+## 本地运行
+
+Python **3.10+**，从完整仓库源码目录运行：
 
 ```powershell
 python -m pip install -r requirements-dev.txt
 python -m answer_engine validate
-python -m answer_engine case-coverage
-python -m answer_engine symptom 语法填空 "有提示词但不确定空位需要什么"
-python -m answer_engine method R01
-python -m answer_engine analyze examples/question-course.json --renderer student
-python -m answer_engine analyze examples/question-reviewed-course.json --renderer structured
-python -m answer_engine analyze examples/question-action-course.json --renderer student
-python -m answer_engine analyze examples/question-lesson-course.json --renderer legacy-wechat
-python -m answer_engine paper examples/paper-course.json
-python -m answer_engine lesson examples/passage-lesson.synthetic.json --renderer legacy-wechat
-python -m answer_engine evaluate evaluation/datasets/real-observations.pending.json
-python -m answer_engine release-check evaluation/release-review.example.json
-python -m answer_engine release-bindings evaluation/release-review.example.json
+python -m answer_engine analyze examples/question-action-course.json --renderer structured
 python -m unittest discover -s tests -v
 ```
 
-示例来自已有课程片段，reviewed示例是工程取证记录，不是真人测试或自动推理成果。Paper示例为两条同源记录，不冒充完整试卷；接口接受完整questions数组。JSON/JSONL评估使用 `--plan` 指定采集前冻结计划。
+已有冻结记录通过显式请求导出：
 
-Python API：`from answer_engine import QuestionAnalyzer, PaperAnalyzer`；`analyze(dict)` 返回受JSON Schema约束的结果。review_provider可接宿主语义分析器；没有内置外部模型、抓取或发布服务。
+```powershell
+python -m answer_engine export-asset <export-request.json>
+python -m answer_engine export-status <export-request.json>
+```
 
-外部审阅只能补标注，不能改变原题号、题型、题面、选项、提示词或学生材料；新增/删除这些字段也会拒绝。题面订正须由调用方重新提交，整卷推荐不会跟随审阅接口悄悄换题。
+内部 Episode 的原生制作入口：
 
-写作审阅输入、原稿引用及完整/局部交付边界见[写作审阅通道](docs/writing-review.md)。缺原文或首句时实际扣留剧情诊断、整篇修改稿及完整分数，不只添加免责声明。
+```powershell
+python ae/experiments/adaptive-episode/run.py audit local-data/<revision>
+python ae/experiments/adaptive-episode/run.py render local-data/<revision> --pid <AE-PID> --hwnd <AE-window>
+python ae/experiments/adaptive-episode/run.py package local-data/<revision>
+```
 
-方法组合可通过action_executions提交具体动作与类型化产物，execution_trace明确记录本步消费哪一步的定位、拆句、分组或骨架；停止/未审阅结果不能继续传递。计划不冒充已执行，核验失败撤回答案。见[可执行方法编排](docs/method-execution.md)；外部语义审阅仍不等于程序自动证明。
+实际制作需要相应冻结请求、字体、声音文件、Adobe 应用与已连接的官方桥接。输入形状、构建步骤和回放要求见各模块文档；示例和合成测试不代表真实学生效果。
 
-宿主完整单题讲解可通过[lesson_review](docs/lesson-review.md)进入原口播形态，绑定动作、短引文、候选比较和刹车，完整消息只在答案闭合后输出。缺口会实际扣留；单题通道不证明整篇做题顺序或旧题库语义表现。
+## 公开仓库与本地产物
 
-整篇讲题另用[lesson接口](docs/passage-lesson.md)：保留原题号，检查阅读任务优先、完形首轮暂留/次轮回收、语法双路顺序及七选五一次分组，最后才按原题号汇总。每题必须有自身完整口播和闭合证据；缺一处就扣留整篇消息，不把结构测试宣传成真实答疑效果。
+公开仓库保存代码、Schema、工作流、脱敏报告及明确标记的合成测试样本。真实题面、冻结真题资产、视频、配音、音乐、模型和 Adobe 工程保留在忽略的 `local-data/` 或本地媒体目录，**不上传视频**。
 
-整卷扫描1.1.0将方法建议次数与已核验触发、动作产物、审阅决定和案例候选分开。典型方法候选按自身可审阅案例数排序，不把建议频次当适用率；定位或分组入选也不代表能独立定案。题目来源、难度和教学效果仍需外部核验。
+渲染进度统一由低档 subagent 只读追踪；制作、异常恢复与最终核验由主代理负责。旧版本独立保留绑定，重渲染或更换配音后重新核验时间线和媒体。
 
-## 目录与兼容
-
-V9.1 增量视频模块：见 [G01 Hero 工作流](docs/cinematic-hero-workflow.md) 与
-[Swiss Cognitive Motion](creative/motion-identity/motion-identity.md)。只消费冻结输出；
-实际视频、音乐及 Adobe 工程保留在忽略的本地目录。
-
-当前方法应用视觉试制见 [Swiss Cognitive POV 工作流](docs/swiss-cognitive-pov.md)：
-纯导出已有动作与语义跨度，在持续原题中执行注意力镜头和可逆拆解；AE 输出动效，
-Premiere 完成声音、字幕与最终内部样片。工程成功与教学、来源、编辑及 Human Taste 分开记录。
-
-新制横版预览、内部粗成片与正式交付统一 **3840×2160、16:9**，见
-[4K 交付规格](docs/video-resolution.md)。原生画面与实际编码尺寸一起核验，历史版本保留原始绑定。
-
-教学选择与学生视角文案为两个独立增量层：
-[Pedagogy Compiler](docs/pedagogy-compiler.md) 提供 `python -m pedagogy compile|validate|handoff|matrix`；
-[Student POV Copy](docs/student-pov-copy.md) 提供 `python -m student_pov realize|validate|inspect`。当前 Compiler/Copy 契约为0.3；[原题展示契约](docs/original-question-copy-contract.md)绑定未填答题面、持续题面层和最终文案指纹。旧保存件仅可历史检查，不能继承当前消费资格。
-
-[R02 边界风险审阅](R02_BOUNDARY_RISK_REVIEW.md)逐条核验九项Tell Now。显式、冻结绑定的Pedagogy审阅可合并重复呈现和后置本次未触发的分支；频率保持unknown，当前Stop由证据/真实输出覆盖。Copy省去结果后的检查清单式提醒，原教学事实及公开门禁不变。
-两者只消费冻结资产和当前状态；READY 教学投影不替真实 Payoff、最终文案或学生体验认证。
-当前 Copy 同步保留 G01 bounded worked_example 草稿；文案 AI 文本复核通过，真实工作减少与 Payoff 缺口仍 HOLD。唯一新增 Golden 文案使用 R02 已冻结的局部候选4→3，内部 Copy 工程 READY；不授予整题答案、实测效率、人工教学认证或公开资格。
-自然口语规则、现有表达问题和可修改入口见 [文案 Agent 交接说明](docs/student-pov-natural-copy-handoff.md)。
-真实首用、Payoff、案例系列与人工体验的未完成项见 [黄金方法交付状态](docs/golden-method-delivery-status.md)。
-
-完整篇目内部试制另见 [阅读 D 篇生产工作流](docs/reading-d-2025-production.md)：
-显式 ANSWER 宿主审阅纯导出、已接受本地声音配置、持续题目区、原生 AE 场景与 PR 整片交付。
-附加篇级契约不修改旧分析器闭合状态，也不自动取得公开发布资格。
-
-- method-registry：方法与源章节唯一事实源，history保留旧版。
-- schemas/cases：标准契约、案例及显式证据缺口。
-- core/renderers：流程约束与四种独立投影。
-- evaluation：真人记录契约、统计工具及明确synthetic的程序样本。
-- gaokao-english/objective/grammar-fill/writing、agents：原调用名称的生成兼容资源，不修改用户技能库。
-- docs：基线、架构、维护、评估、迁移和最终验收。
-
-改Registry后运行 `python -m scripts.generate_assets` 再测试校验，不手改生成资源。单独安装Skill仍可由宿主读取自包含参考；核心需完整仓库与依赖。支持源码目录/editable部署，不承诺独立wheel携带课程数据。
-
-验收顺序：传播效果→冻结→强可用性；第二阶段优先级更高。真实数据缺失为 pending_real_participant_validation。最终缺口见 [docs/final-acceptance.md](docs/final-acceptance.md)。课程基线为 ANSWER@b04ebc26d7fa096404111a0bb12f6c77cc8525b9。
-
-成熟度与实用等级由人工批准，工具不自动升级。release-check核对批准凭证、五类案例、真实冻结评估和当前回归绑定；release-bindings只生成材料指纹，指纹不是批准。示例未批准且会被挡住；实际操作见[真实验收运行](docs/evaluation.md)。
-## 真实试卷材料
-
-用户提供的2020—2025原卷与第三方解析仅用于本地方法回归，全文不随公开仓库再发行；原卷先Blind、冻结预测后才Reveal。导入流程、当前卷级进度及未审项见 [docs/exam-ingestion.md](docs/exam-ingestion.md) 和 `evaluation/reports/exam-ingestion.json`。原题回归不构成真实学生效果验证。
+ANSWER Method Engine 是仓库内保留的教学核心源码。其方法执行、宿主审阅、整篇讲解与真实材料导入分别见[方法执行](docs/method-execution.md)、[单题审阅](docs/lesson-review.md)、[整篇接口](docs/passage-lesson.md)和[试卷导入](docs/exam-ingestion.md)。本仓库的增量不自动修改 `rockpunkgod/ANSWER` 源仓库。
