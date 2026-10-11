@@ -17,6 +17,17 @@ from ae_production.memory_guard import available_memory,monitor_existing_render
 
 HERE=Path(__file__).resolve().parent
 
+def validate_world_visibility(rows,duration):
+    if (not rows or rows[0][0]!=0 or rows[-1][0]!=duration
+            or any(len(r)!=2 or isinstance(r[1],bool) or not isinstance(r[1],(int,float))
+                   or not math.isfinite(r[1]) or not 0<r[1]<=100 or not 0<=r[0]<=duration for r in rows)
+            or any(a[0]>=b[0] for a,b in zip(rows,rows[1:]))):
+        raise ValueError('World visibility must remain present with ordered, bounded opacity')
+
+def same_native_track(actual,expected):
+    return len(actual)==len(expected) and all(
+        abs(a[0]-b[0])<1e-4 and abs(a[1]-b[1])<1e-5 for a,b in zip(actual,expected))
+
 def validate_spec(s,parent,bundle):
     if (s['kind']!='reality_cognitive_native_fast_pass' or s['parent_plan_sha']!=parent['plan_sha']
             or s['spec_sha']!=sha({k:v for k,v in s.items() if k!='spec_sha'})
@@ -41,11 +52,14 @@ def validate_spec(s,parent,bundle):
             if not base<=a<b<=source['range'][1] or source['text'][a-base:b-base]!=word['text']:
                 raise ValueError('Native glyph cannot change the frozen lexical content')
             world[word['id']]=word
+            if 'opacity_track' in word:validate_world_visibility(word['opacity_track'],s['duration'])
         # Token coverage prevents silent deletion or duplication of original words.
         import re
         expected=[(m.group(),[source['range'][0]+m.start(),source['range'][0]+m.end()]) for m in re.finditer(r'\S+',source['text'])]
         if [(w['text'],w['range']) for w in column['words']]!=expected:
             raise ValueError('Incomplete original-source world')
+    for label in s.get('labels',[]):
+        if 'opacity_track' in label:validate_world_visibility(label['opacity_track'],s['duration'])
     ids=set()
     for projection in s['projections']:
         if projection['id'] in ids or projection['origin_word_id'] not in world:
@@ -57,6 +71,18 @@ def validate_spec(s,parent,bundle):
                     or any(not 0<=r[0]<=s['duration'] for r in rows)
                     or any(a[0]>=b[0] for a,b in zip(rows,rows[1:]))):
                 raise ValueError('Explicit ordered bounded projection timing required')
+    if s.get('text_alignment') not in (None,'shared_baseline'):
+        raise ValueError('Unsupported native text alignment')
+    if s.get('comparison_layout'):
+        if s.get('text_alignment')!='shared_baseline':raise ValueError('Comparison requires native shared baselines')
+        assigned=[]
+        for row in s['comparison_layout']:
+            if (not 0<=row['settled_at']<s['duration'] or not math.isfinite(row['baseline_y'])
+                    or not 0<row['font_size']<=100 or not row['projection_ids']
+                    or any(name not in ids for name in row['projection_ids'])):
+                raise ValueError('Invalid comparison row binding')
+            assigned.extend(row['projection_ids'])
+        if len(assigned)!=len(set(assigned)):raise ValueError('Projection assigned to multiple comparison rows')
     before=events[0]['before'];after=events[-1]['after']
     mask=lambda candidates:sum(1<<('ABCDEFG'.index(c)) for c in candidates)
     if s['candidate_mask']!=[[0,mask(before)],[s['candidate_events'][0]['decision_end'],mask(after)],[s['duration'],mask(after)]]:
@@ -131,7 +157,7 @@ def build(folder):
 def native_audit(folder):
     s,_=current(folder);identity=read(folder/'NATIVE_IDENTITY.json')
     c=JunkdogeClient();c.initialize()
-    code='var RCF_COMPS='+json.dumps(identity['compositions'])+';var RCF_SHA='+json.dumps(s['spec_sha'])+';var RCF_FRAMES='+str(s['frames'])+';\n'+(HERE/'audit.jsx').read_text(encoding='utf-8')
+    code='var RCF_COMPS='+json.dumps(identity['compositions'])+';var RCF_SHA='+json.dumps(s['spec_sha'])+';var RCF_FRAMES='+str(s['frames'])+';var RCF_LAYOUT='+json.dumps(s.get('comparison_layout',[]))+';\n'+(HERE/'audit.jsx').read_text(encoding='utf-8')
     raw=json.loads(c.call('ae_exec',{'code':code,'timeout_sec':180},timeout=195)['content'])
     summary=check_native_audit(s,raw)
     write(folder/'NATIVE_AUDIT.json',raw);write(folder/'NATIVE_AUDIT_SUMMARY.json',summary);return summary
@@ -139,6 +165,9 @@ def native_audit(folder):
 def check_native_audit(s,raw):
     if raw['spec_sha']!=s['spec_sha'] or set(raw['compositions'])!={'A','B'}:raise ValueError('Wrong native audit')
     expected={w['id']:w['text'] for col in s['columns'] for w in col['words']}
+    visibility={w['id']:w.get('opacity_track',s.get('world_eliminated_opacity') if
+                col['object_id']==s.get('eliminated_object_id') else s.get('world_opacity'))
+                for col in s['columns'] for w in col['words']}
     projections={p['id']:p for p in s['projections']}
     normalized={};first_after=math.ceil(s['candidate_events'][0]['decision_end']*24)
     for variant,comp in raw['compositions'].items():
@@ -149,11 +178,30 @@ def check_native_audit(s,raw):
             layer=layers[name]
             if layer['text']!=text or not layer['threeD'] or layer['sourceTextKeys'] or layer['sourceTextExpression']:
                 raise ValueError('Native source glyph changed')
+            if visibility[name] is not None and not same_native_track(layer['opacity']['keys'],visibility[name]):
+                raise ValueError('Native world visibility differs from the authored handoff')
+            if s.get('text_alignment')=='shared_baseline' and layer['anchor']['value'][1]!=0:
+                raise ValueError('Native glyph does not use the common baseline')
         for name,node in projections.items():
             layer=layers[name];origin=layers[node['origin_word_id']];binding=json.loads(layer['comment'])
             if (layer['text']!=origin['text'] or binding['origin_layer_id']!=origin['layer_id']
                     or layer['position']['keys'][0][1]!=origin['position']['value'] or not layer['threeD']):
                 raise ValueError('Projection detached from actual native origin')
+            if (layer['sourceTextKeys'] or layer['sourceTextExpression']
+                    or not same_native_track(layer['opacity']['keys'],node['opacity'])):
+                raise ValueError('Native projection changed text or visibility')
+        for label in s.get('labels',[]):
+            track=label.get('opacity_track',s.get('world_opacity'))
+            if track is not None and not same_native_track(layers[label['id']]['opacity']['keys'],track):
+                raise ValueError('Native label escaped the attention hierarchy')
+        actual_rows={row['id']:row['words'] for row in comp.get('comparison_rows',[])}
+        for row in s.get('comparison_layout',[]):
+            words=actual_rows.get(row['id'],[])
+            if [word['id'] for word in words]!=row['projection_ids']:
+                raise ValueError('Missing native comparison row')
+            if any(abs(word['position'][1]-row['baseline_y']*2)>1e-3 or word['anchor'][1]!=0
+                   or abs(word['effective_font_size']-row['font_size']*2)>1e-3 for word in words):
+                raise ValueError('Native comparison baseline or type size differs')
         cam=layers['GUIDED_CAMERA']
         if cam['focus_error'] or not cam['dof'] or not cam['focus']['expression']:raise ValueError('Real camera focus invalid')
         for n,sample in enumerate(comp['samples']):

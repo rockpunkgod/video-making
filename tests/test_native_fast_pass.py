@@ -60,6 +60,7 @@ class NativeFastPassTests(unittest.TestCase):
         base=[world('w1','Plain',1),world('w2','text',2),world('p1','Plain',3)]
         base[2]['position']={'value':[1,2,3],'keys':[[0,[1,2,3]]]}
         base[2]['comment']='{"origin_layer_id":1}'
+        base[2]['opacity']={'keys':deepcopy(self.spec['projections'][0]['opacity'])}
         base.append({'name':'GUIDED_CAMERA','layer_id':4,'comment':'','focus_error':'','dof':1,
                      'focus':{'expression':'synthetic physical focus'},'position':{},'look':{}})
         comps={}
@@ -75,5 +76,41 @@ class NativeFastPassTests(unittest.TestCase):
         with self.assertRaises(ValueError):native.check_native_audit(self.spec,raw)
         raw=self.native_readback();raw['compositions']['B']['layers'][0]['opacity']={'value':50,'keys':[]}
         with self.assertRaisesRegex(ValueError,'more than camera'):native.check_native_audit(self.spec,raw)
+    def test_world_handoff_cannot_delete_source_or_accept_invalid_opacity(self):
+        for rows in ([[0,100],[5,0]],[[0,100],[5,101]],[[0,100],[5,float('nan')]],
+                     [[0,100],[5,True]],[[0,100],[0,4],[5,100]]):
+            with self.assertRaises(ValueError):native.validate_world_visibility(rows,5)
+        native.validate_world_visibility([[0,100],[1,4],[4,4],[5,100]],5)
+    def test_native_handoff_requires_actual_authored_opacity(self):
+        track=[[0,100],[1,4],[5,100]]
+        self.spec['columns'][0]['words'][0]['opacity_track']=track;self.seal()
+        raw=self.native_readback()
+        for comp in raw['compositions'].values():comp['layers'][0]['opacity']={'keys':deepcopy(track)}
+        self.assertTrue(native.check_native_audit(self.spec,raw)['camera_only_control'])
+        # Both cameras can match one another while both violate the spec.
+        for comp in raw['compositions'].values():comp['layers'][0]['opacity']['keys'][1][1]=24
+        with self.assertRaisesRegex(ValueError,'visibility differs'):native.check_native_audit(self.spec,raw)
+    def test_projection_must_match_the_authored_visibility_in_both_variants(self):
+        raw=self.native_readback()
+        for comp in raw['compositions'].values():comp['layers'][2]['opacity']['keys'][0][1]=50
+        with self.assertRaisesRegex(ValueError,'projection changed'):native.check_native_audit(self.spec,raw)
+    def test_comparison_requires_bound_native_baselines_and_uniform_size(self):
+        self.spec['text_alignment']='shared_baseline'
+        self.spec['comparison_layout']=[{'id':'row','baseline_y':20,'font_size':40,'settled_at':4,'projection_ids':['p1']}]
+        self.seal();self.check();raw=self.native_readback()
+        for comp in raw['compositions'].values():
+            for layer in comp['layers'][:2]:layer['anchor']={'value':[0,0,0],'keys':[]}
+            comp['comparison_rows']=[{'id':'row','words':[{'id':'p1','position':[2,40,-4],
+                'anchor':[0,0,0],'effective_font_size':80}]}]
+        self.assertTrue(native.check_native_audit(self.spec,raw)['camera_only_control'])
+        for comp in raw['compositions'].values():comp['comparison_rows'][0]['words'][0]['position'][1]=42
+        with self.assertRaisesRegex(ValueError,'baseline or type size'):native.check_native_audit(self.spec,raw)
+    def test_comparison_cannot_borrow_another_projection_or_repeat_a_row_word(self):
+        self.spec['text_alignment']='shared_baseline'
+        row={'id':'row','baseline_y':20,'font_size':40,'settled_at':4,'projection_ids':['missing']}
+        self.spec['comparison_layout']=[row];self.seal()
+        with self.assertRaisesRegex(ValueError,'row binding'):self.check()
+        row['projection_ids']=['p1'];self.spec['comparison_layout'].append(deepcopy(row));self.seal()
+        with self.assertRaisesRegex(ValueError,'multiple comparison rows'):self.check()
 
 if __name__=='__main__':unittest.main()

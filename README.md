@@ -58,7 +58,8 @@ ANSWER 提供教学事实与生命周期。Video OS 只消费冻结结构化输�
 | B06 判断镜头 A/B | 六份 **3840×2160、24 fps** 局部成片已交付：纯判断段、带上下文视觉版、完整声画版各一组旧／新；工程、帧／样本映射及完整声音已核验，停 G3，见[验收记录](R06_B06_JUDGEMENT_ACCEPTANCE.md) |
 | Experience-First 创意小样 | 三条34s／32s／36s无声 **1080p24 EDITORIAL_PROXY**完成工程核验；用户反馈“与老师PPT没区别”，形式差异待修订，整期与高保真制作保持停止，见[反馈与停止点](EXPERIENCE_FIRST_CREATIVE_PROOF_ACCEPTANCE.md) |
 | Reality Layer + Cognitive Space | 单条40s无声 **1080p24 EDITORIAL_PROXY**：同一个原题世界、来源文字投影、临时比较及返回原题；工程核验完成，用户已认可影像方向，作为后续镜头设计基线，见[本轮预演与反馈](REALITY_COGNITIVE_SPACE_PROOF_ACCEPTANCE.md) |
-| Native Fast-Pass r03 | 两条18s无声 **4K24** 原生AE对照：A固定镜头／B连续认知镜头，信息、动作与判断时序相同；864张原生帧及最终视频已核验，停在高手感／电影感／因果感人工观看，见[原生相机实验](REALITY_COGNITIVE_NATIVE_FAST_PASS_ACCEPTANCE.md) |
+| Native Fast-Pass r03 | 两条18s无声 **4K24** 原生AE对照：A固定镜头／B连续认知镜头；用户反馈画面杂乱、文字不齐，旧版保留，见[原生相机实验](REALITY_COGNITIVE_NATIVE_FAST_PASS_ACCEPTANCE.md) |
+| Native Fast-Pass clean-r2 | 按反馈整理前景、背景与文字基线；比较收成两行，保持同一原题世界与判断时序，见[画面与排版修订](REALITY_COGNITIVE_CLARITY_ACCEPTANCE.md) |
 | 整期声音与成片 | 19 条逐字配音及音乐素材已准备；B06 局部复用完整 take，整期最终声画交付仍待完成，试听暂缓 |
 | 人工体验与公开资格 | 新双题版完整观看审核待进行；`public_render_ready=false` |
 

@@ -1,7 +1,7 @@
 // One frozen real-action experiment. RCF_SPEC names a private authored input.
 (function(){
     function load(path){var f=new File(path);f.encoding='UTF-8';if(!f.open('r'))throw Error('Missing input');var v=JSON.parse(f.read());f.close();return v;}
-    var S=load(RCF_SPEC),scale=2,words={},origins={},sourceLayers={},geometry=[];
+    var S=load(RCF_SPEC),scale=2,words={},origins={},sourceLayers={},geometry=[],baselineOffsets={};
     if(S.kind!=='reality_cognitive_native_fast_pass'||S.public_render_ready!==false)throw Error('Bound internal proof required');
     if(app.project.file.fsName!==new File(S.project).fsName||app.project.renderQueue.rendering)throw Error('Wrong or busy native project');
     var cp=app.project.items.addComp('B_CONTINUOUS_COGNITIVE_CAMERA',3840,2160,1,S.duration,24);
@@ -9,6 +9,14 @@
     cp.comment=JSON.stringify({kind:S.kind,spec_sha:S.spec_sha,variant:'B',public_render_ready:false});
     function xyz(p){return [p[0]*scale,p[1]*scale,(p[2]||0)*scale];}
     function rows(items){var result=[];for(var i=0;i<items.length;i++)result.push([items[i][0],items[i][1] instanceof Array?xyz(items[i][1]):items[i][1]]);return result;}
+    function baselineOffset(size){
+        if(baselineOffsets[size]===undefined){
+            var probe=cp.layers.addText('Hgj'),d=probe.property('Source Text').value;
+            d.font=S.font;d.fontSize=size*scale;probe.property('Source Text').setValue(d);
+            baselineOffsets[size]=-probe.sourceRectAtTime(0,false).top/scale;probe.remove();
+        }
+        return baselineOffsets[size];
+    }
     function text(name,value,size,pos,color,world){
         var l=cp.layers.addText(value);l.name=name;
         var doc=l.property('ADBE Text Properties').property('ADBE Text Document').value;
@@ -16,8 +24,10 @@
         doc.justification=ParagraphJustification.LEFT_JUSTIFY;doc.tracking=0;
         l.property('ADBE Text Properties').property('ADBE Text Document').setValue(doc);
         l.threeDLayer=world;l.motionBlur=world;
-        var r=l.sourceRectAtTime(0,false);l.transform.anchorPoint.setValue(world?[r.left,r.top,0]:[r.left,r.top]);
-        l.transform.position.setValue(world?xyz(pos):[pos[0]*scale,pos[1]*scale]);
+        var r=l.sourceRectAtTime(0,false),baseline=S.text_alignment==='shared_baseline';
+        l.transform.anchorPoint.setValue(world?[r.left,baseline?0:r.top,0]:[r.left,baseline?0:r.top]);
+        var y=pos[1]+(baseline?baselineOffset(size):0);
+        l.transform.position.setValue(world?xyz([pos[0],y,pos[2]||0]):[pos[0]*scale,y*scale]);
         return l;
     }
     function rect(name,w,h,pos,color){
@@ -45,17 +55,20 @@
             var w=col.words[wi];if(w.new_paragraph){x=col.x;y+=col.paragraph_gap;}
             var l=text(w.id,w.text,col.size,[x,y,0],S.palette.ink,true),r=l.sourceRectAtTime(0,false);
             if(x+r.width/scale>col.x+col.width&&x>col.x){x=col.x;y+=col.line_height;}
-            l.transform.position.setValue(xyz([x,y,0]));
+            var origin=[x,y+(S.text_alignment==='shared_baseline'?baselineOffset(col.size):0),0];
+            l.transform.position.setValue(xyz(origin));
             l.comment=JSON.stringify({kind:'source_world_word',id:w.id,object_id:col.object_id,range:w.range,source_ref:col.source_ref});
-            origins[w.id]=[x,y,0];words[w.id]=l;sourceLayers[w.id]=w;
-            RCF_keys(l.transform.opacity,col.object_id===S.eliminated_object_id?S.world_eliminated_opacity:S.world_opacity,false);
+            origins[w.id]=origin;words[w.id]=l;sourceLayers[w.id]=w;
+            var visibility=w.opacity_track||(col.object_id===S.eliminated_object_id?S.world_eliminated_opacity:S.world_opacity);
+            RCF_keys(l.transform.opacity,visibility,false);
             if(w.colour_track)colour(l,w.colour_track);
             geometry.push({id:w.id,layer_id:l.id,object_id:col.object_id,range:w.range,text:w.text,font:l.property('Source Text').value.font,
-                origin:[x,y,0],size:col.size,bounds:[r.left,r.top,r.width,r.height]});
+                origin:origin,size:col.size,bounds:[r.left,r.top,r.width,r.height]});
             x+=r.width/scale+space/scale;
         }
     }
-    for(var i=0;i<S.labels.length;i++){var q=S.labels[i];text(q.id,q.text,q.size,q.position,S.palette.ink,true);}
+    for(var i=0;i<S.labels.length;i++){var q=S.labels[i],label=text(q.id,q.text,q.size,q.position,S.palette.ink,true);
+        RCF_keys(label.transform.opacity,q.opacity_track||S.world_opacity,false);}
     function duplicateProjection(node){
         var original=words[node.origin_word_id];if(!original)throw Error('No actual glyph origin');
         var l=original.duplicate();l.name=node.id;while(l.transform.opacity.numKeys)l.transform.opacity.removeKey(1);

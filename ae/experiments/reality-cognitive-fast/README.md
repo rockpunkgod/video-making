@@ -17,6 +17,20 @@ actual read-back position. Word wrapping uses AE's `sourceRectAtTime()` rather
 than estimated font widths. Capture, comparison and return happen in the same
 world. No explanatory cards or final-answer event are added.
 
+Clarity revisions can bind per-word and label opacity tracks. Every original
+word remains present; the audit compares actual native visibility with the
+authored handoff so that both variants cannot silently share the wrong track.
+Source text stays static and the foreground contains only selected original
+words with their own origin bindings.
+
+`text_alignment: shared_baseline` uses an AE-measured reference glyph to put
+source words on a common font baseline, rather than aligning each glyph's top.
+Optional `comparison_layout` rows bind projection IDs, a settled sample time,
+baseline and type size. Native readback checks their actual positions, anchor
+points and effective font sizes. Equal A/B tracks alone do not establish correct
+typography. Older specs without these fields retain their original layout when
+run with their bound execution version.
+
 `motion.jsx` adapts physical motion from Native Creative Proof r7 and camera
 velocity from Method Relay Fulltext Native. Those experiments provide motion
 techniques; their synthetic language analysis provides no semantic authority.
@@ -46,6 +60,8 @@ snapshot before creating the independent project. No Premiere project is
 modified for this silent visual proof.
 
 To replay an already delivered revision, retain its original spec and receipts.
+Use the execution files from that revision's commit or its byte-matched archive;
+do not refresh input hashes just to run an old spec through changed code.
 Copy the spec into a new private revision, change only the output `project` and
 `scratch` paths, and recompute `spec_sha` with `video_contracts.sha()` over all
 other fields. Keep the parent, frozen input fingerprints, word ranges, actions
