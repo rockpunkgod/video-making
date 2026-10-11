@@ -89,6 +89,51 @@ class HostOwnership:
         if self.record['state'] != 'OWNED':
             raise RuntimeError('Native state uncertain; inspect and reconcile before retry')
 
+    @classmethod
+    def recover_failed_dispatch(cls, host, owner, revision, token, reader, mutation,
+                                evidence_path, evidence_sha, *, target_after, directory=None):
+        """One explicit server-issued script recovery, retaining the occupied token.
+
+        This is not timeout reconciliation or a generic retry. A byte-bound AE
+        recovery receipt must prove a terminal script error with an error line.
+        The caller reviews the partial state and supplies the corrected recovery
+        operation. OWNED is restored only after its independent native readback.
+        """
+        root=Path(directory) if directory is not None else ROOT/'local-data/adobe-host-ownership'
+        previous=read(root/(host+'.json'))
+        if (previous.get('state')!='UNCERTAIN' or any(previous.get(k)!=v for k,v in
+                {'host':host,'owner':owner,'revision':revision,'token':token}.items())):
+            raise RuntimeError('Failed recovery requires the same uncertain owner and token')
+        if hashlib.sha256(Path(evidence_path).read_bytes()).hexdigest()!=evidence_sha:
+            raise ValueError('Server failure evidence changed')
+        evidence=read(evidence_path);last=evidence['attempts'][-1]
+        if (not evidence.get('recoveryId') or last.get('ok') is not False
+                or last.get('disposition')!='failed' or type(last.get('errorLine')) is not int
+                or last['errorLine']<=0 or 'timeout' in last.get('error','').lower()
+                or Path(evidence['sourceProjectPath']).resolve()!=Path(previous['target']['project_path']).resolve()):
+            raise ValueError('A terminal script failure in this project is required; not a timeout')
+        lease=cls(host,owner,revision,previous['target'],directory)
+        lease.record=deepcopy(previous);lease.acquired=True
+        lease._inspect(reader,previous['target']);lease._inspect(reader,previous['target'])
+        if read(lease.path)!=previous:raise RuntimeError('Owner changed before explicit recovery')
+        try:
+            result=mutation(evidence['recoveryId'])
+            expected=target_after(result)
+            if (not {'process_id','project_path','target_id'}<=expected.keys()
+                    or expected['process_id']!=previous['target']['process_id']
+                    or any(v is None for v in expected.values())):
+                raise ValueError('Same host and explicit recovery destination required')
+            lease._inspect(reader,expected)
+            if read(lease.path)!=previous:raise RuntimeError('Owner changed during explicit recovery')
+        except BaseException as error:
+            lease._uncertain(error);raise
+        lease.record={**previous,'state':'OWNED','controller_pid':os.getpid(),'target':dict(expected),
+            'reconciliation':{'resolution':'FAILED_DISPATCH_RECOVERED','recovery_id':evidence['recoveryId'],
+                'failure_evidence':str(evidence_path),'failure_evidence_sha':evidence_sha,
+                'previous_record':previous}}
+        write(lease.path,lease.record)
+        return lease,result
+
     def _inspect(self, reader, expected):
         actual = reader()
         if not isinstance(actual, dict) or any(actual.get(k) != v for k, v in expected.items()):

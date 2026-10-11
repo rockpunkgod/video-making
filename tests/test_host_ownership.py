@@ -52,6 +52,43 @@ class HostOwnershipTests(unittest.TestCase):
         self.assertEqual(calls, [1])
         self.assertTrue(self.lease.path.exists())
 
+    def failed_evidence(self, disposition='failed', error='Synthetic script error'):
+        path=self.directory/'server-recovery.json'
+        write(path,{'recoveryId':'abcdef','sourceProjectPath':self.state['project_path'],
+                    'attempts':[{'ok':False,'disposition':disposition,'errorLine':12,'error':error}]})
+        return path,hashlib.sha256(path.read_bytes()).hexdigest()
+
+    def make_uncertain(self):
+        self.lease.acquire()
+        def failed():raise RuntimeError('Synthetic script dispatch returned failure')
+        with self.assertRaises(RuntimeError):self.lease.mutate(lambda:self.state,failed)
+
+    def test_known_failed_script_recovery_retains_token_until_readback(self):
+        self.make_uncertain();path,digest=self.failed_evidence();calls=[]
+        recovered,result=HostOwnership.recover_failed_dispatch('after_effects','synthetic-worker','synthetic-r1',
+            self.lease.record['token'],lambda:self.state,lambda identifier:calls.append(identifier),path,digest,
+            target_after=lambda value:self.state,directory=self.directory)
+        self.assertEqual(calls,['abcdef']);self.assertEqual(recovered.record['token'],self.lease.record['token'])
+        self.assertEqual(recovered.record['state'],'OWNED');recovered.release(lambda:self.state)
+
+    def test_failed_script_recovery_rejects_timeout_or_wrong_owner(self):
+        self.make_uncertain();path,digest=self.failed_evidence(error='timeout after dispatch');calls=[]
+        with self.assertRaises(ValueError):HostOwnership.recover_failed_dispatch('after_effects','synthetic-worker','synthetic-r1',
+            self.lease.record['token'],lambda:self.state,lambda identifier:calls.append(identifier),path,digest,
+            target_after=lambda value:self.state,directory=self.directory)
+        path,digest=self.failed_evidence()
+        with self.assertRaises(RuntimeError):HostOwnership.recover_failed_dispatch('after_effects','another-worker','synthetic-r1',
+            self.lease.record['token'],lambda:self.state,lambda identifier:calls.append(identifier),path,digest,
+            target_after=lambda value:self.state,directory=self.directory)
+        self.assertEqual(calls,[]);self.assertEqual(read(self.lease.path)['state'],'UNCERTAIN')
+
+    def test_failed_recovery_wrong_post_identity_preserves_uncertainty(self):
+        self.make_uncertain();path,digest=self.failed_evidence()
+        with self.assertRaises(RuntimeError):HostOwnership.recover_failed_dispatch('after_effects','synthetic-worker','synthetic-r1',
+            self.lease.record['token'],lambda:self.state,lambda identifier:self.state.update(target_id='unexpected'),path,digest,
+            target_after=lambda value:{**self.state,'target_id':'expected'},directory=self.directory)
+        self.assertEqual(read(self.lease.path)['state'],'UNCERTAIN')
+
     def test_explicit_project_transition_is_checked_after_call(self):
         self.lease.acquire()
         target = {**self.state, 'project_path': 'new.aep', 'target_id': 'comp:2'}
