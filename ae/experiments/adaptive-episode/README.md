@@ -51,3 +51,12 @@ and mechanically projects the remaining candidate set. An optional
 own check and completion of all provided candidate actions. Retention alone does
 not collapse the working set. This is an engineering readback, not semantic truth
 certification or proof of a successful viewing experience.
+
+Render progress monitoring is delegated to a low-tier subagent (`gpt-6-luna`,
+low reasoning), including native rendering, picture encoding and editorial export.
+The monitor reads the current revision's receipts and output state at 45–60-second
+intervals, and reports 10-percent milestones, errors or five minutes without
+progress. Pending frames are reported separately from verified transfers; a file
+appearing is not completion. The monitor does not alter projects, restart jobs,
+delete files or approve quality. The primary agent owns production, recovery and
+final verification.
