@@ -1,5 +1,7 @@
 # Cognitive Direction v0.2：第一视角认知导演
 
+> 生产定位：0.2 输出设计计划，`execution_allowed=false`；当前 R06 的原生参数来自另有来源绑定的作者输入。计划与实际执行的接线边界见[当前生产工作流](workflows/CURRENT_PRODUCTION_WORKFLOW.md)，不能将本页接口直接交给旧 AE Rig。
+
 本层把当前 Method Choreography 0.1 导演成连续的注意力、镜头、构图与信息空间计划。母方向仍为 **Swiss Cognitive POV**，现有原生 Cognitive POV 0.1、Motion Identity 0.1、Semantic Text Layout、AE 与 Premiere 消费链不变。新接口显式使用，不接管旧工程或生产索引。
 
 ```text

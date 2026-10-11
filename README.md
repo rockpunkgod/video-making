@@ -6,6 +6,12 @@
 
 **方法组织整期，题目驱动叙事，动作推动镜头，证据支撑判断，认知突破产生爽感。**
 
+## 当前制作从这里开始
+
+**[FREE_SHOWCASE 当前生产工作流](docs/workflows/CURRENT_PRODUCTION_WORKFLOW.md)** 是唯一推荐的接手入口：先找实际 revision、有效输入与阻塞，再使用已有生产接口。
+
+配套：[模块职责](docs/workflows/MODULE_OWNERSHIP_MATRIX.md) · [能力索引](docs/workflows/PRODUCTION_CAPABILITY_INDEX.json) · [本轮差异审计](docs/workflows/WORKFLOW_AUDIT.md)。能力索引分别记录设计、实现、接线、原生执行、人工认可和发布审核；目录或测试存在不代表六项全部完成。
+
 ## 产品方向
 
 | 产品 | 第一目标 | 内容组织 |
@@ -17,20 +23,22 @@
 
 两种产品共用真实性和来源底线，使用各自的质量审核标准。详见[双轨内容策略](docs/content-profiles.md)与[自适应双速导演验收](ADAPTIVE_DUAL_SPEED_DIRECTION_ACCEPTANCE.md)。
 
-## 制作链路
+## 当前 R06 的实际制作路径
 
 ```mermaid
 flowchart TD
-    A[ANSWER · 冻结资产与当前状态] --> B[Pedagogy Compiler · 教学选择]
-    B --> C[Student POV · 文案与认知体验]
-    C --> D[Creative Direction · 逐题叙事与镜头]
-    C --> E[Narration Performance · 口播交付意图]
-    D --> F[After Effects · 原生认知动效]
-    E --> G[可替换声音 Producer · voice-delivery/v1]
-    F --> H[Premiere · 节奏、配音、音乐与声音设计]
+    A[ANSWER · 冻结资产与所供当前状态] --> B[Episode · 作者选题与逐题审核]
+    B --> C[当前私有作者 · 场景、原词对象与 Native Spec]
+    B --> D[Audience · 观看意图与全 Beat 计划交接]
+    D -.建议；尚未自动执行.-> C
+    G[可替换声音 Producer · voice-delivery/v1] --> C
+    C --> F[Adaptive Episode → AE · 原生画面与收据]
+    F --> H[Premiere · 完整声画同步与实际媒体]
     G --> H
     H --> I[内部成片与独立审核]
 ```
+
+当前 R06 已到完整带字幕纯画面，后续声画合成与审核分别记录。Pedagogy / Student POV 0.4 → Choreography → Cognitive Direction 0.2 是已有的显式计划链，尚未成为本期原生参数的自动生成路径；默认 0.3 兼容链继续保留。两条路径的真实输入、人工交接和建议收敛方式见[工作流](docs/workflows/CURRENT_PRODUCTION_WORKFLOW.md)。
 
 ANSWER 提供教学事实与生命周期。Video OS 只消费冻结结构化输出和显式状态清单，不从 Registry、教学 Markdown 或原始题库补推断；教学疑点交回上游。认知设计研究辅助呈现决策，不成为第二个教学事实源。
 
@@ -41,7 +49,8 @@ ANSWER 提供教学事实与生命周期。Video OS 只消费冻结结构化输�
 | 模块或产出 | 当前状态 |
 |---|---|
 | Frozen Asset / Video OS | 冻结导出、状态投影、引用绑定、分层门禁与失效传播已有实现 |
-| Pedagogy / Student POV | 0.3 兼容链保留；0.4 Plan / Handoff 与体验层通过显式契约接入 |
+| Pedagogy / Student POV | 默认 0.3 保留；0.4 独立 Plan / Handoff / Experience 已实现，真实诊断计划与 R06 原生接线分开记录 |
+| Audience Engagement | v0.2 已验证 B06 的全部 Beat 场景交接；输出仍为计划建议，尚未证明镜头兑现或实际媒体时间映射 |
 | 第一视角画面 | Swiss Cognitive POV、注意力扫读、透明提取、物理剥离、方法接力与局部重放持续迭代 |
 | 声音消费 | 稳定使用 `voice-delivery/v1`；当前 Producer 为 GPT-SoVITS，口播计划与 Premiere 节奏控制独立 |
 | 知识辅助改稿 | Astra 完成选题、分镜与文案改稿；根代理复核冻结动作、证据与结论范围，见[改稿记录](COGNITIVE_DESIGN_CREATIVE_REVISION.md) |
@@ -50,6 +59,8 @@ ANSWER 提供教学事实与生命周期。Video OS 只消费冻结结构化输�
 | 人工体验与公开资格 | 新双题版完整观看审核待进行；`public_render_ready=false` |
 
 本轮双题片的第一题展示已有的局部候选排除，第二题逐项消费已有动作后才呈现上游闭合答案。候选保留不直接变成定案，辅助动作不借用主方法归因。此轮未修改 ANSWER、Registry 或冻结教学事实。
+
+B06 已提交版本的状态为 G0 PASS / G1 缺精细标注 / G2 未执行；本机随后获得了独立 AI 标注审阅，限定消费适配与原生制作由单独任务推进。新凭证不覆盖旧请求，也不等于 G2 或人工认可已通过；接手时按[版本化停止点](docs/workflows/CURRENT_PRODUCTION_WORKFLOW.md)读取该 revision 的最新真实收据，不重复 G0。
 
 最新画面封装是知识辅助改稿之后的制作进展；历史验收文件保留各自日期、输入与阶段，不将旧版本认可移给新版。当前进展不等于新影片的人工观看或听感通过。
 
@@ -80,14 +91,13 @@ ANSWER 提供教学事实与生命周期。Video OS 只消费冻结结构化输�
 
 认知设计知识库及自动接入的增量仍在本地并行开发；当前公开首页通过已提交的改稿记录说明实际消费与证据范围。
 
-## 本地运行
+## 源码校验
 
 Python **3.10+**，从完整仓库源码目录运行：
 
 ```powershell
 python -m pip install -r requirements-dev.txt
 python -m answer_engine validate
-python -m answer_engine analyze examples/question-action-course.json --renderer structured
 python -m unittest discover -s tests -v
 ```
 
@@ -98,15 +108,7 @@ python -m answer_engine export-asset <export-request.json>
 python -m answer_engine export-status <export-request.json>
 ```
 
-内部 Episode 的原生制作入口：
-
-```powershell
-python ae/experiments/adaptive-episode/run.py audit local-data/<revision>
-python ae/experiments/adaptive-episode/run.py render local-data/<revision> --pid <AE-PID> --hwnd <AE-window>
-python ae/experiments/adaptive-episode/run.py package local-data/<revision>
-```
-
-实际制作需要相应冻结请求、字体、声音文件、Adobe 应用与已连接的官方桥接。输入形状、构建步骤和回放要求见各模块文档；示例和合成测试不代表真实学生效果。
+原生制作命令、输入要求、宿主占用和停止点统一见[当前生产入口](docs/workflows/CURRENT_PRODUCTION_WORKFLOW.md)。实际制作需要冻结请求、字体、声音文件、Adobe 应用与已连接的桥接；不能从一个历史实验命令直接推定新任务已获生产资格。示例和合成测试不代表真实学生效果。
 
 ## 公开仓库与本地产物
 

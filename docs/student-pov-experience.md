@@ -1,5 +1,7 @@
 # Student POV v0.4：学生第一视角学习体验
 
+> 生产定位：本页是 0.4 体验计划接口，当前真实诊断和最终文案资格分别记录；不是当前 R06 原生制作的自动入口。默认 Copy 0.3 保持兼容，实际交接见[当前生产工作流](workflows/CURRENT_PRODUCTION_WORKFLOW.md)。
+
 本层把已经冻结的 Pedagogy 选择编排成学习者接触对象、执行动作、看到变化、停下和记住第一刀的顺序。它不是另一个解题器，也不决定教学压缩。本轮消费真实 Pedagogy 0.4 Copy/Motion Handoff；既有 Copy 0.3、声音、Creative、AE 与 Premiere 链保持兼容。
 
 ```text

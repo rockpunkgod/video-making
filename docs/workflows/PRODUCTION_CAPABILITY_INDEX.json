@@ -1,0 +1,1477 @@
+{
+  "index_version": "1.0",
+  "kind": "documentation_capability_index",
+  "as_of": "2026-10-11T17:24:23+08:00",
+  "repository_base": "d9fa2da8bf893745f567e21cb631a4d43299c110",
+  "recommended_workflow": "docs/workflows/CURRENT_PRODUCTION_WORKFLOW.md",
+  "scope": "Snapshot of the committed baseline plus explicitly labelled pre-existing local overlays. The parallel B06 production task may advance independently.",
+  "not_runtime_contract": true,
+  "not_release_authority": true,
+  "production_roles": [
+    "CURRENT_PRODUCTION",
+    "PROVEN_REUSABLE",
+    "EXPERIMENTAL",
+    "LEGACY_COMPAT",
+    "FUTURE",
+    "BLOCKED_DEPENDENCY"
+  ],
+  "role_rule": "Classify the stated capability and scope, never an entire directory by name; roles do not replace ANSWER lifecycle states.",
+  "missing_local_evidence": "LOCAL_PRODUCTION_EVIDENCE_UNAVAILABLE",
+  "evidence_catalog": {
+    "E01": {
+      "paths": [
+        "answer_engine/frozen_export.py",
+        "answer_engine/__main__.py",
+        "schemas/frozen-asset-bundle.json",
+        "schemas/artifact-status-manifest.json"
+      ],
+      "scope": "explicit frozen export and supplied status",
+      "availability": "TRACKED"
+    },
+    "E02": {
+      "paths": [
+        "creative_os/episode.py",
+        "creative_os/content_profiles.py",
+        "video/schemas/method-episode-plan.json",
+        "tests/test_method_episode.py",
+        "tests/test_content_profiles.py"
+      ],
+      "scope": "episode validation and distinct product context",
+      "availability": "TRACKED"
+    },
+    "E03": {
+      "paths": [
+        "creative_os/audience_engagement.py",
+        "tests/test_audience_engagement.py",
+        "video/schemas/audience-engagement-plan.json"
+      ],
+      "scope": "editorial plan and planned scene handoff only",
+      "availability": "TRACKED"
+    },
+    "E04": {
+      "paths": [
+        "pedagogy/compiler.py",
+        "student_pov/realization.py",
+        "student_pov/experience.py",
+        "PEDAGOGY_COMPILER_V04_ACCEPTANCE.md",
+        "STUDENT_POV_V04_ACCEPTANCE.md"
+      ],
+      "scope": "explicit version contracts; diagnostic source cases",
+      "availability": "TRACKED"
+    },
+    "E05": {
+      "paths": [
+        "method_choreography/validation.py",
+        "creative_os/cognitive_direction/compiler.py",
+        "creative_os/cognitive_direction/validation.py",
+        "COGNITIVE_DIRECTION_V02_ACCEPTANCE.md"
+      ],
+      "scope": "non-native direction and choreography",
+      "availability": "TRACKED"
+    },
+    "E06": {
+      "paths": [
+        "local-data/free-showcase/prepare_title_task_episode.py",
+        "local-data/free-showcase/refine_title_read_cues.py",
+        "local-data/free-showcase/refine_title_candidate_holds.py"
+      ],
+      "scope": "observed private R06 authoring, not portable commands",
+      "availability": "PRIVATE_LOCAL"
+    },
+    "E07": {
+      "paths": [
+        "ae/experiments/adaptive-episode/run.py",
+        "ae/templates/cognitive-pov-v0.1.jsx",
+        "ae_production/candidate_motion.py"
+      ],
+      "scope": "current native executor and candidate output check",
+      "availability": "TRACKED"
+    },
+    "E08": {
+      "paths": [
+        "local-data/free-showcase/title-task-episode-r3/native-request.json",
+        "local-data/free-showcase/title-task-episode-r3/native-audit.json",
+        "local-data/free-showcase/title-task-episode-r3/native-motion-audit.json",
+        "local-data/free-showcase/title-task-episode-r3/NATIVE_RENDER_RECEIPT.json",
+        "local-data/free-showcase/title-task-episode-r3/PICTURE_RECEIPT.json"
+      ],
+      "scope": "9051 frames, 4K24, silent picture at audited revision",
+      "availability": "PRIVATE_LOCAL"
+    },
+    "E09": {
+      "paths": [
+        "local-data/free-showcase/title-task-episode-r1/voice-delivery/delivery.json",
+        "local-data/free-showcase/title-task-episode-r1/editorial/AUDIO_EDITORIAL.json",
+        "local-data/free-showcase/title-task-episode-r3/VOICE_TIMING.json",
+        "local-data/free-showcase/title-task-episode-r3/CAPTIONS.json"
+      ],
+      "scope": "19 exact takes and planned placements, not accepted complete AV",
+      "availability": "PRIVATE_LOCAL"
+    },
+    "E10": {
+      "paths": [
+        "scripts/voice_delivery.py",
+        "premiere_production/cinema.py",
+        "premiere_production/student_voice.py",
+        "docs/first-person-solving-cinema.md"
+      ],
+      "scope": "typed audio consumer, native timeline and encoded audio audits",
+      "availability": "TRACKED"
+    },
+    "E11": {
+      "paths": [
+        "content_os/showcase.py",
+        "content_os/lifecycle.py",
+        "FREE_SHOWCASE_POLICY.md",
+        "tests/test_free_showcase.py"
+      ],
+      "scope": "independent free release reviews and supplied-state invalidation",
+      "availability": "TRACKED"
+    },
+    "E12": {
+      "paths": [
+        "content_os/engagement_learning.py",
+        "scripts/audience_learning.py",
+        "docs/audience-learning-loop.md",
+        "tests/test_engagement_learning.py"
+      ],
+      "scope": "local record authority; external human media anchors and real observations required",
+      "availability": "TRACKED"
+    },
+    "E13": {
+      "paths": [
+        "ae_production/judgement_preflight.py",
+        "ae/experiments/r06-b06-judgement/run.py",
+        "R06_B06_JUDGEMENT_ACCEPTANCE.md",
+        "tests/test_judgement_preflight.py"
+      ],
+      "scope": "committed G0/G1 and four annotation requests, not G2",
+      "availability": "TRACKED"
+    },
+    "E14": {
+      "paths": [
+        "content_os/phrase_review.py",
+        "ae_production/phrase_consumer.py",
+        "local-data/free-showcase/b06-judgement-r3/HOST_PHRASE_REVIEW.json",
+        "local-data/free-showcase/b06-judgement-r3/HOST_PHRASE_REVIEW_STATUS.json",
+        "local-data/free-showcase/b06-judgement-r3/G2_CONSUMPTION_RECEIPT.json"
+      ],
+      "scope": "earlier authorized AI host review, separate unmerged production task; snapshot only",
+      "availability": "LOCAL_UNMERGED"
+    },
+    "E15": {
+      "paths": [
+        "ae_production/host_ownership.py",
+        "tests/test_host_ownership.py"
+      ],
+      "scope": "cooperative guard; caller must actually acquire and wrap each mutation",
+      "availability": "TRACKED"
+    },
+    "E16": {
+      "paths": [
+        "AE_NATIVE_CREATIVE_PROOF_ACCEPTANCE.md",
+        "AE_NATIVE_CREATIVE_PROOF_HUMAN_REVIEW.md",
+        "METHOD_RELAY_DUAL_PASS_ACCEPTANCE.md",
+        "LOCATING_TRACE_V01_ACCEPTANCE.md"
+      ],
+      "scope": "per-film visual acceptance with strict synthetic/real and audio boundaries",
+      "availability": "TRACKED_REPORT"
+    },
+    "E17": {
+      "paths": [
+        "READING_D_DUAL_PASS_ACCEPTANCE.md",
+        "docs/first-person-solving-cinema.md",
+        "STUDENT_POV_VOICE_PERFORMANCE_ACCEPTANCE.md"
+      ],
+      "scope": "historical production and stopped R02 performance trial",
+      "availability": "TRACKED_REPORT"
+    },
+    "E18": {
+      "paths": [
+        "COGNITIVE_DESIGN_CREATIVE_REVISION.md",
+        "knowledge/cognitive-design/README.md",
+        "creative_os/cognitive_direction/workflow.py",
+        "docs/cognitive-design-workflow.md"
+      ],
+      "scope": "committed authored revision plus unmerged research integration; no teaching authority",
+      "availability": "MIXED_TRACKED_AND_LOCAL_UNMERGED"
+    },
+    "E19": {
+      "paths": [
+        "ADAPTIVE_DUAL_SPEED_DIRECTION_ACCEPTANCE.md"
+      ],
+      "scope": "historical R09 native pilot, lossless picture/audio delivery and remaining creative review",
+      "availability": "TRACKED_REPORT"
+    },
+    "E20": {
+      "paths": [
+        "creative/motion-identity/motion-identity.md",
+        "creative/motion-identity/method-signatures.json",
+        "creative/motion-identity/brand-motion-grammar.json"
+      ],
+      "scope": "V9.1 visual specifications, bounded G01 pilot, not all-method implementation",
+      "availability": "TRACKED"
+    }
+  },
+  "capabilities": [
+    {
+      "capability_id": "answer_frozen_export",
+      "production_role": "CURRENT_PRODUCTION",
+      "entrypoint": "answer_engine/frozen_export.py::FrozenAssetExporter",
+      "version": "frozen-asset-bundle + artifact-status-manifest",
+      "input_contracts": [
+        "explicit export request with existing reviews"
+      ],
+      "output_contracts": [
+        "Frozen Bundle",
+        "Status Manifest"
+      ],
+      "known_consumers": [
+        "content_os.candidates",
+        "creative_os.episode",
+        "adaptive-episode.current"
+      ],
+      "evidence_refs": [
+        "E01",
+        "E06",
+        "E08"
+      ],
+      "known_limits": [
+        "No Analyzer rerun",
+        "Supplied current snapshot is not external live monitoring"
+      ],
+      "human_approval_scope": "PENDING; engineering or plan checks are not human approval",
+      "availability": "TRACKED",
+      "scope": "Audited R06 workflow; see limits",
+      "dimensions": {
+        "DESIGNED": "CONFIRMED",
+        "IMPLEMENTED": "CONFIRMED",
+        "INTEGRATED": "CONFIRMED",
+        "NATIVE_VERIFIED": "NOT_APPLICABLE",
+        "HUMAN_APPROVED": "PENDING",
+        "RELEASE_APPROVED": "NOT_ESTABLISHED"
+      },
+      "recommended_action": "保留边界与当前契约；按明确缺口推进"
+    },
+    {
+      "capability_id": "bound_source_validation",
+      "production_role": "CURRENT_PRODUCTION",
+      "entrypoint": "video_contracts/__init__.py::status_matches",
+      "version": "existing video_contracts API",
+      "input_contracts": [
+        "bundle",
+        "current supplied status"
+      ],
+      "output_contracts": [
+        "binding/current-state check"
+      ],
+      "known_consumers": [
+        "Episode",
+        "native current",
+        "bounded consumers"
+      ],
+      "evidence_refs": [
+        "E01",
+        "E02",
+        "E07"
+      ],
+      "known_limits": [
+        "Cannot certify semantic truth or independently authenticate reviewer identity",
+        "Callers must invoke validation"
+      ],
+      "human_approval_scope": "PENDING; engineering or plan checks are not human approval",
+      "availability": "TRACKED",
+      "scope": "Audited R06 workflow; see limits",
+      "dimensions": {
+        "DESIGNED": "CONFIRMED",
+        "IMPLEMENTED": "CONFIRMED",
+        "INTEGRATED": "CONFIRMED",
+        "NATIVE_VERIFIED": "NOT_APPLICABLE",
+        "HUMAN_APPROVED": "PENDING",
+        "RELEASE_APPROVED": "NOT_ESTABLISHED"
+      },
+      "recommended_action": "保留边界与当前契约；按明确缺口推进"
+    },
+    {
+      "capability_id": "legacy_package_projection",
+      "production_role": "LEGACY_COMPAT",
+      "entrypoint": "content_os/director.py::build_draft",
+      "version": "0.1.0 legacy Pattern API",
+      "input_contracts": [
+        "frozen candidate",
+        "statuses",
+        "pattern",
+        "duration_target"
+      ],
+      "output_contracts": [
+        "draft/final package"
+      ],
+      "known_consumers": [
+        "private R06 per-question wrapper",
+        "legacy content_os CLI"
+      ],
+      "evidence_refs": [
+        "E06",
+        "E11"
+      ],
+      "known_limits": [
+        "R06 still calls P02/60 for packaging",
+        "30/60/90 short-format outcome does not constrain independent long Episode"
+      ],
+      "human_approval_scope": "PENDING; engineering or plan checks are not human approval",
+      "availability": "TRACKED",
+      "scope": "Audited R06 workflow; see limits",
+      "dimensions": {
+        "DESIGNED": "CONFIRMED",
+        "IMPLEMENTED": "CONFIRMED",
+        "INTEGRATED": "CONFIRMED_AS_COMPATIBILITY_WRAPPER",
+        "NATIVE_VERIFIED": "NOT_APPLICABLE",
+        "HUMAN_APPROVED": "PENDING",
+        "RELEASE_APPROVED": "NOT_ESTABLISHED"
+      },
+      "recommended_action": "保留边界与当前契约；按明确缺口推进"
+    },
+    {
+      "capability_id": "method_episode",
+      "production_role": "CURRENT_PRODUCTION",
+      "entrypoint": "creative_os/episode.py::validate_episode",
+      "version": "1.0.0",
+      "input_contracts": [
+        "video/schemas/method-episode-plan.json",
+        "current statuses"
+      ],
+      "output_contracts": [
+        "episode engineering audit"
+      ],
+      "known_consumers": [
+        "Audience",
+        "adaptive.current",
+        "publication_episode"
+      ],
+      "evidence_refs": [
+        "E02",
+        "E06",
+        "E08"
+      ],
+      "known_limits": [
+        "Author chooses questions and Establish/Variation",
+        "Validated narrative structure is not a viewing result"
+      ],
+      "human_approval_scope": "PENDING; engineering or plan checks are not human approval",
+      "availability": "TRACKED",
+      "scope": "Audited R06 workflow; see limits",
+      "dimensions": {
+        "DESIGNED": "CONFIRMED",
+        "IMPLEMENTED": "CONFIRMED",
+        "INTEGRATED": "CONFIRMED",
+        "NATIVE_VERIFIED": "NOT_APPLICABLE",
+        "HUMAN_APPROVED": "PENDING",
+        "RELEASE_APPROVED": "NOT_ESTABLISHED"
+      },
+      "recommended_action": "保留边界与当前契约；按明确缺口推进"
+    },
+    {
+      "capability_id": "product_editorial_context",
+      "production_role": "EXPERIMENTAL",
+      "entrypoint": "creative_os/content_profiles.py::editorial_handoffs",
+      "version": "existing content profile API",
+      "input_contracts": [
+        "FREE_SHOWCASE or PAID_MASTERY",
+        "seven editorial artifacts"
+      ],
+      "output_contracts": [
+        "profile context and artifact hashes"
+      ],
+      "known_consumers": [
+        "editorial handoffs",
+        "tests"
+      ],
+      "evidence_refs": [
+        "E02"
+      ],
+      "known_limits": [
+        "R06 adopts policy; full automatic seven-stage transport not demonstrated",
+        "No shared Free/Paid quality score"
+      ],
+      "human_approval_scope": "PENDING; engineering or plan checks are not human approval",
+      "availability": "TRACKED",
+      "scope": "Product context helper, separate from truth and voice-delivery",
+      "dimensions": {
+        "DESIGNED": "CONFIRMED",
+        "IMPLEMENTED": "CONFIRMED",
+        "INTEGRATED": "NOT_VERIFIED_FOR_CURRENT_R06",
+        "NATIVE_VERIFIED": "NOT_APPLICABLE",
+        "HUMAN_APPROVED": "PENDING",
+        "RELEASE_APPROVED": "NOT_ESTABLISHED"
+      },
+      "recommended_action": "保留边界与当前契约；按明确缺口推进"
+    },
+    {
+      "capability_id": "audience_scene_handoff",
+      "production_role": "CURRENT_PRODUCTION",
+      "entrypoint": "creative_os/audience_engagement.py::director_handoff",
+      "version": "0.2.0; 0.1 preserved",
+      "input_contracts": [
+        "Episode",
+        "statuses",
+        "authored Audience Direction",
+        "existing scenes",
+        "all beat assignments"
+      ],
+      "output_contracts": [
+        "audience_director_handoff; PLANNED ranges"
+      ],
+      "known_consumers": [
+        "B06 preparation",
+        "human director"
+      ],
+      "evidence_refs": [
+        "E03",
+        "E13"
+      ],
+      "known_limits": [
+        "adaptive executor does not automatically consume suggestions",
+        "Actual media mapping remains unavailable without media/timeline/human anchors"
+      ],
+      "human_approval_scope": "PENDING; engineering or plan checks are not human approval",
+      "availability": "TRACKED",
+      "scope": "B06 planning, not rendered viewing intentions",
+      "dimensions": {
+        "DESIGNED": "CONFIRMED",
+        "IMPLEMENTED": "CONFIRMED",
+        "INTEGRATED": "CONFIRMED_FOR_B06_PLANNED_HANDOFF",
+        "NATIVE_VERIFIED": "NOT_APPLICABLE",
+        "HUMAN_APPROVED": "PENDING",
+        "RELEASE_APPROVED": "NOT_ESTABLISHED"
+      },
+      "recommended_action": "保留边界与当前契约；按明确缺口推进"
+    },
+    {
+      "capability_id": "pedagogy_03",
+      "production_role": "LEGACY_COMPAT",
+      "entrypoint": "pedagogy/compiler.py::compile_plan",
+      "version": "0.3.0 default",
+      "input_contracts": [
+        "Frozen",
+        "Status",
+        "selection",
+        "boundary review"
+      ],
+      "output_contracts": [
+        "Pedagogy Plan 0.3"
+      ],
+      "known_consumers": [
+        "Student POV Copy 0.3",
+        "historical replay"
+      ],
+      "evidence_refs": [
+        "E04"
+      ],
+      "known_limits": [
+        "Default unchanged",
+        "Historical inspect alone gives no current consumption eligibility"
+      ],
+      "human_approval_scope": "PENDING; engineering or plan checks are not human approval",
+      "availability": "TRACKED",
+      "scope": "Audited R06 workflow; see limits",
+      "dimensions": {
+        "DESIGNED": "CONFIRMED",
+        "IMPLEMENTED": "CONFIRMED",
+        "INTEGRATED": "NOT_VERIFIED_FOR_CURRENT_R06",
+        "NATIVE_VERIFIED": "NOT_APPLICABLE",
+        "HUMAN_APPROVED": "PENDING",
+        "RELEASE_APPROVED": "NOT_ESTABLISHED"
+      },
+      "recommended_action": "保留边界与当前契约；按明确缺口推进"
+    },
+    {
+      "capability_id": "pedagogy_04",
+      "production_role": "EXPERIMENTAL",
+      "entrypoint": "pedagogy/compiler.py::compile_plan",
+      "version": "0.4.0 explicit",
+      "input_contracts": [
+        "current Frozen/Status",
+        "explicit contract_version",
+        "reviewed work/structure"
+      ],
+      "output_contracts": [
+        "Plan 0.4",
+        "Copy/Motion Handoffs"
+      ],
+      "known_consumers": [
+        "Student POV Experience",
+        "Method Choreography"
+      ],
+      "evidence_refs": [
+        "E04",
+        "E05"
+      ],
+      "known_limits": [
+        "Not called by current R06 author",
+        "Unsupported payoff remains HOLD",
+        "Requires explicit new-version consumer"
+      ],
+      "human_approval_scope": "PENDING; engineering or plan checks are not human approval",
+      "availability": "TRACKED",
+      "scope": "Audited R06 workflow; see limits",
+      "dimensions": {
+        "DESIGNED": "CONFIRMED",
+        "IMPLEMENTED": "CONFIRMED",
+        "INTEGRATED": "CONFIRMED_IN_EXPLICIT_PLAN_CHAIN",
+        "NATIVE_VERIFIED": "NOT_APPLICABLE",
+        "HUMAN_APPROVED": "PENDING",
+        "RELEASE_APPROVED": "NOT_ESTABLISHED"
+      },
+      "recommended_action": "保留边界与当前契约；按明确缺口推进"
+    },
+    {
+      "capability_id": "student_copy_03",
+      "production_role": "LEGACY_COMPAT",
+      "entrypoint": "student_pov/realization.py::realize",
+      "version": "0.3.0 default",
+      "input_contracts": [
+        "Plan/projection",
+        "Frozen/Status",
+        "copy review"
+      ],
+      "output_contracts": [
+        "Student POV Copy",
+        "script/final-copy hashes"
+      ],
+      "known_consumers": [
+        "historical R02 voice/picture chain"
+      ],
+      "evidence_refs": [
+        "E04",
+        "E17"
+      ],
+      "known_limits": [
+        "No automatic migration to 0.4",
+        "Accepted voice and copy credentials remain exact-version bound"
+      ],
+      "human_approval_scope": "PENDING; engineering or plan checks are not human approval",
+      "availability": "TRACKED",
+      "scope": "Audited R06 workflow; see limits",
+      "dimensions": {
+        "DESIGNED": "CONFIRMED",
+        "IMPLEMENTED": "CONFIRMED",
+        "INTEGRATED": "NOT_VERIFIED_FOR_CURRENT_R06",
+        "NATIVE_VERIFIED": "NOT_APPLICABLE",
+        "HUMAN_APPROVED": "PENDING",
+        "RELEASE_APPROVED": "NOT_ESTABLISHED"
+      },
+      "recommended_action": "保留边界与当前契约；按明确缺口推进"
+    },
+    {
+      "capability_id": "student_experience_04",
+      "production_role": "EXPERIMENTAL",
+      "entrypoint": "student_pov/experience.py::realize_experience",
+      "version": "0.4.0",
+      "input_contracts": [
+        "Plan and Copy/Motion Handoffs 0.4",
+        "Frozen/Status",
+        "external copy review"
+      ],
+      "output_contracts": [
+        "Experience",
+        "experience audit"
+      ],
+      "known_consumers": [
+        "Method Choreography",
+        "Cognitive Direction"
+      ],
+      "evidence_refs": [
+        "E04",
+        "E05"
+      ],
+      "known_limits": [
+        "R02 new copy credential absent in documented pilot",
+        "G01 payoff unsupported",
+        "Diagnostic output is not production eligible"
+      ],
+      "human_approval_scope": "PENDING; engineering or plan checks are not human approval",
+      "availability": "TRACKED",
+      "scope": "Audited R06 workflow; see limits",
+      "dimensions": {
+        "DESIGNED": "CONFIRMED",
+        "IMPLEMENTED": "CONFIRMED",
+        "INTEGRATED": "CONFIRMED_DIAGNOSTIC_CHAIN",
+        "NATIVE_VERIFIED": "NOT_APPLICABLE",
+        "HUMAN_APPROVED": "PENDING",
+        "RELEASE_APPROVED": "NOT_ESTABLISHED"
+      },
+      "recommended_action": "保留边界与当前契约；按明确缺口推进"
+    },
+    {
+      "capability_id": "method_choreography",
+      "production_role": "EXPERIMENTAL",
+      "entrypoint": "method_choreography/compiler.py::compile_choreography",
+      "version": "0.1.0",
+      "input_contracts": [
+        "Experience 0.4",
+        "Plan/Handoffs",
+        "Frozen/Status",
+        "optional reviewed application"
+      ],
+      "output_contracts": [
+        "choreography",
+        "source-object relationships",
+        "projection"
+      ],
+      "known_consumers": [
+        "Cognitive Direction 0.2"
+      ],
+      "evidence_refs": [
+        "E05"
+      ],
+      "known_limits": [
+        "No English parsing or new actor spans",
+        "No AE coordinates",
+        "Synthetic Peel is not a real semantic review"
+      ],
+      "human_approval_scope": "PENDING; engineering or plan checks are not human approval",
+      "availability": "TRACKED",
+      "scope": "Audited R06 workflow; see limits",
+      "dimensions": {
+        "DESIGNED": "CONFIRMED",
+        "IMPLEMENTED": "CONFIRMED",
+        "INTEGRATED": "CONFIRMED_DIAGNOSTIC_CHAIN",
+        "NATIVE_VERIFIED": "NOT_APPLICABLE",
+        "HUMAN_APPROVED": "PENDING",
+        "RELEASE_APPROVED": "NOT_ESTABLISHED"
+      },
+      "recommended_action": "保留边界与当前契约；按明确缺口推进"
+    },
+    {
+      "capability_id": "cognitive_direction_02",
+      "production_role": "EXPERIMENTAL",
+      "entrypoint": "creative_os/cognitive_direction/compiler.py::compile_direction",
+      "version": "0.2.0",
+      "input_contracts": [
+        "Choreography",
+        "Experience",
+        "Plan/Handoffs",
+        "Frozen/Status"
+      ],
+      "output_contracts": [
+        "direction/projection",
+        "execution_allowed=false"
+      ],
+      "known_consumers": [
+        "explicit design/research consumers"
+      ],
+      "evidence_refs": [
+        "E05"
+      ],
+      "known_limits": [
+        "No current R06 geometry adapter",
+        "Camera scope is intent, not keyframes",
+        "HOLD diagnostic cannot grant render permission"
+      ],
+      "human_approval_scope": "PENDING; engineering or plan checks are not human approval",
+      "availability": "TRACKED",
+      "scope": "Audited R06 workflow; see limits",
+      "dimensions": {
+        "DESIGNED": "CONFIRMED",
+        "IMPLEMENTED": "CONFIRMED",
+        "INTEGRATED": "CONFIRMED_DIAGNOSTIC_CHAIN",
+        "NATIVE_VERIFIED": "NOT_APPLICABLE",
+        "HUMAN_APPROVED": "PENDING",
+        "RELEASE_APPROVED": "NOT_ESTABLISHED"
+      },
+      "recommended_action": "保留边界与当前契约；按明确缺口推进"
+    },
+    {
+      "capability_id": "legacy_shot_director",
+      "production_role": "LEGACY_COMPAT",
+      "entrypoint": "creative_os/director.py::build_shot_plan",
+      "version": "0.1.0",
+      "input_contracts": [
+        "package/manifest/status",
+        "delivery",
+        "narration track"
+      ],
+      "output_contracts": [
+        "shot plan",
+        "landscape contract"
+      ],
+      "known_consumers": [
+        "creative_os.__main__.prepare",
+        "landscape execution"
+      ],
+      "evidence_refs": [
+        "E05",
+        "E10"
+      ],
+      "known_limits": [
+        "Different consumer from Cognitive Direction 0.2 and R06 private author",
+        "Do not replace frozen historical contracts"
+      ],
+      "human_approval_scope": "PENDING; engineering or plan checks are not human approval",
+      "availability": "TRACKED",
+      "scope": "Audited R06 workflow; see limits",
+      "dimensions": {
+        "DESIGNED": "CONFIRMED",
+        "IMPLEMENTED": "CONFIRMED",
+        "INTEGRATED": "NOT_VERIFIED_FOR_CURRENT_R06",
+        "NATIVE_VERIFIED": "NOT_APPLICABLE",
+        "HUMAN_APPROVED": "PENDING",
+        "RELEASE_APPROVED": "NOT_ESTABLISHED"
+      },
+      "recommended_action": "保留边界与当前契约；按明确缺口推进"
+    },
+    {
+      "capability_id": "r06_authored_native_input",
+      "production_role": "CURRENT_PRODUCTION",
+      "entrypoint": "local-data/free-showcase/prepare_title_task_episode.py::prepare",
+      "version": "private r1, r2/r3 patches",
+      "input_contracts": [
+        "two reviewed question packages",
+        "authored scenes",
+        "exact voice delivery",
+        "fonts"
+      ],
+      "output_contracts": [
+        "Episode",
+        "Direction",
+        "Native Spec",
+        "Voice Timing",
+        "Captions"
+      ],
+      "known_consumers": [
+        "adaptive-episode"
+      ],
+      "evidence_refs": [
+        "E06",
+        "E08",
+        "E09"
+      ],
+      "known_limits": [
+        "Not a public portable CLI",
+        "Case-specific scripts may mutate Adobe; do not rerun blindly",
+        "Geometry and actual timing authored here"
+      ],
+      "human_approval_scope": "PENDING; engineering or plan checks are not human approval",
+      "availability": "PRIVATE_LOCAL",
+      "scope": "Audited R06 workflow; see limits",
+      "dimensions": {
+        "DESIGNED": "CONFIRMED",
+        "IMPLEMENTED": "CONFIRMED",
+        "INTEGRATED": "CONFIRMED",
+        "NATIVE_VERIFIED": "NOT_APPLICABLE",
+        "HUMAN_APPROVED": "PENDING",
+        "RELEASE_APPROVED": "NOT_ESTABLISHED"
+      },
+      "recommended_action": "保留边界与当前契约；按明确缺口推进"
+    },
+    {
+      "capability_id": "adaptive_native_episode",
+      "production_role": "CURRENT_PRODUCTION",
+      "entrypoint": "ae/experiments/adaptive-episode/run.py",
+      "version": "unversioned adapter; cognitive-pov-v0.1.jsx",
+      "input_contracts": [
+        "native-request",
+        "current dependencies",
+        "source geometry",
+        "voice hashes"
+      ],
+      "output_contracts": [
+        "AEP",
+        "native audits",
+        "frame receipts",
+        "silent 4K picture"
+      ],
+      "known_consumers": [
+        "Premiere",
+        "B06 preflight"
+      ],
+      "evidence_refs": [
+        "E07",
+        "E08"
+      ],
+      "known_limits": [
+        "Existing build/render not globally wrapped in HostOwnership",
+        "No auto Audience/Direction 0.2 execution",
+        "Silent picture is not complete AV"
+      ],
+      "human_approval_scope": "PENDING; engineering or plan checks are not human approval",
+      "availability": "TRACKED",
+      "scope": "Audited R06 workflow; see limits",
+      "dimensions": {
+        "DESIGNED": "CONFIRMED",
+        "IMPLEMENTED": "CONFIRMED",
+        "INTEGRATED": "CONFIRMED",
+        "NATIVE_VERIFIED": "CONFIRMED_R06_R3",
+        "HUMAN_APPROVED": "PENDING",
+        "RELEASE_APPROVED": "NOT_ESTABLISHED"
+      },
+      "recommended_action": "保留边界与当前契约；按明确缺口推进"
+    },
+    {
+      "capability_id": "candidate_state_audit",
+      "production_role": "CURRENT_PRODUCTION",
+      "entrypoint": "ae_production/candidate_motion.py::audit_candidate_events",
+      "version": "existing candidate-event API",
+      "input_contracts": [
+        "full action event sequence",
+        "bundles",
+        "optional answer confirmations"
+      ],
+      "output_contracts": [
+        "mechanical before/after audit"
+      ],
+      "known_consumers": [
+        "adaptive.current",
+        "judgement_preflight"
+      ],
+      "evidence_refs": [
+        "E07",
+        "E13"
+      ],
+      "known_limits": [
+        "Does not certify viewers understood the comparison",
+        "Retain C leaves C/D until all required actions close"
+      ],
+      "human_approval_scope": "PENDING; engineering or plan checks are not human approval",
+      "availability": "TRACKED",
+      "scope": "Audited R06 workflow; see limits",
+      "dimensions": {
+        "DESIGNED": "CONFIRMED",
+        "IMPLEMENTED": "CONFIRMED",
+        "INTEGRATED": "CONFIRMED",
+        "NATIVE_VERIFIED": "NOT_APPLICABLE",
+        "HUMAN_APPROVED": "PENDING",
+        "RELEASE_APPROVED": "NOT_ESTABLISHED"
+      },
+      "recommended_action": "保留边界与当前契约；按明确缺口推进"
+    },
+    {
+      "capability_id": "host_ownership_guard",
+      "production_role": "BLOCKED_DEPENDENCY",
+      "entrypoint": "ae_production/host_ownership.py::HostOwnership",
+      "version": "committed cooperative guard",
+      "input_contracts": [
+        "owner/revision/process/project/target",
+        "live identity reader"
+      ],
+      "output_contracts": [
+        "atomic ownership",
+        "before/after identity validation"
+      ],
+      "known_consumers": [
+        "B06 live executor integration under development"
+      ],
+      "evidence_refs": [
+        "E15"
+      ],
+      "known_limits": [
+        "Unit tested; old executors not globally wired",
+        "No TTL/retry/takeover",
+        "Actual native use must be evidenced per new revision"
+      ],
+      "human_approval_scope": "PENDING; engineering or plan checks are not human approval",
+      "availability": "TRACKED",
+      "scope": "Audited R06 workflow; see limits",
+      "dimensions": {
+        "DESIGNED": "CONFIRMED",
+        "IMPLEMENTED": "CONFIRMED",
+        "INTEGRATED": "NOT_VERIFIED_FOR_CURRENT_R06",
+        "NATIVE_VERIFIED": "NOT_VERIFIED_AT_AUDIT_BASELINE",
+        "HUMAN_APPROVED": "PENDING",
+        "RELEASE_APPROVED": "NOT_ESTABLISHED"
+      },
+      "recommended_action": "保留边界与当前契约；按明确缺口推进"
+    },
+    {
+      "capability_id": "b06_existing_preflight",
+      "production_role": "CURRENT_PRODUCTION",
+      "entrypoint": "ae/experiments/r06-b06-judgement/run.py",
+      "version": "committed prepare-only d9fa2da",
+      "input_contracts": [
+        "existing baseline/request/scene map/source proposals"
+      ],
+      "output_contracts": [
+        "G0/G1 handoff",
+        "four precise annotation requests"
+      ],
+      "known_consumers": [
+        "upstream host review",
+        "bounded G2 consumer"
+      ],
+      "evidence_refs": [
+        "E13"
+      ],
+      "known_limits": [
+        "Existing r2 G0 must not be repeated",
+        "G1 HOLD until explicit fine annotation",
+        "No renderer in this committed entry"
+      ],
+      "human_approval_scope": "PENDING; engineering or plan checks are not human approval",
+      "availability": "TRACKED",
+      "scope": "Audited R06 workflow; see limits",
+      "dimensions": {
+        "DESIGNED": "CONFIRMED",
+        "IMPLEMENTED": "CONFIRMED",
+        "INTEGRATED": "CONFIRMED_G0_G1_ONLY",
+        "NATIVE_VERIFIED": "NOT_APPLICABLE",
+        "HUMAN_APPROVED": "PENDING",
+        "RELEASE_APPROVED": "NOT_ESTABLISHED"
+      },
+      "recommended_action": "保留边界与当前契约；按明确缺口推进"
+    },
+    {
+      "capability_id": "b06_fine_annotation_overlay",
+      "production_role": "EXPERIMENTAL",
+      "entrypoint": "ae_production/phrase_consumer.py::consume_phrase_review",
+      "version": "reviewed-phrase-operations/1.0 local overlay",
+      "input_contracts": [
+        "original request/action/relation/source",
+        "separate AI review/current state",
+        "exact bounded plan"
+      ],
+      "output_contracts": [
+        "limited G2 consumption receipt"
+      ],
+      "known_consumers": [
+        "parallel B06 production draft"
+      ],
+      "evidence_refs": [
+        "E14"
+      ],
+      "known_limits": [
+        "Unmerged at audit snapshot",
+        "Earlier explicitly authorized AI host review, not ANSWER exporter native Review type",
+        "Four operations only; no independent human certification"
+      ],
+      "human_approval_scope": "PENDING; engineering or plan checks are not human approval",
+      "availability": "LOCAL_UNMERGED",
+      "scope": "Audit observes prior production artifact; does not create or approve a teaching review",
+      "dimensions": {
+        "DESIGNED": "CONFIRMED",
+        "IMPLEMENTED": "CONFIRMED",
+        "INTEGRATED": "CONFIRMED_LOCAL_READ_ONLY_REPLAY",
+        "NATIVE_VERIFIED": "NOT_APPLICABLE",
+        "HUMAN_APPROVED": "PENDING",
+        "RELEASE_APPROVED": "NOT_ESTABLISHED"
+      },
+      "recommended_action": "保留边界与当前契约；按明确缺口推进"
+    },
+    {
+      "capability_id": "b06_native_delivery",
+      "production_role": "BLOCKED_DEPENDENCY",
+      "entrypoint": "ae/experiments/r06-b06-judgement/produce.py",
+      "version": "local development draft",
+      "input_contracts": [
+        "validated annotation response",
+        "old source objects/media/voices",
+        "HostOwnership"
+      ],
+      "output_contracts": [
+        "planned six 4K24 A/B outputs and projects"
+      ],
+      "known_consumers": [
+        "G3 human viewing"
+      ],
+      "evidence_refs": [
+        "E13",
+        "E14",
+        "E15"
+      ],
+      "known_limits": [
+        "Not native-verified at audit snapshot",
+        "Parallel task may advance; inspect its own receipts",
+        "No full R06 expansion before G3"
+      ],
+      "human_approval_scope": "PENDING; engineering or plan checks are not human approval",
+      "availability": "LOCAL_UNMERGED",
+      "scope": "Separate Astra production assignment; not executed by this audit",
+      "dimensions": {
+        "DESIGNED": "CONFIRMED",
+        "IMPLEMENTED": "CONFIRMED",
+        "INTEGRATED": "NOT_VERIFIED_FOR_CURRENT_R06",
+        "NATIVE_VERIFIED": "NOT_VERIFIED_AT_AUDIT_BASELINE",
+        "HUMAN_APPROVED": "PENDING",
+        "RELEASE_APPROVED": "NOT_ESTABLISHED"
+      },
+      "recommended_action": "保留边界与当前契约；按明确缺口推进"
+    },
+    {
+      "capability_id": "voice_delivery",
+      "production_role": "CURRENT_PRODUCTION",
+      "entrypoint": "scripts/voice_delivery.py::validate",
+      "version": "voice-delivery/v1",
+      "input_contracts": [
+        "WAV/transcript/byte hashes/duration/listening status"
+      ],
+      "output_contracts": [
+        "validated immutable audio handoff"
+      ],
+      "known_consumers": [
+        "private R06 author",
+        "Premiere",
+        "historical voice consumers"
+      ],
+      "evidence_refs": [
+        "E09",
+        "E10"
+      ],
+      "known_limits": [
+        "Model and producer replaceable",
+        "New take does not inherit accepted pack approval",
+        "Whole audio retained; timing rebuilt when changed"
+      ],
+      "human_approval_scope": "PENDING; engineering or plan checks are not human approval",
+      "availability": "TRACKED",
+      "scope": "Audited R06 workflow; see limits",
+      "dimensions": {
+        "DESIGNED": "CONFIRMED",
+        "IMPLEMENTED": "CONFIRMED",
+        "INTEGRATED": "CONFIRMED_R06_19_TAKES",
+        "NATIVE_VERIFIED": "NOT_APPLICABLE",
+        "HUMAN_APPROVED": "PENDING",
+        "RELEASE_APPROVED": "NOT_ESTABLISHED"
+      },
+      "recommended_action": "保留边界与当前契约；按明确缺口推进"
+    },
+    {
+      "capability_id": "narration_performance",
+      "production_role": "EXPERIMENTAL",
+      "entrypoint": "narration_performance/plan.py",
+      "version": "narration-performance/v1",
+      "input_contracts": [
+        "exact Copy 0.3 and existing voice slots"
+      ],
+      "output_contracts": [
+        "performance intent/realization",
+        "new voice takes"
+      ],
+      "known_consumers": [
+        "historical R02 A/B"
+      ],
+      "evidence_refs": [
+        "E17"
+      ],
+      "known_limits": [
+        "STOPPED_NO_DEMONSTRATED_IMPROVEMENT",
+        "Tone/energy/certainty/emphasis UNREALIZED in documented trial",
+        "Not a default R06 enhancement"
+      ],
+      "human_approval_scope": "User reported B had no obvious improvement; no preference or listening PASS inferred",
+      "availability": "TRACKED",
+      "scope": "Audited R06 workflow; see limits",
+      "dimensions": {
+        "DESIGNED": "CONFIRMED",
+        "IMPLEMENTED": "CONFIRMED",
+        "INTEGRATED": "NOT_VERIFIED_FOR_CURRENT_R06",
+        "NATIVE_VERIFIED": "CONFIRMED_HISTORICAL_R02_AB",
+        "HUMAN_APPROVED": "NEGATIVE_SCOPED_FEEDBACK",
+        "RELEASE_APPROVED": "NOT_ESTABLISHED"
+      },
+      "recommended_action": "保留边界与当前契约；按明确缺口推进"
+    },
+    {
+      "capability_id": "r06_premiere_completion",
+      "production_role": "BLOCKED_DEPENDENCY",
+      "entrypoint": "premiere_production/cinema.py::audit_timeline",
+      "version": "existing 4K24 cinema audit API",
+      "input_contracts": [
+        "current picture/whole voices/music/subtitles",
+        "actual native timeline"
+      ],
+      "output_contracts": [
+        "native AV edit/export/encoded voice checks"
+      ],
+      "known_consumers": [
+        "final media review",
+        "Showcase",
+        "Audience Learning"
+      ],
+      "evidence_refs": [
+        "E09",
+        "E10"
+      ],
+      "known_limits": [
+        "Current R06 complete native AV receipts absent at baseline",
+        "Student voice legacy request shape cannot be assumed to fit R06",
+        "Bridge track and color limitations depend on actual native session"
+      ],
+      "human_approval_scope": "PENDING; engineering or plan checks are not human approval",
+      "availability": "TRACKED",
+      "scope": "Audited R06 workflow; see limits",
+      "dimensions": {
+        "DESIGNED": "CONFIRMED",
+        "IMPLEMENTED": "CONFIRMED",
+        "INTEGRATED": "NOT_VERIFIED_FOR_CURRENT_R06",
+        "NATIVE_VERIFIED": "NOT_VERIFIED_FOR_R06_AT_AUDIT_BASELINE",
+        "HUMAN_APPROVED": "PENDING",
+        "RELEASE_APPROVED": "NOT_ESTABLISHED"
+      },
+      "recommended_action": "保留边界与当前契约；按明确缺口推进"
+    },
+    {
+      "capability_id": "native_wordcue_peel_reference",
+      "production_role": "PROVEN_REUSABLE",
+      "entrypoint": "ae/experiments/native-creative-proof/build.jsx",
+      "version": "r7-wordcue-final historical proof",
+      "input_contracts": [
+        "explicit synthetic source spans",
+        "given visual anchors"
+      ],
+      "output_contracts": [
+        "recognize-range-peel-settle native motion"
+      ],
+      "known_consumers": [
+        "later scoped creative trials"
+      ],
+      "evidence_refs": [
+        "E16"
+      ],
+      "known_limits": [
+        "Synthetic grammar attachments do not authorize real semantic peeling",
+        "Historical 1080p source is not new 4K approval"
+      ],
+      "human_approval_scope": "overall_visual_effect only, bound r7 media; sound and teaching excluded",
+      "availability": "TRACKED",
+      "scope": "Audited R06 workflow; see limits",
+      "dimensions": {
+        "DESIGNED": "CONFIRMED",
+        "IMPLEMENTED": "CONFIRMED",
+        "INTEGRATED": "NOT_VERIFIED_FOR_CURRENT_R06",
+        "NATIVE_VERIFIED": "CONFIRMED_SCOPED_PROOF",
+        "HUMAN_APPROVED": "SCOPED_VISUAL_FEEDBACK",
+        "RELEASE_APPROVED": "NOT_ESTABLISHED"
+      },
+      "recommended_action": "保留边界与当前契约；按明确缺口推进"
+    },
+    {
+      "capability_id": "method_relay_visual_reference",
+      "production_role": "PROVEN_REUSABLE",
+      "entrypoint": "ae/experiments/method-relay-dual-pass/build.jsx",
+      "version": "0.1.1 historical synthetic proof",
+      "input_contracts": [
+        "synthetic reviewed visual fixture",
+        "bound explanation excerpts"
+      ],
+      "output_contracts": [
+        "continuous handoff and fast/guided visual reference"
+      ],
+      "known_consumers": [
+        "scoped new directors"
+      ],
+      "evidence_refs": [
+        "E16"
+      ],
+      "known_limits": [
+        "Overall visual acceptance only",
+        "No automatic real-question relay/answer entitlement",
+        "No mandatory two full passes for each episode question"
+      ],
+      "human_approval_scope": "bound synthetic film overall visual preview accepted; listening deferred",
+      "availability": "TRACKED",
+      "scope": "Audited R06 workflow; see limits",
+      "dimensions": {
+        "DESIGNED": "CONFIRMED",
+        "IMPLEMENTED": "CONFIRMED",
+        "INTEGRATED": "NOT_VERIFIED_FOR_CURRENT_R06",
+        "NATIVE_VERIFIED": "CONFIRMED_SCOPED_PROOF",
+        "HUMAN_APPROVED": "SCOPED_VISUAL_FEEDBACK",
+        "RELEASE_APPROVED": "NOT_ESTABLISHED"
+      },
+      "recommended_action": "保留边界与当前契约；按明确缺口推进"
+    },
+    {
+      "capability_id": "reviewed_locating_attention",
+      "production_role": "PROVEN_REUSABLE",
+      "entrypoint": "creative_os/locating_attention.py",
+      "version": "Locating Trace v0.1",
+      "input_contracts": [
+        "reviewed locating trace",
+        "source/status",
+        "approved spans"
+      ],
+      "output_contracts": [
+        "attention plan",
+        "existing locating-native adapter input"
+      ],
+      "known_consumers": [
+        "ae/experiments/method-relay-dual-pass/locating_native.py"
+      ],
+      "evidence_refs": [
+        "E16"
+      ],
+      "known_limits": [
+        "r6 12-second 4K locating-only human visual scope",
+        "Cannot infer an answer or grant B06 semantic-group permissions"
+      ],
+      "human_approval_scope": "HUMAN_VISUAL_ACCEPTED for exact r6 locating film; not full film or voice",
+      "availability": "TRACKED",
+      "scope": "Audited R06 workflow; see limits",
+      "dimensions": {
+        "DESIGNED": "CONFIRMED",
+        "IMPLEMENTED": "CONFIRMED",
+        "INTEGRATED": "NOT_VERIFIED_FOR_CURRENT_R06",
+        "NATIVE_VERIFIED": "CONFIRMED_SCOPED_R6",
+        "HUMAN_APPROVED": "SCOPED_VISUAL_APPROVAL",
+        "RELEASE_APPROVED": "NOT_ESTABLISHED"
+      },
+      "recommended_action": "保留边界与当前契约；按明确缺口推进"
+    },
+    {
+      "capability_id": "reading_d_historical_cinema",
+      "production_role": "LEGACY_COMPAT",
+      "entrypoint": "ae/experiments/reading-d-dual-pass/cinema.py",
+      "version": "historical First-person cinema lane",
+      "input_contracts": [
+        "its own Frozen source/trace/word objects/copy/timing"
+      ],
+      "output_contracts": [
+        "cinema derivatives",
+        "exact media/time bindings"
+      ],
+      "known_consumers": [
+        "historical Reading D production"
+      ],
+      "evidence_refs": [
+        "E17"
+      ],
+      "known_limits": [
+        "Not current R06 default",
+        "Bound source spans and approved holds are case specific",
+        "Reuse timing technique only after revalidation"
+      ],
+      "human_approval_scope": "PENDING; engineering or plan checks are not human approval",
+      "availability": "TRACKED",
+      "scope": "Audited R06 workflow; see limits",
+      "dimensions": {
+        "DESIGNED": "CONFIRMED",
+        "IMPLEMENTED": "CONFIRMED",
+        "INTEGRATED": "NOT_VERIFIED_FOR_CURRENT_R06",
+        "NATIVE_VERIFIED": "CONFIRMED_HISTORICAL_LANE",
+        "HUMAN_APPROVED": "PENDING",
+        "RELEASE_APPROVED": "NOT_ESTABLISHED"
+      },
+      "recommended_action": "保留边界与当前契约；按明确缺口推进"
+    },
+    {
+      "capability_id": "motion_identity_vocabulary",
+      "production_role": "EXPERIMENTAL",
+      "entrypoint": "creative/motion-identity/method-signatures.json",
+      "version": "0.1.0",
+      "input_contracts": [
+        "method identity plus separately supported actions"
+      ],
+      "output_contracts": [
+        "signature vocabulary and visual grammar"
+      ],
+      "known_consumers": [
+        "Choreography",
+        "historical Hero directors"
+      ],
+      "evidence_refs": [
+        "E20"
+      ],
+      "known_limits": [
+        "Six specifications are not six solvers or six native implementations",
+        "G01 Hero native subset remains its own historical scope",
+        "Old color examples do not override current question/comparison colors"
+      ],
+      "human_approval_scope": "PENDING; engineering or plan checks are not human approval",
+      "availability": "TRACKED",
+      "scope": "Audited R06 workflow; see limits",
+      "dimensions": {
+        "DESIGNED": "CONFIRMED",
+        "IMPLEMENTED": "CONFIRMED",
+        "INTEGRATED": "NOT_VERIFIED_FOR_CURRENT_R06",
+        "NATIVE_VERIFIED": "NOT_APPLICABLE",
+        "HUMAN_APPROVED": "PENDING",
+        "RELEASE_APPROVED": "NOT_ESTABLISHED"
+      },
+      "recommended_action": "保留边界与当前契约；按明确缺口推进"
+    },
+    {
+      "capability_id": "lossless_av_color_handoff",
+      "production_role": "PROVEN_REUSABLE",
+      "entrypoint": "ADAPTIVE_DUAL_SPEED_DIRECTION_ACCEPTANCE.md",
+      "version": "historical R09 packet-verified handoff",
+      "input_contracts": [
+        "verified Rec.709 AE picture",
+        "native PR audio export"
+      ],
+      "output_contracts": [
+        "lossless mux with packet/time identity"
+      ],
+      "known_consumers": [
+        "historical R09 delivery"
+      ],
+      "evidence_refs": [
+        "E19"
+      ],
+      "known_limits": [
+        "Engineering reuse only",
+        "Does not fix native Premiere color conversion",
+        "New parent media require exact new validation"
+      ],
+      "human_approval_scope": "PENDING; proven scope is packet-preserving technical transfer only",
+      "availability": "TRACKED",
+      "scope": "Audited R06 workflow; see limits",
+      "dimensions": {
+        "DESIGNED": "CONFIRMED",
+        "IMPLEMENTED": "CONFIRMED",
+        "INTEGRATED": "NOT_VERIFIED_FOR_CURRENT_R06",
+        "NATIVE_VERIFIED": "CONFIRMED_HISTORICAL_DELIVERY",
+        "HUMAN_APPROVED": "PENDING",
+        "RELEASE_APPROVED": "NOT_ESTABLISHED"
+      },
+      "recommended_action": "保留边界与当前契约；按明确缺口推进"
+    },
+    {
+      "capability_id": "research_to_design_overlay",
+      "production_role": "EXPERIMENTAL",
+      "entrypoint": "creative_os/cognitive_direction/workflow.py",
+      "version": "local unmerged research integration",
+      "input_contracts": [
+        "scoped research/design evidence",
+        "existing diagnostic direction inputs"
+      ],
+      "output_contracts": [
+        "design suggestions and experiments"
+      ],
+      "known_consumers": [
+        "local research director",
+        "authored R06 creative revision"
+      ],
+      "evidence_refs": [
+        "E18"
+      ],
+      "known_limits": [
+        "Partly absent from clean public checkout",
+        "Cannot become teaching truth or mandatory release gate",
+        "Local research trial is not human viewer acceptance"
+      ],
+      "human_approval_scope": "PENDING; engineering or plan checks are not human approval",
+      "availability": "MIXED_TRACKED_AND_LOCAL_UNMERGED",
+      "scope": "Audited R06 workflow; see limits",
+      "dimensions": {
+        "DESIGNED": "CONFIRMED",
+        "IMPLEMENTED": "CONFIRMED",
+        "INTEGRATED": "NOT_VERIFIED_FOR_CURRENT_R06",
+        "NATIVE_VERIFIED": "NOT_APPLICABLE",
+        "HUMAN_APPROVED": "PENDING",
+        "RELEASE_APPROVED": "NOT_ESTABLISHED"
+      },
+      "recommended_action": "保留边界与当前契约；按明确缺口推进"
+    },
+    {
+      "capability_id": "free_publication_reviews",
+      "production_role": "EXPERIMENTAL",
+      "entrypoint": "content_os/showcase.py::decide",
+      "version": "free_showcase_v1 / 1.0.0",
+      "input_contracts": [
+        "current package/status/scope",
+        "final copy/display/media",
+        "four external human review types"
+      ],
+      "output_contracts": [
+        "independent checks and public decision"
+      ],
+      "known_consumers": [
+        "creative_os.episode.publication_episode",
+        "scripts.free_showcase"
+      ],
+      "evidence_refs": [
+        "E11",
+        "E02"
+      ],
+      "known_limits": [
+        "Policy current; final current-R06 media consumer not yet demonstrated",
+        "First-use research is not required for ordinary Free",
+        "All review bindings conservatively include all final inputs"
+      ],
+      "human_approval_scope": "PENDING; engineering or plan checks are not human approval",
+      "availability": "TRACKED",
+      "scope": "Implemented FREE release API; no actual R06 release approval",
+      "dimensions": {
+        "DESIGNED": "CONFIRMED",
+        "IMPLEMENTED": "CONFIRMED",
+        "INTEGRATED": "NOT_VERIFIED_FOR_CURRENT_R06",
+        "NATIVE_VERIFIED": "NOT_APPLICABLE",
+        "HUMAN_APPROVED": "PENDING",
+        "RELEASE_APPROVED": "NOT_ESTABLISHED"
+      },
+      "recommended_action": "保留边界与当前契约；按明确缺口推进"
+    },
+    {
+      "capability_id": "paid_mastery_release",
+      "production_role": "FUTURE",
+      "entrypoint": null,
+      "version": "not implemented",
+      "input_contracts": [
+        "PAID_MASTERY objectives/practice/transfer and truth/source"
+      ],
+      "output_contracts": [
+        "future independent course acceptance"
+      ],
+      "known_consumers": [],
+      "evidence_refs": [
+        "E02",
+        "E11"
+      ],
+      "known_limits": [
+        "FREE Showcase checker rejects Paid",
+        "Do not relabel Paid to bypass missing course verification"
+      ],
+      "human_approval_scope": "PENDING; engineering or plan checks are not human approval",
+      "availability": "TRACKED",
+      "scope": "Audited R06 workflow; see limits",
+      "dimensions": {
+        "DESIGNED": "CONFIRMED",
+        "IMPLEMENTED": "NOT_IMPLEMENTED",
+        "INTEGRATED": "NOT_VERIFIED_FOR_CURRENT_R06",
+        "NATIVE_VERIFIED": "NOT_APPLICABLE",
+        "HUMAN_APPROVED": "PENDING",
+        "RELEASE_APPROVED": "NOT_ESTABLISHED"
+      },
+      "recommended_action": "先记录真实课程验收需求，本轮不实现"
+    },
+    {
+      "capability_id": "audience_learning_loop",
+      "production_role": "EXPERIMENTAL",
+      "entrypoint": "content_os/engagement_learning.py::AudienceLearning",
+      "version": "0.2.0",
+      "input_contracts": [
+        "bound final media/timeline",
+        "external human frame anchors",
+        "real observed feedback/platform data"
+      ],
+      "output_contracts": [
+        "local ledger",
+        "scoped retrospectives",
+        "reviewed next-director suggestions"
+      ],
+      "known_consumers": [
+        "scripts.audience_learning",
+        "future episode authors"
+      ],
+      "evidence_refs": [
+        "E12"
+      ],
+      "known_limits": [
+        "No actual current-R06 platform dataset",
+        "PLANNED ranges are not media anchors",
+        "publish records an actual external publication; no auto-publishing"
+      ],
+      "human_approval_scope": "PENDING; engineering or plan checks are not human approval",
+      "availability": "TRACKED",
+      "scope": "Implemented record/validation API; current R06 final-cut loop not demonstrated",
+      "dimensions": {
+        "DESIGNED": "CONFIRMED",
+        "IMPLEMENTED": "CONFIRMED",
+        "INTEGRATED": "NOT_VERIFIED_FOR_CURRENT_R06",
+        "NATIVE_VERIFIED": "NOT_APPLICABLE",
+        "HUMAN_APPROVED": "PENDING",
+        "RELEASE_APPROVED": "NOT_ESTABLISHED"
+      },
+      "recommended_action": "保留边界与当前契约；按明确缺口推进"
+    }
+  ]
+}

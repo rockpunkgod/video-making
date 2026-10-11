@@ -1,5 +1,7 @@
 # Audience Engagement Design v0.1
 
+> Current extension: v0.2, with the v0.1 reference retained below. The B06 planned scene handoff has been exercised; automatic execution of its suggestions by the Adaptive renderer has not. Start production from the [current workflow](workflows/CURRENT_PRODUCTION_WORKFLOW.md), and keep planned scene ranges separate from actual media anchors.
+
 ## v0.2 extension
 
 The v0.1 direction contract and existing tests remain supported. New `schema_version=0.2.0` directions use PROBLEM, CURIOSITY, ORIENTATION, SEARCH, RECOGNITION, ANTICIPATION, COMPARISON, DISCOVERY, PAYOFF, PROGRESSION and RECALL. Every beat adds `viewer_state` and explicit `editorial_signals`; all other frozen bindings and restrictions remain intact.

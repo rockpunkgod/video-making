@@ -1,5 +1,7 @@
 # First-person solving cinema: incremental internal workflow
 
+> Scope: the historical Reading D cinema lane and its bounded techniques. Current R06 FREE_SHOWCASE starts at the [current production workflow](workflows/CURRENT_PRODUCTION_WORKFLOW.md). This page does not impose a full two-pass structure, transfer old approval, or provide the default R06 authoring input.
+
 Reuse the frozen source, approved locating trace, native word objects and two-pass picture. The editorial layer may change delivery and disclose existing reviewed evidence; it cannot create a second method, grammar partition or answer permission.
 
 `ae/experiments/reading-d-dual-pass/cinema.py` validates source-pointer hashes, native event bindings, unique audience beats and exact AI scratch-copy approval. This is deterministic provenance lint, not semantic truth certification. Human experience and language reviews remain independent.

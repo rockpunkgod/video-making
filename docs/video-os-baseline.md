@@ -1,5 +1,7 @@
 # Video OS 基线与职责边界
 
+> 历史基线文档：描述 18afe8a 时的初始缺口，不代表当前能力。当前入口、实际生产证据与阻塞见[当前生产工作流](workflows/CURRENT_PRODUCTION_WORKFLOW.md)；本页正文保留作历史对照。
+
 基线：video-making `18afe8a`；检查日期：2026-10-05。
 
 Teaching Engine != Video Production OS。ANSWER 是唯一教学事实源，Video OS 只消费被冻结、可追溯的结构化资产。

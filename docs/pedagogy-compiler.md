@@ -1,5 +1,7 @@
 # Pedagogy Compiler v0.4
 
+> 生产定位：本页是显式 0.4 Plan/Handoff 契约，默认兼容 API 仍为 0.3；当前 R06 原生作者并未自动调用此链。当前接手顺序见[生产工作流](workflows/CURRENT_PRODUCTION_WORKFLOW.md)，勿将 Plan 编译视为已渲染或新增迁移门槛。
+
 0.4 是独立、显式选择的新 Plan / Handoff 契约。它从原 Frozen Asset 和当前提供的 Status 重新编译，记录唯一主动作、真实 Work Delta 和认知对象状态。它不修改 ANSWER、Registry、原题、Action、Evidence、Role、Stop 或已有 Review，也不自动接入当前 Student POV 0.3、画面和声音生产链。
 
 ## 版本与迁移

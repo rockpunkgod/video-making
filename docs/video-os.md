@@ -1,5 +1,7 @@
 # Video Production OS v0.1
 
+> 适用范围：V0–V7 旧 Package / Pattern 契约及历史回放，保留原 API 行为。当前多题 FREE_SHOWCASE 从[当前生产工作流](workflows/CURRENT_PRODUCTION_WORKFLOW.md)进入，不受本页 30/60/90 秒短格式规则限制；旧 AE 契约也不等于当前原生执行器。
+
 本模块消费 ANSWER Frozen Asset Bundle，不读取 Registry、课程 Markdown 或原始试卷来补教学判断。Python 3.10+，使用仓库现有 jsonschema 依赖；源码目录运行或 editable 安装。
 
 ## 流水线与运行

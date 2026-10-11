@@ -1,5 +1,7 @@
 # 两种产品，两套质量审核
 
+制作接手统一从[当前生产工作流](workflows/CURRENT_PRODUCTION_WORKFLOW.md)开始。本页定义产品政策；`editorial_handoffs` 有实现，不代表当前 R06 所有环节已经自动消费同一个上下文。免费与付费审核继续分开。
+
 本页执行 Experience First / Rigour First；当前真实试制采用 `FREE_SHOWCASE`。产品标记位于编辑交接层，不写入 ANSWER Registry 或稳定的 `voice-delivery/v1`。冻结教学事实、原题与声音消费接口保持原状。
 
 ## 共用硬门槛

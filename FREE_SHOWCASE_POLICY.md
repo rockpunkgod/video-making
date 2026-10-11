@@ -1,5 +1,7 @@
 # Free Showcase Publication Policy 1.0.0
 
+Current production starts at the [FREE_SHOWCASE workflow](docs/workflows/CURRENT_PRODUCTION_WORKFLOW.md). This policy governs scoped publication review; it does not certify native production, viewer experience, or a PAID_MASTERY course. Historical research-release checks remain separate.
+
 Policy: `free_showcase_v1`. Brand: **英语有画说**. Series: **学霸这题怎么做？**. Promise: **把英语做题的关键一步，拍给你看。**
 
 Free Showcase presents supported actions on actual questions. Paid Mastery plans broader conditions, counterexamples, combinations and independent practice. Method Validation studies generalizability. These routes cannot change ANSWER facts or borrow one another's approval.
