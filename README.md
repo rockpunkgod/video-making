@@ -63,6 +63,7 @@ ANSWER 提供教学事实与生命周期。Video OS 只消费冻结结构化输�
 | Native Fast-Pass r03 | 两条18s无声 **4K24** 原生AE对照：A固定镜头／B连续认知镜头；用户反馈画面杂乱、文字不齐，旧版保留，见[原生相机实验](REALITY_COGNITIVE_NATIVE_FAST_PASS_ACCEPTANCE.md) |
 | Native Fast-Pass clean-r2 | 按反馈整理前景、背景与文字基线；比较收成两行，保持同一原题世界与判断时序，见[画面与排版修订](REALITY_COGNITIVE_CLARITY_ACCEPTANCE.md) |
 | Native Fast-Pass entry-r1 | D原位辨认与连续移入获用户正向反馈；保留3D层次、物理提取和连续镜头作为后续制作基线，见[候选入场修订](REALITY_COGNITIVE_ENTRY_ACCEPTANCE.md) |
+| Native Fast-Pass integrated-r1 | 将D连续入场、整齐排版与克制的3D侧向镜头融合；一条18s无声 **4K24** B版已交付，实际观看待确认，见[空间融合证明](REALITY_COGNITIVE_INTEGRATED_SPACE_ACCEPTANCE.md) |
 | 整期声音与成片 | 19 条逐字配音及音乐素材已准备；B06 局部复用完整 take，整期最终声画交付仍待完成，试听暂缓 |
 | 人工体验与公开资格 | 新双题版完整观看审核待进行；`public_render_ready=false` |
 

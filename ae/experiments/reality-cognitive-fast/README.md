@@ -36,10 +36,11 @@ source text and label. Hand off source/projection opacity while both occupy the
 same measured origin and have 100% source scale; start spatial motion afterward.
 Grow to the comparison type size during travel. A clone that fades up after
 silently growing, then rushes in from the edge, breaks perceived continuity.
-Keep the already accepted camera, other objects, settled comparison and reviewed
-judgment unchanged. Read back the previous/new native audits to limit changes to
-the candidate's source visibility and projection position/scale/opacity; inspect
-native and encoded frames around recognition, handoff, travel and arrival.
+For an entry-only revision, keep the already accepted camera, other objects,
+settled comparison and reviewed judgment unchanged. Read back the previous/new
+native audits to limit changes to the candidate's source visibility and
+projection position/scale/opacity; inspect native and encoded frames around
+recognition, handoff, travel and arrival.
 
 ### Preserve spatial and camera identity
 
@@ -66,6 +67,19 @@ attention cues, smooth restrained focus magnification, transparent extraction,
 natural task language and 4K delivery. A local typography or entry revision does
 not reset those requirements. Later explicit corrections take precedence over
 obsolete historical defaults; preserve old proofs for replay.
+
+An integration revision may refine camera Position in a new private spec while
+retaining the approved source/projection tracks, D entry, measured baseline rows,
+attention targets, focus target, reading holds, palette and candidate sequence.
+Use restrained off-axis perspective to express source/foreground separation.
+Check the actual native diff, expression-derived focus distance and encoded
+frames: identical world coordinates do not imply identical screen readability.
+Keep the earlier film as the reference and obtain a new viewing judgment.
+
+The native A/B compositions still provide the camera-only audit. If the task
+requests one integrated film, render/package `--variants B` and record B-only
+delivery; the unrendered A composition is not a delivered control video. Never
+relabel a parent's A media with the new spec or feedback.
 
 `motion.jsx` adapts physical motion from Native Creative Proof r7 and camera
 velocity from Method Relay Fulltext Native. Those experiments provide motion
