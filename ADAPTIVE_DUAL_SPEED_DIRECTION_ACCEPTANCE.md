@@ -1,4 +1,4 @@
-# Adaptive Dual-Speed Direction v1.0 — internal engineering delivery
+# Adaptive Dual-Speed Direction v1.0 — delivered, creative revision required
 
 The complete internal MP4, editable AE/Premiere projects and replay inputs are
 delivered and verified. This is not a human viewing, listening or publication
@@ -131,8 +131,8 @@ not used as evidence of a completed film.
 | 4K actual MP4 | PASS — final 5,648-frame Rec.709 delivery, complete decode |
 | Final editable AE/PR and replay handoff | PASS — both saved projects, inputs and final manifest retained |
 | Final native Premiere timing/audio/media readback | PASS — 17 whole clips, 15 bound voices, native stereo mix preserved |
-| Human viewing comparison with the former fixed structure | PENDING; not a controlled same-question experiment |
-| Human taste / reading / listening | PENDING; listening deferred |
+| Human viewing of the full delivered cut | RECEIVED — user found it equivalent to teacher projection and circling relevant sentences; revision required |
+| Creative experience / reading / listening | Creative revision required; reading not separately assessed; listening deferred |
 | Source display, editorial and recording-rights release | PENDING |
 | Public render ready | **false** |
 
@@ -171,3 +171,45 @@ requested listening review. Public teaching certification, actual source-display
 permission, recording rights and editorial release remain HOLD/PENDING. Human
 experience is not inferred from the engineering results. No next episode or
 paid course development is implied by this internal delivery.
+
+
+## Actual viewing feedback and reopened selection — 2026-10-11
+
+After watching the whole delivered movie, the user reported that it felt like
+being led through the questions, extracting related sentences and being told
+their relationship, with no meaningful distinction from a teacher projecting
+and circling the paper. The feedback is bound privately to the exact final-media
+and copy hashes. The internal engineering delivery remains verified, but its
+creative experience did not achieve the requested first-person cognitive
+breakthrough. This feedback does not certify or invalidate teaching accuracy,
+listening quality, reading comfort or general method effectiveness.
+
+The episode selection is reopened. Astra has been asked to actually rewrite
+selection, per-question direction and copy using the newly connected Cognitive
+Design knowledge base and Audience Engagement v0.2. Root independently checks
+frozen claims and scope. Knowledge is presentation evidence, not a second
+teaching authority or proof the revision will succeed. Earlier static-frame
+review is superseded by the actual user's viewing for the creative decision.
+
+Two replacement real questions about the same R06 method were mechanically
+exported through the existing read-only ANSWER interfaces. One supports a
+single reviewed candidate elimination without final closure; the other already
+has reviewed four-candidate decisions and a closed answer. Both supplied status
+projections are ACTIVE and the respective internal candidate gates pass. Their
+12 recorded source/review/registration files remained byte-identical. No solver,
+new Review, Registry edit or teaching rewrite was used. Frozen exports stay in
+ignored local data; no replacement movie has yet been produced or approved.
+
+The proposed improvement must act on the real task and visibly change what
+remains to compare or judge. It cannot merely repeat the former explanation
+with stronger highlighting. Astra's written revision and the root second review
+identify the specific knowledge rules, their evidence limits, the actual
+existing actions and the information still required. Human review of a future
+revision remains separate; this is not a new universal creative-release gate.
+
+The separate private rewrite is now delivered as a selection review, event-based
+storyboard and full narration. Root verified eight rule semantic hashes and all
+five candidate actions with exact evidence spans, then removed two redundant
+procedural/result reminders from narration. This is a reviewed production draft;
+it is not a newly rendered movie or a human viewing PASS. See
+`COGNITIVE_DESIGN_CREATIVE_REVISION.md` for the sanitized increment.
