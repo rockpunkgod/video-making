@@ -5,6 +5,8 @@ the same lock directory; a native identity read detects manual project changes.
 An uncertain mutation deliberately leaves the lock for explicit reconciliation.
 """
 import json
+from copy import deepcopy
+import hashlib
 import os
 from pathlib import Path
 from uuid import uuid4
@@ -40,6 +42,47 @@ class HostOwnership:
         self.acquired = True
         return dict(self.record)
 
+    @classmethod
+    def reconcile_completed(cls, host, owner, revision, token, target, reader,
+                            completion_evidence, directory=None, *, expected_state='UNCERTAIN'):
+        """Explicitly resume the same token after independently verified completion.
+
+        This never replays a mutation, expires a lease or changes its owner.
+        The caller must first audit the completed native result. Evidence files
+        are byte-bound here and the live identity is read twice. An uncertain
+        partial result needs a different, explicit recovery decision. An explicit
+        OWNED checkpoint may also be continued after its prior controller has
+        stopped between completed calls; it is never selected automatically.
+        """
+        lease = cls(host, owner, revision, target, directory)
+        previous = read(lease.path)
+        if expected_state not in ('UNCERTAIN','OWNED'):
+            raise ValueError('Explicit completed or uncertain checkpoint required')
+        if (previous.get('state') != expected_state
+                or any(previous.get(k) != v for k, v in
+                       {'host': host, 'owner': owner, 'revision': revision, 'token': token}.items())):
+            raise RuntimeError('Reconciliation requires the same checkpoint owner, state and token')
+        if previous['target']['process_id'] != target['process_id']:
+            raise RuntimeError('A restarted host cannot reconcile the original mutation')
+        if not completion_evidence:
+            raise ValueError('Independent completed-result evidence required')
+        for path, expected in completion_evidence.items():
+            actual = hashlib.sha256(Path(path).read_bytes()).hexdigest()
+            if actual != expected:
+                raise ValueError('Completion evidence bytes changed')
+        observed = lease._inspect(reader, target)
+        lease._inspect(reader, target)
+        if read(lease.path) != previous:
+            raise RuntimeError('Ownership changed during reconciliation')
+        lease.record = {**deepcopy(previous), 'state': 'OWNED', 'target': dict(target),
+            'controller_pid': os.getpid(), 'reconciliation': {
+                'resolution': 'COMPLETED_VERIFIED', 'mutation_replayed': False,
+                'previous_record': deepcopy(previous), 'observed': observed,
+                'completion_evidence': dict(completion_evidence)}}
+        write(lease.path, lease.record)
+        lease.acquired = True
+        return lease
+
     def _owned(self):
         if not self.acquired or read(self.path) != self.record:
             raise RuntimeError('Adobe host ownership changed or was not acquired')
@@ -64,16 +107,26 @@ class HostOwnership:
 
         A deliberate project switch supplies its expected destination up front.
         Opening/building a project is itself a mutation and must use this path.
+        Adobe can allocate a new comp/sequence ID only during the call. In that
+        case target_after may derive the expected identity from the native
+        mutation result; the independent reader must still confirm it. A caller
+        must never use that reader itself to manufacture the expected identity.
         """
         self._owned()
-        expected = dict(self.record['target'] if target_after is None else target_after)
-        if (not {'process_id', 'project_path', 'target_id'} <= expected.keys()
-                or any(v is None for v in expected.values())
-                or type(expected['process_id']) is not int or expected['process_id'] <= 0):
-            raise ValueError('Explicit destination identity required')
+        def destination(value):
+            expected = dict(value)
+            if (not {'process_id', 'project_path', 'target_id'} <= expected.keys()
+                    or any(v is None for v in expected.values())
+                    or type(expected['process_id']) is not int or expected['process_id'] <= 0):
+                raise ValueError('Explicit destination identity required')
+            return expected
+        expected = None if callable(target_after) else destination(
+            self.record['target'] if target_after is None else target_after)
         try:
             self._inspect(reader, self.record['target'])
             result = mutation()
+            if callable(target_after):
+                expected = destination(target_after(result))
             self._inspect(reader, expected)
             self._owned()
         except BaseException as error:

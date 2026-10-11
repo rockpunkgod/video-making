@@ -38,7 +38,7 @@ flowchart TD
     H --> I[内部成片与独立审核]
 ```
 
-当前 R06 已到完整带字幕纯画面，后续声画合成与审核分别记录。Pedagogy / Student POV 0.4 → Choreography → Cognitive Direction 0.2 是已有的显式计划链，尚未成为本期原生参数的自动生成路径；默认 0.3 兼容链继续保留。两条路径的真实输入、人工交接和建议收敛方式见[工作流](docs/workflows/CURRENT_PRODUCTION_WORKFLOW.md)。
+当前 R06 整期已到完整带字幕纯画面；B06 局部另已完成六份原生 AE → Premiere 4K24 A/B，停在 G3 人工观看。整期声画合成与审核分别记录。Pedagogy / Student POV 0.4 → Choreography → Cognitive Direction 0.2 是已有的显式计划链，尚未成为本期原生参数的自动生成路径；默认 0.3 兼容链继续保留。两条路径的真实输入、人工交接和建议收敛方式见[工作流](docs/workflows/CURRENT_PRODUCTION_WORKFLOW.md)。
 
 ANSWER 提供教学事实与生命周期。Video OS 只消费冻结结构化输出和显式状态清单，不从 Registry、教学 Markdown 或原始题库补推断；教学疑点交回上游。认知设计研究辅助呈现决策，不成为第二个教学事实源。
 
@@ -55,12 +55,13 @@ ANSWER 提供教学事实与生命周期。Video OS 只消费冻结结构化输�
 | 声音消费 | 稳定使用 `voice-delivery/v1`；当前 Producer 为 GPT-SoVITS，口播计划与 Premiere 节奏控制独立 |
 | 知识辅助改稿 | Astra 完成选题、分镜与文案改稿；根代理复核冻结动作、证据与结论范围，见[改稿记录](COGNITIVE_DESIGN_CREATIVE_REVISION.md) |
 | 最新双题试制 | R06 主题，两道不同真实题；原生 AE **9,051 帧、3840×2160、24 fps**，完整带字幕纯画面已封装并全片解码核验，时长 **6 分 17.125 秒** |
-| 最新声音与成片 | 19 条逐字配音及音乐素材已准备；新版原生 Premiere 合成与最终有声交付待完成，试听暂缓 |
+| B06 判断镜头 A/B | 六份 **3840×2160、24 fps** 局部成片已交付：纯判断段、带上下文视觉版、完整声画版各一组旧／新；工程、帧／样本映射及完整声音已核验，停 G3，见[验收记录](R06_B06_JUDGEMENT_ACCEPTANCE.md) |
+| 整期声音与成片 | 19 条逐字配音及音乐素材已准备；B06 局部复用完整 take，整期最终声画交付仍待完成，试听暂缓 |
 | 人工体验与公开资格 | 新双题版完整观看审核待进行；`public_render_ready=false` |
 
 本轮双题片的第一题展示已有的局部候选排除，第二题逐项消费已有动作后才呈现上游闭合答案。候选保留不直接变成定案，辅助动作不借用主方法归因。此轮未修改 ANSWER、Registry 或冻结教学事实。
 
-B06 已提交版本的状态为 G0 PASS / G1 缺精细标注 / G2 未执行；本机随后获得了独立 AI 标注审阅，限定消费适配与原生制作由单独任务推进。新凭证不覆盖旧请求，也不等于 G2 或人工认可已通过；接手时按[版本化停止点](docs/workflows/CURRENT_PRODUCTION_WORKFLOW.md)读取该 revision 的最新真实收据，不重复 G0。
+B06 r2 的 G0 PASS / G1 缺精细标注 / G2 未执行保留为历史快照。r3 使用另存的四项 `ai_reviewed` 标注，经限定消费、实际宿主占用和原生制作，已完成六份内部 A/B。判断原因、对象差异和前后接力是否直观，仍等 G3 实际观看；新片不继承旧片认可。接手时按[版本化停止点](docs/workflows/CURRENT_PRODUCTION_WORKFLOW.md)读取该 revision 的真实收据，不重复 G0 或已完成的渲染。
 
 最新画面封装是知识辅助改稿之后的制作进展；历史验收文件保留各自日期、输入与阶段，不将旧版本认可移给新版。当前进展不等于新影片的人工观看或听感通过。
 

@@ -1,6 +1,6 @@
 # 模块职责与实际消费者
 
-当前入口：[CURRENT_PRODUCTION_WORKFLOW](CURRENT_PRODUCTION_WORKFLOW.md)。本矩阵基于 `d9fa2da` 及本机可读取的独立私有产物；**标注 LOCAL_UNMERGED 的生产增量不属于已提交能力**。E01–E20 证据编号对应审计报告；逐项六维状态、证据路径与可用性见[能力索引](PRODUCTION_CAPABILITY_INDEX.json)。下面每条卡片的“有权/禁止”界定职责，不授予额外操作权限。
+当前入口：[CURRENT_PRODUCTION_WORKFLOW](CURRENT_PRODUCTION_WORKFLOW.md)。原始审计基于 `d9fa2da`；本矩阵增补其后 B06 r3 的限定制作能力，研究/Cinema 的 LOCAL_UNMERGED 增量仍不属于已提交能力。E01–E20 对应原始审计报告，后续 E21 对应独立 B06 制作凭证；逐项六维状态、证据路径与可用性见[能力索引](PRODUCTION_CAPABILITY_INDEX.json)。下面每条卡片的“有权/禁止”界定职责，不授予额外操作权限。
 
 ## 教学事实与节目
 
@@ -75,13 +75,14 @@
 |---|---|---|---|
 | R06 private authors | 两题+冻结改稿+完整VO → Episode/native request/spec/caption；r1→r2→r3作者 → adaptive | 手写合法呈现与实际时间；不增事实/假人工许可 | E06；`CURRENT_PRODUCTION`，LOCAL_PRIVATE。实际链可追踪，作者不在公开 repo；未来提取有限入口，不能宣称通用 CLI 已有 |
 | Adaptive Episode | request/current+原 JSX → 原生工程/audit/framepack/picture；私有作者 → AE/PR | 执行已绑定原文字形/轨迹、核验 source/候选/完整依赖；禁止 solver/通用语义审阅 | E07、E08；`CURRENT_PRODUCTION`，HostOwnership 未接入，不能无保护恢复生产 |
-| Host Ownership | 明确 project/target、owner、宿主快照 → 占用/操作与前后读回收据；未来限定 executor 调用 | 防止并发/错误目标；timeout 保留 UNCERTAIN；禁止盲目重试、自动清锁或抢占 | E15；`BLOCKED_DEPENDENCY` 指接线缺口，模块本身已实现/合成测试。旧 executor 没调用，未证明 native integration |
+| Host Ownership | 明确 project/target、owner、宿主快照 → 占用/操作与前后读回收据；B06 produce/render/premiere 实际调用 | 合作式独占与错误目标检查；timeout 保留 UNCERTAIN；禁止盲目重试、自动清锁或抢占 | E15、E21；`CURRENT_PRODUCTION` 仅限定 B06，已有原生读回和同 token 完成对账记录。旧 executor 未全局接入 |
 | B06 judgement preflight | r3既有画面与r2专用请求 → preparation/candidateprefix/annotations/handoff | 请求精细审阅、检查完整前缀；禁止词法PASS冒充语义通过 | E13；`CURRENT_PRODUCTION` 仅准备范围。run.py prepare-only；不重复G0 |
-| B06 independent review + consumer | request/Action/Relation/source/当前Status/逐项review/plan → 独立review与限定READY收据 | 明确被授权的 AI 宿主可冻结本次新review；消费者只比对绑定/范围，部分不支持HOLD | E14；`EXPERIMENTAL`、LOCAL_UNMERGED。实际审阅完成，human false；未进G2，不随审计合并代码 |
+| B06 independent review + consumer | request/Action/Relation/source/当前Status/逐项review/plan → 独立review与限定READY收据 | 明确被授权的 AI 宿主可冻结本次新review；消费者只比对绑定/范围，部分不支持HOLD | E14、E21；`CURRENT_PRODUCTION` 仅四项 AI 标注与限定消费，human false；源码可复用，实际审阅材料私有，原 Bundle 不变 |
+| B06 bounded native executor | 已有交接/精确标注/父Spec/完整声音 → 六个合成、局部A/B、原生与媒体映射 | 复用原字形与动作，单 revision 的 AE/PR 编辑及局部封装；不能自动扩大到整期或通用渲染框架 | E21；`CURRENT_PRODUCTION`，六份4K24已交付，最终工程和媒体绑定已核验，双宿主占用已释放；G3四项观看判断及听感均 PENDING |
 | Voice Delivery | 已冻结逐字稿/完整声音/测得时长 → `voice-delivery/v1` | 验文件/文本/SHA；补帧静音；不得截断/拉伸或继承旧take认可 | E09；`CURRENT_PRODUCTION`，R06十九条真实素材；完整听感PENDING |
 | Narration Performance | Copy+plan+现有producer → 表演意图、真实执行与A/B | 不改事实/引擎/训练；意图不等于实际声学兑现 | E17；`EXPERIMENTAL`，R02 STOPPED_NO_DEMONSTRATED_IMPROVEMENT，不推荐默认套入R06 |
-| Premiere Production | 当前picture+完整VO/music/captions → native sequence/encoded media/核验 | 排布/避让/完整take与实际时间核验；禁止用accepted API响应冒充渲染验证 | E10；R06新版 `BLOCKED_DEPENDENCY`。历史原生实现可参考；桥不能新增音轨的限制、导出色彩问题须按具体项目验证 |
-| Lossless editorial handoff | 已验证Rec.709 picture+真实PR audio export → packet-identical mux | 保留父媒体封装/时间/流；不能宣称修好PR色彩或任意输入安全 | E10、E19；`PROVEN_REUSABLE`仅已有逐包检验的交接技术；人审/新片适用性另审 |
+| Premiere Production | 当前picture+完整VO/music/captions → native sequence/encoded media/核验 | 排布/避让/完整take与实际时间核验；禁止用accepted API响应冒充渲染验证 | E10、E21；B06 已有独立真实序列/完整音轨/导出核验，完整 R06 声画仍未因此完成。色彩、实际编码位置与当前工程绑定分别验证 |
+| Lossless editorial handoff | 已验证Rec.709 picture+真实PR audio export → packet-identical mux | 保留父媒体封装/时间/流；不能宣称修好PR色彩或任意输入安全 | E10、E19、E21；`PROVEN_REUSABLE`仅已有逐包检验的交接技术，B06六份独立核验；人审/新片适用性另审 |
 
 ## 专项实验：只承认逐功能、逐范围
 

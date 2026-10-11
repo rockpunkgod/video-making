@@ -1,10 +1,10 @@
 {
   "index_version": "1.0",
   "kind": "documentation_capability_index",
-  "as_of": "2026-10-11T17:24:23+08:00",
-  "repository_base": "d9fa2da8bf893745f567e21cb631a4d43299c110",
+  "as_of": "2026-10-11T19:10:12+08:00",
+  "repository_base": "c97c16b06f2657c9a182a37025876058aecec083",
   "recommended_workflow": "docs/workflows/CURRENT_PRODUCTION_WORKFLOW.md",
-  "scope": "Snapshot of the committed baseline plus explicitly labelled pre-existing local overlays. The parallel B06 production task may advance independently.",
+  "scope": "Original audit preserved in WORKFLOW_AUDIT.md; incremental B06 r3 production evidence is separate. Research/Cinema local overlays remain explicitly labelled. This index is not a release credential.",
   "not_runtime_contract": true,
   "not_release_authority": true,
   "production_roles": [
@@ -156,8 +156,8 @@
         "local-data/free-showcase/b06-judgement-r3/HOST_PHRASE_REVIEW_STATUS.json",
         "local-data/free-showcase/b06-judgement-r3/G2_CONSUMPTION_RECEIPT.json"
       ],
-      "scope": "earlier authorized AI host review, separate unmerged production task; snapshot only",
-      "availability": "LOCAL_UNMERGED"
+      "scope": "Explicitly authorized separate AI host review and exact bounded consumer; original bundles and r2 request retained",
+      "availability": "MIXED_TRACKED_AND_LOCAL_PRIVATE"
     },
     "E15": {
       "paths": [
@@ -211,6 +211,26 @@
       ],
       "scope": "V9.1 visual specifications, bounded G01 pilot, not all-method implementation",
       "availability": "TRACKED"
+    },
+    "E21": {
+      "paths": [
+        "ae/experiments/r06-b06-judgement/README.md",
+        "ae/experiments/r06-b06-judgement/produce.py",
+        "ae/experiments/r06-b06-judgement/render.py",
+        "ae/experiments/r06-b06-judgement/premiere.py",
+        "ae/experiments/r06-b06-judgement/delivery.py",
+        "tests/test_b06_production_guards.py",
+        "R06_B06_JUDGEMENT_ACCEPTANCE.md",
+        "local-data/free-showcase/b06-judgement-r3/NATIVE_AUDIT_SUMMARY.json",
+        "local-data/free-showcase/b06-judgement-r3/DELIVERY_INDEX.json",
+        "local-data/free-showcase/b06-judgement-r3/G2_FINAL_TECHNICAL_RECEIPT.json",
+        "local-data/free-showcase/b06-judgement-r3/FINAL_NATIVE_IDENTITIES.json",
+        "local-data/free-showcase/b06-judgement-r3/PROTECTED_INPUTS_POST_G2.json",
+        "local-data/free-showcase/b06-judgement-r3/FRAME_TIMECODE_MAP.md",
+        "local-data/free-showcase/b06-judgement-r3/ACTUAL_EVENT_MAP.json"
+      ],
+      "scope": "B06 r3 four explicit AI phrase reviews, actual guarded AE/PR execution, six verified 4K24 deliveries and native frame/sample mappings; G3 viewing/listening pending, no whole-episode expansion",
+      "availability": "MIXED_TRACKED_AND_LOCAL_PRIVATE"
     }
   },
   "capabilities": [
@@ -847,9 +867,9 @@
     },
     {
       "capability_id": "host_ownership_guard",
-      "production_role": "BLOCKED_DEPENDENCY",
+      "production_role": "CURRENT_PRODUCTION",
       "entrypoint": "ae_production/host_ownership.py::HostOwnership",
-      "version": "committed cooperative guard",
+      "version": "cooperative guard with explicit same-token completion reconciliation",
       "input_contracts": [
         "owner/revision/process/project/target",
         "live identity reader"
@@ -859,24 +879,27 @@
         "before/after identity validation"
       ],
       "known_consumers": [
-        "B06 live executor integration under development"
+        "B06 OwnedAE build/render",
+        "B06 OwnedPR native editing/export"
       ],
       "evidence_refs": [
-        "E15"
+        "E15",
+        "E21"
       ],
       "known_limits": [
-        "Unit tested; old executors not globally wired",
-        "No TTL/retry/takeover",
-        "Actual native use must be evidenced per new revision"
+        "Cooperative clients only; manual users can still change the host",
+        "No TTL, automatic retry or takeover",
+        "Explicit recovery retains the old token and completion evidence; live identity must match",
+        "Bounded entrypoints validate the intended project before acquiring ownership; explicit first-build/Save As transitions remain separate"
       ],
       "human_approval_scope": "PENDING; engineering or plan checks are not human approval",
       "availability": "TRACKED",
-      "scope": "Audited R06 workflow; see limits",
+      "scope": "Actual B06 r3 host integration only; older executors are not globally retrofitted",
       "dimensions": {
         "DESIGNED": "CONFIRMED",
         "IMPLEMENTED": "CONFIRMED",
-        "INTEGRATED": "NOT_VERIFIED_FOR_CURRENT_R06",
-        "NATIVE_VERIFIED": "NOT_VERIFIED_AT_AUDIT_BASELINE",
+        "INTEGRATED": "CONFIRMED_FOR_B06_R3",
+        "NATIVE_VERIFIED": "CONFIRMED_FOR_B06_GUARDED_WRITES",
         "HUMAN_APPROVED": "PENDING",
         "RELEASE_APPROVED": "NOT_ESTABLISHED"
       },
@@ -921,9 +944,9 @@
     },
     {
       "capability_id": "b06_fine_annotation_overlay",
-      "production_role": "EXPERIMENTAL",
+      "production_role": "CURRENT_PRODUCTION",
       "entrypoint": "ae_production/phrase_consumer.py::consume_phrase_review",
-      "version": "reviewed-phrase-operations/1.0 local overlay",
+      "version": "reviewed-phrase-operations/1.0",
       "input_contracts": [
         "original request/action/relation/source",
         "separate AI review/current state",
@@ -933,23 +956,24 @@
         "limited G2 consumption receipt"
       ],
       "known_consumers": [
-        "parallel B06 production draft"
+        "B06 r3 bounded native production"
       ],
       "evidence_refs": [
-        "E14"
+        "E14",
+        "E21"
       ],
       "known_limits": [
-        "Unmerged at audit snapshot",
-        "Earlier explicitly authorized AI host review, not ANSWER exporter native Review type",
-        "Four operations only; no independent human certification"
+        "Explicit user-authorized AI host review; no independent human certification",
+        "Original FrozenBundle, answer and r2 request remain unchanged",
+        "Strict whole-manifest snapshot binding may require rechecking a benign re-export; this is not proof of semantic change"
       ],
       "human_approval_scope": "PENDING; engineering or plan checks are not human approval",
-      "availability": "LOCAL_UNMERGED",
-      "scope": "Audit observes prior production artifact; does not create or approve a teaching review",
+      "availability": "MIXED_TRACKED_AND_LOCAL_PRIVATE",
+      "scope": "Exact four-operation AI host review; not a new ANSWER exporter Review type",
       "dimensions": {
         "DESIGNED": "CONFIRMED",
         "IMPLEMENTED": "CONFIRMED",
-        "INTEGRATED": "CONFIRMED_LOCAL_READ_ONLY_REPLAY",
+        "INTEGRATED": "CONFIRMED_FOR_B06_R3_CONSUMPTION",
         "NATIVE_VERIFIED": "NOT_APPLICABLE",
         "HUMAN_APPROVED": "PENDING",
         "RELEASE_APPROVED": "NOT_ESTABLISHED"
@@ -958,16 +982,17 @@
     },
     {
       "capability_id": "b06_native_delivery",
-      "production_role": "BLOCKED_DEPENDENCY",
+      "production_role": "CURRENT_PRODUCTION",
       "entrypoint": "ae/experiments/r06-b06-judgement/produce.py",
-      "version": "local development draft",
+      "version": "bounded-r3",
       "input_contracts": [
         "validated annotation response",
         "old source objects/media/voices",
         "HostOwnership"
       ],
       "output_contracts": [
-        "planned six 4K24 A/B outputs and projects"
+        "six bounded 4K24 A/B compositions and actual per-variant delivery receipts",
+        "native timeline and output frame/sample correspondence"
       ],
       "known_consumers": [
         "G3 human viewing"
@@ -975,25 +1000,26 @@
       "evidence_refs": [
         "E13",
         "E14",
-        "E15"
+        "E15",
+        "E21"
       ],
       "known_limits": [
-        "Not native-verified at audit snapshot",
-        "Parallel task may advance; inspect its own receipts",
-        "No full R06 expansion before G3"
+        "Six delivered variants have exact media/project bindings in DELIVERY_INDEX and G2_FINAL_TECHNICAL_RECEIPT; private source inputs remain required for replay",
+        "G3 human candidate-state, comparison, judgement and continuity checks remain pending",
+        "No full R06 expansion, generic partial renderer or public release"
       ],
       "human_approval_scope": "PENDING; engineering or plan checks are not human approval",
-      "availability": "LOCAL_UNMERGED",
-      "scope": "Separate Astra production assignment; not executed by this audit",
+      "availability": "MIXED_TRACKED_AND_LOCAL_PRIVATE",
+      "scope": "Separate Astra B06 production with root second review; not the original documentation audit",
       "dimensions": {
         "DESIGNED": "CONFIRMED",
         "IMPLEMENTED": "CONFIRMED",
-        "INTEGRATED": "NOT_VERIFIED_FOR_CURRENT_R06",
-        "NATIVE_VERIFIED": "NOT_VERIFIED_AT_AUDIT_BASELINE",
+        "INTEGRATED": "CONFIRMED_FOR_B06_R3",
+        "NATIVE_VERIFIED": "SIX_BOUNDED_4K24_MEDIA_AND_NATIVE_PROJECTS_CONFIRMED",
         "HUMAN_APPROVED": "PENDING",
         "RELEASE_APPROVED": "NOT_ESTABLISHED"
       },
-      "recommended_action": "保留边界与当前契约；按明确缺口推进"
+      "recommended_action": "G2 complete; stop at G3 for four separate viewing judgements and listening review"
     },
     {
       "capability_id": "voice_delivery",
@@ -1088,21 +1114,22 @@
       ],
       "evidence_refs": [
         "E09",
-        "E10"
+        "E10",
+        "E21"
       ],
       "known_limits": [
-        "Current R06 complete native AV receipts absent at baseline",
+        "Bounded B06 native AV does not complete the whole R06 episode",
         "Student voice legacy request shape cannot be assumed to fit R06",
         "Bridge track and color limitations depend on actual native session"
       ],
       "human_approval_scope": "PENDING; engineering or plan checks are not human approval",
       "availability": "TRACKED",
-      "scope": "Audited R06 workflow; see limits",
+      "scope": "Whole R06 AV remains incomplete; bounded B06 excerpts have separate native timelines and exports",
       "dimensions": {
         "DESIGNED": "CONFIRMED",
         "IMPLEMENTED": "CONFIRMED",
-        "INTEGRATED": "NOT_VERIFIED_FOR_CURRENT_R06",
-        "NATIVE_VERIFIED": "NOT_VERIFIED_FOR_R06_AT_AUDIT_BASELINE",
+        "INTEGRATED": "CONFIRMED_B06_EXCERPTS_NOT_WHOLE_EPISODE",
+        "NATIVE_VERIFIED": "CONFIRMED_B06_EXCERPTS_NOT_WHOLE_EPISODE",
         "HUMAN_APPROVED": "PENDING",
         "RELEASE_APPROVED": "NOT_ESTABLISHED"
       },
@@ -1291,8 +1318,8 @@
     {
       "capability_id": "lossless_av_color_handoff",
       "production_role": "PROVEN_REUSABLE",
-      "entrypoint": "ADAPTIVE_DUAL_SPEED_DIRECTION_ACCEPTANCE.md",
-      "version": "historical R09 packet-verified handoff",
+      "entrypoint": "premiere_production/lossless_handoff.py::assemble",
+      "version": "packet-verified handoff reused in bounded B06",
       "input_contracts": [
         "verified Rec.709 AE picture",
         "native PR audio export"
@@ -1301,10 +1328,12 @@
         "lossless mux with packet/time identity"
       ],
       "known_consumers": [
-        "historical R09 delivery"
+        "historical R09 delivery",
+        "B06 r3 bounded delivery"
       ],
       "evidence_refs": [
-        "E19"
+        "E19",
+        "E21"
       ],
       "known_limits": [
         "Engineering reuse only",
@@ -1313,12 +1342,12 @@
       ],
       "human_approval_scope": "PENDING; proven scope is packet-preserving technical transfer only",
       "availability": "TRACKED",
-      "scope": "Audited R06 workflow; see limits",
+      "scope": "Packet/time-preserving transfer of verified AE picture and actual native PR audio; no semantic or aesthetic certification",
       "dimensions": {
         "DESIGNED": "CONFIRMED",
         "IMPLEMENTED": "CONFIRMED",
-        "INTEGRATED": "NOT_VERIFIED_FOR_CURRENT_R06",
-        "NATIVE_VERIFIED": "CONFIRMED_HISTORICAL_DELIVERY",
+        "INTEGRATED": "CONFIRMED_FOR_B06_R3",
+        "NATIVE_VERIFIED": "CONFIRMED_HISTORICAL_AND_B06_DELIVERY",
         "HUMAN_APPROVED": "PENDING",
         "RELEASE_APPROVED": "NOT_ESTABLISHED"
       },

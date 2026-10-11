@@ -1,5 +1,6 @@
 """Synthetic host identity reads; never launches or controls Adobe."""
 from copy import deepcopy
+import hashlib
 from pathlib import Path
 from tempfile import TemporaryDirectory
 import unittest
@@ -64,6 +65,19 @@ class HostOwnershipTests(unittest.TestCase):
             self.lease.mutate(lambda: self.state, lambda: self.state.update(target_id='unexpected'))
         self.assertTrue(self.lease.path.exists())
 
+    def test_native_generated_target_id_needs_independent_readback(self):
+        self.lease.acquire()
+        def create():
+            self.state['target_id'] = 'comp:allocated-by-adobe'
+            return {'comp_id': 'allocated-by-adobe'}
+        self.lease.mutate(lambda: self.state, create,
+            target_after=lambda result: {**self.state, 'target_id': 'comp:' + result['comp_id']})
+        self.assertEqual(self.lease.record['target']['target_id'], 'comp:allocated-by-adobe')
+        with self.assertRaisesRegex(RuntimeError, 'identity changed'):
+            self.lease.mutate(lambda: self.state, lambda: {'comp_id': 'wrong-native-return'},
+                target_after=lambda result: {**self.state, 'target_id': 'comp:' + result['comp_id']})
+        self.assertEqual(read(self.lease.path)['state'], 'UNCERTAIN')
+
     def test_restarted_host_is_not_same_owner_target(self):
         self.lease.acquire()
         self.state['process_id'] = 456
@@ -80,3 +94,54 @@ class HostOwnershipTests(unittest.TestCase):
     def test_explicit_native_identity_required(self):
         with self.assertRaises(ValueError):
             HostOwnership('after_effects', 'owner', 'revision', {'project_path': 'a'}, self.directory)
+
+    def uncertain_with_evidence(self):
+        self.lease.acquire()
+        self.lease._uncertain(TimeoutError('completed after client timed out'))
+        evidence = self.directory / 'completed-audit.json'
+        evidence.write_text('{"status":"PASS"}', encoding='utf-8')
+        return {str(evidence): hashlib.sha256(evidence.read_bytes()).hexdigest()}
+
+    def reconcile(self, evidence, token=None, reader=None):
+        return HostOwnership.reconcile_completed('after_effects', 'synthetic-worker',
+            'synthetic-r1', token or self.lease.record['token'], self.state,
+            reader or (lambda: self.state), evidence, self.directory)
+
+    def test_completed_reconciliation_preserves_owner_token_and_original_error(self):
+        evidence = self.uncertain_with_evidence()
+        previous = deepcopy(read(self.lease.path))
+        resumed = self.reconcile(evidence)
+        self.assertEqual(resumed.record['token'], previous['token'])
+        self.assertEqual(resumed.record['reconciliation']['previous_record'], previous)
+        self.assertFalse(resumed.record['reconciliation']['mutation_replayed'])
+        resumed.release(lambda: self.state)
+
+    def test_reconciliation_rejects_foreign_token_or_changed_evidence(self):
+        evidence = self.uncertain_with_evidence()
+        previous = read(self.lease.path)
+        with self.assertRaises(RuntimeError): self.reconcile(evidence, token='foreign')
+        Path(next(iter(evidence))).write_text('changed', encoding='utf-8')
+        with self.assertRaises(ValueError): self.reconcile(evidence)
+        self.assertEqual(read(self.lease.path), previous)
+
+    def test_reconciliation_checks_live_identity_and_concurrent_ownership(self):
+        evidence = self.uncertain_with_evidence()
+        previous = read(self.lease.path)
+        with self.assertRaises(RuntimeError):
+            self.reconcile(evidence, reader=lambda: {**self.state, 'target_id': 'wrong'})
+        foreign = {**previous, 'token': 'foreign'}
+        def changed_owner():
+            write(self.lease.path, foreign)
+            return self.state
+        with self.assertRaises(RuntimeError): self.reconcile(evidence, reader=changed_owner)
+        self.assertEqual(read(self.lease.path), foreign)
+
+    def test_owned_checkpoint_requires_explicit_state_and_preserves_token(self):
+        evidence = self.uncertain_with_evidence()
+        previous = read(self.lease.path); previous['state']='OWNED'; write(self.lease.path,previous)
+        with self.assertRaises(RuntimeError): self.reconcile(evidence)
+        resumed=HostOwnership.reconcile_completed('after_effects','synthetic-worker','synthetic-r1',
+            previous['token'],self.state,lambda:self.state,evidence,self.directory,expected_state='OWNED')
+        self.assertEqual(resumed.record['token'],previous['token'])
+        self.assertEqual(resumed.record['reconciliation']['previous_record']['state'],'OWNED')
+        resumed.release(lambda:self.state)

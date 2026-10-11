@@ -2,7 +2,7 @@
 
 从本页进入当前制作；模块权限见[职责矩阵](MODULE_OWNERSHIP_MATRIX.md)，逐项能力与证据见[能力索引](PRODUCTION_CAPABILITY_INDEX.json)，本次核查记录见[审计报告](WORKFLOW_AUDIT.md)。本页是操作导航，不增加 Runtime、必填生产表或发布门禁。
 
-核查基线：`main@d9fa2da8bf893745f567e21cb631a4d43299c110`，2026-10-11，Asia/Shanghai。本机另有未提交研究与 B06 制作增量。以下状态是有范围的核查快照；继续任何生产前读取该 revision 的实际收据与当前提供的上游状态，不凭目录名字或本页日期推定有效。
+原始审计基线：`main@d9fa2da8bf893745f567e21cb631a4d43299c110`；文档整理已提交于 `c97c16b`。2026-10-11 的后续制作状态在本页增量更新，原始[审计报告](WORKFLOW_AUDIT.md)保留当时事实。本机研究/Cinema 增量继续独立保留。继续任何生产前读取该 revision 的实际收据与当前提供的上游状态，不凭目录名字或本页日期推定有效。
 
 ## 接手时先做哪一步
 
@@ -34,7 +34,7 @@ flowchart TD
   X -.显式计划链；尚非 R06 原生参数来源.-> D
 ```
 
-图中虚线是尚未完成的自动消费关系；PR 之后是待完成的 R06 工作。不能把所有方框都读作已交付。
+图中虚线是尚未完成的自动消费关系；完整 R06 的 PR 声画与最终审核仍待完成。B06 的限定片段另有原生序列和导出收据，见下节；不能由局部产出推定整期已交付。
 
 真实作者在忽略目录：`prepare_title_task_episode.py` 读取两套冻结资产及已写好的场景/声音，调用 `build_draft(..., 'P02', 60)` 与 `finalize_copy` 复用旧 Package，再独立编排长 Episode、候选事件、字形坐标、口播位置和字幕。旧短格式结果被保留，不作为整期时长限制。之后 `refine_title_read_cues.py` 与 `refine_title_candidate_holds.py` 形成 r2/r3。它们包含具体案例路径和 Adobe 修改，**是历史作者证据，不是通用重放命令**。故障恢复脚本中的旧 recovery ID 更不能用于新会话。
 
@@ -52,9 +52,9 @@ R06 的 AEP、Native Spec、实际帧和画面收据是执行证据；`DIRECTION
 | `design_engagement` / `validate_engagement` / `director_handoff` | Episode + 状态 + 作者 Audience Direction + 场景映射 → 观看建议、全 Beat 的计划交接 | 题身份、全 Beat、唯一存在的 Scene、来源交集与版本正确；映射不成立回 Episode/导演作者。建议没有自动变成原生运动 |
 | Pedagogy / Student POV 显式新链 | Frozen + 当前状态 → 0.4 Plan/Handoff → 0.4 Experience；Choreography/Direction 0.2 消费 | 0.4 必须显式选择、当前 Copy 审核与上游资格齐备。诊断 HOLD 不能转制作。现有 R06 作者链没有必须迁入此链的新门槛 |
 | 当前逐题 Creative 作者 | 冻结教学范围、已审口播、观看目标、可执行视觉范围 → Native Spec、源对象、事件、声音/字幕时序 | 先分镜确定比较对象和可观察变化，再写具体几何；无词组权限先请求标注，无视觉原因回导演，不改答案 |
-| `adaptive-episode` build/audit/preview/render/package | Native Request + 所有父输入 → AEP / 回读 / 帧收据 / 纯画面 | 输入有效、对象来源可核验、目标工程正确。新 B06 写入还须实际接入 `HostOwnership`；旧执行器并未全局接入，不能直接借其历史 PASS 绕过独占要求 |
+| `adaptive-episode` build/audit/preview/render/package；限定 B06 executor | Native Request + 所有父输入 → AEP / 回读 / 帧收据 / 纯画面 | 输入有效、对象来源可核验、目标工程正确。B06 的 `produce/render/premiere` 已逐写操作接入 `HostOwnership`，具有真实前后身份回读；旧执行器没有因此全局接入 |
 | `scripts.voice_delivery.validate` / 可替换 Producer | WAV、逐字文稿、SHA、时长、试听状态 → `voice-delivery/v1` | 新声音是新 take；保持完整 PCM，按实际时长重排。语气意图不等于引擎执行或试听认可 |
-| Premiere 原生编辑 + `premiere_production.cinema` / `student_voice` 审计 | 画面、完整 voices、音乐、字幕 → 原生序列、导出与声音存在核验 | 实际路径、完整轨道、帧/样本位置与编码一致。R02 的 `student_voice` 请求不能直接冒充 R06 请求；R06 的私有编辑/验证脚本尚需真实交付收据 |
+| Premiere 原生编辑 + `premiere_production.cinema` / `student_voice` 审计 | 画面、完整 voices、音乐、字幕 → 原生序列、导出与声音存在核验 | 实际路径、完整轨道、帧/样本位置与编码一致。R02 的 `student_voice` 请求不能直接冒充 R06 请求；B06 限定入口使用自己的序列、媒体与映射，整期仍需独立交付收据 |
 | Human Review / `content_os.showcase.decide` / `publication_episode` | 最终 Copy、展示片段、原生/媒体指纹、当前状态、独立人类凭证 → 每题及整期发布决定 | 当前 Claim、来源/录音权利、编辑、最终媒体分别成立；两题必须绑定同一最终全片。研究级 First-use 不是普通免费片前置；不自动发布 |
 | `content_os.engagement_learning` / `scripts.audience_learning` | 真正的计划、成片、外部反馈或真实平台记录 → 本地反馈台账及有范围建议 | 实际媒体锚点要原生时间线、媒体及外部人工锚点凭证；无平台数据就是 UNKNOWN。其 `publish` 只登记已发生的发布 |
 
@@ -64,18 +64,19 @@ R06 的 AEP、Native Spec、实际帧和画面收据是执行证据；`DIRECTION
 python -m answer_engine export-asset <existing-export-request.json>
 python -m answer_engine export-status <existing-export-request.json>
 python -m scripts.voice_delivery <delivery.json>
-# 下面是现有原生接口；须由实际制作执行者确认资格、目标与占用后调用。
+# 以下记录旧版原生接口的真实语法；render 不是当前 B06 的制作入口。
+# 旧执行器尚未接入逐次 HostOwnership，新增写操作需先完成该接线。
 python ae/experiments/adaptive-episode/run.py audit local-data/<revision>
 python ae/experiments/adaptive-episode/run.py render local-data/<revision> --pid <verified-AE-PID> --hwnd <verified-AE-window>
 python ae/experiments/adaptive-episode/run.py package local-data/<revision>
 python -m scripts.free_showcase <request.json> --statuses <status.json> --output <new-decision.json>
 ```
 
-本页不提供把所有步骤串成一条命令的入口：当前不存在这种已验证的 Runtime。`build/preview` 的真实接口见[执行器说明](../../ae/experiments/adaptive-episode/README.md)。当前状态检查只相对于调用者提供的清单；静态文件无法感知未送达的撤回。
+本页不提供把所有步骤串成一条命令的入口：当前不存在这种已验证的 Runtime。旧 `build/preview` 的真实接口见[执行器说明](../../ae/experiments/adaptive-episode/README.md)，当前 B06 使用[已接入宿主保护的限定入口](../../ae/experiments/r06-b06-judgement/README.md)。对已有成果先读收据，不重新执行 build/render。当前状态检查只相对于调用者提供的清单；静态文件无法感知未送达的撤回。
 
 ## B06：从有效交接继续
 
-**已提交路径的可复现基线：G0 PASS → G1 HOLD_MISSING_FINE_ANNOTATION → G2 NOT_STARTED。** 不重新运行 G0。读取现有请求，分别检查：
+**r2 历史基线：G0 PASS → G1 HOLD_MISSING_FINE_ANNOTATION → G2 NOT_STARTED。r3 使用独立 AI 标注凭证进入限定 G2。** 不重新运行 G0。原请求保持原样，分别检查：
 
 | operation_id | 需要上游明确的范围与用途 |
 |---|---|
@@ -86,9 +87,11 @@ python -m scripts.free_showcase <request.json> --statuses <status.json> --output
 
 请求由制作预检提出；实际语义判断由**有明确授权的上游宿主审阅**产生，另存版本和当前状态，不能修改原 Bundle/答案或自称独立人工认证。制作消费者负责机械核验请求、Action、Relation、Review、源范围、指纹及当前状态，不负责解释英语后自行批准。
 
-**本机并行增量，单列而非覆盖基线：** 本次审计开始前，用户已授权 Astra 做独立 AI 审阅，r3 已保存四项 `ai_reviewed` 凭证和限定消费收据。主代理只读重放得到 `READY_FOR_BOUNDED_G2`；相关 producer/consumer 当时尚未提交、原生执行尚未开始。这是局部新证据，不是原 r2 请求被改成 PASS，也不是整个 G2 完成。审计不撤销这些文件、不代签其代码二审。后续进展读取该生产 revision 的新收据；不能将本页快照作为 G2 执行许可。
+**r3 后续生产已完成限定 G2：** 用户授权的四项 `ai_reviewed` 凭证由 `content_os.phrase_review` 独立冻结，`ae_production.phrase_consumer` 核验后交给[限定制作入口](../../ae/experiments/r06-b06-judgement/README.md)。原生核验覆盖 704 个文字对象、25,186 个运动关键帧和六个合成；实际写入使用独立 AE/PR 占用。六份 4K24 媒体及可编辑工程已交付，`DELIVERY_INDEX.json` 覆盖 6/6，`G2_FINAL_TECHNICAL_RECEIPT.json` 绑定最终工程、媒体与保护检查。`FRAME_TIMECODE_MAP.md` / `ACTUAL_EVENT_MAP.json` 保存实际帧和声音样本映射。原 r2 请求未改写，AI 标注未升级为独立人工认证。
 
-限定 G2 消费适配核验成立后，唯一制作执行者才可继续独立 revision：纯 B06 的旧/新、带 B05/B07 上下文的旧/新视觉版、相同上下文的旧/新完整声画版，共六份 4K24。复用旧 take，更新声音放置、字幕及实际帧映射；保留旧工程及媒体。`HostOwnership.acquire → mutate(前后原生身份回读) → release` 必须真实执行，超时留下 UNCERTAIN，先查宿主再处理。
+R3 当前只绑定所供状态清单的完整 SHA；无害重导出也可能要求重新核对限定凭证，不据此声称教学语义改变。原生 PR 的颜色差异通过既有 AE 画面与真实 PR 音轨的无损交接处理，保留原导出凭证。实际帧/样本映射与 Audience Learning Loop 所需的外部人工锚点分别记录，后者仍待提供。
+
+本次独立 revision 包含纯 B06 的旧/新、带 B05/B07 上下文的旧/新视觉版、相同上下文的旧/新完整声画版，共六份 4K24。复用旧 take，更新声音放置、字幕及实际帧映射，保留旧工程及媒体。`HostOwnership.acquire → mutate(前后原生身份回读) → release` 已实际执行，最终两宿主均释放占用；常规入口在取得占用前另核对预定工程，首次打开/Save As 使用明确的新工程路径。超时留下 UNCERTAIN，先查宿主再处理。
 
 完整动作前缀导出 B/C/D，B06 仅排除 B 得 C/D，B07 保留 C 仍是 C/D。`candidate_motion` 证明状态与上游一致，不能证明观众理解。**G3** 用户分别观看视觉版和声画版，判断对象差异、排除原因、剩余候选和接缝；未通过只改 B06 及必要接缝。通过后才讨论 **G4** 整期应用。精细标注不支持的关键操作继续 HOLD，不能用 `approved=true` 解锁。
 
@@ -114,7 +117,7 @@ flowchart TD
   L -.有范围的下一期建议.-> E
 ```
 
-这是目标职责图，不是已接通的代码。最小下一步是让当前作者明确消费 Audience 建议及其处理结果、逐场景保留来源/对象/事件，并完成 B06 可观看比较。0.4/0.2 的原生适配只有具体镜头需要时才做；不先迁移全片，不新建第二套 Director。
+这是目标职责图，不是已接通的代码。当前先等 B06 的 G3 实际观看结果；随后让当前作者明确记录 Audience 建议及其处理结果，逐场景保留来源/对象/事件。0.4/0.2 的原生适配只有具体镜头需要时才做；不先迁移全片，不新建第二套 Director。
 
 时长由阅读、动作与完整口播决定，无上限。声音与画面可并行，但最终导出前必须回到同一个实测时钟；不能剪声音凑旧镜头。
 
