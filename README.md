@@ -60,6 +60,7 @@ ANSWER 提供教学事实与生命周期。Video OS 只消费冻结结构化输�
 | Reality Layer + Cognitive Space | 单条40s无声 **1080p24 EDITORIAL_PROXY**：同一个原题世界、来源文字投影、临时比较及返回原题；工程核验完成，用户已认可影像方向，作为后续镜头设计基线，见[本轮预演与反馈](REALITY_COGNITIVE_SPACE_PROOF_ACCEPTANCE.md) |
 | Native Fast-Pass r03 | 两条18s无声 **4K24** 原生AE对照：A固定镜头／B连续认知镜头；用户反馈画面杂乱、文字不齐，旧版保留，见[原生相机实验](REALITY_COGNITIVE_NATIVE_FAST_PASS_ACCEPTANCE.md) |
 | Native Fast-Pass clean-r2 | 按反馈整理前景、背景与文字基线；比较收成两行，保持同一原题世界与判断时序，见[画面与排版修订](REALITY_COGNITIVE_CLARITY_ACCEPTANCE.md) |
+| Native Fast-Pass entry-r1 | 按“D入场突兀，其余还好”的反馈，只调整D原位辨认与连续移入比较区，见[候选入场修订](REALITY_COGNITIVE_ENTRY_ACCEPTANCE.md) |
 | 整期声音与成片 | 19 条逐字配音及音乐素材已准备；B06 局部复用完整 take，整期最终声画交付仍待完成，试听暂缓 |
 | 人工体验与公开资格 | 新双题版完整观看审核待进行；`public_render_ready=false` |
 

@@ -31,6 +31,16 @@ points and effective font sizes. Equal A/B tracks alone do not establish correct
 typography. Older specs without these fields retain their original layout when
 run with their bound execution version.
 
+For a candidate entering comparison, first restore attention to its existing
+source text and label. Hand off source/projection opacity while both occupy the
+same measured origin and have 100% source scale; start spatial motion afterward.
+Grow to the comparison type size during travel. A clone that fades up after
+silently growing, then rushes in from the edge, breaks perceived continuity.
+Keep the already accepted camera, other objects, settled comparison and reviewed
+judgment unchanged. Read back the previous/new native audits to limit changes to
+the candidate's source visibility and projection position/scale/opacity; inspect
+native and encoded frames around recognition, handoff, travel and arrival.
+
 `motion.jsx` adapts physical motion from Native Creative Proof r7 and camera
 velocity from Method Relay Fulltext Native. Those experiments provide motion
 techniques; their synthetic language analysis provides no semantic authority.
