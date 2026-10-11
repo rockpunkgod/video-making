@@ -43,8 +43,10 @@ local-data/creative-proofs/reality-cognitive-r02/
 
 状态日志和关键帧抽查只证明相应工程检查，不证明每帧像素语义、完整英文理解、自然口播或认知爽感。`native_glyph_certified=false`，声音尚未加入。
 
-## 人工停止点
+## 用户反馈与认可范围
 
-交付本条后等待实际观看：**`human_experience_review=PENDING`**。本轮Agent没有签署“参与感更强”或“已经摆脱PPT感”。不进入正式4K、完整Episode、通用Renderer或发布阶段。
+2026-10-11，用户对本条交付回复：**“这个方向很对”**。记录为 **`direction_review=ACCEPTED`**，目标是上一条交付的 r02 混合空间预演；私有反馈凭证绑定实际媒体SHA和Plan SHA。
+
+后续镜头采用这一方向作为设计基线：原文持续存在；注意力在原题世界中移动；已发现的原词从原位置进入透明工作空间；空间比较推动已授权判断；判断后回到原题。此次认可覆盖影像方向，细节理解、最终节奏、目标学生体验及完整成片仍分别审核，`human_experience_review=PENDING` 保留为综合验收状态。创建时的计划与工程收据保留原样，反馈通过独立凭证追加。
 
 AI教学审阅保留上游级别，来源仅限内部试制。**`public_render_ready=false`**。公开仓库不包含试题、媒体、声音或原生工程。

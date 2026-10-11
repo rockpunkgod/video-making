@@ -57,7 +57,7 @@ ANSWER 提供教学事实与生命周期。Video OS 只消费冻结结构化输�
 | 最新双题试制 | R06 主题，两道不同真实题；原生 AE **9,051 帧、3840×2160、24 fps**，完整带字幕纯画面已封装并全片解码核验，时长 **6 分 17.125 秒** |
 | B06 判断镜头 A/B | 六份 **3840×2160、24 fps** 局部成片已交付：纯判断段、带上下文视觉版、完整声画版各一组旧／新；工程、帧／样本映射及完整声音已核验，停 G3，见[验收记录](R06_B06_JUDGEMENT_ACCEPTANCE.md) |
 | Experience-First 创意小样 | 三条34s／32s／36s无声 **1080p24 EDITORIAL_PROXY**完成工程核验；用户反馈“与老师PPT没区别”，形式差异待修订，整期与高保真制作保持停止，见[反馈与停止点](EXPERIENCE_FIRST_CREATIVE_PROOF_ACCEPTANCE.md) |
-| Reality Layer + Cognitive Space | 单条40s无声 **1080p24 EDITORIAL_PROXY**：同一个原题世界、来源文字投影、临时比较及返回原题；工程核验完成，观看体验待用户判断，见[本轮预演](REALITY_COGNITIVE_SPACE_PROOF_ACCEPTANCE.md) |
+| Reality Layer + Cognitive Space | 单条40s无声 **1080p24 EDITORIAL_PROXY**：同一个原题世界、来源文字投影、临时比较及返回原题；工程核验完成，用户已认可影像方向，作为后续镜头设计基线，见[本轮预演与反馈](REALITY_COGNITIVE_SPACE_PROOF_ACCEPTANCE.md) |
 | 整期声音与成片 | 19 条逐字配音及音乐素材已准备；B06 局部复用完整 take，整期最终声画交付仍待完成，试听暂缓 |
 | 人工体验与公开资格 | 新双题版完整观看审核待进行；`public_render_ready=false` |
 
