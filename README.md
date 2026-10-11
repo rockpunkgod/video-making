@@ -56,6 +56,7 @@ ANSWER 提供教学事实与生命周期。Video OS 只消费冻结结构化输�
 | 知识辅助改稿 | Astra 完成选题、分镜与文案改稿；根代理复核冻结动作、证据与结论范围，见[改稿记录](COGNITIVE_DESIGN_CREATIVE_REVISION.md) |
 | 最新双题试制 | R06 主题，两道不同真实题；原生 AE **9,051 帧、3840×2160、24 fps**，完整带字幕纯画面已封装并全片解码核验，时长 **6 分 17.125 秒** |
 | B06 判断镜头 A/B | 六份 **3840×2160、24 fps** 局部成片已交付：纯判断段、带上下文视觉版、完整声画版各一组旧／新；工程、帧／样本映射及完整声音已核验，停 G3，见[验收记录](R06_B06_JUDGEMENT_ACCEPTANCE.md) |
+| Experience-First 创意小样 | 从真实冻结资产选出三个不同方向，已导出34s／32s／36s无声 **1080p24 EDITORIAL_PROXY**；来源、状态和媒体核验通过，交付后停在人工观看，见[验收与停止点](EXPERIENCE_FIRST_CREATIVE_PROOF_ACCEPTANCE.md) |
 | 整期声音与成片 | 19 条逐字配音及音乐素材已准备；B06 局部复用完整 take，整期最终声画交付仍待完成，试听暂缓 |
 | 人工体验与公开资格 | 新双题版完整观看审核待进行；`public_render_ready=false` |
 
@@ -71,7 +72,7 @@ B06 r2 的 G0 PASS / G1 缺精细标注 / G2 未执行保留为历史快照。r3
 - **第一视角做题**：原题先出现，下一步强调的对象提前可见；画面呈现当前注意和记住的信息。
 - **有据的视觉事件**：抽离、重组、比较、候选收缩与证据锁定发生在实际动作节点。
 - **统一高亮**：题干关键词橙色，比对过程蓝色，命中橙色；用短暂高亮表达注意力。
-- **统一 4K 横版**：新制预览和交付使用 3840×2160、16:9，核验原生与实际编码规格。
+- **正式制作统一 4K 横版**：使用 3840×2160、16:9，核验原生与实际编码规格；显式授权的低成本创意小样可使用1080p，并标记 EDITORIAL_PROXY，人工观看后再决定高保真方向。
 - **声音服务思考**：进入、搜索、执行、判断、释放和收束；新 take 单独试听，不继承旧声音认可。
 
 入口：[第一视角电影化做题](docs/first-person-solving-cinema.md) · [Swiss Cognitive POV](docs/swiss-cognitive-pov.md) · [Motion Identity](creative/motion-identity/motion-identity.md) · [口播表演层](creative/voice-performance/README.md) · [4K 规格](docs/video-resolution.md)。
