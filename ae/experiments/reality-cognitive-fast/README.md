@@ -41,6 +41,32 @@ judgment unchanged. Read back the previous/new native audits to limit changes to
 the candidate's source visibility and projection position/scale/opacity; inspect
 native and encoded frames around recognition, handoff, travel and arrival.
 
+### Preserve spatial and camera identity
+
+The moving-camera B film is the production direction. Fixed-camera A remains
+an experimental control. Keep the source paper as the persistent world plane,
+with captured words travelling from measured origins into a nearer working
+plane. Keep camera Position, Point of Interest and focus following attention
+through search, capture, comparison and the return to the original question.
+Readability comes from aligned word baselines, selective visibility and a
+brief settled comparison within that same 3D world. Preserve perspective,
+depth separation, native motion blur and continuous source-to-projection motion
+while refining the layout. Use restrained depth of field with readable text.
+
+The entry-r1 revision preserves every frame of clean-r2 camera/focus tracks and
+the settled comparison. The user's positive D-entry feedback is accompanied by
+an explicit requirement to retain the earlier 3D and camera feeling. Keep both
+as the next revision's visual baseline; a camera change needs its own viewing
+review. Engineering track identity alone does not certify perceived depth.
+
+Carry forward all compatible earlier requirements from the
+[current production baseline](../../../docs/workflows/CURRENT_PRODUCTION_WORKFLOW.md#制作要求的延续),
+including Swiss tension, first-person attention, full-source search, orange/blue
+attention cues, smooth restrained focus magnification, transparent extraction,
+natural task language and 4K delivery. A local typography or entry revision does
+not reset those requirements. Later explicit corrections take precedence over
+obsolete historical defaults; preserve old proofs for replay.
+
 `motion.jsx` adapts physical motion from Native Creative Proof r7 and camera
 velocity from Method Relay Fulltext Native. Those experiments provide motion
 techniques; their synthetic language analysis provides no semantic authority.
