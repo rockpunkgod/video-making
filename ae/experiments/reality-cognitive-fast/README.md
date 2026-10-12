@@ -51,6 +51,23 @@ and encoded transition, not just the settled endpoints. A word-only revision
 preserves the camera, other candidate entries and frozen judgment; changed
 recognition, opacity, position and scale need explicit spec/native readback.
 
+For an existing frozen elimination, make the candidate identifiable before its
+decision. A projected label must come from the original question label, with
+its origin layer, source fingerprint and action/event references recorded; it
+must not first appear when the decision executes. Withdraw the label and whole
+option together, retaining relative spacing and a shared baseline. Update the
+candidate state after the visible withdrawal, hold the result briefly, then
+return to the persistent original question. Keep remaining candidates readable
+and the eliminated original option visibly inactive. This uses the frozen
+candidate output; it adds no answer, explanatory wording or judgment.
+
+An elimination revision must bind the new tracks and duration in its spec,
+read back the label and word projections, and check the actual encoded exit,
+result hold and question return. Preserve compatible keyword-following,
+source-entry, typography and camera requirements; update return timing rather
+than shortening the result hold to meet an old duration. State audit PASS still
+requires a separate viewing judgment about whether the result is clear.
+
 ### Preserve spatial and camera identity
 
 The moving-camera B film is the production direction. Fixed-camera A remains
@@ -145,6 +162,17 @@ the finished frames, acknowledged that warning and continued the same call.
 `package` verifies every native frame SHA, encodes those frames to 4K Rec.709 H.264
 and checks the actual dimensions, rate, frame count and full decode. FFmpeg only
 packages AE-rendered pixels; it does not render a substitute animation.
+
+For bounded disk use, a revision-specific recipe may retain native TIFF output
+as lossless RGB PNG before packaging. Record the actual native preset and depth,
+verify each decoded RGB pixel byte against the reopened PNG, and save original
+TIFF SHA, retained PNG SHA and conversion receipts before releasing only that
+revision's temporary TIFF batch. Check resolved paths and fingerprints before
+release; retain historical frames. Bind the recipe bytes and new frame format
+in the spec, transfers and media receipt. Keep the same HostOwnership and memory
+checks. RGB movie retention does not establish retained alpha channels. This is
+an explicit private recipe, not PNG output support in the public executor; old
+media must keep its original spec, frame format and receipts.
 
 ## Evidence and stop
 

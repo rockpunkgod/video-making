@@ -46,7 +46,7 @@ ANSWER 提供教学事实与生命周期。Video OS 只消费冻结结构化输�
 
 公开放行绑定当前依赖、最终文案、实际展示内容和最终媒体，要求教学、来源与编辑审核同时通过。工程检查、真人观看、试听、教学效果和传播结果分别记录。
 
-## 当前进展 · 2026-10-11
+## 当前进展 · 2026-10-12
 
 | 模块或产出 | 当前状态 |
 |---|---|
@@ -65,6 +65,7 @@ ANSWER 提供教学事实与生命周期。Video OS 只消费冻结结构化输�
 | Native Fast-Pass entry-r1 | D原位辨认与连续移入获用户正向反馈；保留3D层次、物理提取和连续镜头作为后续制作基线，见[候选入场修订](REALITY_COGNITIVE_ENTRY_ACCEPTANCE.md) |
 | Native Fast-Pass integrated-r1 | 将D连续入场、整齐排版与克制的3D侧向镜头融合；一条18s无声 **4K24** B版已交付，实际观看待确认，见[空间融合证明](REALITY_COGNITIVE_INTEGRATED_SPACE_ACCEPTANCE.md) |
 | Native Fast-Pass attention-r2 | 题干关键词先辨认再携带，沿左侧跟随搜索后进入下方比较行；保留相机、D入场与判断时序，18s无声 **4K24** B版待实际观看，见[注意力跟随修订](REALITY_COGNITIVE_ATTENTION_ACCEPTANCE.md) |
+| Native Fast-Pass eliminate-r2 | D原标识随整项下移退出，结果停留后返回原题；19.5s无声 **4K24** B版已完成原生与编码核验，实际观看待确认，见[整项排除修订](REALITY_COGNITIVE_ELIMINATION_ACCEPTANCE.md) |
 | 整期声音与成片 | 19 条逐字配音及音乐素材已准备；B06 局部复用完整 take，整期最终声画交付仍待完成，试听暂缓 |
 | 人工体验与公开资格 | 新双题版完整观看审核待进行；`public_render_ready=false` |
 
