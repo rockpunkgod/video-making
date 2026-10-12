@@ -42,6 +42,15 @@ native audits to limit changes to the candidate's source visibility and
 projection position/scale/opacity; inspect native and encoded frames around
 recognition, handoff, travel and arrival.
 
+A retained question keyword must follow the viewer's attention. Give the camera
+time to arrive and the source word time to be recognized before its in-place
+handoff. Carry it beside the search, avoid crossing focal evidence text, then
+bring it into its final comparison row after attention reaches that comparison.
+Do not shorten recognition to meet a preset duration. Inspect the actual native
+and encoded transition, not just the settled endpoints. A word-only revision
+preserves the camera, other candidate entries and frozen judgment; changed
+recognition, opacity, position and scale need explicit spec/native readback.
+
 ### Preserve spatial and camera identity
 
 The moving-camera B film is the production direction. Fixed-camera A remains
