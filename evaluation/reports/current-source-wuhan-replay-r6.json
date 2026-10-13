@@ -1,0 +1,32 @@
+{
+  "date": "2026-10-14",
+  "source_commit": "61bc9c3e15004639cb442c20e7946ca9631f14ce",
+  "paper_id": "mock-2027-wuhan-september-v01",
+  "scope": "Named independent current AI question reviews and structural paper replay; not whole-paper, natural lesson or learner acceptance",
+  "private_report_path": "local-data/organized-pdfs/wxwork-priority-2026-10/coordinator-reviews/current-61bc9c3-wuhan-r2/host-paper-replay-r6/report.json",
+  "private_report_sha256": "c51f3c936f18d85760cddeb9c84b0a2d13e519271dda87da8013fc0826fa25a7",
+  "input_tasks": 47,
+  "reviewed_closed_questions": 14,
+  "pending_current_semantic_review_tasks": 33,
+  "new_reviews": [
+    {"question": "Q33", "method": "R11", "role": "interpreter", "support_answer": null, "separate_terminal_answer": "C", "sha256": "67a95a53aab0ca29ec7a28f89b01d0a980ae5bc082abd4e4188b1d220fdcbccc"},
+    {"question": "Q34", "method": "R11", "role": "interpreter", "support_answer": null, "separate_terminal_answer": "D", "sha256": "50a841247ae8386228c3995bcacd853c86db9ede54f46459c91c38f83ffe6183"},
+    {"question": "Q35", "method": "R08", "role": "interpreter", "support_answer": null, "separate_terminal_answer": "A", "sha256": "609e6afeb0629c49fbfd7a5160454b2271c001d4b819fd6588181be3026d7b62"}
+  ],
+  "author": "/root/wuhan_current_reading",
+  "independent_reviewer": "/root",
+  "source_pages_visually_read": [7, 8],
+  "source_and_material_checks": "PASS",
+  "exact_support_and_terminal_replays": "PASS",
+  "support_and_terminal_renderer_checks": {"count": 24, "result": "PASS", "scope": "output contract only"},
+  "Q32_old_r2": "HOLD: C has no already-realized condition. New author rationale requested; no retrospective approval.",
+  "whole_paper_semantic_acceptance": "PARTIAL",
+  "natural_whole_passage_delivery": "not_certified",
+  "old_files_and_case_catalog_unchanged": true,
+  "new_case_count": 0,
+  "new_unique_question_count": 0,
+  "new_blind_sample_count": 0,
+  "method_promotion_applied": false,
+  "learner_validation": null,
+  "private_source_text_included": false
+}
