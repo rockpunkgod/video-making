@@ -1,0 +1,83 @@
+"""Synthetic export controls, not student or English semantic evaluation."""
+import json
+from pathlib import Path
+from tempfile import TemporaryDirectory
+import unittest
+from unittest.mock import patch
+
+from core.registry import Registry
+from scripts.prepare_first_use_materials import prepare
+
+
+class FirstUseMaterialsTests(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls): cls.registry=Registry()
+
+    def setUp(self):
+        self.temporary=TemporaryDirectory()
+        self.root=Path(self.temporary.name)
+        self.demo=self.root/'demo.json'; self.transfer=self.root/'transfer.json'
+        self.walkthrough=self.root/'walkthrough.json'
+        for path, qid, passage in [(self.demo,'synthetic-demo','synthetic source one'),
+                                  (self.transfer,'synthetic-transfer','synthetic source two')]:
+            self.save(path,{'question':{'question_id':qid,'question_type':'七选五','stem':'synthetic blank',
+                      'passage':passage,'options':{'A':'synthetic candidate'},'answer':'SECRET-ANSWER',
+                      'observations':[{'expected_group':'SECRET-GROUP'}]},'analysis':{'answer':'SECRET-ANSWER'}})
+        self.save(self.walkthrough,{'method_id':'F01','method_version':self.registry.methods['F01']['version'],
+                      'source_commit':self.registry.index['source_baseline']['commit'],
+                      'question_id':'synthetic-demo','first_action':'synthetic action',
+                      'evidence':'synthetic evidence','output':'synthetic output','stop':'synthetic stop',
+                      'review_scope':'ai_authored_draft_not_learner_validation'})
+        self.patch=patch('scripts.prepare_first_use_materials.ROOT',self.root)
+        self.patch.start()
+
+    def tearDown(self):
+        self.patch.stop(); self.temporary.cleanup()
+
+    def save(self,path,value): path.write_text(json.dumps(value),encoding='utf-8')
+
+    def run_export(self,output=None):
+        return prepare('F01',self.demo,self.transfer,self.walkthrough,
+                       output or self.root/'local-data/kit',self.registry)
+
+    def test_answer_free_and_no_manufactured_observations(self):
+        result=self.run_export(); output=Path(result['output'])
+        text=(output/'student-material.md').read_text(encoding='utf-8')
+        self.assertNotIn('SECRET',text)
+        self.assertNotIn('synthetic evidence',text.split('## 第二道题')[1])
+        facilitator=json.loads((output/'facilitator.json').read_text(encoding='utf-8'))
+        self.assertTrue(all(value is None for value in facilitator['first_use_test'].values()))
+        self.assertFalse(facilitator['collection_allowed'])
+        self.assertEqual(facilitator['new_blind_sample_count'],0)
+
+    def test_public_output_rejected(self):
+        with self.assertRaisesRegex(ValueError,'private local-data'): self.run_export(self.root/'public')
+
+    def test_existing_kit_not_overwritten(self):
+        self.run_export()
+        with self.assertRaisesRegex(ValueError,'overwrite'): self.run_export()
+
+    def test_duplicate_original_question_rejected_even_with_new_id(self):
+        data=json.loads(self.demo.read_text()); data['question']['question_id']='new-id'
+        self.save(self.transfer,data)
+        with self.assertRaisesRegex(ValueError,'different original'): self.run_export()
+
+    def test_stale_demo_version_rejected(self):
+        data=json.loads(self.walkthrough.read_text()); data['method_version']='0.0.0'
+        self.save(self.walkthrough,data)
+        with self.assertRaisesRegex(ValueError,'current method'): self.run_export()
+
+    def test_another_blank_in_same_passage_is_not_unfamiliar_transfer(self):
+        data=json.loads(self.transfer.read_text()); data['question']['passage']='synthetic source one'
+        data['question']['stem']='another blank'; self.save(self.transfer,data)
+        with self.assertRaisesRegex(ValueError,'different passage'): self.run_export()
+
+    def test_wrong_type_or_incomplete_text_rejected(self):
+        data=json.loads(self.transfer.read_text()); data['question']['question_type']='阅读理解'
+        self.save(self.transfer,data)
+        with self.assertRaisesRegex(ValueError,'type does not match'): self.run_export()
+        del data['question']['passage']; self.save(self.transfer,data)
+        with self.assertRaisesRegex(ValueError,'Incomplete question'): self.run_export()
+
+
+if __name__=='__main__': unittest.main()

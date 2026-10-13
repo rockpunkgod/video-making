@@ -2,6 +2,20 @@
 
 基线协议为根目录EVALUATION_PROTOCOL.md：传播→冻结→Practicality Gate→First-use→Blind与Baseline，第二阶段优先级更高。当前pending_real_participant_validation。
 
+## 新版学生入口与真实首用材料
+
+`python -m scripts.audit_student_entries` 读取当前来源版本、逐方法四步卡及独立学生稿，输出结构缺口。它不自动批准语义一致性、短版时长或真实学生成功；历史报告中的入口数量不能覆盖本版检查。
+
+首用材料准备入口：
+
+```powershell
+python -m scripts.prepare_first_use_materials --method F01 --demonstration DEMO.json --transfer TRANSFER.json --walkthrough WALKTHROUGH.json --output local-data/STUDY-DRAFT
+```
+
+DEMO 和 TRANSFER 是已有完整原题的结构化文件（可有顶层 question）。只提取原题字段，不复制答案、历史关系、分组结果或评分。第二题须是不同题号、不同材料和不同文章；参与者是否曾见过仍须现场确认。WALKTHROUGH 显式绑定当前 method_id、method_version、source_commit 和示范 question_id，提供 first_action、evidence、output、stop，并声明 `review_scope=ai_authored_draft_not_learner_validation`。
+
+输出仅写入私有 local-data，拒绝覆盖既有材料。student-material.md 只展示方法名、症状、四步卡、示范和无提示的第二题；facilitator.json 单独保留来源文件哈希、前置研究门槛和全 null 的观察槽。材料草稿不授权采集，先完成示范及评分依据的独立审查、传播验收、版本冻结和 Practicality Gate，再进入 First-use。导出不登记新 Case，不重计 Blind，不导入或编造参与者结果。
+
 按schemas/evaluation-record.json制作JSON数组或JSONL。每条保留参与者、方法版本、题号、冻结题组、分配条件、评价者，以及实际动作/证据/刹车/学生复述/角色。phase为communication、first_use或blind；短版独立组或预先设计counterbalanced分配。不能把自动答案正确充当动作成功。
 
 ```powershell

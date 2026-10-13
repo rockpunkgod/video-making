@@ -23,6 +23,7 @@ def build(registry=None):
             parts += [f'## {duration} 秒版',m['compact'][duration+'s']]
         parts += ['## 一屏视觉式','```text\n'+m['visual_formula']+'\n```','反口诀：'+m['anti_rule'],'## 为什么容易错',m['common_wrong_instinct'],'## 反例与挑战','反例/边界示意（不等于已核验真题）：'+'；'.join(m['counterexamples']),m['challenge_prompt'],f'生成来源：Registry {mid}@{m["version"]}。student_ready仅表示静态学生入口齐备，真人验收待运行。']
         if draft and not m.get('student_ready'):
+            parts[-1] = f'生成来源：Registry {mid}@{m["version"]}。当前 student_ready=false，静态入口复核未完成，真人验收待运行。'
             parts += ['草稿状态：短版时长未实测，传播与实用性验收未通过；不得据此升级 validated、stable、Efficient 或 Signature。']
         assets[f'student-guides/{mid}-{m["brand_name"]}.md'] = '\n\n'.join(parts)+'\n'
     symptoms = {'routes':[]}
