@@ -57,6 +57,37 @@ def validate_graph(graph, question=None):
                 and any(n['type']=='question_signal' and n.get('reviewed') and n.get('method_id')==method_id for n in proof)
                 and any(nodes[parent]['type']=='source_evidence' and nodes[parent].get('span') for parent in incoming[relation['id']]))
     for nid, node in nodes.items():
+        if node['type']=='question_scope':
+            if (node.get('method_id') or not node.get('review_id') or not node.get('candidate_ids')
+                    or not node.get('material_sha256') or not node.get('artifact_fingerprint')):
+                raise ValueError('Whole-question scope requires original material and review payload binding')
+            if question is not None:
+                from .question_verification import material_fingerprint
+                if node['material_sha256']!=material_fingerprint(question) or node['candidate_ids']!=sorted(question.get('options',{})):
+                    raise ValueError('Whole-question scope differs from original material')
+        if node['type'] in {'question_review','question_decision','question_verification'}:
+            if node.get('method_id') or not node.get('candidate') or not node.get('review_id'):
+                raise ValueError('Whole-question proof is not a branded method decision')
+            if node['type']=='question_review':
+                parents=[nodes[x] for x in incoming[nid]]
+                scopes=[n for n in parents if n['type']=='question_scope' and n.get('review_id')==node['review_id']]
+                if len(scopes)!=1 or node['candidate'] not in scopes[0]['candidate_ids']:
+                    raise ValueError('Whole-question review requires its own complete question scope')
+                if not (any(n['type']=='candidate_claim' and n.get('candidate')==node['candidate'] for n in parents)
+                        and any(n['type']=='source_evidence' and n.get('span',{}).get('field')=='passage' for n in parents)
+                        and any(n['type']=='source_evidence' and n.get('span',{}).get('field')=='stem' for n in parents)
+                        and any(n['type']=='action_artifact' and n.get('reviewed') and n.get('artifact_kind') in {'interpretation','framework_card'} for n in parents)):
+                    raise ValueError('Whole-question review needs own claim, passage, task and produced interpretation')
+                if node.get('effect')!='undetermined' and not node.get('reviewed'):
+                    raise ValueError('Unreviewed whole-question proof cannot decide')
+            else:
+                required='question_review' if node['type']=='question_decision' else 'question_decision'
+                parents=[nodes[x] for x in incoming[nid]]
+                if (not node.get('reviewed') or node.get('effect') not in {'retain','eliminate'}
+                        or len(parents)!=1 or parents[0]['type']!=required
+                        or not parents[0].get('reviewed') or
+                        any(parents[0].get(k)!=node.get(k) for k in ('candidate','review_id','effect'))):
+                    raise ValueError('Whole-question conclusion requires its own reviewed candidate path')
         if node['type']=='image_evidence':
             if not node.get('image_ref') or not node.get('artifact_fingerprint'):
                 raise ValueError('Image evidence requires original payload reference and review binding')

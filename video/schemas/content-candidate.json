@@ -1469,6 +1469,239 @@
                 ],
                 "additionalProperties": false
               },
+              "grammar_hint_review": {
+                "type": "object",
+                "properties": {
+                  "state": {
+                    "const": "without_hint"
+                  },
+                  "target_marker": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "evidence": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "field": {
+                          "type": "string",
+                          "minLength": 1
+                        },
+                        "start": {
+                          "type": "integer",
+                          "minimum": 0
+                        },
+                        "end": {
+                          "type": "integer",
+                          "minimum": 1
+                        },
+                        "quote": {
+                          "type": "string",
+                          "minLength": 1
+                        }
+                      },
+                      "required": [
+                        "field",
+                        "start",
+                        "end",
+                        "quote"
+                      ],
+                      "additionalProperties": false
+                    },
+                    "minItems": 1
+                  },
+                  "reviewer": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "review_status": {
+                    "enum": [
+                      "reviewed",
+                      "unreviewed"
+                    ]
+                  },
+                  "review_notes": {
+                    "type": "string",
+                    "minLength": 1
+                  }
+                },
+                "required": [
+                  "state",
+                  "target_marker",
+                  "evidence",
+                  "reviewer",
+                  "review_status",
+                  "review_notes"
+                ],
+                "additionalProperties": false
+              },
+              "question_verification_review": {
+                "type": "object",
+                "properties": {
+                  "schema_version": {
+                    "enum": [
+                      "1.0.0"
+                    ]
+                  },
+                  "review_id": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "question_id": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "task_type": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "source_commit": {
+                    "type": "string",
+                    "pattern": "^[0-9a-f]{40}$"
+                  },
+                  "material_sha256": {
+                    "type": "string",
+                    "pattern": "^[0-9a-f]{64}$"
+                  },
+                  "reviewer": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "review_status": {
+                    "enum": [
+                      "reviewed",
+                      "unreviewed"
+                    ]
+                  },
+                  "source_section_ids": {
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "minItems": 1,
+                    "uniqueItems": true
+                  },
+                  "input_artifact_ids": {
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "minItems": 1
+                  },
+                  "concrete_action": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "stop_rule_check": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "stop_applied": {
+                    "type": "boolean"
+                  },
+                  "candidate_checks": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "candidate": {
+                          "type": "string",
+                          "minLength": 1
+                        },
+                        "claim": {
+                          "type": "string",
+                          "minLength": 1
+                        },
+                        "effect": {
+                          "enum": [
+                            "retain",
+                            "eliminate",
+                            "undetermined"
+                          ]
+                        },
+                        "evidence": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "field": {
+                                "type": "string",
+                                "minLength": 1
+                              },
+                              "start": {
+                                "type": "integer",
+                                "minimum": 0
+                              },
+                              "end": {
+                                "type": "integer",
+                                "minimum": 1
+                              },
+                              "quote": {
+                                "type": "string",
+                                "minLength": 1
+                              }
+                            },
+                            "required": [
+                              "field",
+                              "start",
+                              "end",
+                              "quote"
+                            ],
+                            "additionalProperties": false
+                          },
+                          "minItems": 1
+                        },
+                        "decision_rule_check": {
+                          "type": "string",
+                          "minLength": 1
+                        },
+                        "backfill_check": {
+                          "type": "string",
+                          "minLength": 1
+                        },
+                        "backfill_verdict": {
+                          "enum": [
+                            "supports",
+                            "rejects",
+                            "unresolved"
+                          ]
+                        }
+                      },
+                      "required": [
+                        "candidate",
+                        "claim",
+                        "effect",
+                        "evidence",
+                        "decision_rule_check",
+                        "backfill_check",
+                        "backfill_verdict"
+                      ],
+                      "additionalProperties": false
+                    },
+                    "minItems": 1
+                  }
+                },
+                "required": [
+                  "schema_version",
+                  "review_id",
+                  "question_id",
+                  "task_type",
+                  "source_commit",
+                  "material_sha256",
+                  "reviewer",
+                  "review_status",
+                  "source_section_ids",
+                  "input_artifact_ids",
+                  "concrete_action",
+                  "stop_rule_check",
+                  "stop_applied",
+                  "candidate_checks"
+                ],
+                "additionalProperties": false
+              },
               "original_images": {
                 "type": "array",
                 "items": {
@@ -1761,7 +1994,11 @@
                             "decision",
                             "verification",
                             "action_artifact",
-                            "image_evidence"
+                            "image_evidence",
+                            "question_scope",
+                            "question_review",
+                            "question_decision",
+                            "question_verification"
                           ]
                         },
                         "label": {
@@ -1826,6 +2063,30 @@
                         "artifact_fingerprint": {
                           "type": "string",
                           "pattern": "^[0-9a-f]{64}$"
+                        },
+                        "review_id": {
+                          "type": "string",
+                          "minLength": 1
+                        },
+                        "effect": {
+                          "enum": [
+                            "retain",
+                            "eliminate",
+                            "undetermined"
+                          ]
+                        },
+                        "material_sha256": {
+                          "type": "string",
+                          "pattern": "^[0-9a-f]{64}$"
+                        },
+                        "candidate_ids": {
+                          "type": "array",
+                          "items": {
+                            "type": "string",
+                            "minLength": 1
+                          },
+                          "minItems": 1,
+                          "uniqueItems": true
                         },
                         "image_ref": {
                           "type": "object",
@@ -3621,6 +3882,282 @@
                     "additionalProperties": false
                   }
                 ]
+              },
+              "question_verification": {
+                "type": "object",
+                "properties": {
+                  "review": {
+                    "type": "object",
+                    "properties": {
+                      "schema_version": {
+                        "enum": [
+                          "1.0.0"
+                        ]
+                      },
+                      "review_id": {
+                        "type": "string",
+                        "minLength": 1
+                      },
+                      "question_id": {
+                        "type": "string",
+                        "minLength": 1
+                      },
+                      "task_type": {
+                        "type": "string",
+                        "minLength": 1
+                      },
+                      "source_commit": {
+                        "type": "string",
+                        "pattern": "^[0-9a-f]{40}$"
+                      },
+                      "material_sha256": {
+                        "type": "string",
+                        "pattern": "^[0-9a-f]{64}$"
+                      },
+                      "reviewer": {
+                        "type": "string",
+                        "minLength": 1
+                      },
+                      "review_status": {
+                        "enum": [
+                          "reviewed",
+                          "unreviewed"
+                        ]
+                      },
+                      "source_section_ids": {
+                        "type": "array",
+                        "items": {
+                          "type": "string",
+                          "minLength": 1
+                        },
+                        "minItems": 1,
+                        "uniqueItems": true
+                      },
+                      "input_artifact_ids": {
+                        "type": "array",
+                        "items": {
+                          "type": "string",
+                          "minLength": 1
+                        },
+                        "minItems": 1
+                      },
+                      "concrete_action": {
+                        "type": "string",
+                        "minLength": 1
+                      },
+                      "stop_rule_check": {
+                        "type": "string",
+                        "minLength": 1
+                      },
+                      "stop_applied": {
+                        "type": "boolean"
+                      },
+                      "candidate_checks": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "candidate": {
+                              "type": "string",
+                              "minLength": 1
+                            },
+                            "claim": {
+                              "type": "string",
+                              "minLength": 1
+                            },
+                            "effect": {
+                              "enum": [
+                                "retain",
+                                "eliminate",
+                                "undetermined"
+                              ]
+                            },
+                            "evidence": {
+                              "type": "array",
+                              "items": {
+                                "type": "object",
+                                "properties": {
+                                  "field": {
+                                    "type": "string",
+                                    "minLength": 1
+                                  },
+                                  "start": {
+                                    "type": "integer",
+                                    "minimum": 0
+                                  },
+                                  "end": {
+                                    "type": "integer",
+                                    "minimum": 1
+                                  },
+                                  "quote": {
+                                    "type": "string",
+                                    "minLength": 1
+                                  }
+                                },
+                                "required": [
+                                  "field",
+                                  "start",
+                                  "end",
+                                  "quote"
+                                ],
+                                "additionalProperties": false
+                              },
+                              "minItems": 1
+                            },
+                            "decision_rule_check": {
+                              "type": "string",
+                              "minLength": 1
+                            },
+                            "backfill_check": {
+                              "type": "string",
+                              "minLength": 1
+                            },
+                            "backfill_verdict": {
+                              "enum": [
+                                "supports",
+                                "rejects",
+                                "unresolved"
+                              ]
+                            }
+                          },
+                          "required": [
+                            "candidate",
+                            "claim",
+                            "effect",
+                            "evidence",
+                            "decision_rule_check",
+                            "backfill_check",
+                            "backfill_verdict"
+                          ],
+                          "additionalProperties": false
+                        },
+                        "minItems": 1
+                      }
+                    },
+                    "required": [
+                      "schema_version",
+                      "review_id",
+                      "question_id",
+                      "task_type",
+                      "source_commit",
+                      "material_sha256",
+                      "reviewer",
+                      "review_status",
+                      "source_section_ids",
+                      "input_artifact_ids",
+                      "concrete_action",
+                      "stop_rule_check",
+                      "stop_applied",
+                      "candidate_checks"
+                    ],
+                    "additionalProperties": false
+                  },
+                  "state": {
+                    "enum": [
+                      "reviewed",
+                      "stopped",
+                      "unreviewed"
+                    ]
+                  },
+                  "scope_node_id": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "candidate_bindings": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "candidate": {
+                          "type": "string",
+                          "minLength": 1
+                        },
+                        "effect": {
+                          "enum": [
+                            "retain",
+                            "eliminate",
+                            "undetermined"
+                          ]
+                        },
+                        "review_node_id": {
+                          "type": "string",
+                          "minLength": 1
+                        },
+                        "decision_node_id": {
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        },
+                        "verification_node_id": {
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        },
+                        "evidence_ids": {
+                          "type": "array",
+                          "items": {
+                            "type": "string",
+                            "minLength": 1
+                          },
+                          "minItems": 1
+                        }
+                      },
+                      "required": [
+                        "candidate",
+                        "effect",
+                        "review_node_id",
+                        "decision_node_id",
+                        "verification_node_id",
+                        "evidence_ids"
+                      ],
+                      "additionalProperties": false
+                    },
+                    "minItems": 1
+                  },
+                  "consumed_artifacts": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "execution_id": {
+                          "type": "string",
+                          "minLength": 1
+                        },
+                        "artifact_node_id": {
+                          "type": "string",
+                          "minLength": 1
+                        },
+                        "output_sha256": {
+                          "type": "string",
+                          "pattern": "^[0-9a-f]{64}$"
+                        }
+                      },
+                      "required": [
+                        "execution_id",
+                        "artifact_node_id",
+                        "output_sha256"
+                      ],
+                      "additionalProperties": false
+                    },
+                    "minItems": 1
+                  },
+                  "scope": {
+                    "enum": [
+                      "external_whole_question_review_not_brand_method_credit"
+                    ]
+                  }
+                },
+                "required": [
+                  "review",
+                  "state",
+                  "scope_node_id",
+                  "candidate_bindings",
+                  "consumed_artifacts",
+                  "scope"
+                ],
+                "additionalProperties": false
               }
             },
             "required": [

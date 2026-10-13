@@ -5,6 +5,7 @@ from core.evidence import validate_graph
 from core.execution import validate_execution_trace
 from core.lesson_feedback import validate_lesson_projection
 from core.writing_feedback import validate_writing_projection
+from core.question_verification import validate_question_verification_projection
 
 def render(analysis,kind='structured',registry=None):
     validate_schema('question-analysis',analysis)
@@ -13,10 +14,14 @@ def render(analysis,kind='structured',registry=None):
     validate_execution_trace(analysis,r)
     validate_lesson_projection(analysis,r)
     validate_writing_projection(analysis,r)
+    validate_question_verification_projection(analysis,r)
     if kind=='structured': return json.dumps(analysis,ensure_ascii=False,indent=2)
     if kind=='content-export':
         assets = [{'method_id':x['method_id'],'method_version':r.methods[x['method_id']]['version'],'role':x['role'],'action':x['action'],'stop_rule':x['stop_rule'],'visual_formula':r.methods[x['method_id']]['visual_formula'],'compact':r.methods[x['method_id']]['compact'],'anti_rule':r.methods[x['method_id']]['anti_rule']} for x in analysis['method_chain']]
-        return json.dumps({'export_schema_version':'1.7.0','question_id':analysis['question_id'],'answer':analysis['answer'],'answer_verification':analysis['answer_verification'],'grammar_navigation':analysis['grammar_navigation'],'writing_feedback':analysis['writing_feedback'],'lesson_feedback':analysis['lesson_feedback'],'execution_trace':analysis['execution_trace'],'method_chain':analysis['method_chain'],'evidence_graph':analysis['evidence_graph'],'methods':assets,'eligible_for_review':analysis['content_eligible'],'safe_for_release':'untested','limitations':analysis['limitations']},ensure_ascii=False,indent=2)
+        exported={'export_schema_version':'1.7.0','question_id':analysis['question_id'],'answer':analysis['answer'],'answer_verification':analysis['answer_verification'],'grammar_navigation':analysis['grammar_navigation'],'writing_feedback':analysis['writing_feedback'],'lesson_feedback':analysis['lesson_feedback'],'execution_trace':analysis['execution_trace'],'method_chain':analysis['method_chain'],'evidence_graph':analysis['evidence_graph'],'methods':assets,'eligible_for_review':analysis['content_eligible'],'safe_for_release':'untested','limitations':analysis['limitations']}
+        if 'question_verification' in analysis:
+            exported.update(export_schema_version='1.8.0',question_verification=analysis['question_verification'])
+        return json.dumps(exported,ensure_ascii=False,indent=2)
     if kind not in {'student','legacy-wechat'}: raise ValueError('Unknown renderer')
     lesson=analysis['lesson_feedback']
     if lesson and lesson['scope']=='single_question_lesson':
@@ -84,7 +89,16 @@ def render(analysis,kind='structured',registry=None):
     for c in analysis['candidate_analysis']:
         quotes = [n['label'] for n in analysis['evidence_graph']['nodes'] if n['id'] in c['evidence_ids']]
         effect={'retain':'有依据，暂时保留','eliminate':'依据判据排除','undetermined':'尚不能判断'}[c['effect']]
+        if c['effect']=='undetermined' and analysis.get('question_verification'):
+            effect='这条方法记录只作解释或辅助，整项判断见后面的整题核验'
         parts.append(c['candidate']+'：'+c['claim']+'。题面证据：'+'；'.join(quotes)+'。审阅结果：'+effect+'。')
+    terminal=analysis.get('question_verification')
+    if terminal:
+        parts.append('整题核验（不是辅助方法直接定案）：'+terminal['review']['concrete_action'])
+        for c,b in zip(terminal['review']['candidate_checks'],terminal['candidate_bindings']):
+            effect={'retain':'保留','eliminate':'排除','undetermined':'待定'}[b['effect']]
+            parts.append(c['candidate']+'：'+c['claim']+'。题面证据：'+'；'.join(s['quote'] for s in c['evidence'])+'。'+c['decision_rule_check']+'。回填：'+c['backfill_check']+'。整题审阅结果：'+effect+'。')
+        parts.append('何时停：'+terminal['review']['stop_rule_check'])
     if analysis['answer'] is None:
         parts.append('现在先不报答案。'+analysis['limitations'][-1])
         if not blocked and analysis['answer_verification']['unresolved_candidates']:

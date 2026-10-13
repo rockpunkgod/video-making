@@ -36,7 +36,15 @@ def build():
     method_contract['allOf']=[{'if':{'properties':{'student_ready':{'const':True}},'required':['student_ready']},'then':{'required':['entry_copy']}}]
     write('method-card',method_contract)
     write('case',obj({'case_id':STR,'method_id':STR,'question_type':enum(TYPES),'source':{'type':['object','string']},'question':NULLSTR,'answer':NULLSTR,'trigger':STR,'evidence':array({'type':'object'}),'method_role':enum(ROLES),'expected_action':STR,'expected_output':enum(OUTPUTS),'stop_rule':STR,'case_type':enum(['canonical','counterexample','boundary','transfer','hard']),'status':enum(['verified_course_example','source_pattern_only','evidence_gap']),'notes':STR},extra=True))
+    case_schema=json.loads((ROOT/'schemas/case.json').read_text(encoding='utf-8'))
+    case_schema['properties']['status']['enum'].append('reviewed_real_exam_case')
+    case_schema['allOf']=[{'if':{'properties':{'status':{'const':'reviewed_real_exam_case'}}},'then':{'required':['registration_key','frozen_refs','review_scope','learner_validation','redistribution_rights'],'properties':{'registration_key':{'type':'array','prefixItems':[{'type':'string'},{'type':'string'},enum(['canonical','counterexample','boundary','transfer','hard']),{'type':'string'}],'minItems':4,'maxItems':4},'frozen_refs':{'type':'object','required':['blind','reveal','action','case_review']},'review_scope':{'const':'private_AI_reviewed'},'learner_validation':{'const':'pending_real_participant_validation'},'redistribution_rights':{'const':'not_verified'}}}}]
+    write('case',case_schema)
     span = obj({'field':STR,'start':{'type':'integer','minimum':0},'end':{'type':'integer','minimum':1},'quote':STR})
+    hint_review=obj({'state':{'const':'without_hint'},'target_marker':STR,'evidence':array(span,1),'reviewer':STR,'review_status':enum(['reviewed','unreviewed']),'review_notes':STR})
+    question_check=obj({'candidate':STR,'claim':STR,'effect':enum(['retain','eliminate','undetermined']),'evidence':array(span,1),'decision_rule_check':STR,'backfill_check':STR,'backfill_verdict':enum(['supports','rejects','unresolved'])})
+    question_review=obj({'schema_version':enum(['1.0.0']),'review_id':STR,'question_id':STR,'task_type':STR,'source_commit':{'type':'string','pattern':'^[0-9a-f]{40}$'},'material_sha256':{'type':'string','pattern':'^[0-9a-f]{64}$'},'reviewer':STR,'review_status':enum(['reviewed','unreviewed']),'source_section_ids':{**array(STR,1),'uniqueItems':True},'input_artifact_ids':array(STR,1),'concrete_action':STR,'stop_rule_check':STR,'stop_applied':BOOL,'candidate_checks':array(question_check,1)})
+    write('question-verification-review',question_review)
     relation = obj({'method_id':STR,'candidate':STR,'effect':enum(['retain','eliminate','undetermined']),'claim':STR,'evidence':array(span,1),'decision_rule_check':STR,'stop_rule_check':STR,'verification':STR,'reviewer':STR,'review_status':enum(['reviewed','unreviewed'])})
     relation['properties']['execution_role'] = enum(ROLES)
     grounded_text=obj({'name':STR,'value':STR,'evidence':array(span,1)})
@@ -72,11 +80,14 @@ def build():
     write('writing-review',writing_review)
     write('question-input',obj({'question_id':STR,'question_type':enum(TYPES+['未知']),'task_type':STR,'passage':{'type':'string'},'stem':{'type':'string'},'options':{'type':'object','additionalProperties':STR},'student_symptoms':array(STR),'observations':array(obj({'method_id':STR,'evidence':array(span,1),'reviewed':BOOL})),'relations':array(relation),'given_word':{'type':['string','null']},'student_text':{'type':'string'},'continuation_starters':array(STR),'requested_chain':array(STR),'difficulty':enum(['easy','medium','hard','unknown']),'writing_review':writing_review,'action_executions':array(execution),'lesson_review':lesson_review},required=['question_id','question_type','stem'],extra=False))
     question_schema=json.loads((ROOT/'schemas/question-input.json').read_text(encoding='utf-8'))
+    question_schema['properties'].update(grammar_hint_review=hint_review,question_verification_review=question_review)
     question_schema['properties']['original_images']=array(obj({'image_id':STR,'sha256':{'type':'string','pattern':'^[0-9a-f]{64}$'},'mime_type':enum(['image/png','image/jpeg']),'data_base64':{'type':'string','minLength':1,'maxLength':13981016}}))
     write('question-input',question_schema)
     artifact_kinds=sorted({kind for kinds in ROLE_ARTIFACTS.values() for kind in kinds})
     node = obj({'id':STR,'type':enum(['question_signal','source_evidence','candidate_claim','relation','method_action','decision','verification','action_artifact']),'label':STR,'span':span,'method_id':STR,'candidate':STR,'reviewed':BOOL,'execution_id':STR,'artifact_kind':enum(artifact_kinds),'artifact_fingerprint':{'type':'string','pattern':'^[0-9a-f]{64}$'}},required=['id','type','label'],extra=False)
     node['properties']['type']['enum'].append('image_evidence')
+    node['properties']['type']['enum'] += ['question_scope','question_review','question_decision','question_verification']
+    node['properties'].update(review_id=STR,effect=enum(['retain','eliminate','undetermined']),material_sha256={'type':'string','pattern':'^[0-9a-f]{64}$'},candidate_ids={**array(STR,1),'uniqueItems':True})
     node['properties']['image_ref']=image_ref
     edge = obj({'from':STR,'to':STR,'type':enum(['supports','contradicts','locates','expands','narrows','eliminates','verifies'])})
     graph = obj({'nodes':array(node),'edges':array(edge)})
@@ -102,6 +113,9 @@ def build():
     lesson=obj({'review':delivered_review,'scope':enum(['single_question_lesson','partial_delivery','unreviewed']),'evidence_ids':array(STR),'segment_bindings':array(obj({'segment_id':STR,'claim_node_id':STR,'relation_node_id':STR,'evidence_ids':array(STR,1)})),'grouping_execution_ids':array(STR),'limitations':array(STR,1)})
     analysis['properties']['lesson_feedback']={'anyOf':[{'type':'null'},lesson]}
     analysis['required'].append('lesson_feedback')
+    binding=obj({'candidate':STR,'effect':enum(['retain','eliminate','undetermined']),'review_node_id':STR,'decision_node_id':NULLSTR,'verification_node_id':NULLSTR,'evidence_ids':array(STR,1)})
+    consumed=obj({'execution_id':STR,'artifact_node_id':STR,'output_sha256':{'type':'string','pattern':'^[0-9a-f]{64}$'}})
+    analysis['properties']['question_verification']=obj({'review':question_review,'state':enum(['reviewed','stopped','unreviewed']),'scope_node_id':STR,'candidate_bindings':array(binding,1),'consumed_artifacts':array(consumed,1),'scope':enum(['external_whole_question_review_not_brand_method_credit'])})
     write('question-analysis',analysis)
     paper=obj({'schema_version':enum(['1.0.0','1.1.0']),'paper_id':STR,'questions':array(analysis),'recommendations':array(STR),'method_counts':{'type':'object','additionalProperties':{'type':'integer','minimum':0}},'difficulty_counts':{'type':'object'},'evidence_complete_count':{'type':'integer','minimum':0},'case_candidates':array(STR),'limitations':array(STR)})
     stage_ids={**array(STR),'uniqueItems':True}

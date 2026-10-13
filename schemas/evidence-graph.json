@@ -22,7 +22,11 @@
               "decision",
               "verification",
               "action_artifact",
-              "image_evidence"
+              "image_evidence",
+              "question_scope",
+              "question_review",
+              "question_decision",
+              "question_verification"
             ]
           },
           "label": {
@@ -87,6 +91,30 @@
           "artifact_fingerprint": {
             "type": "string",
             "pattern": "^[0-9a-f]{64}$"
+          },
+          "review_id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "effect": {
+            "enum": [
+              "retain",
+              "eliminate",
+              "undetermined"
+            ]
+          },
+          "material_sha256": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{64}$"
+          },
+          "candidate_ids": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 1
+            },
+            "minItems": 1,
+            "uniqueItems": true
           },
           "image_ref": {
             "type": "object",

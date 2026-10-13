@@ -7,6 +7,8 @@ from .evidence import EvidenceGraph, check_span
 from .grammar_navigation import navigate_grammar
 from .writing_feedback import writing_feedback, validate_writing_projection
 from .lesson_feedback import lesson_feedback, validate_lesson_projection
+from .question_verification import (verify_question, apply_question_verification,
+                                    validate_question_verification_projection)
 
 class QuestionAnalyzer:
     def __init__(self,registry=None,review_provider=None):
@@ -138,6 +140,10 @@ class QuestionAnalyzer:
             result.update(answer=None,answer_confidence='low',content_eligible=False,status='needs_evidence',review_scope='external_action_review')
             result['answer_verification']['closed']=False
             result['limitations'].append('显式回填核验未通过；先解决验证冲突，不沿用此前候选结论。')
+        if 'question_verification_review' in q:
+            result['schema_version']='1.8.0'
+            verification=verify_question(q,result,self.registry,graph)
+            apply_question_verification(result,verification)
         result['writing_feedback']=writing_feedback(q,self.registry,graph,trigger_nodes)
         result['evidence_graph']=graph.result(q)
         result['lesson_feedback']=lesson_feedback(q,result,self.registry,graph,trigger_nodes,relation_nodes)
@@ -153,6 +159,7 @@ class QuestionAnalyzer:
         validate_execution_trace(result,self.registry)
         validate_lesson_projection(result,self.registry)
         validate_writing_projection(result,self.registry)
+        validate_question_verification_projection(result,self.registry)
         return result
 
     def demonstration(self,matches,candidates,chain):
