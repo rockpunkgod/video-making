@@ -18,8 +18,14 @@ def render_passage(result,kind='structured',registry=None):
         if result['review']['reading_mode']=='central_task':
             has_main=any(x['analysis']['task_type'] in {'main_idea','purpose','title'} for x in result['questions'])
             has_vocab=any(x['analysis']['task_type'] in {'vocabulary','word_meaning'} for x in result['questions'])
-            if has_vocab:
+            # Projection validation has already rejected unknown central tasks.
+            has_detail=any(x['analysis']['task_type'] not in {'main_idea','purpose','title','vocabulary','word_meaning'} for x in result['questions'])
+            if has_vocab and has_detail:
                 parts.append('这里先把全文中心任务的题做掉，再回头做细节，猜词放最后。' if has_main else '这里没有全文中心任务题，就先核细节，猜词放最后。')
+            elif has_vocab:
+                parts.append('这里先核全文中心任务，再按原题号回文核词义。' if has_main else '这些题只问词义，按原题号回文核语境。')
+            elif has_main and not has_detail:
+                parts.append('这些题只问全文中心任务，按原题号回文核所问。')
             else:
                 parts.append('这里先把全文中心任务的题做掉，再回头核其他题。' if has_main else '这里没有全文中心任务题，就按原题号核各题的局部任务。')
         else: parts.append('这里按原题号逐题回文找依据，不改成按难易挑题。')

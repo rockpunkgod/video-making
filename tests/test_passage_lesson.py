@@ -126,6 +126,44 @@ class PassageLessonTest(unittest.TestCase):
         for kind in ('structured','content-export'):
             self.assertEqual(json.loads(render_passage(out,kind,self.r)),out)
 
+    def test_center_only_does_not_announce_other_questions(self):
+        p=packet(self.r)
+        p['questions']=[r for r in p['questions'] if r['number']==33]
+        p['review']['steps']=[s for s in p['review']['steps'] if s['question_id']=='program-33']
+        out=self.a.analyze(p);before=deepcopy(out)
+        for kind in ('student','legacy-wechat'):
+            intro=render_passage(out,kind,self.r).split('\n\n')[1]
+            self.assertIn('只问全文中心任务',intro)
+            self.assertNotIn('其他题',intro)
+            self.assertNotIn('细节',intro)
+            self.assertNotIn('猜词',intro)
+        self.assertEqual(out,before)
+
+    def test_vocabulary_only_does_not_announce_details(self):
+        p=packet(self.r)
+        p['questions']=[r for r in p['questions'] if r['number']==32]
+        p['review']['steps']=[s for s in p['review']['steps'] if s['question_id']=='program-32']
+        out=self.a.analyze(p)
+        for kind in ('student','legacy-wechat'):
+            intro=render_passage(out,kind,self.r).split('\n\n')[1]
+            self.assertIn('只问词义',intro)
+            self.assertNotIn('细节',intro)
+            self.assertNotIn('全文中心任务',intro)
+        for kind in ('structured','content-export'):
+            self.assertEqual(json.loads(render_passage(out,kind,self.r)),out)
+
+    def test_center_and_vocabulary_without_details_skip_detail_stage(self):
+        p=packet(self.r)
+        p['questions']=[r for r in p['questions'] if r['number']!=31]
+        p['review']['steps']=[s for s in p['review']['steps'] if s['question_id']!='program-31']
+        out=self.a.analyze(p)
+        self.assertEqual([s['question_id'] for s in out['review']['steps']],['program-33','program-32'])
+        for kind in ('student','legacy-wechat'):
+            intro=render_passage(out,kind,self.r).split('\n\n')[1]
+            self.assertIn('先核全文中心任务',intro)
+            self.assertIn('核词义',intro)
+            self.assertNotIn('细节',intro)
+
     def test_local_looking_unknown_labels_are_not_a_detail_fallback(self):
         for task in ('paragraph_task_unknown','reading_passage_D','effect'):
             p=packet(self.r);p['questions'][0]['question']['task_type']=task
