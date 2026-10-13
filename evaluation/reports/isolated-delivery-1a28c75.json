@@ -1,0 +1,20 @@
+{
+  "scope": "Fixed committed structural-report delivery inventory and running isolated engineering regression",
+  "snapshot_commit_abbreviation": "1a28c75",
+  "source_commit": "61bc9c3e15004639cb442c20e7946ca9631f14ce",
+  "archive_path": "deliverables/ANSWER-Method-Engine-1a28c75.zip",
+  "folder_path": "deliverables/ANSWER-Method-Engine-1a28c75/ANSWER-Method-Engine-1a28c75",
+  "archive_sha256": "31d773c8ee2f26159d06649e34118dad2fcf57e8ccfa1ca18c5bd9f566f9bc43",
+  "archive_entries": 1788,
+  "private_local_data_or_original_papers_included": false,
+  "recursive_deliverables_included": false,
+  "uncommitted_user_changes_included": false,
+  "isolated_registry_and_generated_validation": "PASS",
+  "full_regression_session": 59501,
+  "full_regression_state_at_recording": "running",
+  "full_regression_result_at_recording": null,
+  "older_failed_fb0cd0c_package_or_its_running_inputs_modified": false,
+  "older_results_reused": false,
+  "learner_validation": null,
+  "method_promotion_applied": false
+}
