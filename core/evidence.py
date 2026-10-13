@@ -76,7 +76,9 @@ def validate_graph(graph, question=None):
                 if not (any(n['type']=='candidate_claim' and n.get('candidate')==node['candidate'] for n in parents)
                         and any(n['type']=='source_evidence' and n.get('span',{}).get('field')=='passage' for n in parents)
                         and any(n['type']=='source_evidence' and n.get('span',{}).get('field')=='stem' for n in parents)
-                        and any(n['type']=='action_artifact' and n.get('reviewed') and n.get('artifact_kind') in {'interpretation','framework_card'} for n in parents)):
+                        and any(n['type']=='action_artifact' and n.get('reviewed') and
+                            (n.get('artifact_kind') in {'interpretation','framework_card'} or
+                             (n.get('artifact_kind')=='verification_result' and n.get('verification_scope')=='candidate_relation_check' and n.get('candidate')==node['candidate'])) for n in parents)):
                     raise ValueError('Whole-question review needs own claim, passage, task and produced interpretation')
                 if node.get('effect')!='undetermined' and not node.get('reviewed'):
                     raise ValueError('Unreviewed whole-question proof cannot decide')

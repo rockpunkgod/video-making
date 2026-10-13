@@ -116,6 +116,11 @@
             "minItems": 1,
             "uniqueItems": true
           },
+          "verification_scope": {
+            "enum": [
+              "candidate_relation_check"
+            ]
+          },
           "image_ref": {
             "type": "object",
             "properties": {

@@ -57,6 +57,10 @@ def build():
         obj({'kind':enum(['framework_card']),'fields':array(grounded_text,1)}),
         obj({'kind':enum(['candidate_decision']),'candidate':STR,'effect':enum(['retain','eliminate','undetermined']),'relation_index':{'type':'integer','minimum':0}}),
         obj({'kind':enum(['verification_result']),'candidate':STR,'target_execution_ids':array(STR,1),'verdict':enum(['supports','rejects','unresolved'])}),
+        obj({'kind':enum(['verification_result']),'scope':enum(['candidate_relation_check']),
+             'candidate':STR,'claim':STR,'target_execution_ids':{'type':'array','maxItems':0},
+             'evidence':array(span,1),'relation_check':STR,'backfill_check':STR,
+             'verdict':enum(['supports','rejects','unresolved'])}),
     ]
     artifact={'oneOf':artifacts}
     write('action-artifact',artifact)
@@ -90,6 +94,7 @@ def build():
     node['properties']['type']['enum'].append('image_evidence')
     node['properties']['type']['enum'] += ['question_scope','question_review','question_decision','question_verification']
     node['properties'].update(review_id=STR,effect=enum(['retain','eliminate','undetermined']),material_sha256={'type':'string','pattern':'^[0-9a-f]{64}$'},candidate_ids={**array(STR,1),'uniqueItems':True})
+    node['properties']['verification_scope']=enum(['candidate_relation_check'])
     node['properties']['image_ref']=image_ref
     edge = obj({'from':STR,'to':STR,'type':enum(['supports','contradicts','locates','expands','narrows','eliminates','verifies'])})
     graph = obj({'nodes':array(node),'edges':array(edge)})

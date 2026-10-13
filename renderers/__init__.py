@@ -53,6 +53,7 @@ def render(analysis,kind='structured',registry=None):
     # only one pending entry and never invite continuation through a stop.
     blocked = any(x['state']=='stopped' or
                   (x['state']=='produced' and x['output']['kind']=='verification_result'
+                   and x['output'].get('scope')!='candidate_relation_check'
                    and x['output']['verdict']!='supports')
                   for x in analysis['execution_trace'])
     pending = next((s for s in analysis['method_chain']
@@ -111,6 +112,8 @@ def render(analysis,kind='structured',registry=None):
 
 def render_artifact(output):
     kind=output['kind']
+    if kind=='verification_result' and output.get('scope')=='candidate_relation_check':
+        return '候选'+output['candidate']+'关系核查：'+output['relation_check']+'。回填：'+output['backfill_check']+'。'+{'supports':'该关系有支持','rejects':'该关系不成立','unresolved':'该关系仍未核清'}[output['verdict']]+'，不代表整题答案。'
     if kind=='located_evidence': return '定位到：'+'；'.join(s['quote'] for s in output['spans'])+'。定位仍不等于定案。'
     if kind=='interpretation': return '拆解结果：'+'；'.join(p['name']+'：'+p['value'] for p in output['parts'])+'。'
     if kind=='framework_card':

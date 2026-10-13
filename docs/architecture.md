@@ -37,7 +37,11 @@ writing_review输入经独立审阅适配进入writing_feedback；两类写作�
 
 Composer计划另有类型化执行通道：action_executions → execution_trace → action_artifact图节点。明确区分计划、关系审阅与实际提交产物；只有更早的已审阅、完整、未刹车产物可被后续消费。R09骨架、F01分组、语法路线和独立候选判断各有限权；核验失败撤回答案。Renderer重检执行链与图指纹绑定，content-export保留完整产物。详见method-execution.md；该通道不认证外部语义或审阅身份。
 
-合法解释后的整题终判单列为 `question_verification_review`，不创建新方法名，也不更改解释方法的职责。输入须绑定题号、审过的任务、原题材料指纹及当前来源提交，消费实际 produced 的解释或骨架；定位、分组或剩余项不能独立定案。每个原选项完整文本必须恰好核一次，分别提交本题原文跨度、整项关系检查、回填说明和 `backfill_verdict`，并写具体停止条件。这里的 supports 是回填支持该项保留/排除判断，不是一律说候选正确；rejects/unresolved 均使该项待定。上游停止或验证失败不能被终判绕过。
+整题终判单列为 `question_verification_review`，不创建新方法名，也不更改支持方法的职责。输入须绑定题号、审过的任务、原题材料指纹及当前来源提交，消费实际 produced 的解释、骨架或逐候选关系核查；定位、分组或剩余项不能独立定案。每个原选项完整文本必须恰好核一次，分别提交本题原文跨度、整项关系检查、回填说明和 `backfill_verdict`，并写具体停止条件。这里的 supports 是回填支持该项保留/排除判断，不是一律说候选正确；rejects/unresolved 均使该项待定。上游停止或旧式决定后验证失败不能被终判绕过。
+
+verifier 可产出 `verification_result` 的显式 `scope: candidate_relation_check` 分支，不需要先假造一个 decider。必须提供 candidate、原选项完整 claim、空的 target_execution_ids、自己的准确 evidence、具体 relation_check、backfill_check 及 verdict。这些字段描述候选呼应或逻辑关系核查，不直接生成 retain/eliminate 或答案。局部 supports 不保证完整选项正确；rejects 仅否定本项所核关系，不是全题失败；unresolved 使该项终判待定，不能靠别项已排而选。缺显式 scope 的旧验证仍要求真实同候选先前决定，旧冻结输入与角色产物列表不变。
+
+没有解释/骨架支持时，终判必须消费每个原候选自己的关系核查。已有 produced 核查全部必须消费，不能省掉不利或未决记录后借另一个解释绕过。候选图只接自己的核查及共同支持产物，输出端核候选、scope、完整主张、自己的证据覆盖、载荷哈希和精确依赖边集合。保留与自己的 rejects 冲突即拒绝；自己的 unresolved 暂留。程序核字段和依赖，无法仅凭存在两个引文就证明实际两侧关系或段落任务正确，仍须独立英语审阅。
 
 新图路径为完整题干/候选主张/本项正文/实际解释产物 → question_review → question_decision → question_verification；各项自行绑定 review_id、candidate 和 effect，不借另一项关系作证。整题输出单列 question_verification，不塞入带 method_id 的 candidate_analysis；Paper 的方法判项覆盖因此不增加辅助方法信用。只有唯一正向保留、所有竞争项完成、终判已审且未停止，才闭合答案。未提供此接口的输入继续产生原 1.7.0 输出；显式提供时为 1.8.0。四 Renderer 及内嵌整卷、篇级、冻结素材、视频契约同步接纳并复核新证明，公开发布状态仍不自动变成通过。
 

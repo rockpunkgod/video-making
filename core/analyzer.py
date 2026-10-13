@@ -136,10 +136,17 @@ class QuestionAnalyzer:
             result['limitations'].append('动作与产物来自外部审阅；类型、依赖和引文一致不认证真实执行或语义正确。')
             if result['review_scope']=='mechanical_structure_only' and any(x['state']=='produced' for x in result['execution_trace']):
                 result['review_scope']='external_action_review'
-        if any(x['state']=='produced' and x['output']['kind']=='verification_result' and x['output']['verdict']!='supports' for x in result['execution_trace']):
+        if any(x['state']=='produced' and x['output']['kind']=='verification_result' and x['output'].get('scope')!='candidate_relation_check' and x['output']['verdict']!='supports' for x in result['execution_trace']):
             result.update(answer=None,answer_confidence='low',content_eligible=False,status='needs_evidence',review_scope='external_action_review')
             result['answer_verification']['closed']=False
             result['limitations'].append('显式回填核验未通过；先解决验证冲突，不沿用此前候选结论。')
+        if any(x['state']=='produced' and x['output'].get('scope')=='candidate_relation_check'
+               and (x['output']['verdict']=='unresolved' or
+                    (x['output']['verdict']=='rejects' and x['output']['candidate'] in retained))
+               for x in result['execution_trace']):
+            result.update(answer=None,answer_confidence='low',content_eligible=False,status='needs_evidence')
+            result['answer_verification']['closed']=False
+            result['limitations'].append('候选关系核查未决或与已有保留冲突；不沿用先前答案。')
         if 'question_verification_review' in q:
             result['schema_version']='1.8.0'
             verification=verify_question(q,result,self.registry,graph)

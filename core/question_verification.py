@@ -18,8 +18,21 @@ def material_fingerprint(question):
 
 def upstream_blocked(executions):
     return any(x['state']=='stopped' or (x['state']=='produced' and
-        x['output']['kind']=='verification_result' and x['output']['verdict']!='supports')
+        x['output']['kind']=='verification_result' and x['output'].get('scope')!='candidate_relation_check'
+        and x['output']['verdict']!='supports')
         for x in executions)
+
+
+def candidate_support(consumed, candidate):
+    return [x for x in consumed if x['output'].get('scope')!='candidate_relation_check'
+            or x['output'].get('candidate')==candidate]
+
+
+def has_semantic_support(consumed, candidate):
+    return any(x['output']['kind'] in {'interpretation','framework_card'} or
+               (x['output']['kind']=='verification_result' and
+                x['output'].get('scope')=='candidate_relation_check' and
+                x['output']['candidate']==candidate) for x in consumed)
 
 
 def verify_question(question, analysis, registry, graph):
@@ -52,7 +65,10 @@ def verify_question(question, analysis, registry, graph):
         if not x or x['state'] != 'produced':
             raise ValueError('Whole-question review needs actual produced earlier artifacts')
         consumed.append(x)
-    if not any(x['output']['kind'] in {'interpretation', 'framework_card'} for x in consumed):
+    if any(x['state']=='produced' and x['output'].get('scope')=='candidate_relation_check'
+           and eid not in inputs for eid,x in executions.items()):
+        raise ValueError('Whole-question review cannot bypass an existing candidate relation check')
+    if not all(has_semantic_support(consumed,c) for c in question['options']):
         raise ValueError('Location, partition or remaining candidates cannot alone decide a question')
     sections = {sid for x in consumed for sid in registry.methods[x['method_id']]['section_ids']}
     if not set(review['source_section_ids']) <= sections:
@@ -76,7 +92,13 @@ def verify_question(question, analysis, registry, graph):
         spans = [check_span(question, s) for s in c['evidence']]
         if not any(s['field'] == 'passage' for s in spans):
             raise ValueError('Each candidate needs its own passage evidence, not option self-proof')
-        effect = c['effect'] if active and c['backfill_verdict']=='supports' else 'undetermined'
+        own = candidate_support(consumed,c['candidate'])
+        own_checks=[x['output'] for x in own if x['output'].get('scope')=='candidate_relation_check']
+        if any(x['claim']!=c['claim'] for x in own_checks):
+            raise ValueError('Whole-question relation check must bind its own complete claim')
+        if c['effect']=='retain' and any(x['verdict']=='rejects' for x in own_checks):
+            raise ValueError('Whole-question retain contradicts its own relation check')
+        effect = c['effect'] if active and c['backfill_verdict']=='supports' and not any(x['verdict']=='unresolved' for x in own_checks) else 'undetermined'
         claim = graph.node('candidate_claim', c['claim'], candidate=c['candidate'])
         relation = graph.node('question_review', c['decision_rule_check'],
                               candidate=c['candidate'], review_id=review['review_id'],
@@ -84,7 +106,7 @@ def verify_question(question, analysis, registry, graph):
         graph.edge(stem, relation, 'supports')
         graph.edge(scope_node, relation, 'supports')
         graph.edge(claim, relation, 'supports')
-        for x in consumed:
+        for x in own:
             graph.edge(x['artifact_node_id'], relation, 'supports')
         evidence_ids = []
         for s in spans:
@@ -180,7 +202,11 @@ def validate_question_verification_projection(analysis, registry=None):
         if (not x or x['state'] != 'produced' or x['artifact_node_id'] != item['artifact_node_id']
                 or artifact_fingerprint(x['output']) != item['output_sha256']):
             raise ValueError('Whole-question consumed artifact projection differs')
-    if not any(trace[x['execution_id']]['output']['kind'] in {'interpretation','framework_card'} for x in inputs):
+    consumed=[trace[x['execution_id']] for x in inputs]
+    if any(x['state']=='produced' and x['output'].get('scope')=='candidate_relation_check'
+           and eid not in review['input_artifact_ids'] for eid,x in trace.items()):
+        raise ValueError('Whole-question projection cannot bypass an existing candidate relation check')
+    if not all(has_semantic_support(consumed,c['candidate']) for c in review['candidate_checks']):
         raise ValueError('Whole-question projection lacks produced interpretation')
     if registry is not None:
         sections={sid for x in inputs for sid in registry.methods[trace[x['execution_id']]['method_id']]['section_ids']}
@@ -192,7 +218,11 @@ def validate_question_verification_projection(analysis, registry=None):
     if len(report['candidate_bindings']) != len(review['candidate_checks']):
         raise ValueError('Whole-question projected candidate coverage differs')
     for c, b in zip(review['candidate_checks'], report['candidate_bindings']):
-        effect = c['effect'] if expected_state == 'reviewed' and c['backfill_verdict']=='supports' else 'undetermined'
+        own=candidate_support(consumed,c['candidate'])
+        own_checks=[x['output'] for x in own if x['output'].get('scope')=='candidate_relation_check']
+        if any(x['claim']!=c['claim'] for x in own_checks) or (c['effect']=='retain' and any(x['verdict']=='rejects' for x in own_checks)):
+            raise ValueError('Whole-question projection contradicts its own relation check')
+        effect = c['effect'] if expected_state == 'reviewed' and c['backfill_verdict']=='supports' and not any(x['verdict']=='unresolved' for x in own_checks) else 'undetermined'
         if b['candidate'] != c['candidate'] or b['effect'] != effect:
             raise ValueError('Whole-question projected candidate effect differs')
         n = nodes.get(b['review_node_id'], {})
@@ -200,7 +230,8 @@ def validate_question_verification_projection(analysis, registry=None):
                 or n.get('candidate') != c['candidate'] or n.get('review_id') != review['review_id']
                 or n.get('effect') != effect or n.get('reviewed') != (expected_state == 'reviewed')):
             raise ValueError('Whole-question review node projection differs')
-        if (scope['id'],n['id']) not in edges or not all((x['artifact_node_id'], n['id']) in edges for x in inputs):
+        incoming_artifacts={source for source,target in edges if target==n['id'] and nodes[source]['type']=='action_artifact'}
+        if (scope['id'],n['id']) not in edges or incoming_artifacts!={x['artifact_node_id'] for x in own}:
             raise ValueError('Whole-question review dropped consumed proof edges')
         if not any(node['type']=='candidate_claim' and node.get('candidate')==c['candidate']
                    and node['label']==c['claim'] and (node['id'],n['id']) in edges for node in nodes.values()):

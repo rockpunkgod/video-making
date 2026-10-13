@@ -13,6 +13,8 @@ from .grammar_navigation import navigate_grammar
 
 def output_spans(output):
     if output is None: return []
+    if output['kind']=='verification_result' and output.get('scope')=='candidate_relation_check':
+        return output['evidence']
     if output['kind']=='located_evidence': return output['spans']
     if output['kind']=='interpretation': return [s for p in output['parts'] for s in p['evidence']]
     if output['kind']=='framework_card': return [s for f in output['fields'] for s in f['evidence']]
@@ -55,6 +57,14 @@ def check_output(question, execution, registry, produced):
         if not all(covered_by(s,execution['evidence']) for s in relation['evidence']):
             raise ValueError('Decision artifact cannot borrow another action evidence')
     elif kind=='verification_result':
+        if output.get('scope')=='candidate_relation_check':
+            if output['candidate'] not in question.get('options',{}) or output['claim']!=question['options'][output['candidate']]:
+                raise ValueError('Candidate relation check must preserve its own complete option')
+            if output['target_execution_ids'] or not all(output[k].strip() for k in ['relation_check','backfill_check']):
+                raise ValueError('Candidate relation check is concrete and independent of prior decisions')
+            if not any(s['field']=='passage' for s in output['evidence']):
+                raise ValueError('Candidate relation check needs its own passage evidence')
+            return
         targets=output['target_execution_ids']
         if len(targets)!=len(set(targets)) or not set(targets)<=set(execution['input_artifact_ids']):
             raise ValueError('Verifier must consume its named earlier decisions')
@@ -146,7 +156,10 @@ def execute_actions(question, chain, matches, registry, graph, trigger_nodes, co
                 if x['output']['kind']=='candidate_decision':
                     attrs['candidate']=x['output']['candidate']
                     graph.edge(relation_nodes[x['output']['relation_index']],action_id,'supports')
-                elif x['output']['kind']=='verification_result': attrs['candidate']=x['output']['candidate']
+                elif x['output']['kind']=='verification_result':
+                    attrs['candidate']=x['output']['candidate']
+                    if x['output'].get('scope')=='candidate_relation_check':
+                        attrs['verification_scope']='candidate_relation_check'
                 artifact_id=graph.node('action_artifact',x['output']['kind'],method_id=mid,execution_id=eid,artifact_kind=x['output']['kind'],artifact_fingerprint=artifact_fingerprint(x['output']),reviewed=True,**attrs)
                 edge={'locator':'locates','reducer':'narrows','verifier':'verifies'}.get(role,'supports')
                 graph.edge(action_id,artifact_id,edge)
@@ -188,6 +201,16 @@ def validate_execution_trace(analysis,registry=None):
                     or artifact.get('artifact_kind')!=x['output']['kind'] or artifact.get('artifact_fingerprint')!=artifact_fingerprint(x['output'])
                     or action.get('type')!='method_action' or action.get('execution_id')!=eid or action.get('method_id')!=mid or action.get('label')!=x['concrete_action']):
                 raise ValueError('Serialized output is not bound to its own action graph')
+            relation_check=x['output']['kind']=='verification_result' and x['output'].get('scope')=='candidate_relation_check'
+            if relation_check != (artifact.get('verification_scope')=='candidate_relation_check'):
+                raise ValueError('Serialized candidate relation scope differs from its own artifact')
+            if relation_check and artifact.get('candidate')!=x['output']['candidate']:
+                raise ValueError('Serialized candidate relation check borrows another candidate')
+            if relation_check and (x['output']['target_execution_ids'] or
+                    not all(x['output'][key].strip() for key in ['claim','relation_check','backfill_check']) or
+                    not any(s['field']=='passage' for s in x['output']['evidence']) or
+                    not all(covered_by(s,x['evidence']) for s in x['output']['evidence'])):
+                raise ValueError('Serialized candidate relation check lost its own concrete evidence')
             if not any(e['from']==x['action_node_id'] and e['to']==x['artifact_node_id'] for e in analysis['evidence_graph']['edges']):
                 raise ValueError('Serialized artifact lacks direct producing action edge')
             produced[eid]=x

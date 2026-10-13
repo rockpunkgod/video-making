@@ -390,6 +390,92 @@
         "verdict"
       ],
       "additionalProperties": false
+    },
+    {
+      "type": "object",
+      "properties": {
+        "kind": {
+          "enum": [
+            "verification_result"
+          ]
+        },
+        "scope": {
+          "enum": [
+            "candidate_relation_check"
+          ]
+        },
+        "candidate": {
+          "type": "string",
+          "minLength": 1
+        },
+        "claim": {
+          "type": "string",
+          "minLength": 1
+        },
+        "target_execution_ids": {
+          "type": "array",
+          "maxItems": 0
+        },
+        "evidence": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "field": {
+                "type": "string",
+                "minLength": 1
+              },
+              "start": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "end": {
+                "type": "integer",
+                "minimum": 1
+              },
+              "quote": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "required": [
+              "field",
+              "start",
+              "end",
+              "quote"
+            ],
+            "additionalProperties": false
+          },
+          "minItems": 1
+        },
+        "relation_check": {
+          "type": "string",
+          "minLength": 1
+        },
+        "backfill_check": {
+          "type": "string",
+          "minLength": 1
+        },
+        "verdict": {
+          "enum": [
+            "supports",
+            "rejects",
+            "unresolved"
+          ]
+        }
+      },
+      "required": [
+        "kind",
+        "scope",
+        "candidate",
+        "claim",
+        "target_execution_ids",
+        "evidence",
+        "relation_check",
+        "backfill_check",
+        "verdict"
+      ],
+      "additionalProperties": false
     }
   ]
 }

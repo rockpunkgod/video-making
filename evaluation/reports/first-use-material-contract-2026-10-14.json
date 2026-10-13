@@ -39,7 +39,17 @@
     "no_general_filesystem_or_cross_process_transaction_atomicity_claim",
     "independent_r3_did_not_run_the_host_87_tests_or_inherit_old_runtime_results"
   ],
-  "final_fixed_commit_full_regression": "pending",
+  "final_fixed_commit_full_regression": {
+    "commit": "f0933b0",
+    "tests_run": 1465,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 1,
+    "elapsed_seconds": 854.483,
+    "report_path": "deliverables/ANSWER-Method-Engine-f0933b0/ANSWER-Method-Engine-f0933b0/local-data/answer-alignment-2026-10-13/full-regression-latest.json",
+    "report_sha256": "983f6552c60a0d793555f9d17873bdcc88aaa6ff3748d627a552a5c2fd76aa39",
+    "scope": "Fixed committed code package only; not subsequent relation-check changes, semantic or learner acceptance"
+  },
   "new_case_count": 0,
   "new_unique_question_count": 0,
   "new_blind_sample_count": 0,

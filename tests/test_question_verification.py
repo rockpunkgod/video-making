@@ -5,6 +5,7 @@ import json
 import tempfile
 from pathlib import Path
 from unittest.mock import patch
+from jsonschema.exceptions import ValidationError
 from core.analyzer import QuestionAnalyzer, PaperAnalyzer
 from core.registry import Registry
 from core.question_verification import material_fingerprint
@@ -59,6 +60,74 @@ class QuestionVerificationTests(unittest.TestCase):
         for kind in ('structured','student','legacy-wechat','content-export'):
             self.assertTrue(render(result,kind,self.registry))
         self.assertIn('不是辅助方法直接定案',render(result,'student',self.registry))
+
+    def relation_question(self):
+        q=self.question(); q.update(question_type='七选五',requested_chain=['F07'])
+        q['observations'][0]['method_id']='F07'
+        span=q['observations'][0]['evidence'][0]
+        q['action_executions']=[action('check-'+c,'F07','verifier',{
+            'kind':'verification_result','scope':'candidate_relation_check','candidate':c,
+            'claim':claim,'target_execution_ids':[],'evidence':[span],
+            'relation_check':'Synthetic two-sided relation '+c,
+            'backfill_check':'Synthetic backfill '+c,
+            'verdict':'supports' if c=='A' else 'rejects'},evidence=[span])
+            for c,claim in q['options'].items()]
+        review=q['question_verification_review']
+        review.update(material_sha256=material_fingerprint(q),
+            input_artifact_ids=[x['execution_id'] for x in q['action_executions']],
+            source_section_ids=self.registry.methods['F07']['section_ids'])
+        return q
+
+    def test_relation_verifiers_support_terminal_without_becoming_deciders(self):
+        q=self.relation_question(); support=deepcopy(q); support.pop('question_verification_review')
+        self.assertIsNone(self.engine.analyze(support)['answer'])
+        result=self.engine.analyze(q)
+        self.assertEqual(result['answer'],'A'); self.assertEqual(result['candidate_analysis'],[])
+        self.assertEqual(result['method_chain'][0]['role'],'verifier')
+        self.assertFalse(any(n['type'] in {'decision','verification'} for n in result['evidence_graph']['nodes']))
+        for mode in ('structured','student','legacy-wechat','content-export'): render(result,mode,self.registry)
+
+    def test_relation_checks_cannot_borrow_another_candidate_or_omit_one(self):
+        q=self.relation_question(); q['question_verification_review']['input_artifact_ids'].pop()
+        with self.assertRaisesRegex(ValueError,'bypass an existing'): self.engine.analyze(q)
+        q=self.relation_question(); q['question_verification_review']['input_artifact_ids'].pop()
+        q['action_executions'].pop()
+        with self.assertRaisesRegex(ValueError,'cannot alone decide'): self.engine.analyze(q)
+        q=self.relation_question(); q['action_executions'][0]['output']['claim']='partial'
+        with self.assertRaisesRegex(ValueError,'own complete option'): self.engine.analyze(q)
+
+    def test_local_relation_rejection_is_not_global_failure_but_cannot_retain(self):
+        q=self.relation_question(); q['action_executions'][0]['output']['verdict']='rejects'
+        with self.assertRaisesRegex(ValueError,'contradicts its own'): self.engine.analyze(q)
+        q=self.relation_question(); q['action_executions'][1]['output']['verdict']='unresolved'
+        r=self.engine.analyze(q); self.assertIsNone(r['answer'])
+        self.assertIn('B',r['answer_verification']['unresolved_candidates'])
+
+    def test_relation_scope_is_explicit_and_legacy_empty_targets_remain_invalid(self):
+        q=self.relation_question(); q['action_executions'][0]['output'].pop('scope')
+        with self.assertRaises(ValidationError): self.engine.analyze(q)
+
+    def test_relation_check_requires_concrete_own_passage_support(self):
+        for mutation in ('blank','option_only','foreign','outside'):
+            q=self.relation_question(); x=q['action_executions'][0]; out=x['output']
+            if mutation=='blank': out['relation_check']=' '
+            elif mutation=='foreign': out['candidate']='X'
+            elif mutation=='option_only': out['evidence']=[{'field':'option:A','start':0,'end':5,'quote':'alpha'}]
+            else: x['evidence']=[{'field':'passage','start':0,'end':5,'quote':'alpha'}]
+            with self.subTest(mutation=mutation),self.assertRaises(ValueError):self.engine.analyze(q)
+
+    def test_relation_projection_scope_and_candidate_edges_are_bound(self):
+        result=self.engine.analyze(self.relation_question())
+        for mutation in ('scope','candidate','edge'):
+            changed=deepcopy(result); x=changed['execution_trace'][0]
+            node=next(n for n in changed['evidence_graph']['nodes'] if n['id']==x['artifact_node_id'])
+            if mutation=='scope':node.pop('verification_scope')
+            elif mutation=='candidate':node['candidate']='B'
+            else:
+                target=changed['question_verification']['candidate_bindings'][1]['review_node_id']
+                changed['evidence_graph']['edges'].append({'from':x['artifact_node_id'],'to':target,'type':'supports'})
+            for mode in ('structured','student','legacy-wechat','content-export'):
+                with self.subTest(mutation=mutation,mode=mode),self.assertRaises(ValueError):render(changed,mode,self.registry)
 
     def test_legacy_input_still_has_no_terminal_field_or_answer(self):
         q=self.question(); q.pop('question_verification_review')
