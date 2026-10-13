@@ -8,6 +8,12 @@
 
 ## 当前制作从这里开始
 
+正在 [redesign/v1 分支](https://github.com/rockpunkgod/video-making/tree/redesign/v1)
+进行内容优先的改造，当前停点为 **[P0 招式、排期与文案评审](docs/redesign/CONTENT_REVIEW.md)**。
+新主版本为 B站 16:9 横屏，竖屏为派生切片；内部草稿轻量，公开发布前保留独立严审。
+先确认内容，再确认 [P1 静帧、字体与配色](ae/design/README.md)；不自动进入动态模板或整期重建。
+本轮阶段顺序、课程缺口和 ZIP 核查见 [redesign/v1 接手入口](docs/redesign/README.md)。
+
 **[FREE_SHOWCASE 当前生产工作流](docs/workflows/CURRENT_PRODUCTION_WORKFLOW.md)** 是唯一推荐的接手入口：先找实际 revision、有效输入与阻塞，再使用已有生产接口。
 
 此前兼容的创作要求持续有效，后续制作按[制作要求的延续](docs/workflows/CURRENT_PRODUCTION_WORKFLOW.md#制作要求的延续)核对；本次排版与D入场修订同时保留原生3D和连续镜头。

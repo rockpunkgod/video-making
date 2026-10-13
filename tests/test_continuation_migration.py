@@ -2,7 +2,7 @@
 import unittest
 from core.registry import Registry,load
 from core.analyzer import QuestionAnalyzer
-from scripts.generate_assets import build
+from scripts.generate_assets import build, guide_path
 
 IDS={'W'+str(i).zfill(2) for i in range(1,17)}
 
@@ -29,7 +29,7 @@ class ContinuationMigrationTest(unittest.TestCase):
     def test_all_guides_preserve_independent_actions_stops_and_short_versions(self):
         assets=build(self.r)
         for mid in IDS:
-            m=self.r.methods[mid]; guide=assets['student-guides/'+mid+'-'+m['brand_name']+'.md']
+            m=self.r.methods[mid]; guide=assets[guide_path(m)]
             for value in [m['core_action'],m['stop_rule'],m['challenge_prompt'],*(m['compact'][key] for key in ['10s','30s','90s'])]: self.assertIn(value,guide)
         for key in ['decision_rule','stop_rule','visual_formula','challenge_prompt']:
             self.assertEqual(len({self.r.methods[mid][key] for mid in IDS}),16)

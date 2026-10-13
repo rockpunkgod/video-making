@@ -56,7 +56,7 @@ No MP4 binary reproducibility is claimed across AE/hardware/encoder versions.
 
 ## Visual system and vocabulary
 
-`design/swiss-academic-motion.json` freezes a 1080×1920 six-column layout, five
+`design/legacy/swiss-academic-motion.json` freezes a 1080×1920 six-column layout, five
 type levels, semantic colors and five motion types. Typography never shrinks to
 fit; measured text paginates at fixed leading. Missing fonts, unsafe overflow,
 short subtitle holds or unsupported structures block production. English wraps

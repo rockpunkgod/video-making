@@ -151,7 +151,7 @@ class RegistryTest(unittest.TestCase):
         guides = list((ROOT / "student-guides").glob("*.md"))
         self.assertGreaterEqual(len(guides), 6)
         for method_id, method in self.methods.items():
-            matches = [path for path in guides if path.name.startswith(method_id + "-")]
+            matches = [path for path in guides if path.name == method['brand_name'] + '.md']
             self.assertEqual(len(matches), 1, method_id)
             text = matches[0].read_text(encoding="utf-8")
             for marker in ("## 四步实战卡", "## 10 秒版", "## 30 秒版", "## 90 秒版", "挑战：", "## 一屏视觉式", "反口诀："):

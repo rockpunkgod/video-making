@@ -4056,6 +4056,46 @@
                     "example_scope"
                   ],
                   "additionalProperties": false
+                },
+                "tier": {
+                  "enum": [
+                    "move",
+                    "sub_action",
+                    "knowledge"
+                  ]
+                },
+                "move_card": {
+                  "type": "object",
+                  "required": [
+                    "trigger",
+                    "action_3s",
+                    "trap_name",
+                    "counterexample",
+                    "mantra"
+                  ],
+                  "properties": {
+                    "trigger": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "action_3s": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "trap_name": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "counterexample": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "mantra": {
+                      "type": "string",
+                      "minLength": 1
+                    }
+                  },
+                  "additionalProperties": false
                 }
               },
               "required": [

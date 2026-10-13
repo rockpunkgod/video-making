@@ -8,7 +8,7 @@ import json
 from pathlib import Path
 
 from core.registry import Registry
-from scripts.generate_assets import build
+from scripts.generate_assets import build, guide_path
 
 PRIORITY = ('R01', 'R02', 'R06', 'R09', 'F01', 'G01')
 
@@ -19,8 +19,8 @@ def audit(registry=None):
     assets = build(registry)
     rows = []
     for mid, method in registry.methods.items():
-        guide_path = f'student-guides/{mid}-{method["brand_name"]}.md'
-        guide = assets.get(guide_path, '')
+        student_path = guide_path(method)
+        guide = assets.get(student_path, '')
         steps = method.get('four_step_card', {})
         # These are inspectable projections, not judgments of teaching quality.
         checks = {
@@ -48,7 +48,7 @@ def audit(registry=None):
             'method_id': mid, 'method_version': method['version'],
             'question_type': method['question_type'], 'method_type': method['method_type'],
             'primary_role': method['primary_role'], 'output_role': method['output_type'],
-            'source_section_ids': method['section_ids'], 'guide_path': guide_path,
+            'source_section_ids': method['section_ids'], 'guide_path': student_path,
             'entry_state': 'static_entry_ready' if ready else 'draft' if draft else 'held_for_reacceptance',
             'structural_checks': checks,
             'structural_gaps': [key for key, ok in checks.items() if not ok],

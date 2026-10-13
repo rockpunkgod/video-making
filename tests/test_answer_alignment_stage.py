@@ -113,17 +113,18 @@ class AlignmentStageTests(unittest.TestCase):
         self.assertNotIn('原空号走两遍',self.candidate.methods['C01']['full']['source_boundary'])
 
     def test_projection_does_not_expose_old_student_copy_or_merge_source_names(self):
-        guide=(self.path/'student-guides/R09-三步压文.md').read_text(encoding='utf-8')
-        self.assertIn('学生首次接触草稿',guide)
-        self.assertIn('传播与实用性验收未通过',guide)
+        guide=(self.path/'student-guides/三步压文.md').read_text(encoding='utf-8')
+        self.assertTrue(guide.startswith('# 三步压文'))
+        self.assertNotIn('student_ready',guide)
+        self.assertNotIn('validated',guide)
         self.assertIn('## 10 秒版',guide)
         self.assertNotIn('不看选项细节',guide)
         skill=(self.path/'gaokao-english/SKILL.md').read_text(encoding='utf-8')
         self.assertNotIn('课程原名和品牌名是同一方法',skill)
         self.assertIn('不能把独立课程原名静默合并',skill)
         self.assertTrue((self.path/'gaokao-english/generated-course-identities.yaml').exists())
-        pending=(self.path/'student-guides/W03-剧情四格.md').read_text(encoding='utf-8')
-        self.assertIn('新版入口复核中',pending)
+        pending=(self.path/'student-guides/剧情四格.md').read_text(encoding='utf-8')
+        self.assertIn(self.candidate.methods['W03']['stop_rule'],pending)
 
     def test_all_changed_source_cards_receive_reviewed_boundary_profile(self):
         for m in self.candidate.methods.values():

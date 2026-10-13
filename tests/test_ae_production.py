@@ -27,7 +27,7 @@ class AEProductionTest(unittest.TestCase):
         exp=FrozenAssetExporter(); b=exp.export(r); cls.statuses={b['asset_id']:exp.status(r)}
         candidate=make_candidate([b],[{'asset_id':b['asset_id'],'method_id':'F01','action_ids':['group-sentence']}],cls.statuses)
         cls.package=finalize_copy(build_draft(candidate,cls.statuses)); cls.manifest=manifest(cls.package,candidate)
-        cls.design=read(ROOT/'ae/design/swiss-academic-motion.json')
+        cls.design=read(ROOT/'ae/design/legacy/swiss-academic-motion.json')
         if not Path(cls.design['font']['measurement_file']).exists():
             linux=Path('/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf')
             if not linux.exists(): raise unittest.SkipTest('No explicitly measured test font available')

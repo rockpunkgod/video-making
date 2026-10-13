@@ -336,7 +336,9 @@ def realize_experience(copy_projection, motion_projection, plan, bundle, status,
     gaps = []
     if not gate['consumption_allowed']: gaps += ['UPSTREAM_PEDAGOGY_HOLD'] + plan['availability']['gaps'] + plan['availability']['blockers']
     if not reviewed: gaps.append('FINAL_EXPERIENCE_COPY_REVIEW_REQUIRED')
-    if flags: gaps.append('EXPERIENCE_TONE_OR_DUPLICATION_REVIEW_REQUIRED')
+    # A connective result reminder is an editorial warning, not a production hold.
+    if set(flags) - {'redundant_result_reminder'}:
+        gaps.append('EXPERIENCE_TONE_OR_DUPLICATION_REVIEW_REQUIRED')
     result['experience_audit'] = audit
     result['ai_tone_lint'] = {'flags': flags, 'deterministic_lint_only': True,
         'semantic_truth_certification': False, 'actual_delivery_review': 'PENDING'}

@@ -12,9 +12,12 @@ def resolve_profile(requested=None):
         result[key].update(value) if isinstance(value,dict) else result.update({key:value})
     result.update(platform=name,version=catalog['version'],status=catalog['status'])
     if isinstance(requested,dict) and requested!=result:raise ValueError('Platform profile drift; update the versioned catalog')
+    # Historical profiles retain their 1080x1920 coordinate system. style-v1
+    # has an explicit horizontal canvas; it does not rescale old safe areas.
+    canvas=result.get('canvas',[1080,1920])
     for rect in [result['safe_area_profile']['core']]+result['ui_overlay_profile']['exclusion_rects']:
         x,y,w,h=rect
-        if min(x,y)<0 or min(w,h)<=0 or x+w>1080 or y+h>1920:raise ValueError('Invalid platform rectangle')
+        if min(x,y)<0 or min(w,h)<=0 or x+w>canvas[0] or y+h>canvas[1]:raise ValueError('Invalid platform rectangle')
     return result
 
 

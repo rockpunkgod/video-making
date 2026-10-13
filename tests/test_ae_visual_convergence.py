@@ -16,7 +16,7 @@ class VisualConvergenceTest(unittest.TestCase):
         fixture.AEProductionTest.setUpClass()
         cls.package=fixture.AEProductionTest.package;cls.manifest=fixture.AEProductionTest.manifest
         cls.statuses=fixture.AEProductionTest.statuses
-        cls.design=read(ROOT/'ae/design/swiss-academic-motion-v0.2.json')
+        cls.design=read(ROOT/'ae/design/legacy/swiss-academic-motion-v0.2.json')
         if not Path(cls.design['font']['measurement_file']).exists():
             cls.design['font']=deepcopy(fixture.AEProductionTest.design['font'])
             cls.design['font']['measurement_margin_px']=16

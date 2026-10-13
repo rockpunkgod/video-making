@@ -32,7 +32,7 @@ class DirectionTests(unittest.TestCase):
                               {'start': 8, 'end': 12, 'phase': 'HOLD'}]
         self.base = self.fixture.build(design={'id': 'A_PAPER_CUT', 'background': '#F2F0EA',
                                               'ink': '#20211F', 'secondary': '#58625C'})
-        self.profiles = read('ae/design/swiss-cognitive-directions-v0.5.json')['directions']
+        self.profiles = read('ae/design/legacy/swiss-cognitive-directions-v0.5.json')['directions']
 
     def variant(self, profile, statuses=None, base=None):
         f = self.fixture

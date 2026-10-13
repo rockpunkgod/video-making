@@ -1,6 +1,21 @@
 schema_version: 1.0.0
 name: method-card
 description: 高考英语品牌方法卡的最小完整约定。
+presentation_extension:
+  optional_fields:
+    tier:
+    - move
+    - sub_action
+    - knowledge
+    move_card:
+    - trigger
+    - action_3s
+    - trap_name
+    - counterexample
+    - mantra
+  catalog: method-registry/move-catalog.yaml
+  scope: 仅品牌展示分层，不改变课程原名、教学事实、原角色或运行匹配。
+  grouping: 共享学生入口，不视为方法等价或允许跨方法借用证据。
 required_fields:
 - method_id
 - brand_name

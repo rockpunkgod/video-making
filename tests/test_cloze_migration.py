@@ -3,7 +3,7 @@ import unittest
 from copy import deepcopy
 from core.registry import Registry,load
 from core.analyzer import QuestionAnalyzer
-from scripts.generate_assets import build
+from scripts.generate_assets import build, guide_path
 
 IDS={'C'+str(i).zfill(2) for i in range(1,10)}
 
@@ -42,7 +42,7 @@ class ClozeMigrationTest(unittest.TestCase):
     def test_all_guides_preserve_actions_and_stop_independently(self):
         assets=build(self.r)
         for mid in IDS:
-            m=self.r.methods[mid]; guide=assets['student-guides/'+mid+'-'+m['brand_name']+'.md']
+            m=self.r.methods[mid]; guide=assets[guide_path(m)]
             self.assertIn(m['core_action'],guide); self.assertIn(m['stop_rule'],guide)
             self.assertIn(m['challenge_prompt'],guide)
             self.assertTrue(all(m['compact'][duration] for duration in ['10s','30s','90s']))

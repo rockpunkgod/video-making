@@ -11,8 +11,8 @@ VERSION = '0.1.0'
 def build_shot_plan(package, manifest, statuses, delivery, track, design=None):
     semantic_guard(delivery, package, manifest, statuses); validate_track(track, delivery)
     if human_voice_critic(delivery)['status'] == 'AI_TONE_WARNING': raise ValueError('AI tone needs revision')
-    ds = deepcopy(design or read(ROOT/'ae/design/swiss-cinematic-editorial-v0.3.json'))
-    registered = read(ROOT/'ae/design/swiss-cinematic-editorial-v0.3.json')
+    ds = deepcopy(design or read(ROOT/'ae/design/legacy/swiss-cinematic-editorial-v0.3.json'))
+    registered = read(ROOT/'ae/design/legacy/swiss-cinematic-editorial-v0.3.json')
     if {k: v for k, v in ds.items() if k != 'font'} != {k: v for k, v in registered.items() if k != 'font'}:
         raise ValueError('Versioned landscape design drift')
     bundles = {b['asset_id']: b for b in package['source_items']}; frozen = {s['scene_id']: s for s in package['semantic_scenes']}

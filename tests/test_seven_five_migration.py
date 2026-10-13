@@ -2,7 +2,7 @@
 import unittest
 from core.registry import Registry, load
 from core.analyzer import QuestionAnalyzer
-from scripts.generate_assets import build
+from scripts.generate_assets import build, guide_path
 from scripts.prepare_revision import prepare
 
 IDS={'F'+str(i).zfill(2) for i in range(2,12)}
@@ -49,7 +49,7 @@ class SevenFiveMigrationTest(unittest.TestCase):
         assets=build(self.r)
         for m in self.r.methods.values():
             if m['question_type']=='七选五':
-                text=assets['student-guides/'+m['method_id']+'-'+m['brand_name']+'.md']
+                text=assets[guide_path(m)]
                 self.assertIn(m['stop_rule'],text); self.assertIn(m['challenge_prompt'],text)
                 self.assertTrue(all(k in text for k in ['四步实战卡','10 秒版','30 秒版','90 秒版']))
 

@@ -19,7 +19,7 @@
       "source_section_ids": [
         "dfb7dd8dc0c2e8a1"
       ],
-      "guide_path": "student-guides/R01-选项加戏.md",
+      "guide_path": "student-guides/选项加戏.md",
       "entry_state": "draft",
       "structural_checks": {
         "symptom_present": true,
@@ -55,7 +55,7 @@
       "source_section_ids": [
         "fce5dc9189e1137b"
       ],
-      "guide_path": "student-guides/R02-谁干的陷阱.md",
+      "guide_path": "student-guides/谁干的陷阱.md",
       "entry_state": "draft",
       "structural_checks": {
         "symptom_present": true,
@@ -91,7 +91,7 @@
       "source_section_ids": [
         "fd49a052453f33e0"
       ],
-      "guide_path": "student-guides/R06-主旨缺块.md",
+      "guide_path": "student-guides/主旨缺块.md",
       "entry_state": "draft",
       "structural_checks": {
         "symptom_present": true,
@@ -127,7 +127,7 @@
       "source_section_ids": [
         "25287b93945fdb97"
       ],
-      "guide_path": "student-guides/R09-三步压文.md",
+      "guide_path": "student-guides/三步压文.md",
       "entry_state": "draft",
       "structural_checks": {
         "symptom_present": true,
@@ -165,7 +165,7 @@
         "7c0a77869754a1dc",
         "4a9de82ef9741f92"
       ],
-      "guide_path": "student-guides/F01-选项三分.md",
+      "guide_path": "student-guides/选项三分.md",
       "entry_state": "draft",
       "structural_checks": {
         "symptom_present": true,
@@ -220,7 +220,7 @@
         "62e443a0a04865bf",
         "7ae166ccec059b00"
       ],
-      "guide_path": "student-guides/G01-先判空位.md",
+      "guide_path": "student-guides/先判空位.md",
       "entry_state": "draft",
       "structural_checks": {
         "symptom_present": true,
@@ -258,7 +258,7 @@
       "source_section_ids": [
         "dfb7dd8dc0c2e8a1"
       ],
-      "guide_path": "student-guides/R01-选项加戏.md",
+      "guide_path": "student-guides/选项加戏.md",
       "entry_state": "draft",
       "structural_checks": {
         "symptom_present": true,
@@ -294,7 +294,7 @@
       "source_section_ids": [
         "fce5dc9189e1137b"
       ],
-      "guide_path": "student-guides/R02-谁干的陷阱.md",
+      "guide_path": "student-guides/谁干的陷阱.md",
       "entry_state": "draft",
       "structural_checks": {
         "symptom_present": true,
@@ -330,7 +330,7 @@
       "source_section_ids": [
         "fd49a052453f33e0"
       ],
-      "guide_path": "student-guides/R06-主旨缺块.md",
+      "guide_path": "student-guides/主旨缺块.md",
       "entry_state": "draft",
       "structural_checks": {
         "symptom_present": true,
@@ -366,7 +366,7 @@
       "source_section_ids": [
         "25287b93945fdb97"
       ],
-      "guide_path": "student-guides/R09-三步压文.md",
+      "guide_path": "student-guides/三步压文.md",
       "entry_state": "draft",
       "structural_checks": {
         "symptom_present": true,
@@ -402,7 +402,7 @@
       "source_section_ids": [
         "664edd91ce02db49"
       ],
-      "guide_path": "student-guides/R03-换词不换义.md",
+      "guide_path": "student-guides/换词不换义.md",
       "entry_state": "held_for_reacceptance",
       "structural_checks": {
         "symptom_present": true,
@@ -440,7 +440,7 @@
       "source_section_ids": [
         "4311f90fc985aca0"
       ],
-      "guide_path": "student-guides/R04-比较别偷换.md",
+      "guide_path": "student-guides/比较别偷换.md",
       "entry_state": "held_for_reacceptance",
       "structural_checks": {
         "symptom_present": true,
@@ -478,7 +478,7 @@
       "source_section_ids": [
         "c26359463dd942f3"
       ],
-      "guide_path": "student-guides/R05-因果别选反.md",
+      "guide_path": "student-guides/因果别选反.md",
       "entry_state": "held_for_reacceptance",
       "structural_checks": {
         "symptom_present": true,
@@ -516,7 +516,7 @@
       "source_section_ids": [
         "233f304ca6cf0622"
       ],
-      "guide_path": "student-guides/R07-并列打包.md",
+      "guide_path": "student-guides/并列打包.md",
       "entry_state": "static_entry_ready",
       "structural_checks": {
         "symptom_present": true,
@@ -552,7 +552,7 @@
       "source_section_ids": [
         "ba96ebddcc797633"
       ],
-      "guide_path": "student-guides/R08-例子只作证.md",
+      "guide_path": "student-guides/例子只作证.md",
       "entry_state": "held_for_reacceptance",
       "structural_checks": {
         "symptom_present": true,
@@ -590,7 +590,7 @@
       "source_section_ids": [
         "624926b4c68413ff"
       ],
-      "guide_path": "student-guides/R10-代词回填.md",
+      "guide_path": "student-guides/代词回填.md",
       "entry_state": "held_for_reacceptance",
       "structural_checks": {
         "symptom_present": true,
@@ -628,7 +628,7 @@
       "source_section_ids": [
         "0b966000686151d0"
       ],
-      "guide_path": "student-guides/R11-长句拆骨.md",
+      "guide_path": "student-guides/长句拆骨.md",
       "entry_state": "held_for_reacceptance",
       "structural_checks": {
         "symptom_present": true,
@@ -666,7 +666,7 @@
       "source_section_ids": [
         "7adfe6c470337e82"
       ],
-      "guide_path": "student-guides/R12-关键词追踪.md",
+      "guide_path": "student-guides/关键词追踪.md",
       "entry_state": "held_for_reacceptance",
       "structural_checks": {
         "symptom_present": true,
@@ -705,7 +705,7 @@
         "3104f706064bf305",
         "7adfe6c470337e82"
       ],
-      "guide_path": "student-guides/R13-名词追踪.md",
+      "guide_path": "student-guides/名词追踪.md",
       "entry_state": "held_for_reacceptance",
       "structural_checks": {
         "symptom_present": true,
@@ -744,7 +744,7 @@
         "3104f706064bf305",
         "7adfe6c470337e82"
       ],
-      "guide_path": "student-guides/R14-顺序锁区.md",
+      "guide_path": "student-guides/顺序锁区.md",
       "entry_state": "held_for_reacceptance",
       "structural_checks": {
         "symptom_present": true,
@@ -783,7 +783,7 @@
         "3104f706064bf305",
         "7adfe6c470337e82"
       ],
-      "guide_path": "student-guides/R15-动词定关系.md",
+      "guide_path": "student-guides/动词定关系.md",
       "entry_state": "held_for_reacceptance",
       "structural_checks": {
         "symptom_present": true,
@@ -821,7 +821,7 @@
       "source_section_ids": [
         "fd49a052453f33e0"
       ],
-      "guide_path": "student-guides/R16-主题锁定.md",
+      "guide_path": "student-guides/主题锁定.md",
       "entry_state": "held_for_reacceptance",
       "structural_checks": {
         "symptom_present": true,
@@ -861,7 +861,7 @@
         "664edd91ce02db49",
         "624926b4c68413ff"
       ],
-      "guide_path": "student-guides/R17-前后补证.md",
+      "guide_path": "student-guides/前后补证.md",
       "entry_state": "held_for_reacceptance",
       "structural_checks": {
         "symptom_present": true,
@@ -901,7 +901,7 @@
         "7c0a77869754a1dc",
         "4a9de82ef9741f92"
       ],
-      "guide_path": "student-guides/F01-选项三分.md",
+      "guide_path": "student-guides/选项三分.md",
       "entry_state": "draft",
       "structural_checks": {
         "symptom_present": true,
@@ -937,7 +937,7 @@
       "source_section_ids": [
         "a8f0c4ae44ae61ff"
       ],
-      "guide_path": "student-guides/F02-句型分组.md",
+      "guide_path": "student-guides/句型分组.md",
       "entry_state": "static_entry_ready",
       "structural_checks": {
         "symptom_present": true,
@@ -973,7 +973,7 @@
       "source_section_ids": [
         "7c0a77869754a1dc"
       ],
-      "guide_path": "student-guides/F03-主角分组.md",
+      "guide_path": "student-guides/主角分组.md",
       "entry_state": "held_for_reacceptance",
       "structural_checks": {
         "symptom_present": true,
@@ -1011,7 +1011,7 @@
       "source_section_ids": [
         "4a9de82ef9741f92"
       ],
-      "guide_path": "student-guides/F04-时间分组.md",
+      "guide_path": "student-guides/时间分组.md",
       "entry_state": "held_for_reacceptance",
       "structural_checks": {
         "symptom_present": true,
@@ -1049,7 +1049,7 @@
       "source_section_ids": [
         "1fcc9966ce085922"
       ],
-      "guide_path": "student-guides/F05-段首统领.md",
+      "guide_path": "student-guides/段首统领.md",
       "entry_state": "held_for_reacceptance",
       "structural_checks": {
         "symptom_present": true,
@@ -1087,7 +1087,7 @@
       "source_section_ids": [
         "92ec24e9e7003cba"
       ],
-      "guide_path": "student-guides/F06-前后呼应.md",
+      "guide_path": "student-guides/前后呼应.md",
       "entry_state": "held_for_reacceptance",
       "structural_checks": {
         "symptom_present": true,
@@ -1125,7 +1125,7 @@
       "source_section_ids": [
         "03214bbc4e91eae2"
       ],
-      "guide_path": "student-guides/F07-关系拼接.md",
+      "guide_path": "student-guides/关系拼接.md",
       "entry_state": "static_entry_ready",
       "structural_checks": {
         "symptom_present": true,
@@ -1161,7 +1161,7 @@
       "source_section_ids": [
         "3d13a787824e210c"
       ],
-      "guide_path": "student-guides/F08-情绪同向.md",
+      "guide_path": "student-guides/情绪同向.md",
       "entry_state": "static_entry_ready",
       "structural_checks": {
         "symptom_present": true,
@@ -1197,7 +1197,7 @@
       "source_section_ids": [
         "a8f0c4ae44ae61ff"
       ],
-      "guide_path": "student-guides/F09-半句补全.md",
+      "guide_path": "student-guides/半句补全.md",
       "entry_state": "static_entry_ready",
       "structural_checks": {
         "symptom_present": true,
@@ -1233,7 +1233,7 @@
       "source_section_ids": [
         "d815465ca190a14f"
       ],
-      "guide_path": "student-guides/F10-末轮反查.md",
+      "guide_path": "student-guides/末轮反查.md",
       "entry_state": "held_for_reacceptance",
       "structural_checks": {
         "symptom_present": true,
@@ -1271,7 +1271,7 @@
       "source_section_ids": [
         "d815465ca190a14f"
       ],
-      "guide_path": "student-guides/F11-正文闭环.md",
+      "guide_path": "student-guides/正文闭环.md",
       "entry_state": "held_for_reacceptance",
       "structural_checks": {
         "symptom_present": true,
@@ -1310,7 +1310,7 @@
         "c84135f2763c6806",
         "3f36ea92a4769ee5"
       ],
-      "guide_path": "student-guides/C01-语篇线索链.md",
+      "guide_path": "student-guides/语篇线索链.md",
       "entry_state": "held_for_reacceptance",
       "structural_checks": {
         "symptom_present": true,
@@ -1349,7 +1349,7 @@
         "b50b911407b9faa9",
         "3f36ea92a4769ee5"
       ],
-      "guide_path": "student-guides/C02-前后夹击.md",
+      "guide_path": "student-guides/前后夹击.md",
       "entry_state": "held_for_reacceptance",
       "structural_checks": {
         "symptom_present": true,
@@ -1387,7 +1387,7 @@
       "source_section_ids": [
         "c84135f2763c6806"
       ],
-      "guide_path": "student-guides/C03-首句定调.md",
+      "guide_path": "student-guides/首句定调.md",
       "entry_state": "held_for_reacceptance",
       "structural_checks": {
         "symptom_present": true,
@@ -1425,7 +1425,7 @@
       "source_section_ids": [
         "b0b1e691060b321a"
       ],
-      "guide_path": "student-guides/C04-词性导航.md",
+      "guide_path": "student-guides/词性导航.md",
       "entry_state": "held_for_reacceptance",
       "structural_checks": {
         "symptom_present": true,
@@ -1463,7 +1463,7 @@
       "source_section_ids": [
         "87987576b5e8284b"
       ],
-      "guide_path": "student-guides/C05-近义落地.md",
+      "guide_path": "student-guides/近义落地.md",
       "entry_state": "static_entry_ready",
       "structural_checks": {
         "symptom_present": true,
@@ -1499,7 +1499,7 @@
       "source_section_ids": [
         "7abd608ebd73dbe2"
       ],
-      "guide_path": "student-guides/C06-时间线复原.md",
+      "guide_path": "student-guides/时间线复原.md",
       "entry_state": "static_entry_ready",
       "structural_checks": {
         "symptom_present": true,
@@ -1535,7 +1535,7 @@
       "source_section_ids": [
         "89415a44acd8248e"
       ],
-      "guide_path": "student-guides/C07-名词回声.md",
+      "guide_path": "student-guides/名词回声.md",
       "entry_state": "held_for_reacceptance",
       "structural_checks": {
         "symptom_present": true,
@@ -1573,7 +1573,7 @@
       "source_section_ids": [
         "b7ce29d974576463"
       ],
-      "guide_path": "student-guides/C08-结果反推.md",
+      "guide_path": "student-guides/结果反推.md",
       "entry_state": "static_entry_ready",
       "structural_checks": {
         "symptom_present": true,
@@ -1609,7 +1609,7 @@
       "source_section_ids": [
         "b7ce29d974576463"
       ],
-      "guide_path": "student-guides/C09-动作串联.md",
+      "guide_path": "student-guides/动作串联.md",
       "entry_state": "static_entry_ready",
       "structural_checks": {
         "symptom_present": true,
@@ -1664,7 +1664,7 @@
         "62e443a0a04865bf",
         "7ae166ccec059b00"
       ],
-      "guide_path": "student-guides/G01-先判空位.md",
+      "guide_path": "student-guides/先判空位.md",
       "entry_state": "draft",
       "structural_checks": {
         "symptom_present": true,
@@ -1700,7 +1700,7 @@
       "source_section_ids": [
         "781c4478d621bf5c"
       ],
-      "guide_path": "student-guides/G02-双路分流.md",
+      "guide_path": "student-guides/双路分流.md",
       "entry_state": "static_entry_ready",
       "structural_checks": {
         "symptom_present": true,
@@ -1736,7 +1736,7 @@
       "source_section_ids": [
         "98a55752856ca984"
       ],
-      "guide_path": "student-guides/G03-限定词落位.md",
+      "guide_path": "student-guides/限定词落位.md",
       "entry_state": "static_entry_ready",
       "structural_checks": {
         "symptom_present": true,
@@ -1772,7 +1772,7 @@
       "source_section_ids": [
         "92af20a0997f0b48"
       ],
-      "guide_path": "student-guides/G04-指代落位.md",
+      "guide_path": "student-guides/指代落位.md",
       "entry_state": "static_entry_ready",
       "structural_checks": {
         "symptom_present": true,
@@ -1808,7 +1808,7 @@
       "source_section_ids": [
         "bdec04e2ce032b40"
       ],
-      "guide_path": "student-guides/G05-介词看场景.md",
+      "guide_path": "student-guides/介词看场景.md",
       "entry_state": "static_entry_ready",
       "structural_checks": {
         "symptom_present": true,
@@ -1844,7 +1844,7 @@
       "source_section_ids": [
         "9b496b1572cdf49b"
       ],
-      "guide_path": "student-guides/G06-从句找缺口.md",
+      "guide_path": "student-guides/从句找缺口.md",
       "entry_state": "static_entry_ready",
       "structural_checks": {
         "symptom_present": true,
@@ -1880,7 +1880,7 @@
       "source_section_ids": [
         "32c08d6c85a150ea"
       ],
-      "guide_path": "student-guides/G07-句间搭桥.md",
+      "guide_path": "student-guides/句间搭桥.md",
       "entry_state": "static_entry_ready",
       "structural_checks": {
         "symptom_present": true,
@@ -1916,7 +1916,7 @@
       "source_section_ids": [
         "a166ae34f9256ee9"
       ],
-      "guide_path": "student-guides/G08-词性落位.md",
+      "guide_path": "student-guides/词性落位.md",
       "entry_state": "static_entry_ready",
       "structural_checks": {
         "symptom_present": true,
@@ -1952,7 +1952,7 @@
       "source_section_ids": [
         "ab95cd79ca0709e2"
       ],
-      "guide_path": "student-guides/G09-名词节点.md",
+      "guide_path": "student-guides/名词节点.md",
       "entry_state": "static_entry_ready",
       "structural_checks": {
         "symptom_present": true,
@@ -1988,7 +1988,7 @@
       "source_section_ids": [
         "9b610bdb9f63227e"
       ],
-      "guide_path": "student-guides/G10-形副节点.md",
+      "guide_path": "student-guides/形副节点.md",
       "entry_state": "static_entry_ready",
       "structural_checks": {
         "symptom_present": true,
@@ -2024,7 +2024,7 @@
       "source_section_ids": [
         "a26dc83760c12ebb"
       ],
-      "guide_path": "student-guides/G11-数词节点.md",
+      "guide_path": "student-guides/数词节点.md",
       "entry_state": "static_entry_ready",
       "structural_checks": {
         "symptom_present": true,
@@ -2060,7 +2060,7 @@
       "source_section_ids": [
         "5131f97d0dc78441"
       ],
-      "guide_path": "student-guides/G12-动词二分.md",
+      "guide_path": "student-guides/动词二分.md",
       "entry_state": "static_entry_ready",
       "structural_checks": {
         "symptom_present": true,
@@ -2096,7 +2096,7 @@
       "source_section_ids": [
         "a0bcc74f05b00671"
       ],
-      "guide_path": "student-guides/G13-时态三查.md",
+      "guide_path": "student-guides/时态三查.md",
       "entry_state": "static_entry_ready",
       "structural_checks": {
         "symptom_present": true,
@@ -2132,7 +2132,7 @@
       "source_section_ids": [
         "a0bcc74f05b00671"
       ],
-      "guide_path": "student-guides/G14-找真主语.md",
+      "guide_path": "student-guides/找真主语.md",
       "entry_state": "static_entry_ready",
       "structural_checks": {
         "symptom_present": true,
@@ -2168,7 +2168,7 @@
       "source_section_ids": [
         "f77de6ec724f8e88"
       ],
-      "guide_path": "student-guides/G15-非谓语三轴.md",
+      "guide_path": "student-guides/非谓语三轴.md",
       "entry_state": "static_entry_ready",
       "structural_checks": {
         "symptom_present": true,
@@ -2204,7 +2204,7 @@
       "source_section_ids": [
         "7c16410a7f1b8e4f"
       ],
-      "guide_path": "student-guides/G16-找动作主人.md",
+      "guide_path": "student-guides/找动作主人.md",
       "entry_state": "static_entry_ready",
       "structural_checks": {
         "symptom_present": true,
@@ -2240,7 +2240,7 @@
       "source_section_ids": [
         "781c4478d621bf5c"
       ],
-      "guide_path": "student-guides/G17-长句脱壳.md",
+      "guide_path": "student-guides/长句脱壳.md",
       "entry_state": "static_entry_ready",
       "structural_checks": {
         "symptom_present": true,
@@ -2276,7 +2276,7 @@
       "source_section_ids": [
         "781c4478d621bf5c"
       ],
-      "guide_path": "student-guides/G18-考点重复反查.md",
+      "guide_path": "student-guides/考点重复反查.md",
       "entry_state": "static_entry_ready",
       "structural_checks": {
         "symptom_present": true,
@@ -2312,7 +2312,7 @@
       "source_section_ids": [
         "781c4478d621bf5c"
       ],
-      "guide_path": "student-guides/G19-变形次数反查.md",
+      "guide_path": "student-guides/变形次数反查.md",
       "entry_state": "static_entry_ready",
       "structural_checks": {
         "symptom_present": true,
@@ -2350,7 +2350,7 @@
         "f8cfb194a81aad6e",
         "ed19bd45d6bc3762"
       ],
-      "guide_path": "student-guides/A01-作文五检.md",
+      "guide_path": "student-guides/作文五检.md",
       "entry_state": "static_entry_ready",
       "structural_checks": {
         "symptom_present": true,
@@ -2386,7 +2386,7 @@
       "source_section_ids": [
         "0a6f5b5594a41dd6"
       ],
-      "guide_path": "student-guides/A02-六步成稿.md",
+      "guide_path": "student-guides/六步成稿.md",
       "entry_state": "held_for_reacceptance",
       "structural_checks": {
         "symptom_present": true,
@@ -2425,7 +2425,7 @@
         "15e18423e3364f72",
         "8cc4571377b8183a"
       ],
-      "guide_path": "student-guides/A03-三步造句.md",
+      "guide_path": "student-guides/三步造句.md",
       "entry_state": "held_for_reacceptance",
       "structural_checks": {
         "symptom_present": true,
@@ -2464,7 +2464,7 @@
         "15e18423e3364f72",
         "8cc4571377b8183a"
       ],
-      "guide_path": "student-guides/A04-句块拼接.md",
+      "guide_path": "student-guides/句块拼接.md",
       "entry_state": "held_for_reacceptance",
       "structural_checks": {
         "symptom_present": true,
@@ -2503,7 +2503,7 @@
         "15e18423e3364f72",
         "8cc4571377b8183a"
       ],
-      "guide_path": "student-guides/A05-长句重组.md",
+      "guide_path": "student-guides/长句重组.md",
       "entry_state": "held_for_reacceptance",
       "structural_checks": {
         "symptom_present": true,
@@ -2542,7 +2542,7 @@
         "27cf55e8f2cf7c93",
         "1b1197e2fa02ee07"
       ],
-      "guide_path": "student-guides/A06-对照仿写.md",
+      "guide_path": "student-guides/对照仿写.md",
       "entry_state": "held_for_reacceptance",
       "structural_checks": {
         "symptom_present": true,
@@ -2581,7 +2581,7 @@
         "4dde2ad49f107ae2",
         "3f39d3b03e8baef0"
       ],
-      "guide_path": "student-guides/A07-长句搭积木.md",
+      "guide_path": "student-guides/长句搭积木.md",
       "entry_state": "held_for_reacceptance",
       "structural_checks": {
         "symptom_present": true,
@@ -2620,7 +2620,7 @@
         "cfc5531cda2a9b91",
         "e68392b5352c1bc7"
       ],
-      "guide_path": "student-guides/A08-文体骨架.md",
+      "guide_path": "student-guides/文体骨架.md",
       "entry_state": "held_for_reacceptance",
       "structural_checks": {
         "symptom_present": true,
@@ -2660,7 +2660,7 @@
         "f8cfb194a81aad6e",
         "ed19bd45d6bc3762"
       ],
-      "guide_path": "student-guides/A09-应用文评分.md",
+      "guide_path": "student-guides/应用文评分.md",
       "entry_state": "static_entry_ready",
       "structural_checks": {
         "symptom_present": true,
@@ -2697,7 +2697,7 @@
         "c827be84f7798683",
         "0a6f5b5594a41dd6"
       ],
-      "guide_path": "student-guides/A10-读背仿与训练阶段.md",
+      "guide_path": "student-guides/读背仿与训练阶段.md",
       "entry_state": "held_for_reacceptance",
       "structural_checks": {
         "symptom_present": true,
@@ -2742,7 +2742,7 @@
         "7b4c299267a685c2",
         "27662f3285730b79"
       ],
-      "guide_path": "student-guides/W01-五步锁剧情.md",
+      "guide_path": "student-guides/五步锁剧情.md",
       "entry_state": "held_for_reacceptance",
       "structural_checks": {
         "symptom_present": true,
@@ -2783,7 +2783,7 @@
         "7b4c299267a685c2",
         "27662f3285730b79"
       ],
-      "guide_path": "student-guides/W02-十句五锚.md",
+      "guide_path": "student-guides/十句五锚.md",
       "entry_state": "held_for_reacceptance",
       "structural_checks": {
         "symptom_present": true,
@@ -2823,7 +2823,7 @@
         "a9f982dcfec817d9",
         "6570e8d5c4fff00d"
       ],
-      "guide_path": "student-guides/W03-剧情四格.md",
+      "guide_path": "student-guides/剧情四格.md",
       "entry_state": "held_for_reacceptance",
       "structural_checks": {
         "symptom_present": true,
@@ -2863,7 +2863,7 @@
         "a9f982dcfec817d9",
         "7b4c299267a685c2"
       ],
-      "guide_path": "student-guides/W04-首句找缺口.md",
+      "guide_path": "student-guides/首句找缺口.md",
       "entry_state": "held_for_reacceptance",
       "structural_checks": {
         "symptom_present": true,
@@ -2902,7 +2902,7 @@
         "866388dfa1b014b3",
         "5391fbc041ed3f90"
       ],
-      "guide_path": "student-guides/W05-动作拆链.md",
+      "guide_path": "student-guides/动作拆链.md",
       "entry_state": "held_for_reacceptance",
       "structural_checks": {
         "symptom_present": true,
@@ -2941,7 +2941,7 @@
         "0601c0f1de7a4b8f",
         "a9f982dcfec817d9"
       ],
-      "guide_path": "student-guides/W06-三点锁题.md",
+      "guide_path": "student-guides/三点锁题.md",
       "entry_state": "held_for_reacceptance",
       "structural_checks": {
         "symptom_present": true,
@@ -2981,7 +2981,7 @@
         "6570e8d5c4fff00d",
         "a9f982dcfec817d9"
       ],
-      "guide_path": "student-guides/W07-伏笔回扣.md",
+      "guide_path": "student-guides/伏笔回扣.md",
       "entry_state": "held_for_reacceptance",
       "structural_checks": {
         "symptom_present": true,
@@ -3020,7 +3020,7 @@
         "0601c0f1de7a4b8f",
         "a9f982dcfec817d9"
       ],
-      "guide_path": "student-guides/W08-因果三连.md",
+      "guide_path": "student-guides/因果三连.md",
       "entry_state": "held_for_reacceptance",
       "structural_checks": {
         "symptom_present": true,
@@ -3060,7 +3060,7 @@
         "5391fbc041ed3f90",
         "6570e8d5c4fff00d"
       ],
-      "guide_path": "student-guides/W09-细节三镜.md",
+      "guide_path": "student-guides/细节三镜.md",
       "entry_state": "held_for_reacceptance",
       "structural_checks": {
         "symptom_present": true,
@@ -3098,7 +3098,7 @@
       "source_section_ids": [
         "0601c0f1de7a4b8f"
       ],
-      "guide_path": "student-guides/W10-无痕衔接.md",
+      "guide_path": "student-guides/无痕衔接.md",
       "entry_state": "held_for_reacceptance",
       "structural_checks": {
         "symptom_present": true,
@@ -3139,7 +3139,7 @@
         "a9f982dcfec817d9",
         "6570e8d5c4fff00d"
       ],
-      "guide_path": "student-guides/W11-小转折.md",
+      "guide_path": "student-guides/小转折.md",
       "entry_state": "held_for_reacceptance",
       "structural_checks": {
         "symptom_present": true,
@@ -3178,7 +3178,7 @@
         "0601c0f1de7a4b8f",
         "3c0a4de4ecbf9d90"
       ],
-      "guide_path": "student-guides/W12-精准换词.md",
+      "guide_path": "student-guides/精准换词.md",
       "entry_state": "held_for_reacceptance",
       "structural_checks": {
         "symptom_present": true,
@@ -3219,7 +3219,7 @@
         "6570e8d5c4fff00d",
         "a9f982dcfec817d9"
       ],
-      "guide_path": "student-guides/W13-结尾回扣.md",
+      "guide_path": "student-guides/结尾回扣.md",
       "entry_state": "held_for_reacceptance",
       "structural_checks": {
         "symptom_present": true,
@@ -3260,7 +3260,7 @@
         "6570e8d5c4fff00d",
         "a9f982dcfec817d9"
       ],
-      "guide_path": "student-guides/W14-骨架句与肌肉句.md",
+      "guide_path": "student-guides/骨架句与肌肉句.md",
       "entry_state": "held_for_reacceptance",
       "structural_checks": {
         "symptom_present": true,
@@ -3301,7 +3301,7 @@
         "09015032f4ec758b",
         "27662f3285730b79"
       ],
-      "guide_path": "student-guides/W15-续写评分.md",
+      "guide_path": "student-guides/续写评分.md",
       "entry_state": "held_for_reacceptance",
       "structural_checks": {
         "symptom_present": true,
@@ -3340,7 +3340,7 @@
         "0601c0f1de7a4b8f",
         "7b4c299267a685c2"
       ],
-      "guide_path": "student-guides/W16-五档训练升级.md",
+      "guide_path": "student-guides/五档训练升级.md",
       "entry_state": "held_for_reacceptance",
       "structural_checks": {
         "symptom_present": true,

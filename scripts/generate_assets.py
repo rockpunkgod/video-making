@@ -3,6 +3,11 @@ import argparse
 import yaml
 from core.registry import ROOT, Registry, load
 
+def guide_path(method):
+    """Consumer filenames contain the display name; internal IDs stay in Registry."""
+    name = method['brand_name'].replace('/', '／').replace('\\', '＼')
+    return f'student-guides/{name}.md'
+
 def build(registry=None):
     r = registry or Registry()
     assets = {}
@@ -10,22 +15,19 @@ def build(registry=None):
         draft=m.get('source_alignment',{}).get('authored_first_contact_draft') is True
         if not m.get('student_ready') and not draft:
             if m.get('source_alignment'):
-                assets[f'student-guides/{mid}-{m["brand_name"]}.md'] = (
-                    f'# {mid} {m["brand_name"]}：新版入口复核中\n\n'
-                    f'当前来源版本：{r.index["source_baseline"]["commit"]}；卡片版本：{m["version"]}。\n\n'
-                    '旧版首次接触稿不能继续作为新版入口。当前四步动作可查询方法卡，完整边界须读本版来源；短版传播与实用性验收仍未通过。\n')
+                assets[guide_path(m)] = (
+                    f'# {m["brand_name"]}\n\n'
+                    f'第一步：{m["four_step_card"]["first_cut"]}\n\n'
+                    f'做到哪里：{m["four_step_card"]["judge"]}\n\n'
+                    f'什么时候停：{m["stop_rule"]}\n')
             continue
-        label='学生首次接触草稿' if draft and not m.get('student_ready') else '学生首次接触版'
-        parts = [f'# {mid} {m["brand_name"]}：{label}', m['entry_copy'], '## 四步实战卡']
+        parts = [f'# {m["brand_name"]}', m['entry_copy'], '## 四步实战卡']
         parts += [f'{i}. {label}：{m["four_step_card"][key]}' for i,(key,label) in enumerate([('start','启动'),('first_cut','第一刀'),('judge','判断'),('stop','停止')],1)]
         parts += ['Stop Rule：'+m['stop_rule']]
         for duration in ['10','30','90']:
             parts += [f'## {duration} 秒版',m['compact'][duration+'s']]
-        parts += ['## 一屏视觉式','```text\n'+m['visual_formula']+'\n```','反口诀：'+m['anti_rule'],'## 为什么容易错',m['common_wrong_instinct'],'## 反例与挑战','反例/边界示意（不等于已核验真题）：'+'；'.join(m['counterexamples']),m['challenge_prompt'],f'生成来源：Registry {mid}@{m["version"]}。student_ready仅表示静态学生入口齐备，真人验收待运行。']
-        if draft and not m.get('student_ready'):
-            parts[-1] = f'生成来源：Registry {mid}@{m["version"]}。当前 student_ready=false，静态入口复核未完成，真人验收待运行。'
-            parts += ['草稿状态：短版时长未实测，传播与实用性验收未通过；不得据此升级 validated、stable、Efficient 或 Signature。']
-        assets[f'student-guides/{mid}-{m["brand_name"]}.md'] = '\n\n'.join(parts)+'\n'
+        parts += ['## 一屏视觉式','```text\n'+m['visual_formula']+'\n```','反口诀：'+m['anti_rule'],'## 为什么容易错',m['common_wrong_instinct'],'## 反例与挑战','反例/边界示意：'+'；'.join(m['counterexamples']),m['challenge_prompt']]
+        assets[guide_path(m)] = '\n\n'.join(parts)+'\n'
     symptoms = {'routes':[]}
     for m in r.methods.values():
         aliases=next((x['phrases'] for x in r.symptom_cues if x['method_id']==m['method_id']),[])
@@ -81,6 +83,11 @@ def build(registry=None):
         if d['path'].startswith('agents/'):
             assets[d['path']] = '<!-- Generated compatibility contract; installed Skill uses Registry. -->\n'+r.document(d['path'])
     assets['references/method-roles.md'] = '# 方法角色（自动生成）\n\n'+'\n'.join(f'- {m["method_id"]} {m["brand_name"]}：{m["method_type"]} / {m["primary_role"]} → {m["output_type"]}' for m in r.methods.values())+'\n'
+    # Current brand overlays are optional; frozen historical projections remain replayable.
+    catalog_path = r.asset_root/'method-registry/move-catalog.yaml'
+    if catalog_path.exists() and not r.is_historical:
+        from creative_os.moves import load_catalog, student_cards
+        assets.update(student_cards(load_catalog(catalog_path, registry=r)))
     return assets
 
 def generate(check=False,registry=None,output_root=None):

@@ -1,0 +1,1994 @@
+version: 0.1.0
+source_commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
+scope: brand_projection_only
+runtime_aliases_changed: false
+tiers:
+  R01: move
+  R02: move
+  R06: sub_action
+  R09: move
+  R03: move
+  R04: move
+  R05: move
+  R07: move
+  R08: move
+  R10: move
+  R11: move
+  R12: move
+  R13: sub_action
+  R14: sub_action
+  R15: sub_action
+  R16: move
+  R17: sub_action
+  F01: move
+  F02: sub_action
+  F03: sub_action
+  F04: sub_action
+  F05: move
+  F06: move
+  F07: move
+  F08: sub_action
+  F09: sub_action
+  F10: sub_action
+  F11: sub_action
+  C01: move
+  C02: move
+  C03: sub_action
+  C04: sub_action
+  C05: sub_action
+  C06: sub_action
+  C07: sub_action
+  C08: sub_action
+  C09: sub_action
+  G01: move
+  G02: sub_action
+  G03: knowledge
+  G04: knowledge
+  G05: move
+  G06: move
+  G07: move
+  G08: move
+  G09: knowledge
+  G10: knowledge
+  G11: knowledge
+  G12: move
+  G13: sub_action
+  G14: sub_action
+  G15: move
+  G16: sub_action
+  G17: sub_action
+  G18: sub_action
+  G19: sub_action
+  A01: move
+  A02: move
+  A03: move
+  A04: move
+  A05: move
+  A06: move
+  A07: move
+  A08: knowledge
+  A09: knowledge
+  A10: move
+  W01: move
+  W02: move
+  W03: move
+  W04: move
+  W05: move
+  W06: sub_action
+  W07: sub_action
+  W08: sub_action
+  W09: sub_action
+  W10: sub_action
+  W11: sub_action
+  W12: sub_action
+  W13: move
+  W14: knowledge
+  W15: knowledge
+  W16: move
+entries:
+- name: 标题放回全文
+  method_ids:
+  - R16
+  - R09
+  - R06
+  question_type: 阅读理解
+  first_batch: true
+  move_card:
+    trigger: 题干问标题或主旨。
+    action_3s: 圈出标题之间不同的判断。
+    trap_name: 话题跑偏
+    counterexample: 只问一段时，别拿全文替它作答。
+    mantra: 相关还不够，要盖住所问内容。
+  field_bindings:
+    trigger:
+    - method_id: R16
+      version: 1.2.0
+      field: trigger_cues
+      sha: 4a47c12def3392018eac1c34015cc59435eefe8ff67f53b6123cc76bc4e072a7
+    - method_id: R09
+      version: 1.2.0
+      field: trigger_cues
+      sha: 01d474d506aafe053e947d10d7220b42b9e7285e307dc61c58b0106d2d48e539
+    - method_id: R06
+      version: 1.2.0
+      field: trigger_cues
+      sha: 269251950abdd9198b2463a5d00ffdded38407d226e00b0fbe3ddca8c9f6e1e9
+    action_3s:
+    - method_id: R16
+      version: 1.2.0
+      field: four_step_card
+      sha: 11e323d0141b3b562314ee9bf941feeba4b92fe903676bf6bb1c89c8f8ff0211
+    - method_id: R09
+      version: 1.2.0
+      field: four_step_card
+      sha: c9be31b908e0fe01df52a94c2f3d377bed33efd732e53d47de57b9039bca2619
+    - method_id: R06
+      version: 1.2.0
+      field: four_step_card
+      sha: c3255e5ae4a165c0e386f4843b0f25ea5a1ceec8b59ae7973c5024022f85492c
+    trap_name:
+    - method_id: R16
+      version: 1.2.0
+      field: common_wrong_instinct
+      sha: c46d42d56107422b3536c54f87a952c88b2f2a6a3ed2396cbc0c80a33a930809
+    - method_id: R09
+      version: 1.2.0
+      field: common_wrong_instinct
+      sha: fa4a9251a40a46d2efb35a41cba3c8ec4e9e98207c54bc36b79c10366107ce37
+    - method_id: R06
+      version: 1.2.0
+      field: common_wrong_instinct
+      sha: 05075323787601978373192ce598cdc3d19e523c521b0910de12e5d1beb0e5a0
+    counterexample:
+    - method_id: R16
+      version: 1.2.0
+      field: counterexamples
+      sha: 6272510b4217b08eefd66e524fa637a3f42f27f5a10a9202638ae14e01367949
+    - method_id: R09
+      version: 1.2.0
+      field: counterexamples
+      sha: 624d5c8dff9246452624611f460a777ef30a8bce1a756b0efb58d1ca061b8948
+    - method_id: R06
+      version: 1.2.0
+      field: counterexamples
+      sha: 7544b2cbb85235cd3d508d023b9545ba4e4cb7b2a66b273afe5068e5b98f93b1
+    mantra:
+    - method_id: R16
+      version: 1.2.0
+      field: memory_line
+      sha: 8b894df4aec2c59ac14de2422c32ca2146713af466c040d5b3a31ddaae7694e5
+    - method_id: R09
+      version: 1.2.0
+      field: memory_line
+      sha: 7d8b6ce0944bd579fc2285d34a52ababeca68a48c3e3313977c9aa9762d4bb64
+    - method_id: R06
+      version: 1.2.0
+      field: memory_line
+      sha: 6f5031644e9541e74e3e5f5a57d8f8460e25c0e1948e872085b0095e9e9ae7e6
+  methods:
+  - method_id: R16
+    version: 1.2.0
+    source_name: mainly题与主旨大意
+    role: framework
+    source_references:
+    - repository: https://github.com/rockpunkgod/ANSWER.git
+      path: gaokao-english/references/reading-comprehension.md
+      heading: mainly题与主旨大意
+      commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
+  - method_id: R09
+    version: 1.2.0
+    source_name: 三化法
+    role: framework
+    source_references:
+    - repository: https://github.com/rockpunkgod/ANSWER.git
+      path: gaokao-english/references/reading-comprehension.md
+      heading: 三化法
+      commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
+    - repository: https://github.com/rockpunkgod/ANSWER.git
+      path: gaokao-english/references/course-evidence.md
+      heading: 其他已激活阅读方法
+      commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
+  - method_id: R06
+    version: 1.2.0
+    source_name: 主旨缺失（判项诊断用语）
+    role: decider
+    source_references:
+    - repository: https://github.com/rockpunkgod/ANSWER.git
+      path: gaokao-english/references/reading-comprehension.md
+      heading: mainly题与主旨大意
+      commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
+    - repository: https://github.com/rockpunkgod/ANSWER.git
+      path: gaokao-english/references/course-evidence.md
+      heading: 其他已激活阅读方法
+      commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
+  evaluation:
+    sampled: 10
+    annotated: 0
+    applicable: null
+    hits: null
+    hit_rate: null
+    annotation_coverage: 0.0
+    human_audit_fraction: null
+  wording_review: pending
+  student_test: not_run
+- name: 关键词追踪
+  method_ids:
+  - R12
+  - R13
+  - R14
+  - R15
+  - R17
+  question_type: 阅读理解
+  first_batch: true
+  move_card:
+    trigger: 题干要找一个对象或一件事。
+    action_3s: 圈题干里有区分力的词。
+    trap_name: 同词误认
+    counterexample: 同一个词指向不同对象时，不能算命中。
+    mantra: 带着问题找，再读完整意思。
+  field_bindings:
+    trigger:
+    - method_id: R12
+      version: 1.2.0
+      field: trigger_cues
+      sha: f672a2f64f68546396a589f4d8752c281f3d8e9deca35a039e957722c134db15
+    - method_id: R13
+      version: 1.2.0
+      field: trigger_cues
+      sha: 286412e1e148db0354ef999a999311f727427d30eb622d237073794413a84a53
+    - method_id: R14
+      version: 1.2.0
+      field: trigger_cues
+      sha: 010e166f5d93efb0269c42749428da8a29f9fd740f48229ae5c0f46981f86949
+    - method_id: R15
+      version: 1.2.0
+      field: trigger_cues
+      sha: 594808ca30254a77f712758b7caa27d48d02880eb58fd20dc4b6edb51c44f47e
+    - method_id: R17
+      version: 1.2.0
+      field: trigger_cues
+      sha: e1ef140e1acc783d923026c0d5e9d92cb5bf4ad7dd53ea08178089b9ee156d29
+    action_3s:
+    - method_id: R12
+      version: 1.2.0
+      field: four_step_card
+      sha: 94670d61378eb67295853e10f57e8eee9305c0e9d75ae51df90e0b470acfeb98
+    - method_id: R13
+      version: 1.2.0
+      field: four_step_card
+      sha: 38cf3734d2bb6b0f92ec99eaf28f704c4c51851deaf120766913a021d32c6b23
+    - method_id: R14
+      version: 1.2.0
+      field: four_step_card
+      sha: 4425326276f9c154b1d518e15666df1c62f3dad5b32a1e64797f243c3866f6c3
+    - method_id: R15
+      version: 1.2.0
+      field: four_step_card
+      sha: f9e352212002c0d114621f55ecadc60eeb5e792ed1c21cbe6615083dcf9e91f0
+    - method_id: R17
+      version: 1.2.0
+      field: four_step_card
+      sha: 51d20381068c0b11033e8eba885b55e087ade94566f72b21dc2f9b48dbf650e3
+    trap_name:
+    - method_id: R12
+      version: 1.2.0
+      field: common_wrong_instinct
+      sha: 96dcf83030d1b1c17356b3d0d60d1cf7f9dd466a0d84f574a701383f9b020d81
+    - method_id: R13
+      version: 1.2.0
+      field: common_wrong_instinct
+      sha: 4fbf311e01bb78e90a3d1f4d001dbfeb9ef3a910fa45ffe00519a59e3a2fd790
+    - method_id: R14
+      version: 1.2.0
+      field: common_wrong_instinct
+      sha: 85c735494e550d0c07bc30f62b28feb4aead4358106739f63c91aa2a63009359
+    - method_id: R15
+      version: 1.2.0
+      field: common_wrong_instinct
+      sha: ebf7fe8b1fac85340f59d42ccd910be2a3093afb1297998b034c6b1136dbe3d0
+    - method_id: R17
+      version: 1.2.0
+      field: common_wrong_instinct
+      sha: b5b7b43eefec3cc2e6ebccf7af8d51aeb08522c24a92af3007d8c2838825d9b3
+    counterexample:
+    - method_id: R12
+      version: 1.2.0
+      field: counterexamples
+      sha: f30c23e86c3b3ea6ab064b83b5d02bd96ed86ffa212e6e3ec427fd33de369a9a
+    - method_id: R13
+      version: 1.2.0
+      field: counterexamples
+      sha: 68877968ab7242a5a98169f9cc9094e2842444f91997eff1af34044657e1bf3f
+    - method_id: R14
+      version: 1.2.0
+      field: counterexamples
+      sha: f14593e7b43be86b243c4d9264d862dc8bf9b054ae473fed4431e1e5ec0d576d
+    - method_id: R15
+      version: 1.2.0
+      field: counterexamples
+      sha: dceeec9a45824b92d10563cc58f11d13232af3f551998d3c81d1521e08005927
+    - method_id: R17
+      version: 1.2.0
+      field: counterexamples
+      sha: 9b31771deddaf35c64d2b8efea943a1ec2e07c3412b26d0c89942f99c835aaf9
+    mantra:
+    - method_id: R12
+      version: 1.2.0
+      field: memory_line
+      sha: 387cb504d4eee3f3fab1175a4678bd2865ea9e73a963a438d6536e47096800d6
+    - method_id: R13
+      version: 1.2.0
+      field: memory_line
+      sha: fe43a48695e2ed4b9b28e39d278fc2294fc8ce6dd4ed2c48fa17bf46c36b9c9a
+    - method_id: R14
+      version: 1.2.0
+      field: memory_line
+      sha: 96da88a0967d642e17d365697152e79cb6594b89d3c36bb307fda5be2a0bfaee
+    - method_id: R15
+      version: 1.2.0
+      field: memory_line
+      sha: 947d5e34ec8c2405b44d1fa9d446d88d750e9b0985021ee942326497f6ea8e3a
+    - method_id: R17
+      version: 1.2.0
+      field: memory_line
+      sha: f8d1403d635e66d53ae20ab8879a16a828d8ffd8a52c6314d6307a222b3cc435
+  methods:
+  - method_id: R12
+    version: 1.2.0
+    source_name: 跳读定位
+    role: locator
+    source_references:
+    - repository: https://github.com/rockpunkgod/ANSWER.git
+      path: gaokao-english/references/reading-comprehension.md
+      heading: 跳读定位
+      commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
+  - method_id: R13
+    version: 1.2.0
+    source_name: 名词定出处
+    role: locator
+    source_references:
+    - repository: https://github.com/rockpunkgod/ANSWER.git
+      path: gaokao-english/references/reading-comprehension.md
+      heading: 按题型任务分流，不按文体硬套
+      commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
+    - repository: https://github.com/rockpunkgod/ANSWER.git
+      path: gaokao-english/references/reading-comprehension.md
+      heading: 跳读定位
+      commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
+  - method_id: R14
+    version: 1.2.0
+    source_name: 题文同序
+    role: locator
+    source_references:
+    - repository: https://github.com/rockpunkgod/ANSWER.git
+      path: gaokao-english/references/reading-comprehension.md
+      heading: 按题型任务分流，不按文体硬套
+      commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
+    - repository: https://github.com/rockpunkgod/ANSWER.git
+      path: gaokao-english/references/reading-comprehension.md
+      heading: 跳读定位
+      commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
+  - method_id: R15
+    version: 1.2.0
+    source_name: 动词定逻辑
+    role: interpreter
+    source_references:
+    - repository: https://github.com/rockpunkgod/ANSWER.git
+      path: gaokao-english/references/reading-comprehension.md
+      heading: 按题型任务分流，不按文体硬套
+      commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
+    - repository: https://github.com/rockpunkgod/ANSWER.git
+      path: gaokao-english/references/reading-comprehension.md
+      heading: 跳读定位
+      commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
+  - method_id: R17
+    version: 1.2.0
+    source_name: 定位后必要上下文核对（内部动作说明）
+    role: verifier
+    source_references:
+    - repository: https://github.com/rockpunkgod/ANSWER.git
+      path: gaokao-english/references/reading-comprehension.md
+      heading: 阅读方法适用边界
+      commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
+    - repository: https://github.com/rockpunkgod/ANSWER.git
+      path: gaokao-english/references/reading-comprehension.md
+      heading: 同源替换
+      commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
+    - repository: https://github.com/rockpunkgod/ANSWER.git
+      path: gaokao-english/references/reading-comprehension.md
+      heading: 代词指代
+      commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
+  evaluation:
+    sampled: 10
+    annotated: 0
+    applicable: null
+    hits: null
+    hit_rate: null
+    annotation_coverage: 0.0
+    human_audit_fraction: null
+  wording_review: pending
+  student_test: not_run
+- name: 选项加戏
+  method_ids:
+  - R01
+  question_type: 阅读理解
+  first_batch: true
+  move_card:
+    trigger: 选项比原文多说了一截。
+    action_3s: 框出多出来的那一截。
+    trap_name: 无据加戏
+    counterexample: 原文能间接支持时，不能因为没原词就排除。
+    mantra: 只查多出来的那一截。
+  field_bindings:
+    trigger:
+    - method_id: R01
+      version: 1.2.0
+      field: trigger_cues
+      sha: 7f5add26b792584a35a8b7fa14bdaf12ca765a0e69fe541908f6cb8864041778
+    action_3s:
+    - method_id: R01
+      version: 1.2.0
+      field: four_step_card
+      sha: 1928407f3971d61160834f57ae6be937162e1f94da66a18bb18c1b5885a4d9a8
+    trap_name:
+    - method_id: R01
+      version: 1.2.0
+      field: common_wrong_instinct
+      sha: 86d719388c1ec37ba26e80e159cf98f8ea21aba47520223de18e71887ec83c9d
+    counterexample:
+    - method_id: R01
+      version: 1.2.0
+      field: counterexamples
+      sha: 280dd3e4ada9d022220efd2d1ed87a91e84b6b6c3a2242bd1dfd7e8bd03f7f68
+    mantra:
+    - method_id: R01
+      version: 1.2.0
+      field: memory_line
+      sha: 7c79d66c3c66a6241b9141bfed52c22528e60b12300c57addb5fe1465e510924
+  methods:
+  - method_id: R01
+    version: 1.2.0
+    source_name: 过度推测
+    role: decider
+    source_references:
+    - repository: https://github.com/rockpunkgod/ANSWER.git
+      path: gaokao-english/references/reading-comprehension.md
+      heading: 过度推测
+      commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
+    - repository: https://github.com/rockpunkgod/ANSWER.git
+      path: gaokao-english/references/course-evidence.md
+      heading: 其他已激活阅读方法
+      commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
+  evaluation:
+    sampled: 10
+    annotated: 0
+    applicable: null
+    hits: null
+    hit_rate: null
+    annotation_coverage: 0.0
+    human_audit_fraction: null
+  wording_review: pending
+  student_test: not_run
+- name: 谁干的陷阱
+  method_ids:
+  - R02
+  question_type: 阅读理解
+  first_batch: true
+  move_card:
+    trigger: 词很像，做事的人或状态却不同。
+    action_3s: 圈主体和完整谓语。
+    trap_name: 偷换关系
+    counterexample: 题干已说明主体时，选项可以省略它。
+    mantra: 先看谁，再对完整动作。
+  field_bindings:
+    trigger:
+    - method_id: R02
+      version: 1.2.0
+      field: trigger_cues
+      sha: 4cf1bde5726342f4660ee6b9e27d1376b6f65ddf5ea884b155777b995eaa9f2d
+    action_3s:
+    - method_id: R02
+      version: 1.2.0
+      field: four_step_card
+      sha: ea5e347676f87d529f5992bd969289578840eb18fab700861c07621b3d9dd131
+    trap_name:
+    - method_id: R02
+      version: 1.2.0
+      field: common_wrong_instinct
+      sha: 96102fa30ba831994ac2675f79d69cd8fb6f44506733b9d9a379062d31278353
+    counterexample:
+    - method_id: R02
+      version: 1.2.0
+      field: counterexamples
+      sha: dbcb8b468b0f59ed6a050140e0cf97269f3fcb4ce51923b741cc6862504c8ebf
+    mantra:
+    - method_id: R02
+      version: 1.2.0
+      field: memory_line
+      sha: 365c2ed6390d768e49a4233c095475b106f694bd38d549ec6a976d079aadbea9
+  methods:
+  - method_id: R02
+    version: 1.2.0
+    source_name: 主客一致
+    role: decider
+    source_references:
+    - repository: https://github.com/rockpunkgod/ANSWER.git
+      path: gaokao-english/references/reading-comprehension.md
+      heading: 主客一致
+      commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
+    - repository: https://github.com/rockpunkgod/ANSWER.git
+      path: gaokao-english/references/course-evidence.md
+      heading: 主客一致
+      commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
+  evaluation:
+    sampled: 10
+    annotated: 0
+    applicable: null
+    hits: null
+    hit_rate: null
+    annotation_coverage: 0.0
+    human_audit_fraction: null
+  wording_review: pending
+  student_test: not_run
+- name: 换词不换义
+  method_ids:
+  - R03
+  question_type: 阅读理解
+  first_batch: true
+  move_card:
+    trigger: 原文和选项换了一种说法。
+    action_3s: 并排放好对应的两句。
+    trap_name: 只看同词
+    counterexample: 结构像，但动作或限制不同，就不能互换。
+    mantra: 换词以后，意思还一样吗？
+  field_bindings:
+    trigger:
+    - method_id: R03
+      version: 1.2.0
+      field: trigger_cues
+      sha: e0071dde9b0a592139ea6cea0bd6f580d24a138354d95083a41058154367ccdd
+    action_3s:
+    - method_id: R03
+      version: 1.2.0
+      field: four_step_card
+      sha: fd983ccec0f3bbf4a0d978f096545cdb09da0e6c1a1a8ef7035f0ee5f072ad3e
+    trap_name:
+    - method_id: R03
+      version: 1.2.0
+      field: common_wrong_instinct
+      sha: 5833c88e8ade38e091e4a0622ff893fd0dbadbe4810747437959c4ba60570db6
+    counterexample:
+    - method_id: R03
+      version: 1.2.0
+      field: counterexamples
+      sha: ff4754732d79716962761120eea95e4d3e44934fed893715d8e7977387e1df33
+    mantra:
+    - method_id: R03
+      version: 1.2.0
+      field: memory_line
+      sha: 86219640e3f75250c961ade28e1e54e7ecf91dbc10c7a136bd19fe2f3d5a0ac2
+  methods:
+  - method_id: R03
+    version: 1.2.0
+    source_name: 同源替换
+    role: interpreter
+    source_references:
+    - repository: https://github.com/rockpunkgod/ANSWER.git
+      path: gaokao-english/references/reading-comprehension.md
+      heading: 同源替换
+      commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
+  evaluation:
+    sampled: 10
+    annotated: 0
+    applicable: null
+    hits: null
+    hit_rate: null
+    annotation_coverage: 0.0
+    human_audit_fraction: null
+  wording_review: pending
+  student_test: not_run
+- name: 比较别偷换
+  method_ids:
+  - R04
+  question_type: 阅读理解
+  first_batch: true
+  move_card:
+    trigger: 选项在比大小、强弱或程度。
+    action_3s: 圈出比较的双方。
+    trap_name: 比较换轴
+    counterexample: 不同阶段、范围或属性，不能直接比。
+    mantra: 先对齐，再比。
+  field_bindings:
+    trigger:
+    - method_id: R04
+      version: 1.2.0
+      field: trigger_cues
+      sha: 52c822cf2b3cbdf3958379dd0e8b13ac6d64cbf3520d57ecdc289a2a1720c74c
+    action_3s:
+    - method_id: R04
+      version: 1.2.0
+      field: four_step_card
+      sha: e5b96568abebac66162963ea84bee5f025f2ca367c0bc8e43b442cc10dd5db41
+    trap_name:
+    - method_id: R04
+      version: 1.2.0
+      field: common_wrong_instinct
+      sha: b03a2e162a31fba8a6dababb72c11f225db35d6e988419cbb80be1899757ac66
+    counterexample:
+    - method_id: R04
+      version: 1.2.0
+      field: counterexamples
+      sha: 734c0b1defe3c0489f842b6e890c6f10020cd0270583fd92f1d520a90310ded0
+    mantra:
+    - method_id: R04
+      version: 1.2.0
+      field: memory_line
+      sha: c6f98c04563177b98ecd7fabdae302697ba4d2f2c0d985c7c6ae58c4ca8bd1a9
+  methods:
+  - method_id: R04
+    version: 1.2.0
+    source_name: 比较级谨慎选
+    role: decider
+    source_references:
+    - repository: https://github.com/rockpunkgod/ANSWER.git
+      path: gaokao-english/references/reading-comprehension.md
+      heading: 比较级谨慎选
+      commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
+  evaluation:
+    sampled: 10
+    annotated: 0
+    applicable: null
+    hits: null
+    hit_rate: null
+    annotation_coverage: 0.0
+    human_audit_fraction: null
+  wording_review: pending
+  student_test: not_run
+- name: 因果别选反
+  method_ids:
+  - R05
+  question_type: 阅读理解
+  first_batch: true
+  move_card:
+    trigger: 题干问原因、结果或某个环节。
+    action_3s: 圈出题干所问的那一步。
+    trap_name: 因果倒置
+    counterexample: 先发生不等于造成；原因题不能只找结果。
+    mantra: 问题问哪步，就对哪步。
+  field_bindings:
+    trigger:
+    - method_id: R05
+      version: 1.2.0
+      field: trigger_cues
+      sha: 10d6efe63a4bec5e87472554698a216cb8d52ddcd48337a7f87fdd43445a24b8
+    action_3s:
+    - method_id: R05
+      version: 1.2.0
+      field: four_step_card
+      sha: 3b166fc6e3f132f34bfdacc655d4bc2ba7831587f1299f020ebd53699f05cb6f
+    trap_name:
+    - method_id: R05
+      version: 1.2.0
+      field: common_wrong_instinct
+      sha: 57d1a5c2586c7f8f2eb490b35b62f1d2dd08e8bedde04d91518137b32d3fa1b9
+    counterexample:
+    - method_id: R05
+      version: 1.2.0
+      field: counterexamples
+      sha: d9bd030367c5348829a7f90df9578ccce41f41db04497f3b6fbf6db2ccff9b6f
+    mantra:
+    - method_id: R05
+      version: 1.2.0
+      field: memory_line
+      sha: 2f252f26dec989fbeb5c668809aa2d7388212e511f6b0cf322cf9de269dc5726
+  methods:
+  - method_id: R05
+    version: 1.2.0
+    source_name: 因果选果
+    role: decider
+    source_references:
+    - repository: https://github.com/rockpunkgod/ANSWER.git
+      path: gaokao-english/references/reading-comprehension.md
+      heading: 因果选果
+      commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
+  evaluation:
+    sampled: 10
+    annotated: 0
+    applicable: null
+    hits: null
+    hit_rate: null
+    annotation_coverage: 0.0
+    human_audit_fraction: null
+  wording_review: pending
+  student_test: not_run
+- name: 并列打包
+  method_ids:
+  - R07
+  question_type: 阅读理解
+  first_batch: true
+  move_card:
+    trigger: 原文有同层、同范围的并列内容。
+    action_3s: 框住同层并列项。
+    trap_name: 局部冒充
+    counterexample: 不同阶段或不同层级，不能硬打成一组。
+    mantra: 一组内容，别只拿一块。
+  field_bindings:
+    trigger:
+    - method_id: R07
+      version: 1.2.0
+      field: trigger_cues
+      sha: f9a052cc9352c618f99862e9a2bccb2f2992aecae714eb992d8b9505fcaf371c
+    action_3s:
+    - method_id: R07
+      version: 1.2.0
+      field: four_step_card
+      sha: e6eb7e3a2ebb7e937a11fcddee67ee81da768f7dae0352d86cdf670975b4ce25
+    trap_name:
+    - method_id: R07
+      version: 1.2.0
+      field: common_wrong_instinct
+      sha: 42b76e210bac38d951f4cc0e9aa5033e61f948fb7deecddebd90b0a32a84224c
+    counterexample:
+    - method_id: R07
+      version: 1.2.0
+      field: counterexamples
+      sha: 7d79e05daab3d7cac41dc3dad7802cc3ce6510fabbc1ac5c044881ae495efda9
+    mantra:
+    - method_id: R07
+      version: 1.2.0
+      field: memory_line
+      sha: bb1e6db2d6920af82e6f9f35ae065988e5ec3a5573c50d09cd93616be6a303b7
+  methods:
+  - method_id: R07
+    version: 1.2.0
+    source_name: 并列删除
+    role: reducer
+    source_references:
+    - repository: https://github.com/rockpunkgod/ANSWER.git
+      path: gaokao-english/references/reading-comprehension.md
+      heading: 并列删除
+      commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
+  evaluation:
+    sampled: 10
+    annotated: 0
+    applicable: null
+    hits: null
+    hit_rate: null
+    annotation_coverage: 0.0
+    human_audit_fraction: null
+  wording_review: pending
+  student_test: not_run
+- name: 例子只作证
+  method_ids:
+  - R08
+  question_type: 阅读理解
+  first_batch: true
+  move_card:
+    trigger: 题干问例子的作用或所支持的观点。
+    action_3s: 圈例子前后的观点。
+    trap_name: 细节顶替
+    counterexample: 直接问例子事实时，就回答那条事实。
+    mantra: 例子发生什么，还要看它证明什么。
+  field_bindings:
+    trigger:
+    - method_id: R08
+      version: 1.2.0
+      field: trigger_cues
+      sha: ce52f6e234cc2dae53889ded53fd662218b5577a5212b9eba65c2c09c9c8a9a2
+    action_3s:
+    - method_id: R08
+      version: 1.2.0
+      field: four_step_card
+      sha: 3c09e64738e826b492fd54848b7956356055c447290870236eb1f41446553257
+    trap_name:
+    - method_id: R08
+      version: 1.2.0
+      field: common_wrong_instinct
+      sha: 2581e3c497c214a4c7b7af9e870d172275475a273636a3e48843a8d24cc0ad14
+    counterexample:
+    - method_id: R08
+      version: 1.2.0
+      field: counterexamples
+      sha: 03b7df02ed048bab08f4d0c34bd51dadc83e9934f506b8a383cabda74ff33e4f
+    mantra:
+    - method_id: R08
+      version: 1.2.0
+      field: memory_line
+      sha: 84709b15a9a8bd155468b8fc2bdaf9b2e247b1d269f0a1e82ae7be9f2c8904b6
+  methods:
+  - method_id: R08
+    version: 1.2.0
+    source_name: 例子非答案
+    role: interpreter
+    source_references:
+    - repository: https://github.com/rockpunkgod/ANSWER.git
+      path: gaokao-english/references/reading-comprehension.md
+      heading: 例子非答案
+      commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
+  evaluation:
+    sampled: 10
+    annotated: 0
+    applicable: null
+    hits: null
+    hit_rate: null
+    annotation_coverage: 0.0
+    human_audit_fraction: null
+  wording_review: pending
+  student_test: not_run
+- name: 代词回填
+  method_ids:
+  - R10
+  question_type: 阅读理解
+  first_batch: true
+  move_card:
+    trigger: 题干或证据里有需要确认的指代。
+    action_3s: 圈代词及所在的完整谓语。
+    trap_name: 近词误指
+    counterexample: 事件或整句指代，不能硬换成最近的名词。
+    mantra: 换回去，这句话还成立吗？
+  field_bindings:
+    trigger:
+    - method_id: R10
+      version: 1.2.0
+      field: trigger_cues
+      sha: 5ab179057dc500908921a5b7cde99b4b647f08aa4cb44d186fefa4515f929ce5
+    action_3s:
+    - method_id: R10
+      version: 1.2.0
+      field: four_step_card
+      sha: 35d6664f1d076a53a9471da30086f69878e9f15563a2194d644fc03ff7fa1f42
+    trap_name:
+    - method_id: R10
+      version: 1.2.0
+      field: common_wrong_instinct
+      sha: 04fbd8f75870cb37c697acab0541ffc0f4048681bf6b30bf9acf7b9d107d961e
+    counterexample:
+    - method_id: R10
+      version: 1.2.0
+      field: counterexamples
+      sha: 7901cbec5073206313bb9a33318ada4980f8ab620e6eb259c3e1d90c5718991d
+    mantra:
+    - method_id: R10
+      version: 1.2.0
+      field: memory_line
+      sha: f4bda1700354f853484f1bcc412e9b46a5d1e43279a630fcac36b52c09ef2b58
+  methods:
+  - method_id: R10
+    version: 1.2.0
+    source_name: 代词指代
+    role: interpreter
+    source_references:
+    - repository: https://github.com/rockpunkgod/ANSWER.git
+      path: gaokao-english/references/reading-comprehension.md
+      heading: 代词指代
+      commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
+  evaluation:
+    sampled: 10
+    annotated: 0
+    applicable: null
+    hits: null
+    hit_rate: null
+    annotation_coverage: 0.0
+    human_audit_fraction: null
+  wording_review: pending
+  student_test: not_run
+- name: 长句拆骨
+  method_ids:
+  - R11
+  question_type: 阅读理解
+  first_batch: true
+  move_card:
+    trigger: 长句里主体、动作或层次看不清。
+    action_3s: 圈谓语和对应主体。
+    trap_name: 修饰误删
+    counterexample: 影响否定、条件或答案范围的修饰不能删。
+    mantra: 先看骨架，限制留住。
+  field_bindings:
+    trigger:
+    - method_id: R11
+      version: 1.2.0
+      field: trigger_cues
+      sha: 6774f1fade95e65048f61e0b90f3aa8a897f7b2b890878ee2b1954563e89e78b
+    action_3s:
+    - method_id: R11
+      version: 1.2.0
+      field: four_step_card
+      sha: 633e8eb8b9a7af8c119e4096711d87b334eea25a000a25d245abf18b880a01ec
+    trap_name:
+    - method_id: R11
+      version: 1.2.0
+      field: common_wrong_instinct
+      sha: 060b5d941baaff2f9fc4721e962e5088cc5d88528b84b482f156f015a9d5eee0
+    counterexample:
+    - method_id: R11
+      version: 1.2.0
+      field: counterexamples
+      sha: 6378f459088a192bc1527eb62a47aa2a2ed67bffe8c69198ec503f93c77962f1
+    mantra:
+    - method_id: R11
+      version: 1.2.0
+      field: memory_line
+      sha: 8072a6fb6cff613a1d5f47ae132ae8795de29598965cd713f4484e3a0b25d5c8
+  methods:
+  - method_id: R11
+    version: 1.2.0
+    source_name: 逻辑简化
+    role: interpreter
+    source_references:
+    - repository: https://github.com/rockpunkgod/ANSWER.git
+      path: gaokao-english/references/reading-comprehension.md
+      heading: 逻辑简化
+      commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
+  evaluation:
+    sampled: 10
+    annotated: 0
+    applicable: null
+    hits: null
+    hit_rate: null
+    annotation_coverage: 0.0
+    human_audit_fraction: null
+  wording_review: pending
+  student_test: not_run
+- name: 选项三分
+  method_ids:
+  - F01
+  - F02
+  - F03
+  - F04
+  question_type: 七选五
+  first_batch: true
+  move_card:
+    trigger: 七选五选项有可见的结构、主角或时间差异。
+    action_3s: 先标一组实际句型。
+    trap_name: 同组即选
+    counterexample: 没有区分度就不编组；同组仍要回正文。
+    mantra: 先让选项站队，再回正文。
+  field_bindings:
+    trigger:
+    - method_id: F01
+      version: 1.2.0
+      field: trigger_cues
+      sha: dbac448cf9997399f6992c4e59cd12747542bf7296445aa922f1d3c92d566c3e
+    - method_id: F02
+      version: 1.2.0
+      field: trigger_cues
+      sha: 3429e8d8494a07f347a0dc5e2cb92bad7dba817efd07fbd431c3172ef33cd058
+    - method_id: F03
+      version: 1.2.0
+      field: trigger_cues
+      sha: 630d3893aa194d4862514eb3a2884656e258f9109bf7d2f333d847fb85f33a9e
+    - method_id: F04
+      version: 1.2.0
+      field: trigger_cues
+      sha: d581b04466aec8ea0f69b5cde51d098af4b8718b9a040392d7390667c28a0700
+    action_3s:
+    - method_id: F01
+      version: 1.2.0
+      field: four_step_card
+      sha: b17717728497958337f9ee1bae2cee0794606d6664bde4d43e23488b5b518292
+    - method_id: F02
+      version: 1.2.0
+      field: four_step_card
+      sha: 926bd9cc45ebb55dcc7695f00dc7e9fed0231282f2df676f7ae2836f58ce7068
+    - method_id: F03
+      version: 1.2.0
+      field: four_step_card
+      sha: 6e0462fe2cfcf1abd1ea35b5dfe71046bbbb67b0762a6abfc95058d7d106439a
+    - method_id: F04
+      version: 1.2.0
+      field: four_step_card
+      sha: 832de45eb95c2f1fd88096082abeb3da5f4bb62177a9e370216d664cbf592f22
+    trap_name:
+    - method_id: F01
+      version: 1.2.0
+      field: common_wrong_instinct
+      sha: baefec0c8504720f7f3e651bf09fd4e7c51eb240f2c6a6646bfc4bd1682b2296
+    - method_id: F02
+      version: 1.2.0
+      field: common_wrong_instinct
+      sha: 8c2b39e496fb5e5bd1b7c22abe10814fe4088e74b031706eb92f8ba20679670a
+    - method_id: F03
+      version: 1.2.0
+      field: common_wrong_instinct
+      sha: 42582c629aec6cc26d33956f537c97cc26d95e1323686134f090d32729edc540
+    - method_id: F04
+      version: 1.2.0
+      field: common_wrong_instinct
+      sha: c9ff3104c0f4ed222eb35128d35fcecbc9f7ceb96660d3bb991ad4f52be5798e
+    counterexample:
+    - method_id: F01
+      version: 1.2.0
+      field: counterexamples
+      sha: d7bbaefe89c28ec5bde9ce94e088a4d77f24af1bed682451084a52fe4a8d9eab
+    - method_id: F02
+      version: 1.2.0
+      field: counterexamples
+      sha: 362612712cb5cac829dd982530f39063a52d2aa4fd702cc153b40c84edf07658
+    - method_id: F03
+      version: 1.2.0
+      field: counterexamples
+      sha: d6992fb3cc585c7efc08ac48c079dff2cd5245943451bdf569e164ece03374ef
+    - method_id: F04
+      version: 1.2.0
+      field: counterexamples
+      sha: 3dc1b9cab169cf0b492b1161d9a4038a80ab8bb0a9910f02d16241d527d33215
+    mantra:
+    - method_id: F01
+      version: 1.2.0
+      field: memory_line
+      sha: b77e30ba9de57f17f68c62cf6a3b1e8af65cd63dfaaf085336d49396e7a9126e
+    - method_id: F02
+      version: 1.2.0
+      field: memory_line
+      sha: 33212702ff2faef7337fad49c5623af1703475b251338e536004b6d77c5c6411
+    - method_id: F03
+      version: 1.2.0
+      field: memory_line
+      sha: f0a365d1df7c2360ced5c3bb8a1579ad4c55c53ce0cea4c2078dc1d9663a69cc
+    - method_id: F04
+      version: 1.2.0
+      field: memory_line
+      sha: d7daa67d9c1ff817911b02ff444c56b662765e7a746f2025659998ac9ee5a982
+  methods:
+  - method_id: F01
+    version: 1.2.0
+    source_name: 结构一致 + 主语一致 + 时态一致
+    role: reducer
+    source_references:
+    - repository: https://github.com/rockpunkgod/ANSWER.git
+      path: gaokao-english/references/seven-five.md
+      heading: 结构一致
+      commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
+    - repository: https://github.com/rockpunkgod/ANSWER.git
+      path: gaokao-english/references/seven-five.md
+      heading: 主语一致
+      commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
+    - repository: https://github.com/rockpunkgod/ANSWER.git
+      path: gaokao-english/references/seven-five.md
+      heading: 时态一致
+      commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
+    - repository: https://github.com/rockpunkgod/ANSWER.git
+      path: gaokao-english/references/course-evidence.md
+      heading: 结构一致
+      commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
+    - repository: https://github.com/rockpunkgod/ANSWER.git
+      path: gaokao-english/references/course-evidence.md
+      heading: 七选五主语一致
+      commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
+    - repository: https://github.com/rockpunkgod/ANSWER.git
+      path: gaokao-english/references/course-evidence.md
+      heading: 七选五时态一致
+      commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
+    - repository: https://github.com/rockpunkgod/ANSWER.git
+      path: gaokao-grammar-fill/references/course-evidence.md
+      heading: 七选五
+      commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
+  - method_id: F02
+    version: 1.2.0
+    source_name: 结构一致
+    role: reducer
+    source_references:
+    - repository: https://github.com/rockpunkgod/ANSWER.git
+      path: gaokao-english/references/seven-five.md
+      heading: 结构一致
+      commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
+  - method_id: F03
+    version: 1.2.0
+    source_name: 主语一致
+    role: reducer
+    source_references:
+    - repository: https://github.com/rockpunkgod/ANSWER.git
+      path: gaokao-english/references/seven-five.md
+      heading: 主语一致
+      commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
+  - method_id: F04
+    version: 1.2.0
+    source_name: 时态一致
+    role: reducer
+    source_references:
+    - repository: https://github.com/rockpunkgod/ANSWER.git
+      path: gaokao-english/references/seven-five.md
+      heading: 时态一致
+      commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
+  evaluation:
+    sampled: 10
+    annotated: 0
+    applicable: null
+    hits: null
+    hit_rate: null
+    annotation_coverage: 0.0
+    human_audit_fraction: null
+  wording_review: pending
+  student_test: not_run
+- name: 段首统领
+  method_ids:
+  - F05
+  question_type: 七选五
+  first_batch: true
+  move_card:
+    trigger: 空位需要概括并引出后面的内容。
+    action_3s: 框出它要管的范围。
+    trap_name: 局部统领
+    counterexample: 只概括一个例子，不能统领其他分项。
+    mantra: 这一句，管得住后面吗？
+  field_bindings:
+    trigger:
+    - method_id: F05
+      version: 1.3.0
+      field: trigger_cues
+      sha: 44bc6af1c2f25cfa632f269e171938564dbb67a494e23a3e8bc734f40eec46b8
+    action_3s:
+    - method_id: F05
+      version: 1.3.0
+      field: four_step_card
+      sha: 28837435d5ccb60613c88a44853148137229636847955b9bd22c612e6dbfec50
+    trap_name:
+    - method_id: F05
+      version: 1.3.0
+      field: common_wrong_instinct
+      sha: 2b86cb7f87817dadbff71d1205da1d83983bf5b33bad5c14aa9289814e109961
+    counterexample:
+    - method_id: F05
+      version: 1.3.0
+      field: counterexamples
+      sha: 84b7f4d819bc9e09284f49cb5c1129d27a82f45660de003dfccfb95135a632fc
+    mantra:
+    - method_id: F05
+      version: 1.3.0
+      field: memory_line
+      sha: 13235e21b4e9f1bead6e82aae6ad72b5e075674aeaaa67028b8621d1e7f86814
+  methods:
+  - method_id: F05
+    version: 1.3.0
+    source_name: 总起句做题法
+    role: interpreter
+    source_references:
+    - repository: https://github.com/rockpunkgod/ANSWER.git
+      path: gaokao-english/references/seven-five.md
+      heading: 总起句做题法
+      commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
+  evaluation:
+    sampled: 10
+    annotated: 0
+    applicable: null
+    hits: null
+    hit_rate: null
+    annotation_coverage: 0.0
+    human_audit_fraction: null
+  wording_review: pending
+  student_test: not_run
+- name: 前后呼应
+  method_ids:
+  - F06
+  question_type: 七选五
+  first_batch: true
+  move_card:
+    trigger: 空位两侧有明确的词、指代或内容呼应。
+    action_3s: 圈出相互承接的表达。
+    trap_name: 重词当证
+    counterexample: 只是同一话题，不能算内容承接。
+    mantra: 接的是哪件事？
+  field_bindings:
+    trigger:
+    - method_id: F06
+      version: 1.2.0
+      field: trigger_cues
+      sha: b41c42ecb973288e333a3d99efe7a64d0bb0913fd30a1f5442f5259780a18917
+    action_3s:
+    - method_id: F06
+      version: 1.2.0
+      field: four_step_card
+      sha: 9ef78240175044eac0857ce67d087d684d77674852160c128b846336536547b9
+    trap_name:
+    - method_id: F06
+      version: 1.2.0
+      field: common_wrong_instinct
+      sha: 9748d746ccca14199a5d763cfa766878e8bd0cd5556c17b74c242c0116c2a535
+    counterexample:
+    - method_id: F06
+      version: 1.2.0
+      field: counterexamples
+      sha: 638cf4b5db76a6b7518b1dce55c059af607621ec1927596e836b9ef4b660e05b
+    mantra:
+    - method_id: F06
+      version: 1.2.0
+      field: memory_line
+      sha: a15dea19e82cad5a1d7d14ecad712c3ecb7ef8eba4fc71be599076708f1a405d
+  methods:
+  - method_id: F06
+    version: 1.2.0
+    source_name: 对应词法
+    role: verifier
+    source_references:
+    - repository: https://github.com/rockpunkgod/ANSWER.git
+      path: gaokao-english/references/seven-five.md
+      heading: 对应词法
+      commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
+  evaluation:
+    sampled: 10
+    annotated: 0
+    applicable: null
+    hits: null
+    hit_rate: null
+    annotation_coverage: 0.0
+    human_audit_fraction: null
+  wording_review: pending
+  student_test: not_run
+- name: 关系拼接
+  method_ids:
+  - F07
+  question_type: 七选五
+  first_batch: true
+  move_card:
+    trigger: 空前后存在需要补清的真实关系。
+    action_3s: 并排摆出两侧的完整意思。
+    trap_name: 接前丢后
+    counterexample: 只接得上前句，或措施时点错了，都不够。
+    mantra: 前后都接得上。
+  field_bindings:
+    trigger:
+    - method_id: F07
+      version: 1.2.0
+      field: trigger_cues
+      sha: b0417225dd95afa6c733dd704de662a258fc60acd78c5167696469f17ea34ddf
+    action_3s:
+    - method_id: F07
+      version: 1.2.0
+      field: four_step_card
+      sha: 82d6b21f9cd208b6b73bd255df411c93c99f3d7806c901de26647d332f9e8543
+    trap_name:
+    - method_id: F07
+      version: 1.2.0
+      field: common_wrong_instinct
+      sha: 03020e33b4be0ccd58d4f91489d08b202834041e4713dbc6b80adc9880d2fe51
+    counterexample:
+    - method_id: F07
+      version: 1.2.0
+      field: counterexamples
+      sha: 9f8075127b64d82783a5c8f7df2e68ff0f6ae172e55ef1a659bd08060be9f581
+    mantra:
+    - method_id: F07
+      version: 1.2.0
+      field: memory_line
+      sha: 681f98587240869c72d084a5eceb92f465a55697a4505a512f9a062a7f96fa3b
+  methods:
+  - method_id: F07
+    version: 1.2.0
+    source_name: 逻辑关系法
+    role: verifier
+    source_references:
+    - repository: https://github.com/rockpunkgod/ANSWER.git
+      path: gaokao-english/references/seven-five.md
+      heading: 逻辑关系法
+      commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
+  evaluation:
+    sampled: 10
+    annotated: 0
+    applicable: null
+    hits: null
+    hit_rate: null
+    annotation_coverage: 0.0
+    human_audit_fraction: null
+  wording_review: pending
+  student_test: not_run
+- name: 前后夹击
+  method_ids:
+  - C02
+  question_type: 完形填空
+  first_batch: true
+  move_card:
+    trigger: 完形当前空需要前后文的具体提示。
+    action_3s: 圈空位两侧的对象或动作。
+    trap_name: 猜词互证
+    counterexample: 两个未定空不能互相证明；不足就找独立提示。
+    mantra: 近处够就用，不够再扩。
+  field_bindings:
+    trigger:
+    - method_id: C02
+      version: 1.2.0
+      field: trigger_cues
+      sha: ff531befda36466647731c528f7e21ae4afcf3d55de6cb1866ff8f538bb9291f
+    action_3s:
+    - method_id: C02
+      version: 1.2.0
+      field: four_step_card
+      sha: b1c47e1aec7cd2bf144c33c540614d1317ecb752d7f6b2186f90a8901740eff9
+    trap_name:
+    - method_id: C02
+      version: 1.2.0
+      field: common_wrong_instinct
+      sha: 0fd1c83a2395b90f42311d430ab6ad90ce52be0b48391318105d433f5f1a463e
+    counterexample:
+    - method_id: C02
+      version: 1.2.0
+      field: counterexamples
+      sha: 127e16bfa29ad733278d96075185369e2d2f317cbdb18617ff25384ce92a4a94
+    mantra:
+    - method_id: C02
+      version: 1.2.0
+      field: memory_line
+      sha: c32eea462f653bb805658e04051482202dcbad27d1b362d31ac4e2333d4232b4
+  methods:
+  - method_id: C02
+    version: 1.2.0
+    source_name: 瞻前顾后法
+    role: verifier
+    source_references:
+    - repository: https://github.com/rockpunkgod/ANSWER.git
+      path: gaokao-english/references/cloze.md
+      heading: 瞻前顾后法
+      commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
+    - repository: https://github.com/rockpunkgod/ANSWER.git
+      path: gaokao-english/references/cloze.md
+      heading: 完形填空
+      commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
+  evaluation:
+    sampled: 10
+    annotated: 0
+    applicable: null
+    hits: null
+    hit_rate: null
+    annotation_coverage: 0.0
+    human_audit_fraction: null
+  wording_review: pending
+  student_test: not_run
+- name: 结果与动作
+  method_ids:
+  - C08
+  - C09
+  question_type: 完形填空
+  first_batch: true
+  move_card:
+    trigger: 正文给出了动作的结果或评价。
+    action_3s: 圈结果实际评价的行为。
+    trap_name: 评价错位
+    counterexample: 结果没指向这个行为，不能补出联系。
+    mantra: 这结果，到底说的是哪件事？
+  field_bindings:
+    trigger:
+    - method_id: C08
+      version: 1.2.0
+      field: trigger_cues
+      sha: 324797c3251d46a9cc13176afd1d7a58e08f73e1904072610360e633a67627f3
+    - method_id: C09
+      version: 1.2.0
+      field: trigger_cues
+      sha: 4fe3022c0086f9a6d7eaf59425d707cf90dcc83bb81014615d93134b13ffb2c6
+    action_3s:
+    - method_id: C08
+      version: 1.2.0
+      field: four_step_card
+      sha: af4412f9fa1074df8a8115f779e3e2f34b3322a9b8cfa4a4d59f4fabf4f1e8ff
+    - method_id: C09
+      version: 1.2.0
+      field: four_step_card
+      sha: 0995c7e446eb2b717bfc9b4e7b21509405a0cae63829c854b4a19858f6832e20
+    trap_name:
+    - method_id: C08
+      version: 1.2.0
+      field: common_wrong_instinct
+      sha: e2999909b44e685050ee6f0a09852c3cce513806dfd5ba0a7a3409e6634ee69e
+    - method_id: C09
+      version: 1.2.0
+      field: common_wrong_instinct
+      sha: fe29b27aa6c9cfb4f9c259d20dfd0147363fdafc4bd51ecd9d5b54889331a0b8
+    counterexample:
+    - method_id: C08
+      version: 1.2.0
+      field: counterexamples
+      sha: fd0cd8ba3aad6a65cfba6f6219223b2e328edbfa504a3b90c75ec144b4d7efc6
+    - method_id: C09
+      version: 1.2.0
+      field: counterexamples
+      sha: 7cb06da8487ad9a02f31b4bc94103a955268975ddb2914490cf0155e9d0e7fb6
+    mantra:
+    - method_id: C08
+      version: 1.2.0
+      field: memory_line
+      sha: a7c0323278422f836694aa726db735080448a68507f2e0f269e30321bd89899e
+    - method_id: C09
+      version: 1.2.0
+      field: memory_line
+      sha: d63594509dd19bd658f93a8bcd2aeac5a631036a71d224c33d0ab2759aa42be6
+  methods:
+  - method_id: C08
+    version: 1.2.0
+    source_name: 评价、结果与动作链
+    role: verifier
+    source_references:
+    - repository: https://github.com/rockpunkgod/ANSWER.git
+      path: gaokao-english/references/cloze.md
+      heading: 评价、结果与动作链
+      commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
+  - method_id: C09
+    version: 1.2.0
+    source_name: 评价、结果与动作链
+    role: interpreter
+    source_references:
+    - repository: https://github.com/rockpunkgod/ANSWER.git
+      path: gaokao-english/references/cloze.md
+      heading: 评价、结果与动作链
+      commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
+  evaluation:
+    sampled: 10
+    annotated: 0
+    applicable: null
+    hits: null
+    hit_rate: null
+    annotation_coverage: 0.0
+    human_audit_fraction: null
+  wording_review: pending
+  student_test: not_run
+- name: 先判空位
+  method_ids:
+  - G01
+  - G02
+  - G17
+  question_type: 语法填空
+  first_batch: true
+  move_card:
+    trigger: 语法填空还没确定空位需要什么。
+    action_3s: 圈空位前后的支配或修饰词。
+    trap_name: 见词就变
+    counterexample: 功能没看清就先停；路由不能替词形核验。
+    mantra: 先看缺什么，再动提示词。
+  field_bindings:
+    trigger:
+    - method_id: G01
+      version: 1.2.0
+      field: trigger_cues
+      sha: 9f3bbc6206202d07203799a27abc1a60ee5f8664e694f88e16aee850ecbd7c00
+    - method_id: G02
+      version: 1.2.0
+      field: trigger_cues
+      sha: b74a3280eb6b0f44b5e931c57d32aba5a36d8402e10c68550c830ebcbf13a19a
+    - method_id: G17
+      version: 1.2.0
+      field: trigger_cues
+      sha: 6931ae3544380bd9e856ca740201d0f26cc86836c932982a6fe261c12eabe753
+    action_3s:
+    - method_id: G01
+      version: 1.2.0
+      field: four_step_card
+      sha: 145918d4f1c4afb4102a40e699755ac99c42b0be4595b36a41ef6063db53d229
+    - method_id: G02
+      version: 1.2.0
+      field: four_step_card
+      sha: 768f1b0b7e40a9d323a4146b5ef35eca2e7dfe420384fa30921426d3adb8c052
+    - method_id: G17
+      version: 1.2.0
+      field: four_step_card
+      sha: edd9abe05caf20a5dcaad5b69da7819101a266924a93c0b2cdc40c3105aeb7ec
+    trap_name:
+    - method_id: G01
+      version: 1.2.0
+      field: common_wrong_instinct
+      sha: b319cfe55f747d33bed99029d9afdc4c49c512bf1182ca72d52be5f26d7d6c2b
+    - method_id: G02
+      version: 1.2.0
+      field: common_wrong_instinct
+      sha: 036cf759901b590806d4024db96d7227c3e1dab5cf19d9964767c479c21a16cb
+    - method_id: G17
+      version: 1.2.0
+      field: common_wrong_instinct
+      sha: 399e12d7c329e2c9508e8f0b5feffce2d7a5da36f4516766b01c0bc2c5f7804f
+    counterexample:
+    - method_id: G01
+      version: 1.2.0
+      field: counterexamples
+      sha: 1b296fbb9c6d6104899378962658045cc477084e3d5cef694781c18cdf589667
+    - method_id: G02
+      version: 1.2.0
+      field: counterexamples
+      sha: 3a8005e2abe97d5f6b10a8ffb014e077dd31588bdda769eaaf2a0238a54a87c6
+    - method_id: G17
+      version: 1.2.0
+      field: counterexamples
+      sha: 4b1c321eff1c23cb6e88c2c6a001b5e8e1ad33d780e61c095295ddc74c4ac68a
+    mantra:
+    - method_id: G01
+      version: 1.2.0
+      field: memory_line
+      sha: 8b4743f4219a2e4c66cb7b98c724111cd9b0fc564ee4d23a000791d352a43941
+    - method_id: G02
+      version: 1.2.0
+      field: memory_line
+      sha: e2dbb97c3e257df45962665d1189e88e48e28a3790a4a46256417a7b09c2cccd
+    - method_id: G17
+      version: 1.2.0
+      field: memory_line
+      sha: 04978742ec0739cdbf89a3f5fe635d06a35233fb7b170960721b44126805f3fe
+  methods:
+  - method_id: G01
+    version: 1.2.0
+    source_name: 语法填空总路线（操作整理，非课程原名）
+    role: framework
+    source_references:
+    - repository: https://github.com/rockpunkgod/ANSWER.git
+      path: gaokao-grammar-fill/references/grammar-fill.md
+      heading: 总路线
+      commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
+    - repository: https://github.com/rockpunkgod/ANSWER.git
+      path: gaokao-grammar-fill/references/grammar-fill.md
+      heading: 无提示词
+      commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
+    - repository: https://github.com/rockpunkgod/ANSWER.git
+      path: gaokao-grammar-fill/references/grammar-fill.md
+      heading: 有提示词
+      commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
+    - repository: https://github.com/rockpunkgod/ANSWER.git
+      path: gaokao-grammar-fill/references/grammar-fill.md
+      heading: 需要动词形式：先判谓语还是非谓语
+      commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
+    - repository: https://github.com/rockpunkgod/ANSWER.git
+      path: gaokao-grammar-fill/references/course-evidence.md
+      heading: 语法填空
+      commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
+  - method_id: G02
+    version: 1.2.0
+    source_name: 总路线
+    role: framework
+    source_references:
+    - repository: https://github.com/rockpunkgod/ANSWER.git
+      path: gaokao-grammar-fill/references/grammar-fill.md
+      heading: 总路线
+      commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
+  - method_id: G17
+    version: 1.2.0
+    source_name: 总路线
+    role: interpreter
+    source_references:
+    - repository: https://github.com/rockpunkgod/ANSWER.git
+      path: gaokao-grammar-fill/references/grammar-fill.md
+      heading: 总路线
+      commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
+  evaluation:
+    sampled: 10
+    annotated: 0
+    applicable: null
+    hits: null
+    hit_rate: null
+    annotation_coverage: 0.0
+    human_audit_fraction: null
+  wording_review: pending
+  student_test: not_run
+- name: 动词二分
+  method_ids:
+  - G12
+  - G13
+  - G14
+  question_type: 语法填空
+  first_batch: true
+  move_card:
+    trigger: 空位已经确认需要动词形式。
+    action_3s: 圈本分句的谓语和连接词。
+    trap_name: 全句误数
+    counterexample: 主句已有谓语，不代表另一个分句不用谓语。
+    mantra: 先看这个分句缺不缺谓语。
+  field_bindings:
+    trigger:
+    - method_id: G12
+      version: 1.2.0
+      field: trigger_cues
+      sha: 5dce2f8f75696dbd684cc1fd36f10846f319e750239c63ce1f807324a1412e83
+    - method_id: G13
+      version: 1.2.0
+      field: trigger_cues
+      sha: 38b9c1d4216706dcd9e9caac3637d91ca436679bce530a7998e589a09364bd89
+    - method_id: G14
+      version: 1.2.0
+      field: trigger_cues
+      sha: 3d2f9fec1e1e780dbbf17fc6f4a28659d79503f511fec2e8563bbc3a58b9af7f
+    action_3s:
+    - method_id: G12
+      version: 1.2.0
+      field: four_step_card
+      sha: ea02e45f8b23fa4bcfbafedfd08185873b8a4c75a66d1440c0a5dfd19c4f9f92
+    - method_id: G13
+      version: 1.2.0
+      field: four_step_card
+      sha: b5744f0984ed4e4ab5d28ace5edf43020c5f427192908acb23d334b4dfd757d5
+    - method_id: G14
+      version: 1.2.0
+      field: four_step_card
+      sha: 085cae67dd1c2177fa919bf3f770e94623907edef272ec7565115d9a1c54acaa
+    trap_name:
+    - method_id: G12
+      version: 1.2.0
+      field: common_wrong_instinct
+      sha: cde243e8aafcefc653e28246c727de20ccc947b93b8d1f9a6815e437e22e8420
+    - method_id: G13
+      version: 1.2.0
+      field: common_wrong_instinct
+      sha: e1ddb9fc67c751965e3b0ef4953298092ea4643752f070356131134ad3f1ebc2
+    - method_id: G14
+      version: 1.2.0
+      field: common_wrong_instinct
+      sha: aa92a4e8799f4780d93b7133524226adcd6b46add0d35274ef7b26ed76da7894
+    counterexample:
+    - method_id: G12
+      version: 1.2.0
+      field: counterexamples
+      sha: bec9c91c95899ff54b7ff358bd196f999a12d771afd00c950ea0a28b0c63be95
+    - method_id: G13
+      version: 1.2.0
+      field: counterexamples
+      sha: ce7e6bbc4d350136cc2aabf60fd42bc66f122fd71d4a85dc922bbd694d210599
+    - method_id: G14
+      version: 1.2.0
+      field: counterexamples
+      sha: dbe48efdf8ba24fe2dee6e42c58c8242fc8cebdf8b1b98f4e35f8a2a4c8162a0
+    mantra:
+    - method_id: G12
+      version: 1.2.0
+      field: memory_line
+      sha: 309b41fb4fd012abae0b3ed8d51a7fd9abf41dbf5743356077917409a79ab863
+    - method_id: G13
+      version: 1.2.0
+      field: memory_line
+      sha: b26bf40b6fa9db61c6055526093b0c39754d3c8d13c1b3d45483af39d83dc103
+    - method_id: G14
+      version: 1.2.0
+      field: memory_line
+      sha: ac1cf6bfa78a9f86438bcf3ded62bafb79d55fd6bdb03f8e595abd523b47aeaa
+  methods:
+  - method_id: G12
+    version: 1.2.0
+    source_name: 第一步：数谓语、看连接
+    role: reducer
+    source_references:
+    - repository: https://github.com/rockpunkgod/ANSWER.git
+      path: gaokao-grammar-fill/references/grammar-fill.md
+      heading: 第一步：数谓语、看连接
+      commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
+  - method_id: G13
+    version: 1.2.0
+    source_name: 时态判定三步法
+    role: decider
+    source_references:
+    - repository: https://github.com/rockpunkgod/ANSWER.git
+      path: gaokao-grammar-fill/references/grammar-fill.md
+      heading: 谓语：检查时态、语态、主谓一致
+      commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
+  - method_id: G14
+    version: 1.2.0
+    source_name: 谓语：检查时态、语态、主谓一致
+    role: verifier
+    source_references:
+    - repository: https://github.com/rockpunkgod/ANSWER.git
+      path: gaokao-grammar-fill/references/grammar-fill.md
+      heading: 谓语：检查时态、语态、主谓一致
+      commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
+  evaluation:
+    sampled: 10
+    annotated: 0
+    applicable: null
+    hits: null
+    hit_rate: null
+    annotation_coverage: 0.0
+    human_audit_fraction: null
+  wording_review: pending
+  student_test: not_run
+- name: 非谓语三轴
+  method_ids:
+  - G15
+  - G16
+  question_type: 语法填空
+  first_batch: true
+  move_card:
+    trigger: 空位已经确认需要非谓语。
+    action_3s: 圈这个动作的逻辑主语。
+    trap_name: 只看词尾
+    counterexample: 逗号或词尾不能替代作用、主被动和先后核验。
+    mantra: 谁做，怎么用，先还是后？
+  field_bindings:
+    trigger:
+    - method_id: G15
+      version: 1.2.0
+      field: trigger_cues
+      sha: 21f74881a94152e7e2b366db9f9855cb0145856c9677666441a0d89987d05850
+    - method_id: G16
+      version: 1.2.0
+      field: trigger_cues
+      sha: e377a7d27332d60426172fa2166e9d3bdeb57c2348fff9b80b0ca38b68b4c97e
+    action_3s:
+    - method_id: G15
+      version: 1.2.0
+      field: four_step_card
+      sha: e96d2d20f7cec1bbebb16504bf3c4a295341686b1d4195ef3fcd2331c030b247
+    - method_id: G16
+      version: 1.2.0
+      field: four_step_card
+      sha: 96fb9d40aeb5038adeff87a7703fc9798c75e590589a4c143f233cf3f7efb07d
+    trap_name:
+    - method_id: G15
+      version: 1.2.0
+      field: common_wrong_instinct
+      sha: 3ed7a11cc8ee34d53870c057ba3f3f35357b5289005b50f26442ed6f313414d7
+    - method_id: G16
+      version: 1.2.0
+      field: common_wrong_instinct
+      sha: 1fc6fa0a836a15a752b18fe9bd4a7d469b9e93e7a64f38d5d2748f5faf88f179
+    counterexample:
+    - method_id: G15
+      version: 1.2.0
+      field: counterexamples
+      sha: f334c3f26b2d90ad62b3cb28ff9f7f6512b0e28297280ae47272b9556389675e
+    - method_id: G16
+      version: 1.2.0
+      field: counterexamples
+      sha: cfa1a93347d47a958942359106161ae2a89aee3b736af254c5e9782d10fd1df6
+    mantra:
+    - method_id: G15
+      version: 1.2.0
+      field: memory_line
+      sha: 3b6ecc5346614c4c45dc3530c8fea55fb6a07c96f42bb23d8e43b9e40a8a1c19
+    - method_id: G16
+      version: 1.2.0
+      field: memory_line
+      sha: ed9329ba03ac1daf7273fe988a574ce5f791c3969b2b3f88a1a7c03935ef412c
+  methods:
+  - method_id: G15
+    version: 1.2.0
+    source_name: 非谓语：作用、主被动与先后
+    role: decider
+    source_references:
+    - repository: https://github.com/rockpunkgod/ANSWER.git
+      path: gaokao-grammar-fill/references/grammar-fill.md
+      heading: 非谓语：作用、主被动与先后
+      commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
+  - method_id: G16
+    version: 1.2.0
+    source_name: 26S春 补充（非谓语动词专项）
+    role: verifier
+    source_references:
+    - repository: https://github.com/rockpunkgod/ANSWER.git
+      path: gaokao-grammar-fill/references/grammar-fill.md
+      heading: 26S春 补充（非谓语动词专项）
+      commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
+  evaluation:
+    sampled: 10
+    annotated: 0
+    applicable: null
+    hits: null
+    hit_rate: null
+    annotation_coverage: 0.0
+    human_audit_fraction: null
+  wording_review: pending
+  student_test: not_run
+- name: 续写升级
+  method_ids:
+  - W06
+  - W07
+  - W08
+  - W09
+  - W10
+  - W11
+  - W12
+  question_type: 读后续写
+  first_batch: false
+  move_card:
+    trigger: 情节与基础句子准确后，需要局部完善。
+    action_3s: 先圈当前要完善的一处。
+    trap_name: 盲目升级
+    counterexample: 基础意思不准，先修意思；不能按替换数量评分。
+    mantra: 只改需要改的那一处。
+  field_bindings:
+    trigger:
+    - method_id: W06
+      version: 1.2.0
+      field: trigger_cues
+      sha: d158a5e529452415edc308567b299fda4600e1767c6630ed6714d1e6df9d12e5
+    - method_id: W07
+      version: 1.2.0
+      field: trigger_cues
+      sha: c71198e974228ace83f306b0ea52ac08993366a11dda2028680e3fc1493550dc
+    - method_id: W08
+      version: 1.2.0
+      field: trigger_cues
+      sha: 6885138aa97f1da3e7ae1b5116fad95e3e556fc30c429100681157dad9b85500
+    - method_id: W09
+      version: 1.2.0
+      field: trigger_cues
+      sha: 50bfc88fe887cab753fb61784e268e4247aad2afcf5adecfaa6ee71c46ce799c
+    - method_id: W10
+      version: 1.2.0
+      field: trigger_cues
+      sha: 4ae24adc4c7a6b6409651e54773e015700bc3e4857871f114ff5475fd52fd4a8
+    - method_id: W11
+      version: 1.2.0
+      field: trigger_cues
+      sha: 621f45ef5e496235fe1fbcf9986be5fe3c4313cdbac3ee4f04a0293ef776a808
+    - method_id: W12
+      version: 1.2.0
+      field: trigger_cues
+      sha: 9ae7ddf4d45783864f28b664074883ab39b69deb7477bfca6c31287c9b545963
+    action_3s:
+    - method_id: W06
+      version: 1.2.0
+      field: four_step_card
+      sha: 3cb6404337f959fa23f90ff83239e587caed9bdf525cd4b3a84b5a98404adba9
+    - method_id: W07
+      version: 1.2.0
+      field: four_step_card
+      sha: cd6bc2386796b077351ba1f60b996bc783d8e4cd2c58ceda7322d48187db245f
+    - method_id: W08
+      version: 1.2.0
+      field: four_step_card
+      sha: 54b9d3273fee7970abd30785806e39b3cd147a55f895b0828728603b5fffe374
+    - method_id: W09
+      version: 1.2.0
+      field: four_step_card
+      sha: 98be6d02bd954efaa229ca29860483ae99c5d77431cafd25b363de2e447f856d
+    - method_id: W10
+      version: 1.2.0
+      field: four_step_card
+      sha: 1248127876f4bf2c9e6325231bc0967d121144a8a4cec5f3cdcd85e6df2a308c
+    - method_id: W11
+      version: 1.2.0
+      field: four_step_card
+      sha: 388c9c6b2bef66735f2191a08c21a0181b218b0dfa26af89ed753a3f73eeba87
+    - method_id: W12
+      version: 1.2.0
+      field: four_step_card
+      sha: 2758634e3434688aa957f2e9e06dd0184f40461df415e02ff91ac05933fe0549
+    trap_name:
+    - method_id: W06
+      version: 1.2.0
+      field: common_wrong_instinct
+      sha: 0b0593a74a77d80888cba7bfbd0791a8fd1ef4466305ada47e28404899f9b516
+    - method_id: W07
+      version: 1.2.0
+      field: common_wrong_instinct
+      sha: 07275c8bfcafd796afb7275e3bd7a7c16ec6ef3183677a7c0b2832799fdb52a1
+    - method_id: W08
+      version: 1.2.0
+      field: common_wrong_instinct
+      sha: 539d5b8b1d06501e650f14c96054ae072547ba816c2504914287635d0eeb3d8f
+    - method_id: W09
+      version: 1.2.0
+      field: common_wrong_instinct
+      sha: 55ba25d57fd6be5271561a7e25390dc320a9c3e8da4ba8463c4680735634e1e2
+    - method_id: W10
+      version: 1.2.0
+      field: common_wrong_instinct
+      sha: c50308664703b358355a2256b521e21d769833317b52bf3320baf065344c1153
+    - method_id: W11
+      version: 1.2.0
+      field: common_wrong_instinct
+      sha: fd169507092a5aa32847aa88a6bbea549e53b430faaa4052ccd8ffaa71e9dc4b
+    - method_id: W12
+      version: 1.2.0
+      field: common_wrong_instinct
+      sha: af1538eabd101cb3a02776968594ce37f7b229a58525dc76d237498ec0a1b73c
+    counterexample:
+    - method_id: W06
+      version: 1.2.0
+      field: counterexamples
+      sha: a31a7a3519779629b028ed2f2654b75e5b641571e5c1b95d8ef0a6d4054e4a0c
+    - method_id: W07
+      version: 1.2.0
+      field: counterexamples
+      sha: fed51106fc89a9191bef80c0dc6033bb7872916c90d8c6d602f94c6e0edf924f
+    - method_id: W08
+      version: 1.2.0
+      field: counterexamples
+      sha: 54f3a35687dd38ea6fce53cfa781522e727667e42bf78bb6749a91e2d042b5f6
+    - method_id: W09
+      version: 1.2.0
+      field: counterexamples
+      sha: c6678499724dfd99db943e349ee5805b9dc9495a37472030edb087b160d5e63c
+    - method_id: W10
+      version: 1.2.0
+      field: counterexamples
+      sha: 7e4f2bdb893d8c17f8bf9eb6bb8ae54cb657bc71ac5e55377b413e0bcbfa7a87
+    - method_id: W11
+      version: 1.2.0
+      field: counterexamples
+      sha: 224b67f45c7eac3eb4a20fc1d69a214fec7fc3f8c624a4577167c2d83ee1fd0a
+    - method_id: W12
+      version: 1.2.0
+      field: counterexamples
+      sha: 3884711c944c65b0bb6162adc0e25c965d442dcddc2aa0ce51626b40dd4aac75
+    mantra:
+    - method_id: W06
+      version: 1.2.0
+      field: memory_line
+      sha: e7acd10ce20db7947c95c91d6c554d4c9b1428fb5a84a1fdf6912fe9b4c6c10e
+    - method_id: W07
+      version: 1.2.0
+      field: memory_line
+      sha: 9b23964202d51452d15626ae30cf57b615c7313ff98bb57c461cb2f13f2cab12
+    - method_id: W08
+      version: 1.2.0
+      field: memory_line
+      sha: 35f5bf13df8e5a65cbd6fb5c5ef2fa70ef773ff53b66b6d0c96c952c026d0464
+    - method_id: W09
+      version: 1.2.0
+      field: memory_line
+      sha: 6b73906c7799d478048133ddda742464c2ac00ee959fbe77ec86d879fc09c842
+    - method_id: W10
+      version: 1.2.0
+      field: memory_line
+      sha: 2241be540d2a7e2f0edaf19f6f721dec67a583aa12ab2c349f119791f6186761
+    - method_id: W11
+      version: 1.2.0
+      field: memory_line
+      sha: fc8e81a8c582e911ade3b647450cc9504ca120752b5fd8721e59ce0dc9953314
+    - method_id: W12
+      version: 1.2.0
+      field: memory_line
+      sha: 8743f05cf6fb771f517256340d194e5a80f82e0cdc6afff603f5e62fd9c7ebea
+  methods:
+  - method_id: W06
+    version: 1.2.0
+    source_name: 五档升级路径（训练用）
+    role: locator
+    source_references:
+    - repository: https://github.com/rockpunkgod/ANSWER.git
+      path: gaokao-writing/references/continuation-writing-and-correction.md
+      heading: 五档升级路径（训练用）
+      commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
+  - method_id: W07
+    version: 1.2.0
+    source_name: 五档升级路径（训练用）
+    role: verifier
+    source_references:
+    - repository: https://github.com/rockpunkgod/ANSWER.git
+      path: gaokao-writing/references/continuation-writing-and-correction.md
+      heading: 五档升级路径（训练用）
+      commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
+  - method_id: W08
+    version: 1.2.0
+    source_name: 五档升级路径（训练用）
+    role: interpreter
+    source_references:
+    - repository: https://github.com/rockpunkgod/ANSWER.git
+      path: gaokao-writing/references/continuation-writing-and-correction.md
+      heading: 五档升级路径（训练用）
+      commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
+  - method_id: W09
+    version: 1.2.0
+    source_name: 五档升级路径（训练用）
+    role: interpreter
+    source_references:
+    - repository: https://github.com/rockpunkgod/ANSWER.git
+      path: gaokao-writing/references/continuation-writing-and-correction.md
+      heading: 五档升级路径（训练用）
+      commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
+  - method_id: W10
+    version: 1.2.0
+    source_name: 五档升级路径（训练用）
+    role: interpreter
+    source_references:
+    - repository: https://github.com/rockpunkgod/ANSWER.git
+      path: gaokao-writing/references/continuation-writing-and-correction.md
+      heading: 五档升级路径（训练用）
+      commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
+  - method_id: W11
+    version: 1.2.0
+    source_name: 五档升级路径（训练用）
+    role: interpreter
+    source_references:
+    - repository: https://github.com/rockpunkgod/ANSWER.git
+      path: gaokao-writing/references/continuation-writing-and-correction.md
+      heading: 五档升级路径（训练用）
+      commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
+  - method_id: W12
+    version: 1.2.0
+    source_name: 五档升级路径（训练用）
+    role: interpreter
+    source_references:
+    - repository: https://github.com/rockpunkgod/ANSWER.git
+      path: gaokao-writing/references/continuation-writing-and-correction.md
+      heading: 五档升级路径（训练用）
+      commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
+  evaluation:
+    sampled: 0
+    annotated: 0
+    applicable: null
+    hits: null
+    hit_rate: null
+    human_audit_fraction: null
+  wording_review: pending
+  student_test: not_run

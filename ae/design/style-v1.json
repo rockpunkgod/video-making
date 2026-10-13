@@ -1,0 +1,42 @@
+{
+  "version": "1.0.0-draft",
+  "status": "P1_visual_selection",
+  "coordinates": {"authoring": [1920, 1080], "delivery_scale": 2, "fps": 24, "type_sizes_are_projected_screen_pixels": true},
+  "palette": {"paper": "#F2F0EA", "ink": "#20211F", "secondary": "#5A646B", "attention_orange": "#C8622E", "comparison_blue": "#3A6A8A", "highlight_ink": "#10110F", "caption_ink": "#FFFFFF"},
+  "type_scale": {"focus_text": 46, "question": 48, "option": 44, "comparison": 72, "decision": 100, "label": 28, "minimum": 28, "caption": 36, "overview": 28, "focus_line_height": 62},
+  "fonts": {
+    "english": {"family": "Source Serif 4", "postscript": "SourceSerif4-Regular", "license": "OFL-1.1", "source": "https://github.com/adobe-fonts/source-serif", "selected": false},
+    "english_comparison": {"family": "Georgia", "postscript": "Georgia", "selected": false},
+    "chinese": {"family": "Noto Sans SC", "postscript": "NotoSansSC-Regular"},
+    "caption": {"family": "Noto Sans SC", "weight": 500, "postscript": "NotoSansSC-StyleV1Medium"},
+    "decision": {"family": "Noto Serif SC", "weight": 700, "postscript": "NotoSerifSC-StyleV1Bold"}
+  },
+  "layout": {"focus_max_lines": 9, "focus_characters_per_line": [45, 65], "focus_width": 1560, "overview_is_navigation_not_focus_reading": true, "paragraphs_preserved": true},
+  "motion": {
+    "easing": {"type": "zero_speed_bezier", "influence": 55, "overshoot": false},
+    "actions": {
+      "locate": {"frames": 10, "operation": "fill_wipe_left_to_right", "sfx": "pencil_light"},
+      "lift": {"frames": 14, "operation": "duplicate_original_glyph_forward", "target_type": "comparison", "sfx": "paper_light"},
+      "compare": {"frames": 12, "operation": "align_shared_baseline", "sfx": null},
+      "eliminate": {"frames": 10, "operation": "withdraw_whole_option_and_label", "y_offset": 24, "opacity": 20, "sfx": "dry_tap"},
+      "return": {"frames": 16, "operation": "reverse_original_path", "sfx": null}
+    },
+    "hit": {"frames": 4, "fill_opacity": 100, "settled_fill_opacity": 60, "small_colored_text": false},
+    "dynamic_implementation": "P3_after_P1_selection"
+  },
+  "depth": {"world_opacity": 35, "world_z_retreat": 600, "dof": "native_camera", "readable_focus_plane": true, "background_never_4_percent": true},
+  "safe_area": {"bilibili_16x9": {"top": 64, "bottom": 120, "left": 96, "right": 96}, "caption_bottom": 132},
+  "audio": {"integrated_lufs": -14, "true_peak_dbtp": -1, "music_max_db_under_narration": -30, "ducking": true, "sfx_map": {"locate": "pencil_light", "lift": "paper_light", "compare": null, "eliminate": "dry_tap", "return": null}, "music_sections": ["cold_open", "chapter", "outro"], "allowed_assets": ["CC0", "documented_license"], "implemented_in": "P3"},
+  "structure": {"question": ["cold_open_under_5s", "fast_pass", "local_judgment_replay", "one_method_sentence", "memory_hold_2s"], "episode": ["cold_open", "ident_1.5s", "question_1", "chapter", "question_2", "memory_and_next"]},
+  "contrast": {
+    "adjustment": "Specified ink on full orange measures 4.04:1; use highlight_ink on fills without changing orange or normal text.",
+    "combinations": [
+      {"foreground": "ink", "background": "paper", "minimum": 7, "role": "body"},
+      {"foreground": "secondary", "background": "paper", "minimum": 4.5, "role": "labels"},
+      {"foreground": "highlight_ink", "background": "attention_orange", "minimum": 4.5, "role": "orange_hit"},
+      {"foreground": "ink", "background": "attention_orange", "background_opacity": 0.6, "minimum": 4.5, "role": "orange_settled"},
+      {"foreground": "ink", "background": "comparison_blue", "background_opacity": 0.25, "minimum": 7, "role": "comparison_fill"},
+      {"foreground": "caption_ink", "background": "ink", "background_opacity": 0.6, "minimum": 4.5, "role": "captions"}
+    ]
+  }
+}

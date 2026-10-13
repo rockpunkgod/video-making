@@ -25,7 +25,7 @@ class CreativeOSTest(unittest.TestCase):
         baseline.AEProductionTest.setUpClass()
         cls.package=baseline.AEProductionTest.package;cls.manifest=baseline.AEProductionTest.manifest
         cls.statuses=baseline.AEProductionTest.statuses
-        cls.design=read(ROOT/'ae/design/swiss-cinematic-editorial-v0.3.json')
+        cls.design=read(ROOT/'ae/design/legacy/swiss-cinematic-editorial-v0.3.json')
         cls.design['font']=deepcopy(baseline.AEProductionTest.design['font'])
 
     def setUp(self):

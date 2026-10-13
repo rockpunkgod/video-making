@@ -84,7 +84,60 @@ def suppression_qa(realization, coverage):
             'public_render_ready': False}
 
 
-def lint_copy(text, role, may_answer):
+def frozen_answer_binding(bundle, status):
+    """Project a reviewed, closed answer from a frozen asset for draft narration.
+
+    A Reveal key, a retained candidate or an exporter success alone is insufficient.
+    This is an engineering consumption check, never a public release credential.
+    """
+    from content_os.candidates import engineering_gate
+    from video_contracts import status_matches, verify_bundle
+
+    verify_bundle(bundle)
+    if status is None or not status_matches(bundle, status):
+        raise ValueError('Current frozen answer status required')
+    analysis = bundle['analysis']
+    answer = analysis['answer']
+    selections = []
+    for method in bundle['methods']:
+        mid = method['method_id']
+        actions = [a['execution_id'] for a in analysis['execution_trace']
+                   if a['method_id'] == mid and (a.get('output') or {}).get('candidate') == answer
+                   and (a.get('output') or {}).get('effect') == 'retain']
+        if not actions:
+            continue
+        # Include the complete reviewed sequence, not just the winning option.
+        selection = {'method_id': mid, 'action_ids': [a['execution_id']
+            for a in analysis['execution_trace'] if a['method_id'] == mid
+            and a['state'] == 'produced' and a['review_status'] == 'reviewed']}
+        decisions = {a['output']['candidate'] for a in analysis['execution_trace']
+                     if a['execution_id'] in selection['action_ids'] and a.get('output')
+                     and a['output']['kind'] == 'candidate_decision'}
+        if decisions != set(bundle['source_snapshot'].get('options', {})):
+            continue
+        if engineering_gate(bundle, selection, 'full_solution', status)['status'] == 'PASS':
+            selections.append(selection)
+    if answer is None or not selections:
+        raise ValueError('Frozen reviewed full-solution closure required')
+    return {'answer': answer, 'asset_id': bundle['asset_id'],
+            'answer_sha': sha(answer), 'semantic_binding_sha': bundle['semantic_binding_sha'],
+            'status_content_sha': status['content_sha'], 'selections': selections,
+            'public_render_ready': False}
+
+
+def answer_letters(text):
+    """Conservative literal answer-claim lint; not a semantic truth recognizer."""
+    pattern = r'(?:选(?:择)?\s*|答案(?:已经)?(?:是|为|确定为)\s*)([A-G])|([A-G])\s*(?:就是|是)答案'
+    letters = []
+    for match in re.finditer(pattern, text):
+        prefix = text[max(0, match.start() - 8):match.start()]
+        if re.search(r'(?:不|别|不能|不该|不应|不要|不能直接|不要直接)$', prefix):
+            continue
+        letters.append(match.group(1) or match.group(2))
+    return letters
+
+
+def lint_copy(text, role, may_answer, *, frozen_answer=None):
     flags = []
     if re.search(r'一招秒杀|必考|90%的学生|所有.*都必须|做阅读不用背单词|阅读不用词汇', text):
         flags.append('prohibited_or_generalized_claim')
@@ -100,6 +153,7 @@ def lint_copy(text, role, may_answer):
         flags.append('expert_chain_leakage')
     if re.search(r'\b(?:provenance|decider|reducer|verifier|framework)\b|review:[A-Za-z0-9]', text, re.I):
         flags.append('expert_chain_leakage')
-    if re.search(r'今天(?:我们)?(?:学习|介绍).*方法|今天学习', text):
-        flags.append('method_name_before_value')
+    if frozen_answer is not None:
+        if any(letter != frozen_answer for letter in answer_letters(text)):
+            flags.append('frozen_answer_mismatch')
     return sorted(set(flags))

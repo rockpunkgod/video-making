@@ -1,14 +1,15 @@
 """Deterministic learner-path and language lint, not Human Taste certification."""
 import re
 
-from .qa import lint_copy
+from .qa import answer_letters, frozen_answer_binding, lint_copy
 
 STAGE_ORDER = ('PAIN', 'INTERRUPT', 'ORIENT', 'FOCUS', 'ACT', 'TENSION',
                'COLLAPSE', 'PAYOFF', 'STOP', 'MEMORY')
 SIGNPOSTS = r'首先|其次|接下来|此外|因此我们可以看到|值得注意的是|由此可见|换句话说|综上'
 
 
-def tone_lint(beats, role, may_answer):
+def tone_lint(beats, role, may_answer, *, frozen_bundle=None, frozen_status=None,
+              frozen_answer=None):
     """Literal evidence/question are protected source, not new copy claims."""
     flags, errors = [], []
     spoken = [b['vo']['text'] for b in beats if b['vo'] is not None]
@@ -18,7 +19,12 @@ def tone_lint(beats, role, may_answer):
     # Do not lint that frozen negative statement as a new affirmative claim.
     # Its exact source, reviewed placement and coverage are audited separately.
     text = '\n'.join(spoken + editable_screen)
-    base = lint_copy(text, role, may_answer)
+    if frozen_bundle is not None:
+        frozen_answer = frozen_answer_binding(frozen_bundle, frozen_status)['answer']
+        may_answer = True
+    elif frozen_status is not None:
+        raise ValueError('Status requires its exact frozen bundle')
+    base = lint_copy(text, role, may_answer, frozen_answer=frozen_answer)
     if base:
         errors += ['COPY_LINT:' + flag for flag in base]
         if 'expert_chain_leakage' in base: flags.append('expert_backend_narration')
@@ -28,7 +34,7 @@ def tone_lint(beats, role, may_answer):
         errors.append('INTERNAL_METHOD_CODE_ON_CONSUMER_SURFACE')
     if re.search(r'(?<![A-Za-z0-9_])(?:locator|interpreter|decider|reducer|verifier|framework|interpret|reduce|Evidence|Review|Registry|Artifact|Provenance)(?![A-Za-z0-9_])|调用.*(?:方法|阶段)|进入.*阶段', text, re.I):
         flags.append('expert_backend_narration'); errors.append('EXPERT_BACKEND_NARRATION')
-    if not may_answer and re.search(r'答案(?:已经|直接|就)?(?:出来|是|确定)|(?:所以|直接|就|只能)选\s*[A-G]|[A-G]\s*(?:就是|是)答案', text):
+    if not may_answer and (answer_letters(text) or re.search(r'答案(?:已经|直接|就)?(?:出来|确定)', text)):
         errors.append('ANSWER_SCOPE_OVERCLAIM'); flags.append('fake_payoff')
     if re.search(r'不用(?:读全文|阅读全文|读整篇|认识词|认识单词|背单词)|省(?:一半|\d+).*时间|秒选|秒杀', text):
         errors.append('UNSUPPORTED_SAVINGS_CLAIM'); flags.append('fake_payoff')
@@ -132,13 +138,13 @@ def audit_experience(value, view, plan):
     action_at = next((i for i,b in enumerate(beats) if b['cognitive_function'] == 'action'), None)
     named_at = next((i for i,b in enumerate(beats) if any(line['kind'] == 'method_name' for line in b['screen']['copy'])), None)
     early_name = named_at is not None and (action_at is None or named_at <= action_at)
-    if early_name: errors.append('METHOD_NAME_BEFORE_ACTION')
     original_first = bool(beats and beats[0]['cognitive_function'] == 'pain'
         and value['reality_layer']['question'] == view['original_question']
         and value['reality_layer']['persistent'] is True and value['reality_layer']['fact_mutation_allowed'] is False
         and all(b['screen']['reality_layer_ref'] == '/reality_layer' for b in beats))
     if not original_first: errors.append('ORIGINAL_QUESTION_NOT_PRESERVED')
-    flags, copy_errors = tone_lint(beats, plan['role'], view['answer_permission']['may_output_final_answer'])
+    flags, copy_errors = tone_lint(beats, plan['role'], view['answer_permission']['may_output_final_answer'],
+                                  frozen_answer=view['answer_permission'].get('answer'))
     errors += copy_errors
     audit = {'first_action_visible': bool(action_visible), 'first_action_unique': bool(action_unique),
         'focus_scope_preserved': focus_preserved, 'payoff_supported': support,

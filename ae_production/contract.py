@@ -35,9 +35,9 @@ def build_contract(package, manifest, statuses, design=None, revision=1, _check=
         raise ValueError('Manifest final copy binding mismatch')
     # Reuses upstream gates, without changing the input package or schema.
     ae_contract(package, statuses, internal=True)
-    design = deepcopy(design or read(ROOT / 'ae/design/swiss-academic-motion.json'))
+    design = deepcopy(design or read(ROOT / 'ae/design/legacy/swiss-academic-motion.json'))
     version=design['version'];v02=version=='0.2.0'
-    baseline=read(ROOT/('ae/design/swiss-academic-motion-v0.2.json' if v02 else 'ae/design/swiss-academic-motion.json'))
+    baseline=read(ROOT/('ae/design/legacy/swiss-academic-motion-v0.2.json' if v02 else 'ae/design/legacy/swiss-academic-motion.json'))
     template_path(version)
     frozen_keys=('canvas','grid','typography','motion','subtitles')+ (('colors','treatment','art_direction','cjk_typography','localized_labels') if v02 else ())
     if any(design[k]!=baseline[k] for k in frozen_keys):

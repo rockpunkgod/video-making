@@ -6,7 +6,7 @@ from core.registry import Registry,load
 from core.analyzer import QuestionAnalyzer
 from core.grammar_navigation import navigate_grammar
 from renderers import render
-from scripts.generate_assets import build
+from scripts.generate_assets import build, guide_path
 
 IDS={'G'+str(i).zfill(2) for i in range(1,20)}
 
@@ -43,7 +43,7 @@ class GrammarMigrationTest(unittest.TestCase):
     def test_all_guides_have_action_stop_challenge_and_three_versions(self):
         assets=build(self.r)
         for mid in IDS:
-            m=self.r.methods[mid]; guide=assets['student-guides/'+mid+'-'+m['brand_name']+'.md']
+            m=self.r.methods[mid]; guide=assets[guide_path(m)]
             # Golden G01 intentionally uses its four-step first action rather
             # than repeating the differently worded internal core_action.
             action=m['four_step_card']['first_cut'] if mid=='G01' else m['core_action']

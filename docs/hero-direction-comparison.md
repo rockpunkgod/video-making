@@ -80,7 +80,7 @@ claim/method/evidence/review 引用保留。公开发布状态仍独立记录。
 `python -m creative_os.hero_directions <local-request.json>` 只生成视觉契约。
 请求包含已有冻结输入的 `package`、`manifest`、`statuses`、`full_delivery`、
 `excerpt`，以及 `base_contract`、`profiles`、`revision`、`output`。
-`profiles` 使用 `ae/design/swiss-cognitive-directions-v0.5.json`。
+`profiles` 使用 `ae/design/legacy/swiss-cognitive-directions-v0.5.json`。
 输出必须是新的目录；所有变体校验成功后才写入，禁止覆盖历史。
 
 沿用 [Hero 工作流](cinematic-hero-workflow.md) 完成原生制作：

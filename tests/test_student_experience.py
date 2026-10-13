@@ -171,12 +171,13 @@ class StudentExperienceTests(unittest.TestCase):
             v=self.experience(draft_lines={'action':self.line(text,'/primary_action/instruction')})
             with self.subTest(text=text): self.assertEqual(v['availability']['status'],'FAIL')
 
-    def test_method_stamp_follows_first_effective_action(self):
+    def test_method_stamp_default_is_late_but_placement_is_editorial(self):
         v=self.experience(); self.assertEqual(v['beats'][-1]['cognitive_function'],'stamp')
         self.assertEqual(v['memory_closure']['first_action_ref'],pedagogy_ref(self.plan,'/primary_action'))
         self.assertIsNone(v['experience_audit']['method_named_before_understood'])
         v['beats'].insert(0,v['beats'].pop())
-        _,_,errors=audit_experience(v,self.view(),self.plan); self.assertIn('METHOD_NAME_BEFORE_ACTION',errors)
+        _,_,errors=audit_experience(v,self.view(),self.plan)
+        self.assertNotIn('METHOD_NAME_BEFORE_ACTION',errors)
 
     def test_silence_cannot_hide_required_spoken_tell_now(self):
         v=self.experience(); view=self.view(); item=view['must_obtain'][0]

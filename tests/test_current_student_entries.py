@@ -51,11 +51,13 @@ class CurrentEntryTests(unittest.TestCase):
         stored=json.loads((ROOT/'evaluation/reports/current-student-entry-audit.json').read_text(encoding='utf-8'))
         self.assertEqual(stored,self.report)
 
-    def test_draft_guide_displays_actual_not_ready_flag(self):
+    def test_draft_guide_keeps_review_state_off_student_surface(self):
         for row in self.report['priority_entries']:
             if row['entry_state']=='draft':
                 text=(ROOT/row['guide_path']).read_text(encoding='utf-8')
-                self.assertIn('当前 student_ready=false',text)
+                self.assertNotIn('student_ready',text)
+                self.assertNotIn('validated',text)
+                self.assertEqual(row['learner_acceptance'],'pending_real_participant_validation')
 
     def test_missing_first_cut_is_not_hidden_by_other_complete_fields(self):
         with patch.dict(self.registry.methods['F01']['four_step_card'], {'first_cut':''}):
