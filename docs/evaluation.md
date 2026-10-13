@@ -12,9 +12,17 @@
 python -m scripts.prepare_first_use_materials --method F01 --demonstration DEMO.json --transfer TRANSFER.json --walkthrough WALKTHROUGH.json --output local-data/STUDY-DRAFT
 ```
 
-DEMO 和 TRANSFER 是已有完整原题的结构化文件（可有顶层 question）。只提取原题字段，不复制答案、历史关系、分组结果或评分。第二题须是不同题号、不同材料和不同文章；参与者是否曾见过仍须现场确认。WALKTHROUGH 显式绑定当前 method_id、method_version、source_commit 和示范 question_id，提供 first_action、evidence、output、stop，并声明 `review_scope=ai_authored_draft_not_learner_validation`。
+DEMO 和 TRANSFER 是已有完整原题的结构化文件（可有顶层 question）。只提取原题字段，不复制答案、历史关系、分组结果或评分。第二题须是不同题号、不同材料和不同文章；参与者是否曾见过仍须现场确认。WALKTHROUGH 显式绑定当前 method_id、method_version、source_commit、示范 question_id 及 `demonstration_question_sha256`，提供 first_action、evidence、output、stop，并声明 `review_scope=ai_authored_draft_not_learner_validation`。题面指纹由 `scripts.prepare_first_use_materials.question_fingerprint(read_question(path)[0])` 计算，题号不变但原文或选项变化也必须重新审查示范。
 
 输出仅写入私有 local-data，拒绝覆盖既有材料。student-material.md 只展示方法名、症状、四步卡、示范和无提示的第二题；facilitator.json 单独保留来源文件哈希、前置研究门槛和全 null 的观察槽。材料草稿不授权采集，先完成示范及评分依据的独立审查、传播验收、版本冻结和 Practicality Gate，再进入 First-use。导出不登记新 Case，不重计 Blind，不导入或编造参与者结果。
+
+七选五须有完整 A–G，阅读须有完整 A–D；缺项、空项或非文字原文不导出，不自动补题。第二题使用 Registry 当前 Challenge，检测具体动作而非直接猜答案。原选项自带字母时不重复加字母；这些检查不证明文章未缺段或英语语义正确。
+
+```powershell
+python -m scripts.prepare_first_use_materials --verify local-data/STUDY-DRAFT
+```
+
+复核学生文件哈希、原题与示范文件哈希、题面指纹及当前教学卡指纹。同版本卡片的四步动作变化也会使旧材料失效。检查只证明数据一致性，不认证来源真实性、教学效力或研究许可；材料草稿不能夹带伪造的 First-use 观察。旧材料版本保留，重新生成须用新目录。
 
 按schemas/evaluation-record.json制作JSON数组或JSONL。每条保留参与者、方法版本、题号、冻结题组、分配条件、评价者，以及实际动作/证据/刹车/学生复述/角色。phase为communication、first_use或blind；短版独立组或预先设计counterbalanced分配。不能把自动答案正确充当动作成功。
 

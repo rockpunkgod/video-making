@@ -6,7 +6,7 @@ import unittest
 from unittest.mock import patch
 
 from core.registry import Registry
-from scripts.prepare_first_use_materials import prepare
+from scripts.prepare_first_use_materials import prepare, question_fingerprint, read_question, verify, render_question
 
 
 class FirstUseMaterialsTests(unittest.TestCase):
@@ -21,11 +21,13 @@ class FirstUseMaterialsTests(unittest.TestCase):
         for path, qid, passage in [(self.demo,'synthetic-demo','synthetic source one'),
                                   (self.transfer,'synthetic-transfer','synthetic source two')]:
             self.save(path,{'question':{'question_id':qid,'question_type':'七选五','stem':'synthetic blank',
-                      'passage':passage,'options':{'A':'synthetic candidate'},'answer':'SECRET-ANSWER',
+                      'passage':passage,'options':{key:'synthetic candidate '+key for key in 'ABCDEFG'},'answer':'SECRET-ANSWER',
                       'observations':[{'expected_group':'SECRET-GROUP'}]},'analysis':{'answer':'SECRET-ANSWER'}})
         self.save(self.walkthrough,{'method_id':'F01','method_version':self.registry.methods['F01']['version'],
                       'source_commit':self.registry.index['source_baseline']['commit'],
-                      'question_id':'synthetic-demo','first_action':'synthetic action',
+                      'question_id':'synthetic-demo',
+                      'demonstration_question_sha256':question_fingerprint(read_question(self.demo)[0]),
+                      'first_action':'synthetic action',
                       'evidence':'synthetic evidence','output':'synthetic output','stop':'synthetic stop',
                       'review_scope':'ai_authored_draft_not_learner_validation'})
         self.patch=patch('scripts.prepare_first_use_materials.ROOT',self.root)
@@ -78,6 +80,52 @@ class FirstUseMaterialsTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError,'type does not match'): self.run_export()
         del data['question']['passage']; self.save(self.transfer,data)
         with self.assertRaisesRegex(ValueError,'Incomplete question'): self.run_export()
+
+    def test_same_id_cannot_rebind_demonstration_to_changed_original_text(self):
+        data=json.loads(self.demo.read_text()); data['question']['options']['G']='changed source'
+        self.save(self.demo,data)
+        with self.assertRaisesRegex(ValueError,'current method'): self.run_export()
+
+    def test_missing_or_blank_choice_rejected_without_creating_output(self):
+        data=json.loads(self.transfer.read_text()); del data['question']['options']['G']
+        self.save(self.transfer,data)
+        with self.assertRaisesRegex(ValueError,'choice set'): self.run_export()
+        self.assertFalse((self.root/'local-data/kit').exists())
+        data['question']['options']['G']='   '; self.save(self.transfer,data)
+        with self.assertRaisesRegex(ValueError,'choice set'): self.run_export()
+
+    def test_nontext_original_fields_are_not_silently_stringified(self):
+        data=json.loads(self.transfer.read_text()); data['question']['passage']=['source']
+        self.save(self.transfer,data)
+        with self.assertRaisesRegex(ValueError,'Incomplete question'): self.run_export()
+
+    def test_private_export_bindings_verify_without_granting_study_approval(self):
+        result=self.run_export()
+        checked=verify(result['output'],self.registry)
+        self.assertEqual(checked['binding_check'],'PASS')
+        self.assertFalse(checked['collection_allowed'])
+
+    def test_changed_student_copy_and_original_source_are_detected(self):
+        result=self.run_export(); output=Path(result['output'])
+        material=output/'student-material.md'; original=material.read_bytes()
+        material.write_bytes(original+b'changed')
+        with self.assertRaisesRegex(ValueError,'Student material changed'): verify(output,self.registry)
+        material.write_bytes(original)
+        self.transfer.write_bytes(self.transfer.read_bytes()+b' ')
+        with self.assertRaisesRegex(ValueError,'source artifact changed'): verify(output,self.registry)
+
+    def test_same_version_changed_teaching_and_fabricated_results_rejected(self):
+        result=self.run_export(); output=Path(result['output'])
+        with patch.dict(self.registry.methods['F01']['four_step_card'],{'first_cut':'another action'}):
+            with self.assertRaisesRegex(ValueError,'stale'): verify(output,self.registry)
+        meta_path=output/'facilitator.json'; meta=json.loads(meta_path.read_text())
+        meta['first_use_test']['action_success']=True; self.save(meta_path,meta)
+        with self.assertRaisesRegex(ValueError,'observations'): verify(output,self.registry)
+
+    def test_original_letter_prefix_not_duplicated_in_student_display(self):
+        text=render_question({'passage':'source','stem':'task','options':{'A':'A.The key is consistency.'}})
+        self.assertIn('A.The key',text)
+        self.assertNotIn('A. A.',text)
 
 
 if __name__=='__main__': unittest.main()
