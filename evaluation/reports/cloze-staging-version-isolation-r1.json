@@ -1,0 +1,31 @@
+{
+  "scope": "disposable_cloze_source_patch_version_identity_fix_not_teaching_acceptance",
+  "source_commit": "61bc9c3e15004639cb442c20e7946ca9631f14ce",
+  "baseline_repository_commit": "c1a3094",
+  "affected_staged_method_ids": ["C01", "C02"],
+  "staged_source_patch_versions": {"C01": "1.2.1", "C02": "1.2.1"},
+  "reason": "Disposable candidates already incorporate the L3 fixed-order removal; they must not reuse the archived prepatch 1.2.0 identity.",
+  "other_80_version_generation_rules_unchanged": true,
+  "candidate_state": "staged_not_live",
+  "candidate_student_ready": false,
+  "live_registry_rules_changed": false,
+  "historical_1_2_0_cards_changed": false,
+  "historical_card_sha256": {
+    "C01": "bef5cc0895fe8669e8bfa1a8296d10e61453260fd8807823873e6a2e6420d5e6",
+    "C02": "4a3f60e651d03700957fb9c60af59a64653b1bcde7106816fce0269c00df3340"
+  },
+  "changed_code_sha256": {
+    "scripts/stage_answer_alignment.py": "1d0ab07875366ed3f4986e815708a08e83661f8e7798ea22b038e8ab29597bf5",
+    "tests/test_answer_alignment_stage.py": "e8456103d2b2f96767d4f29f4dce4c8cdda8cb11400d887c18cdda58a2f0f681"
+  },
+  "targeted_regression": {"tests_run": 40, "failures": 0, "errors": 0, "elapsed_seconds": 39.091},
+  "registry_validation": {"methods": 82, "source_documents": 20, "status": "PASS"},
+  "generated_assets": "PASS",
+  "diagnostic_command_correction": "scripts.validate_registry does not exist; direct Registry().validate() was subsequently executed and passed. The failed command is not counted as a successful validation.",
+  "independent_engineering_audit": "pending",
+  "current_code_full_regression": "not_yet_run",
+  "new_case_count": 0,
+  "new_blind_sample_count": 0,
+  "learner_validation": null,
+  "method_promotion_applied": false
+}

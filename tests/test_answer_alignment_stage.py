@@ -131,6 +131,27 @@ class AlignmentStageTests(unittest.TestCase):
                     if card['method_id'] in ('C01','C02'):
                         self.assertEqual(card['levels']['L3'],card['stop_rule'])
 
+    def test_staged_cloze_patch_does_not_reuse_archived_prepatch_identity(self):
+        from core.registry import load
+        from scripts.stage_answer_alignment import SOURCE_PATCH_VERSIONS
+        self.assertEqual(SOURCE_PATCH_VERSIONS, {'C01': '1.2.1', 'C02': '1.2.1'})
+        for mid in ('C01', 'C02'):
+            staged = self.candidate.methods[mid]
+            archived = load('method-registry/history/' + mid + '/1.2.0.yaml')
+            self.assertEqual(archived['version'], '1.2.0')
+            self.assertNotEqual(staged['version'], archived['version'])
+            self.assertNotEqual(staged['levels']['L3'], archived['levels']['L3'])
+            self.assertEqual(staged['version'], Registry().methods[mid]['version'])
+            self.assertEqual(staged['source_alignment']['state'], 'staged_not_live')
+            self.assertFalse(staged['student_ready'])
+            self.assertEqual(staged['status'], 'candidate')
+        old = Registry(snapshot_commit=self.report['from_commit'])
+        for mid in set(self.candidate.methods) - set(SOURCE_PATCH_VERSIONS):
+            parts = old.methods[mid]['version'].split('.')
+            parts[1] = str(int(parts[1]) + 1)
+            parts[2] = '0'
+            self.assertEqual(self.candidate.methods[mid]['version'], '.'.join(parts))
+
     def test_projection_does_not_expose_old_student_copy_or_merge_source_names(self):
         guide=(self.path/'student-guides/R09-三步压文.md').read_text(encoding='utf-8')
         self.assertIn('学生首次接触草稿',guide)

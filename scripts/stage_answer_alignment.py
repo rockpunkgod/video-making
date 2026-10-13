@@ -342,6 +342,11 @@ FIRST_CUTS = {
  'C01':'在当前空旁标要查词义、关系还是搭配，再圈最近的对象或动作提示。',
 }
 
+# The source-epoch compiler also incorporates the reviewed L3 patch. Its
+# disposable cards must not reuse the archived pre-patch identity. These
+# versions identify source-bound rules, not teaching/release acceptance.
+SOURCE_PATCH_VERSIONS = {'C01': '1.2.1', 'C02': '1.2.1'}
+
 
 def corrected_card(original):
     m=deepcopy(original); mid=m['method_id']
@@ -443,7 +448,8 @@ def stage(parent=None):
         for i,old in enumerate(module['methods']):
             m=corrected_card(old); mid=m['method_id']; row=plan_by_id[mid]
             parts=m['version'].split('.'); parts[1]=str(int(parts[1])+1); parts[2]='0'
-            m['version']='.'.join(parts); m['section_ids']=rebind(old['section_ids'])
+            m['version']=SOURCE_PATCH_VERSIONS.get(mid, '.'.join(parts))
+            m['section_ids']=rebind(old['section_ids'])
             m['source_references']=[{'repository':manifest['repository'],**{k:s[k] for k in ('path','heading','commit')}}
                                      for s in row['resolved_references']]
             # full is also transported to downstream consumers. Do not leave
