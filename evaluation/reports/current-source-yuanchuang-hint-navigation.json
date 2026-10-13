@@ -1,0 +1,42 @@
+{
+  "date": "2026-10-14",
+  "scope": "post_reveal_private_current_source_G01_route_selection_only",
+  "source_commit": "61bc9c3e15004639cb442c20e7946ca9631f14ce",
+  "paper_id": "mock-2026-hubei-yuanchuang-m05-v01",
+  "question_routes": {"Q57": "clause", "Q59": "preposition", "Q60": "clause", "Q61": "article"},
+  "clause_display_label": "连接/关系词",
+  "original_given_word_fields": "still_omitted_not_replaced_by_null",
+  "original_material_changed": false,
+  "review_removed_control": "all_four_return_to_unknown",
+  "current_replay_equal_frozen_analysis": 4,
+  "checked_file_references": 28,
+  "file_hash_mismatches": 0,
+  "engineering_checks": {
+    "scope": "synthetic_hint_controls_first_use_material_binding_and_grammar_migration_not_learner_results",
+    "test_modules": ["tests.test_grammar_hint_review", "tests.test_first_use_materials", "tests.test_grammar_migration"],
+    "tests_run": 56,
+    "failures": 0,
+    "errors": 0,
+    "registry_and_generated_assets": "PASS"
+  },
+  "independent_review": {
+    "path": "local-data/organized-pdfs/wxwork-priority-2026-10/coordinator-reviews/current-61bc9c3-r1/hint-navigation-r3/independent-routing-review.json",
+    "sha256": "73cf7789fafb0bf6fa4226ef44bd1c7be76a1a99e55f307214cab832c92b6ae8",
+    "reviewer_kind": "AI",
+    "reviewer": "/root/yuanchuang_current_case_review",
+    "action_author": "/root",
+    "independent_from_new_r3_action_author": true,
+    "independent_of_own_r2_semantic_work": false,
+    "verdict": "PASS",
+    "pass_scope": "four_new_r3_routes_only"
+  },
+  "answer_count": 0,
+  "new_case_count": 0,
+  "new_unique_question_count": 0,
+  "new_blind_sample_count": 0,
+  "learner_acceptance": "not_evaluated",
+  "method_promotion_applied": false,
+  "whole_paper_semantic_acceptance": "PARTIAL",
+  "remaining_role_gap": "lawful_complete_question_verification_without_fake_decider_triggers",
+  "private_source_material_included": false
+}

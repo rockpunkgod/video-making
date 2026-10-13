@@ -202,6 +202,19 @@
       },
       "minItems": 0
     },
+    "grammar_hint_review": {
+      "type": "object",
+      "properties": {
+        "state": {"const": "without_hint"},
+        "target_marker": {"type": "string", "minLength": 1},
+        "evidence": {"$ref": "#/properties/observations/items/properties/evidence"},
+        "reviewer": {"type": "string", "minLength": 1},
+        "review_status": {"enum": ["reviewed", "unreviewed"]},
+        "review_notes": {"type": "string", "minLength": 1}
+      },
+      "required": ["state", "target_marker", "evidence", "reviewer", "review_status", "review_notes"],
+      "additionalProperties": false
+    },
     "given_word": {
       "type": [
         "string",

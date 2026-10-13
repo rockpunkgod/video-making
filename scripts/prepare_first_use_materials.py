@@ -9,11 +9,12 @@ import json
 from pathlib import Path
 import re
 
-from core.registry import ROOT, Registry
+from core.registry import ROOT, Registry, validate_schema
+from core.grammar_navigation import hint_branch
 from scripts.audit_student_entries import PRIORITY
 
 FIELDS = ('question_id','question_type','task_type','stem','passage','options',
-          'given_word','hint_word','student_draft','continuation_starters')
+          'given_word','hint_word','student_draft','continuation_starters','grammar_hint_review')
 
 
 def question_fingerprint(question):
@@ -53,10 +54,14 @@ def read_question(path, question_id=None):
     if not all(isinstance(question.get(key),str) and question[key].strip()
                for key in ('question_id','question_type','stem','passage')):
         raise ValueError('Incomplete question text; do not fill missing source material')
-    return question, {'path': str(path), 'sha256': hashlib.sha256(data).hexdigest(),
+    ref = {'path': str(path), 'sha256': hashlib.sha256(data).hexdigest(),
                       'question_sha256':question_fingerprint(question),
                       'question_selector':question_id,
                       'question_text_only': True, 'historical_review_reused': False}
+    if 'grammar_hint_review' in question:
+        ref.update(question_text_only=False, factual_hint_review_retained=True,
+                   hint_review_scope='target_hint_presence_only_not_method_or_answer_credit')
+    return question, ref
 
 
 def check_choices(question):
@@ -70,13 +75,22 @@ def check_choices(question):
 
 def grammar_hint(question):
     keys=[key for key in ('given_word','hint_word') if key in question]
-    if not keys:
-        raise ValueError('Missing explicit hint state for this grammar blank')
     if any(question[key] is not None and not isinstance(question[key],str) for key in keys):
         raise ValueError('Grammar hint must be text or explicit null')
     values=[(question[key] or '').strip() for key in keys]
-    if len(set(values))!=1:
+    if len(set(values))>1:
         raise ValueError('Conflicting original grammar hint fields')
+    if 'grammar_hint_review' in question:
+        view={key:question[key] for key in (
+            'question_id','question_type','stem','passage','given_word','grammar_hint_review')
+            if key in question}
+        if 'given_word' not in view and keys:
+            view['given_word']=question[keys[0]]  # validation view only; preserve original fields
+        validate_schema('question-input',view)
+        branch=hint_branch(view)
+        if not keys and branch=='without_hint': return None
+    if not keys:
+        raise ValueError('Missing explicit hint state for this grammar blank')
     return values[0] or None
 
 

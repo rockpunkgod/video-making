@@ -105,7 +105,7 @@ def render_artifact(output):
     if kind=='candidate_partition': return '按'+output['axis']+'分组：'+'；'.join(g['label']+'：'+'、'.join(g['candidates']) for g in output['groups'])+'。分组不排除任何选项，也不定答案。'
     if kind=='text_groups': return '文本分组：'+'；'.join(g['label']+'：'+'、'.join(s['quote'] for s in g['spans']) for g in output['groups'])+'。'
     if kind=='route_selection':
-        labels={'entry':'先判空位','hint':'核有无提示词','with_hint':'有提示词','without_hint':'无提示词','article':'限定/冠词','pronoun':'指代','preposition':'介词场景','clause':'从句缺口','discourse':'句间关系','noun':'名词功能','modifier':'修饰功能','number':'数词','verb':'动词功能','predicate':'谓语','nonfinite':'非谓语'}
+        labels={'entry':'先判空位','hint':'核有无提示词','with_hint':'有提示词','without_hint':'无提示词','article':'限定/冠词','pronoun':'指代','preposition':'介词场景','clause':'连接/关系词','discourse':'句间关系','noun':'名词功能','modifier':'修饰功能','number':'数词','verb':'动词功能','predicate':'谓语','nonfinite':'非谓语'}
         return '待调用知识节点：'+' → '.join(labels.get(n,n) for n in output['node_ids'])+'。节点不是词形答案。'
     if kind=='candidate_decision': return '候选'+output['candidate']+'：'+{'retain':'保留','eliminate':'排除','undetermined':'待定'}[output['effect']]+'；依赖独立关系审阅。'
     return '回填核验：'+{'supports':'支持当前候选判断','rejects':'不支持当前候选判断','unresolved':'尚未闭合'}[output['verdict']]+'。'

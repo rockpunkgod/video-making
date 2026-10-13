@@ -7,6 +7,7 @@ from unittest.mock import patch
 
 from core.registry import Registry
 from scripts.prepare_first_use_materials import prepare, question_fingerprint, read_question, verify, render_question
+from tests import test_grammar_hint_review as hint_fixtures
 
 
 class FirstUseMaterialsTests(unittest.TestCase):
@@ -37,6 +38,30 @@ class FirstUseMaterialsTests(unittest.TestCase):
         self.patch.stop(); self.temporary.cleanup()
 
     def save(self,path,value): path.write_text(json.dumps(value),encoding='utf-8')
+
+    def test_answer_free_hint_review_can_preserve_missing_field_in_original_material(self):
+        q=hint_fixtures.HintReviewTests().question()
+        q['grammar_hint_review']['review_notes']='SECRET-REVIEW-NOTES'
+        self.save(self.demo,{'question':q,'analysis':{'answer':'SECRET-ANSWER'}})
+        selected,ref=read_question(self.demo)
+        self.assertNotIn('given_word',selected)
+        self.assertTrue(ref['factual_hint_review_retained'])
+        self.assertFalse(ref['historical_review_reused'])
+        text=render_question(selected)
+        self.assertIn('本空无提示词',text)
+        self.assertNotIn('SECRET',text)
+        self.assertNotIn('given_word',selected)
+
+    def test_missing_hint_is_not_inferred_from_an_unreviewed_annotation(self):
+        q=hint_fixtures.HintReviewTests().question()
+        q['grammar_hint_review']['review_status']='unreviewed'
+        with self.assertRaisesRegex(ValueError,'Missing explicit hint state'):
+            render_question(q)
+
+    def test_alias_word_cannot_conflict_with_no_hint_review(self):
+        q=hint_fixtures.HintReviewTests().question(); q['hint_word']='word'
+        with self.assertRaisesRegex(ValueError,'contradicts'):
+            render_question(q)
 
     def run_export(self,output=None):
         return prepare('F01',self.demo,self.transfer,self.walkthrough,
