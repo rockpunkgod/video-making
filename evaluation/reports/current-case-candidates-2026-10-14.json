@@ -1,0 +1,43 @@
+{
+  "date": "2026-10-14",
+  "source_commit": "61bc9c3e15004639cb442c20e7946ca9631f14ce",
+  "scope": "Post-reveal actual-action candidate indexing; not Case registration or coverage acceptance",
+  "specification_checked": [
+    "Final objective section 31: Case Registry",
+    "Real-paper supplement sections 5, 8, 9 and 15"
+  ],
+  "papers": [
+    {
+      "paper_id": "mock-2026-hubei-yuanchuang-m05-v01",
+      "private_report_path": "local-data/organized-pdfs/wxwork-priority-2026-10/coordinator-reviews/current-61bc9c3-r1/case-candidates-r1.json",
+      "private_report_sha256": "35ca6db7af91cd361b6ffc478465bf7a3e29f11c7836029b4c34feeaaca267c4",
+      "reviewed_questions": 20,
+      "question_method_candidates": 23,
+      "methods": {"F06": 2, "F07": 5, "R03": 9, "R06": 1, "R09": 1, "R11": 2, "R16": 3}
+    },
+    {
+      "paper_id": "mock-2027-wuhan-september-v01",
+      "private_report_path": "local-data/organized-pdfs/wxwork-priority-2026-10/coordinator-reviews/current-61bc9c3-wuhan-r1/case-candidates-r1.json",
+      "private_report_sha256": "7074af3abe900821b96cf9ddb4b7bfc191aca801858f0b7b5ef119382287a9e5",
+      "reviewed_questions": 4,
+      "question_method_candidates": 5,
+      "methods": {"R03": 1, "R09": 1, "R10": 1, "R11": 2}
+    }
+  ],
+  "candidate_case_type": null,
+  "registration_eligible": false,
+  "remaining_requirements": ["Verify an actual existing pre-reveal prediction/reveal chain; never fabricate one", "Independent own-method Case-type review"],
+  "test_command": "python -X utf8 -m unittest tests.test_current_case_candidates -q",
+  "tests_run": 22,
+  "new_index_tests": 4,
+  "inherited_review_binding_tests": 18,
+  "test_result": "PASS",
+  "full_regression_for_new_index_code": "not_run",
+  "new_case_count": 0,
+  "filled_case_slots": 0,
+  "new_unique_question_count": 0,
+  "new_blind_sample_count": 0,
+  "learner_validation": null,
+  "method_promotion_applied": false,
+  "private_source_text_included": false
+}
