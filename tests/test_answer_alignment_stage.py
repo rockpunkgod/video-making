@@ -112,6 +112,25 @@ class AlignmentStageTests(unittest.TestCase):
         self.assertIn('decision_tree',self.candidate.methods['G01']['full'])
         self.assertNotIn('原空号走两遍',self.candidate.methods['C01']['full']['source_boundary'])
 
+    def test_cloze_layered_stop_matches_current_source_in_live_and_staged_cards(self):
+        for registry in (Registry(),self.candidate):
+            for mid in ('C01','C02'):
+                with self.subTest(registry=registry.asset_root,method=mid):
+                    card=registry.methods[mid]
+                    self.assertEqual(card['levels']['L3'],card['stop_rule'])
+                    self.assertIn('不强制原空号',card['levels']['L3'])
+                    self.assertNotIn('原空号走两遍',card['levels']['L3'])
+                    self.assertNotIn('按原空号先做',card['levels']['L3'])
+
+    def test_cloze_generated_resource_uses_current_layered_stop(self):
+        import yaml
+        for root in (ROOT,self.path):
+            for folder in ('gaokao-english','gaokao-objective'):
+                cards=yaml.safe_load((root/folder/'generated-methods.yaml').read_bytes())['methods']
+                for card in cards:
+                    if card['method_id'] in ('C01','C02'):
+                        self.assertEqual(card['levels']['L3'],card['stop_rule'])
+
     def test_projection_does_not_expose_old_student_copy_or_merge_source_names(self):
         guide=(self.path/'student-guides/R09-三步压文.md').read_text(encoding='utf-8')
         self.assertIn('学生首次接触草稿',guide)

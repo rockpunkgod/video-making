@@ -155,12 +155,12 @@ methods:
   C01:
     brand_name: 语篇线索链
     status: candidate
-    version: 1.2.0
+    version: 1.2.1
     file: method-registry/cloze.yaml
   C02:
     brand_name: 前后夹击
     status: candidate
-    version: 1.2.0
+    version: 1.2.1
     file: method-registry/cloze.yaml
   C03:
     brand_name: 首句定调

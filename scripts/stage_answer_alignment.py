@@ -377,6 +377,9 @@ def corrected_card(original):
     if mid in FIRST_CONTACT:
         m['compact'].update({k:FIRST_CONTACT[mid][k] for k in ('10s','30s','90s')})
     m['memory_line']=ENTRY_CORRECTIONS.get(mid,{}).get('memory_line',action)
+    if mid in {'C01','C02'}:
+        # The historical L3 fixed-order wording must not leak into this epoch.
+        m['levels']['L3']=stop
     m['practicality_gate']['transfer']=m['transfer_pattern']
     if mid in FIRST_CONTACT:
         m['entry_copy']=m['compact']['10s']+'\n\n'+m['compact']['90s']

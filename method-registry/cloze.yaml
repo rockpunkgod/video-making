@@ -59,7 +59,7 @@ methods:
   levels:
     L1: 标当前空是词义/关系/搭配角色；找最近对象与动作线索；不足向复现、回答、结果或评价扩；回填核语义
     L2: 产出当前空的线索路径：空位查词义、关系还是搭配，最近哪句有对象/动作提示，不足向何处扩，回填需核哪条关系；框架本身不定案。
-    L3: 当前空自己的词义、搭配或决定性关系仍不明就暂留；主题同向、单句顺口或另一空已填都不证明答案。原空号走两遍，不按难易预排。
+    L3: 当前空的决定性词义或关系仍不明就暂留；找到独立提示再返回，不强制原空号、两遍或三遍。
     L4: 换题材仍先标空位角色、圈最近提示、按缺口扩证并回填，不迁移上篇主题或词对。
   compact:
     line: 标空位角色，圈最近对象/动作提示；最近不足才向真实复现、回答、结果或评价扩读，再回填核具体语义与联系。
@@ -120,8 +120,8 @@ methods:
   status: candidate
   maturity_status: candidate
   practical_value: Useful
-  version: 1.2.0
-  change_reason: ANSWER 61bc9c3e15004639cb442c20e7946ca9631f14ce 来源重绑定；旧证据仅按归档版本复核，新规则与传播入口仍待重新验收。
+  version: 1.2.1
+  change_reason: 1.2.1补丁删除L3遗留固定题序/遍数，与ANSWER 61bc9c3完整来源和主要Stop一致；1.2.0完整卡另存history，旧版本证据不自动升级。
   affected_cases:
   - cases/cloze/C01/canonical/case.yaml
   regression_result: pending_current_epoch_semantic_and_student_acceptance
@@ -195,7 +195,7 @@ methods:
   levels:
     L1: 圈两侧谁、动作、评价和时间；近处不足再向明确复现或结果扩读，仍不足暂留
     L2: 圈两侧对象、动作、评价与时间，逐条说明线索和候选的实际联系；近处足够则回填核验，不够记录缺口向明确复现、回答、结果或评价扩。
-    L3: 局部仍不足就暂留，按原空号先做有独立依据的空再返回；相邻待定空、教师先报答案和选项占用都不能给本空作证。不要只截取支持初选的一句。
+    L3: 仍不足就暂留，找到独立提示后返回，不强制原空号；相邻待定空、已占项或先报答案不互证。
     L4: 新篇仍核两侧实际提示与候选要求，不把左右句数固定，也不借未证空位答案。
   compact:
     line: 圈两侧对象、动作、评价、时间及候选额外前提；近处够则回填，不够写缺口并向真实复现、回答、结果或评价扩。
@@ -256,8 +256,8 @@ methods:
   status: candidate
   maturity_status: candidate
   practical_value: Useful
-  version: 1.2.0
-  change_reason: ANSWER 61bc9c3e15004639cb442c20e7946ca9631f14ce 来源重绑定；旧证据仅按归档版本复核，新规则与传播入口仍待重新验收。
+  version: 1.2.1
+  change_reason: 1.2.1补丁删除L3遗留固定题序/遍数，与ANSWER 61bc9c3完整来源和主要Stop一致；1.2.0完整卡另存history，旧版本证据不自动升级。
   affected_cases:
   - cases/cloze/C02/canonical/case.yaml
   regression_result: pending_current_epoch_semantic_and_student_acceptance
