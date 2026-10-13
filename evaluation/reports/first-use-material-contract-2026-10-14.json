@@ -1,0 +1,50 @@
+{
+  "date": "2026-10-14",
+  "scope": "first_use_draft_export_verify_and_refresh_program_contract_not_learner_or_English_acceptance",
+  "source_commit": "61bc9c3e15004639cb442c20e7946ca9631f14ce",
+  "code_bindings": {
+    "scripts/prepare_first_use_materials.py": "15b501ca10a0df866b877d3e0198119ab68d680460830ec1406fec72d9bf03ab",
+    "scripts/refresh_first_use_drafts.py": "d18d3587b67f6a277ba3095474c5df5232c58039edd30a2879fa9036821112b8",
+    "tests/test_first_use_materials.py": "027646c928bd611906afa48bdb1bc49df252bfcb5353ab3487aed95efe088da4"
+  },
+  "repairs": [
+    "layout_only_article_reuse_rejected_without_rewriting_source_or_fingerprints",
+    "verify_rechecks_walkthrough_identity_and_full_student_projection",
+    "exact_seven_null_observations_and_uncollected_pending_declarations",
+    "priority_method_scope_shared_by_export_and_verify",
+    "exact_UTF8_export_and_two_sided_line_ending_projection_check",
+    "optional_field_types_checked_before_export",
+    "entire_refresh_batch_validated_and_rendered_before_any_new_kit"
+  ],
+  "initial_reproduction": {"test_methods": 4, "failures_including_subtests": 7, "scope": "synthetic_program_controls_only"},
+  "final_host_targeted_regression": {"tests_run": 87, "failures": 0, "errors": 0, "elapsed_seconds": 132.725},
+  "intermediate_failed_regression": {"tests_run": 87, "errors": 1, "classification": "resolved_test_fixture_setup_error_before_refresh_assertion_not_core_bypass", "failure_evidence_preserved": true},
+  "independent_review_chain": {
+    "r1": {"verdict": "HOLD", "sha256": "879dc19dcea216cfe008a0c7758fee6b97f6b950e3feac6797daaa19bd9a9b37"},
+    "r2": {"verdict": "PASS_WITH_ADVISORY", "sha256": "d3ba7c1946d30bb94d9589bf70271a7ee711c882edf1949e27d006e0a058dd36"},
+    "r3": {"verdict": "bounded_current_code_PASS", "path": "local-data/first-use-material-review-2026-10-14/peer-review-r3.json", "sha256": "23ebb83c7255c78964bfedc8c2ef37634e0a4284b4d9d0cedccbf1abf40d6970", "independent_targeted_tests": 2, "independent_probes": 17}
+  },
+  "host_current_draft_recheck": {
+    "path": "local-data/first-use-material-review-2026-10-14/host-current-kits-r3.json",
+    "sha256": "57ab15e3503b5daddc5783a88aec08c3ac372fed889d6eeb430684f8862f9b27",
+    "methods": ["R01", "R02", "R06", "R09", "F01", "G01"],
+    "binding_and_projection_passes": 6,
+    "observations_per_kit": "exactly_seven_null_fields",
+    "collection_allowed": false
+  },
+  "independent_old_file_immutability_check": {"files": 41, "changed": 0},
+  "limits": [
+    "normalization_is_not_semantic_similarity_or_proof_of_unfamiliarity",
+    "self_declared_hashes_and_draft_markers_do_not_authenticate_source_or_participants",
+    "no_general_filesystem_or_cross_process_transaction_atomicity_claim",
+    "independent_r3_did_not_run_the_host_87_tests_or_inherit_old_runtime_results"
+  ],
+  "final_fixed_commit_full_regression": "pending",
+  "new_case_count": 0,
+  "new_unique_question_count": 0,
+  "new_blind_sample_count": 0,
+  "human_first_use_trials": 0,
+  "method_promotion_applied": false,
+  "communication_or_practicality_gate_passed": false,
+  "private_source_or_learner_text_included": false
+}

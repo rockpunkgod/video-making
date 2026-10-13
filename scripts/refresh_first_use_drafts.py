@@ -9,7 +9,8 @@ import json
 from pathlib import Path
 
 from core.registry import ROOT, Registry
-from scripts.prepare_first_use_materials import prepare
+from scripts.prepare_first_use_materials import (prepare,read_question,validate_materials,
+                                                validate_draft_metadata,render_student_material)
 
 
 def refresh(index, suffix, registry=None):
@@ -35,17 +36,20 @@ def refresh(index, suffix, registry=None):
         if (meta.get('method_id')!=mid or meta.get('method_version')!=registry.methods[mid]['version'] or
                 meta.get('source_commit')!=manifest['source_commit']):
             raise ValueError('Method identity or version changed; do not migrate an old demonstration')
-        if (meta.get('status')!='draft_materials_not_study_approval' or
-                meta.get('collection_allowed') is not False or
-                not meta.get('first_use_test') or
-                any(value is not None for value in meta['first_use_test'].values()) or
-                meta.get('new_case_count')!=0 or meta.get('new_blind_sample_count')!=0):
-            raise ValueError('Refuse to refresh collected, approved or non-draft material')
+        try:
+            validate_draft_metadata(meta)
+        except ValueError as exc:
+            raise ValueError('Refuse to refresh collected, approved or non-draft material') from exc
         if hashlib.sha256((old/'student-material.md').read_bytes()).hexdigest()!=meta.get('student_material_sha256'):
             raise ValueError('Old student copy changed; inspect it instead of silently refreshing')
         refs=meta['source_refs']
         if len(refs)!=3 or any(hashlib.sha256(Path(ref['path']).read_bytes()).hexdigest()!=ref['sha256'] for ref in refs):
             raise ValueError('Original source or demonstration changed; semantic review required')
+        demo,_=read_question(refs[0]['path'],refs[0].get('question_selector'))
+        transfer,_=read_question(refs[1]['path'],refs[1].get('question_selector'))
+        walkthrough=json.loads(Path(refs[2]['path']).read_bytes())
+        validate_materials(registry.methods[mid],manifest['source_commit'],demo,transfer,walkthrough)
+        render_student_material(registry.methods[mid],demo,transfer,walkthrough)
         target=old.with_name(old.name+'-'+suffix)
         if target.exists():
             raise ValueError('Revision output already exists; refuse overwrite')

@@ -8,6 +8,7 @@ import hashlib
 import json
 from pathlib import Path
 import re
+import unicodedata
 
 from core.registry import ROOT, Registry, validate_schema
 from core.grammar_navigation import hint_branch
@@ -15,6 +16,21 @@ from scripts.audit_student_entries import PRIORITY
 
 FIELDS = ('question_id','question_type','task_type','stem','passage','options',
           'given_word','hint_word','student_draft','continuation_starters','grammar_hint_review')
+FIRST_USE_FIELDS=('trigger_success','action_success','evidence_success',
+                  'stop_rule_success','no_answer_backfit','final_result','failure_type')
+DRAFT_MARKERS={
+    'status':'draft_materials_not_study_approval',
+    'review_scope':'ai_authored_draft_not_learner_validation',
+    'origin':'existing_real_question_artifacts_not_new_cases',
+    'prior_exposure':'must_check_with_each_participant_before_collection',
+    'study_order':'communication_then_freeze_then_practicality_then_first_use',
+    'learner_validation':'pending_real_participant_validation',
+}
+BEFORE_COLLECTION=[
+    'independent current-source review of demonstration and transfer scoring evidence',
+    'communication acceptance and frozen teaching version',
+    'practicality gate, participant unfamiliarity check and frozen study plan',
+]
 
 
 def question_fingerprint(question):
@@ -54,6 +70,11 @@ def read_question(path, question_id=None):
     if not all(isinstance(question.get(key),str) and question[key].strip()
                for key in ('question_id','question_type','stem','passage')):
         raise ValueError('Incomplete question text; do not fill missing source material')
+    if question.get('student_draft') is not None and not isinstance(question['student_draft'],str):
+        raise ValueError('Optional student draft must be text or null')
+    starters=question.get('continuation_starters')
+    if starters is not None and (not isinstance(starters,list) or any(not isinstance(x,str) for x in starters)):
+        raise ValueError('Optional continuation starters must be text items or null')
     ref = {'path': str(path), 'sha256': hashlib.sha256(data).hexdigest(),
                       'question_sha256':question_fingerprint(question),
                       'question_selector':question_id,
@@ -109,6 +130,78 @@ def render_question(question):
     return '\n\n'.join(parts)
 
 
+def passage_identity(text):
+    """Detect layout-only reuse; never rewrite original text or its fingerprint.
+
+    This is not a semantic similarity detector or proof of prior non-exposure.
+    """
+    text=unicodedata.normalize('NFKC',text).translate({0x200B:None,0xFEFF:None})
+    return re.sub(r'\s+',' ',text).strip()
+
+
+def validate_materials(method, source_commit, demo, transfer, walkthrough):
+    """Shared export/recheck contract, not independent teaching acceptance."""
+    if method['method_id'] not in PRIORITY:
+        raise ValueError('Use the current Registry and one priority method')
+    if demo['question_type'] != method['question_type'] or transfer['question_type'] != method['question_type']:
+        raise ValueError('Question type does not match the teaching method')
+    check_choices(demo); check_choices(transfer)
+    if method['method_id']=='G01':
+        grammar_hint(demo); grammar_hint(transfer)
+    identity = lambda question: {key: value for key, value in question.items() if key!='question_id'}
+    if demo['question_id']==transfer['question_id'] or identity(demo)==identity(transfer):
+        raise ValueError('The second task must use different original question material')
+    if passage_identity(demo['passage'])==passage_identity(transfer['passage']):
+        raise ValueError('A different passage is required for the unfamiliar transfer task')
+    if not isinstance(walkthrough,dict):
+        raise ValueError('An explicitly authored demonstration is required')
+    if (walkthrough.get('method_id')!=method['method_id'] or walkthrough.get('method_version')!=method['version']
+            or walkthrough.get('source_commit')!=source_commit
+            or walkthrough.get('question_id')!=demo['question_id']
+            or walkthrough.get('demonstration_question_sha256')!=question_fingerprint(demo)):
+        raise ValueError('Demonstration must bind the current method, source and exact example')
+    if not all(isinstance(walkthrough.get(key),str) and walkthrough[key].strip()
+               for key in ('first_action','evidence','output','stop')):
+        raise ValueError('Demonstration requires explicit action, evidence, output and stop')
+    if walkthrough.get('review_scope')!='ai_authored_draft_not_learner_validation':
+        raise ValueError('Do not claim independent or learner acceptance for this draft')
+
+
+def validate_draft_metadata(meta):
+    """A complete, explicitly uncollected draft cannot assert study success."""
+    observations=meta.get('first_use_test')
+    if (any(meta.get(key)!=value for key,value in DRAFT_MARKERS.items())
+            or meta.get('collection_allowed') is not False
+            or any(type(meta.get(key)) is not int or meta[key]!=0
+                   for key in ('new_case_count','new_blind_sample_count'))
+            or meta.get('required_before_collection')!=BEFORE_COLLECTION
+            or not isinstance(observations,dict) or set(observations)!=set(FIRST_USE_FIELDS)
+            or any(value is not None for value in observations.values())):
+        raise ValueError('A material draft cannot claim study approval or observations')
+
+
+def normalized_newlines(text):
+    return text.replace('\r\n','\n').replace('\r','\n')
+
+
+def render_student_material(method, demo, transfer, walkthrough):
+    """One projection shared by export and verify; never supplies test results."""
+    card=method['four_step_card']
+    return '\n\n'.join([
+        '# '+method['brand_name'],
+        '你可能遇到：'+method['student_symptoms'][0],
+        '什么时候启动：'+card['start'], '第一刀：'+card['first_cut'],
+        '怎么判：'+card['judge'], '什么时候停：'+card['stop'],
+        *(['```text\n'+method['visual_formula']+'\n```'] if method['method_id']=='G01' else []),
+        '## 示范题', render_question(demo),
+        '先做：'+walkthrough['first_action'], '看到的证据：'+walkthrough['evidence'],
+        '只得到：'+walkthrough['output'], '这里要刹车：'+walkthrough['stop'],
+        '## 第二道题', render_question(transfer),
+        '先不要报答案。'+method['challenge_prompt'],
+        '再说明是否该启动，你看的词句是什么，动作得到什么、还缺什么，以及是否需要停。',
+    ])+'\n'
+
+
 def prepare(method_id, demonstration_path, transfer_path, walkthrough_path, output, registry=None,
             demonstration_id=None, transfer_id=None):
     registry = registry or Registry()
@@ -118,75 +211,33 @@ def prepare(method_id, demonstration_path, transfer_path, walkthrough_path, outp
     method = registry.methods[method_id]
     demo, demo_ref = read_question(demonstration_path,demonstration_id)
     transfer, transfer_ref = read_question(transfer_path,transfer_id)
-    if demo['question_type'] != method['question_type'] or transfer['question_type'] != method['question_type']:
-        raise ValueError('Question type does not match the teaching method')
-    check_choices(demo); check_choices(transfer)
-    if method_id=='G01':
-        grammar_hint(demo); grammar_hint(transfer)
-    identity = lambda question: {key: value for key, value in question.items() if key!='question_id'}
-    if demo['question_id']==transfer['question_id'] or identity(demo)==identity(transfer):
-        raise ValueError('The second task must use different original question material')
-    if demo['passage'].strip()==transfer['passage'].strip():
-        raise ValueError('A different passage is required for the unfamiliar transfer task')
     walkthrough_path = Path(walkthrough_path).resolve()
     walkthrough_bytes = walkthrough_path.read_bytes()
     walkthrough = json.loads(walkthrough_bytes)
-    if (walkthrough.get('method_id')!=method_id or walkthrough.get('method_version')!=method['version']
-            or walkthrough.get('source_commit')!=registry.index['source_baseline']['commit']
-            or walkthrough.get('question_id')!=demo['question_id']
-            or walkthrough.get('demonstration_question_sha256')!=question_fingerprint(demo)):
-        raise ValueError('Demonstration must bind the current method, source and exact example')
-    if not all(isinstance(walkthrough.get(key),str) and walkthrough[key].strip()
-               for key in ('first_action','evidence','output','stop')):
-        raise ValueError('Demonstration requires explicit action, evidence, output and stop')
-    if walkthrough.get('review_scope')!='ai_authored_draft_not_learner_validation':
-        raise ValueError('Do not claim independent or learner acceptance for this draft')
+    validate_materials(method,registry.index['source_baseline']['commit'],demo,transfer,walkthrough)
     output = Path(output).resolve()
     if not output.is_relative_to((ROOT/'local-data').resolve()):
         raise ValueError('Real question materials must remain in private local-data')
     if output.exists():
         raise ValueError('Refuse to overwrite a frozen or existing study kit')
-    card = method['four_step_card']
-    learner = '\n\n'.join([
-        '# '+method['brand_name'],
-        '你可能遇到：'+method['student_symptoms'][0],
-        '什么时候启动：'+card['start'], '第一刀：'+card['first_cut'],
-        '怎么判：'+card['judge'], '什么时候停：'+card['stop'],
-        *(['```text\n'+method['visual_formula']+'\n```'] if method_id=='G01' else []),
-        '## 示范题', render_question(demo),
-        '先做：'+walkthrough['first_action'], '看到的证据：'+walkthrough['evidence'],
-        '只得到：'+walkthrough['output'], '这里要刹车：'+walkthrough['stop'],
-        '## 第二道题', render_question(transfer),
-        '先不要报答案。'+method['challenge_prompt'],
-        '再说明是否该启动，你看的词句是什么，动作得到什么、还缺什么，以及是否需要停。',
-    ])+'\n'
+    learner = render_student_material(method,demo,transfer,walkthrough)
     # Evaluation prompts do not reveal any expected groups, answers or evidence.
     facilitator = {
         'method_id': method_id, 'method_version': method['version'],
         'source_commit': registry.index['source_baseline']['commit'],
         'teaching_card_sha256':teaching_fingerprint(method),
         'teaching_binding_scope':'first_use_card_and_challenge_v2',
-        'status': 'draft_materials_not_study_approval',
-        'review_scope': walkthrough['review_scope'],
+        **DRAFT_MARKERS,
         'question_ids': [demo['question_id'],transfer['question_id']],
-        'origin': 'existing_real_question_artifacts_not_new_cases',
         'source_refs': [demo_ref,transfer_ref,{'path':str(walkthrough_path),
                         'sha256':hashlib.sha256(walkthrough_bytes).hexdigest()}],
-        'prior_exposure': 'must_check_with_each_participant_before_collection',
-        'study_order': 'communication_then_freeze_then_practicality_then_first_use',
         'collection_allowed': False,
-        'required_before_collection': [
-            'independent current-source review of demonstration and transfer scoring evidence',
-            'communication acceptance and frozen teaching version',
-            'practicality gate, participant unfamiliarity check and frozen study plan',
-        ],
-        'first_use_test': dict.fromkeys(('trigger_success','action_success','evidence_success',
-                           'stop_rule_success','no_answer_backfit','final_result','failure_type')),
-        'learner_validation': 'pending_real_participant_validation',
+        'required_before_collection': list(BEFORE_COLLECTION),
+        'first_use_test': dict.fromkeys(FIRST_USE_FIELDS),
         'new_case_count': 0, 'new_blind_sample_count': 0,
     }
     output.mkdir(parents=True)
-    (output/'student-material.md').write_text(learner,encoding='utf-8')
+    (output/'student-material.md').write_text(learner,encoding='utf-8',newline='')
     facilitator['student_material_sha256']=hashlib.sha256((output/'student-material.md').read_bytes()).hexdigest()
     (output/'facilitator.json').write_text(json.dumps(facilitator,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
     return {'method_id':method_id,'output':str(output),'status':facilitator['status'],
@@ -202,18 +253,13 @@ def verify(output, registry=None):
         raise ValueError('Real question materials must remain in private local-data')
     meta=json.loads((output/'facilitator.json').read_text(encoding='utf-8'))
     method=registry.methods.get(meta.get('method_id'))
-    if (registry.is_historical or method is None or
+    if (registry.is_historical or method is None or method['method_id'] not in PRIORITY or
             meta.get('teaching_binding_scope')!='first_use_card_and_challenge_v2' or
             meta.get('method_version')!=method['version'] or
             meta.get('source_commit')!=registry.index['source_baseline']['commit'] or
             meta.get('teaching_card_sha256')!=teaching_fingerprint(method)):
         raise ValueError('Study kit teaching card is stale or not current-bound')
-    if (meta.get('status')!='draft_materials_not_study_approval' or
-            meta.get('collection_allowed') is not False or
-            meta.get('new_case_count')!=0 or meta.get('new_blind_sample_count')!=0 or
-            not isinstance(meta.get('first_use_test'),dict) or
-            any(value is not None for value in meta['first_use_test'].values())):
-        raise ValueError('A material draft cannot claim study approval or observations')
+    validate_draft_metadata(meta)
     material=(output/'student-material.md').read_bytes()
     if hashlib.sha256(material).hexdigest()!=meta.get('student_material_sha256'):
         raise ValueError('Student material changed after export')
@@ -223,14 +269,21 @@ def verify(output, registry=None):
     for ref in refs:
         if hashlib.sha256(Path(ref['path']).read_bytes()).hexdigest()!=ref['sha256']:
             raise ValueError('Original source artifact changed after export')
-    bound_question_ids=[]
+    bound_question_ids=[]; bound_questions=[]
     for ref in refs[:2]:
         question,_=read_question(ref['path'],ref.get('question_selector'))
         if question_fingerprint(question)!=ref.get('question_sha256'):
             raise ValueError('Original question binding mismatch')
         bound_question_ids.append(question['question_id'])
+        bound_questions.append(question)
     if bound_question_ids!=meta.get('question_ids'):
         raise ValueError('Study question IDs do not match selected source questions')
+    walkthrough=json.loads(Path(refs[2]['path']).read_bytes())
+    demo,transfer=bound_questions
+    validate_materials(method,registry.index['source_baseline']['commit'],demo,transfer,walkthrough)
+    expected=render_student_material(method,demo,transfer,walkthrough)
+    if normalized_newlines(material.decode('utf-8'))!=normalized_newlines(expected):
+        raise ValueError('Student material differs from its current bound teaching projection')
     return {'method_id':method['method_id'],'binding_check':'PASS',
             'status':'draft_materials_not_study_approval','collection_allowed':False,
             'scope':'consistency only; not semantic, source authenticity or learner acceptance'}

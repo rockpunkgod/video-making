@@ -99,6 +99,39 @@ class FirstUseMaterialsTests(unittest.TestCase):
         data['question']['stem']='another blank'; self.save(self.transfer,data)
         with self.assertRaisesRegex(ValueError,'different passage'): self.run_export()
 
+    def test_layout_only_changes_do_not_make_a_passage_unfamiliar(self):
+        variants=['synthetic\nsource\tone','synthetic\u00a0source one',
+                  'ｓｙｎｔｈｅｔｉｃ source one','synthetic\u200b source one']
+        for index,passage in enumerate(variants):
+            with self.subTest(passage=passage):
+                data=json.loads(self.transfer.read_text())
+                data['question'].update(passage=passage,stem='another synthetic blank')
+                self.save(self.transfer,data)
+                output=self.root/'local-data'/('format-'+str(index))
+                with self.assertRaisesRegex(ValueError,'different passage'): self.run_export(output)
+                self.assertFalse(output.exists())
+
+    def test_layout_identity_preserves_original_text_and_question_fingerprint(self):
+        from scripts.prepare_first_use_materials import passage_identity
+        data=json.loads(self.transfer.read_text())
+        data['question']['passage']='ｓｙｎｔｈｅｔｉｃ\u00a0source\n two'
+        self.save(self.transfer,data)
+        question,binding=read_question(self.transfer); original_bytes=self.transfer.read_bytes()
+        self.assertEqual(passage_identity(question['passage']),'synthetic source two')
+        result=self.run_export(); verify(result['output'],self.registry)
+        self.assertEqual(self.transfer.read_bytes(),original_bytes)
+        self.assertEqual(question_fingerprint(read_question(self.transfer)[0]),binding['question_sha256'])
+        self.assertIn(question['passage'],(Path(result['output'])/'student-material.md').read_text(encoding='utf-8'))
+
+    def test_layout_identity_does_not_remove_negation_or_numeric_conditions(self):
+        from scripts.prepare_first_use_materials import passage_identity
+        self.assertNotEqual(passage_identity('synthetic source can act'),
+                            passage_identity('synthetic source cannot act'))
+        self.assertNotEqual(passage_identity('synthetic result 10 units'),
+                            passage_identity('synthetic result 100 units'))
+        self.assertNotEqual(passage_identity('synthetic result -10 units'),
+                            passage_identity('synthetic result 10 units'))
+
     def test_wrong_type_or_incomplete_text_rejected(self):
         data=json.loads(self.transfer.read_text()); data['question']['question_type']='阅读理解'
         self.save(self.transfer,data)
@@ -124,11 +157,103 @@ class FirstUseMaterialsTests(unittest.TestCase):
         self.save(self.transfer,data)
         with self.assertRaisesRegex(ValueError,'Incomplete question'): self.run_export()
 
+    def test_optional_nontext_fields_rejected_before_export(self):
+        from copy import deepcopy
+        original=json.loads(self.transfer.read_text())
+        for index,(field,value,message) in enumerate([
+                ('student_draft',['synthetic text'],'student draft'),
+                ('continuation_starters','synthetic text','continuation starters'),
+                ('continuation_starters',[1],'continuation starters')]):
+            with self.subTest(field=field,value=value):
+                data=deepcopy(original);data['question'][field]=value;self.save(self.transfer,data)
+                output=self.root/'local-data'/('optional-'+str(index))
+                with self.assertRaisesRegex(ValueError,message):self.run_export(output)
+                self.assertFalse(output.exists())
+
     def test_private_export_bindings_verify_without_granting_study_approval(self):
         result=self.run_export()
         checked=verify(result['output'],self.registry)
         self.assertEqual(checked['binding_check'],'PASS')
         self.assertFalse(checked['collection_allowed'])
+
+    def test_verify_rechecks_walkthrough_identity_even_with_matching_file_hash(self):
+        import hashlib
+        output=Path(self.run_export()['output'])
+        data=json.loads(self.walkthrough.read_text()); data['method_id']='R09'
+        self.save(self.walkthrough,data)
+        meta_path=output/'facilitator.json'; meta=json.loads(meta_path.read_text())
+        meta['source_refs'][2]['sha256']=hashlib.sha256(self.walkthrough.read_bytes()).hexdigest()
+        self.save(meta_path,meta)
+        with self.assertRaisesRegex(ValueError,'Demonstration must bind'): verify(output,self.registry)
+
+    def test_verify_rechecks_student_projection_not_just_declared_hash(self):
+        import hashlib
+        output=Path(self.run_export()['output'])
+        student=output/'student-material.md'; student.write_text('synthetic unrelated lesson and answer')
+        meta_path=output/'facilitator.json'; meta=json.loads(meta_path.read_text())
+        meta['student_material_sha256']=hashlib.sha256(student.read_bytes()).hexdigest()
+        self.save(meta_path,meta)
+        with self.assertRaisesRegex(ValueError,'Student material.*projection'): verify(output,self.registry)
+
+    def test_verify_rechecks_passage_independence_even_with_matching_source_hashes(self):
+        import hashlib
+        output=Path(self.run_export()['output'])
+        data=json.loads(self.transfer.read_text()); data['question']['passage']='synthetic\nsource one'
+        self.save(self.transfer,data)
+        meta_path=output/'facilitator.json'; meta=json.loads(meta_path.read_text())
+        meta['source_refs'][1]['sha256']=hashlib.sha256(self.transfer.read_bytes()).hexdigest()
+        meta['source_refs'][1]['question_sha256']=question_fingerprint(read_question(self.transfer)[0])
+        self.save(meta_path,meta)
+        with self.assertRaisesRegex(ValueError,'different passage'): verify(output,self.registry)
+
+    def test_verify_requires_complete_null_observations_and_pending_draft_markers(self):
+        from copy import deepcopy
+        output=Path(self.run_export()['output']); meta_path=output/'facilitator.json'
+        original=json.loads(meta_path.read_text())
+        changes=[('first_use_test',{}),('first_use_test',{'unknown_result':None}),
+                 ('learner_validation','validated_real_participant'),
+                 ('review_scope','independently_validated'),('prior_exposure','verified_unfamiliar'),
+                 ('study_order','blind_before_communication'),('required_before_collection',[]),
+                 ('origin','real_student_result'),('new_case_count',False)]
+        for key,value in changes:
+            with self.subTest(key=key,value=value):
+                meta=deepcopy(original);meta[key]=value;self.save(meta_path,meta)
+                with self.assertRaisesRegex(ValueError,'approval or observations'):verify(output,self.registry)
+        self.save(meta_path,original)
+        self.assertFalse(verify(output,self.registry)['collection_allowed'])
+
+    def test_verify_and_prepare_share_priority_method_scope(self):
+        import hashlib
+        from scripts.prepare_first_use_materials import teaching_fingerprint,render_student_material
+        output=Path(self.run_export()['output']); method=self.registry.methods['F05']
+        walkthrough=json.loads(self.walkthrough.read_text())
+        walkthrough.update(method_id='F05',method_version=method['version'])
+        self.save(self.walkthrough,walkthrough)
+        meta_path=output/'facilitator.json';meta=json.loads(meta_path.read_text())
+        meta.update(method_id='F05',method_version=method['version'],teaching_card_sha256=teaching_fingerprint(method))
+        meta['source_refs'][2]['sha256']=hashlib.sha256(self.walkthrough.read_bytes()).hexdigest()
+        student=output/'student-material.md'
+        student.write_text(render_student_material(method,read_question(self.demo)[0],read_question(self.transfer)[0],walkthrough),encoding='utf-8',newline='')
+        meta['student_material_sha256']=hashlib.sha256(student.read_bytes()).hexdigest();self.save(meta_path,meta)
+        with self.assertRaisesRegex(ValueError,'not current-bound'):verify(output,self.registry)
+        with self.assertRaisesRegex(ValueError,'priority method'):
+            prepare('F05',self.demo,self.transfer,self.walkthrough,self.root/'local-data/unsupported',self.registry)
+
+    def test_valid_line_endings_verify_without_expanding_original_CRLF(self):
+        import hashlib
+        from scripts.prepare_first_use_materials import render_student_material,normalized_newlines
+        data=json.loads(self.transfer.read_text());data['question']['passage']='synthetic source\r\ntwo'
+        self.save(self.transfer,data);source_bytes=self.transfer.read_bytes()
+        output=Path(self.run_export()['output']);student=output/'student-material.md'
+        expected=render_student_material(self.registry.methods['F01'],read_question(self.demo)[0],read_question(self.transfer)[0],json.loads(self.walkthrough.read_text()))
+        self.assertEqual(student.read_bytes(),expected.encode('utf-8'))
+        self.assertNotIn(b'\r\r\n',student.read_bytes())
+        meta_path=output/'facilitator.json';meta=json.loads(meta_path.read_text())
+        for text in [expected,normalized_newlines(expected),normalized_newlines(expected).replace('\n','\r\n')]:
+            student.write_bytes(text.encode('utf-8'))
+            meta['student_material_sha256']=hashlib.sha256(student.read_bytes()).hexdigest();self.save(meta_path,meta)
+            self.assertEqual(verify(output,self.registry)['binding_check'],'PASS')
+        self.assertEqual(self.transfer.read_bytes(),source_bytes)
 
     def test_changed_student_copy_and_original_source_are_detected(self):
         result=self.run_export(); output=Path(result['output'])
@@ -244,6 +369,42 @@ class FirstUseMaterialsTests(unittest.TestCase):
             meta_path=old/'facilitator.json'; meta=json.loads(meta_path.read_text())
             meta['first_use_test']['action_success']=False; self.save(meta_path,meta)
             with self.assertRaisesRegex(ValueError,'collected'): refresh(index,'test-v3',self.registry)
+
+    def assert_invalid_batch_preflight(self,change,message):
+        import hashlib
+        from scripts.refresh_first_use_drafts import refresh
+        old=Path(self.run_export()['output'])
+        gdemo=self.root/'grammar-demo.json';gtransfer=self.root/'grammar-transfer.json';gwalk=self.root/'grammar-walkthrough.json'
+        for path,qid,passage in [(gdemo,'synthetic-gdemo','synthetic grammar one'),(gtransfer,'synthetic-gtransfer','synthetic grammar two')]:
+            self.save(path,{'question_id':qid,'question_type':'语法填空','stem':'synthetic grammar blank','passage':passage,'given_word':'solid'})
+        self.save(gwalk,{'method_id':'G01','method_version':self.registry.methods['G01']['version'],
+                        'source_commit':self.registry.index['source_baseline']['commit'],'question_id':'synthetic-gdemo',
+                        'demonstration_question_sha256':question_fingerprint(read_question(gdemo)[0]),
+                        'first_action':'synthetic action','evidence':'synthetic evidence','output':'synthetic output',
+                        'stop':'synthetic stop','review_scope':'ai_authored_draft_not_learner_validation'})
+        other=self.root/'local-data/grammar-kit'
+        prepare('G01',gdemo,gtransfer,gwalk,other,self.registry)
+        data=json.loads(gtransfer.read_text());data.update(change);self.save(gtransfer,data)
+        meta_path=other/'facilitator.json';meta=json.loads(meta_path.read_text())
+        meta['source_refs'][1]['sha256']=hashlib.sha256(gtransfer.read_bytes()).hexdigest()
+        # Deliberately invalid raw fixture: do not validate it during setup.
+        # The assertion below must reach the refresh batch preflight itself.
+        meta['source_refs'][1]['question_sha256']=question_fingerprint(data);self.save(meta_path,meta)
+        old_files={p:p.read_bytes() for kit in [old,other] for p in kit.iterdir()}
+        index=old.parent/'CURRENT_DRAFTS.json'
+        self.save(index,{'source_commit':self.registry.index['source_baseline']['commit'],'current_kits':{'F01':old.name,'G01':other.name}})
+        with patch('scripts.refresh_first_use_drafts.ROOT',self.root):
+            with self.assertRaisesRegex(ValueError,message):refresh(index,'preflight-v2',self.registry)
+        self.assertFalse(old.with_name(old.name+'-preflight-v2').exists())
+        self.assertFalse(other.with_name(other.name+'-preflight-v2').exists())
+        self.assertFalse(index.with_name('CURRENT_DRAFTS-preflight-v2.json').exists())
+        for p,raw in old_files.items():self.assertEqual(p.read_bytes(),raw)
+
+    def test_batch_preflight_rejects_later_invalid_pair_before_any_new_kit(self):
+        self.assert_invalid_batch_preflight({'passage':'synthetic\ngrammar one'},'different passage')
+
+    def test_batch_preflight_rejects_later_render_failure_before_any_new_kit(self):
+        self.assert_invalid_batch_preflight({'student_draft':['synthetic text']},'student draft')
 
     def test_f01_core_rules_unchanged_from_pre_revision_snapshot(self):
         from core.registry import ROOT
