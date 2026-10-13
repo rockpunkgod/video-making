@@ -187,5 +187,46 @@ class FirstUseMaterialsTests(unittest.TestCase):
         for qid in ('missing','synthetic-demo'):
             with self.assertRaisesRegex(ValueError,'missing or duplicated'): read_question(paper,qid)
 
+    def test_same_version_challenge_changes_invalidate_study_material(self):
+        result=self.run_export()
+        with patch.dict(self.registry.methods['F01'],{'challenge_prompt':'changed task at same version'}):
+            with self.assertRaisesRegex(ValueError,'stale'): verify(result['output'],self.registry)
+
+    def test_legacy_material_without_challenge_binding_cannot_be_current(self):
+        result=self.run_export(); output=Path(result['output']); meta_path=output/'facilitator.json'
+        meta=json.loads(meta_path.read_text()); del meta['teaching_binding_scope']; self.save(meta_path,meta)
+        with self.assertRaisesRegex(ValueError,'stale'): verify(output,self.registry)
+
+    def test_no_forced_absent_dimension_in_current_f01_instruction(self):
+        method=self.registry.methods['F01']
+        self.assertIn('若某一维没有区别',method['challenge_prompt'])
+        self.assertIn('若某一维没有区别',method['compact']['90s'])
+        self.assertNotIn('说出哪一维没有区分度',method['challenge_prompt'])
+        self.assertNotIn('指出一个无区分度',method['compact']['90s'])
+
+    def test_batch_refresh_preserves_old_drafts_and_rejects_collected_values(self):
+        from scripts.refresh_first_use_drafts import refresh
+        result=self.run_export(); old=Path(result['output']); original=(old/'student-material.md').read_bytes()
+        index=old.parent/'CURRENT_DRAFTS.json'
+        self.save(index,{'source_commit':self.registry.index['source_baseline']['commit'],
+                         'current_kits':{'F01':old.name}})
+        with patch('scripts.refresh_first_use_drafts.ROOT',self.root):
+            updated=refresh(index,'test-v2',self.registry)
+            self.assertFalse(updated['collection_allowed'])
+            self.assertEqual((old/'student-material.md').read_bytes(),original)
+            self.assertEqual(verify(old.with_name(old.name+'-test-v2'),self.registry)['binding_check'],'PASS')
+            with self.assertRaisesRegex(ValueError,'index already exists'): refresh(index,'test-v2',self.registry)
+            meta_path=old/'facilitator.json'; meta=json.loads(meta_path.read_text())
+            meta['first_use_test']['action_success']=False; self.save(meta_path,meta)
+            with self.assertRaisesRegex(ValueError,'collected'): refresh(index,'test-v3',self.registry)
+
+    def test_f01_core_rules_unchanged_from_pre_revision_snapshot(self):
+        from core.registry import ROOT
+        original=json.loads((ROOT/'provenance/student-entry-revisions/F01-1.2.0-before-conditional-challenge.json').read_text(encoding='utf-8'))['method']
+        current=self.registry.methods['F01']
+        for key in ('version','core_action','trigger_cues','decision_rule','stop_rule','primary_role','four_step_card','full'):
+            self.assertEqual(current[key],original[key],key)
+        self.assertNotEqual(current['challenge_prompt'],original['challenge_prompt'])
+
 
 if __name__=='__main__': unittest.main()

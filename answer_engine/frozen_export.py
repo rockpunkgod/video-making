@@ -62,7 +62,8 @@ class FrozenAssetExporter:
         # facts. This comparison does NOT change legacy sealed bundle hashing.
         teaching_keys=('source_name','method_type','primary_role','secondary_roles','trigger_cues',
                        'core_action','decision_rule','verification','stop_rule','anti_rule',
-                       'failure_cases','counterexamples','cannot_replace','full','section_ids','source_references')
+                       'failure_cases','counterexamples','cannot_replace','full','section_ids','source_references',
+                       'compact','four_step_card','challenge_prompt','visual_formula','entry_copy','common_wrong_instinct')
         semantic_changed=[m['method_id'] for m in req['methods'] if any(
             m.get(k)!=registry.methods[m['method_id']].get(k) for k in teaching_keys)]
         if semantic_changed and result['effective_status'] not in {'WITHDRAWN','SUPERSEDED'}:

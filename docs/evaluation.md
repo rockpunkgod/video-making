@@ -28,6 +28,8 @@ python -m scripts.prepare_first_use_materials --verify local-data/STUDY-DRAFT
 
 复核学生文件哈希、原题与示范文件哈希、题面指纹及当前教学卡指纹。同版本卡片的四步动作变化也会使旧材料失效。检查只证明数据一致性，不认证来源真实性、教学效力或研究许可；材料草稿不能夹带伪造的 First-use 观察。旧材料版本保留，重新生成须用新目录。
 
+当前材料绑定范围为 `first_use_card_and_challenge_v2`，包含 Challenge；不能仅凭同版本四步卡未变继续使用旧练习任务。旧范围缺此绑定时须重新导出。`python -m scripts.refresh_first_use_drafts --index local-data/STUDY/CURRENT_DRAFTS.json --suffix REVISION` 可批量重导未采集草稿，并输出新的索引供明确选择；不会改旧稿。已有观察值、已批准采集、来源文件变化或方法版本变化均拒绝刷新，不能把真实旧观察迁成新结果。
+
 按schemas/evaluation-record.json制作JSON数组或JSONL。每条保留参与者、方法版本、题号、冻结题组、分配条件、评价者，以及实际动作/证据/刹车/学生复述/角色。phase为communication、first_use或blind；短版独立组或预先设计counterbalanced分配。不能把自动答案正确充当动作成功。
 
 ```powershell

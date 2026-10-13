@@ -118,6 +118,15 @@ class VideoOSTest(unittest.TestCase):
         self.assertEqual(status['effective_status'],'SUPERSEDED')
         self.assertTrue(any('teaching facts differ' in reason for reason in status['invalidation_reasons']))
 
+    def test_same_version_student_task_or_visual_change_invalidates_current_export(self):
+        for key in ('challenge_prompt','visual_formula','entry_copy'):
+            with self.subTest(key=key):
+                current=Registry()
+                current.methods[self.req['methods'][0]['method_id']][key]='changed student instruction'
+                status=self.exporter.status_current_epoch(self.req,current)
+                self.assertEqual(status['effective_status'],'SUPERSEDED')
+        self.assertTrue(any('teaching facts differ' in reason for reason in status['invalidation_reasons']))
+
     def test_ai_not_human(self):
         b, _ = self.assets()
         self.assertEqual(b['semantic_review']['level'], 'ai_reviewed')

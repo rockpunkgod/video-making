@@ -24,7 +24,7 @@ def question_fingerprint(question):
 def teaching_fingerprint(method):
     fields={key:method[key] for key in (
         'method_id','version','brand_name','student_symptoms','four_step_card',
-        'primary_role','output_type','section_ids')}
+        'primary_role','output_type','section_ids','challenge_prompt')}
     if method['method_id']=='G01':
         fields['visual_formula']=method['visual_formula']
     return question_fingerprint(fields)
@@ -151,6 +151,7 @@ def prepare(method_id, demonstration_path, transfer_path, walkthrough_path, outp
         'method_id': method_id, 'method_version': method['version'],
         'source_commit': registry.index['source_baseline']['commit'],
         'teaching_card_sha256':teaching_fingerprint(method),
+        'teaching_binding_scope':'first_use_card_and_challenge_v2',
         'status': 'draft_materials_not_study_approval',
         'review_scope': walkthrough['review_scope'],
         'question_ids': [demo['question_id'],transfer['question_id']],
@@ -188,6 +189,7 @@ def verify(output, registry=None):
     meta=json.loads((output/'facilitator.json').read_text(encoding='utf-8'))
     method=registry.methods.get(meta.get('method_id'))
     if (registry.is_historical or method is None or
+            meta.get('teaching_binding_scope')!='first_use_card_and_challenge_v2' or
             meta.get('method_version')!=method['version'] or
             meta.get('source_commit')!=registry.index['source_baseline']['commit'] or
             meta.get('teaching_card_sha256')!=teaching_fingerprint(method)):
