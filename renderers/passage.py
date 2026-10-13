@@ -17,7 +17,11 @@ def render_passage(result,kind='structured',registry=None):
     if result['question_type']=='阅读理解':
         if result['review']['reading_mode']=='central_task':
             has_main=any(x['analysis']['task_type'] in {'main_idea','purpose','title'} for x in result['questions'])
-            parts.append('这里先把全文中心任务的题做掉，再回头做细节，猜词放最后。' if has_main else '这里没有全文中心任务题，就先核细节，猜词放最后。')
+            has_vocab=any(x['analysis']['task_type'] in {'vocabulary','word_meaning'} for x in result['questions'])
+            if has_vocab:
+                parts.append('这里先把全文中心任务的题做掉，再回头做细节，猜词放最后。' if has_main else '这里没有全文中心任务题，就先核细节，猜词放最后。')
+            else:
+                parts.append('这里先把全文中心任务的题做掉，再回头核其他题。' if has_main else '这里没有全文中心任务题，就按原题号核各题的局部任务。')
         else: parts.append('这里按原题号逐题回文找依据，不改成按难易挑题。')
     elif result['question_type']=='语法填空':
         has_no_hint=any(x['question']['given_word'] is None for x in result['questions'])

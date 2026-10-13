@@ -109,8 +109,20 @@ class PassageLessonTest(unittest.TestCase):
             body=render_passage(out,kind,self.r)
             self.assertIn('没有全文中心任务题',body)
             self.assertNotIn('先把全文中心任务的题做掉',body)
+            self.assertNotIn('猜词放最后',body)
             positions=[body.index('核第'+str(n)+'题') for n in range(32,36)]
             self.assertEqual(positions,sorted(positions))
+        for kind in ('structured','content-export'):
+            self.assertEqual(json.loads(render_passage(out,kind,self.r)),out)
+
+    def test_center_without_vocabulary_does_not_announce_a_missing_stage(self):
+        p=packet(self.r);p['questions'][1]['question']['task_type']='study_finding'
+        out=self.a.analyze(p);before=deepcopy(out)
+        for kind in ('student','legacy-wechat'):
+            body=render_passage(out,kind,self.r)
+            self.assertIn('先把全文中心任务的题做掉',body)
+            self.assertNotIn('猜词放最后',body)
+        self.assertEqual(out,before)
         for kind in ('structured','content-export'):
             self.assertEqual(json.loads(render_passage(out,kind,self.r)),out)
 
