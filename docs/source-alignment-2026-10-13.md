@@ -289,3 +289,9 @@ Q35 新稿的另一作者复核已结束，独立读原页及完整学生稿的�
 批准另存private root-r11；只修改新口播及篇review的审阅者/状态，不改原支持、终判作者或cause/study_finding。四个旧独立审阅、四个无答案支持及四份材料来源实际重放通过，全部口播片段与原生稿中间段完全一致，落盘精确重放得到whole_passage_delivery，四输出实际检查通过，主代理又读完整自动学生输出。主代理首轮负控错误访问candidate_checks层级而中途失败，原runner及说明保留；正确wrapper重做全部16负控并全部拒绝，才出最终报告。作者r9失败和r10未审稿均保留。
 
 公开元数据 `evaluation/reports/current-source-wuhan-natural-C-r11.json` 不含题文和学生原稿。此为真实整篇AI交付审阅，不是学生已学会、提速或两阶段Gate通过，不新增整题已审数、Case、题目、Blind或方法等级。武汉D新稿已继续分派，不虚构缺少的全文中心题，不把具体任务改为detail来过接口。
+
+## 武汉 D 局部任务排序修复
+
+实际D组装的paragraph_focus/action_purpose/functional_contribution/data_purpose四个真实局部任务曾被排序集合拒绝。仅将它们显式归入排序的细节阶段，不改原标签、不改终判绑定，不增加任意标签fallback。D本篇没有全文中心任务，故不虚构主旨题，四题32→33→34→35；局部purpose不冒充全文purpose。主代理实际重放已有四份独立题目审阅并确认task与terminal一致，原字段不变。
+
+既有两个具体任务的主旨后/猜词前及错序拒绝子测试扩至六标签，新增无全文中心不虚构、看似局部却未知标签仍拒两项测试；篇级/终判/口播48项专项通过，36.389秒。另一作者工程增量复核与D新完整讲稿语义验收仍待结束，不复用正在运行的e91da0c包全量结果覆盖这次后续代码。公开元数据为 `evaluation/reports/passage-local-task-order-r2.json`，不增加任何题目、Case、Blind或学生学习信用。

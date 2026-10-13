@@ -7,9 +7,10 @@ from .execution import validate_execution_trace
 from .lesson_feedback import DELIVERY_PATH,check_spoken_text,validate_lesson_projection
 
 MAIN={'main_idea','purpose','title'}
-# Ordering buckets do not rename the question's reviewed task. Cause and
-# study-finding questions follow the detail phase, not the vocabulary phase.
-DETAIL={'detail','inference','paragraph_main_idea','cause','study_finding'}
+# Ordering buckets do not rename the question's reviewed task. Local paragraph,
+# action, data and finding questions are not whole-text purpose/main-idea tasks.
+DETAIL={'detail','inference','paragraph_main_idea','cause','study_finding',
+        'paragraph_focus','action_purpose','functional_contribution','data_purpose'}
 VOCAB={'vocabulary','word_meaning'}
 
 

@@ -8,6 +8,9 @@ from core.passage_lesson import PassageLessonAnalyzer,validate_order
 from renderers.passage import render_passage
 from tests.test_lesson_feedback import fixture as single_fixture
 
+SPECIFIC_DETAILS=('cause','study_finding','paragraph_focus','action_purpose',
+                  'functional_contribution','data_purpose')
+
 def seven_question(registry):
     q=single_fixture(registry); s=q['observations'][0]['evidence'][0]
     q.update(question_type='七选五',options={c:'program-only option '+c for c in 'ABCDEFG'},requested_chain=['F01','F11'],observations=[{'method_id':m,'reviewed':True,'evidence':[s]} for m in ['F01','F11']])
@@ -53,8 +56,8 @@ class PassageLessonTest(unittest.TestCase):
         p['review']['reading_mode']='central_task'
         with self.assertRaisesRegex(ValueError,'course task order'): self.a.analyze(p)
 
-    def test_cause_and_study_finding_keep_their_tasks_in_detail_phase(self):
-        for task in ('cause','study_finding'):
+    def test_specific_details_keep_their_tasks_in_detail_phase(self):
+        for task in SPECIFIC_DETAILS:
             with self.subTest(task=task):
                 p=packet(self.r);p['questions'][0]['question']['task_type']=task
                 original=deepcopy(p);out=self.a.analyze(p)
@@ -74,7 +77,7 @@ class PassageLessonTest(unittest.TestCase):
                         self.assertLess(body.index('核第31题'),body.index('核第32题'))
 
     def test_specific_detail_tasks_cannot_bypass_central_task_order(self):
-        for task in ('cause','study_finding'):
+        for task in SPECIFIC_DETAILS:
             p=packet(self.r);p['questions'][0]['question']['task_type']=task
             p['review']['steps'].sort(key=lambda s:s['question_id'])
             with self.subTest(task=task),self.assertRaisesRegex(ValueError,'course task order'):
@@ -87,6 +90,35 @@ class PassageLessonTest(unittest.TestCase):
         for kind in ('student','legacy-wechat','structured','content-export'):
             with self.subTest(kind=kind),self.assertRaisesRegex(ValueError,'metadata'):
                 render_passage(out,kind,self.r)
+
+    def test_local_purpose_tasks_do_not_invent_a_whole_text_center(self):
+        p=packet(self.r)
+        p['questions']=[]
+        for number,task in zip(range(32,36),SPECIFIC_DETAILS[2:]):
+            q=single_fixture(self.r);q.update(question_id='program-'+str(number),task_type=task)
+            p['questions'].append({'number':number,'question':q})
+        span=p['questions'][0]['question']['observations'][0]['evidence'][0]
+        p['review']['steps']=[{'question_id':'program-'+str(n),'pass':1,'outcome':'solved',
+            'transition':'回alpha beta gamma核第'+str(n)+'题所问的局部关系。',
+            'evidence':[span],'execution_ids':[]} for n in range(32,36)]
+        original=deepcopy(p);out=self.a.analyze(p)
+        self.assertEqual(p,original)
+        self.assertEqual(out['scope'],'whole_passage_delivery')
+        self.assertEqual([x['analysis']['task_type'] for x in out['questions']],list(SPECIFIC_DETAILS[2:]))
+        for kind in ('student','legacy-wechat'):
+            body=render_passage(out,kind,self.r)
+            self.assertIn('没有全文中心任务题',body)
+            self.assertNotIn('先把全文中心任务的题做掉',body)
+            positions=[body.index('核第'+str(n)+'题') for n in range(32,36)]
+            self.assertEqual(positions,sorted(positions))
+        for kind in ('structured','content-export'):
+            self.assertEqual(json.loads(render_passage(out,kind,self.r)),out)
+
+    def test_local_looking_unknown_labels_are_not_a_detail_fallback(self):
+        for task in ('paragraph_task_unknown','reading_passage_D','effect'):
+            p=packet(self.r);p['questions'][0]['question']['task_type']=task
+            with self.subTest(task=task),self.assertRaisesRegex(ValueError,'classification'):
+                self.a.analyze(p)
 
     def test_identical_original_order_transition_and_action_display_once(self):
         p=packet(self.r); p['review']['reading_mode']='original_order'
