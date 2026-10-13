@@ -53,6 +53,41 @@ class PassageLessonTest(unittest.TestCase):
         p['review']['reading_mode']='central_task'
         with self.assertRaisesRegex(ValueError,'course task order'): self.a.analyze(p)
 
+    def test_cause_and_study_finding_keep_their_tasks_in_detail_phase(self):
+        for task in ('cause','study_finding'):
+            with self.subTest(task=task):
+                p=packet(self.r);p['questions'][0]['question']['task_type']=task
+                original=deepcopy(p);out=self.a.analyze(p)
+                self.assertEqual(p,original)
+                self.assertEqual(out['scope'],'whole_passage_delivery')
+                self.assertEqual([s['question_id'] for s in out['review']['steps']],
+                                 ['program-33','program-31','program-32'])
+                row=next(x for x in out['questions'] if x['number']==31)
+                self.assertEqual(row['question']['task_type'],task)
+                self.assertEqual(row['analysis']['task_type'],task)
+                for kind in ('student','legacy-wechat','structured','content-export'):
+                    body=render_passage(out,kind,self.r)
+                    if kind in ('structured','content-export'):
+                        self.assertEqual(json.loads(body),out)
+                    else:
+                        self.assertLess(body.index('核第33题'),body.index('核第31题'))
+                        self.assertLess(body.index('核第31题'),body.index('核第32题'))
+
+    def test_specific_detail_tasks_cannot_bypass_central_task_order(self):
+        for task in ('cause','study_finding'):
+            p=packet(self.r);p['questions'][0]['question']['task_type']=task
+            p['review']['steps'].sort(key=lambda s:s['question_id'])
+            with self.subTest(task=task),self.assertRaisesRegex(ValueError,'course task order'):
+                self.a.analyze(p)
+
+    def test_specific_detail_task_projection_metadata_remains_bound(self):
+        p=packet(self.r);p['questions'][0]['question']['task_type']='cause'
+        out=self.a.analyze(p)
+        out['questions'][0]['question']['task_type']='study_finding'
+        for kind in ('student','legacy-wechat','structured','content-export'):
+            with self.subTest(kind=kind),self.assertRaisesRegex(ValueError,'metadata'):
+                render_passage(out,kind,self.r)
+
     def test_identical_original_order_transition_and_action_display_once(self):
         p=packet(self.r); p['review']['reading_mode']='original_order'
         p['review']['steps'].sort(key=lambda s:s['question_id'])

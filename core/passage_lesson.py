@@ -7,7 +7,9 @@ from .execution import validate_execution_trace
 from .lesson_feedback import DELIVERY_PATH,check_spoken_text,validate_lesson_projection
 
 MAIN={'main_idea','purpose','title'}
-DETAIL={'detail','inference','paragraph_main_idea'}
+# Ordering buckets do not rename the question's reviewed task. Cause and
+# study-finding questions follow the detail phase, not the vocabulary phase.
+DETAIL={'detail','inference','paragraph_main_idea','cause','study_finding'}
 VOCAB={'vocabulary','word_meaning'}
 
 
