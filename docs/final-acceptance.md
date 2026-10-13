@@ -386,4 +386,8 @@ Q66应用文的新完整自然写前指导另存私有r61，8段从圈投稿/尺
 
 武汉原卷数字标空的实际接口缺口已补显式metadata适配，未改原Word、原stem数字、原passage或补given_word。16项新纯合成控制及旧提示/迁移合45项通过；含首用材料、核心、执行与当前整卷重放的201项专项也实际通过。主代理看原Word第10页后另存Q61/Q63/Q64新注释：6source核验、3旧unknown精确重现、3新analyze、12输出，均只确认without_hint，paths为空、G01执行0、答案null。普通年份/数字不自动判为空，仍需具体原页审阅及本题自身数字跨度绑定。独立工程复核与新代码隔离全量尚待，不移用7f包1540项结果。记录 `evaluation/reports/numeric-grammar-hint-adaptation-r63.json`，方法、来源版本、Case和学生信用均不升级。
 
+后续独立工程r64实际对照固定旧b1ee803 Git源码与新导航，执行52分支、5schema负控、45新旧专项及4输出，无修复要求。根全读实际控制体/ground并在新r66目录亲自重跑，全分支证据精确一致，所有引用与新代码哈希重核通过；根复跑是接受控制，不重复计成另一独立审阅。接受只涵盖显式契约，不认证外部排版/身份、三武汉题的英语语义或学生实效，见 `evaluation/reports/numeric-hint-engineering-peer-accepted-r66.json`。
+
+固定新提交d13add8另存1255项提交资产的新文件夹与ZIP，逐文件验证等于Git archive；无private题文、完整讲解、未提交模块、递归交付或声音模型。隔离生成校验已通过，全量实际进程32605仍运行，未得到终局结果不得报通过或重启。记录 `evaluation/reports/isolated-delivery-d13add8.json`。旧7f包及1540项结果仅认证旧固定版本，完整项目目标依然PARTIAL。
+
 以上推进G14工程回归与优先卷审阅，不能替代全部六题型/全语料的真实Case、整卷语义闭合、自然学生交付和真人研究链。总体仍PARTIAL，82方法没有因上述工程检查获得成熟度或Efficient/Signature升级；缺少真人的验收仍为pending_real_participant_validation。

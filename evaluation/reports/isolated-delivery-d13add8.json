@@ -1,0 +1,22 @@
+{
+  "scope": "New pinned committed-source delivery with its own running isolated full engineering regression",
+  "checked_on": "2026-10-14",
+  "snapshot_repository_commit": "d13add85dc72dbcd4c6a316db6cab097473189d8",
+  "source_commit": "61bc9c3e15004639cb442c20e7946ca9631f14ce",
+  "archive_path": "deliverables/ANSWER-Method-Engine-d13add8.zip",
+  "archive_sha256": "6857f1b47c2825bdde570b6f083d28c403abb2b38fa6f124535de62520b75d6c",
+  "folder_path": "deliverables/ANSWER-Method-Engine-d13add8/ANSWER-Method-Engine-d13add8",
+  "archive_file_count": 1255,
+  "archive_and_extracted_files_match_committed_source": true,
+  "private_papers_or_complete_lessons_included": false,
+  "uncommitted_unrelated_modules_included": false,
+  "recursive_deliverables_or_voice_models_included": false,
+  "required_committed_voice_helper_included": true,
+  "isolated_generated_assets_check": "PASS",
+  "full_regression_session": 32605,
+  "full_regression_state": "running_at_this_check",
+  "full_regression_completed": false,
+  "older_full_regression_result_reused": false,
+  "ANSWER_repository_modified": false,
+  "overall_goal_complete": false
+}
