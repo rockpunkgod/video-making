@@ -1,0 +1,20 @@
+{
+  "scope": "Host audit of independent engineering review evidence; not English or learner acceptance",
+  "status": "HOLD_PREVIOUS_IMPLEMENTATION_COMPARISON",
+  "review_report_sha256": "c145cfcdecba8c1ff4f22387a292a9082e979f868786225c4a02c238dc1385eb",
+  "reviewer": "/root/z20_current_reading",
+  "implementation_commit": "2b2994e6f857b7ff1eaa91d42a2d3b2ffec52960",
+  "renderer_sha256": "aa15eb6b0a0e15b00e1ab864b53c9c5b7fa0c61734367027466a3b9b399ee70d",
+  "reported_previous_renderer_sha256": "aa15eb6b0a0e15b00e1ab864b53c9c5b7fa0c61734367027466a3b9b399ee70d",
+  "observed_defect": "The private runner fetched HEAD after the repair was committed, so both snapshots contain the fixed implementation. Old/new equality controls are not historical comparison evidence.",
+  "reported_current_implementation_controls": 73,
+  "reported_targeted_tests": 43,
+  "historical_comparison_accepted": false,
+  "followup": "Preserve r1 and rerun against the exact parent implementation in a new r2 directory",
+  "original_evidence_overwritten": false,
+  "new_case_count": 0,
+  "new_independent_question_count": 0,
+  "new_blind_sample_count": 0,
+  "learner_validation": null,
+  "method_promotion_applied": false
+}
