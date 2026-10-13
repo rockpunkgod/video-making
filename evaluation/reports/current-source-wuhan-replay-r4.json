@@ -1,0 +1,32 @@
+{
+  "date": "2026-10-14",
+  "source_commit": "61bc9c3e15004639cb442c20e7946ca9631f14ce",
+  "paper_id": "mock-2027-wuhan-september-v01",
+  "scope": "Current-source structural replay and six named independent AI question reviews; not whole-paper or learner acceptance",
+  "private_report_path": "local-data/organized-pdfs/wxwork-priority-2026-10/coordinator-reviews/current-61bc9c3-wuhan-r2/host-paper-replay-r4/report.json",
+  "private_report_sha256": "00d71801fb6d863aa8014ab5c4ab7119864e671b057ee3a3bf644fa7cb4b13d4",
+  "input_tasks": 47,
+  "reviewed_closed_questions": 6,
+  "pending_current_semantic_review_tasks": 41,
+  "new_reviews": [
+    {"question": "Q21", "method": "R03", "role": "interpreter", "support_answer": null, "separate_terminal_answer": "D", "review_sha256": "f095c1c5dfb0568a6f842652fe1f78f7d52257c329e5c5e1d38ebcc7395569ec"},
+    {"question": "Q22", "method": "R11", "role": "interpreter", "support_answer": null, "separate_terminal_answer": "B", "review_sha256": "f3d31cf365ec743cf948af1a29d5528fd397c9d19b3594d22ba2b5397c1cf445"}
+  ],
+  "author": "/root/wuhan_current_reading",
+  "independent_reviewer": "/root",
+  "source_pages_visually_read": [3, 4],
+  "source_and_material_checks": "PASS",
+  "exact_support_and_terminal_replays": "PASS",
+  "support_and_terminal_renderer_checks": {"count": 16, "result": "PASS", "scope": "output contract only; not natural lesson acceptance"},
+  "Q23_r2": "HOLD: original C has no only; action/backfill added an exclusive qualifier. New author revision requested, not retrospectively approved.",
+  "whole_paper_semantic_acceptance": "PARTIAL",
+  "natural_whole_passage_delivery": "not_certified_by_single_question_reviews",
+  "listening": "20 source-only records outside supported analysis",
+  "old_files_and_case_catalog_unchanged": true,
+  "new_case_count": 0,
+  "new_unique_question_count": 0,
+  "new_blind_sample_count": 0,
+  "method_promotion_applied": false,
+  "learner_validation": null,
+  "private_source_text_included": false
+}
