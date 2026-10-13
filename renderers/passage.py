@@ -39,14 +39,31 @@ def render_passage(result,kind='structured',registry=None):
         parts.append(('先看第'+number+'题。' if number not in step['transition'] else '')+step['transition'])
         if step['outcome']=='deferred': continue
         a=rows[step['question_id']]['analysis']; f=a['lesson_feedback']
-        for segment in f['review']['segments']:
+        segments=f['review']['segments']
+        # Keep every distinct reviewed order reason. Only an exact duplicate of
+        # the first reading action may be displayed once rather than twice.
+        duplicate_action=(result['question_type']=='阅读理解'
+                          and result['review']['reading_mode']=='original_order'
+                          and bool(segments) and segments[0]['function']=='action'
+                          and step['transition']==segments[0]['text'])
+        previous_spoken=duplicate_action
+        for index,segment in enumerate(segments):
+            if duplicate_action and index==0: continue
             if grouped and result['question_type']=='七选五' and segment.get('method_id')=='F01': continue
-            parts.append(segment['text'])
+            # Segment boundaries are proof boundaries, not necessarily prose
+            # boundaries. Rejoin a reading clause cut at a Chinese comma,
+            # without altering either segment or merging different questions.
+            if result['question_type']=='阅读理解' and previous_spoken and parts[-1].endswith('，'):
+                parts[-1]+=segment['text']
+            else:
+                parts.append(segment['text'])
+            previous_spoken=True
             if f['grouping_execution_ids'] and not grouped and segment['function']=='action' and segment.get('method_id')=='F01':
                 executions={x['execution_id']:x for x in a['execution_trace']}
                 for eid in f['grouping_execution_ids']:
                     output=executions[eid]['output']; label={'sentence':'句型','actor':'主角','time':'时间'}[output['axis']]
                     parts.append('按'+label+'先分，'+'，'.join('和'.join(g['candidates'])+'属于'+g['label'].rstrip('。') for g in output['groups'])+'。分完回正文核内容，不把分组当答案。')
                 grouped=True
+                previous_spoken=False
     parts.append('最后按原题号汇总，'+'，'.join('第'+str(x['number'])+'题'+('填' if result['question_type']=='语法填空' else '选')+x['answer'] for x in result['answer_summary'])+'。')
     return '\n\n'.join(parts)

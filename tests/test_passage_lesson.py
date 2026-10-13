@@ -53,6 +53,50 @@ class PassageLessonTest(unittest.TestCase):
         p['review']['reading_mode']='central_task'
         with self.assertRaisesRegex(ValueError,'course task order'): self.a.analyze(p)
 
+    def test_identical_original_order_transition_and_action_display_once(self):
+        p=packet(self.r); p['review']['reading_mode']='original_order'
+        p['review']['steps'].sort(key=lambda s:s['question_id'])
+        for row in p['questions']:
+            text='核第'+str(row['number'])+'题，先用选项加戏回到alpha beta gamma核新增部分。'
+            row['question']['lesson_review']['segments'][0]['text']=text
+            next(s for s in p['review']['steps'] if s['question_id']==row['question']['question_id'])['transition']=text
+        out=self.a.analyze(p); original=deepcopy(out)
+        for mode in ('student','legacy-wechat'):
+            body=render_passage(out,mode,self.r)
+            for row in p['questions']:
+                self.assertEqual(body.count(row['question']['lesson_review']['segments'][0]['text']),1)
+        self.assertEqual(out,original)
+        self.assertEqual(json.loads(render_passage(out,'structured',self.r)),original)
+
+    def test_distinct_order_reason_is_not_removed(self):
+        p=packet(self.r); p['review']['reading_mode']='original_order'
+        p['review']['steps'].sort(key=lambda s:s['question_id'])
+        out=self.a.analyze(p);body=render_passage(out,'student',self.r)
+        for step in p['review']['steps']:self.assertIn(step['transition'],body)
+        self.assertIn(p['questions'][0]['question']['lesson_review']['segments'][0]['text'],body)
+
+    def test_adjacent_reading_clause_segments_rejoin_without_rewriting(self):
+        p=packet(self.r)
+        for row in p['questions']:
+            row['question']['lesson_review']['segments'][1]['text']='先看alpha beta gamma，'
+        out=self.a.analyze(p);original=deepcopy(out);body=render_passage(out,'student',self.r)
+        for row in p['questions']:
+            segments=row['question']['lesson_review']['segments']
+            self.assertIn(segments[1]['text']+segments[2]['text'],body)
+        self.assertNotIn('alpha beta gamma，\n\n',body)
+        self.assertEqual(out,original)
+        self.assertEqual(json.loads(render_passage(out,'content-export',self.r)),original)
+
+    def test_central_task_order_transition_is_not_deduplicated(self):
+        p=packet(self.r)
+        for row in p['questions']:
+            text='核第'+str(row['number'])+'题，先用选项加戏回到alpha beta gamma核新增部分。'
+            row['question']['lesson_review']['segments'][0]['text']=text
+            next(s for s in p['review']['steps'] if s['question_id']==row['question']['question_id'])['transition']=text
+        out=self.a.analyze(p);body=render_passage(out,'student',self.r)
+        for row in p['questions']:
+            self.assertEqual(body.count(row['question']['lesson_review']['segments'][0]['text']),2)
+
     def test_missing_material_or_one_own_lesson_withholds_whole_message(self):
         for missing in ['material','lesson','review']:
             p=packet(self.r)

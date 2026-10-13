@@ -1,0 +1,30 @@
+{
+  "scope": "Reading delivery presentation repair; no English-rule, Case or learner credit",
+  "source_commit": "61bc9c3e15004639cb442c20e7946ca9631f14ce",
+  "changes": ["Exact duplicate transition/first action is displayed once only in reading original_order", "Same-question adjacent reading clauses cut at a Chinese comma are rejoined without modifying segment text"],
+  "distinct_order_reasons_preserved": true,
+  "central_task_and_nonreading_deduplication": "not_enabled",
+  "original_segments_and_proof_unchanged": true,
+  "real_presentation_reports": [
+    {"passage": "A", "path": "local-data/organized-pdfs/wxwork-priority-2026-10/coordinator-reviews/current-61bc9c3-wuhan-natural-A-rejoined-r8/presentation-checks.json", "sha256": "b5ca5b81bbf5b8c9103b025d1f97b0445db1f0d5a54252a2a321357818a88336"},
+    {"passage": "B", "path": "local-data/organized-pdfs/wxwork-priority-2026-10/coordinator-reviews/current-61bc9c3-wuhan-natural-B-rejoined-r8/presentation-checks.json", "sha256": "ef485bf136dc3c1bef4e6056e52005d616e6622b14332d639172d59b96cffd64"}
+  ],
+  "question_analyses_unchanged": 7,
+  "original_number_answer_summary_unchanged": true,
+  "real_renderer_checks": 8,
+  "exact_serialized_replay": "PASS",
+  "structured_and_export_exact": true,
+  "test_command": "python -X utf8 -m unittest tests.test_passage_lesson tests.test_terminal_lesson tests.test_lesson_feedback -q",
+  "tests_run": 43,
+  "tests_result": "PASS",
+  "new_presentation_tests": 4,
+  "independent_engineering_review": "pending",
+  "full_regression_of_new_renderer": "not_run",
+  "challenge": "Previously reviewed explicitly attached text, not a new native field",
+  "new_case_count": 0,
+  "new_independent_question_count": 0,
+  "new_blind_sample_count": 0,
+  "learner_validation": null,
+  "method_promotion_applied": false,
+  "private_source_text_included": false
+}
