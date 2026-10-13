@@ -1651,6 +1651,63 @@
         "review_notes": {
           "type": "string",
           "minLength": 1
+        },
+        "numeric_marker_binding": {
+          "type": "object",
+          "properties": {
+            "question_id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "question_number": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 999
+            },
+            "target_span": {
+              "type": "object",
+              "properties": {
+                "field": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "start": {
+                  "type": "integer",
+                  "minimum": 0
+                },
+                "end": {
+                  "type": "integer",
+                  "minimum": 1
+                },
+                "quote": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              },
+              "required": [
+                "field",
+                "start",
+                "end",
+                "quote"
+              ],
+              "additionalProperties": false
+            },
+            "printed_blank_confirmed": {
+              "const": true
+            },
+            "source_review_note": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "required": [
+            "question_id",
+            "question_number",
+            "target_span",
+            "printed_blank_confirmed",
+            "source_review_note"
+          ],
+          "additionalProperties": false
         }
       },
       "required": [

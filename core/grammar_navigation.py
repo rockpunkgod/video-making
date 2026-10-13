@@ -2,6 +2,45 @@
 from .evidence import check_span
 import re
 
+def _numeric_hint_absence(question, review, spans):
+    """An external source review identifies printed numbering, never digit heuristics.
+
+    Source typography and reviewer identity still require independent review;
+    this check binds the annotation to this question's unchanged characters.
+    """
+    binding=review.get('numeric_marker_binding')
+    marker=review['target_marker']
+    if not isinstance(binding,dict):
+        raise ValueError('Numeric blank requires an explicit printed-source binding')
+    number=binding.get('question_number')
+    if (type(number) is not int or not 1<=number<=999 or str(number)!=marker
+            or question['stem'].strip()!=marker
+            or binding.get('question_id')!=question['question_id']):
+        raise ValueError('Numeric blank must bind this exact requested question number')
+    if (binding.get('printed_blank_confirmed') is not True
+            or not isinstance(binding.get('source_review_note'),str)
+            or not binding['source_review_note'].strip()):
+        raise ValueError('Numeric blank requires a concrete external printed-source review')
+    target=check_span(question,binding['target_span'])
+    if target['field']!='passage' or target['quote']!=marker:
+        raise ValueError('Numeric blank target span must identify the passage marker itself')
+    text=question.get('passage','')
+    matches=list(re.finditer(r'(?<!\w)'+re.escape(marker)+r'(?!\w)',text))
+    if (len(matches)!=1 or matches[0].span()!=(target['start'],target['end'])):
+        raise ValueError('Numeric blank must have one exact target occurrence')
+    suffix=text[target['end']:];following=suffix.lstrip()
+    if not following:
+        raise ValueError('Numeric hint absence needs text after the target, not a cropped blank')
+    if following.startswith(('(', '（', '[', '【', '{', '｛')):
+        raise ValueError('Target is followed by a bracketed prompt or unresolved parenthesis')
+    following_index=target['end']+len(suffix)-len(following)
+    # Require the whole next printed token, not a blank-only or one-letter crop.
+    token_end=following_index+len(re.match(r'\S+',following).group())
+    if not any(s['field']=='passage' and s['start']<=target['start']
+               and s['end']>=token_end for s in spans):
+        raise ValueError('Numeric hint review quote must cover target and complete following text token')
+    return 'without_hint'
+
 def hint_branch(question):
     """Keep missing metadata unknown unless a target-bound review establishes absence.
 
@@ -23,6 +62,10 @@ def hint_branch(question):
     if review['state']!='without_hint' or branch=='with_hint':
         raise ValueError('Hint review contradicts the supplied prompt word')
     marker=review['target_marker']
+    if re.fullmatch(r'[1-9]\d{0,2}',marker):
+        return _numeric_hint_absence(question,review,spans)
+    if 'numeric_marker_binding' in review:
+        raise ValueError('Numeric marker binding cannot annotate a different marker format')
     if not re.fullmatch(r'_{2,}(?:\d+_{2,})?', marker):
         raise ValueError('Hint review target must be a printed blank marker')
     # Do not borrow another blank's absence or infer from a cropped quotation.

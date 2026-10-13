@@ -382,4 +382,8 @@ G7/G8/G10/G11 仍 PARTIAL，不以这两例宣称全题型、全槽或整卷完�
 
 Q66应用文的新完整自然写前指导另存私有r61，8段从圈投稿/尺寸/建议/理由进入，带建议—收益配对、投稿文体、可选小尺度设计、具体语言例子及动作挑战。实际source/精确动作/原独审准入/四输出通过，仅检查旧动作而非认证新全文。新讲解已交另一作者复核，仍待语义接受及原生输出集成，不转移旧框架信用，不伪造学生全文或15分批改。公开状态为 `evaluation/reports/current-source-yuanchuang-Q66-natural-author-r61.json`。
 
+后续r60/r62不同作者实际完成两个新自然附件的逐段语义复核（10段/8段），没有借旧动作批准直接认证新讲解。根读完整grounds和执行体，核全部引用哈希，再作2source/2exact/2原审阅准入/8原动作输出重放，接受的是不同作者对新稿的审阅，不是根自审自己的文稿。新r65语义附件状态为AI_peer_accepted；原author-only冻结保留。引擎原生自然输出集成仍未完成，不能把这两份附件或原动作四输出当完成集成或学生验收。公开元数据为 `evaluation/reports/current-source-yuanchuang-natural-writing-peer-accepted-r65.json`。
+
+武汉原卷数字标空的实际接口缺口已补显式metadata适配，未改原Word、原stem数字、原passage或补given_word。16项新纯合成控制及旧提示/迁移合45项通过；含首用材料、核心、执行与当前整卷重放的201项专项也实际通过。主代理看原Word第10页后另存Q61/Q63/Q64新注释：6source核验、3旧unknown精确重现、3新analyze、12输出，均只确认without_hint，paths为空、G01执行0、答案null。普通年份/数字不自动判为空，仍需具体原页审阅及本题自身数字跨度绑定。独立工程复核与新代码隔离全量尚待，不移用7f包1540项结果。记录 `evaluation/reports/numeric-grammar-hint-adaptation-r63.json`，方法、来源版本、Case和学生信用均不升级。
+
 以上推进G14工程回归与优先卷审阅，不能替代全部六题型/全语料的真实Case、整卷语义闭合、自然学生交付和真人研究链。总体仍PARTIAL，82方法没有因上述工程检查获得成熟度或Efficient/Signature升级；缺少真人的验收仍为pending_real_participant_validation。
