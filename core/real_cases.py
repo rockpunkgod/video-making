@@ -154,6 +154,56 @@ def frozen_question(blind, request, root=None):
     return question
 
 
+def check_external_reveal(root, request, blind, reveal, reference_row):
+    """Bind a post-reveal adapter to actual old same-question records.
+
+    This checks preserved assertions, not time authenticity or answer authority.
+    Old incorrect/unresolved predictions remain incorrect/unresolved; no current
+    answer or method credit can be substituted into the historical record.
+    """
+    if (reveal.get('phase') != 'post_reveal_adapter_not_new_prediction'
+            or 'original_comparison_ref' not in reveal
+            or 'source_only_checkpoint_ref' not in reveal):
+        raise ValueError('External reveal needs an explicit adapter, original comparison and source-only checkpoint')
+    checkpoint = artifact(root, reveal['source_only_checkpoint_ref'])
+    if (checkpoint.get('blind_sha256') != request['blind']['sha256']
+            or checkpoint.get('reference_read') is not False
+            or checkpoint.get('paper_id') != blind.get('paper_id')
+            or checkpoint.get('source_sha256') != blind.get('source_sha256')
+            or checkpoint.get('reviewer_agent') != blind.get('reviewer_agent')):
+        raise ValueError('Source-only checkpoint does not bind the actual old prediction')
+    comparison = artifact(root, reveal['original_comparison_ref'])
+    if (comparison.get('phase') != 'after_source_only_freeze_reference_read'
+            or comparison.get('paper_id') != blind.get('paper_id')
+            or comparison.get('source_sha256') != blind.get('source_sha256')
+            or comparison.get('reviewer_agent') != blind.get('reviewer_agent')):
+        raise ValueError('Original comparison phase, paper, source or old author differs')
+    if 'reference_pdf_ref' in reveal:
+        if comparison.get('reference_sha256') != reveal['reference_pdf_ref']['sha256']:
+            raise ValueError('Original comparison does not bind this reference PDF')
+    elif ('reference_original_ref' not in reveal
+          or comparison.get('reference_original_ref') != reveal['reference_original_ref']):
+        raise ValueError('Original comparison does not bind this reference original')
+    row_keys = [key for key in ('rows', 'questions') if key in comparison]
+    if len(row_keys) != 1 or not isinstance(comparison[row_keys[0]], list):
+        raise ValueError('One unambiguous original comparison row collection required')
+    rows = [row for row in comparison[row_keys[0]] if isinstance(row, dict)
+            and row.get('question_id') == request['question_id']]
+    predictions = [row for row in blind['objective_predictions'] if isinstance(row, dict)
+                   and row.get('question_id') == request['question_id']]
+    if len(rows) != 1 or len(predictions) != 1:
+        raise ValueError('One original prediction and comparison for this question required')
+    original, compared = predictions[0], rows[0]
+    for before, after in (('predicted_answer', 'agent_before_reference_read'),
+                          ('candidate_if_unresolved', 'agent_unresolved_candidate'),
+                          ('decisive_evidence', 'source_evidence_retained_in_blind')):
+        if before not in original or after not in compared or original[before] != compared[after]:
+            raise ValueError('Original same-question prediction field differs: '+before)
+    if ('third_party_reference' not in compared
+            or compared['third_party_reference'] != reference_row['reference_answer']):
+        raise ValueError('Adapter reference answer differs from original same-question comparison')
+
+
 def source_identity(source):
     """Keep legacy PDF requests intact; new requests name the actual original."""
     generic = any(k in source for k in ('original_path', 'original_sha256', 'source_format'))
@@ -401,6 +451,8 @@ def validate_request(root, request, registry=None):
             matches[0].get('answer_authority') not in {'third_party_compilation_not_official',
                                                         'third_party_unverified','user_supplied_unverified'}:
         raise ValueError('Revealed reference answer identity missing or duplicated')
+    if 'blind_question_ref' in request:
+        check_external_reveal(root, request, blind, reveal, matches[0])
     action = artifact(root, request['action'])
     if (action.get('exam_id',action.get('paper_id')), action.get('question_id'), action.get('method_id'),
             action.get('method_version')) != (exam_id, request['question_id'],

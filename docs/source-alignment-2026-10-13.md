@@ -1,5 +1,15 @@
 # ANSWER 来源对齐与模块交接
 
+## 外部历史揭答链 r2：保留旧攻击失败，逐题绑定后再复测
+
+独立代理在固定 c67 实现上用真实 schema/analyzer/graph/trace、无 mock 的14个合成请求实际发现缺口：正例接受，11个错误历史关系接受，两类自审拒绝。根读完整失败报告及攻击脚本，确认文件重哈希并不能替代同题关系核对。旧 HOLD 报告 SHA256 为 `27551ac157a0d70cea9c9a47acbec973038ec06ad1edbf0dd0f8036f1c828678`，旧源码快照为 `2da384b6df8afcdb99268591d678f6a36812308ff8a8d4e06ffbc241e272b9b2`；失败不覆盖。
+
+修复新增 `check_external_reveal`：外部路径必须提供显式 post-reveal adapter、原 comparison 与 source-only checkpoint。checkpoint 核实际旧 blind 哈希、未读答案及 paper/source/旧作者；comparison 核冻结后阶段、相同身份和真实参考原件指纹。唯一同题行必须逐项匹配旧 predicted_answer、candidate_if_unresolved、decisive_evidence，以及对照中的旧预测、未决候选、保留证据。adapter 揭答值须与同题 third_party_reference 相同。缺旧字段不视作 null；真实未决和旧错误均保留，不用当前答案重写。历史直接指针路径不变。
+
+根用真实旧45行核修复后对照，保留真实未决记录；这是历史一致性检查，不认证新动作或Case类型。修复版53项组合控制通过，新增真实null/缺字段区分后外部模块12项通过；合成登记集成仍明确使用mock夹具，独立无mock复测另行进行。82方法、20来源和生成资产校验通过。公开修复索引见 `evaluation/reports/external-case-source-contract-r2.json`。旧 Case 目录、原预测、原对照不变，未登记新 Case 或生成新 Blind。
+
+固定 `82c98e4` 包全量回归已实际完成1496项，0失败、0错误、1跳过，881.742秒。但它不包含 c67 外部引用和本轮揭答修复，不能作为新实现全量通过的证据；其完成记录单列 `evaluation/reports/isolated-regression-82c98e4.json`。
+
 ## 原预测显式外部题面引用：实现待独立工程审阅
 
 `core.real_cases.frozen_question` 新增可选私有根参数和请求 `blind_question_ref`，不改原预测的阶段、答案或字节。仅支持原 blind 的 `input_sha256` 已按确切文件名绑定的来源：引用哈希必须一致，来源必须为未读参考答案的纯题转写，与旧预测的 paper/source 身份相同，旧作者及唯一原客观题预测必须存在，指针取出的完整核心字段必须匹配请求。没有该字段的历史直接指针路径保持原契约；不默认任何 source-only 文件都等于预测。

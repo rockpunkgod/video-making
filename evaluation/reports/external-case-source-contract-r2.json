@@ -1,0 +1,31 @@
+{
+  "scope": "Same-question historical reveal consistency repair; independent repaired-code audit pending",
+  "runtime_code_sha256": "082d687ce22525342c1db73edb54440d0842b7d3326346925eca8e24c465beb1",
+  "original_failure": {
+    "snapshot_commit": "c67bf7c",
+    "code_sha256": "2da384b6df8afcdb99268591d678f6a36812308ff8a8d4e06ffbc241e272b9b2",
+    "private_report_path": "local-data/organized-pdfs/wxwork-priority-2026-10/coordinator-reviews/external-source-admission-agent-review-r1/hold-attack-report-r1.json",
+    "report_sha256": "27551ac157a0d70cea9c9a47acbec973038ec06ad1edbf0dd0f8036f1c828678",
+    "status": "HOLD",
+    "unmocked_requests": 14,
+    "prohibited_relational_attacks_accepted": 11,
+    "self_review_controls_rejected": 2,
+    "baseline_accepted": 1,
+    "failure_preserved": true
+  },
+  "private_host_repair_report_path": "local-data/organized-pdfs/wxwork-priority-2026-10/coordinator-reviews/current-61bc9c3-r1/external-reveal-host-r2.json",
+  "private_host_repair_report_sha256": "e32998f0bd1bff0981f39af60c6888f82dd6f6102f7d67ab1d9f42b494f73141",
+  "actual_old_rows_checked": 45,
+  "genuine_old_null_preserved": true,
+  "combined_tests": {"run": 53, "result": "PASS", "scope": "Before addition of the explicit null-preservation test; repaired runtime code unchanged"},
+  "final_external_module_tests": {"run": 12, "result": "PASS"},
+  "mocked_integration_fixtures": "Explicit synthetic schema/analyzer fixtures, not real English proof",
+  "independent_repaired_code_audit": "pending",
+  "full_regression_for_repaired_code": "not_run",
+  "registration_applied": false,
+  "new_case_count": 0,
+  "new_unique_question_count": 0,
+  "new_blind_sample_count": 0,
+  "learner_validation": null,
+  "method_promotion_applied": false
+}

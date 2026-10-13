@@ -91,11 +91,28 @@ class ExternalFrozenSourceTests(unittest.TestCase):
                      source_sha256=request['source']['pdf_sha256'],
                      input_sha256={'original-source.json': source_ref['sha256']},
                      objective_predictions=[{'question_id': fixture.question['question_id'],
-                                             'predicted_answer': 'A'}])
+                                             'predicted_answer': 'A', 'candidate_if_unresolved': None,
+                                             'decisive_evidence': []}])
         blind_ref = put(root, 'external-blind.json', blind)
         import json
         reveal = json.loads((root/'reveal.json').read_bytes())
         reveal['prediction_sha256'] = blind_ref['sha256']
+        reference_raw = b'%PDF SYNTHETIC REFERENCE ONLY'
+        (root/'reference.pdf').write_bytes(reference_raw)
+        from core.real_cases import digest
+        reference_ref = {'path': 'reference.pdf', 'sha256': digest(reference_raw)}
+        comparison = {'phase': 'after_source_only_freeze_reference_read',
+                      'paper_id': 'synthetic-001', 'source_sha256': blind['source_sha256'],
+                      'reviewer_agent': 'first-ai', 'reference_sha256': reference_ref['sha256'],
+                      'rows': [{'question_id': fixture.question['question_id'],
+                                'agent_before_reference_read': 'A', 'agent_unresolved_candidate': None,
+                                'source_evidence_retained_in_blind': [], 'third_party_reference': 'A'}]}
+        reveal.update(phase='post_reveal_adapter_not_new_prediction', reference_pdf_ref=reference_ref,
+                      original_comparison_ref=put(root, 'external-comparison.json', comparison),
+                      source_only_checkpoint_ref=put(root, 'checkpoint.json', {
+                          'blind_sha256': blind_ref['sha256'], 'reference_read': False,
+                          'paper_id': 'synthetic-001', 'source_sha256': blind['source_sha256'],
+                          'reviewer_agent': 'first-ai'}))
         reveal_ref = put(root, 'external-reveal.json', reveal)
         action = json.loads((root/'action.json').read_bytes())
         action['mechanical_prediction_sha256'] = blind_ref['sha256']
@@ -146,3 +163,71 @@ class ExternalFrozenSourceTests(unittest.TestCase):
                 request['case_review'] = put(fixture.root, 'external-review.json', review)
                 with self.assertRaisesRegex(ValueError, 'actual current action author'):
                     self.validate_mocked_registration(fixture, request)
+
+    def test_rehashed_same_question_comparison_tampering_is_rejected(self):
+        import json
+        variants = ('answer', 'prediction', 'evidence', 'unresolved', 'duplicate',
+                    'missing_qid', 'paper', 'phase', 'author', 'reference')
+        for variant in variants:
+            with self.subTest(variant=variant):
+                fixture, request, review, _ = self.external_registration_fixture()
+                root = fixture.root
+                reveal = json.loads((root/'external-reveal.json').read_bytes())
+                comparison = json.loads((root/'external-comparison.json').read_bytes())
+                if variant == 'answer': reveal['questions'][0]['reference_answer'] = 'B'
+                elif variant == 'prediction': comparison['rows'][0]['agent_before_reference_read'] = 'B'
+                elif variant == 'evidence': comparison['rows'][0]['source_evidence_retained_in_blind'] = ['fake']
+                elif variant == 'unresolved': comparison['rows'][0]['agent_unresolved_candidate'] = 'B'
+                elif variant == 'duplicate': comparison['rows'] *= 2
+                elif variant == 'missing_qid': comparison['rows'][0]['question_id'] = 'other'
+                elif variant == 'paper': comparison['paper_id'] = 'other'
+                elif variant == 'phase': comparison['phase'] = 'unknown'
+                elif variant == 'author': comparison['reviewer_agent'] = 'other'
+                else: comparison['reference_sha256'] = '0'*64
+                reveal['original_comparison_ref'] = put(root, 'external-comparison.json', comparison)
+                request['reveal'] = put(root, 'external-reveal.json', reveal)
+                review['reveal_sha256'] = request['reveal']['sha256']
+                request['case_review'] = put(root, 'external-review.json', review)
+                with self.assertRaises(ValueError): self.validate_mocked_registration(fixture, request)
+
+    def test_checkpoint_and_comparison_cannot_be_omitted_or_retargeted(self):
+        import json
+        for variant in ('omit_comparison', 'omit_checkpoint', 'prediction', 'exposure', 'paper'):
+            with self.subTest(variant=variant):
+                fixture, request, review, _ = self.external_registration_fixture()
+                root = fixture.root; reveal = json.loads((root/'external-reveal.json').read_bytes())
+                checkpoint = json.loads((root/'checkpoint.json').read_bytes())
+                if variant == 'omit_comparison':
+                    reveal.pop('original_comparison_ref'); reveal.pop('reference_pdf_ref')
+                elif variant == 'omit_checkpoint': reveal.pop('source_only_checkpoint_ref')
+                else:
+                    key, value = {'prediction': ('blind_sha256', '0'*64),
+                                  'exposure': ('reference_read', True), 'paper': ('paper_id', 'other')}[variant]
+                    checkpoint[key] = value
+                    reveal['source_only_checkpoint_ref'] = put(root, 'checkpoint.json', checkpoint)
+                request['reveal'] = put(root, 'external-reveal.json', reveal)
+                review['reveal_sha256'] = request['reveal']['sha256']
+                request['case_review'] = put(root, 'external-review.json', review)
+                with self.assertRaises(ValueError): self.validate_mocked_registration(fixture, request)
+
+    def test_historical_null_is_preserved_but_missing_prediction_field_is_not_null(self):
+        import json
+        from core.real_cases import check_external_reveal
+        fixture, request, _, _ = self.external_registration_fixture()
+        root = fixture.root
+        blind = json.loads((root/'external-blind.json').read_bytes())
+        blind['objective_predictions'][0].update(predicted_answer=None, candidate_if_unresolved='B')
+        request['blind'] = put(root, 'external-blind.json', blind)
+        checkpoint = json.loads((root/'checkpoint.json').read_bytes())
+        checkpoint['blind_sha256'] = request['blind']['sha256']
+        reveal = json.loads((root/'external-reveal.json').read_bytes())
+        reveal['source_only_checkpoint_ref'] = put(root, 'checkpoint.json', checkpoint)
+        comparison = json.loads((root/'external-comparison.json').read_bytes())
+        comparison['rows'][0].update(agent_before_reference_read=None, agent_unresolved_candidate='B')
+        reveal['original_comparison_ref'] = put(root, 'external-comparison.json', comparison)
+        before = deepcopy(blind)
+        check_external_reveal(root, request, blind, reveal, reveal['questions'][0])
+        self.assertEqual(blind, before)
+        blind['objective_predictions'][0].pop('predicted_answer')
+        with self.assertRaisesRegex(ValueError, 'predicted_answer'):
+            check_external_reveal(root, request, blind, reveal, reveal['questions'][0])
