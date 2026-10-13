@@ -1,8 +1,8 @@
 registry_version: 2.0.0
 source_baseline:
   repository: https://github.com/rockpunkgod/ANSWER.git
-  commit: b04ebc26d7fa096404111a0bb12f6c77cc8525b9
-  captured_at: 2026-10-05
+  commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
+  captured_at: '2026-10-13'
 schema: schemas/method-card.json
 method_files:
 - method-registry/reading.yaml
@@ -15,412 +15,412 @@ methods:
   R01:
     brand_name: 选项加戏
     status: candidate
-    version: 1.1.0
+    version: 1.2.0
     file: method-registry/reading.yaml
   R02:
     brand_name: 谁干的陷阱
     status: candidate
-    version: 1.1.0
+    version: 1.2.0
     file: method-registry/reading.yaml
   R06:
     brand_name: 主旨缺块
     status: candidate
-    version: 1.1.0
+    version: 1.2.0
     file: method-registry/reading.yaml
   R09:
     brand_name: 三步压文
     status: candidate
-    version: 1.1.0
+    version: 1.2.0
     file: method-registry/reading.yaml
   R03:
     brand_name: 换词不换义
     status: candidate
-    version: 1.1.0
+    version: 1.2.0
     file: method-registry/reading.yaml
   R04:
     brand_name: 比较别偷换
     status: candidate
-    version: 1.1.0
+    version: 1.2.0
     file: method-registry/reading.yaml
   R05:
     brand_name: 因果别选反
     status: candidate
-    version: 1.1.0
+    version: 1.2.0
     file: method-registry/reading.yaml
   R07:
     brand_name: 并列打包
     status: candidate
-    version: 1.1.0
+    version: 1.2.0
     file: method-registry/reading.yaml
   R08:
     brand_name: 例子只作证
     status: candidate
-    version: 1.1.0
+    version: 1.2.0
     file: method-registry/reading.yaml
   R10:
     brand_name: 代词回填
     status: candidate
-    version: 1.1.0
+    version: 1.2.0
     file: method-registry/reading.yaml
   R11:
     brand_name: 长句拆骨
     status: candidate
-    version: 1.1.0
+    version: 1.2.0
     file: method-registry/reading.yaml
   R12:
     brand_name: 关键词追踪
     status: candidate
-    version: 1.1.0
+    version: 1.2.0
     file: method-registry/reading.yaml
   R13:
     brand_name: 名词追踪
     status: candidate
-    version: 1.1.0
+    version: 1.2.0
     file: method-registry/reading.yaml
   R14:
     brand_name: 顺序锁区
     status: candidate
-    version: 1.1.0
+    version: 1.2.0
     file: method-registry/reading.yaml
   R15:
     brand_name: 动词定关系
     status: candidate
-    version: 1.1.0
+    version: 1.2.0
     file: method-registry/reading.yaml
   R16:
     brand_name: 主题锁定
     status: candidate
-    version: 1.1.0
+    version: 1.2.0
     file: method-registry/reading.yaml
   R17:
     brand_name: 前后补证
     status: candidate
-    version: 1.1.0
+    version: 1.2.0
     file: method-registry/reading.yaml
   F01:
     brand_name: 选项三分
     status: candidate
-    version: 1.1.0
+    version: 1.2.0
     file: method-registry/seven-five.yaml
   F02:
     brand_name: 句型分组
     status: candidate
-    version: 1.1.0
+    version: 1.2.0
     file: method-registry/seven-five.yaml
   F03:
     brand_name: 主角分组
     status: candidate
-    version: 1.1.0
+    version: 1.2.0
     file: method-registry/seven-five.yaml
   F04:
     brand_name: 时间分组
     status: candidate
-    version: 1.1.0
+    version: 1.2.0
     file: method-registry/seven-five.yaml
   F05:
     brand_name: 段首统领
     status: candidate
-    version: 1.2.0
+    version: 1.3.0
     file: method-registry/seven-five.yaml
   F06:
     brand_name: 前后呼应
     status: candidate
-    version: 1.1.0
+    version: 1.2.0
     file: method-registry/seven-five.yaml
   F07:
     brand_name: 关系拼接
     status: candidate
-    version: 1.1.0
+    version: 1.2.0
     file: method-registry/seven-five.yaml
   F08:
     brand_name: 情绪同向
     status: candidate
-    version: 1.1.0
+    version: 1.2.0
     file: method-registry/seven-five.yaml
   F09:
     brand_name: 半句补全
     status: candidate
-    version: 1.1.0
+    version: 1.2.0
     file: method-registry/seven-five.yaml
   F10:
     brand_name: 末轮反查
     status: candidate
-    version: 1.1.0
+    version: 1.2.0
     file: method-registry/seven-five.yaml
   F11:
     brand_name: 正文闭环
     status: candidate
-    version: 1.1.0
+    version: 1.2.0
     file: method-registry/seven-five.yaml
   C01:
     brand_name: 语篇线索链
     status: candidate
-    version: 1.1.0
+    version: 1.2.0
     file: method-registry/cloze.yaml
   C02:
     brand_name: 前后夹击
     status: candidate
-    version: 1.1.0
+    version: 1.2.0
     file: method-registry/cloze.yaml
   C03:
     brand_name: 首句定调
     status: candidate
-    version: 1.1.0
+    version: 1.2.0
     file: method-registry/cloze.yaml
   C04:
     brand_name: 词性导航
     status: candidate
-    version: 1.1.0
+    version: 1.2.0
     file: method-registry/cloze.yaml
   C05:
     brand_name: 近义落地
     status: candidate
-    version: 1.1.0
+    version: 1.2.0
     file: method-registry/cloze.yaml
   C06:
     brand_name: 时间线复原
     status: candidate
-    version: 1.1.0
+    version: 1.2.0
     file: method-registry/cloze.yaml
   C07:
     brand_name: 名词回声
     status: candidate
-    version: 1.1.0
+    version: 1.2.0
     file: method-registry/cloze.yaml
   C08:
     brand_name: 结果反推
     status: candidate
-    version: 1.1.0
+    version: 1.2.0
     file: method-registry/cloze.yaml
   C09:
     brand_name: 动作串联
     status: candidate
-    version: 1.1.0
+    version: 1.2.0
     file: method-registry/cloze.yaml
   G01:
     brand_name: 先判空位
     status: candidate
-    version: 1.1.0
+    version: 1.2.0
     file: method-registry/grammar.yaml
   G02:
     brand_name: 双路分流
     status: candidate
-    version: 1.1.0
+    version: 1.2.0
     file: method-registry/grammar.yaml
   G03:
     brand_name: 限定词落位
     status: candidate
-    version: 1.1.0
+    version: 1.2.0
     file: method-registry/grammar.yaml
   G04:
     brand_name: 指代落位
     status: candidate
-    version: 1.1.0
+    version: 1.2.0
     file: method-registry/grammar.yaml
   G05:
     brand_name: 介词看场景
     status: candidate
-    version: 1.1.0
+    version: 1.2.0
     file: method-registry/grammar.yaml
   G06:
     brand_name: 从句找缺口
     status: candidate
-    version: 1.1.0
+    version: 1.2.0
     file: method-registry/grammar.yaml
   G07:
     brand_name: 句间搭桥
     status: candidate
-    version: 1.1.0
+    version: 1.2.0
     file: method-registry/grammar.yaml
   G08:
     brand_name: 词性落位
     status: candidate
-    version: 1.1.0
+    version: 1.2.0
     file: method-registry/grammar.yaml
   G09:
     brand_name: 名词节点
     status: candidate
-    version: 1.1.0
+    version: 1.2.0
     file: method-registry/grammar.yaml
   G10:
     brand_name: 形副节点
     status: candidate
-    version: 1.1.0
+    version: 1.2.0
     file: method-registry/grammar.yaml
   G11:
     brand_name: 数词节点
     status: candidate
-    version: 1.1.0
+    version: 1.2.0
     file: method-registry/grammar.yaml
   G12:
     brand_name: 动词二分
     status: candidate
-    version: 1.1.0
+    version: 1.2.0
     file: method-registry/grammar.yaml
   G13:
     brand_name: 时态三查
     status: candidate
-    version: 1.1.0
+    version: 1.2.0
     file: method-registry/grammar.yaml
   G14:
     brand_name: 找真主语
     status: candidate
-    version: 1.1.0
+    version: 1.2.0
     file: method-registry/grammar.yaml
   G15:
     brand_name: 非谓语三轴
     status: candidate
-    version: 1.1.0
+    version: 1.2.0
     file: method-registry/grammar.yaml
   G16:
     brand_name: 找动作主人
     status: candidate
-    version: 1.1.0
+    version: 1.2.0
     file: method-registry/grammar.yaml
   G17:
     brand_name: 长句脱壳
     status: candidate
-    version: 1.1.0
+    version: 1.2.0
     file: method-registry/grammar.yaml
   G18:
     brand_name: 考点重复反查
     status: candidate
-    version: 1.1.0
+    version: 1.2.0
     file: method-registry/grammar.yaml
   G19:
     brand_name: 变形次数反查
     status: candidate
-    version: 1.1.0
+    version: 1.2.0
     file: method-registry/grammar.yaml
   A01:
     brand_name: 作文五检
     status: candidate
-    version: 1.1.0
+    version: 1.2.0
     file: method-registry/application-writing.yaml
   A02:
     brand_name: 六步成稿
     status: candidate
-    version: 1.1.0
+    version: 1.2.0
     file: method-registry/application-writing.yaml
   A03:
     brand_name: 三步造句
     status: candidate
-    version: 1.1.0
+    version: 1.2.0
     file: method-registry/application-writing.yaml
   A04:
     brand_name: 句块拼接
     status: candidate
-    version: 1.1.0
+    version: 1.2.0
     file: method-registry/application-writing.yaml
   A05:
     brand_name: 长句重组
     status: candidate
-    version: 1.1.0
+    version: 1.2.0
     file: method-registry/application-writing.yaml
   A06:
     brand_name: 对照仿写
     status: candidate
-    version: 1.1.0
+    version: 1.2.0
     file: method-registry/application-writing.yaml
   A07:
     brand_name: 长句搭积木
     status: candidate
-    version: 1.1.0
+    version: 1.2.0
     file: method-registry/application-writing.yaml
   A08:
     brand_name: 文体骨架
     status: candidate
-    version: 1.1.0
+    version: 1.2.0
     file: method-registry/application-writing.yaml
   A09:
     brand_name: 应用文评分
     status: candidate
-    version: 1.1.0
+    version: 1.2.0
     file: method-registry/application-writing.yaml
   A10:
     brand_name: 读背仿与训练阶段
     status: candidate
-    version: 1.1.0
+    version: 1.2.0
     file: method-registry/application-writing.yaml
   W01:
     brand_name: 五步锁剧情
     status: candidate
-    version: 1.1.0
+    version: 1.2.0
     file: method-registry/continuation-writing.yaml
   W02:
     brand_name: 十句五锚
     status: candidate
-    version: 1.1.0
+    version: 1.2.0
     file: method-registry/continuation-writing.yaml
   W03:
     brand_name: 剧情四格
     status: candidate
-    version: 1.1.0
+    version: 1.2.0
     file: method-registry/continuation-writing.yaml
   W04:
     brand_name: 首句找缺口
     status: candidate
-    version: 1.1.0
+    version: 1.2.0
     file: method-registry/continuation-writing.yaml
   W05:
     brand_name: 动作拆链
     status: candidate
-    version: 1.1.0
+    version: 1.2.0
     file: method-registry/continuation-writing.yaml
   W06:
     brand_name: 三点锁题
     status: candidate
-    version: 1.1.0
+    version: 1.2.0
     file: method-registry/continuation-writing.yaml
   W07:
     brand_name: 伏笔回扣
     status: candidate
-    version: 1.1.0
+    version: 1.2.0
     file: method-registry/continuation-writing.yaml
   W08:
     brand_name: 因果三连
     status: candidate
-    version: 1.1.0
+    version: 1.2.0
     file: method-registry/continuation-writing.yaml
   W09:
     brand_name: 细节三镜
     status: candidate
-    version: 1.1.0
+    version: 1.2.0
     file: method-registry/continuation-writing.yaml
   W10:
     brand_name: 无痕衔接
     status: candidate
-    version: 1.1.0
+    version: 1.2.0
     file: method-registry/continuation-writing.yaml
   W11:
     brand_name: 小转折
     status: candidate
-    version: 1.1.0
+    version: 1.2.0
     file: method-registry/continuation-writing.yaml
   W12:
     brand_name: 精准换词
     status: candidate
-    version: 1.1.0
+    version: 1.2.0
     file: method-registry/continuation-writing.yaml
   W13:
     brand_name: 结尾回扣
     status: candidate
-    version: 1.1.0
+    version: 1.2.0
     file: method-registry/continuation-writing.yaml
   W14:
     brand_name: 骨架句与肌肉句
     status: candidate
-    version: 1.1.0
+    version: 1.2.0
     file: method-registry/continuation-writing.yaml
   W15:
     brand_name: 续写评分
     status: candidate
-    version: 1.1.0
+    version: 1.2.0
     file: method-registry/continuation-writing.yaml
   W16:
     brand_name: 五档训练升级
     status: candidate
-    version: 1.1.0
+    version: 1.2.0
     file: method-registry/continuation-writing.yaml
 version_policy:
   rule: 任何语义、触发、判据或边界改动都新增版本记录，不静默覆盖。
@@ -433,3 +433,234 @@ golden_methods:
 - F01
 - G01
 source_sections: method-registry/source-sections.yaml
+cloze_order_policy: evidence_driven_visits
+cloze_order_source:
+  path: gaokao-english/references/delivery-contract.md
+  heading: 做题顺序
+  commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
+  quote: 完形不强制固定空号顺序、两遍作答或先易后难
+course_identities:
+- source_heading: 定位阅读法（应用文阅读课程题名）
+  identity_kind: course_title
+  source_activation: false
+  task_scope: []
+  equivalent_to_existing_brand: false
+  runtime_registration: not_created_by_this_plan
+  source:
+    path: gaokao-english/references/reading-comprehension.md
+    heading: 定位阅读法（应用文阅读课程题名）
+    line_start: 175
+    line_end: 178
+    commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
+- source_heading: 顺藤摸瓜（记叙文细节的原命名）
+  identity_kind: bounded_course_operation
+  source_activation: true
+  task_scope:
+  - narrative_detail
+  equivalent_to_existing_brand: false
+  runtime_registration: not_created_by_this_plan
+  source:
+    path: gaokao-english/references/reading-comprehension.md
+    heading: 顺藤摸瓜（记叙文细节的原命名）
+    line_start: 189
+    line_end: 196
+    commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
+- source_heading: 左顾右盼（记叙文细节的原命名）
+  identity_kind: bounded_course_operation
+  source_activation: true
+  task_scope:
+  - narrative_detail
+  - word_meaning_context
+  equivalent_to_existing_brand: false
+  runtime_registration: not_created_by_this_plan
+  source:
+    path: gaokao-english/references/reading-comprehension.md
+    heading: 左顾右盼（记叙文细节的原命名）
+    line_start: 205
+    line_end: 212
+    commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
+- source_heading: 中心思想（8.7讲义原名，强版本未激活）
+  identity_kind: unactivated_strong_definition
+  source_activation: false
+  task_scope: []
+  equivalent_to_existing_brand: false
+  runtime_registration: not_created_by_this_plan
+  source:
+    path: gaokao-english/references/reading-comprehension.md
+    heading: 中心思想（8.7讲义原名，强版本未激活）
+    line_start: 213
+    line_end: 216
+    commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
+- source_heading: 积极阅读法：重复定主旨
+  identity_kind: bounded_course_operation
+  source_activation: true
+  task_scope:
+  - theme_framework
+  equivalent_to_existing_brand: false
+  runtime_registration: not_created_by_this_plan
+  source:
+    path: gaokao-english/references/reading-comprehension.md
+    heading: 积极阅读法：重复定主旨
+    line_start: 35
+    line_end: 42
+    commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
+- source_heading: 积极阅读法：褒贬定态度（受限作者评价观察）
+  identity_kind: bounded_course_operation
+  source_activation: true
+  task_scope:
+  - author_evaluation
+  equivalent_to_existing_brand: false
+  runtime_registration: not_created_by_this_plan
+  source:
+    path: gaokao-english/references/reading-comprehension.md
+    heading: 积极阅读法：褒贬定态度（受限作者评价观察）
+    line_start: 43
+    line_end: 52
+    commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
+- source_heading: 记叙文全文主旨／标题的受限操作
+  identity_kind: bounded_operation_group
+  source_activation: true
+  task_scope:
+  - narrative_main_idea
+  - narrative_title
+  equivalent_to_existing_brand: false
+  runtime_registration: not_created_by_this_plan
+  source:
+    path: gaokao-english/references/reading-comprehension.md
+    heading: 记叙文全文主旨／标题的受限操作
+    line_start: 53
+    line_end: 68
+    commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
+- source_heading: 褒贬一致（阅读已验受限比较判据）
+  identity_kind: comparison_criterion
+  source_activation: true
+  task_scope:
+  - title
+  - paragraph_main_idea
+  - object_evaluation
+  - cognitive_cause
+  - word_meaning_direction
+  equivalent_to_existing_brand: false
+  runtime_registration: not_created_by_this_plan
+  source:
+    path: gaokao-english/references/reading-comprehension.md
+    heading: 褒贬一致（阅读已验受限比较判据）
+    line_start: 85
+    line_end: 94
+    commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
+- source_heading: 分句结构法（原名；逻辑简化中的受限结构动作）
+  identity_kind: bounded_structure_operation
+  source_activation: true
+  task_scope:
+  - complex_structure
+  equivalent_to_existing_brand: false
+  runtime_registration: not_created_by_this_plan
+  source:
+    path: gaokao-english/references/reading-comprehension.md
+    heading: 分句结构法（原名；逻辑简化中的受限结构动作）
+    line_start: 171
+    line_end: 174
+    commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
+- source_heading: 画蛇添足（判项诊断用语）
+  identity_kind: candidate_diagnosis
+  source_activation: false
+  task_scope: []
+  equivalent_to_existing_brand: false
+  runtime_registration: not_created_by_this_plan
+  source:
+    path: gaokao-english/references/reading-comprehension.md
+    heading: 画蛇添足（判项诊断用语）
+    line_start: 111
+    line_end: 116
+    commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
+- source_heading: mainly题与主旨大意
+  identity_kind: bounded_course_operation
+  source_activation: true
+  task_scope:
+  - main_idea
+  - paragraph_main_idea
+  equivalent_to_existing_brand: false
+  runtime_registration: not_created_by_this_plan
+  source:
+    path: gaokao-english/references/reading-comprehension.md
+    heading: mainly题与主旨大意
+    line_start: 217
+    line_end: 230
+    commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
+- source_heading: 语篇行文结构的已核验操作（内容说明，非新增方法名）
+  identity_kind: internal_framework
+  source_activation: true
+  task_scope:
+  - cloze
+  equivalent_to_existing_brand: false
+  runtime_registration: not_created_by_this_plan
+  source:
+    path: gaokao-english/references/cloze.md
+    heading: 语篇行文结构的已核验操作（内容说明，非新增方法名）
+    line_start: 15
+    line_end: 29
+    commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
+- source_heading: 应用文写作六步训练法通用梳理框架
+  identity_kind: editorial_framework
+  source_activation: false
+  task_scope: []
+  equivalent_to_existing_brand: false
+  runtime_registration: not_created_by_this_plan
+  source:
+    path: gaokao-writing/references/application-writing-and-correction.md
+    heading: 应用文写作六步训练法通用梳理框架
+    line_start: 53
+    line_end: 61
+    commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
+- source_heading: 三种写作表达方法
+  identity_kind: distinct_course_method_group
+  source_activation: true
+  task_scope:
+  - application_expression
+  equivalent_to_existing_brand: false
+  runtime_registration: not_created_by_this_plan
+  source:
+    path: gaokao-writing/references/application-writing-and-correction.md
+    heading: 三种写作表达方法
+    line_start: 62
+    line_end: 67
+    commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
+- source_heading: 富兰克林写作法（寒4五步）
+  identity_kind: course_training_sequence
+  source_activation: true
+  task_scope:
+  - application_after_class
+  equivalent_to_existing_brand: false
+  runtime_registration: not_created_by_this_plan
+  source:
+    path: gaokao-writing/references/application-writing-and-correction.md
+    heading: 富兰克林写作法（寒4五步）
+    line_start: 68
+    line_end: 71
+    commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
+- source_heading: 情节构思：PTSD 四步法
+  identity_kind: source_version_group
+  source_activation: true
+  task_scope:
+  - continuation_planning
+  equivalent_to_existing_brand: false
+  runtime_registration: not_created_by_this_plan
+  source:
+    path: gaokao-writing/references/continuation-writing-and-correction.md
+    heading: 情节构思：PTSD 四步法
+    line_start: 198
+    line_end: 205
+    commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
+- source_heading: 动作链与动作面
+  identity_kind: mixed_activation_group
+  source_activation: true
+  task_scope:
+  - action_chain_only
+  equivalent_to_existing_brand: false
+  runtime_registration: not_created_by_this_plan
+  source:
+    path: gaokao-writing/references/continuation-writing-and-correction.md
+    heading: 动作链与动作面
+    line_start: 238
+    line_end: 247
+    commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce

@@ -1,0 +1,19 @@
+case_id: F11-canonical
+method_id: F11
+question_type: 七选五
+source:
+  repository: https://github.com/rockpunkgod/ANSWER.git
+  commit: b04ebc26d7fa096404111a0bb12f6c77cc8525b9
+  path: gaokao-english/references/seven-five.md
+  heading: 定案与输出
+question: null
+answer: null
+trigger: 候选已回填且必须区分竞争项
+evidence: []
+method_role: decider
+expected_action: 逐项核候选主体、动作、对象、上下句关系和段落任务，只以当前空自身的决定性关系定案
+expected_output: decide
+stop_rule: 多项仅局部接通或仍共同成立时暂留，不按主观更像原因撤销另一项；形式、同词、时态、占用或剩余均不能替代当前空自身证据。
+case_type: canonical
+status: evidence_gap
+notes: 源方法可核；尚未逐题核验案例，不可当成功样例

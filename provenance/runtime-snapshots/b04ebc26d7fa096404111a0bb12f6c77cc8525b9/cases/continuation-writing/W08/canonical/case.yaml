@@ -1,0 +1,19 @@
+case_id: W08-canonical
+method_id: W08
+question_type: 读后续写
+source:
+  repository: https://github.com/rockpunkgod/ANSWER.git
+  commit: b04ebc26d7fa096404111a0bb12f6c77cc8525b9
+  path: gaokao-writing/references/continuation-writing-and-correction.md
+  heading: 五档升级路径（训练用）
+question: null
+answer: null
+trigger: 事件跳跃缺因果桥梁
+evidence: []
+method_role: interpreter
+expected_action: 写因为A→行动B→结果C，每条边引用原文或合理铺垫，不让猜测互证
+expected_output: interpret
+stop_rule: 某一条边只有猜测互证或物理条件不成立先停推进，补合理动机/行动而不是再添结果。叙事先后不自动等于因果。
+case_type: canonical
+status: evidence_gap
+notes: 源方法可核；尚未逐题核验案例，不可当成功样例

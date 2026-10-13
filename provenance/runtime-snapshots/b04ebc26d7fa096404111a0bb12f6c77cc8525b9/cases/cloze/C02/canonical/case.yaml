@@ -1,0 +1,19 @@
+case_id: C02-canonical
+method_id: C02
+question_type: 完形填空
+source:
+  repository: https://github.com/rockpunkgod/ANSWER.git
+  commit: b04ebc26d7fa096404111a0bb12f6c77cc8525b9
+  path: gaokao-english/references/cloze.md
+  heading: 瞻前顾后法
+question: null
+answer: null
+trigger: 空前空后证据尚未闭合
+evidence: []
+method_role: verifier
+expected_action: 圈两侧谁、动作、评价和时间；近处不足再向明确复现或结果扩读，仍不足暂留
+expected_output: verify
+stop_rule: 局部仍不足就暂留，按原空号先做有独立依据的空再返回；相邻待定空、教师先报答案和选项占用都不能给本空作证。不要只截取支持初选的一句。
+case_type: canonical
+status: evidence_gap
+notes: 源方法可核；尚未逐题核验案例，不可当成功样例

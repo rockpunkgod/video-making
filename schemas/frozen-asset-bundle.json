@@ -4004,7 +4004,8 @@
             "properties": {
               "status": {
                 "enum": [
-                  "source_bound_editorial_review"
+                  "source_bound_editorial_review",
+                  "source_rebound_semantic_reacceptance_pending"
                 ]
               },
               "source_section_ids": {

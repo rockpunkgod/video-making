@@ -1,0 +1,1414 @@
+{
+  "schema_version": "1.0.0",
+  "scope": "source_alignment_not_teaching_or_learner_certification",
+  "from_commit": "b04ebc26d7fa096404111a0bb12f6c77cc8525b9",
+  "to_commit": "61bc9c3e15004639cb442c20e7946ca9631f14ce",
+  "status": "source_bound_candidate_epoch_active",
+  "registry_validation": {
+    "methods": 82,
+    "source_documents": 20,
+    "status": "PASS"
+  },
+  "generated_assets": "PASS",
+  "changed_source_profiles": 51,
+  "method_ids_added_or_removed": false,
+  "method_promotion_applied": false,
+  "student_short_form_acceptance": "pending",
+  "new_blind_samples": 0,
+  "private_catalog_sha256_preserved": "de04d47ad7ef062e1504bd06eb0228024c7b7b3f565ba6ac46405192ee6d64f4",
+  "backup_directory": "E:\\自媒体\\video-making\\local-data\\answer-alignment-2026-10-13\\activation-backup-slad43rn",
+  "asset_write_count": 278,
+  "asset_hashes": [
+    {
+      "path": "agents/gaokao-grammar-fill.md",
+      "previous_sha256": "5cb48bcdbd01c832ee3caca78f0efb56ca08c47eb852dcd0e652f79e007df133",
+      "next_sha256": "bb2fab4cecbfb4a82fee7a07b197ae1231346db2e552c786e63cbce0b5342188"
+    },
+    {
+      "path": "agents/gaokao-objective.md",
+      "previous_sha256": "9bb166995bac11449252f8bba3a7913ffe6f8b1eb1afae0895ff58d6817f7159",
+      "next_sha256": "c6c183141a8ddb319c6c6285a116198f05f1bda5bc3185c160cd122276308c0d"
+    },
+    {
+      "path": "agents/gaokao-writing.md",
+      "previous_sha256": "18b4fcc18f1737e64563856ffb28d45a20f7f5a260142651ab350d82f881f548",
+      "next_sha256": "4cf686c5ad78616e3dbfcef5c868b8c2e2e9500fce3d3436cdd65b8ccf2dbb14"
+    },
+    {
+      "path": "cases/F01/boundary/case.yaml",
+      "previous_sha256": "8e9c2e7f98a27b7ddd28fd8e49ca64ff643e0b22876116e1f533c6758a4046e8",
+      "next_sha256": "67933685f2e73864725826f04b21dc726c7b129ffa698957596818538d729abd"
+    },
+    {
+      "path": "cases/F01/canonical/case.yaml",
+      "previous_sha256": "15f14b52f326229e2251cf0ba3a52f79e1e4374dbdeea6b950f08906e27650ea",
+      "next_sha256": "e3da7efcb30c1890f9dafef213cbf2e86c7d46b84bfdd185fe52f1bc338a4568"
+    },
+    {
+      "path": "cases/F01/counterexamples/case.yaml",
+      "previous_sha256": "1ed1e97b054e24cac5322fa97209c05484b2f16ee04d44536c22302d2ed2a5b3",
+      "next_sha256": "589c3082a5c48ebceae0471a775aaa1086d6d12109becfa172d756d6f76e212e"
+    },
+    {
+      "path": "cases/F01/hard/case.yaml",
+      "previous_sha256": "0709a0647a29c98fe6ce363f6999f92d214cbde816402cea4e1a5993f9a1a424",
+      "next_sha256": "65bf481678e6266c9c70e9ec6b8d464d963ed0da5ed0d515c7feaf9f93ef6030"
+    },
+    {
+      "path": "cases/F01/transfer/case.yaml",
+      "previous_sha256": "b3ae087b6c2a90d61555f9ce40c00636991fb447419ef294e95955efbabae18b",
+      "next_sha256": "e2fe813d77003540cb942d79bf5c20724514c292f7e9fbf8bdb10e9de909eea6"
+    },
+    {
+      "path": "cases/G01/boundary/case.yaml",
+      "previous_sha256": "ac64db9137b8dc8e6b8feb8ea3ab4d2f75aa8223903ad5a9774337771f778267",
+      "next_sha256": "3022f55ac307aff010633f1cdc7fa01565e9e66a57a73e34e5a22b6bcfb13c5d"
+    },
+    {
+      "path": "cases/G01/canonical/case.yaml",
+      "previous_sha256": "eea9769b069b1f723844bb9478875c8cf677d5dc44a123a9dc1d8be709682341",
+      "next_sha256": "9573334f055f12c71789d20cca0b66edab19bd71e8ba38c388469840b90380e5"
+    },
+    {
+      "path": "cases/G01/counterexamples/case.yaml",
+      "previous_sha256": "d2f9d797dc3c85573007079067ce09b5a4051a086bcb152515da08602c7ce27f",
+      "next_sha256": "f5b2de3c9687db72a1b7b7283e0f6e21341b60b904930e60187ddddc8b67d985"
+    },
+    {
+      "path": "cases/G01/hard/case.yaml",
+      "previous_sha256": "758a9aa46e6f7638718d3da9299f3ad10c77499dc84ef2721a34e89ff3ef1367",
+      "next_sha256": "7380a0df2f97584d36183d16e66a978a64b6f995bbd80f9175e4ca7d6226b7f3"
+    },
+    {
+      "path": "cases/G01/transfer/case.yaml",
+      "previous_sha256": "3d5e9173f694ce43ba55d2a15b452df83efccdee13faa9b2689aebde3d7e8ba4",
+      "next_sha256": "c398c216b7144256c208d1c0eb3782becd7ebad02089ab8a960457e253bfb4e1"
+    },
+    {
+      "path": "cases/R01/boundary/case.yaml",
+      "previous_sha256": "ae852a576dfc9f097cb79a010c965595578b21e26a892fbd74f9da5b456c31bc",
+      "next_sha256": "c2bace0fb2861712f7d29f01a7774963b91e267c6dc6ed402527f3b7da02d6d6"
+    },
+    {
+      "path": "cases/R01/canonical/case.yaml",
+      "previous_sha256": "25e41720654d18bd04eacbc14885ac5256a979bc77a81bcd418baa4942f59667",
+      "next_sha256": "6b737e8c0ff32ab8cda4cb9bb826218190fb1dbab16a621ff15b6516556fe3f3"
+    },
+    {
+      "path": "cases/R01/counterexamples/case.yaml",
+      "previous_sha256": "5358ddc1ecf135bcbc7026b7fb541bb7a2c2f03b905db73e574df32abfb3223c",
+      "next_sha256": "827eee0b45136e7fd03628cfaac248a366357c2ee9486b39726ac7b7c4c5008f"
+    },
+    {
+      "path": "cases/R01/hard/case.yaml",
+      "previous_sha256": "6a799ca3f9ed3ed14232a169c8f85997d7f327c778b54024d35785421e10feec",
+      "next_sha256": "41581d7bef41f232d1f27e57caff2d88b475db7e127c16a0f9587d8d4d50c986"
+    },
+    {
+      "path": "cases/R01/transfer/case.yaml",
+      "previous_sha256": "c7039d319714d2c2a3abd68cc39aee110d2e53bd926e17b8041b4dc34e0ac478",
+      "next_sha256": "7722dcf8ae39491a929e893c7115df5265a1efd0a1a63983b0e854a88e401926"
+    },
+    {
+      "path": "cases/R02/boundary/case.yaml",
+      "previous_sha256": "2b7e2803cc0a3eee9e69d7bda394f314d7ba24dbb4fff6428f1086c3bc80f4af",
+      "next_sha256": "7f2d1d9fc906d7beb0b192c5ed03b1bca5456da9f37a2358d7521d9b6ed88197"
+    },
+    {
+      "path": "cases/R02/canonical/case.yaml",
+      "previous_sha256": "a9073db0a5208398267649025ded5ac5ad915ede6141187c6f1d710173900764",
+      "next_sha256": "18a112e102fc9328f202e598620c3bcddeeb791c287171ab62c460ec5476356b"
+    },
+    {
+      "path": "cases/R02/counterexamples/case.yaml",
+      "previous_sha256": "c091dfa394bca48bb131cbb1529b54e71dc09552bd6da523ec5a4a79aa1e10a5",
+      "next_sha256": "1777b28e3af0a4508a998f28f9a5baeb4425b5b6d3e764964d52e4378ac2fe40"
+    },
+    {
+      "path": "cases/R02/hard/case.yaml",
+      "previous_sha256": "b451e2da0e4f8f4af0d84329dfeaa12f0f13b0e335ea39b810106259147426cb",
+      "next_sha256": "21279ebb73d8a8b1c5fb52a7ebcef11a0732a45a798a1d77f2bde9271ef0412f"
+    },
+    {
+      "path": "cases/R02/transfer/case.yaml",
+      "previous_sha256": "1a25ba25f92edecbad8bc4569547beb59eae31da1d671a7a9f1c22d12390a2cc",
+      "next_sha256": "17fea79ed645e9c16c82f0f3682518b6062bac68343874bd163023c8ce878889"
+    },
+    {
+      "path": "cases/R06/boundary/case.yaml",
+      "previous_sha256": "90a020cdf065f3c25413ce681983b44be45455afd52a2c76f9b235c1de32cbd2",
+      "next_sha256": "387eaa341bd50f7cfca8171e98dff3d47254ca5eedd52fc6aa772514a034b757"
+    },
+    {
+      "path": "cases/R06/canonical/case.yaml",
+      "previous_sha256": "b707edc361a387bf90ed22d35a1594441f8e107e73fe8f8510bae63ac8984ebb",
+      "next_sha256": "cd571c26e245fa1c285b2286fbb3a66885563a6da4ba5f7e720abcf74c8d7dc9"
+    },
+    {
+      "path": "cases/R06/counterexamples/case.yaml",
+      "previous_sha256": "e8dcb72daf2264059121dd5ca5ba5333551132250aa8b96d2e13baca84b56329",
+      "next_sha256": "bacf51b2de0b0b2cf10443949f6632105b823493f271ed9247890942eda63572"
+    },
+    {
+      "path": "cases/R06/hard/case.yaml",
+      "previous_sha256": "12eab595603845f0dcdd0913764460399b698857209623876a590779ac52f8f3",
+      "next_sha256": "e99f1edae40e3ab01460f2af50a2e9ec6b3b226ac834679de26b756061fec504"
+    },
+    {
+      "path": "cases/R06/transfer/case.yaml",
+      "previous_sha256": "51f93ebc583df56a98a778c7830037876d2eaa578637ed7b79e3372e4bd42a76",
+      "next_sha256": "1ee864ec8ffbc27dbb5e08def8274a1632841bac380cf732c4638c47f905b783"
+    },
+    {
+      "path": "cases/R09/boundary/case.yaml",
+      "previous_sha256": "bd215f160ddc89df552a48865f84ce53d765ee48731a4cb25a657c32cdb160bd",
+      "next_sha256": "0d48b5d9abe313a2bf90517b976bac9f44eb36b86c7fc0cb7fa7f6ff276a9b25"
+    },
+    {
+      "path": "cases/R09/canonical/case.yaml",
+      "previous_sha256": "a1b86bef7882a65444b338c2c42b1e26c19edafc8681dab8938ca61f8d4fbf22",
+      "next_sha256": "be3fd2a6e574eac85d8a4c1d147e57f9ad997a15d782818dd2b349ed1035ab6a"
+    },
+    {
+      "path": "cases/R09/counterexamples/case.yaml",
+      "previous_sha256": "05687f359e0bf5c6a93ec13dfce1447eca2db3ddd2cae79040bd1f163c5330f2",
+      "next_sha256": "e75252a5394e7fce8e70583e026901669414a5c90a2da9db170259482d087bc3"
+    },
+    {
+      "path": "cases/R09/hard/case.yaml",
+      "previous_sha256": "650a21c32fb4f139ceb66fd4f2199d1fc591e92d696ca43cefac998de27f867a",
+      "next_sha256": "3e7c3b1370da675a0b6994a6ece8369b5512075ec7c804a4a5161ce6e8721344"
+    },
+    {
+      "path": "cases/R09/transfer/case.yaml",
+      "previous_sha256": "6eae15c9a7519f81edb215bc3bcd2c74a391423573b4efa9879482dccf3de3fd",
+      "next_sha256": "3f765308910d09da2e7e5e2abc13db61036c81e9415de6b0d39b93fc2da9eee3"
+    },
+    {
+      "path": "cases/application-writing/A01/canonical/case.yaml",
+      "previous_sha256": "03705f96fb015b1b7d7dd9b8342c525ea69c529239cea069e45076747ace50dd",
+      "next_sha256": "098b4b314d458460d9e2de69c731223392e98903bee307f0b9555b6e1cf7a44f"
+    },
+    {
+      "path": "cases/application-writing/A02/canonical/case.yaml",
+      "previous_sha256": "b47106ceca3aea549e62aaaefa81255e05c5ffdd543b5768a6ce8cc08df5cfd2",
+      "next_sha256": "ab7c8e932344e6eaa68af9ded2da9ebbcb74755962c4f54fe65a4e510f124a94"
+    },
+    {
+      "path": "cases/application-writing/A03/canonical/case.yaml",
+      "previous_sha256": "a6e2cc45e5356bee6d4967acc1b8da473404892aea576cb45b216926d2bce4f5",
+      "next_sha256": "c0bf534f1d6175e410ede1c5c46c65106dd175414476d123e879073e48825450"
+    },
+    {
+      "path": "cases/application-writing/A04/canonical/case.yaml",
+      "previous_sha256": "d4ec0d6eccc1a91886ab1715e1cc6fb8b02a6523f759bf6c84ce035d00660e77",
+      "next_sha256": "7458bb119286f895d51375dd36bbdb6f9bc3e009d38b40a0850cb93ae56b5725"
+    },
+    {
+      "path": "cases/application-writing/A05/canonical/case.yaml",
+      "previous_sha256": "cf2fcc52c443a487a20b00ec8ce66b8a9f76e7e285fc544d8b9eb4ad6509e621",
+      "next_sha256": "99387d33aef4721f28eecabd9610ee9640a23d2278f1b112cff5bc5b10655bfb"
+    },
+    {
+      "path": "cases/application-writing/A06/canonical/case.yaml",
+      "previous_sha256": "6fe10776a85c7361b1552ffb88e3b7bc9511d735657dcd21dc71ec61c24ebd1f",
+      "next_sha256": "9862b63c893f40c98c9177e154136390cab7f1112e1d4f2759515ee049da63e2"
+    },
+    {
+      "path": "cases/application-writing/A07/canonical/case.yaml",
+      "previous_sha256": "8bfb2df4c20c4f5a0a64066da2873fffde8aa32081c0d0e9e0d690c5a4ae4485",
+      "next_sha256": "1a955bbec9e9ddb1a43693584f2c8f615966e84bfcf242331a2901fb2cd717dc"
+    },
+    {
+      "path": "cases/application-writing/A08/canonical/case.yaml",
+      "previous_sha256": "cf4a659d93ce3b75ba2ab82e3608e100578bd6c5066c32cb2f092dfd1c89e2fc",
+      "next_sha256": "28e02f4b02fddf6df9280cd98db4004607bc4b5872d7f97470fe35c1e9962f24"
+    },
+    {
+      "path": "cases/application-writing/A09/canonical/case.yaml",
+      "previous_sha256": "cd076854b47b4108c827660d7f3ed2c73fefe511a9671286665b644217682711",
+      "next_sha256": "b5f9471edd798ef6c961c55c4ef8ae0f2c793d8eb02d61e1529d7084f07295d7"
+    },
+    {
+      "path": "cases/application-writing/A10/canonical/case.yaml",
+      "previous_sha256": "036bcf11663e97d0ad78a2296c01b4ae71eff1c4f6310798bcfa72d5682e1a2d",
+      "next_sha256": "59b121f461adfac66b03b75bb4ed8cac00933484e9b24835ac4e8dd07a49e486"
+    },
+    {
+      "path": "cases/cloze/C01/canonical/case.yaml",
+      "previous_sha256": "c8341b4f0818fdf25e76eb8ec24d125b4cad5771ef0cec6af461717e559650c8",
+      "next_sha256": "f6320376b987cf3ac5f44eb7bc8289639dc971a5f725057193e80a68bd8dde59"
+    },
+    {
+      "path": "cases/cloze/C02/canonical/case.yaml",
+      "previous_sha256": "36a4b994d02a4739613f1e7c24fd3a97381919393c4105e00f3265d65cbd29ba",
+      "next_sha256": "738cb55a807195f602984c61da94abf3c5d2fbf9959751e963da2462a070f979"
+    },
+    {
+      "path": "cases/cloze/C03/canonical/case.yaml",
+      "previous_sha256": "72a87e4494a2ba43f999e23b53d603d7acbed3d739a18947d7fddec15f4e0038",
+      "next_sha256": "baeeea503cca89549953ae710943de49fdaf3dc031860a3fd855fa8d739abdce"
+    },
+    {
+      "path": "cases/cloze/C04/canonical/case.yaml",
+      "previous_sha256": "1706f57808659c7bb0361c6650bed5f0a5d085921dd12e740a6801faea0ce030",
+      "next_sha256": "d1184f81680064b723f11dc5cbce844d6071705e1946bc88cb691b986ef2b7cb"
+    },
+    {
+      "path": "cases/cloze/C05/canonical/case.yaml",
+      "previous_sha256": "b5f180e1c5f6224c43bcdd332ada2bdffb681a0c23fa7ceeb3d0b2b4656e0d58",
+      "next_sha256": "a1695aeab76dcea6a795f094c38ccc83052679059123b07b566e19938e2cd852"
+    },
+    {
+      "path": "cases/cloze/C06/canonical/case.yaml",
+      "previous_sha256": "5edd684f741ae164627a5158f28f1307454ee3263ee7ea763ea438aed297275f",
+      "next_sha256": "2d504859a39e497085293a5425568529d301ddd4c9a329ee0b932c43af4b1d26"
+    },
+    {
+      "path": "cases/cloze/C07/canonical/case.yaml",
+      "previous_sha256": "ace8aeed0ea186d163342463786074ba115e7e06ee919140272220ca2511daf5",
+      "next_sha256": "aa4780f3f236a4f4151a612eaf48acfd1d372c2f1fce1c6c3126a06ea625b50d"
+    },
+    {
+      "path": "cases/cloze/C08/canonical/case.yaml",
+      "previous_sha256": "169dc703a273dabdabee0cdae891034607a4bfc88019f1ec7ceb3600cb13941c",
+      "next_sha256": "c6cfdf04fc5ac0bcb5f8765c26b848ea4e4c9574bfd4f71c4682e36a7001eb08"
+    },
+    {
+      "path": "cases/cloze/C09/canonical/case.yaml",
+      "previous_sha256": "842b4a919cc204fe74ecc486137acf0276ca883c4c006940a778bef247cd0b71",
+      "next_sha256": "b5b8501eeb5f72d95c8fd6ca6f2f3b52ceef96bec98b6508ffd1a4513086313c"
+    },
+    {
+      "path": "cases/continuation-writing/W01/canonical/case.yaml",
+      "previous_sha256": "805fe53a1e7d5169a830e18e086a3369153af6e04d332439f27544d1dd14a966",
+      "next_sha256": "9e74c5712ae31373ad157ad56113f90aff0310a799969ce3f7da4e5f52817076"
+    },
+    {
+      "path": "cases/continuation-writing/W02/canonical/case.yaml",
+      "previous_sha256": "6874cc2fbc76e0ba5212e27ce6c36fa2e1af7ce17b6968e815214f036e3b9ac0",
+      "next_sha256": "67e86f77375f9fca8f669448286b6464ea8bc610313dc742efa0b05a88403309"
+    },
+    {
+      "path": "cases/continuation-writing/W03/canonical/case.yaml",
+      "previous_sha256": "fd8c0c9f8a64a9e58b85412dde05367978327d1651d216141a2771d377a721f6",
+      "next_sha256": "90c1404f86ecb8702f963add8cc9f0043b60b536a11b4ce65616ef7579d486f1"
+    },
+    {
+      "path": "cases/continuation-writing/W04/canonical/case.yaml",
+      "previous_sha256": "994e65f2301160031ec158134000908a007285d843a339698bafc8409ccc4072",
+      "next_sha256": "cde0ff06752511b9fb51f3b3729f0f4cec4b9f060f5310f1cceb1fb295b618d2"
+    },
+    {
+      "path": "cases/continuation-writing/W05/canonical/case.yaml",
+      "previous_sha256": "5207179294fcb6edf452b8a07ab04a672562f2e5c647bfc0ee4c5924830d462f",
+      "next_sha256": "3baa69e8483197ff8782d00cf18e9582dec7fc3d79b7f72a456e4cab0cef0ac9"
+    },
+    {
+      "path": "cases/continuation-writing/W06/canonical/case.yaml",
+      "previous_sha256": "dbf3d8da435c29688a48b0246d1a17b7335102aed2e896bfaec760e03d397e91",
+      "next_sha256": "505be2ba59de1dfe7a44cecc1b1c4a53f5bcea460a50d68d13d03ce27244ae27"
+    },
+    {
+      "path": "cases/continuation-writing/W07/canonical/case.yaml",
+      "previous_sha256": "6260a25d57cb617d838daad3e102fc45fa79f8fdeb807153d803948fbd75862b",
+      "next_sha256": "7a3edd73c127695e4b27ea61cd9efe5744dff89a5750e53867c3ffa8c05f45fc"
+    },
+    {
+      "path": "cases/continuation-writing/W08/canonical/case.yaml",
+      "previous_sha256": "3d441d2550c39fcf21f46c9243ebb94394084d3712ec2b608fb7b0f94e314bb3",
+      "next_sha256": "02d85d793a761b957089e640fd5c608fcad755fe642b9617ed74884cc3aa235e"
+    },
+    {
+      "path": "cases/continuation-writing/W09/canonical/case.yaml",
+      "previous_sha256": "702e42bc6b5fde5059959db30d34266ee501bc9c85d1d9de6aa1971708d92cd8",
+      "next_sha256": "f1b9aee9a9e86cf2a672cc1c8f20ecefd914c2671b30555b9957b4a14b75a044"
+    },
+    {
+      "path": "cases/continuation-writing/W10/canonical/case.yaml",
+      "previous_sha256": "0a0150f0377f5a7f730cd5768f463d60cae6efc23c9cee4cc15879e4123fbda3",
+      "next_sha256": "c7b5a75900d01458045038e87e54c3e9015f7c6c722e23709e047ca6ba19edaa"
+    },
+    {
+      "path": "cases/continuation-writing/W11/canonical/case.yaml",
+      "previous_sha256": "39b6adf6d188cc4851b81711e41166d382fde81f97b9165453868b22182cf434",
+      "next_sha256": "95157296479feae1df35d530f98fbb651e7aab339b890b33bf444cd9db747720"
+    },
+    {
+      "path": "cases/continuation-writing/W12/canonical/case.yaml",
+      "previous_sha256": "aba6d43064afbc02455ac26b8b0238bccacd36a4063ed18a894583e5cc6d1ddc",
+      "next_sha256": "a82efbde332a63b98cda583cb46f18722c0b9a77752dff297dde92bcbfdcec39"
+    },
+    {
+      "path": "cases/continuation-writing/W13/canonical/case.yaml",
+      "previous_sha256": "4c0443261373257cbbc1389d84ca8ef36665782c59c287a1593f63e95eb3c79d",
+      "next_sha256": "83ecc5e2bd9e003269812d5208b3f3d9d53a8d24dedf5be3c8595e2999b5a08f"
+    },
+    {
+      "path": "cases/continuation-writing/W14/canonical/case.yaml",
+      "previous_sha256": "490c736c151608154fd0fc4d88da0db886b5434dd7e4628d23fd5cd74ca69e11",
+      "next_sha256": "a3a6b2fd65a497c5a26eaaa37860ea717acc4545788fdcd558df0d423df6edb8"
+    },
+    {
+      "path": "cases/continuation-writing/W15/canonical/case.yaml",
+      "previous_sha256": "914e3b66f8e8fd2ed2c594c9ba77743009c6659f346c0d912c2a235491675806",
+      "next_sha256": "518b56451661762fb88f028b3986b44f0fec63774cb69688d4edfb6602a0c46f"
+    },
+    {
+      "path": "cases/continuation-writing/W16/canonical/case.yaml",
+      "previous_sha256": "5a8433ab7d277b473df17b31bb27c4caf798601d382c0695cb112d3600ad12e0",
+      "next_sha256": "3a2debb7fb4d9f6fbd68b2b1db158907a656d640df2c953d8bcb92e02734842c"
+    },
+    {
+      "path": "cases/grammar/G02/canonical/case.yaml",
+      "previous_sha256": "33b9cef1dfc36a5ad521c4e1906b7f4070a905fb79640fb6735b8e7b22238217",
+      "next_sha256": "5ac8c01ecf95f25792aac168f02781d6c12ae0d2c61f8e9d9d03db8a7edd5459"
+    },
+    {
+      "path": "cases/grammar/G03/canonical/case.yaml",
+      "previous_sha256": "ca2516057cdf3565f29b6b3717d8393006e64d209ad31816ae53e1cb9227ef6b",
+      "next_sha256": "4a4445f69082772673b5795f56afe00de9ab7edfdd350184564e11191d9f1c51"
+    },
+    {
+      "path": "cases/grammar/G04/canonical/case.yaml",
+      "previous_sha256": "f30c432039a0bb5f4d1829225249628f67bbe08f4afa13c8570bdcc37c6bad07",
+      "next_sha256": "3aa729ae6ba241e04c34811c0afbd0f95e58bbe9cb38b1ba35e42f8868767584"
+    },
+    {
+      "path": "cases/grammar/G05/canonical/case.yaml",
+      "previous_sha256": "d43514290c82f7fce60edaf1e921acde13a2abfdec7df5c03d73a540b5ab67c0",
+      "next_sha256": "0ceb6b9dd76966c5b25c68e3c199283c4380e974b61c92ef40d8f6ac74893965"
+    },
+    {
+      "path": "cases/grammar/G06/canonical/case.yaml",
+      "previous_sha256": "d18459b77bbac5bbbf0821e46ebbe446556058610edecbc95abaf2aa1ae77572",
+      "next_sha256": "661c5a51a41f77a7edc3f5bde0ff2345f32a255217f55a99d57946e2e6df3acc"
+    },
+    {
+      "path": "cases/grammar/G07/canonical/case.yaml",
+      "previous_sha256": "ae8884366fb9a0ae9fe58da5bc5b658cc2d3e260e927b90dc339335ba291679d",
+      "next_sha256": "b0ab96f480c58f118a85644fc24b1afca38f7f12991960609cbe83559012726e"
+    },
+    {
+      "path": "cases/grammar/G08/canonical/case.yaml",
+      "previous_sha256": "4c43723414c4ea9538885f3db4595927c965c7b6e18d212c8f3de70eb2ab8943",
+      "next_sha256": "3ea2f5b79431d2fad713ed8889e1edf4fd66a6130771f228db980cdf528af1dd"
+    },
+    {
+      "path": "cases/grammar/G09/canonical/case.yaml",
+      "previous_sha256": "8aa803a64fbe414f6dca0718ac9ba551d4f7f1de74b4565053ed34e4df9c14d6",
+      "next_sha256": "c64955146746fac591f2decdecbe8bf1c5f27416d5f844320c5bb7062d7fec2e"
+    },
+    {
+      "path": "cases/grammar/G10/canonical/case.yaml",
+      "previous_sha256": "5fded85088e650ef7656ff7736f33bb3ac4ff060025680837678832fe5174533",
+      "next_sha256": "c0c43f336edac0950fdfdb006d024b4ce36975314b8f03be0ce31a950db316b1"
+    },
+    {
+      "path": "cases/grammar/G11/canonical/case.yaml",
+      "previous_sha256": "b71dee1caeeff8649ca6beaea650f2d0f363d6bc133ea368b516fa0c0c8024b4",
+      "next_sha256": "28e4f00aec1eb89390f85abbe707fd1a2a29045b5c92303ba7d54891a7b27b17"
+    },
+    {
+      "path": "cases/grammar/G12/canonical/case.yaml",
+      "previous_sha256": "6a304b10531e27b446c8b3e68fee248cbbb6bde807168df51447aef430766372",
+      "next_sha256": "e8b1be047c477b737ac6384d094e0b13c2b0ae55df28f93a1c21a94a73c80137"
+    },
+    {
+      "path": "cases/grammar/G13/canonical/case.yaml",
+      "previous_sha256": "d507155a1f2549ea971c0a915fc830dbb9fe72dc82cf7f53582cfaa75e921605",
+      "next_sha256": "130916e7934d347839ccba231f9253087a1e490384cde60a895bb1e163d60301"
+    },
+    {
+      "path": "cases/grammar/G14/canonical/case.yaml",
+      "previous_sha256": "9b2c52cba2866156b5c5ebf15c7e01e17fea1650cf1a7ecb0d7e4370c8f8d14d",
+      "next_sha256": "899d2933d78dd45af44be8f70bf1c17b877d360948f382b2b39f1480c936ea6e"
+    },
+    {
+      "path": "cases/grammar/G15/canonical/case.yaml",
+      "previous_sha256": "3dba30b1a9c7dc43ee69aa4223293813dd3d98eae5c4ba9407f7cd9aeb2a6f74",
+      "next_sha256": "5beee76b5d6c872a20f4c800c10a0e2a0ef930d74296f30db5ab44a129da48fa"
+    },
+    {
+      "path": "cases/grammar/G16/canonical/case.yaml",
+      "previous_sha256": "73075dbae063dc19c6983cb549cc5c8a85445724e40d22d224cc521e4787a593",
+      "next_sha256": "99ed9be186a8b6e38a4e17d1b69200115035ee2716c39693765b597b8407e721"
+    },
+    {
+      "path": "cases/grammar/G17/canonical/case.yaml",
+      "previous_sha256": "c5fb24f1137ae60b8b04807744b492142c044d37e50881ecdc848d43f3df9f7f",
+      "next_sha256": "4ddb5b9c04352878c6c1af992dd757109336bab415fc15384fbbb394513637da"
+    },
+    {
+      "path": "cases/grammar/G18/canonical/case.yaml",
+      "previous_sha256": "421bf72312fc71e1666a8594bc38910fdc2a6f1f55b6a82cca0f22d2a31aa3fc",
+      "next_sha256": "a6f8306a4154a6be7ee68a6af8f340bdffd7969c309580e74ceb637aac4e2e4c"
+    },
+    {
+      "path": "cases/grammar/G19/canonical/case.yaml",
+      "previous_sha256": "b023adf56a1d91fc628a02f8406abfe98c9ced07cfb91488f89fdc2a5e41ca3f",
+      "next_sha256": "4bbd5418c9eff14950a43924c34bb60bc584f35bad271810d5006cf4f743aa19"
+    },
+    {
+      "path": "cases/reading/R03/canonical/case.yaml",
+      "previous_sha256": "83c0e52e4c4d33ddf0bb1bd9d7353135bf7997206aa91ae493636125a21bedd5",
+      "next_sha256": "cb9d5b5108ae50fa22480c61df1432747c5262348a76a4aa1151e38f508c0e19"
+    },
+    {
+      "path": "cases/reading/R04/canonical/case.yaml",
+      "previous_sha256": "c66d26c832b31b1c776c6771fcfb691110c79e455bb165fb357b248a9bde4acc",
+      "next_sha256": "b4ccf9fe24e04c140fe8d09fd531a9374df6cd0943aa8b1a0015d0647428414c"
+    },
+    {
+      "path": "cases/reading/R05/canonical/case.yaml",
+      "previous_sha256": "908b438503689287eaf6848e29aceffce67eb054da2be0cabc76f76ffeb58ee0",
+      "next_sha256": "d2555d4454d2dc2659dfcfd1cba13be607cc59623fbc8ac2319328f5f9ca444e"
+    },
+    {
+      "path": "cases/reading/R07/canonical/case.yaml",
+      "previous_sha256": "db9e8f1a85ee6253806122ba28ea85c8401e9df3ad8746a08fe48042d6e64380",
+      "next_sha256": "c6fef20a8341c24014cc7ffddc912e023b753ed80fe958e852dae8c06791d5a8"
+    },
+    {
+      "path": "cases/reading/R08/canonical/case.yaml",
+      "previous_sha256": "17ce65c7be0b634c888df68a1960db1f85421681b84f81c48a56ae9c396e7a57",
+      "next_sha256": "04a9676945aba56ee820813e4a9f90ad2693f29b505cb9571bff50823b7aae77"
+    },
+    {
+      "path": "cases/reading/R10/canonical/case.yaml",
+      "previous_sha256": "c20e1a3057645c737d8fa11faf751d29c762ba1f2a70cada4e0efb1c2edcc8ea",
+      "next_sha256": "8e94f5be18bb52221e582ac07007b54c171e0a0dfd7d674553c8c12e414896ab"
+    },
+    {
+      "path": "cases/reading/R11/canonical/case.yaml",
+      "previous_sha256": "ec03d30f8f5c7b1aa5079aa9f855c31b738dbd66225c27aff344179f128820e3",
+      "next_sha256": "4409535029f01305233671193f0bf36168ad0366fc5d7a3b656a85fa9d7e6f69"
+    },
+    {
+      "path": "cases/reading/R12/canonical/case.yaml",
+      "previous_sha256": "ab0458861d344b8c0ca55fef742269a45040a8d07d82f29e9117e5f78b2c71ba",
+      "next_sha256": "01349fc6110f8b0ec0369c0e103afe9357da2999310f3a1bca4ee8667ba0a834"
+    },
+    {
+      "path": "cases/reading/R13/canonical/case.yaml",
+      "previous_sha256": "7ef3838ae2e78fb3f4535bd79812730f2059fdaf026cfdeb1f37f18966f6c8ca",
+      "next_sha256": "86a4464c86afd469fea49828964670c7bb8236d42d634f0c077224f73c76cea8"
+    },
+    {
+      "path": "cases/reading/R14/canonical/case.yaml",
+      "previous_sha256": "67c89f3df5310f896a8c41482682946f53d2588755b6bc058f4c14648bc053f1",
+      "next_sha256": "5e7be45d1930a69919e2fe770694ef35c05d14b87a2b30cf967c6c5b6ff7f6cd"
+    },
+    {
+      "path": "cases/reading/R15/canonical/case.yaml",
+      "previous_sha256": "e14f36a8627e628951a79c1d44035295b8741d4e83c6fb43d3867b622ef92d23",
+      "next_sha256": "3a419c7b3e4c0a0ea44cc11c6fd8863c738757704f1f51184caf15b97fe71c20"
+    },
+    {
+      "path": "cases/reading/R16/canonical/case.yaml",
+      "previous_sha256": "87774c32702ce8503561c3a70b1a15ab9847fe084f7155555801abb0a64c5fbf",
+      "next_sha256": "4973d5e26d6c79b41e3a616861adc7ee9a0abf595064618f1e0baceca1278f49"
+    },
+    {
+      "path": "cases/reading/R17/canonical/case.yaml",
+      "previous_sha256": "09cbaeb951406848868167fc6cbf4fc638e1101fddea2fff1d4a404dd059d9bf",
+      "next_sha256": "9a51c006c06f89e1f5e4baf222f23a4fc7dcfb69be20e8550a0d5569c47db017"
+    },
+    {
+      "path": "cases/registry.yaml",
+      "previous_sha256": "61a7671384a42a5c4503fea7352b14d6a7811a7f296df7e849a33b962f9cac7d",
+      "next_sha256": "61a7671384a42a5c4503fea7352b14d6a7811a7f296df7e849a33b962f9cac7d"
+    },
+    {
+      "path": "cases/seven-five/F02/canonical/case.yaml",
+      "previous_sha256": "4c5e0fd9495e1c65d0ff953793dcb6ba471d42a1aeed0908510773fb70c521ce",
+      "next_sha256": "fe5f89e641991ca35f11b158a9438955f01ac1992c44659eb8d07e4bd3567b69"
+    },
+    {
+      "path": "cases/seven-five/F03/canonical/case.yaml",
+      "previous_sha256": "a913f9c45c6168275406668b4b1c1e9a4f6035ff5a1974d181dc5c4ae374586e",
+      "next_sha256": "c5f19aaa847d6fbc3ca21e561ed2427b9e37cf08ba78e0449a907b6e62c7d413"
+    },
+    {
+      "path": "cases/seven-five/F04/canonical/case.yaml",
+      "previous_sha256": "c2757cb95f07b8ffaa8094866e6f4358dcbcc9ebab82d4a6cb8c2c2a05fc13d2",
+      "next_sha256": "b65c1c98f201fc94c2bbc89722ab9eccfc8b5e1f91bad873cf59f47fe52a7bcb"
+    },
+    {
+      "path": "cases/seven-five/F05/canonical/case.yaml",
+      "previous_sha256": "901843e9a72eee6879929db584d61daf59b09258f8ea84249ede405f38703162",
+      "next_sha256": "9ca6224e334b5a0616e6ace0d30240c158837b1d52791bb0978c7cbf4603918e"
+    },
+    {
+      "path": "cases/seven-five/F06/canonical/case.yaml",
+      "previous_sha256": "7bc0812276de64ddfede8dcb553183fb4279632d79f2b8c5d58b0e2fc8e22978",
+      "next_sha256": "315f17408d07a713d957950b12b9968d71be38c91b991ee103c24d37ff9605a9"
+    },
+    {
+      "path": "cases/seven-five/F07/canonical/case.yaml",
+      "previous_sha256": "2279a711a872573b06110ad37f9fc00d235c01049c89398ac0122daf0fce2e37",
+      "next_sha256": "8cc2219b1c562a41cb23ef3007dc30f08943ebad37938de1a1be1fd60ea7d060"
+    },
+    {
+      "path": "cases/seven-five/F08/canonical/case.yaml",
+      "previous_sha256": "c9436bbfb8e27e454d43325964ca3fcd471e744521a15eaa79e40d8a931a71e0",
+      "next_sha256": "8bf5a6e0d2036f0fd30ce0fb4259875615a9879176187db4fbd5f0be12f52a7e"
+    },
+    {
+      "path": "cases/seven-five/F09/canonical/case.yaml",
+      "previous_sha256": "48d799892da4bd49ab1a31fdc9168cede3cc24258c18aa9269f7d6b95439262c",
+      "next_sha256": "e38613b6fa45fa44290807869f75f22e3b3b5ba60730d3efbf29701bc26f54e3"
+    },
+    {
+      "path": "cases/seven-five/F10/canonical/case.yaml",
+      "previous_sha256": "8b54f2fa6bb18b6edfecb617a911b3c5e40cbcd0551af6c0df92aee548e0ae6a",
+      "next_sha256": "2bf1f8a5920fffba8e36cffd6ad9da1d3354f5749113728cb9974f1f0388caff"
+    },
+    {
+      "path": "cases/seven-five/F11/canonical/case.yaml",
+      "previous_sha256": "2ae52277a94edb1a6123ba05ca828820adea368414a061d5cf01a744c688284c",
+      "next_sha256": "f45e697e0a88738c94df45d1cb6f694b4e9d1b0e55ee3ad66a52bd494d430d08"
+    },
+    {
+      "path": "gaokao-english/SKILL.md",
+      "previous_sha256": "9ced6fddaae11527373a017b19572148acc23be527406377c04d6b6733be6471",
+      "next_sha256": "77df82604a51859d3dbfba28afe0fb41dbd324af764ec907135f786cd7a4eb35"
+    },
+    {
+      "path": "gaokao-english/generated-contract.md",
+      "previous_sha256": "a79587408955bf5b20855df54f2df967910af16827bb58d02deca74722e359b1",
+      "next_sha256": "9fb9e1b224cd39ba5de486ac8d104307ee1efd29e3c46766d137cfb439e7da87"
+    },
+    {
+      "path": "gaokao-english/generated-course-identities.yaml",
+      "previous_sha256": null,
+      "next_sha256": "19fe3b28093e718d8bec2f5a02d25330dd6c2f5674de68eb008f219e9ccd7242"
+    },
+    {
+      "path": "gaokao-english/generated-methods.yaml",
+      "previous_sha256": "9b17c10d14c1442dee63f4c51f0a24fa493358624e84e055a52ab64ad9de86a4",
+      "next_sha256": "04c63fd91985e5b062ae6724a9e39be7200e7497a77b45885aa46689fe2b1a57"
+    },
+    {
+      "path": "gaokao-english/references/cloze.md",
+      "previous_sha256": "fddf21ba17e8a5d3bcb90a7281896fbd44bd7d532b6780a375303ebe8d9211ba",
+      "next_sha256": "e07c42938f8beacf42ae44c2b5995bb234059a863922491b378be047978132dd"
+    },
+    {
+      "path": "gaokao-english/references/course-evidence.md",
+      "previous_sha256": "8fc17e35d454a7d1665ec616359072bc33a6c120ac2612d84c359a898085e9e3",
+      "next_sha256": "c0dc49422401163523f76f241ff8f2e329ffe4acd537d5ed30bdd795425580fe"
+    },
+    {
+      "path": "gaokao-english/references/delivery-contract.md",
+      "previous_sha256": "61aa9a84bf743932f4073ae93dba9db37ef9823851d04b78eaeb36b9e74a02f4",
+      "next_sha256": "446e61e28a93e41fc01c513aef9600f041dfa3a30133909f41593810d4233453"
+    },
+    {
+      "path": "gaokao-english/references/evidence-gaps.md",
+      "previous_sha256": "48e405dd4a42134f74d54018da5ec222bdf13b4cc4ef576a00e0c6b533eda520",
+      "next_sha256": "98f97e7cb9d9da15b5c215923a94cce932cb6a28841534907c7e20efe465cfdd"
+    },
+    {
+      "path": "gaokao-english/references/lesson-review.md",
+      "previous_sha256": "ac9e12b3f87e64c8212caa87316ae0822486199f8765ebd30aa750bbe2716bfa",
+      "next_sha256": "d1e760ed1f2363bd7b0e096a3b223ea95d966470d052d24be92ea0ce49527e1f"
+    },
+    {
+      "path": "gaokao-english/references/listening.md",
+      "previous_sha256": "c20af004ed2ea287146a32d76fb366c228c5e76d53da1b2d2a30de0afaba34d6",
+      "next_sha256": "f5aaa08c446acf8bd11e1acd10baeabe42b02466a268cc8a777df1c4c69f1d36"
+    },
+    {
+      "path": "gaokao-english/references/passage-lesson.md",
+      "previous_sha256": "4ac63c0197e6c6999d9b0595804d24d20836840930343bb9141c119eee4337c6",
+      "next_sha256": "a57ea66a8f274349947295ffae57da44f19d536f00c928d873828dbce70b2309"
+    },
+    {
+      "path": "gaokao-english/references/reading-comprehension.md",
+      "previous_sha256": "83559f667eb262351dc6ba90818725f1f517a1969a888bb18b831f403e3818dd",
+      "next_sha256": "d0a1894fb355577d5310f0355273acb27ba82f9b0fb91512b115e2191303ef4b"
+    },
+    {
+      "path": "gaokao-english/references/router.md",
+      "previous_sha256": "61b70e95a09dbcbd9bf2701366ef10ef026ca505c208f323b72b4506a818e732",
+      "next_sha256": "121f89b6ba87c3618b6b67c950215202eae2cd46a7a7a515209a1cfc11beec2a"
+    },
+    {
+      "path": "gaokao-english/references/seven-five.md",
+      "previous_sha256": "6beebb8d0e32297e1ab7611ffbf86a378d4ad690c0604baafe1584804d44b089",
+      "next_sha256": "229724a7242ebc68e565386acc69eb10368b893efe03aba24bd4192768a97f58"
+    },
+    {
+      "path": "gaokao-grammar-fill/SKILL.md",
+      "previous_sha256": "914f9ba17d62a927b4c946ae8ebac8afbc3b821d70abb3be6fe9ebd0b56084c4",
+      "next_sha256": "d5082b8db0a997ca0e705338e6a12c6f721bba0fe1ed630ad0bc2e429afadcd6"
+    },
+    {
+      "path": "gaokao-grammar-fill/generated-contract.md",
+      "previous_sha256": "ebeb3d4f99f0ec58ca74b73f12a3a2b2aa1a3e47b0b7ebf213a4933098e300c5",
+      "next_sha256": "5f979ae2cb2db37a6f285fe5ca4b53f7d96ca1a1bfdf1b61999eea261448c07d"
+    },
+    {
+      "path": "gaokao-grammar-fill/generated-course-identities.yaml",
+      "previous_sha256": null,
+      "next_sha256": "19fe3b28093e718d8bec2f5a02d25330dd6c2f5674de68eb008f219e9ccd7242"
+    },
+    {
+      "path": "gaokao-grammar-fill/generated-methods.yaml",
+      "previous_sha256": "2f03004ebeadc5de2da1b1002ebff32f541db6d84c84f9a8a1de4bb96d678287",
+      "next_sha256": "417fbb76d86d79c932f90d03a21c0493b623891bd69fbf313467d5ec0c7631bf"
+    },
+    {
+      "path": "gaokao-grammar-fill/references/course-evidence.md",
+      "previous_sha256": "feab1810a3788a2659633cc78f82fdb5d9d3ed52b9908edf9fe8f5b0ca751ae5",
+      "next_sha256": "0892998bbb1dc59f2d420fcfb16573d4d81c5907041dfe4d14bfb7900b72c954"
+    },
+    {
+      "path": "gaokao-grammar-fill/references/grammar-fill.md",
+      "previous_sha256": "b1ff451d8a01ae4c799ad60b4f47132e2dec4235c5acacd03582de63ab838148",
+      "next_sha256": "ad2629ded0feaa1f0aa2ee297698fdb388e2016cc84e5a1e8b947db3b7f8b0de"
+    },
+    {
+      "path": "gaokao-grammar-fill/references/grammar-navigation.md",
+      "previous_sha256": "6a04b914c6e9c6415e349df5a21ccb756853399cc4761f79731bdb3fb36e1c1e",
+      "next_sha256": "3c0fb7a59b496b35ab3d1713e59dc4bc95a70e2d851da4779764f1000fcbe802"
+    },
+    {
+      "path": "gaokao-grammar-fill/references/lesson-review.md",
+      "previous_sha256": "ac9e12b3f87e64c8212caa87316ae0822486199f8765ebd30aa750bbe2716bfa",
+      "next_sha256": "d1e760ed1f2363bd7b0e096a3b223ea95d966470d052d24be92ea0ce49527e1f"
+    },
+    {
+      "path": "gaokao-grammar-fill/references/method-application-example.md",
+      "previous_sha256": "b31cc2459f048403875a2d4c1912849c6008928e515f7ebddfea76e5c5155753",
+      "next_sha256": "a98e5db8428b8e08669399ebaf22e19c5951e04c303617a72f43ada90e8239f9"
+    },
+    {
+      "path": "gaokao-grammar-fill/references/objective-revision.md",
+      "previous_sha256": "135f45929404a3f77aa29336b2df8a1d7dd81ee3595c4d98029fbbea0a1345fa",
+      "next_sha256": "c79398344582014d7c63733721707d370684553212a25b7c143556f013290334"
+    },
+    {
+      "path": "gaokao-grammar-fill/references/passage-lesson.md",
+      "previous_sha256": "4ac63c0197e6c6999d9b0595804d24d20836840930343bb9141c119eee4337c6",
+      "next_sha256": "a57ea66a8f274349947295ffae57da44f19d536f00c928d873828dbce70b2309"
+    },
+    {
+      "path": "gaokao-objective/SKILL.md",
+      "previous_sha256": "7d4d25737c931c5705d8c4fb4a79f51312cc1b7e70649d465400fd4d3156ca84",
+      "next_sha256": "ab7aa8a4430e8a1fc438cacdcf2fd17747fe3bc88598cfe06ecfd69b31254682"
+    },
+    {
+      "path": "gaokao-objective/generated-contract.md",
+      "previous_sha256": "a79587408955bf5b20855df54f2df967910af16827bb58d02deca74722e359b1",
+      "next_sha256": "9fb9e1b224cd39ba5de486ac8d104307ee1efd29e3c46766d137cfb439e7da87"
+    },
+    {
+      "path": "gaokao-objective/generated-course-identities.yaml",
+      "previous_sha256": null,
+      "next_sha256": "19fe3b28093e718d8bec2f5a02d25330dd6c2f5674de68eb008f219e9ccd7242"
+    },
+    {
+      "path": "gaokao-objective/generated-methods.yaml",
+      "previous_sha256": "9b17c10d14c1442dee63f4c51f0a24fa493358624e84e055a52ab64ad9de86a4",
+      "next_sha256": "04c63fd91985e5b062ae6724a9e39be7200e7497a77b45885aa46689fe2b1a57"
+    },
+    {
+      "path": "gaokao-objective/references/cloze.md",
+      "previous_sha256": "fddf21ba17e8a5d3bcb90a7281896fbd44bd7d532b6780a375303ebe8d9211ba",
+      "next_sha256": "e07c42938f8beacf42ae44c2b5995bb234059a863922491b378be047978132dd"
+    },
+    {
+      "path": "gaokao-objective/references/course-evidence.md",
+      "previous_sha256": "8fc17e35d454a7d1665ec616359072bc33a6c120ac2612d84c359a898085e9e3",
+      "next_sha256": "c0dc49422401163523f76f241ff8f2e329ffe4acd537d5ed30bdd795425580fe"
+    },
+    {
+      "path": "gaokao-objective/references/delivery-contract.md",
+      "previous_sha256": "61aa9a84bf743932f4073ae93dba9db37ef9823851d04b78eaeb36b9e74a02f4",
+      "next_sha256": "446e61e28a93e41fc01c513aef9600f041dfa3a30133909f41593810d4233453"
+    },
+    {
+      "path": "gaokao-objective/references/evidence-gaps.md",
+      "previous_sha256": "48e405dd4a42134f74d54018da5ec222bdf13b4cc4ef576a00e0c6b533eda520",
+      "next_sha256": "98f97e7cb9d9da15b5c215923a94cce932cb6a28841534907c7e20efe465cfdd"
+    },
+    {
+      "path": "gaokao-objective/references/lesson-review.md",
+      "previous_sha256": "ac9e12b3f87e64c8212caa87316ae0822486199f8765ebd30aa750bbe2716bfa",
+      "next_sha256": "d1e760ed1f2363bd7b0e096a3b223ea95d966470d052d24be92ea0ce49527e1f"
+    },
+    {
+      "path": "gaokao-objective/references/listening.md",
+      "previous_sha256": "c20af004ed2ea287146a32d76fb366c228c5e76d53da1b2d2a30de0afaba34d6",
+      "next_sha256": "f5aaa08c446acf8bd11e1acd10baeabe42b02466a268cc8a777df1c4c69f1d36"
+    },
+    {
+      "path": "gaokao-objective/references/passage-lesson.md",
+      "previous_sha256": "4ac63c0197e6c6999d9b0595804d24d20836840930343bb9141c119eee4337c6",
+      "next_sha256": "a57ea66a8f274349947295ffae57da44f19d536f00c928d873828dbce70b2309"
+    },
+    {
+      "path": "gaokao-objective/references/reading-comprehension.md",
+      "previous_sha256": "83559f667eb262351dc6ba90818725f1f517a1969a888bb18b831f403e3818dd",
+      "next_sha256": "d0a1894fb355577d5310f0355273acb27ba82f9b0fb91512b115e2191303ef4b"
+    },
+    {
+      "path": "gaokao-objective/references/router.md",
+      "previous_sha256": "61b70e95a09dbcbd9bf2701366ef10ef026ca505c208f323b72b4506a818e732",
+      "next_sha256": "121f89b6ba87c3618b6b67c950215202eae2cd46a7a7a515209a1cfc11beec2a"
+    },
+    {
+      "path": "gaokao-objective/references/seven-five.md",
+      "previous_sha256": "6beebb8d0e32297e1ab7611ffbf86a378d4ad690c0604baafe1584804d44b089",
+      "next_sha256": "229724a7242ebc68e565386acc69eb10368b893efe03aba24bd4192768a97f58"
+    },
+    {
+      "path": "gaokao-writing/SKILL.md",
+      "previous_sha256": "02110c1831941bc282c7c04dae181f0f66b9e53d6c1847edb4fecb72bbab36bf",
+      "next_sha256": "31165626252c7b79602d43bc959bbf6ccba2cc9578ab1d08f6e5f58c25f69e40"
+    },
+    {
+      "path": "gaokao-writing/generated-contract.md",
+      "previous_sha256": "fd43a55880e94ab4c7563cd2c5f8670fbd266bad504fbaf051a3752ce3914497",
+      "next_sha256": "37716178416af83c7a37e7548d523cf9df6509f6fc651d8752fd3373a75fa82b"
+    },
+    {
+      "path": "gaokao-writing/generated-course-identities.yaml",
+      "previous_sha256": null,
+      "next_sha256": "19fe3b28093e718d8bec2f5a02d25330dd6c2f5674de68eb008f219e9ccd7242"
+    },
+    {
+      "path": "gaokao-writing/generated-methods.yaml",
+      "previous_sha256": "c1234c758aa0d7a936c04b9b89f1d22dc2a2244c7a0f0bee6e7ea5b77e76cb57",
+      "next_sha256": "34be470973818a389c91dbabae3352b40773fd3fd78d4cafc2d4728ff408a2d4"
+    },
+    {
+      "path": "gaokao-writing/references/application-writing-and-correction.md",
+      "previous_sha256": "1bb8f9c2eece155a531efaf653e29ee79d515f0a7a4eb36f480bfdec9b178192",
+      "next_sha256": "d8d89b6a3aed948c79bf142651ee96d4c17bd0aeeaaed5775220cb37f9895493"
+    },
+    {
+      "path": "gaokao-writing/references/continuation-writing-and-correction.md",
+      "previous_sha256": "3149bb08249e3c8dce7f7b035bd2162d6b0ff02f6d8d19bbda1b054acaf9409b",
+      "next_sha256": "27cc1e82d7856b9930d1f344963dfdf6ae6b8395ca7fff49f7465436ec926041"
+    },
+    {
+      "path": "gaokao-writing/references/writing-review.md",
+      "previous_sha256": "b9519ff3e530030b04bf5b016bb3ddae780d51a628b928c3b8f9579bced6ed95",
+      "next_sha256": "870f3a5ceffde0ebe7d6cd32b05dad2ca0527a7711c88dd6ef0729f9c79d0457"
+    },
+    {
+      "path": "method-registry/anti-rules.yaml",
+      "previous_sha256": "9dd4bd77d38582eef6618721f8bb6c42bdaa2e74fe704f1996ea84bbc0ea5e1b",
+      "next_sha256": "7bd89a2cb16eb340ce10b445d999cb12d54bb07ff66f565da1fd7755c8ddd065"
+    },
+    {
+      "path": "method-registry/application-writing.yaml",
+      "previous_sha256": "7d6dcf42d821a0c0935d272a463ab672cf5652424dec7b042af6ec3b61b15758",
+      "next_sha256": "2ac3deb9493a0bd2950f89f16bfd6de32d2c8d5f33edcb2709294635f8c6c112"
+    },
+    {
+      "path": "method-registry/cloze.yaml",
+      "previous_sha256": "107daffd8b8d275b08902cc10138f09db0aba4f8891b1c780289d808990c8d99",
+      "next_sha256": "26e55c021f776ea8ce886610e5ad87b67b73fa315530f143a1fffd07e9185652"
+    },
+    {
+      "path": "method-registry/continuation-writing.yaml",
+      "previous_sha256": "463901dd6aabb9ecda605c22f2b447ab7ddf2d83828f23049a87dfc7db1ed516",
+      "next_sha256": "3bd7c353091f8bba2ab664871bf0b3890d009ecd3ed0488448f8f4c3338c2656"
+    },
+    {
+      "path": "method-registry/grammar-tree.yaml",
+      "previous_sha256": "9b7b5dffa80f42440d31a66379f72261bcfae0980d486e7f476207b0cbf87892",
+      "next_sha256": "51db794947a77233ae6664f45dc908643c2f2d84c05953c3c8005121c86d66f8"
+    },
+    {
+      "path": "method-registry/grammar.yaml",
+      "previous_sha256": "2f03004ebeadc5de2da1b1002ebff32f541db6d84c84f9a8a1de4bb96d678287",
+      "next_sha256": "68cbfed4d3f5b6d93d28fd9fe89e9aaaf9c8b6f352fc9efb357981d2ae68adc1"
+    },
+    {
+      "path": "method-registry/reading.yaml",
+      "previous_sha256": "115dd2ee823dc9d96309696ccc525d59dbfbc0c02835184378dc8437882acdb9",
+      "next_sha256": "0a5a05a2e951c420aaa75177eef7343aec9442f5c6b7511980603a761ae62ed7"
+    },
+    {
+      "path": "method-registry/registry.yaml",
+      "previous_sha256": "2009cb297a7e522d7b94c3aea45abcd1d4420cc526b5be1a42331e7a25c655f4",
+      "next_sha256": "084f9ca831eb5565f4c4d7a604d8ecb25d10a71f03918948191af3cd5a0a49f8"
+    },
+    {
+      "path": "method-registry/seven-five.yaml",
+      "previous_sha256": "91e2cb0a93ddba61e7bdeb84db88f2d12a4ecd9a3af1b847d1889924b54baee5",
+      "next_sha256": "8aa599990659f99862ea6b8016fbe8cb92b0614860ff66f7b485251866e76c62"
+    },
+    {
+      "path": "method-registry/source-risks.yaml",
+      "previous_sha256": "0fdff824aae6ae6c893c9c215576a17dff39825cf3d298825f48b5f5a058380f",
+      "next_sha256": "027e1f7b60a4c1cc6117a71bbba43049eaa0fb26fcf8d9fd1356b67d8375ef61"
+    },
+    {
+      "path": "method-registry/source-sections.yaml",
+      "previous_sha256": "4f4625bb4f7b86cfc0156b54b7a8d0731da1a426b8ad924b764e9003a4e4b8d4",
+      "next_sha256": "5661b47035c60baeed28e57e02483be670bde439141140e464017c9018de4fca"
+    },
+    {
+      "path": "method-registry/symptom-cues.yaml",
+      "previous_sha256": "aa402ce9a48456e474510601e614760004211ad6e74f076826166f1821190029",
+      "next_sha256": "07bca967d4e82cfd8bdf72448bf8a7246633b721540f05ed336c134918c857da"
+    },
+    {
+      "path": "provenance/ANSWER/agents/gaokao-grammar-fill.md",
+      "previous_sha256": "1c0436e2d4fda0fe07d5e5c56161710269db4d1200c9f60c1db04ffb4f6df878",
+      "next_sha256": "1c0436e2d4fda0fe07d5e5c56161710269db4d1200c9f60c1db04ffb4f6df878"
+    },
+    {
+      "path": "provenance/ANSWER/agents/gaokao-objective.md",
+      "previous_sha256": "299428eeba7526f22dae564905b24de5d4b586bde5703b4aed518ca34721bedf",
+      "next_sha256": "299428eeba7526f22dae564905b24de5d4b586bde5703b4aed518ca34721bedf"
+    },
+    {
+      "path": "provenance/ANSWER/agents/gaokao-writing.md",
+      "previous_sha256": "de5f81ec944e59b5342c219eb9bb9c1cbf35d1994a812d59d75dd0a177a91c9e",
+      "next_sha256": "de5f81ec944e59b5342c219eb9bb9c1cbf35d1994a812d59d75dd0a177a91c9e"
+    },
+    {
+      "path": "provenance/ANSWER/gaokao-english/SKILL.md",
+      "previous_sha256": "af44ada25049354e8a5edfbe3b9da2698a47ac8014aeb39bf1a3cbe2b100fdf5",
+      "next_sha256": "56868efa2404288e4ab18e64bc03dfb4d66f1a0eb058968b1ebbe3ccbee02926"
+    },
+    {
+      "path": "provenance/ANSWER/gaokao-english/references/cloze.md",
+      "previous_sha256": "fddf21ba17e8a5d3bcb90a7281896fbd44bd7d532b6780a375303ebe8d9211ba",
+      "next_sha256": "e2135bf6605a14adb2d99804d41be8db136ef780857a16829c207b72d6ddabb4"
+    },
+    {
+      "path": "provenance/ANSWER/gaokao-english/references/course-evidence.md",
+      "previous_sha256": "8fc17e35d454a7d1665ec616359072bc33a6c120ac2612d84c359a898085e9e3",
+      "next_sha256": "78b7636dd168ebc701cd7eeb7f87f6a77c32e0eb1805eb86a56b2365a7e81143"
+    },
+    {
+      "path": "provenance/ANSWER/gaokao-english/references/delivery-contract.md",
+      "previous_sha256": "61aa9a84bf743932f4073ae93dba9db37ef9823851d04b78eaeb36b9e74a02f4",
+      "next_sha256": "05f48808abf662a83b50c38b342e1db3f9ce5b84edd8fde7de387059ef0c44d2"
+    },
+    {
+      "path": "provenance/ANSWER/gaokao-english/references/evidence-gaps.md",
+      "previous_sha256": "48e405dd4a42134f74d54018da5ec222bdf13b4cc4ef576a00e0c6b533eda520",
+      "next_sha256": "e79832cdff169619469e343b2b51c6b55cfc4015896fd6c3ed4e03a3cac518cf"
+    },
+    {
+      "path": "provenance/ANSWER/gaokao-english/references/listening.md",
+      "previous_sha256": "c20af004ed2ea287146a32d76fb366c228c5e76d53da1b2d2a30de0afaba34d6",
+      "next_sha256": "6056701c9b0aab1fdd2eb9b26dcb6a4c5971822d0ba0561028ac1565d59903ff"
+    },
+    {
+      "path": "provenance/ANSWER/gaokao-english/references/reading-comprehension.md",
+      "previous_sha256": "83559f667eb262351dc6ba90818725f1f517a1969a888bb18b831f403e3818dd",
+      "next_sha256": "d48d3f361d47fc5fdd2d02bdb969e49959b8143cd702301f72d110e51300f938"
+    },
+    {
+      "path": "provenance/ANSWER/gaokao-english/references/router.md",
+      "previous_sha256": "61b70e95a09dbcbd9bf2701366ef10ef026ca505c208f323b72b4506a818e732",
+      "next_sha256": "ac7ab78436b040f927bce2ee4a7d88e28134b399a0172433df30ce44eebf6675"
+    },
+    {
+      "path": "provenance/ANSWER/gaokao-english/references/seven-five.md",
+      "previous_sha256": "6beebb8d0e32297e1ab7611ffbf86a378d4ad690c0604baafe1584804d44b089",
+      "next_sha256": "11dfb9adb5da11cbb3059c0f420bdcdae6fbeb6b42826c1cedd7b540f08af0a1"
+    },
+    {
+      "path": "provenance/ANSWER/gaokao-grammar-fill/SKILL.md",
+      "previous_sha256": "4d7d0e26e6007efba8fb3aca0dbe3bc75b8b78d15b14757fa4a80a7e6460b048",
+      "next_sha256": "4d7d0e26e6007efba8fb3aca0dbe3bc75b8b78d15b14757fa4a80a7e6460b048"
+    },
+    {
+      "path": "provenance/ANSWER/gaokao-grammar-fill/references/course-evidence.md",
+      "previous_sha256": "feab1810a3788a2659633cc78f82fdb5d9d3ed52b9908edf9fe8f5b0ca751ae5",
+      "next_sha256": "feab1810a3788a2659633cc78f82fdb5d9d3ed52b9908edf9fe8f5b0ca751ae5"
+    },
+    {
+      "path": "provenance/ANSWER/gaokao-grammar-fill/references/grammar-fill.md",
+      "previous_sha256": "b1ff451d8a01ae4c799ad60b4f47132e2dec4235c5acacd03582de63ab838148",
+      "next_sha256": "b1ff451d8a01ae4c799ad60b4f47132e2dec4235c5acacd03582de63ab838148"
+    },
+    {
+      "path": "provenance/ANSWER/gaokao-grammar-fill/references/method-application-example.md",
+      "previous_sha256": "b31cc2459f048403875a2d4c1912849c6008928e515f7ebddfea76e5c5155753",
+      "next_sha256": "b31cc2459f048403875a2d4c1912849c6008928e515f7ebddfea76e5c5155753"
+    },
+    {
+      "path": "provenance/ANSWER/gaokao-grammar-fill/references/objective-revision.md",
+      "previous_sha256": "135f45929404a3f77aa29336b2df8a1d7dd81ee3595c4d98029fbbea0a1345fa",
+      "next_sha256": "135f45929404a3f77aa29336b2df8a1d7dd81ee3595c4d98029fbbea0a1345fa"
+    },
+    {
+      "path": "provenance/ANSWER/gaokao-grammar-fill/scripts/check_lesson.py",
+      "previous_sha256": "751a00d9e663603a9478aa1f52bcfa37db909f8d705b6652c6a53931f477e7a2",
+      "next_sha256": "751a00d9e663603a9478aa1f52bcfa37db909f8d705b6652c6a53931f477e7a2"
+    },
+    {
+      "path": "provenance/ANSWER/gaokao-writing/SKILL.md",
+      "previous_sha256": "5d6f50b52b6c2e612907bf24821aacb6012330d661ccb59439b67098a8f693e3",
+      "next_sha256": "5d6f50b52b6c2e612907bf24821aacb6012330d661ccb59439b67098a8f693e3"
+    },
+    {
+      "path": "provenance/ANSWER/gaokao-writing/references/application-writing-and-correction.md",
+      "previous_sha256": "1bb8f9c2eece155a531efaf653e29ee79d515f0a7a4eb36f480bfdec9b178192",
+      "next_sha256": "3cb6331b4adf5fae7dfc1ab900eb4a2074879219aa7f907b88137e28ffa88155"
+    },
+    {
+      "path": "provenance/ANSWER/gaokao-writing/references/continuation-writing-and-correction.md",
+      "previous_sha256": "3149bb08249e3c8dce7f7b035bd2162d6b0ff02f6d8d19bbda1b054acaf9409b",
+      "next_sha256": "d2a9c364d67f484ca9b752fc53f53754f2d407e45020f6043d6abaa9d97f7dc8"
+    },
+    {
+      "path": "provenance/manifest.yaml",
+      "previous_sha256": "d87407f30cf4d1bcdb625c915ec0d602a935783b97d3fcac2b61885b8814ca73",
+      "next_sha256": "0dc5315cc24b09cbc3db61f1fa5ca07231cb893d5a9400d15d350b9ac42d4cc7"
+    },
+    {
+      "path": "references/anti-rules.md",
+      "previous_sha256": "f85071ae2b6cbb7306ef7faa64407b6215876dc2ad3fd75f5ce3df544795541d",
+      "next_sha256": "17566a8e705f9589462c4c66622ec5c51d959a3fd0c1db50d7992a9b87cfed38"
+    },
+    {
+      "path": "references/anti-rules.yaml",
+      "previous_sha256": "9dd4bd77d38582eef6618721f8bb6c42bdaa2e74fe704f1996ea84bbc0ea5e1b",
+      "next_sha256": "78018f9e66fefed29d73f36922d8fe5d2c99966104497045f9d9a6be2f4dd549"
+    },
+    {
+      "path": "references/grammar-navigation.md",
+      "previous_sha256": "6a04b914c6e9c6415e349df5a21ccb756853399cc4761f79731bdb3fb36e1c1e",
+      "next_sha256": "3c0fb7a59b496b35ab3d1713e59dc4bc95a70e2d851da4779764f1000fcbe802"
+    },
+    {
+      "path": "references/method-roles.md",
+      "previous_sha256": "ace79a86a6e69d844db4667e8d89d43b53beedb7896d1f2ddaddb2da89c4ce89",
+      "next_sha256": "5350335c8175169d8afeaf8fe5625816887359e89946dcf4a0e5672ca3549635"
+    },
+    {
+      "path": "references/student-symptoms.md",
+      "previous_sha256": "b95c91c06ceb7246c15cc9c83a6d16abd5e2c3619d434ff9003441670fbbebba",
+      "next_sha256": "2dcf765e35be14d7fa4a82113031dee32cb75a2b4dbeacc211bfea36f1f68565"
+    },
+    {
+      "path": "references/student-symptoms.yaml",
+      "previous_sha256": "f59dd76b146e6310b7f3692b2ecd7a8a86f90f41bfc96db3b3679b8661b3d33f",
+      "next_sha256": "a2245ffdc5b7d35eeda516a7ab6912345b3dca1c190c9c3de888a402263fb067"
+    },
+    {
+      "path": "student-guides/A01-作文五检.md",
+      "previous_sha256": "0756cbb43b7bff6b00e69ae3968c5d6419047fabe8e2170133afc4e6ff8e9eb4",
+      "next_sha256": "f106a85a9b3f8cd1a86cd0c2f82ed3ab71417b7e58eda4dd3586ada953f687a6"
+    },
+    {
+      "path": "student-guides/A02-六步成稿.md",
+      "previous_sha256": "45676f0e713de6d4b783652009bc91bbfe5d1c38ebb8fc3f4d89a7cd45ee4cb9",
+      "next_sha256": "1c404add5466e889a8c9c1a01bc56c2b3d9b077e72c9c43da3ddf07e11d45b1b"
+    },
+    {
+      "path": "student-guides/A03-三步造句.md",
+      "previous_sha256": "e5f0a883d5458a5f443568c09d8b3204dd0cd9fa1330ebc40a497e394cadf3a1",
+      "next_sha256": "3a441be3c40b64d8761827c510b8244c364180f0df5de8b842ac0ce41806bafd"
+    },
+    {
+      "path": "student-guides/A04-句块拼接.md",
+      "previous_sha256": "2ac42cdb68fd08034ad200979aba70a472a8c4a723a1a7fe065f0d6dd3392426",
+      "next_sha256": "147e78c5979a4be57fdae70948b96dcfaa84c6da29d42aead0d3df00fd1b1438"
+    },
+    {
+      "path": "student-guides/A05-长句重组.md",
+      "previous_sha256": "03fcc0208f5dfdbb397fd50d5d7bbf843276ae26ab6d6201f58486bc33b4513e",
+      "next_sha256": "0264acd77c8950b2bbd7d7114416a43f64e20ce178cacc5ffaff5a4eac5bb74a"
+    },
+    {
+      "path": "student-guides/A06-对照仿写.md",
+      "previous_sha256": "e417388d06d8d89259d99ec525520eabbe815537f366a56ea5789cdff260fe76",
+      "next_sha256": "b76269cb5db18cf6b733fb87865b7604c820a186f28601dc9d08b66bd1f1c538"
+    },
+    {
+      "path": "student-guides/A07-长句搭积木.md",
+      "previous_sha256": "d6f45dc6b684c9a16004c47dd016ca6538522c013ede09c9ee5b64dbdf9bdcc4",
+      "next_sha256": "3ad1e8c594b6e2868003f67b0f89a94c2a70e330a8908b6fcc4418aea7a27e3b"
+    },
+    {
+      "path": "student-guides/A08-文体骨架.md",
+      "previous_sha256": "20cedee5cc703d5fcff83f55a1528296c8ea762201ce70ce1d8ca4d1d2735c46",
+      "next_sha256": "650712ce91f42e668d5c7b3b8e12930464fcd8d287993ecc14d0187ed32e1ddd"
+    },
+    {
+      "path": "student-guides/A09-应用文评分.md",
+      "previous_sha256": "b0476f3e1ad9420c1d35f7da59e50bc542fb3885c9b5b6f1ddd62c0dd92e0b14",
+      "next_sha256": "83346189fe8404520e92457c9bdd9f6914a46b887c6cea5ae56ae3857f839c76"
+    },
+    {
+      "path": "student-guides/A10-读背仿与训练阶段.md",
+      "previous_sha256": "f63501dfff7b11353cc759fac727a02998de0065b776d1b5d312845461fcd65c",
+      "next_sha256": "de46ede832512a17a260e3c5f6b7f50a2d24f133def1c84f3ee12b955078639e"
+    },
+    {
+      "path": "student-guides/C01-语篇线索链.md",
+      "previous_sha256": "e91ab7abb0faed5516dbf00ff60718adadad9b8cccae70b6b1e75bb424727ec3",
+      "next_sha256": "56abf164912c3a21a4edde797a1787d8860c2003124e323fb17c057fef06a404"
+    },
+    {
+      "path": "student-guides/C02-前后夹击.md",
+      "previous_sha256": "1ba21d75bb1c29a2c76003d287c1733c38c33808fb2cce58d442a9a794b8dde7",
+      "next_sha256": "07304b50e769eca8e114d28466a76892a6b862f246b774f95daac135b715d1fb"
+    },
+    {
+      "path": "student-guides/C03-首句定调.md",
+      "previous_sha256": "00888f1fbf3f40d5c1eedb8168a46d4548cf37c306af940a9359bfae946046db",
+      "next_sha256": "b67e45e366961b1ce0e88a09e9b5814f492c1f5de62122845a3811743ec11e6d"
+    },
+    {
+      "path": "student-guides/C04-词性导航.md",
+      "previous_sha256": "c1b031dbb175229209a591c383daf2529bca6a3b7e7c92e23618bda6b3eb3aaa",
+      "next_sha256": "4189a0c443b4c4d92300b0a0122e68e26d0dcbc49a3c46afb6958e9bcbf1fc87"
+    },
+    {
+      "path": "student-guides/C05-近义落地.md",
+      "previous_sha256": "d226562f02919fb72d864acdcb7b281a884c82325a89ba44df292564ef4b14bf",
+      "next_sha256": "a67910b8fdd975c6c7bbf0312fc146038eacae45a58f0e0052b1b2a0b4e65e1d"
+    },
+    {
+      "path": "student-guides/C06-时间线复原.md",
+      "previous_sha256": "525064c02ff41c286f97529150d3612119f6d553e6d61059f07b736c1f0c6caf",
+      "next_sha256": "e56202064507a6acb171538673264ede49d0fdac738253d1ae3250c4f3f275f4"
+    },
+    {
+      "path": "student-guides/C07-名词回声.md",
+      "previous_sha256": "1adfecf8d01f3a02a91f6c983deff10845b3959b8a7cfaaa834cfa286f885da7",
+      "next_sha256": "ca455dc98d35479c42dbfd36044277a553d33c148ad567212f09fe0e6bdf4005"
+    },
+    {
+      "path": "student-guides/C08-结果反推.md",
+      "previous_sha256": "5f6fa97f70247a9dd20227966f8ae00c73dfc6cd81f872d719818b4f3d949eb1",
+      "next_sha256": "1d4ee6e94e812289686893399ee339aa72c4b080bf74ee9b479d9e45fd308ac7"
+    },
+    {
+      "path": "student-guides/C09-动作串联.md",
+      "previous_sha256": "cd30568e8b7d1958c8760eebbb327741cb1efbb2c1ef1c7dfb1d625bd32c23e4",
+      "next_sha256": "e729f894c6b3371afb5c4fc25e528ef9414c746f8bde6f474726c305986fe810"
+    },
+    {
+      "path": "student-guides/F01-选项三分.md",
+      "previous_sha256": "96debf03da15bb4bec23bfa2d5cf15c3ac58a2d2fc2edf39dda23f967955fd76",
+      "next_sha256": "8b3ac62a6464b8cec7efb92e6991dadeab13ec75049b6a97e894c914a96d7c75"
+    },
+    {
+      "path": "student-guides/F02-句型分组.md",
+      "previous_sha256": "b5a7d21db59a923db03b0bee56e54deea53925305af8b531e534bd39326c09fc",
+      "next_sha256": "00b99c2b5fc786685cdae9a268d36e5136711c2ca65596fa73a952af44e49123"
+    },
+    {
+      "path": "student-guides/F03-主角分组.md",
+      "previous_sha256": "dd42f92c88b8cbc851977fddd0feef54c17ee1c5a60e6a0ffec1cff28c6c9ce5",
+      "next_sha256": "8cd3b1ef6bde30c2b5dabc3128e2d60633d1fe914c610e97c0687372dd1e667d"
+    },
+    {
+      "path": "student-guides/F04-时间分组.md",
+      "previous_sha256": "951e55904c9f514b82aaf6614b25e73b5685abb61010bac6113652c090f3551a",
+      "next_sha256": "4042022576b66fa104c23c9aa41d53ee42af14e4d888527c37820862d84f3dd4"
+    },
+    {
+      "path": "student-guides/F05-段首统领.md",
+      "previous_sha256": "565fb8014952ac937e072548648a988df2b41ede1ea0ffa955a617bebc6d2620",
+      "next_sha256": "bf93730e19af8a6a7e786abe9862a5350ac2658dc4ce97b214753f5fea0b53d9"
+    },
+    {
+      "path": "student-guides/F06-前后呼应.md",
+      "previous_sha256": "c413d903ed293e7daba333530765d8e9f1777405ce3571167f45d496a4422ec0",
+      "next_sha256": "e7344d6dd91611c4c542050abb3e56229670ff09c33829e7ee218d28f946f229"
+    },
+    {
+      "path": "student-guides/F07-关系拼接.md",
+      "previous_sha256": "103de9aefb8ad590cc44a71e77601a0631c076a9acd3d1837076bec8cc597b2e",
+      "next_sha256": "5773affa6115e3b0bb30b9d1bbf898d18a8e31a56e6d148747bc42c5f61f5973"
+    },
+    {
+      "path": "student-guides/F08-情绪同向.md",
+      "previous_sha256": "43dd955803f93ad87572ac61976f7ec12a2c87c9abd44908bcd5e62ac578c895",
+      "next_sha256": "6ca89f1511df3894708ef5118398460f544172686bb51d90284458b8c6f9da78"
+    },
+    {
+      "path": "student-guides/F09-半句补全.md",
+      "previous_sha256": "472b6bf5e00bd2011ce23aefc08b0a270395703834714fceccfc08f8794b008a",
+      "next_sha256": "66562d834d87aea4609d716fc22ce804ed1c955c53dd05bfb921e1daba91a788"
+    },
+    {
+      "path": "student-guides/F10-末轮反查.md",
+      "previous_sha256": "3c87c0531f8bb5ee945000a694b7e4117f528d6aa2f729cbb76bd59095a3aece",
+      "next_sha256": "b66fd09164473eb37d182d1d06695196b233556a934894c0687b58fc5ff65b0a"
+    },
+    {
+      "path": "student-guides/F11-正文闭环.md",
+      "previous_sha256": "83ae890908bb9dd3df612182295b78f9226787ecbd8549788417d42c93316a59",
+      "next_sha256": "c974d6215b273921b90f26a2964d960445fa171b06eccadc46bbe48663bbfc84"
+    },
+    {
+      "path": "student-guides/G01-先判空位.md",
+      "previous_sha256": "3ba72c8bd1d802c48b1e622bca28850c7a970bb1c3da82acf0e4b924eb7f74b9",
+      "next_sha256": "d471504aa6909eb515d89663596c4a1b2daeb06c6cab8f18395a1d6a54b71e15"
+    },
+    {
+      "path": "student-guides/G02-双路分流.md",
+      "previous_sha256": "93987b77be6b02c58cf1d5f291e895ecc15384b288537ca97fb16cdaff8b37da",
+      "next_sha256": "5eb1f2bbf0c2777296ed0e6e3eecb9db64c530506e44623078e69ea21b0989b0"
+    },
+    {
+      "path": "student-guides/G03-限定词落位.md",
+      "previous_sha256": "96d27a5565d9ebbb8deeed21b7e39a7510c6e91697320c527742732c5f0afc82",
+      "next_sha256": "e09b4a9f6945e7623bce967f786836b895cdff638c91d2fa52ef314b8fa97b76"
+    },
+    {
+      "path": "student-guides/G04-指代落位.md",
+      "previous_sha256": "e5c86672e6728b3af3152cda6467cdf3bbd8ef39e15815a40657b310543a900c",
+      "next_sha256": "bbedd520153faf3866a33b4b97db8460d60056c0e065b650b5fdc03f4b496fb5"
+    },
+    {
+      "path": "student-guides/G05-介词看场景.md",
+      "previous_sha256": "7201fc87d5e3e6653797389bae6c9df466da550e8563838797e9bd5f086c2bbb",
+      "next_sha256": "3c60a5ca0e7eb8bbf788d907c528b95a4f169e6cbc75a9f6717832075894181a"
+    },
+    {
+      "path": "student-guides/G06-从句找缺口.md",
+      "previous_sha256": "0a53e796c2d14c790d2ca6bfc0ec6d1380edb205133c9a7ff76c99a25f81a7f8",
+      "next_sha256": "dc6825496dccc7d0c9c5b0968ccb3829d55be9671728e99227f42f0a52e80ea4"
+    },
+    {
+      "path": "student-guides/G07-句间搭桥.md",
+      "previous_sha256": "534e5f653febf299b7241a6e4b5f7fae504390733c0b491599531dcdc40f8dd6",
+      "next_sha256": "51e7297bf4fec5cfca190719b06d10f28f138b522c69522e62e8dcb11a5fc985"
+    },
+    {
+      "path": "student-guides/G08-词性落位.md",
+      "previous_sha256": "f6c092902876f8dd52599f6b30d04f68a2739368e2cb6124942c2591839ff77b",
+      "next_sha256": "6641bd735ab7492a2a1d0cb8e8c59dc1c42f3d425db4ef45ad14cebe6f2a855d"
+    },
+    {
+      "path": "student-guides/G09-名词节点.md",
+      "previous_sha256": "5796c7300e6f0b3eb70b114fe1587b86ea236f3051d03284f9882039d5c256da",
+      "next_sha256": "81b52907cb0d83e13e5664b7045574155bae473c69b1d4210c69ed123e2368b7"
+    },
+    {
+      "path": "student-guides/G10-形副节点.md",
+      "previous_sha256": "555f300026fd40daa3dfdb57834ba9f1d35f4ffd82d492756a88e300344f5806",
+      "next_sha256": "634d83f8d5960bf20b0a22b9d315a560566d28b94622511a39e75f9d5eadeb2e"
+    },
+    {
+      "path": "student-guides/G11-数词节点.md",
+      "previous_sha256": "e55790f30a3aaefe404ab8a18e9465808069d530e9a7aab244923ff04957b093",
+      "next_sha256": "3628ec1c27c4ee6040edbd82ae91ed2af748723f0e21ec73b4733bfbdfd1e0d5"
+    },
+    {
+      "path": "student-guides/G12-动词二分.md",
+      "previous_sha256": "3dc362619264d9a5041c9d0f74ed6bf5b49e7802204f7e3257019667fbdd729b",
+      "next_sha256": "1a3578968778e9e8970077718ece5e7cd354a4aed0ddd5d35d60780c00404af7"
+    },
+    {
+      "path": "student-guides/G13-时态三查.md",
+      "previous_sha256": "8f39f25815ecb3280130612b105dc5f7fe16eda5cb35334694d875bcf44f6760",
+      "next_sha256": "f0ee76e18b8a6887926ea25299d483c756b9a554293ff1ecceb0a413d98d0af5"
+    },
+    {
+      "path": "student-guides/G14-找真主语.md",
+      "previous_sha256": "8b31348c2e2c041adb94f6dc8704455b634eb6164e84d83bbee6d98701e93cfe",
+      "next_sha256": "4dbd8f9a8cf3778bc907a53a886a8e301a924cc09622b863646123081a38f5f3"
+    },
+    {
+      "path": "student-guides/G15-非谓语三轴.md",
+      "previous_sha256": "54065e368c962d47fb0f026e4568eace89f63c5e5fd6f429604c596ca2d63299",
+      "next_sha256": "d16c012c6c3e3814cc50f75394582cfdbd0b592adaa615d522cfc70334a2987b"
+    },
+    {
+      "path": "student-guides/G16-找动作主人.md",
+      "previous_sha256": "455872095c4b17d9be944026a3527683893e58c9e5297b53adf2bf283a2c04ba",
+      "next_sha256": "e08d7913afc85133def256b273df70f2704ebfe8006987ef9e7e3c22d2473bca"
+    },
+    {
+      "path": "student-guides/G17-长句脱壳.md",
+      "previous_sha256": "069ed064688623778ce14225d8424ee4246dc6bd5f11e155c8c5624e7933ddea",
+      "next_sha256": "3c646212dddb61b13ded8d95ef1b67004989c33b3904072bd3fda1329081c15b"
+    },
+    {
+      "path": "student-guides/G18-考点重复反查.md",
+      "previous_sha256": "b6073856138a35bad8fc6ea1b22dfa5fa2e741282976da8350cb93d53c6ab327",
+      "next_sha256": "151d3f0043578549a6e8da199387fa949ff46673452d74319f8b0de91563c6f8"
+    },
+    {
+      "path": "student-guides/G19-变形次数反查.md",
+      "previous_sha256": "62fd97872e76c3ab5a49d2f230e0b3204cf1c379c4da3357fe17a4b0d9d85c42",
+      "next_sha256": "82e5efd38e676639616860766972df40cbc1953738b23a2f6c6907246c984de1"
+    },
+    {
+      "path": "student-guides/R01-选项加戏.md",
+      "previous_sha256": "73adb0923ba2dc4b648b5fba7064d6467f0d17b80bb95ba6aa7b2b45b0f43470",
+      "next_sha256": "9c5496fb1d7985222363962f05b8063048d6bb67583caca611ef5d5c1ba1a5f5"
+    },
+    {
+      "path": "student-guides/R02-谁干的陷阱.md",
+      "previous_sha256": "b60a20729d5a46436f9e6805726ed249ba1dce5cee57c2099afda1cce2bead74",
+      "next_sha256": "f72311026090af196d8d58983da471ce9321087af921a19bf884278959d19629"
+    },
+    {
+      "path": "student-guides/R03-换词不换义.md",
+      "previous_sha256": "e22398377c22b92f01409f0b504889c1187506ed637dbd5ef8e008f9de740496",
+      "next_sha256": "83252590658eafb42d66c918e5c5426ed79b1dae351568b386d4966f083e2c16"
+    },
+    {
+      "path": "student-guides/R04-比较别偷换.md",
+      "previous_sha256": "9c856371e0360abe81034048370e209317b28c021754c123987ebb2685b01706",
+      "next_sha256": "8085a9d318e78994220d1c223a7fab9cf64498087f55cf4ee8dbb5b795c48d94"
+    },
+    {
+      "path": "student-guides/R05-因果别选反.md",
+      "previous_sha256": "1daaeb96a3354bde472186909b957bf80eaf3c9b647dde82f0be201ebf87e2db",
+      "next_sha256": "ff534019d0f611af134fbccc74ffce5062322d14e0803e44ed530eeace21fe69"
+    },
+    {
+      "path": "student-guides/R06-主旨缺块.md",
+      "previous_sha256": "af174be836bd57b63114d0aa20dd23458c638349004442ce2727e0b67292fb91",
+      "next_sha256": "c55c3317bdbf77158806d679a77469283c285a6e3d902962a67bace72eafd164"
+    },
+    {
+      "path": "student-guides/R07-并列打包.md",
+      "previous_sha256": "af77c4cf81b5801551e38742f3da1bb3d42429376ef2e3d5c2b61a2c5cb3e5d4",
+      "next_sha256": "2baa5ca1f88c62549a8ee143ea0a53bcc4115179e048b1497224785a71d03c82"
+    },
+    {
+      "path": "student-guides/R08-例子只作证.md",
+      "previous_sha256": "3d53df44fd01593d81f5112ebabef7daf37027ed497f90268a7d06f3664f7e1c",
+      "next_sha256": "f91d9b4d9f9758268632ce8d488f93ccfc5b2cc0d4a9f2250740840eae382b5b"
+    },
+    {
+      "path": "student-guides/R09-三步压文.md",
+      "previous_sha256": "61a8097249b19102541ba57c2c7c84cedb8a5f959169ddd9ff7f75123a082966",
+      "next_sha256": "68e302fb3ebbddff90f9228bfd6dd9a5fda720ba1b528b6f6d19bde262966fad"
+    },
+    {
+      "path": "student-guides/R10-代词回填.md",
+      "previous_sha256": "53f50dc8256492273118aa5da9c19711d609680fe462145bb0dae34dc3859393",
+      "next_sha256": "a4cb1aafe162a327aefff2d9fbf4182c3fff47e1f251af448cf71b1414098ebb"
+    },
+    {
+      "path": "student-guides/R11-长句拆骨.md",
+      "previous_sha256": "0302aba75baf29196300254aadb0b1e00b5305e580d720ba6d5ac5d85c501e0b",
+      "next_sha256": "b7307c0ed4e1e7bd3210153f6e67c9997af261db08dd5f76a5f71e54162d6eda"
+    },
+    {
+      "path": "student-guides/R12-关键词追踪.md",
+      "previous_sha256": "a51eedb1b54c38683c16fde5c5648ba1e29737b346fd665f551521f50b64c4f8",
+      "next_sha256": "5817b36061a09a2ad664704e406443a03c9da79fac08cd0f646a34f5e943f628"
+    },
+    {
+      "path": "student-guides/R13-名词追踪.md",
+      "previous_sha256": "dc909e48dd66f2b4249eed72927af3c7460d0a56892d28fd1792e3c57d88962a",
+      "next_sha256": "ed038ed0163619affd328b696ab3b1a163006769b7cea494c8d4a8a1d4ee55e5"
+    },
+    {
+      "path": "student-guides/R14-顺序锁区.md",
+      "previous_sha256": "1753bbb149370464ab69686fd825c4546cd7f246bbdf2ae8de585f1cfd736075",
+      "next_sha256": "19e727d66f523ffb6a2c320c1f03ebe242d9ccb2ba82f0f9afe4e206566dc1d9"
+    },
+    {
+      "path": "student-guides/R15-动词定关系.md",
+      "previous_sha256": "8dea7aee9eaf705a927b21cb0a6d9e4d9a7c2980d94b307a8b0561070582a07f",
+      "next_sha256": "5ac38138957681607b30f1e60929494c46c889f4e2928d24d612f2847eb2c313"
+    },
+    {
+      "path": "student-guides/R16-主题锁定.md",
+      "previous_sha256": "4a13b58442eaf9a1a12a064732cd0f981e09c3d27fa4c442db5612603b479836",
+      "next_sha256": "8da4dbcc95cf26b0d49b6e340f37a04957a9198ad588323195d717e00cff9a11"
+    },
+    {
+      "path": "student-guides/R17-前后补证.md",
+      "previous_sha256": "e840b1a25adaf10930b54f976c27dc48e6743e06c19b961d9faa532a8de7769e",
+      "next_sha256": "627be30150e41cab4e63068137d99cd35a47f97d45928de59ee0b35be4ca3e19"
+    },
+    {
+      "path": "student-guides/W01-五步锁剧情.md",
+      "previous_sha256": "37e69cf0c775f9c32a9a242faf15d4d5ba0bdce2e9b0cf5c4d1c786b83c20c4a",
+      "next_sha256": "9fda3d2d6f2cc89c50b21cc3b65cee5dcddd950947e79af8b199f39d1f4ab942"
+    },
+    {
+      "path": "student-guides/W02-十句五锚.md",
+      "previous_sha256": "d6c4b63aca5e76c5cdb1d2fb3c73ed013621a5df57df8a7a6b18ab695cc7c85e",
+      "next_sha256": "04b5e3605c678425522becd1a9763254a80139f85fca33819899f818069347cb"
+    },
+    {
+      "path": "student-guides/W03-剧情四格.md",
+      "previous_sha256": "02dffbb87b7e87a59d8dc1641b2604692b567d933be68da3ed1924146cf3d17a",
+      "next_sha256": "25f407d3143bb468f6ef3b1b93ba5aab9e3e6ba9848400b65f0a125c964bbb3d"
+    },
+    {
+      "path": "student-guides/W04-首句找缺口.md",
+      "previous_sha256": "17a4ea9819d1144e3c3a58ef052b3bb62dba3255c02fc85fd8e293f7be88cbc5",
+      "next_sha256": "98c76e3e8a15c9fa74142c483f6c71a89e17a2f0065e9a83805cfaa1bb430ce1"
+    },
+    {
+      "path": "student-guides/W05-动作拆链.md",
+      "previous_sha256": "8f49336611463ac2a6823d5d0afcdd3dec65c2c89777ac64bcf99d9f4d09080a",
+      "next_sha256": "ed0a4a3b2786c84ff79127c3298fd8a71ec5c9da98681d44dd118bc420c6a7ac"
+    },
+    {
+      "path": "student-guides/W06-三点锁题.md",
+      "previous_sha256": "d9acaf8c9312d0c5284d2093cd08d99b5d5ea4c7d945125b656066f1ecc9b453",
+      "next_sha256": "eac74f98b0205166ec8ba55fbf5c927b1753268775c02fafb3b67a1773f683c9"
+    },
+    {
+      "path": "student-guides/W07-伏笔回扣.md",
+      "previous_sha256": "560dfd45c554f6f9d3b38e4661d1516c847e31f83e4b1f7b19074906daded4ca",
+      "next_sha256": "6745bc70c008d6a8f2b2f33a8947a1e6106825b9d24b0511c28ca2eec1b744c1"
+    },
+    {
+      "path": "student-guides/W08-因果三连.md",
+      "previous_sha256": "86f97ecbc480e5f48a11eb0d44be0b86d602b5bb41616d9096a63f4b9556cc83",
+      "next_sha256": "7d993267f8a2b4c6ce6d32ee3b229466f201f191d7d7420d7878a1e0fccd3b34"
+    },
+    {
+      "path": "student-guides/W09-细节三镜.md",
+      "previous_sha256": "1fd1747ef3372a3a7eb9c1d48c4f350e5e8ff1432fc84e403facccf8ee915d23",
+      "next_sha256": "f8ad29f7275249d57072759359772101e6ee9eb683a9bfd1d40c776c67494803"
+    },
+    {
+      "path": "student-guides/W10-无痕衔接.md",
+      "previous_sha256": "aa729b34d31a67b61397042cbab7550bc3c9ff4cf3749bc07b8a5d09fda0be2c",
+      "next_sha256": "dc349e334c32bfb7aed8709e4b67699cfc251fb50eb684a15d1243f7e84ecb20"
+    },
+    {
+      "path": "student-guides/W11-小转折.md",
+      "previous_sha256": "7b8b00dd8d662ebe65a43f9b71dc7a3d890bc3da1f26bf2bb01e163d316d00f8",
+      "next_sha256": "a739ac7c0379915a87d8ac91bec487ea86a0d2b05b2718b9aa9ac493d13ea45e"
+    },
+    {
+      "path": "student-guides/W12-精准换词.md",
+      "previous_sha256": "855a01ac0c572a8c01c688acb768d241ada95a82d7fa4266e4fd2119d6befb59",
+      "next_sha256": "fd5ac1714ac56a2e769240d13a457413986685f7b5650d3d69210e3723b5b4e0"
+    },
+    {
+      "path": "student-guides/W13-结尾回扣.md",
+      "previous_sha256": "b02641433bc308b16dea1337d231c3e3cdf9c70832a4717ee2f3a3c1c24757ab",
+      "next_sha256": "74a4e274ceb3bb4e4d0c33bcbe397d65f7df9eecf2a6dea8629373b91f7fe8cf"
+    },
+    {
+      "path": "student-guides/W14-骨架句与肌肉句.md",
+      "previous_sha256": "938d5ffa01431f5be9d30bd5a9c877efea5e0bc2d06dafa93c084e7e9bf920ae",
+      "next_sha256": "9d46baac24a7dabf8f6b91012bafef0540cabb68a094c8cd7494a24cd46c4628"
+    },
+    {
+      "path": "student-guides/W15-续写评分.md",
+      "previous_sha256": "1df2ef8accbf586850b95b4f0ae0e0d2275bd1ed6571c42aaed1a690901b968a",
+      "next_sha256": "0a92c3a347b36e54addda19294a7c56565e3ae0ebaa2ddff5f292007611afedf"
+    },
+    {
+      "path": "student-guides/W16-五档训练升级.md",
+      "previous_sha256": "1550c0a98b6fd9b73b761f56233026d4eca36637ecef19b6ba8aab9b25992577",
+      "next_sha256": "808869cbe4348e92c1763d16c3853e1d8730f11529bab015b5bb37c4118cab9d"
+    }
+  ],
+  "full_runtime_regression": "pending_after_activation"
+}

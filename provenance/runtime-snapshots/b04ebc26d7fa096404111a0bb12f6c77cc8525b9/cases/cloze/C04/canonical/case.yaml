@@ -1,0 +1,19 @@
+case_id: C04-canonical
+method_id: C04
+question_type: 完形填空
+source:
+  repository: https://github.com/rockpunkgod/ANSWER.git
+  commit: b04ebc26d7fa096404111a0bb12f6c77cc8525b9
+  path: gaokao-english/references/cloze.md
+  heading: 词性只引导找线索
+question: null
+answer: null
+trigger: 空内词的句法作用能指向线索类型
+evidence: []
+method_role: locator
+expected_action: 标空内作用，再圈修饰同一对象或动作的结构，不凭词性定案
+expected_output: locate
+stop_rule: 只看词尾或词性仍无法确认所修饰对象时停止定位结论；动词空要另核谁做、指向谁、回应什么，不能把观察者感受当人物行动。
+case_type: canonical
+status: evidence_gap
+notes: 源方法可核；尚未逐题核验案例，不可当成功样例

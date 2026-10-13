@@ -1,0 +1,19 @@
+case_id: W05-canonical
+method_id: W05
+question_type: 读后续写
+source:
+  repository: https://github.com/rockpunkgod/ANSWER.git
+  commit: b04ebc26d7fa096404111a0bb12f6c77cc8525b9
+  path: gaokao-writing/references/continuation-writing-and-correction.md
+  heading: 动作链与动作面（人物刻画核心）
+question: null
+answer: null
+trigger: 核心行动需要具体连贯描写
+evidence: []
+method_role: interpreter
+expected_action: 把已有行动拆最多三个合理小动作，再加与场景相符的方式，不改变人物能力
+expected_output: interpret
+stop_rule: 没有成立的核心行动先回情节，不用拆链发明事件；不机械凑三个动作。主体、物理条件或先后冲突时退回原动作。
+case_type: canonical
+status: evidence_gap
+notes: 源方法可核；尚未逐题核验案例，不可当成功样例

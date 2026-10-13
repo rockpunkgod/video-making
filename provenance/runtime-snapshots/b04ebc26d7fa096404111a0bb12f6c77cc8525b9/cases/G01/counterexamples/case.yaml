@@ -1,0 +1,21 @@
+method_id: G01
+case_type: counterexample
+status: verified_course_example
+objective: 防止把介词后需要名词性成分简化成一律派生名词。
+source_item: 2021全国高考甲卷语法填空，课程讲义 PDF 第4页。
+prompt_excerpt: After ___ (spend) some time looking at all the defensive equipment...
+expected_action: 标有提示词；识别 After 后需要名词性成分；再核动名词结构可带宾语 some time。
+expected_result: spending
+pass_condition: 不用介词后只能名词的伪规则排除 doing。
+source_reference: ANSWER@b04ebc26:kaiming-english-qa/references/corpus/24c4e1bcbc7f.txt#PDF第4页
+case_id: G01-counterexample
+question_type: 语法填空
+source: ANSWER@b04ebc26:kaiming-english-qa/references/corpus/24c4e1bcbc7f.txt#PDF第4页
+question: After ___ (spend) some time looking at all the defensive equipment...
+answer: spending
+trigger: 任何语法填空空位开始处理时。
+evidence: []
+method_role: framework
+expected_output: reduce
+stop_rule: 提示词是什么词性，不等于答案就是什么词性。
+notes: 尚未真人验收

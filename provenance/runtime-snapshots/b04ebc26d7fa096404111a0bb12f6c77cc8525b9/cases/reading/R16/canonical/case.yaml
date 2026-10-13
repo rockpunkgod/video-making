@@ -1,0 +1,19 @@
+case_id: R16-canonical
+method_id: R16
+question_type: 阅读理解
+source:
+  repository: https://github.com/rockpunkgod/ANSWER.git
+  commit: b04ebc26d7fa096404111a0bb12f6c77cc8525b9
+  path: gaokao-english/references/reading-comprehension.md
+  heading: mainly题与主旨大意（学生常说中心思想）
+question: null
+answer: null
+trigger: 题干问全文或指定段主旨
+evidence: []
+method_role: framework
+expected_action: 先圈全文/段落范围，再写对象与核心判断，回各关键段检查覆盖
+expected_output: interpret
+stop_rule: 段落主题已清时不机械压全文；局部事实、一般推断或人物品质题不直接套主旨。共同词、抽象程度和首尾结构不独立证明概括。
+case_type: canonical
+status: evidence_gap
+notes: 源方法可核；尚未逐题核验案例，不可当成功样例

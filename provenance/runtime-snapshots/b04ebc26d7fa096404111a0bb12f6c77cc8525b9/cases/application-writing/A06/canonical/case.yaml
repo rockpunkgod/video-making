@@ -1,0 +1,19 @@
+case_id: A06-canonical
+method_id: A06
+question_type: 应用文
+source:
+  repository: https://github.com/rockpunkgod/ANSWER.git
+  commit: b04ebc26d7fa096404111a0bb12f6c77cc8525b9
+  path: gaokao-writing/references/application-writing-and-correction.md
+  heading: 富兰克林写作法（五步）
+question: null
+answer: null
+trigger: 课后需积累准确可迁移表达
+evidence: []
+method_role: framework
+expected_action: 先简化中文自行译，再对照范文记录缺失表达；背诵复现后在同结构仿写
+expected_output: interpret
+stop_rule: 适用于课后训练，不是考场先看答案；已准确且自然的异写不判错。范文或AI升级改变意思、搭配未核时不背不照抄。
+case_type: canonical
+status: evidence_gap
+notes: 源方法可核；尚未逐题核验案例，不可当成功样例

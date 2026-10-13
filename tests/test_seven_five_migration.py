@@ -1,4 +1,4 @@
-"""Seven-five source/role/entry regressions, not real learner validation."""
+"""Archived b04 seven-five source controls, not current epoch or learner validation."""
 import unittest
 from core.registry import Registry, load
 from core.analyzer import QuestionAnalyzer
@@ -9,7 +9,7 @@ IDS={'F'+str(i).zfill(2) for i in range(2,12)}
 
 class SevenFiveMigrationTest(unittest.TestCase):
     @classmethod
-    def setUpClass(cls): cls.r=Registry()
+    def setUpClass(cls): cls.r=Registry(snapshot_commit='b04ebc26d7fa096404111a0bb12f6c77cc8525b9')
 
     def test_all_eleven_student_entries_are_static_ready_only(self):
         methods=[m for m in self.r.methods.values() if m['question_type']=='七选五']
@@ -46,7 +46,7 @@ class SevenFiveMigrationTest(unittest.TestCase):
         self.assertIn('不因任意段尾',m['full']['boundaries'][0])
 
     def test_all_guides_keep_four_steps_brake_challenge_and_counterexample(self):
-        assets=build()
+        assets=build(self.r)
         for m in self.r.methods.values():
             if m['question_type']=='七选五':
                 text=assets['student-guides/'+m['method_id']+'-'+m['brand_name']+'.md']

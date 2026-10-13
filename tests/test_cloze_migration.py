@@ -1,4 +1,4 @@
-"""Cloze editorial, source-dependency and execution-role regressions."""
+"""Archived b04 cloze controls; the current evidence-driven epoch has separate tests."""
 import unittest
 from copy import deepcopy
 from core.registry import Registry,load
@@ -15,7 +15,7 @@ def role_fixture(mid,role=None):
 
 class ClozeMigrationTest(unittest.TestCase):
     @classmethod
-    def setUpClass(cls): cls.r=Registry()
+    def setUpClass(cls): cls.r=Registry(snapshot_commit='b04ebc26d7fa096404111a0bb12f6c77cc8525b9')
 
     def test_nine_entries_ready_but_only_two_core_teaching_entries(self):
         methods=[m for m in self.r.methods.values() if m['question_type']=='完形填空']
@@ -40,7 +40,7 @@ class ClozeMigrationTest(unittest.TestCase):
             self.assertIn('按原空号走两遍',self.r.full(mid))
 
     def test_all_guides_preserve_actions_and_stop_independently(self):
-        assets=build()
+        assets=build(self.r)
         for mid in IDS:
             m=self.r.methods[mid]; guide=assets['student-guides/'+mid+'-'+m['brand_name']+'.md']
             self.assertIn(m['core_action'],guide); self.assertIn(m['stop_rule'],guide)

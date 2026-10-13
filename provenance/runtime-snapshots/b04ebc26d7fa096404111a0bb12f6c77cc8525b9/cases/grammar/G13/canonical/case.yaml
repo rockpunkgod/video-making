@@ -1,0 +1,19 @@
+case_id: G13-canonical
+method_id: G13
+question_type: 语法填空
+source:
+  repository: https://github.com/rockpunkgod/ANSWER.git
+  commit: b04ebc26d7fa096404111a0bb12f6c77cc8525b9
+  path: gaokao-grammar-fill/references/grammar-fill.md
+  heading: 谓语：检查时态、语态、主谓一致
+question: null
+answer: null
+trigger: 空位是谓语且需判时态
+evidence: []
+method_role: decider
+expected_action: 圈明确时间、上下文事件先后和句内语态，再与真主语核数
+expected_output: decide
+stop_rule: 单个since/by等只提示，不免上下文参照核对；主语角色、状态性分词或时间参照不明就停，不执行有be/无be快速二分口诀。
+case_type: canonical
+status: evidence_gap
+notes: 源方法可核；尚未逐题核验案例，不可当成功样例

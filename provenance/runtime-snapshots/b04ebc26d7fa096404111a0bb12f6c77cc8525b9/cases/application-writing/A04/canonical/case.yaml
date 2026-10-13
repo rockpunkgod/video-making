@@ -1,0 +1,19 @@
+case_id: A04-canonical
+method_id: A04
+question_type: 应用文
+source:
+  repository: https://github.com/rockpunkgod/ANSWER.git
+  commit: b04ebc26d7fa096404111a0bb12f6c77cc8525b9
+  path: gaokao-writing/references/application-writing-and-correction.md
+  heading: 三种句子生成法
+question: null
+answer: null
+trigger: 多个动作要合成复杂句
+evidence: []
+method_role: interpreter
+expected_action: 每个动作先写正确简单句，再按真实关系用从句、非谓语或连接词粘连
+expected_output: interpret
+stop_rule: 基础句未正确先修句；逻辑关系不明不合并。非谓语的动作主体或从句依附不成立，退回独立句，不为复杂度强拼。
+case_type: canonical
+status: evidence_gap
+notes: 源方法可核；尚未逐题核验案例，不可当成功样例

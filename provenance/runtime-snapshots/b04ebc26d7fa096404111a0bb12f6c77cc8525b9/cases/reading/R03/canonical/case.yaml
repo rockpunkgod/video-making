@@ -1,0 +1,19 @@
+case_id: R03-canonical
+method_id: R03
+question_type: 阅读理解
+source:
+  repository: https://github.com/rockpunkgod/ANSWER.git
+  commit: b04ebc26d7fa096404111a0bb12f6c77cc8525b9
+  path: gaokao-english/references/reading-comprehension.md
+  heading: 同源替换
+question: null
+answer: null
+trigger: 选项换了表达，需要核同一断言
+evidence: []
+method_role: interpreter
+expected_action: 并排圈出原文与选项的对象、动作和限定词，逐格核语义是否相同
+expected_output: interpret
+stop_rule: 词义不能确认、对象不同或定位句不足以闭合时停止替换，向必要上下文求证；对应词数量不证明答案。
+case_type: canonical
+status: evidence_gap
+notes: 源方法可核；尚未逐题核验案例，不可当成功样例

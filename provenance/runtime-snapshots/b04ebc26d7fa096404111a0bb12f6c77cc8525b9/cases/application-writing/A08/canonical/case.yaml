@@ -1,0 +1,19 @@
+case_id: A08-canonical
+method_id: A08
+question_type: 应用文
+source:
+  repository: https://github.com/rockpunkgod/ANSWER.git
+  commit: b04ebc26d7fa096404111a0bb12f6c77cc8525b9
+  path: gaokao-writing/references/application-writing-and-correction.md
+  heading: 常见文体骨架
+question: null
+answer: null
+trigger: 应用文需要匹配文体与交际目的
+evidence: []
+method_role: framework
+expected_action: 圈题目文体对象目的，调用对应骨架，不把文体模板算独立原创规则
+expected_output: interpret
+stop_rule: 题面格式、已给首尾或目的另有要求时服从题面，不硬套三段或称呼；骨架不是原创品牌判据，也不能以句型齐全判内容完成。
+case_type: canonical
+status: evidence_gap
+notes: 源方法可核；尚未逐题核验案例，不可当成功样例

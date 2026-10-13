@@ -1,0 +1,23 @@
+method_id: F01
+case_type: canonical
+status: verified_course_example
+objective: 用时态维度缩小叙事段空位候选，再回内容定案。
+source_item: 2024黑龙江三模七选五，课程语料段78–92。
+prompt_excerpt: 上文叙述毕业后选专业的过去经历，候选 D 为 So I changed my mind and chose Business Management
+  as my major.
+expected_action: 先将有真实过去时谓语的候选归组，再回文核选专业的动作与事件推进。
+pass_condition: 能说出时态只缩范围，选项 D 还需由前后的专业变化内容验证。
+stop_check: 不用时态一项直接定案。
+source_reference: ANSWER@b04ebc26:kaiming-english-qa/references/corpus/ce31f1ee2a89.txt#段78-92
+case_id: F01-canonical
+question_type: 七选五
+source: ANSWER@b04ebc26:kaiming-english-qa/references/corpus/ce31f1ee2a89.txt#段78-92
+question: 上文叙述毕业后选专业的过去经历，候选 D 为 So I changed my mind and chose Business Management
+  as my major.
+answer: null
+trigger: 整篇七选五刚开始，候选之间存在可观察的句型角色、主角/核心话题或真谓语时间差异。
+evidence: []
+method_role: reducer
+expected_output: reduce
+stop_rule: 分组只缩范围，不负责定答案。
+notes: 尚未真人验收

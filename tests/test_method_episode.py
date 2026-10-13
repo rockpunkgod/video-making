@@ -27,7 +27,7 @@ class MethodEpisodeTests(unittest.TestCase):
         candidate = make_candidate([bundle], [selection], statuses)
         second = finalize_copy(polish(build_draft(candidate, statuses), IdentityPolisher()))
         self.plan = {'schema_version': '1.0.0', 'kind': 'method_centered_episode',
-            'method': {'method_id': 'R12', 'version': '1.1.0', 'theme': 'SYNTHETIC ONLY', 'signature_motion': 'synthetic'},
+            'method': {'method_id': 'R12', 'version': control.registry.methods['R12']['version'], 'theme': 'SYNTHETIC ONLY', 'signature_motion': 'synthetic'},
             'viewer_question': 'Synthetic task', 'questions': [], 'method_recall': 'Synthetic memory',
             'duration_policy': 'reading_narration_and_action_determine_duration', 'public_render_ready': False}
         for index, package in enumerate((first, second)):

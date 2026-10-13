@@ -1,4 +1,4 @@
-"""Source-bound application entry checks; no simulated learner outcomes."""
+"""Archived b04 application checks, not current-source or learner certification."""
 import unittest
 from core.registry import Registry,load
 from core.analyzer import QuestionAnalyzer
@@ -8,7 +8,7 @@ IDS={'A'+str(i).zfill(2) for i in range(1,11)}
 
 class ApplicationMigrationTest(unittest.TestCase):
     @classmethod
-    def setUpClass(cls): cls.r=Registry()
+    def setUpClass(cls): cls.r=Registry(snapshot_commit='b04ebc26d7fa096404111a0bb12f6c77cc8525b9')
 
     def test_ten_entries_ready_without_turning_templates_into_brands(self):
         methods=[m for m in self.r.methods.values() if m['question_type']=='应用文']
@@ -27,7 +27,7 @@ class ApplicationMigrationTest(unittest.TestCase):
             self.assertEqual(m['static_design_review']['source_section_ids'],m['section_ids'])
 
     def test_independent_entries_include_exact_actions_and_brakes(self):
-        assets=build()
+        assets=build(self.r)
         for mid in IDS:
             m=self.r.methods[mid]; guide=assets['student-guides/'+mid+'-'+m['brand_name']+'.md']
             for text in [m['core_action'],m['stop_rule'],m['challenge_prompt'],*(m['compact'][key] for key in ['10s','30s','90s'])]: self.assertIn(text,guide)

@@ -8,9 +8,9 @@ rules:
   counterexample: 词语复现但主体或动作不一致时不能定案
   boundary: 词语复现但主体或动作不一致时不能定案
   source_evidence:
-  - 6666ada9f1f24eb8
+  - 664edd91ce02db49
   - 92ec24e9e7003cba
-  - b0b1e691060b321a
+  - 89415a44acd8248e
   case_status: source_pattern_only
 - anti_rule_id: AR02
   rule: 绝对词 ≠ 必错。
@@ -19,7 +19,7 @@ rules:
   counterexample: 原文能支持绝对范围时不能因词形排除
   boundary: 原文能支持绝对范围时不能因词形排除
   source_evidence:
-  - 044ac82fa0d47a9d
+  - dfb7dd8dc0c2e8a1
   case_status: source_pattern_only
 - anti_rule_id: AR03
   rule: 转折后 ≠ 必选。
@@ -30,7 +30,7 @@ rules:
   boundary: 转折关系须由两侧完整内容成立
   source_evidence:
   - 03214bbc4e91eae2
-  - 9b9a8cf18e4a40a5
+  - c84135f2763c6806
   case_status: source_pattern_only
 - anti_rule_id: AR04
   rule: 段首 ≠ 中心句。
@@ -40,7 +40,7 @@ rules:
   counterexample: 首句可能只是背景，须核下文共同任务
   boundary: 首句可能只是背景，须核下文共同任务
   source_evidence:
-  - 4311f90fc985aca0
+  - 25287b93945fdb97
   - 1fcc9966ce085922
   case_status: source_pattern_only
 - anti_rule_id: AR05
@@ -50,7 +50,7 @@ rules:
   counterexample: 覆盖大却新增错误关系仍不合格
   boundary: 覆盖大却新增错误关系仍不合格
   source_evidence:
-  - 30dc89c0d75b4e5e
+  - fd49a052453f33e0
   case_status: source_pattern_only
 - anti_rule_id: AR06
   rule: 定位 ≠ 答案。
@@ -60,8 +60,8 @@ rules:
   counterexample: 同词定位只能找到证据区域，仍须核完整断言
   boundary: 同词定位只能找到证据区域，仍须核完整断言
   source_evidence:
-  - 7a963f5609d19db8
-  - c51d31bdcc7d5e16
+  - 7adfe6c470337e82
+  - 3104f706064bf305
   case_status: source_pattern_only
 - anti_rule_id: AR07
   rule: 分组 ≠ 定案。
@@ -83,7 +83,7 @@ rules:
   boundary: 排除或占用不能替代剩余项自身证据
   source_evidence:
   - d815465ca190a14f
-  - 044ac82fa0d47a9d
+  - dfb7dd8dc0c2e8a1
   case_status: source_pattern_only
 - anti_rule_id: AR09
   rule: 没原词 ≠ 没依据。
@@ -92,5 +92,5 @@ rules:
   counterexample: 上下文合理间接支持B时必须停止排除
   boundary: 上下文合理间接支持B时必须停止排除
   source_evidence:
-  - 044ac82fa0d47a9d
+  - dfb7dd8dc0c2e8a1
   case_status: source_pattern_only

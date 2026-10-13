@@ -1,0 +1,20 @@
+method_id: F01
+case_type: transfer
+status: verified_course_example
+objective: 将三分从时态明显的叙事题迁移到小标题与祈使句突出的方法文。
+source_item: 2024安徽淮北一模羽绒被七选五，课程语料段12–27。
+prompt_excerpt: 文章以 Start, Wash, Dry 等操作段落展开，候选可按小标题与祈使句结构初筛。
+expected_action: 优先使用本题有区分度的结构维度，再回段落操作对象与任务验证。
+pass_condition: 能根据新题面选有区分度的维度，而非机械强求三维都产生组。
+source_reference: ANSWER@b04ebc26:kaiming-english-qa/references/corpus/ce31f1ee2a89.txt#段12-27
+case_id: F01-transfer
+question_type: 七选五
+source: ANSWER@b04ebc26:kaiming-english-qa/references/corpus/ce31f1ee2a89.txt#段12-27
+question: 文章以 Start, Wash, Dry 等操作段落展开，候选可按小标题与祈使句结构初筛。
+answer: null
+trigger: 整篇七选五刚开始，候选之间存在可观察的句型角色、主角/核心话题或真谓语时间差异。
+evidence: []
+method_role: reducer
+expected_output: reduce
+stop_rule: 分组只缩范围，不负责定答案。
+notes: 尚未真人验收

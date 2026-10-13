@@ -26,11 +26,16 @@ class ReleaseReviewTest(unittest.TestCase):
 
     def fixture(self,grade='Useful',state='validated'):
         r=Registry(); rows,plan=design(); rows=declared_real(rows)
-        cases={path:{'status':'verified_course_example','question':'PROGRAM-ONLY metadata, not an exam or verified course case'} for path in r.methods['R01']['cases'].values()}
+        for row in rows: row['method_version']=r.methods[row['method_id']]['version']
+        cases={path:{'status':'verified_course_example','question':'PROGRAM-ONLY metadata, not an exam or verified course case',
+                     'method_id':'R01','method_version':r.methods['R01']['version'],
+                     'source_commit':r.index['source_baseline']['commit']}
+               for path in r.methods['R01']['cases'].values()}
         stack=ExitStack(); self.addCleanup(stack.close)
         stack.enter_context(patch.object(r,'case_inventory',return_value=cases))
         report={**regression_snapshot(r),'source_commit':r.index['source_baseline']['commit'],'after_refactor':{'tests_run':278,'failures':0,'errors':0,'registry':{'status':'PASS'},'generated':{'generated_assets':'PASS'}}}
         review=read_json('evaluation/release-review.example.json')
+        review['method_version']=r.methods['R01']['version']
         review.update(target_maturity=state,target_practical_value=grade,approved=True,reviewer='PROGRAM-ONLY reviewer declaration',reviewed_at='2026-01-07T00:00:00Z',checks={key:True for key in CHECKS},evidence_refs=['PROGRAM-ONLY control metadata, not human evidence'])
         memory={review['inputs']['plan']:plan,review['inputs']['regression']:report}
         stack.enter_context(patch('core.release.read_json',side_effect=lambda path:deepcopy(memory[path])))
@@ -45,6 +50,13 @@ class ReleaseReviewTest(unittest.TestCase):
         self.assertTrue(out['ready_for_manual_release'],out)
         self.assertEqual(r.methods,before)
         self.assertIn('not authentication',out['scope'])
+
+    def test_historical_case_epoch_cannot_release_current_method(self):
+        r,review,*_=self.fixture()
+        for case in r.case_inventory().values(): case['source_commit']='0'*40
+        review['bindings']=release_bindings(r,'R01',review['inputs'])
+        out=check_release(r,review)
+        self.assertIn('five_verified_case_slots',out['blocking_reasons'])
 
     def test_unapproved_or_stale_method_case_data_plan_report_cannot_release(self):
         for mutation in ('approval','method','cases','records','plan','report'):

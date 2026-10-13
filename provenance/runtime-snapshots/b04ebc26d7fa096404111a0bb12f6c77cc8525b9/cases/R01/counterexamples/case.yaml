@@ -1,0 +1,21 @@
+method_id: R01
+case_type: counterexample
+status: source_pattern_only
+objective: 防止把未逐字出现误判为加戏。
+prompt_excerpt: null
+documented_pattern: 候选的 B 未逐字出现，但原文事实、数量或上下文对 B 构成间接支持。
+expected_action: 找出完成间接推断的文本链，并停止加戏排除。
+pass_condition: 明确说出间接支持也是支持。
+gap: 有证据模式，但源运行层未发布完整可盲测题面。
+source_reference: ANSWER@b04ebc26:gaokao-english/references/reading-comprehension.md#过度推测
+case_id: R01-counterexample
+question_type: 阅读理解
+source: ANSWER@b04ebc26:gaokao-english/references/reading-comprehension.md#过度推测
+question: null
+answer: null
+trigger: 候选核心与原文对应，但又多出参与者、目的、用途、时间、范围、因果或确定程度。
+evidence: []
+method_role: decider
+expected_output: decide
+stop_rule: 没逐字出现，不等于没有依据。
+notes: 有证据模式，但源运行层未发布完整可盲测题面。

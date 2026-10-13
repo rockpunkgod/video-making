@@ -3,17 +3,27 @@ import argparse
 import yaml
 from core.registry import ROOT, Registry, load
 
-def build():
-    r = Registry()
+def build(registry=None):
+    r = registry or Registry()
     assets = {}
     for mid,m in r.methods.items():
-        if not m.get('student_ready'): continue
-        parts = [f'# {mid} {m["brand_name"]}：学生首次接触版', m['entry_copy'], '## 四步实战卡']
+        draft=m.get('source_alignment',{}).get('authored_first_contact_draft') is True
+        if not m.get('student_ready') and not draft:
+            if m.get('source_alignment'):
+                assets[f'student-guides/{mid}-{m["brand_name"]}.md'] = (
+                    f'# {mid} {m["brand_name"]}：新版入口复核中\n\n'
+                    f'当前来源版本：{r.index["source_baseline"]["commit"]}；卡片版本：{m["version"]}。\n\n'
+                    '旧版首次接触稿不能继续作为新版入口。当前四步动作可查询方法卡，完整边界须读本版来源；短版传播与实用性验收仍未通过。\n')
+            continue
+        label='学生首次接触草稿' if draft and not m.get('student_ready') else '学生首次接触版'
+        parts = [f'# {mid} {m["brand_name"]}：{label}', m['entry_copy'], '## 四步实战卡']
         parts += [f'{i}. {label}：{m["four_step_card"][key]}' for i,(key,label) in enumerate([('start','启动'),('first_cut','第一刀'),('judge','判断'),('stop','停止')],1)]
         parts += ['Stop Rule：'+m['stop_rule']]
         for duration in ['10','30','90']:
             parts += [f'## {duration} 秒版',m['compact'][duration+'s']]
         parts += ['## 一屏视觉式','```text\n'+m['visual_formula']+'\n```','反口诀：'+m['anti_rule'],'## 为什么容易错',m['common_wrong_instinct'],'## 反例与挑战','反例/边界示意（不等于已核验真题）：'+'；'.join(m['counterexamples']),m['challenge_prompt'],f'生成来源：Registry {mid}@{m["version"]}。student_ready仅表示静态学生入口齐备，真人验收待运行。']
+        if draft and not m.get('student_ready'):
+            parts += ['草稿状态：短版时长未实测，传播与实用性验收未通过；不得据此升级 validated、stable、Efficient 或 Signature。']
         assets[f'student-guides/{mid}-{m["brand_name"]}.md'] = '\n\n'.join(parts)+'\n'
     symptoms = {'routes':[]}
     for m in r.methods.values():
@@ -31,7 +41,7 @@ def build():
     tree_copy+='\n\n先拆句：'+', '.join(tree['preparatory_methods'])+'；整篇复查：'+', '.join(tree['postcheck_methods'])+'。都不能代替独立答案证据。\n'
     assets['references/grammar-navigation.md']=tree_copy
     assets['gaokao-grammar-fill/references/grammar-navigation.md']=tree_copy
-    anti = load('method-registry/anti-rules.yaml')['rules']
+    anti = r._load('method-registry/anti-rules.yaml')['rules']
     assets['references/anti-rules.yaml'] = yaml.safe_dump({'rules':anti},allow_unicode=True,sort_keys=False)
     assets['references/anti-rules.md'] = '# Anti-Rule Registry（自动生成）\n\n'+'\n\n'.join(f'## {x["anti_rule_id"]} {x["rule"]}\n\n绑定：{", ".join(x["related_methods"])}。反例与边界：{x["boundary"]}。依据：{", ".join(x["source_evidence"])}。仅源模式，不是真题验证。' for x in anti)+'\n'
     for name,types in [('gaokao-english',['阅读理解','七选五','完形填空']),('gaokao-objective',['阅读理解','七选五','完形填空']),('gaokao-grammar-fill',['语法填空']),('gaokao-writing',['应用文','读后续写'])]:
@@ -42,6 +52,16 @@ def build():
         assets[f'{name}/SKILL.md'] = f'---\nname: {name}\ndescription: {description}\n---\n\n# 统一引擎适配入口\n\n先读取本目录 [generated-contract.md](generated-contract.md)，再按题型读取其中链接的 references，保留原先题型、顺序与证据边界。课程原名和品牌名是同一方法的别名，不产生新判据。学生动作入口允许注册品牌名，方法问答同时兼容课程原名。源契约中的逆推只能用于独立核验，不得把已知答案当证据或在 First-use 先猜后贴方法。\n\n方法查询：在项目根执行 `python -m answer_engine method METHOD_ID`；单题：`python -m answer_engine analyze INPUT.json --renderer legacy-wechat`；整卷：`python -m answer_engine paper INPUT.json`。宿主模型按完整契约作语义分析，再提交有原文跨度、判据、刹车、回填和审阅者的 relations；核心不把宿主猜测当自动验证。缺题面或语义证据必须暂留，不填答案。写作完整批改仍由宿主按15/25分独立契约完成，不由本地程序伪评分。\n\n单独安装 Skill 文件夹时，生成资源可自包含调用，完整核心命令需整个仓库及依赖；不要假定安装 Skill 等于安装核心。不能执行程序时按题型查询 [generated-methods.yaml](generated-methods.yaml)，完成相同证据动作；明确标记宿主分析未经核心检查。不要绕开停用边界。\n'
         if name=='gaokao-grammar-fill':
             assets[f'{name}/SKILL.md']+='\n语法知识路由读取 [grammar-navigation.md](references/grammar-navigation.md)。先确认有无提示词，再按未填句功能进入节点；树路径只是知识调用计划，不能代替句法、搭配与词形核验。\n'
+        assets[f'{name}/SKILL.md']=assets[f'{name}/SKILL.md'].replace(
+            '课程原名和品牌名是同一方法的别名，不产生新判据。学生动作入口允许注册品牌名，方法问答同时兼容课程原名。',
+            '课程原名、学生品牌入口、内部框架、判项诊断和课程题名按实际身份分别处理。只有已明确绑定同一动作的名称才能作入口别名，不能把独立课程原名静默合并。品牌入口不增加判据，诊断不变成独立整题算法。')
+        identities=r.index.get('course_identities',[])
+        if identities:
+            assets[f'{name}/generated-course-identities.yaml']=yaml.safe_dump(
+                {'scope':'source identity inspection only; not runtime activation or promotion',
+                 'source_commit':r.index['source_baseline']['commit'],'identities':identities},
+                allow_unicode=True,sort_keys=False)
+            assets[f'{name}/SKILL.md']+='\n名称身份有疑问时读取 [generated-course-identities.yaml](generated-course-identities.yaml)，并回对应题型原章节；项目内可用 `python -m answer_engine course-identity 完整源标题` 查询。来源登记、程序检查或生成短稿不等于方法已通过传播、实用性或真人验收。\n'
         if name in {'gaokao-english','gaokao-objective','gaokao-grammar-fill'}:
             assets[f'{name}/SKILL.md']+='\n需要完整单题口播进入核心时读 [lesson-review.md](references/lesson-review.md)，提交lesson_review并绑定实际动作、短引文、候选比较和刹车。完整口播没有闭合就扣留，不把通用结构投影当原课程现场讲解；整篇顺序仍须原契约完整执行，不由单题通道证明。\n'
             assets[f'{name}/references/lesson-review.md']='<!-- Generated interface guide; course facts stay in Registry. -->\n\n'+(ROOT/'docs/lesson-review.md').read_text(encoding='utf-8')
@@ -62,10 +82,11 @@ def build():
     assets['references/method-roles.md'] = '# 方法角色（自动生成）\n\n'+'\n'.join(f'- {m["method_id"]} {m["brand_name"]}：{m["method_type"]} / {m["primary_role"]} → {m["output_type"]}' for m in r.methods.values())+'\n'
     return assets
 
-def generate(check=False):
+def generate(check=False,registry=None,output_root=None):
     stale = []
-    for relative, content in build().items():
-        p = ROOT/relative
+    destination=output_root or ROOT
+    for relative, content in build(registry).items():
+        p = destination/relative
         if check:
             if not p.exists() or p.read_text(encoding='utf-8') != content:
                 stale.append(relative)

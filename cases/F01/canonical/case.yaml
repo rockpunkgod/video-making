@@ -21,3 +21,5 @@ method_role: reducer
 expected_output: reduce
 stop_rule: 分组只缩范围，不负责定答案。
 notes: 尚未真人验收
+method_version: 1.1.0
+source_commit: b04ebc26d7fa096404111a0bb12f6c77cc8525b9

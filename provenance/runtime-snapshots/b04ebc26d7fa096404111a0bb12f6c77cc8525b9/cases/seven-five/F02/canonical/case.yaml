@@ -1,0 +1,19 @@
+case_id: F02-canonical
+method_id: F02
+question_type: 七选五
+source:
+  repository: https://github.com/rockpunkgod/ANSWER.git
+  commit: b04ebc26d7fa096404111a0bb12f6c77cc8525b9
+  path: gaokao-english/references/seven-five.md
+  heading: 结构一致
+question: null
+answer: null
+trigger: 选项存在不同句式且空位有结构线索
+evidence: []
+method_role: reducer
+expected_action: 一次圈出完整句/半句/疑问/祈使等真实结构并分组，再回正文核内容
+expected_output: reduce
+stop_rule: 没有可观察句型差异就标无区分度；两项结构都能接时停止结构筛选，不凭大小写、句首修饰或同句型定案。
+case_type: canonical
+status: evidence_gap
+notes: 源方法可核；尚未逐题核验案例，不可当成功样例

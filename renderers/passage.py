@@ -1,7 +1,7 @@
 """Whole-passage projections preserve order and summarize by original numbers."""
 import json
 from core.registry import Registry,validate_schema
-from core.passage_lesson import validate_passage_projection
+from core.passage_lesson import validate_passage_projection,evidence_driven_cloze
 
 
 def render_passage(result,kind='structured',registry=None):
@@ -23,7 +23,9 @@ def render_passage(result,kind='structured',registry=None):
         has_no_hint=any(x['question']['given_word'] is None for x in result['questions'])
         has_hint=any(x['question']['given_word'] is not None for x in result['questions'])
         parts.append('先把无提示词的空过完，再回头做有提示词的，每一遍内部都按原空号。' if has_no_hint and has_hint else '这些空都没有提示词，按原空号逐空核功能。' if has_no_hint else '这些空都有提示词，按原空号逐空核功能，再核词形。')
-    elif result['question_type']=='完形填空': parts.append('先按原空号逐空核证据，拿不准的先留着，走完首轮再回收。')
+    elif result['question_type']=='完形填空':
+        parts.append('按当前证据推进，拿不准的先暂留，找到独立提示再回到本空核对。' if evidence_driven_cloze(r)
+                     else '先按原空号逐空核证据，拿不准的先留着，走完首轮再回收。')
     if result['question_type']=='七选五':
         first=rows[result['review']['steps'][0]['question_id']]['analysis']; f=first['lesson_feedback']
         parts.append(next(s['text'] for s in f['review']['segments'] if s['method_id']=='F01' and s['function']=='action'))

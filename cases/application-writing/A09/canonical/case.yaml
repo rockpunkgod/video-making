@@ -17,3 +17,5 @@ stop_rule: 无题目或缺全文不给完整分数；仅转写文本不评书写
 case_type: canonical
 status: evidence_gap
 notes: 源方法可核；尚未逐题核验案例，不可当成功样例
+method_version: 1.1.0
+source_commit: b04ebc26d7fa096404111a0bb12f6c77cc8525b9

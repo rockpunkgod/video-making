@@ -1,0 +1,19 @@
+case_id: G16-canonical
+method_id: G16
+question_type: 语法填空
+source:
+  repository: https://github.com/rockpunkgod/ANSWER.git
+  commit: b04ebc26d7fa096404111a0bb12f6c77cc8525b9
+  path: gaokao-grammar-fill/references/grammar-fill.md
+  heading: 26S春 补充（非谓语动词专项）
+question: null
+answer: null
+trigger: 非谓语动作归属尚不明确
+evidence: []
+method_role: verifier
+expected_action: 圈非谓语的逻辑主语，再核谁执行或承受动作，不只看最近名词
+expected_output: verify
+stop_rule: 最近名词不独立证明动作主人；状语非谓语与主句主体不一致时停，检查是否有明确独立结构，不能补造未出现的主人。
+case_type: canonical
+status: evidence_gap
+notes: 源方法可核；尚未逐题核验案例，不可当成功样例

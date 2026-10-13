@@ -1,0 +1,19 @@
+case_id: R17-canonical
+method_id: R17
+question_type: 阅读理解
+source:
+  repository: https://github.com/rockpunkgod/ANSWER.git
+  commit: b04ebc26d7fa096404111a0bb12f6c77cc8525b9
+  path: gaokao-english/references/reading-comprehension.md
+  heading: 定位后上下文核对（学生常说左顾右盼）
+question: null
+answer: null
+trigger: 定位句缺原因、指代或转折关系
+evidence: []
+method_role: verifier
+expected_action: 明确缺哪种关系，只向前后扩读到能补清它的句子，再核主体和动作
+expected_output: verify
+stop_rule: 定位句已闭合就不扩读；前后固定一句仍不足就按缺口继续找，关键内容未展示或仍不能闭合时暂留，不补造关系。
+case_type: canonical
+status: evidence_gap
+notes: 源方法可核；尚未逐题核验案例，不可当成功样例

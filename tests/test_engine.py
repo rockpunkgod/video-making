@@ -13,6 +13,7 @@ from core.evidence import validate_graph,check_span
 from renderers import render
 from scripts.generate_assets import generate
 from evaluation.harness import evaluate,failure_types,metrics,validate_records
+from tests.test_execution import current_versions
 
 def span(field,text): return {'field':field,'start':0,'end':len(text),'quote':text}
 def grammar_review():
@@ -26,6 +27,7 @@ def record(i=0,**changes):
     measure={'accuracy':True,'time_seconds':20,'candidates_remaining':2,'evidence_span':3,'hesitation_count':1,'unresolved':False}
     r={'record_id':str(i),'participant_id':'synthetic-'+str(i),'method_id':'R01','method_version':'1.1.0','question_id':'fixture-'+str(i),'dataset_id':'synthetic-contract-test','origin':'synthetic','phase':'blind','compact_version':'90s','case_type':'positive_trigger','applicable':True,'triggered':True,'action_success':True,'evidence_success':True,'stop_required':False,'stopped':False,'boundary_detected':False,'observed_first_action':'synthetic 拆 A+B','observed_evidence':'synthetic 观察，不是学生原话','stop_rule_observation':'synthetic 无需停','participant_restatement':'synthetic 只查B','notes':'仅程序分支测试，不是试题或真人数据','resolved':True,'standalone':True,'assisted':False,'role_overclaim':False,'answer_backfit':False,'execution_breakdown':False,'recall_success':True,'natural_restatement':True,'baseline':measure,'method':dict(measure),'communication_freeze_id':'synthetic-freeze','assignment':'randomized','evaluator_id':'synthetic-fixture'}
     r.update(declared_primary_role='decider',observed_actual_role='decider')
+    r['method_version']=current_versions()['R01']
     r.update(changes); return r
 
 class RegistryEngineTest(unittest.TestCase):
@@ -65,7 +67,8 @@ class RegistryEngineTest(unittest.TestCase):
     def test_original_and_new_version_both_exist(self):
         for mid in self.r.index['golden_methods']:
             self.assertEqual(load('method-registry/history/'+mid+'/1.0.0.yaml')['version'],'1.0.0')
-            self.assertEqual(self.r.methods[mid]['version'],'1.1.0')
+            self.assertEqual(Registry(snapshot_commit='b04ebc26d7fa096404111a0bb12f6c77cc8525b9').methods[mid]['version'],'1.1.0')
+            self.assertEqual(self.r.methods[mid]['version'],'1.2.0')
 
 class AnalyzerTest(unittest.TestCase):
     @classmethod
@@ -159,11 +162,13 @@ class AnalyzerTest(unittest.TestCase):
         self.assertEqual([x['method_id'] for x in out['method_matches']],['R16'])
         self.assertIsNone(out['answer'])
     def test_reviewed_paragraph_observation_cannot_force_full_text_method(self):
-        for mid in ('R06','R09'):
+        for mid in ('R09',):
             q={'question_id':'q','question_type':'阅读理解','stem':'first paragraph mainly','task_type':'paragraph_main_idea',
                'observations':[{'method_id':mid,'evidence':[span('stem','first paragraph mainly')],'reviewed':True}]}
             with self.subTest(method_id=mid),self.assertRaisesRegex(ValueError,'Full-text'):
                 self.a.analyze(q)
+        q['observations'][0]['method_id']='R06'
+        self.assertIn('R06',[x['method_id'] for x in self.a.analyze(q)['method_matches']])
     def test_whole_text_tasks_keep_existing_framework_and_coverage_entry(self):
         for task in ('main_idea','purpose','title'):
             out=self.a.analyze({'question_id':'q','question_type':'阅读理解','stem':'whole text','task_type':task})
@@ -205,7 +210,7 @@ class AnalyzerTest(unittest.TestCase):
     def test_punctuation_does_not_break_spoken_symptom(self):
         self.assertEqual([x['method_id'] for x in symptom_route('语法填空','不知道，谓语还是非谓语？',self.r)],['G12'])
     def test_paragraph_symptom_never_claims_whole_text_coverage(self):
-        self.assertEqual([x['method_id'] for x in symptom_route('阅读理解','这段主旨二选一',self.r)],['R16'])
+        self.assertEqual([x['method_id'] for x in symptom_route('阅读理解','这段主旨二选一',self.r)],['R16','R06'])
     def test_specific_symptom_not_preempted_by_generic_entry(self):
         out=self.a.analyze({'question_id':'specific','question_type':'阅读理解','stem':'','student_symptoms':['定位句看不懂']})
         self.assertEqual(out['method_chain'][0]['method_id'],'R11')

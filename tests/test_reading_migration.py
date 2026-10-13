@@ -1,4 +1,4 @@
-"""Source-bound editorial regressions, not a simulated student or exam study."""
+"""Archived b04 editorial regressions; current epoch is tested in alignment tests."""
 from copy import deepcopy
 import unittest
 from core.registry import Registry, ROOT, load
@@ -8,7 +8,7 @@ REVISED={'R03','R04','R05','R07','R08','R10','R11','R12','R13','R14','R15','R16'
 
 class ReadingMigrationTest(unittest.TestCase):
     @classmethod
-    def setUpClass(cls): cls.registry=Registry()
+    def setUpClass(cls): cls.registry=Registry(snapshot_commit='b04ebc26d7fa096404111a0bb12f6c77cc8525b9')
 
     def test_every_reading_entry_has_independent_action_judgment_and_brake(self):
         methods=[m for m in self.registry.methods.values() if m['question_type']=='阅读理解']
@@ -52,7 +52,7 @@ class ReadingMigrationTest(unittest.TestCase):
                         self.assertTrue(any(marker in self.registry.methods[mid]['compact'][duration] for marker in alternatives),alternatives)
 
     def test_generated_student_guides_exist_for_entire_reading_module(self):
-        assets=build()
+        assets=build(self.registry)
         for m in self.registry.methods.values():
             if m['question_type']=='阅读理解':
                 path='student-guides/'+m['method_id']+'-'+m['brand_name']+'.md'

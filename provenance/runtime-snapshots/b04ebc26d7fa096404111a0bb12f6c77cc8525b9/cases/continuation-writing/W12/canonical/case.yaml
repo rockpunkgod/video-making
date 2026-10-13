@@ -1,0 +1,19 @@
+case_id: W12-canonical
+method_id: W12
+question_type: 读后续写
+source:
+  repository: https://github.com/rockpunkgod/ANSWER.git
+  commit: b04ebc26d7fa096404111a0bb12f6c77cc8525b9
+  path: gaokao-writing/references/continuation-writing-and-correction.md
+  heading: 五档升级路径（训练用）
+question: null
+answer: null
+trigger: 基础表达准确后需改具体词
+evidence: []
+method_role: interpreter
+expected_action: 圈笼统动词或形容词，用符合场景与搭配的具体词替换，生词搭配不明就停
+expected_output: interpret
+stop_rule: 基础意思或句法未准确先修，不先换词；替换词搭配、力度或适用对象不明就停并保留准确常用词，不从词表盲抄。
+case_type: canonical
+status: evidence_gap
+notes: 源方法可核；尚未逐题核验案例，不可当成功样例

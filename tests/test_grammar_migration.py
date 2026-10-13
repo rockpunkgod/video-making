@@ -1,4 +1,4 @@
-"""Grammar editorial and navigation checks, not learner/effectiveness trials."""
+"""Archived b04 grammar controls; current navigation also has alignment coverage."""
 from copy import deepcopy
 import json
 import unittest
@@ -20,7 +20,7 @@ def fixture(mid=None,hint='protect',reviewed=True):
 
 class GrammarMigrationTest(unittest.TestCase):
     @classmethod
-    def setUpClass(cls): cls.r=Registry()
+    def setUpClass(cls): cls.r=Registry(snapshot_commit='b04ebc26d7fa096404111a0bb12f6c77cc8525b9')
 
     def test_all_nineteen_entries_ready_without_empirical_promotion(self):
         methods=[m for m in self.r.methods.values() if m['question_type']=='语法填空']
@@ -41,7 +41,7 @@ class GrammarMigrationTest(unittest.TestCase):
             self.assertTrue(all(load(p)['status']=='evidence_gap' for p in m['cases'].values()))
 
     def test_all_guides_have_action_stop_challenge_and_three_versions(self):
-        assets=build()
+        assets=build(self.r)
         for mid in IDS:
             m=self.r.methods[mid]; guide=assets['student-guides/'+mid+'-'+m['brand_name']+'.md']
             # Golden G01 intentionally uses its four-step first action rather

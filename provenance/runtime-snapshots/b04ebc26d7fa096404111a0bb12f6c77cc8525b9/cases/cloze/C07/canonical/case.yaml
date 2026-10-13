@@ -1,0 +1,19 @@
+case_id: C07-canonical
+method_id: C07
+question_type: 完形填空
+source:
+  repository: https://github.com/rockpunkgod/ANSWER.git
+  commit: b04ebc26d7fa096404111a0bb12f6c77cc8525b9
+  path: gaokao-english/references/cloze.md
+  heading: 名词复现只是线索
+question: null
+answer: null
+trigger: 名词空需要同一人物物件或事件线索
+evidence: []
+method_role: locator
+expected_action: 圈原词/同义/同源复现并核是否同一对象，不把复现直接当答案
+expected_output: locate
+stop_rule: 宽泛类别、同词或复现次数不构成定案；同名不同事件需分开，邻句不足可找后面几句，但缺同指关系就停止采用该线索。
+case_type: canonical
+status: evidence_gap
+notes: 源方法可核；尚未逐题核验案例，不可当成功样例

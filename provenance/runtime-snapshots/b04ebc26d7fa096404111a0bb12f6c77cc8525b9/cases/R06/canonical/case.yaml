@@ -1,0 +1,21 @@
+method_id: R06
+case_type: canonical
+status: source_pattern_only
+objective: 比较全文核心块覆盖与候选完整判断。
+prompt_excerpt: null
+documented_pattern: 课程的全文标题例要求核对对象、完整判断、结尾动作与全文覆盖，不接受只覆盖末段的候选。
+expected_action: 先列 2–4 个核心块，再为候选标缺块/多块/错关系。
+pass_condition: 以全文证据说清具体遗漏，不只说不全面。
+gap: 课程证据记录局部操作，未发布可重用完整全文和候选。
+source_reference: ANSWER@b04ebc26:gaokao-english/references/course-evidence.md#其他已激活阅读方法
+case_id: R06-canonical
+question_type: 阅读理解
+source: ANSWER@b04ebc26:gaokao-english/references/course-evidence.md#其他已激活阅读方法
+question: null
+answer: null
+trigger: 题干问全文主旨、写作目的或最佳标题。
+evidence: []
+method_role: decider
+expected_output: decide
+stop_rule: 范围大，不等于主旨对。
+notes: 课程证据记录局部操作，未发布可重用完整全文和候选。

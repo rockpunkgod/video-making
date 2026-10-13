@@ -10,7 +10,7 @@ routes:
   method_id: R01
   role: decider
   first_action: 把候选拆成原文已有内容 A 加新增内容 B。
-  stop_rule: 没逐字出现，不等于没有依据。
+  stop_rule: 共同核心A未确认时不强拆；B有直接或间接支持时停止排除，不能因没原词判错；排除后仍核保留项。
 - question_type: 阅读理解
   symptoms:
   - 原文和选项关键词一样，但关系总判错。
@@ -18,8 +18,8 @@ routes:
   spoken_aliases: []
   method_id: R02
   role: decider
-  first_action: 把原文和候选都填进谁 → 做什么 → 对谁三个槽位。
-  stop_rule: 关键词一样，不代表动作关系一样。
+  first_action: 并排圈主体与完整谓语；按本题差异核谁对谁做什么，或希望/事实、能力/意愿，不强制三格串行。
+  stop_rule: 没有可比差异就不用；题干已明示共同对象时不因候选省略主体排除，不能据剩余项定案。
 - question_type: 阅读理解
   symptoms:
   - 主旨题总在两个相关选项之间摇摆。
@@ -29,8 +29,8 @@ routes:
   - 主旨题二选一
   method_id: R06
   role: decider
-  first_action: 先把全文压成 2–4 个不可缺核心块 A+B+C，再用候选逐块拼图。
-  stop_rule: 范围大，不等于主旨对。
+  first_action: 把候选拆成谈什么与作什么判断，对照所问范围的已证核心关系，指出具体遗漏。
+  stop_rule: 没有已证核心关系先停；省略、近义或上位概念能覆盖时，不能因没原词判缺失。
 - question_type: 阅读理解
   symptoms:
   - 长文读完只记得零散事实，说不出全文在完成什么任务。
@@ -41,32 +41,32 @@ routes:
   - 读完不知道文章说什么
   method_id: R09
   role: framework
-  first_action: 依次压出对象、核心判断和全文结构任务。
-  stop_rule: 词频高，不等于主题完整。
+  first_action: 先读实际题干及相关选项；共同/重复概念仅作假设；再化简有效首尾，最后读中间段首及必要回答或段尾。
+  stop_rule: 局部题或缺主要段落不启动；重复线索缺失只跳过该观察；三格无正文支持则暂留，不编相关题目。
 - question_type: 阅读理解
   symptoms:
   - 选项换了表达，需要核同一断言
   spoken_aliases: []
   method_id: R03
   role: interpreter
-  first_action: 并排圈出原文与选项的对象、动作和限定词，逐格核语义是否相同
-  stop_rule: 词义不能确认、对象不同或定位句不足以闭合时停止替换，向必要上下文求证；对应词数量不证明答案。
+  first_action: 先圈所问对象、动作与限制定位段落，再用有区分度的候选名词或动作找句；并排核完整动词关系与形副范围。
+  stop_rule: 仅结构相似不启动；同词、近义词命中不直接选；词义或所在句不闭合就补必要上下文，保留否定条件。
 - question_type: 阅读理解
   symptoms:
   - 候选带比较级或最高级
   spoken_aliases: []
   method_id: R04
   role: decider
-  first_action: 列出比较双方、属性、方向、程度、范围、时间与条件，逐格回文核对
-  stop_rule: 只有一方数值、比较维度不同或原比较未找到时停止定案；最高级不是自动错误，相对更好不自动支持全范围最好。
+  first_action: 在本题内先圈比较候选，尤其多个比较项时优先回文找真实关系，再对齐双方、属性、方向、程度、范围、阶段与条件。
+  stop_rule: 未找到同比较词只是未定位，不等于证伪；最高级不自动错，后来状态不补成先前性质；题内优先不改整篇题序。
 - question_type: 阅读理解
   symptoms:
   - 两个有依据的候选可能属于同一因果链
   spoken_aliases: []
   method_id: R05
   role: decider
-  first_action: 先圈题干问原因还是结果，再写出原文支持的原因→结果，比较候选落点
-  stop_rule: 候选未各自得到支持、因果桥无原文证据、只是先后或并列时停止；问 why/reason/cause 时停止套选果偏好。
+  first_action: 先圈题干所问现象或具体环节；问原因就找与它相连的原因，否则画已证原因→中间结果→最终结果并对齐所问节点。
+  stop_rule: 共同对象、先后或并列不足以启动；链或各候选缺依据即停；不把后续结果移作前一环节目的，不由排一项定另一项。
 - question_type: 阅读理解
   symptoms:
   - 多个细节真实并列且题干允许归为一组
@@ -81,16 +81,16 @@ routes:
   spoken_aliases: []
   method_id: R08
   role: interpreter
-  first_action: 圈例子前后被支持的观点，再用例子内容检验它实际支持哪句
-  stop_rule: 直接问例中事实时不启动作用排除；候选更抽象却没有前后观点与例中动作支持时停止初判，不能补造作者用途。
+  first_action: 圈例子及必要前后观点，分别写例中发生什么与它支持哪种判断，再核候选声称的作用或覆盖。
+  stop_rule: 直接考例中事实不用本法排细节；作用新增无依据则撤回，段首段尾和主题词只作入口，不机械见细节必排。
 - question_type: 阅读理解
   symptoms:
   - 代词使对象或动作归属不清
   spoken_aliases: []
   method_id: R10
   role: interpreter
-  first_action: 列候选先行词，把每个换回原句，核数、动作角色和完整语义
-  stop_rule: 同数候选仍需比角色；状态不能压成单个名词。附近不足就扩大上下文；没有明确指示解释关系时不进入词义推断分支。
+  first_action: 圈指代及所在完整谓语；实体先列可比对象并回填，状态写谁处于什么状态，概念回看它概括的行为并还原内部代词。
+  stop_rule: 最近名词、同数或同词性不定案；状态不缩成名词，结果不冒充原状态；附近不足按缺口扩，解释关系不明停词义分支。
 - question_type: 阅读理解
   symptoms:
   - 定位长句主干与枝叶混在一起
@@ -101,8 +101,8 @@ routes:
   - 长句看不懂
   method_id: R11
   role: interpreter
-  first_action: 圈谓语和对应主体，划开修饰枝叶，但保留否定、条件、范围和比较
-  stop_rule: 枝叶中含改变结论的否定、条件、范围或比较时必须恢复；不能将目标当现状、多个动作当已证过程或转折后当答案。
+  first_action: 先圈谓语及对应主体，划分真实结构并保留答题相关修饰；阶段差异核当前与目标，持续差异直接核动作含义和必要上下文。
+  stop_rule: 分结构不等于删修饰作答；不强制持续检查前先画时间线或比时长，不凭时态、持续词或转折位置定案；含义不明停该检查。
 - question_type: 阅读理解
   symptoms:
   - 找不到与题干对象对应的证据句
@@ -112,48 +112,48 @@ routes:
   - 不知道去哪找证据
   method_id: R12
   role: locator
-  first_action: 圈题干有区分力的对象或标签，回文找对应句，再读完整断言
-  stop_rule: 同数字、同词或最近位置只提供入口；价格人数日期若为条件需另算或比较。区块不足则扩证，不能假设一题一段。
+  first_action: 圈实际题干所问对象和范围，以当前有区分力的专名、数字或其他标志标候选区域。
+  stop_rule: 暑4版本前提不成立，不借一般定位放宽；标签无区分度或位置不闭合就换线索或扩证，不假设一题一段。
 - question_type: 阅读理解
   symptoms:
   - 题干有可区别于其他段的名词
   spoken_aliases: []
   method_id: R13
   role: locator
-  first_action: 圈差异性名词，回原文对应区域，不以同词命中直接定案
-  stop_rule: 同一名词跨段或全篇重复、名词没有区分力时停止单词追踪，改用题干动作和限定；不能把出现次数当证据强度。
+  first_action: 圈差异名词或名词短语，回文标候选区域，再配题干实际动作与限定，没原词时查可确认近义表达。
+  stop_rule: 同名跨段、名词无区分度或当前表达未确认就换动作线索或补证；不按次数、最近位置或同词定答案。
 - question_type: 阅读理解
   symptoms:
   - 文章组织与题目顺序实际相符
   spoken_aliases: []
   method_id: R14
   role: locator
-  first_action: 标相邻已定位题的出处，作为当前题查找区间，发现倒叙或偏离就取消区间
-  stop_rule: 插叙、回叙、跨段综合、猜词共享出处或当前证据落区间外时取消顺序限制，回全篇定位；已定位不得等同已答对。
+  first_action: 标相邻已定位题的真实出处，暂估当前题可能区间，再以当前题对象和动作回文确认。
+  stop_rule: 插叙、回叙、跨段综合、共享出处或证据落区间外时取消限制；不切死一题一段，定位不等于已答对。
 - question_type: 阅读理解
   symptoms:
   - 同一名词对应多个动作关系
   spoken_aliases: []
   method_id: R15
   role: interpreter
-  first_action: 圈题干动词，配回主体和对象，与定位句的完整谓语比较
-  stop_rule: 只命中动词而主体或对象不同，或动作词义尚不明时停止关系等同；定位句缺原因指代时转补证。
+  first_action: 圈题干动词及对应主体对象，并排配回定位句的完整谓语，保留否定、阶段、范围和条件。
+  stop_rule: 主体、对象或动词含义未确认不判等同；缺指代、因果或阶段联系就补必要上下文，不把一致当整项正解。
 - question_type: 阅读理解
   symptoms:
   - 题干问全文或指定段主旨
   spoken_aliases: []
   method_id: R16
   role: framework
-  first_action: 先圈全文/段落范围，再写对象与核心判断，回各关键段检查覆盖
-  stop_rule: 段落主题已清时不机械压全文；局部事实、一般推断或人物品质题不直接套主旨。共同词、抽象程度和首尾结构不独立证明概括。
+  first_action: 先圈所问全文/段落范围，扫候选共同对象并去同求异，带不同判断回该范围核贯穿内容及覆盖。
+  stop_rule: 局部事实、泛推理或人物品质不套主旨；不并为中心思想；共同词、较宽范围、动态词形或剩余项不定案，段意清楚不机械压全文。
 - question_type: 阅读理解
   symptoms:
   - 定位句缺原因、指代或转折关系
   spoken_aliases: []
   method_id: R17
   role: verifier
-  first_action: 明确缺哪种关系，只向前后扩读到能补清它的句子，再核主体和动作
-  stop_rule: 定位句已闭合就不扩读；前后固定一句仍不足就按缺口继续找，关键内容未展示或仍不能闭合时暂留，不补造关系。
+  first_action: 先写清缺哪条关系，只向必要前后文扩读到能补清它的位置，再回完整断言核主体、动作和限制。
+  stop_rule: 定位句已闭合即停扩读；固定邻一句仍不足就按缺口继续，材料不足或关系不明则暂留，不编依据。
 - question_type: 七选五
   symptoms:
   - 七个选项感觉都能放，拿到每个空都从 A–G 凭语感试填。
@@ -164,8 +164,8 @@ routes:
   - 七选五凭感觉乱填
   method_id: F01
   role: reducer
-  first_action: 在选项区只做一次三维标记：句型、主角、时间；形成暂定组后立即把候选拼回空前空后。
-  stop_rule: 分组只缩范围，不负责定答案。
+  first_action: 在选项区按句型、实际主角、真谓语时间各标一次组并说清字母；无区分度如实标记，随后按突破口回正文。
+  stop_rule: 无区别不编组；发现漏纳、指代或谓语初筛错误可在当前比较纠正，不重演完整三分；不据组小、占用或剩一项选。
 - question_type: 七选五
   symptoms:
   - 选项存在不同句式且空位有结构线索
@@ -180,16 +180,16 @@ routes:
   spoken_aliases: []
   method_id: F03
   role: reducer
-  first_action: 圈选项主语与指代对象，按实际主体分组，正文发生话题转换时重新核对
-  stop_rule: 同主角仍需比谁对什么做什么；正文话题切换要核当前候选，不重新机械三分。指代未还原、共享行动者但对象不同就停主体筛选。
+  first_action: 开头圈主体与指代并展示暂定字母组，回文确认当前主体对象，再在同组比完整动作及段落推进。
+  stop_rule: 同主角但对象不同继续比；新证据改变话题或发现漏纳、指代初筛错误时更正，不重演分组；归属不明暂留。
 - question_type: 七选五
   symptoms:
   - 选项存在真实时间差异
   spoken_aliases: []
   method_id: F04
   role: reducer
-  first_action: 标每项谓语及时间词，按真实事件时间分组，不用分词词尾代替时态
-  stop_rule: 非谓语词尾不能分时态；没有真实时间差异就停筛。正文有经历、常态或感悟切换时按局部时间核，不强求全篇表面一致，也不重复三分。
+  first_action: 开头圈真谓语与时间词并说字母组，回文确认局部事件阶段，再在同组比主体、动作、指代、评价与两侧内容。
+  stop_rule: 非谓语词尾不分时态；无差异停止该维筛选；经历与感悟可切换，初筛错误可更正但不重演；不只比较异组后就选。
 - question_type: 七选五
   symptoms:
   - 空位在段首或第一段段尾附近，且后文围绕共同主题展开
@@ -199,8 +199,8 @@ routes:
   - 第一段段尾要引下文不知道怎么填
   method_id: F05
   role: interpreter
-  first_action: 列下文共同对象、动作与段落任务，再核候选能否统领，不把段首自动当中心
-  stop_rule: 候选只覆盖一个例子、数据或步骤，或预测展开与后文不符时停初判；段首和Here are等只作入口，指代承接还要核。
+  first_action: 先标候选管一个段还是后续若干分项，概括全部管辖内容的共同对象和展开方向，再核代词承接与实际展开。
+  stop_rule: 位置或Here are不定案；只对应一个例子、数据或步骤就撤回初判；不把较概括项推广到任意位置，竞争未闭合继续核。
 - question_type: 七选五
   symptoms:
   - 候选与上下句有对象或词义复现
@@ -209,8 +209,8 @@ routes:
   - 同词就想选
   method_id: F06
   role: verifier
-  first_action: 圈两边对应对象与动作，标同指或同义关系，再回填核上下句和段落任务
-  stop_rule: 只是同主题或翻译通却没有明确呼应时不命名本法；同词多项都能接时比完整断言。形式it、概括名词或latter必须按实际内容还原，不能强找最近名词。
+  first_action: 圈呼应表达并写它承接哪个对象、事件或整句内容，回填两侧；需要时由空后代词反查候选提供的前提。
+  stop_rule: 无明确呼应不命名本法；形式it不强找名词，latter要有真实成对对象；前提未引出不提前放，段界连下段起句核。
 - question_type: 七选五
   symptoms:
   - 空前后显示转折、因果、解释等关系
@@ -241,48 +241,48 @@ routes:
   spoken_aliases: []
   method_id: F10
   role: verifier
-  first_action: 逐空回填，核主体、动作、对象、上下句关系及段落任务，不以占用或剩余定案
-  stop_rule: 当前空仍有多个内容成立项或关键关系缺失时停止确认并暂留；发现其他项可能对应已填空就返回该处重核，不能无据恢复已证伪项。
+  first_action: 逐空回填核对象、动作、两侧功能与段落任务，再核未选项的内容承接和断言范围，疑似对应已填位置则返回。
+  stop_rule: 内容仍多项成立或缺关键关系就暂留；占用与剩余不作本空依据，已证伪项不无据恢复。
 - question_type: 七选五
   symptoms:
   - 候选已回填且必须区分竞争项
   spoken_aliases: []
   method_id: F11
   role: decider
-  first_action: 逐项核候选主体、动作、对象、上下句关系和段落任务，只以当前空自身的决定性关系定案
-  stop_rule: 多项仅局部接通或仍共同成立时暂留，不按主观更像原因撤销另一项；形式、同词、时态、占用或剩余均不能替代当前空自身证据。
+  first_action: 并排核竞争项完整断言怎样承接空前具体条件、空后结果与全段问题，标实际支持或冲突。
+  stop_rule: 多个候选仍成立则暂留，不按主观更像原因撤销另一项；不靠他空占用、剩一项或无文本的直觉定案。
 - question_type: 完形填空
   symptoms:
   - 当前空不能由孤立语法闭合
   spoken_aliases: []
   method_id: C01
   role: framework
-  first_action: 标当前空是词义/关系/搭配角色；找最近对象与动作线索；不足向复现、回答、结果或评价扩；回填核语义
-  stop_rule: 当前空自己的词义、搭配或决定性关系仍不明就暂留；主题同向、单句顺口或另一空已填都不证明答案。原空号走两遍，不按难易预排。
+  first_action: 标空位角色，圈最近对象/动作提示；最近不足才向真实复现、回答、结果或评价扩读，再回填核具体语义与联系。
+  stop_rule: 当前空的决定性词义或关系仍不明就暂留；找到独立提示再返回，不强制原空号、两遍或三遍。
 - question_type: 完形填空
   symptoms:
   - 空前空后证据尚未闭合
   spoken_aliases: []
   method_id: C02
   role: verifier
-  first_action: 圈两侧谁、动作、评价和时间；近处不足再向明确复现或结果扩读，仍不足暂留
-  stop_rule: 局部仍不足就暂留，按原空号先做有独立依据的空再返回；相邻待定空、教师先报答案和选项占用都不能给本空作证。不要只截取支持初选的一句。
+  first_action: 圈两侧对象、动作、评价、时间及候选额外前提；近处够则回填，不够写缺口并向真实复现、回答、结果或评价扩。
+  stop_rule: 仍不足就暂留，找到独立提示后返回，不强制原空号；相邻待定空、已占项或先报答案不互证。
 - question_type: 完形填空
   symptoms:
   - 当前空依赖人物背景或全文基调
   spoken_aliases: []
   method_id: C03
   role: interpreter
-  first_action: 从首句记录人物、背景、主题、视角和暂定基调，不据此预编后续情节
-  stop_rule: 首句没有的信息不能预编；人物态度、外在表现和实际遭遇须分开。当前空能局部闭合就不机械复述首句，框架不选词。
+  first_action: 从首句或前几句标人物、背景、主题、视角与暂定基调，再核当前空实际需要的对象和关系。
+  stop_rule: 首句未给的信息不预编；积极态度不等于遭遇顺利，外在表现、遭遇与态度不混同；不报课程系列为方法。
 - question_type: 完形填空
   symptoms:
   - 空内词的句法作用能指向线索类型
   spoken_aliases: []
   method_id: C04
   role: locator
-  first_action: 标空内作用，再圈修饰同一对象或动作的结构，不凭词性定案
-  stop_rule: 只看词尾或词性仍无法确认所修饰对象时停止定位结论；动词空要另核谁做、指向谁、回应什么，不能把观察者感受当人物行动。
+  first_action: 标空内作用并圈实际修饰同一对象或动作的结构；动词空核谁做、指向谁及真实施受归属。
+  stop_rule: 修饰对象、逻辑主语或具体词义未确认先停该定位结论；不凭职业惯例、心理猜测补候选所需前提。
 - question_type: 完形填空
   symptoms:
   - 多个候选译义相近或评价同向
@@ -305,8 +305,8 @@ routes:
   spoken_aliases: []
   method_id: C07
   role: locator
-  first_action: 圈原词/同义/同源复现并核是否同一对象，不把复现直接当答案
-  stop_rule: 宽泛类别、同词或复现次数不构成定案；同名不同事件需分开，邻句不足可找后面几句，但缺同指关系就停止采用该线索。
+  first_action: 圈相关表达及其内容，确认仍指同一人物、状态或事件；已知派生关系再核词义，必要时向后找并回填。
+  stop_rule: 未知词根不拆猜，共同后缀或形近不当同根；and不强定同向，复现、类别或次数不定案；同指或词义不明暂留。
 - question_type: 完形填空
   symptoms:
   - 题面给出评价或结果可核当前行为
@@ -333,7 +333,7 @@ routes:
   method_id: G01
   role: framework
   first_action: 圈出空后的括号提示词（若有），再圈空前后支配或修饰词，在未填句上标明空位成分；确认需要动词才分谓语/非谓语。
-  stop_rule: 提示词是什么词性，不等于答案就是什么词性。
+  stop_rule: 空位功能或必要句子未确认时先停；到达知识节点即停止总路线，改用节点句法、搭配与句意核验，不把路由当答案。
 - question_type: 语法填空
   symptoms:
   - 开始处理语法空位
@@ -496,56 +496,56 @@ routes:
   spoken_aliases: []
   method_id: A02
   role: framework
-  first_action: 先圈限定和全部要点，搭文体骨架，再依原六步造句、组篇、升级和复核
-  stop_rule: 题目或交际对象不清先补信息；基础句或内容未成立时停止升级。模板不合语境不得照抄，完成六步不保证分数。
+  first_action: 圈题面限定与全部要点，搭合适文体骨架，写准确单句再按真实关系组篇、升级和复核。
+  stop_rule: 题目或对象不清先补材料；基础内容未成立先修，不照抄不合语境模板，不保证分数。
 - question_type: 应用文
   symptoms:
   - 要点已确定但简单句写不出来
   spoken_aliases: []
   method_id: A03
   role: interpreter
-  first_action: 先写主体，再写动作或状态，最后嵌入题面支持的场景细节
-  stop_rule: 主体或动作不确定先回要点，不能编背景补空；句子主干、搭配或时态不成立先修准确，不急着加修饰。
+  first_action: 先写核心主体，再写动作或状态，最后加入题面支持且服务要点的时间地点等细节。
+  stop_rule: 主体或动作不明先回要点，不编背景；基础不成立先修，不靠堆修饰升级，基础句式锚定不与另两种方法合并。
 - question_type: 应用文
   symptoms:
   - 多个动作要合成复杂句
   spoken_aliases: []
   method_id: A04
   role: interpreter
-  first_action: 每个动作先写正确简单句，再按真实关系用从句、非谓语或连接词粘连
-  stop_rule: 基础句未正确先修句；逻辑关系不明不合并。非谓语的动作主体或从句依附不成立，退回独立句，不为复杂度强拼。
+  first_action: 各动作先独立写成正确简单句，标实际关系，再选合适从句、非谓语、连接词或介词短语粘连。
+  stop_rule: 基础句或关系未成立不合并；动作主体或依附错误退回独立句，不为复杂度强拼或把训练配比作语法上限。
 - question_type: 应用文
   symptoms:
   - 中文长句信息和修饰混杂
   spoken_aliases: []
   method_id: A05
   role: interpreter
-  first_action: 拆核心与修饰，按主体→动作→场景重组，再校时态词性单复数与风格
-  stop_rule: 核心与修饰还分不清先停重排；否定、时间、数量或条件不能当枝叶丢掉。改写改变身份、动作或因果时退回原意。
+  first_action: 拆核心与修饰信息，按主体→核心动作→场景重组，再校时态、词性、单复数和衔接风格。
+  stop_rule: 核心不清先停重排；否定、时间、数量、条件不能当枝叶删；不宣称缺连续口述或新完整例的分支已全面验收。
 - question_type: 应用文
   symptoms:
   - 课后需积累准确可迁移表达
   spoken_aliases: []
   method_id: A06
   role: framework
-  first_action: 先简化中文自行译，再对照范文记录缺失表达；背诵复现后在同结构仿写
-  stop_rule: 适用于课后训练，不是考场先看答案；已准确且自然的异写不判错。范文或AI升级改变意思、搭配未核时不背不照抄。
+  first_action: 中文必要时先简化，再独立英译、对照范文、记录并背诵缺失词或句式；第五步AI升级可选。
+  stop_rule: 范文或AI改变任务、意思或搭配未核就不背不抄；挖空法另列，不塞入寒4五步或改称六步。
 - question_type: 应用文
   symptoms:
   - 基础句准确且需要自然升级
   spoken_aliases: []
   method_id: A07
   role: interpreter
-  first_action: 先简化中文、译正确简单句，再加入服务真实逻辑的修饰或从句，搭配不明停升级
-  stop_rule: 基础句不成立先修基础；升级引入原任务没有的事件、感受或因果时停止。动作主体、搭配或句法不明则撤回该层，不追求层层加满。
+  first_action: 并排写出相关简单句，标共同主体和实际关系，再选合适从句、非谓语或介词短语拼接。
+  stop_rule: 主体、语义关系或搭配不成立退回独立句；不靠110/120整篇词数选法，不借续写同名定义。
 - question_type: 应用文
   symptoms:
   - 应用文需要匹配文体与交际目的
   spoken_aliases: []
   method_id: A08
   role: framework
-  first_action: 圈题目文体对象目的，调用对应骨架，不把文体模板算独立原创规则
-  stop_rule: 题面格式、已给首尾或目的另有要求时服从题面，不硬套三段或称呼；骨架不是原创品牌判据，也不能以句型齐全判内容完成。
+  first_action: 圈题面文体、对象、目的及明示格式，让各段承担实际要点功能，再选择相应文体骨架。
+  stop_rule: 题面已给标题首尾或特殊格式就按要求保留，不硬套段数；示范句型不作每篇配额，骨架齐不等于要点完成。
 - question_type: 应用文
   symptoms:
   - 题目与学生全文可见且请求批改
@@ -560,133 +560,133 @@ routes:
   spoken_aliases: []
   method_id: A10
   role: framework
-  first_action: 按材料中的训练阶段选一个下一步，不把分数锚定当个体提分保证
-  stop_rule: 这是课后训练规划，不是当场答案或个体得分预测；基础翻译、任务覆盖未稳不跳到复杂升级，不因背完金句承诺10分或15分。
+  first_action: 依据现有稿件或练习，标任务骨架、基础翻译、素材调用或自然升级的缺口，选择一个对应阶段的复练动作。
+  stop_rule: 没有现稿不精确承诺档次；基础未稳不跳华丽结构，金句积累数量不作单篇使用数，110/120不当整篇词数策略。
 - question_type: 读后续写
   symptoms:
   - 原文与两段开头语齐全，需要构思
   spoken_aliases: []
   method_id: W01
   role: framework
-  first_action: 先读两段开头语找约束，再记录原文人物矛盾与时空，依跳定思提润推进
-  stop_rule: 缺原文或任一开头语先停构思，只校现有语言；人物、关键事实或段间接续不成立先修框架。润色不得靠无铺垫的新事件，独立升华句不是必须项。
+  first_action: 先读两首句提出待证问题，再回原文找人物矛盾与时空；依跳定思提润留下线索、冲突主题、构思、功能提纲与润色检查。
+  stop_rule: 缺必要材料只校现有语言；人物、事实或衔接不成立先修，不能借独立升华句补框架，也不混同各版五步成文原名。
 - question_type: 读后续写
   symptoms:
   - 需要搭两段功能提纲或诊断桥接
   spoken_aliases: []
   method_id: W02
   role: framework
-  first_action: 只标学生自写的第1/5/6/9/10句功能，写清衔接、桥接、解决与回扣，不算给定首句
-  stop_rule: 给定首句不计学生十句，未抄首句正常；实际不是十句时按功能映射，不为凑数删合理内容。缺原文或首句不判完整衔接，独立升华句非必需。
+  first_action: 先标自写两段开头、第一段末、结局与收束五个功能位；采用自写十句时才对应1/5/6/9/10。
+  stop_rule: 句数不同按现稿映射，不凑十句；给定首句不要求重抄；已衔接就不重述或补可省过渡。
 - question_type: 读后续写
   symptoms:
   - 已读原文首句需要整理情节
   spoken_aliases: []
   method_id: W03
   role: framework
-  first_action: 只选需求→困难→行动→结局这一套四格，每格填原文约束，不混用另一版字母定义
-  stop_rule: 两版PTSD字母定义不可混用；缺原文约束先停，未铺垫的困难或解决者不能靠填表成立。结果应顺承故事，独立升华句不强制。
+  first_action: 先注明版本：寒8板书P目的/T方式/S苦难/D结局；同课表格P需求/T方法/S困难/D结局；逐槽填首句已知与原文约束。
+  stop_rule: 未注明版本先停；未知槽留空，不凭口诀补事故或救场者；Needs/Difficulties/Solutions/Denouement不是PTSD英文展开。
 - question_type: 读后续写
   symptoms:
   - 两段开头语对人物或行动有约束
   spoken_aliases: []
   method_id: W04
   role: locator
-  first_action: 圈开头语的名词和任务，回文找人物与矛盾，再反推段间需要补的动作
-  stop_rule: 首句只给约束，不证明唯一剧情；回文找不到任务前提或人物动机就暂留，不凭名词造事件。缺任一首句不能做完整段间反推。
+  first_action: 圈首句已明示的人事物、状态、时地和任务，带状态变化的问题回原文，再标段间确有必要的过程。
+  stop_rule: 缺首句或前提不足停完整反推；可省过渡不强加，已衔接不重述下一段进行中事件，不凭名词补唯一剧情。
 - question_type: 读后续写
   symptoms:
   - 核心行动需要具体连贯描写
   spoken_aliases: []
   method_id: W05
   role: interpreter
-  first_action: 把已有行动拆最多三个合理小动作，再加与场景相符的方式，不改变人物能力
-  stop_rule: 没有成立的核心行动先回情节，不用拆链发明事件；不机械凑三个动作。主体、物理条件或先后冲突时退回原动作。
+  first_action: 圈已有核心行动，拆真实相连的小动作，标人物、先后和因果，再补合语境状态。
+  stop_rule: 没有成立行动不拆；人物能力、物理条件或因果不成立则撤回；动作面独立定义未核，不补成动作加心理加环境。
 - question_type: 读后续写
   symptoms:
   - 续写不知从哪里下笔
   spoken_aliases: []
   method_id: W06
   role: locator
-  first_action: 圈核心人物、核心矛盾和关键线索，不额外造主角或无铺垫事故
-  stop_rule: 三点未从原文找到先停编写；线索不能自动证明解决动作，新主角或无铺垫事故不能补成第三点。
+  first_action: 给这三项各圈真实原文位置，写谁因何受阻、哪条线索约束后续。
+  stop_rule: 原文找不到就留缺口，不编主角或事故补齐三点；不把段首句加动作加结局的练习比例当全体写作配额。
 - question_type: 读后续写
   symptoms:
   - 人物行为或物件需要兑现原文线索
   spoken_aliases: []
   method_id: W07
   role: verifier
-  first_action: 把关键行为与原文伏笔逐对连线，找悬空线索，不强行用无关细节
-  stop_rule: 对应只找到同词却说不清因果或用途时停止核验；不能为了兑现添加无铺垫能力或事件。缺原文无法证明回扣。
+  first_action: 将关键行为、物件结果与原文重要伏笔连线，写清动机、用途或后果，标未兑现的重要联系。
+  stop_rule: 只有同词而无真实联系就停确认；不为了兑现添无铺垫能力、事故或人物，缺原文不证明回扣。
 - question_type: 读后续写
   symptoms:
   - 事件跳跃缺因果桥梁
   spoken_aliases: []
   method_id: W08
   role: interpreter
-  first_action: 写因为A→行动B→结果C，每条边引用原文或合理铺垫，不让猜测互证
-  stop_rule: 某一条边只有猜测互证或物理条件不成立先停推进，补合理动机/行动而不是再添结果。叙事先后不自动等于因果。
+  first_action: 写因为A→行动B→结果C，为每条边标原文条件或合理铺垫，逐条说明怎样促成下一步。
+  stop_rule: 边上只有猜测互证或物理条件不成立就停推进，先补合理动机/行动，不靠再添结果证明前一步。
 - question_type: 读后续写
   symptoms:
   - 主线成立但画面单薄
   spoken_aliases: []
   method_id: W09
   role: interpreter
-  first_action: 在推进主线的位置选动作、神态、环境中有用的细节，不每句堆三类
-  stop_rule: 人物因果或衔接未成立先修框架；细节只为凑字数且不服务主线时停止添加。采用26S春人与自然万能句式时另遵非功能位限制，环境模板不放结尾，不能泛化成所有描写的绝对位置规则。
+  first_action: 在推进主线的行动旁选有用的动作、神态或环境细节，注明它显示的状态或推进的环节。
+  stop_rule: 框架未成立先修；只凑字数不加。春11环境素材位置建议仅限该组模板，不扩大成所有环境描写禁令或强制句位。
 - question_type: 读后续写
   symptoms:
   - 连接词堆砌却对象衔接不清
   spoken_aliases: []
   method_id: W10
   role: interpreter
-  first_action: 圈相邻句共同对象和代词回指，使用关键词复现，不删掉必要逻辑关系
-  stop_rule: 代词有歧义先明确对象；两句对象相同但动作无因果不宣称自然衔接。删连接词会改变逻辑时保留或换准确表达。
+  first_action: 圈共同对象和代词回指，回填所指并核动作接续；可用关键词复现或指代替代无用连接词。
+  stop_rule: 代词歧义先明确对象；同对象不证明有因果，删词会改关系就保留或换准确表达，不为无痕而删逻辑。
 - question_type: 读后续写
   symptoms:
   - 解决过程可以加入有铺垫波折
   spoken_aliases: []
   method_id: W11
   role: interpreter
-  first_action: 从原文矛盾找小障碍，写解决动作，不凭空新增关键人物事故
-  stop_rule: 无原文矛盾轨道或必要铺垫先停设计；新关键人物、事故、超能力不能只为反转加入。框架未完整先解决框架，正向结果不等于强行大团圆。
+  first_action: 从当前矛盾找合理小障碍，写触发条件与解决行动，再核人物能力和主线不变。
+  stop_rule: 无铺垫或框架未完整先停；不加无据关键人物、超能力或事故，每篇不强制转折，正向不等于大团圆。
 - question_type: 读后续写
   symptoms:
   - 基础表达准确后需改具体词
   spoken_aliases: []
   method_id: W12
   role: interpreter
-  first_action: 圈笼统动词或形容词，用符合场景与搭配的具体词替换，生词搭配不明就停
-  stop_rule: 基础意思或句法未准确先修，不先换词；替换词搭配、力度或适用对象不明就停并保留准确常用词，不从词表盲抄。
+  first_action: 圈笼统词，写清此处实际动作或状态，再选对象、力度与搭配匹配的词并回填。
+  stop_rule: 基础未准确先修，生词的力度或搭配不明保留准确常用词；不从词表盲抄或按替换数量评分。
 - question_type: 读后续写
   symptoms:
   - 故事结局需要回应主题
   spoken_aliases: []
   method_id: W13
   role: verifier
-  first_action: 圈原文关键细节与解决结果，让结尾回扣它们；独立升华句不是必须项
-  stop_rule: 核心矛盾未解决先停喊道理；主题与原文不符或抽象词不能换成本题内容时不保留。缺原文无法完整核回扣，没独立升华句不判重大缺失。
+  first_action: 把解决结果对应回原文关键线索，指出行动或感悟怎样带出本题主题。
+  stop_rule: 核心矛盾未解先停喊道理；抽象主题不能换成本题内容就撤回，没独立升华句不自动降档或判重大缺失。
 - question_type: 读后续写
   symptoms:
   - 功能提纲与扩写位置需要区分
   spoken_aliases: []
   method_id: W14
   role: framework
-  first_action: 标确定功能位为骨架，其余位置按因果与画面扩写，不把句数当评分扣分项
-  stop_rule: 骨架任务未接通先补功能，不先堆肌肉；非功能位也受原文人物事实与因果限制，不能会什么背什么。句数不是独立扣分项。
+  first_action: 标接首句、必要桥接、解决与收束等实际功能为骨架，其余位置按本题因果与画面需要选写有把握内容。
+  stop_rule: 骨架未接通先补功能；非功能位也受原文约束，不会什么就硬背什么，不因句数或句位本身扣分。
 - question_type: 读后续写
   symptoms:
   - 原文首句和学生续写齐全且请求评分
   spoken_aliases: []
   method_id: W15
   role: verifier
-  first_action: 只按25分续写档次核原文融洽、语言与结构；不抄首句正常，书写只在实见影响交际时评
-  stop_rule: 缺原文或任一首句只能校语言，不评完整剧情或分数；不抄首句正常，给定首句不计学生字数句数。仅清晰原手写且影响交际才评书写，独立升华句和恰好十句都不是必须项。
+  first_action: 按25分档次逐项引用原文与自写稿证据，先核融洽、情节和完整性，再核语言与衔接。
+  stop_rule: 缺必要材料不报完整分；不抄给定首句正常；仅原手写可见且影响交际才按规范处理书写，不伪造固定扣分。
 - question_type: 读后续写
   symptoms:
   - 课后需确定下一档训练缺口
   spoken_aliases: []
   method_id: W16
   role: framework
-  first_action: 按现稿证据选对应升级动作，不把训练模板直接当官方独立扣分项
-  stop_rule: 训练路径不代替25分定档，缺当前稿不能精确诊断；基础逻辑语言未稳不跳到华丽表达。每项练习都受原文约束，不机械追加转折或升华。
+  first_action: 按现稿先核完整和因果，再选细节衔接、合理转折或精准表达中的一项复练。
+  stop_rule: 缺现稿不精确诊断或承诺升档；基础未稳不跳华丽升级，不机械增加动作、复杂句、转折或独立升华句。

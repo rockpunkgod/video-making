@@ -1,0 +1,435 @@
+registry_version: 2.0.0
+source_baseline:
+  repository: https://github.com/rockpunkgod/ANSWER.git
+  commit: b04ebc26d7fa096404111a0bb12f6c77cc8525b9
+  captured_at: 2026-10-05
+schema: schemas/method-card.json
+method_files:
+- method-registry/reading.yaml
+- method-registry/seven-five.yaml
+- method-registry/cloze.yaml
+- method-registry/grammar.yaml
+- method-registry/application-writing.yaml
+- method-registry/continuation-writing.yaml
+methods:
+  R01:
+    brand_name: 选项加戏
+    status: candidate
+    version: 1.1.0
+    file: method-registry/reading.yaml
+  R02:
+    brand_name: 谁干的陷阱
+    status: candidate
+    version: 1.1.0
+    file: method-registry/reading.yaml
+  R06:
+    brand_name: 主旨缺块
+    status: candidate
+    version: 1.1.0
+    file: method-registry/reading.yaml
+  R09:
+    brand_name: 三步压文
+    status: candidate
+    version: 1.1.0
+    file: method-registry/reading.yaml
+  R03:
+    brand_name: 换词不换义
+    status: candidate
+    version: 1.1.0
+    file: method-registry/reading.yaml
+  R04:
+    brand_name: 比较别偷换
+    status: candidate
+    version: 1.1.0
+    file: method-registry/reading.yaml
+  R05:
+    brand_name: 因果别选反
+    status: candidate
+    version: 1.1.0
+    file: method-registry/reading.yaml
+  R07:
+    brand_name: 并列打包
+    status: candidate
+    version: 1.1.0
+    file: method-registry/reading.yaml
+  R08:
+    brand_name: 例子只作证
+    status: candidate
+    version: 1.1.0
+    file: method-registry/reading.yaml
+  R10:
+    brand_name: 代词回填
+    status: candidate
+    version: 1.1.0
+    file: method-registry/reading.yaml
+  R11:
+    brand_name: 长句拆骨
+    status: candidate
+    version: 1.1.0
+    file: method-registry/reading.yaml
+  R12:
+    brand_name: 关键词追踪
+    status: candidate
+    version: 1.1.0
+    file: method-registry/reading.yaml
+  R13:
+    brand_name: 名词追踪
+    status: candidate
+    version: 1.1.0
+    file: method-registry/reading.yaml
+  R14:
+    brand_name: 顺序锁区
+    status: candidate
+    version: 1.1.0
+    file: method-registry/reading.yaml
+  R15:
+    brand_name: 动词定关系
+    status: candidate
+    version: 1.1.0
+    file: method-registry/reading.yaml
+  R16:
+    brand_name: 主题锁定
+    status: candidate
+    version: 1.1.0
+    file: method-registry/reading.yaml
+  R17:
+    brand_name: 前后补证
+    status: candidate
+    version: 1.1.0
+    file: method-registry/reading.yaml
+  F01:
+    brand_name: 选项三分
+    status: candidate
+    version: 1.1.0
+    file: method-registry/seven-five.yaml
+  F02:
+    brand_name: 句型分组
+    status: candidate
+    version: 1.1.0
+    file: method-registry/seven-five.yaml
+  F03:
+    brand_name: 主角分组
+    status: candidate
+    version: 1.1.0
+    file: method-registry/seven-five.yaml
+  F04:
+    brand_name: 时间分组
+    status: candidate
+    version: 1.1.0
+    file: method-registry/seven-five.yaml
+  F05:
+    brand_name: 段首统领
+    status: candidate
+    version: 1.2.0
+    file: method-registry/seven-five.yaml
+  F06:
+    brand_name: 前后呼应
+    status: candidate
+    version: 1.1.0
+    file: method-registry/seven-five.yaml
+  F07:
+    brand_name: 关系拼接
+    status: candidate
+    version: 1.1.0
+    file: method-registry/seven-five.yaml
+  F08:
+    brand_name: 情绪同向
+    status: candidate
+    version: 1.1.0
+    file: method-registry/seven-five.yaml
+  F09:
+    brand_name: 半句补全
+    status: candidate
+    version: 1.1.0
+    file: method-registry/seven-five.yaml
+  F10:
+    brand_name: 末轮反查
+    status: candidate
+    version: 1.1.0
+    file: method-registry/seven-five.yaml
+  F11:
+    brand_name: 正文闭环
+    status: candidate
+    version: 1.1.0
+    file: method-registry/seven-five.yaml
+  C01:
+    brand_name: 语篇线索链
+    status: candidate
+    version: 1.1.0
+    file: method-registry/cloze.yaml
+  C02:
+    brand_name: 前后夹击
+    status: candidate
+    version: 1.1.0
+    file: method-registry/cloze.yaml
+  C03:
+    brand_name: 首句定调
+    status: candidate
+    version: 1.1.0
+    file: method-registry/cloze.yaml
+  C04:
+    brand_name: 词性导航
+    status: candidate
+    version: 1.1.0
+    file: method-registry/cloze.yaml
+  C05:
+    brand_name: 近义落地
+    status: candidate
+    version: 1.1.0
+    file: method-registry/cloze.yaml
+  C06:
+    brand_name: 时间线复原
+    status: candidate
+    version: 1.1.0
+    file: method-registry/cloze.yaml
+  C07:
+    brand_name: 名词回声
+    status: candidate
+    version: 1.1.0
+    file: method-registry/cloze.yaml
+  C08:
+    brand_name: 结果反推
+    status: candidate
+    version: 1.1.0
+    file: method-registry/cloze.yaml
+  C09:
+    brand_name: 动作串联
+    status: candidate
+    version: 1.1.0
+    file: method-registry/cloze.yaml
+  G01:
+    brand_name: 先判空位
+    status: candidate
+    version: 1.1.0
+    file: method-registry/grammar.yaml
+  G02:
+    brand_name: 双路分流
+    status: candidate
+    version: 1.1.0
+    file: method-registry/grammar.yaml
+  G03:
+    brand_name: 限定词落位
+    status: candidate
+    version: 1.1.0
+    file: method-registry/grammar.yaml
+  G04:
+    brand_name: 指代落位
+    status: candidate
+    version: 1.1.0
+    file: method-registry/grammar.yaml
+  G05:
+    brand_name: 介词看场景
+    status: candidate
+    version: 1.1.0
+    file: method-registry/grammar.yaml
+  G06:
+    brand_name: 从句找缺口
+    status: candidate
+    version: 1.1.0
+    file: method-registry/grammar.yaml
+  G07:
+    brand_name: 句间搭桥
+    status: candidate
+    version: 1.1.0
+    file: method-registry/grammar.yaml
+  G08:
+    brand_name: 词性落位
+    status: candidate
+    version: 1.1.0
+    file: method-registry/grammar.yaml
+  G09:
+    brand_name: 名词节点
+    status: candidate
+    version: 1.1.0
+    file: method-registry/grammar.yaml
+  G10:
+    brand_name: 形副节点
+    status: candidate
+    version: 1.1.0
+    file: method-registry/grammar.yaml
+  G11:
+    brand_name: 数词节点
+    status: candidate
+    version: 1.1.0
+    file: method-registry/grammar.yaml
+  G12:
+    brand_name: 动词二分
+    status: candidate
+    version: 1.1.0
+    file: method-registry/grammar.yaml
+  G13:
+    brand_name: 时态三查
+    status: candidate
+    version: 1.1.0
+    file: method-registry/grammar.yaml
+  G14:
+    brand_name: 找真主语
+    status: candidate
+    version: 1.1.0
+    file: method-registry/grammar.yaml
+  G15:
+    brand_name: 非谓语三轴
+    status: candidate
+    version: 1.1.0
+    file: method-registry/grammar.yaml
+  G16:
+    brand_name: 找动作主人
+    status: candidate
+    version: 1.1.0
+    file: method-registry/grammar.yaml
+  G17:
+    brand_name: 长句脱壳
+    status: candidate
+    version: 1.1.0
+    file: method-registry/grammar.yaml
+  G18:
+    brand_name: 考点重复反查
+    status: candidate
+    version: 1.1.0
+    file: method-registry/grammar.yaml
+  G19:
+    brand_name: 变形次数反查
+    status: candidate
+    version: 1.1.0
+    file: method-registry/grammar.yaml
+  A01:
+    brand_name: 作文五检
+    status: candidate
+    version: 1.1.0
+    file: method-registry/application-writing.yaml
+  A02:
+    brand_name: 六步成稿
+    status: candidate
+    version: 1.1.0
+    file: method-registry/application-writing.yaml
+  A03:
+    brand_name: 三步造句
+    status: candidate
+    version: 1.1.0
+    file: method-registry/application-writing.yaml
+  A04:
+    brand_name: 句块拼接
+    status: candidate
+    version: 1.1.0
+    file: method-registry/application-writing.yaml
+  A05:
+    brand_name: 长句重组
+    status: candidate
+    version: 1.1.0
+    file: method-registry/application-writing.yaml
+  A06:
+    brand_name: 对照仿写
+    status: candidate
+    version: 1.1.0
+    file: method-registry/application-writing.yaml
+  A07:
+    brand_name: 长句搭积木
+    status: candidate
+    version: 1.1.0
+    file: method-registry/application-writing.yaml
+  A08:
+    brand_name: 文体骨架
+    status: candidate
+    version: 1.1.0
+    file: method-registry/application-writing.yaml
+  A09:
+    brand_name: 应用文评分
+    status: candidate
+    version: 1.1.0
+    file: method-registry/application-writing.yaml
+  A10:
+    brand_name: 读背仿与训练阶段
+    status: candidate
+    version: 1.1.0
+    file: method-registry/application-writing.yaml
+  W01:
+    brand_name: 五步锁剧情
+    status: candidate
+    version: 1.1.0
+    file: method-registry/continuation-writing.yaml
+  W02:
+    brand_name: 十句五锚
+    status: candidate
+    version: 1.1.0
+    file: method-registry/continuation-writing.yaml
+  W03:
+    brand_name: 剧情四格
+    status: candidate
+    version: 1.1.0
+    file: method-registry/continuation-writing.yaml
+  W04:
+    brand_name: 首句找缺口
+    status: candidate
+    version: 1.1.0
+    file: method-registry/continuation-writing.yaml
+  W05:
+    brand_name: 动作拆链
+    status: candidate
+    version: 1.1.0
+    file: method-registry/continuation-writing.yaml
+  W06:
+    brand_name: 三点锁题
+    status: candidate
+    version: 1.1.0
+    file: method-registry/continuation-writing.yaml
+  W07:
+    brand_name: 伏笔回扣
+    status: candidate
+    version: 1.1.0
+    file: method-registry/continuation-writing.yaml
+  W08:
+    brand_name: 因果三连
+    status: candidate
+    version: 1.1.0
+    file: method-registry/continuation-writing.yaml
+  W09:
+    brand_name: 细节三镜
+    status: candidate
+    version: 1.1.0
+    file: method-registry/continuation-writing.yaml
+  W10:
+    brand_name: 无痕衔接
+    status: candidate
+    version: 1.1.0
+    file: method-registry/continuation-writing.yaml
+  W11:
+    brand_name: 小转折
+    status: candidate
+    version: 1.1.0
+    file: method-registry/continuation-writing.yaml
+  W12:
+    brand_name: 精准换词
+    status: candidate
+    version: 1.1.0
+    file: method-registry/continuation-writing.yaml
+  W13:
+    brand_name: 结尾回扣
+    status: candidate
+    version: 1.1.0
+    file: method-registry/continuation-writing.yaml
+  W14:
+    brand_name: 骨架句与肌肉句
+    status: candidate
+    version: 1.1.0
+    file: method-registry/continuation-writing.yaml
+  W15:
+    brand_name: 续写评分
+    status: candidate
+    version: 1.1.0
+    file: method-registry/continuation-writing.yaml
+  W16:
+    brand_name: 五档训练升级
+    status: candidate
+    version: 1.1.0
+    file: method-registry/continuation-writing.yaml
+version_policy:
+  rule: 任何语义、触发、判据或边界改动都新增版本记录，不静默覆盖。
+  history_location: method-registry/history/
+golden_methods:
+- R01
+- R02
+- R06
+- R09
+- F01
+- G01
+source_sections: method-registry/source-sections.yaml

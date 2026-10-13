@@ -19,3 +19,5 @@ method_role: framework
 expected_output: interpret
 stop_rule: 词频高，不等于主题完整。
 notes: 完整材料未在 ANSWER 运行层发布。
+method_version: 1.1.0
+source_commit: b04ebc26d7fa096404111a0bb12f6c77cc8525b9

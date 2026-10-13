@@ -1,0 +1,19 @@
+case_id: W06-canonical
+method_id: W06
+question_type: 读后续写
+source:
+  repository: https://github.com/rockpunkgod/ANSWER.git
+  commit: b04ebc26d7fa096404111a0bb12f6c77cc8525b9
+  path: gaokao-writing/references/continuation-writing-and-correction.md
+  heading: 五档升级路径（训练用）
+question: null
+answer: null
+trigger: 续写不知从哪里下笔
+evidence: []
+method_role: locator
+expected_action: 圈核心人物、核心矛盾和关键线索，不额外造主角或无铺垫事故
+expected_output: locate
+stop_rule: 三点未从原文找到先停编写；线索不能自动证明解决动作，新主角或无铺垫事故不能补成第三点。
+case_type: canonical
+status: evidence_gap
+notes: 源方法可核；尚未逐题核验案例，不可当成功样例

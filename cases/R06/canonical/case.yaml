@@ -19,3 +19,5 @@ method_role: decider
 expected_output: decide
 stop_rule: 范围大，不等于主旨对。
 notes: 课程证据记录局部操作，未发布可重用完整全文和候选。
+method_version: 1.1.0
+source_commit: b04ebc26d7fa096404111a0bb12f6c77cc8525b9

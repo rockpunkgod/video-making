@@ -22,3 +22,5 @@ method_role: framework
 expected_output: reduce
 stop_rule: 提示词是什么词性，不等于答案就是什么词性。
 notes: 缺少经核验完整困难题，不造题补数
+method_version: 1.1.0
+source_commit: b04ebc26d7fa096404111a0bb12f6c77cc8525b9

@@ -1,0 +1,19 @@
+case_id: W11-canonical
+method_id: W11
+question_type: 读后续写
+source:
+  repository: https://github.com/rockpunkgod/ANSWER.git
+  commit: b04ebc26d7fa096404111a0bb12f6c77cc8525b9
+  path: gaokao-writing/references/continuation-writing-and-correction.md
+  heading: 五档升级路径（训练用）
+question: null
+answer: null
+trigger: 解决过程可以加入有铺垫波折
+evidence: []
+method_role: interpreter
+expected_action: 从原文矛盾找小障碍，写解决动作，不凭空新增关键人物事故
+expected_output: interpret
+stop_rule: 无原文矛盾轨道或必要铺垫先停设计；新关键人物、事故、超能力不能只为反转加入。框架未完整先解决框架，正向结果不等于强行大团圆。
+case_type: canonical
+status: evidence_gap
+notes: 源方法可核；尚未逐题核验案例，不可当成功样例

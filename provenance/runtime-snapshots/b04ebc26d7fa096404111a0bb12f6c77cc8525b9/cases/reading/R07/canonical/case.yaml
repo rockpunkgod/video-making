@@ -1,0 +1,19 @@
+case_id: R07-canonical
+method_id: R07
+question_type: 阅读理解
+source:
+  repository: https://github.com/rockpunkgod/ANSWER.git
+  commit: b04ebc26d7fa096404111a0bb12f6c77cc8525b9
+  path: gaokao-english/references/reading-comprehension.md
+  heading: 并列删除
+question: null
+answer: null
+trigger: 多个细节真实并列且题干允许归为一组
+evidence: []
+method_role: reducer
+expected_action: 把同层并列项框成一组，核候选是否只截取组内局部
+expected_output: reduce
+stop_rule: and/also 只作入口；不同层级、状态阶段不同、题干只问一项时拆组。无不能回答所问的内容理由，不可共同排除。
+case_type: canonical
+status: evidence_gap
+notes: 源方法可核；尚未逐题核验案例，不可当成功样例

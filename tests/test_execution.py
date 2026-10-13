@@ -2,6 +2,7 @@
 from copy import deepcopy
 import json
 import unittest
+from functools import lru_cache
 from core.analyzer import QuestionAnalyzer, PaperAnalyzer
 from core.evidence import validate_graph
 from core.registry import Registry, validate_schema
@@ -12,8 +13,13 @@ def span(text='alpha beta gamma'):
     return {'field':'passage','start':0,'end':len(text),'quote':text}
 
 
+@lru_cache(maxsize=1)
+def current_versions():
+    return {mid:m['version'] for mid,m in Registry().methods.items()}
+
+
 def action(eid,mid,role,output,inputs=None,evidence=None):
-    return {'execution_id':eid,'method_id':mid,'method_version':'1.1.0','role':role,'input_artifact_ids':inputs or [],'concrete_action':'program-only observable action '+eid,
+    return {'execution_id':eid,'method_id':mid,'method_version':current_versions()[mid],'role':role,'input_artifact_ids':inputs or [],'concrete_action':'program-only observable action '+eid,
             'evidence':evidence or [span()],'decision_rule_check':'synthetic structural check, not English semantics','stop_rule_check':'synthetic stop observation','stop_applied':False,
             'reviewer':'synthetic-program-fixture-not-a-learner','review_status':'reviewed','output':output}
 
@@ -50,7 +56,6 @@ def seven_chain_fixture():
         action('choice-A','F11','decider',{'kind':'candidate_decision','candidate':'A','effect':'retain','relation_index':0},['scope',*ids]),
         action('choice-B','F11','decider',{'kind':'candidate_decision','candidate':'B','effect':'eliminate','relation_index':1},['scope',*ids]),
         action('verify-A','F06','verifier',{'kind':'verification_result','candidate':'A','target_execution_ids':['choice-A'],'verdict':'supports'},['choice-A'])]
-    q['action_executions'][3]['method_version']='1.2.0'
     return q
 
 

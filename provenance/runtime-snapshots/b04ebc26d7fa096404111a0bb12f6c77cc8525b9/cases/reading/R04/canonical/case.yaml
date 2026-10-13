@@ -1,0 +1,19 @@
+case_id: R04-canonical
+method_id: R04
+question_type: 阅读理解
+source:
+  repository: https://github.com/rockpunkgod/ANSWER.git
+  commit: b04ebc26d7fa096404111a0bb12f6c77cc8525b9
+  path: gaokao-english/references/reading-comprehension.md
+  heading: 比较级谨慎选
+question: null
+answer: null
+trigger: 候选带比较级或最高级
+evidence: []
+method_role: decider
+expected_action: 列出比较双方、属性、方向、程度、范围、时间与条件，逐格回文核对
+expected_output: decide
+stop_rule: 只有一方数值、比较维度不同或原比较未找到时停止定案；最高级不是自动错误，相对更好不自动支持全范围最好。
+case_type: canonical
+status: evidence_gap
+notes: 源方法可核；尚未逐题核验案例，不可当成功样例

@@ -478,7 +478,60 @@ def _catalog_paths(root):
     return sorted(directory.glob('catalog-*.json')) if directory.is_dir() else []
 
 
-def load_catalog(dataset):
+def _runtime_contexts(root):
+    """Bind archived requests to a verified past Registry, never new admission."""
+    paths=sorted((root/CATALOG).glob('runtime-context-*.json'))
+    assignments={}; registries={}; previous=None
+    for number,path in enumerate(paths,1):
+        if path.name!=f'runtime-context-{number:06d}.json':
+            raise ValueError('Historical runtime context revisions are missing or invalid')
+        raw=path.read_bytes(); context=json.loads(raw)
+        if context.get('revision')!=number or context.get('previous_sha256')!=previous or \
+                context.get('scope')!='historical_revalidation_only' or \
+                context.get('current_rule_acceptance') is not False or context.get('new_blind_sample') is not False or \
+                context.get('past_analysis_replay_checked') is not True or context.get('learner_validation') is not None:
+            raise ValueError('Historical runtime context chain mismatch')
+        commit=context.get('registry_snapshot_commit')
+        if not isinstance(commit,str) or not re.fullmatch(r'[0-9a-f]{40}',commit):
+            raise ValueError('Historical runtime context requires a full source commit')
+        if commit not in registries:
+            registries[commit]=Registry(snapshot_commit=commit)
+        registry=registries[commit]
+        if not registry.is_historical or digest((registry.asset_root/'snapshot-manifest.json').read_bytes())!=context.get('snapshot_manifest_sha256'):
+            raise ValueError('Historical runtime context snapshot differs')
+        frontier=context.get('catalog_revision')
+        expected_path=f'{CATALOG}/catalog-{frontier:06d}.json' if type(frontier) is int and frontier>0 else None
+        catalog_ref=context.get('catalog_ref')
+        if not isinstance(catalog_ref,dict) or catalog_ref.get('path')!=expected_path:
+            raise ValueError('Historical runtime context must bind an actual catalog frontier')
+        catalog=artifact(root,catalog_ref)
+        if catalog.get('revision')!=frontier:
+            raise ValueError('Historical runtime context frontier mismatch')
+        expected={}
+        for case_ref in catalog.get('cases',[]):
+            record=artifact(root,case_ref); ref=record.get('registration_request_ref')
+            if not isinstance(ref,dict): raise ValueError('Historical Case request reference missing')
+            expected[(ref.get('path'),ref.get('sha256'))]=ref
+        for alias in catalog.get('aliases',[]):
+            ref=alias.get('registration_request_ref')
+            if not isinstance(ref,dict): raise ValueError('Historical alias request reference missing')
+            expected[(ref.get('path'),ref.get('sha256'))]=ref
+        incoming=context.get('request_refs')
+        if not isinstance(incoming,list) or any(not isinstance(ref,dict) for ref in incoming):
+            raise ValueError('Historical request context references required')
+        keys=[(ref.get('path'),ref.get('sha256')) for ref in incoming]
+        if len(set(keys))!=len(keys) or set(keys)!=(set(expected)-set(assignments)) or not keys:
+            raise ValueError('Historical runtime context request coverage differs')
+        for ref in incoming:
+            key=(ref['path'],ref['sha256'])
+            artifact(root,ref)
+            assignments[key]={'registry':registry,'source_commit':commit,
+                              'context_ref':{'path':path.relative_to(root).as_posix(),'sha256':digest(raw)}}
+        previous=digest(raw)
+    return assignments
+
+
+def load_catalog(dataset, *, registry=None, use_runtime_contexts=True):
     root = private_root(dataset)
     paths = _catalog_paths(root)
     if not paths:
@@ -498,7 +551,8 @@ def load_catalog(dataset):
     result = None
     preceding_refs = []
     preceding_aliases = []
-    seen_keys=set(); seen_ids=set(); registry=Registry()
+    seen_keys=set(); seen_ids=set(); registry=registry or Registry()
+    contexts=_runtime_contexts(root) if use_runtime_contexts else {}
     canonical_bindings={}
     validated_records={}
     validated_requests={}
@@ -509,7 +563,8 @@ def load_catalog(dataset):
         identity=(ref.get('path'),ref.get('sha256'))
         if identity not in validated_requests:
             request=artifact(root,ref)
-            validated_requests[identity]=(request,*validate_request(root,request,registry))
+            request_registry=contexts.get(identity,{}).get('registry',registry)
+            validated_requests[identity]=(request,*validate_request(root,request,request_registry),request_registry)
         return validated_requests[identity]
 
     for number, path in numbered:
@@ -527,9 +582,9 @@ def load_catalog(dataset):
                 raise ValueError('Catalog contains non-private reviewed Case')
             validate_schema('case', record)
             request_ref=record.get('registration_request_ref')
-            request,method,question,review=checked_request(request_ref)
+            request,method,question,review,request_registry=checked_request(request_ref)
             _check_canonical_binding(request, canonical_bindings)
-            case_id=expected_case_id(request,review,registry)
+            case_id=expected_case_id(request,review,request_registry)
             if record != expected_record(request,request_ref,method,question,review,case_id):
                 raise ValueError('Private Case differs from validated request')
             key=tuple(record['registration_key'])
@@ -539,7 +594,7 @@ def load_catalog(dataset):
             validated_records[(case_ref['path'],case_ref['sha256'])]=record
         else:
             alias=aliases[-1]
-            request,_,_,review=checked_request(alias.get('registration_request_ref'))
+            request,_,_,review,_=checked_request(alias.get('registration_request_ref'))
             _check_canonical_binding(request, canonical_bindings)
             original=next((record for record in validated_records.values() if
                            record['case_id']==alias.get('case_id') and
@@ -567,7 +622,51 @@ def load_catalog(dataset):
     expected={(root/ref['path']).resolve() for ref in result['cases']}
     if actual!=expected:
         raise ValueError('Orphan or missing private Case file; explicit recovery required')
+    if contexts:
+        result['historical_runtime_contexts']=[{'request_ref':{'path':key[0],'sha256':key[1]},
+                                              'source_commit':value['source_commit'],
+                                              'context_ref':value['context_ref']}
+                                             for key,value in sorted(contexts.items())]
     return result
+
+
+def freeze_runtime_context(dataset, snapshot_commit):
+    """Preflight the existing prefix against its old rules before a source upgrade."""
+    root=private_root(dataset); registry=Registry(snapshot_commit=snapshot_commit)
+    contexts=_runtime_contexts(root)
+    catalog=load_catalog(root,registry=registry,use_runtime_contexts=True)
+    if catalog['revision']==0:
+        raise ValueError('No registered historical Case prefix to bind')
+    refs={}
+    for case_ref in catalog['cases']:
+        ref=artifact(root,case_ref)['registration_request_ref']
+        refs[(ref['path'],ref['sha256'])]=ref
+    for alias in catalog['aliases']:
+        ref=alias['registration_request_ref']; refs[(ref['path'],ref['sha256'])]=ref
+    incoming=[refs[key] for key in sorted(set(refs)-set(contexts))]
+    if not incoming:
+        return {'status':'existing_runtime_context_reused','new_context_count':0,
+                'catalog_revision':catalog['revision'],
+                'source_commits':sorted({value['source_commit'] for value in contexts.values()}),
+                'current_rule_acceptance':False}
+    prior=sorted((root/CATALOG).glob('runtime-context-*.json'))
+    revision=len(prior)+1
+    catalog_path=root/CATALOG/f"catalog-{catalog['revision']:06d}.json"
+    value={'revision':revision,'previous_sha256':digest(prior[-1].read_bytes()) if prior else None,
+           'scope':'historical_revalidation_only','registry_snapshot_commit':snapshot_commit,
+           'snapshot_manifest_sha256':digest((registry.asset_root/'snapshot-manifest.json').read_bytes()),
+           'catalog_revision':catalog['revision'],
+           'catalog_ref':{'path':catalog_path.relative_to(root).as_posix(),'sha256':digest(catalog_path.read_bytes())},
+           'request_refs':incoming,'past_analysis_replay_checked':True,
+           'current_rule_acceptance':False,'new_blind_sample':False,'learner_validation':None}
+    target=root/CATALOG/f'runtime-context-{revision:06d}.json'
+    with target.open('xb') as stream:
+        stream.write((json.dumps(value,ensure_ascii=False,indent=2)+'\n').encode('utf-8'))
+    _runtime_contexts(root)
+    return {'status':'historical_runtime_context_frozen','new_context_count':1,
+            'context_ref':{'path':target.relative_to(root).as_posix(),'sha256':digest(target.read_bytes())},
+            'catalog_revision':catalog['revision'],'historical_request_count':len(incoming),
+            'source_commit':snapshot_commit,'current_rule_acceptance':False}
 
 
 def register(dataset, request_path):
@@ -650,12 +749,17 @@ def coverage_overlay(coverage, dataset):
     for method in coverage['methods']:
         for slot in method['slots']:
             own = [c for c in records if c['method_id'] == method['method_id']
-                   and c['case_type'] == slot['case_type']]
+                   and c['case_type'] == slot['case_type']
+                   and c['registration_key'][3] == method['method_version']]
             slot['private_registered_case_count'] = len(own)
             slot['private_case_ids'] = [c['case_id'] for c in own]
             slot['private_review_status'] = STATUS if own else None
     coverage['private_catalog'] = {'revision': catalog['revision'],
                                    'private_reviewed_case_count': len(records),
+                                   'historical_version_case_count':sum(
+                                       c['registration_key'][3]!=next((m['method_version'] for m in coverage['methods']
+                                                                       if m['method_id']==c['method_id']),None)
+                                       for c in records),
                                    'unique_question_count': len(questions),
                                    'covered_method_type_pairs': len(pairs),
                                    'release_gate': 'not_satisfied_by_private_case_registration'}

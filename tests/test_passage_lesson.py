@@ -6,7 +6,7 @@ from core.registry import Registry
 from core.analyzer import QuestionAnalyzer
 from core.passage_lesson import PassageLessonAnalyzer,validate_order
 from renderers.passage import render_passage
-from test_lesson_feedback import fixture as single_fixture
+from tests.test_lesson_feedback import fixture as single_fixture
 
 def seven_question(registry):
     q=single_fixture(registry); s=q['observations'][0]['evidence'][0]
@@ -18,7 +18,7 @@ def seven_question(registry):
     review['segments']=[segment(0,'F01','action','先用选项三分，先分组，再拼回去。'),segment(1,'F01','evidence','回到alpha beta gamma核本空的内容。'),segment(2,'F01','stop','分组不能定案。'),segment(3,'F11','action','再用正文闭环核本空关系。')]
     review['segments'] += [segment(i+4,'F11','comparison',c+'回到alpha beta gamma，核这个候选的决定性关系。',[i]) for i,c in enumerate('ABCDEFG')]
     review['segments'].append(segment(20,'F11','stop','本空关系不足就先停，不能只看剩余项。'))
-    q['action_executions']=[{'execution_id':axis,'method_id':'F01','method_version':'1.1.0','role':'reducer','input_artifact_ids':[],'concrete_action':'program-only grouping','evidence':[s],'decision_rule_check':'program partition','stop_rule_check':'program reduce only','stop_applied':False,'reviewer':'synthetic-program-fixture','review_status':'reviewed','output':{'kind':'candidate_partition','axis':axis,'groups':[{'label':'没有可观察区别','candidates':list('ABCDEFG')}]}} for axis in ['sentence','actor','time']]
+    q['action_executions']=[{'execution_id':axis,'method_id':'F01','method_version':registry.methods['F01']['version'],'role':'reducer','input_artifact_ids':[],'concrete_action':'program-only grouping','evidence':[s],'decision_rule_check':'program partition','stop_rule_check':'program reduce only','stop_applied':False,'reviewer':'synthetic-program-fixture','review_status':'reviewed','output':{'kind':'candidate_partition','axis':axis,'groups':[{'label':'没有可观察区别','candidates':list('ABCDEFG')}]}} for axis in ['sentence','actor','time']]
     return q
 
 
@@ -107,13 +107,14 @@ class PassageLessonTest(unittest.TestCase):
         def step(n,p,outcome): return {'question_id':str(n),'pass':p,'outcome':outcome,'transition':'回到program，先暂留再核本空证据。','evidence':[s],'execution_ids':['stop'] if outcome=='deferred' else []}
         review={'reading_mode':None,'steps':[step(21,1,'deferred'),step(22,1,'solved'),step(23,1,'deferred'),step(21,2,'solved'),step(23,2,'solved')]}
         analyses={qid:{'execution_trace':[{'execution_id':'stop','state':'stopped'}]} for qid in items}
-        validate_order('完形填空',items,review,analyses)
+        history=Registry(snapshot_commit='b04ebc26d7fa096404111a0bb12f6c77cc8525b9')
+        validate_order('完形填空',items,review,analyses,history)
         for change in ['recovery','interleave','stop']:
             bad=deepcopy(review); a=deepcopy(analyses)
             if change=='recovery': bad['steps'][-2:]=list(reversed(bad['steps'][-2:]))
             elif change=='interleave': bad['steps'][1],bad['steps'][3]=bad['steps'][3],bad['steps'][1]
             else: a['21']['execution_trace'][0]['state']='produced'
-            with self.subTest(change=change),self.assertRaises(ValueError): validate_order('完形填空',items,bad,a)
+            with self.subTest(change=change),self.assertRaises(ValueError): validate_order('完形填空',items,bad,a,history)
 
     def test_whole_seven_grouping_precedes_breakthrough_and_is_never_rebuilt(self):
         p=packet(self.r); p['question_type']='七选五'; p['review']['reading_mode']=None; p['questions']=[]
@@ -138,9 +139,10 @@ class PassageLessonTest(unittest.TestCase):
             q['lesson_review'].update(question_type='完形填空',source_section_ids=[q['lesson_review']['source_section_ids'][0],source])
             for seg in q['lesson_review']['segments']: seg.update(method_id='C01',text=seg['text'].replace('选项加戏','语篇线索链'))
         s=p['questions'][0]['question']['observations'][0]['evidence'][0]
-        p['questions'][0]['question']['action_executions']=[{'execution_id':'stop','method_id':'C01','method_version':'1.1.0','role':'framework','input_artifact_ids':[],'concrete_action':'program-only first pass stopped action','evidence':[s],'decision_rule_check':'program first-pass gap','stop_rule_check':'program gap observed','stop_applied':True,'reviewer':'synthetic-program-fixture','review_status':'reviewed','output':None}]
+        p['questions'][0]['question']['action_executions']=[{'execution_id':'stop','method_id':'C01','method_version':self.r.methods['C01']['version'],'role':'framework','input_artifact_ids':[],'concrete_action':'program-only first pass stopped action','evidence':[s],'decision_rule_check':'program first-pass gap','stop_rule_check':'program gap observed','stop_applied':True,'reviewer':'synthetic-program-fixture','review_status':'reviewed','output':None},
+            {'execution_id':'recovery','method_id':'C01','method_version':self.r.methods['C01']['version'],'role':'framework','input_artifact_ids':[],'concrete_action':'program-only own recovery evidence action','evidence':[s],'decision_rule_check':'program recovery evidence','stop_rule_check':'program return with own evidence','stop_applied':False,'reviewer':'synthetic-program-fixture','review_status':'reviewed','output':{'kind':'framework_card','fields':[{'name':name,'value':'synthetic evidence field, not teaching proof','evidence':[s]} for name in ['current_blank_role','recent_clue','expansion_gate','backfill_check']]}}]
         def step(n,pass_no,outcome,text,refs=None): return {'question_id':'program-'+str(n),'pass':pass_no,'outcome':outcome,'transition':text,'evidence':[s],'execution_ids':refs or []}
-        p['review']['steps']=[step(31,1,'deferred','第31题回到alpha beta gamma还不足，先留着。',['stop']),step(32,1,'solved','先核第32题的alpha beta gamma关系。'),step(31,2,'solved','再回到第31题的alpha beta gamma，核本空回收依据。')]
+        p['review']['steps']=[step(31,1,'deferred','第31题回到alpha beta gamma还不足，先留着。',['stop']),step(32,1,'solved','先核第32题的alpha beta gamma关系。'),step(31,2,'solved','再回到第31题的alpha beta gamma，核本空回收依据。',['recovery'])]
         body=render_passage(self.a.analyze(p),'legacy-wechat',self.r)
         self.assertLess(body.index('先留着'),body.index('先核第32题')); self.assertLess(body.index('先核第32题'),body.index('再回到第31题'))
         self.assertNotIn('第31题选A',body[:body.index('最后按原题号')])

@@ -1,0 +1,368 @@
+{
+  "repository": "https://github.com/rockpunkgod/ANSWER.git",
+  "commit": "61bc9c3e15004639cb442c20e7946ca9631f14ce",
+  "captured_at": "2026-10-13",
+  "previous_runtime_commit": "b04ebc26d7fa096404111a0bb12f6c77cc8525b9",
+  "files": [
+    {
+      "path": "README.md",
+      "sha256": "0ee48906c9d33735c9c16b346e96c8edcfba4369181dacc40a6e532c46a9f995",
+      "byte_count": 6026,
+      "previous_sha256": null,
+      "state": "added"
+    },
+    {
+      "path": "agents/gaokao-grammar-fill.md",
+      "sha256": "1c0436e2d4fda0fe07d5e5c56161710269db4d1200c9f60c1db04ffb4f6df878",
+      "byte_count": 1659,
+      "previous_sha256": "1c0436e2d4fda0fe07d5e5c56161710269db4d1200c9f60c1db04ffb4f6df878",
+      "state": "unchanged"
+    },
+    {
+      "path": "agents/gaokao-objective.md",
+      "sha256": "299428eeba7526f22dae564905b24de5d4b586bde5703b4aed518ca34721bedf",
+      "byte_count": 2183,
+      "previous_sha256": "299428eeba7526f22dae564905b24de5d4b586bde5703b4aed518ca34721bedf",
+      "state": "unchanged"
+    },
+    {
+      "path": "agents/gaokao-writing.md",
+      "sha256": "de5f81ec944e59b5342c219eb9bb9c1cbf35d1994a812d59d75dd0a177a91c9e",
+      "byte_count": 1846,
+      "previous_sha256": "de5f81ec944e59b5342c219eb9bb9c1cbf35d1994a812d59d75dd0a177a91c9e",
+      "state": "unchanged"
+    },
+    {
+      "path": "course-audits/2026-10-13/COURSE_TERMINOLOGY.md",
+      "sha256": "960dce68a8ae2e1618a9cef1dbed3c7f90b7e853b0b5fef542cd813ea9d90838",
+      "byte_count": 2868,
+      "previous_sha256": null,
+      "state": "added"
+    },
+    {
+      "path": "course-audits/2026-10-13/README.md",
+      "sha256": "2381114a1ca25efb4264912bf1bc78fad8fd8abe198cf0a49d3198aa47cfe6a4",
+      "byte_count": 2248,
+      "previous_sha256": null,
+      "state": "added"
+    },
+    {
+      "path": "course-audits/2026-10-13/acceptance.md",
+      "sha256": "2a1ccd0782d071c5e8903af1b6d3bca9ca339d9f67e3f9b1f3ee7abe58ecb283",
+      "byte_count": 18042,
+      "previous_sha256": null,
+      "state": "added"
+    },
+    {
+      "path": "course-audits/2026-10-13/application-terms.md",
+      "sha256": "3cfa72845bdf812dc057967f717b3c19df2736135b2b2633c39a9b0b845fa3e3",
+      "byte_count": 10378,
+      "previous_sha256": null,
+      "state": "added"
+    },
+    {
+      "path": "course-audits/2026-10-13/application/APPLICATION_BOUNDARY_REVIEW.md",
+      "sha256": "9cd1ec869b5ee698cb1cea64dc022bffc28627af9b0e8c416f4f464daa62fb4a",
+      "byte_count": 11675,
+      "previous_sha256": null,
+      "state": "added"
+    },
+    {
+      "path": "course-audits/2026-10-13/application/MEDIA_TERM_SCAN.md",
+      "sha256": "4dc7017867f751bc9437390590bec80fa4a06ea0962621e8a4aaabe26eea988f",
+      "byte_count": 5479,
+      "previous_sha256": null,
+      "state": "added"
+    },
+    {
+      "path": "course-audits/2026-10-13/application/SOURCES_APPLICATION.md",
+      "sha256": "ac1167fe4b1310e76ea0806e8414dd0faeba30d6675350e733078401c4becaaf",
+      "byte_count": 6502,
+      "previous_sha256": null,
+      "state": "added"
+    },
+    {
+      "path": "course-audits/2026-10-13/application/TERMINOLOGY_APPLICATION.md",
+      "sha256": "c336aeeae3260b15869b6ea6ae25c22e469faf678e6c725bb4a1d61ad40a300f",
+      "byte_count": 19842,
+      "previous_sha256": null,
+      "state": "added"
+    },
+    {
+      "path": "course-audits/2026-10-13/cloze-terms.md",
+      "sha256": "db8b016d1c6e851c9c8ba68872100c7032a4b6df3b2fbbd026e3bec9aae5fe87",
+      "byte_count": 6853,
+      "previous_sha256": null,
+      "state": "added"
+    },
+    {
+      "path": "course-audits/2026-10-13/cloze/coverage.md",
+      "sha256": "bfee93b5fde06f5a787428e0d236790117c1aabdb187d5f745df41ef4f59a30b",
+      "byte_count": 8111,
+      "previous_sha256": null,
+      "state": "added"
+    },
+    {
+      "path": "course-audits/2026-10-13/continuation-terms.md",
+      "sha256": "0408a6c3f388b0316067f00bd35880eef8a576c9ec409fb7ecf1d23aaf6de336",
+      "byte_count": 23471,
+      "previous_sha256": null,
+      "state": "added"
+    },
+    {
+      "path": "course-audits/2026-10-13/continuation/CONTINUATION_BOUNDARY_REVIEW.md",
+      "sha256": "4837c533e85fa757f3793046b4394fc01af1560fc9a42f24d49dbb412e62bb36",
+      "byte_count": 14413,
+      "previous_sha256": null,
+      "state": "added"
+    },
+    {
+      "path": "course-audits/2026-10-13/continuation/CONTINUATION_BOUNDARY_SOURCE_STATUS.md",
+      "sha256": "36bf7343cd3e4d6516ce300691836430d53824fbb67597012e58867fb5bcb477",
+      "byte_count": 6828,
+      "previous_sha256": null,
+      "state": "added"
+    },
+    {
+      "path": "course-audits/2026-10-13/continuation/SOURCE_INDEX.md",
+      "sha256": "8ed46755b52d13c84059ca0c4c513d3a508b4b4703a1dd0cfc0849625aeb4b8c",
+      "byte_count": 10704,
+      "previous_sha256": null,
+      "state": "added"
+    },
+    {
+      "path": "course-audits/2026-10-13/continuation/TERMINOLOGY_CONTINUATION.md",
+      "sha256": "8e55ed130400ab695b99a616790ac884a2e69cd8676357403a63893caf793c33",
+      "byte_count": 28747,
+      "previous_sha256": null,
+      "state": "added"
+    },
+    {
+      "path": "course-audits/2026-10-13/coverage.md",
+      "sha256": "408325eafef2d860300dd89867fa98f28f7abab6a0a7e80c7a9a19bfd99131e5",
+      "byte_count": 50300,
+      "previous_sha256": null,
+      "state": "added"
+    },
+    {
+      "path": "course-audits/2026-10-13/objective/TERMINOLOGY_OBJECTIVE.md",
+      "sha256": "5af7aa8c3c973a7376f6f61fdf8d88a0aa4f1f90a6e486d6d917d90d02112665",
+      "byte_count": 30971,
+      "previous_sha256": null,
+      "state": "added"
+    },
+    {
+      "path": "course-audits/2026-10-13/objective/reading/AUTUMN03_METHOD_REVIEW.md",
+      "sha256": "b850b621933332c5935e87ec0b8faa52022f6d7c31fe4426be05f99218b3efa9",
+      "byte_count": 7834,
+      "previous_sha256": null,
+      "state": "added"
+    },
+    {
+      "path": "course-audits/2026-10-13/objective/reading/CD_GIFT_METHOD_REVIEW.md",
+      "sha256": "7e81cec5befe0381fc3f607f8342965be6ac4e2610ab2bf5aed3ec42110d4d36",
+      "byte_count": 11792,
+      "previous_sha256": null,
+      "state": "added"
+    },
+    {
+      "path": "course-audits/2026-10-13/reading-terms.md",
+      "sha256": "e287b02ed215b7d9467896b55971a70a060fde20d768c523d3a9019cfb5a037c",
+      "byte_count": 18002,
+      "previous_sha256": null,
+      "state": "added"
+    },
+    {
+      "path": "course-audits/2026-10-13/reading/coverage.md",
+      "sha256": "dbf8beb364801228cf403fbcbf9c9295790956bb889bf5d04324405b3dfeb4a4",
+      "byte_count": 25242,
+      "previous_sha256": null,
+      "state": "added"
+    },
+    {
+      "path": "course-audits/2026-10-13/release/RELEASE.md",
+      "sha256": "4f4a427c1f8a66c2b546f6e1336903969c5d2e6231798c64310446a9d5f854cf",
+      "byte_count": 2379,
+      "previous_sha256": null,
+      "state": "added"
+    },
+    {
+      "path": "course-audits/2026-10-13/release/behavior-acceptance.md",
+      "sha256": "d7165e5a9d82b0f4922728ed33916bdf7c645e5d4bb646a0cd453555e9955b9b",
+      "byte_count": 15764,
+      "previous_sha256": null,
+      "state": "added"
+    },
+    {
+      "path": "course-audits/2026-10-13/release/objective-release.md",
+      "sha256": "451e2765e5649ddbb8bfe762b90290c629dd71b1fa4ed305b81c3fb7e9c1a665",
+      "byte_count": 4006,
+      "previous_sha256": null,
+      "state": "added"
+    },
+    {
+      "path": "course-audits/2026-10-13/release/writing-release.md",
+      "sha256": "5a2577dc927f92f74299d5fca63c4fd9b6d447b121a278afcdbd433565a54de1",
+      "byte_count": 3433,
+      "previous_sha256": null,
+      "state": "added"
+    },
+    {
+      "path": "course-audits/2026-10-13/seven-five-terms.md",
+      "sha256": "bc9de277178a9a600a4dca837dba1827022a40c48c75caea24910ac59a1ae8c8",
+      "byte_count": 4689,
+      "previous_sha256": null,
+      "state": "added"
+    },
+    {
+      "path": "course-audits/2026-10-13/seven/FINAL_STATUS.md",
+      "sha256": "f7e4fb0e6155939c8009546404dc97e427e4d1859a67ad9f60a7c1c6800367fb",
+      "byte_count": 4979,
+      "previous_sha256": null,
+      "state": "added"
+    },
+    {
+      "path": "course-audits/2026-10-13/seven/coverage.md",
+      "sha256": "63b06e9f7fd9efb0a125ebc386883faf7e3c9fea91a84363d08efcccb2f197fc",
+      "byte_count": 9361,
+      "previous_sha256": null,
+      "state": "added"
+    },
+    {
+      "path": "gaokao-english/SKILL.md",
+      "sha256": "56868efa2404288e4ab18e64bc03dfb4d66f1a0eb058968b1ebbe3ccbee02926",
+      "byte_count": 11593,
+      "previous_sha256": "af44ada25049354e8a5edfbe3b9da2698a47ac8014aeb39bf1a3cbe2b100fdf5",
+      "state": "changed"
+    },
+    {
+      "path": "gaokao-english/references/cloze.md",
+      "sha256": "e2135bf6605a14adb2d99804d41be8db136ef780857a16829c207b72d6ddabb4",
+      "byte_count": 12879,
+      "previous_sha256": "fddf21ba17e8a5d3bcb90a7281896fbd44bd7d532b6780a375303ebe8d9211ba",
+      "state": "changed"
+    },
+    {
+      "path": "gaokao-english/references/course-evidence.md",
+      "sha256": "78b7636dd168ebc701cd7eeb7f87f6a77c32e0eb1805eb86a56b2365a7e81143",
+      "byte_count": 135179,
+      "previous_sha256": "8fc17e35d454a7d1665ec616359072bc33a6c120ac2612d84c359a898085e9e3",
+      "state": "changed"
+    },
+    {
+      "path": "gaokao-english/references/delivery-contract.md",
+      "sha256": "05f48808abf662a83b50c38b342e1db3f9ce5b84edd8fde7de387059ef0c44d2",
+      "byte_count": 7551,
+      "previous_sha256": "61aa9a84bf743932f4073ae93dba9db37ef9823851d04b78eaeb36b9e74a02f4",
+      "state": "changed"
+    },
+    {
+      "path": "gaokao-english/references/evidence-gaps.md",
+      "sha256": "e79832cdff169619469e343b2b51c6b55cfc4015896fd6c3ed4e03a3cac518cf",
+      "byte_count": 25490,
+      "previous_sha256": "48e405dd4a42134f74d54018da5ec222bdf13b4cc4ef576a00e0c6b533eda520",
+      "state": "changed"
+    },
+    {
+      "path": "gaokao-english/references/listening.md",
+      "sha256": "6056701c9b0aab1fdd2eb9b26dcb6a4c5971822d0ba0561028ac1565d59903ff",
+      "byte_count": 1635,
+      "previous_sha256": "c20af004ed2ea287146a32d76fb366c228c5e76d53da1b2d2a30de0afaba34d6",
+      "state": "changed"
+    },
+    {
+      "path": "gaokao-english/references/reading-comprehension.md",
+      "sha256": "d48d3f361d47fc5fdd2d02bdb969e49959b8143cd702301f72d110e51300f938",
+      "byte_count": 38620,
+      "previous_sha256": "83559f667eb262351dc6ba90818725f1f517a1969a888bb18b831f403e3818dd",
+      "state": "changed"
+    },
+    {
+      "path": "gaokao-english/references/router.md",
+      "sha256": "ac7ab78436b040f927bce2ee4a7d88e28134b399a0172433df30ce44eebf6675",
+      "byte_count": 7860,
+      "previous_sha256": "61b70e95a09dbcbd9bf2701366ef10ef026ca505c208f323b72b4506a818e732",
+      "state": "changed"
+    },
+    {
+      "path": "gaokao-english/references/seven-five.md",
+      "sha256": "11dfb9adb5da11cbb3059c0f420bdcdae6fbeb6b42826c1cedd7b540f08af0a1",
+      "byte_count": 11835,
+      "previous_sha256": "6beebb8d0e32297e1ab7611ffbf86a378d4ad690c0604baafe1584804d44b089",
+      "state": "changed"
+    },
+    {
+      "path": "gaokao-grammar-fill/SKILL.md",
+      "sha256": "4d7d0e26e6007efba8fb3aca0dbe3bc75b8b78d15b14757fa4a80a7e6460b048",
+      "byte_count": 18838,
+      "previous_sha256": "4d7d0e26e6007efba8fb3aca0dbe3bc75b8b78d15b14757fa4a80a7e6460b048",
+      "state": "unchanged"
+    },
+    {
+      "path": "gaokao-grammar-fill/references/course-evidence.md",
+      "sha256": "feab1810a3788a2659633cc78f82fdb5d9d3ed52b9908edf9fe8f5b0ca751ae5",
+      "byte_count": 17537,
+      "previous_sha256": "feab1810a3788a2659633cc78f82fdb5d9d3ed52b9908edf9fe8f5b0ca751ae5",
+      "state": "unchanged"
+    },
+    {
+      "path": "gaokao-grammar-fill/references/grammar-fill.md",
+      "sha256": "b1ff451d8a01ae4c799ad60b4f47132e2dec4235c5acacd03582de63ab838148",
+      "byte_count": 25671,
+      "previous_sha256": "b1ff451d8a01ae4c799ad60b4f47132e2dec4235c5acacd03582de63ab838148",
+      "state": "unchanged"
+    },
+    {
+      "path": "gaokao-grammar-fill/references/method-application-example.md",
+      "sha256": "b31cc2459f048403875a2d4c1912849c6008928e515f7ebddfea76e5c5155753",
+      "byte_count": 4900,
+      "previous_sha256": "b31cc2459f048403875a2d4c1912849c6008928e515f7ebddfea76e5c5155753",
+      "state": "unchanged"
+    },
+    {
+      "path": "gaokao-grammar-fill/references/objective-revision.md",
+      "sha256": "135f45929404a3f77aa29336b2df8a1d7dd81ee3595c4d98029fbbea0a1345fa",
+      "byte_count": 3980,
+      "previous_sha256": "135f45929404a3f77aa29336b2df8a1d7dd81ee3595c4d98029fbbea0a1345fa",
+      "state": "unchanged"
+    },
+    {
+      "path": "gaokao-grammar-fill/scripts/check_lesson.py",
+      "sha256": "751a00d9e663603a9478aa1f52bcfa37db909f8d705b6652c6a53931f477e7a2",
+      "byte_count": 20277,
+      "previous_sha256": "751a00d9e663603a9478aa1f52bcfa37db909f8d705b6652c6a53931f477e7a2",
+      "state": "unchanged"
+    },
+    {
+      "path": "gaokao-writing/SKILL.md",
+      "sha256": "5d6f50b52b6c2e612907bf24821aacb6012330d661ccb59439b67098a8f693e3",
+      "byte_count": 3917,
+      "previous_sha256": "5d6f50b52b6c2e612907bf24821aacb6012330d661ccb59439b67098a8f693e3",
+      "state": "unchanged"
+    },
+    {
+      "path": "gaokao-writing/references/application-writing-and-correction.md",
+      "sha256": "3cb6331b4adf5fae7dfc1ab900eb4a2074879219aa7f907b88137e28ffa88155",
+      "byte_count": 25161,
+      "previous_sha256": "1bb8f9c2eece155a531efaf653e29ee79d515f0a7a4eb36f480bfdec9b178192",
+      "state": "changed"
+    },
+    {
+      "path": "gaokao-writing/references/continuation-writing-and-correction.md",
+      "sha256": "d2a9c364d67f484ca9b752fc53f53754f2d407e45020f6043d6abaa9d97f7dc8",
+      "byte_count": 31993,
+      "previous_sha256": "3149bb08249e3c8dce7f7b035bd2162d6b0ff02f6d8d19bbda1b054acaf9409b",
+      "state": "changed"
+    },
+    {
+      "path": "kaiming-english-qa/SKILL.md",
+      "sha256": "2181999bca008b2aed46a24029be4308cf03d11fc44a0ffbb20cb4c0a2dffe08",
+      "byte_count": 5564,
+      "previous_sha256": null,
+      "state": "added"
+    }
+  ],
+  "current_runtime_updated": false,
+  "skill_installation_updated": false,
+  "source_repository_modified": false
+}

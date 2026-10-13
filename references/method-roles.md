@@ -2,7 +2,7 @@
 
 - R01 选项加戏：method / decider → decide
 - R02 谁干的陷阱：method / decider → decide
-- R06 主旨缺块：method / decider → decide
+- R06 主旨缺块：internal_rule / decider → decide
 - R09 三步压文：framework / framework → interpret
 - R03 换词不换义：method / interpreter → interpret
 - R04 比较别偷换：method / decider → decide
@@ -16,7 +16,7 @@
 - R14 顺序锁区：sub_action / locator → locate
 - R15 动词定关系：sub_action / interpreter → interpret
 - R16 主题锁定：framework / framework → interpret
-- R17 前后补证：method / verifier → verify
+- R17 前后补证：verification_rule / verifier → verify
 - F01 选项三分：method / reducer → reduce
 - F02 句型分组：sub_action / reducer → reduce
 - F03 主角分组：sub_action / reducer → reduce

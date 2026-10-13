@@ -387,7 +387,7 @@ class ChainReviewTest(unittest.TestCase):
         old_report=self.root/'chain-reviews/program-only/program-only-typed-pipeline-old.review.json'
         freeze_json(old_report,historical); before=old_report.read_bytes()
         result=load_chain_metadata(self.root,'program-only')
-        self.assertEqual(result[0]['method_versions']['F05'],'1.2.0')
+        self.assertEqual(result[0]['method_versions']['F05'],Registry().methods['F05']['version'])
         self.assertEqual(result[0]['superseded_artifact_count'],1)
         self.assertEqual(old_report.read_bytes(),before)
         current.unlink()  # Synthetic temporary fixture only.

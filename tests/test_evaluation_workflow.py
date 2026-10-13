@@ -8,11 +8,13 @@ import unittest
 from core.registry import load
 from evaluation.harness import COMMUNICATION_CHECKS,PRACTICALITY_CHECKS,evaluate,load_records,validate_plan
 from core.registry import ROOT
+from tests.test_execution import current_versions
 
 def observation(i,phase,version,kind='positive_trigger',person=None):
     applicable=kind in {'positive_trigger','transfer'}; stop=kind in {'boundary','counterexample'}
     measurement={'accuracy':True,'time_seconds':20,'candidates_remaining':2,'evidence_span':3,'hesitation_count':1,'unresolved':False}
     result={'record_id':'program-'+str(i),'participant_id':person or 'program-person-'+str(i),'method_id':'R01','method_version':'1.1.0','question_id':'program-'+phase+'-'+kind,'dataset_id':'synthetic-protocol-fixture','origin':'synthetic','phase':phase,'compact_version':version,'case_type':kind,'applicable':applicable,'triggered':applicable,'action_success':True,'evidence_success':True,'stop_required':stop,'stopped':stop,'boundary_detected':stop,'resolved':applicable,'standalone':applicable,'assisted':False,'role_overclaim':False,'answer_backfit':False,'execution_breakdown':False,'recall_success':True,'natural_restatement':True,'baseline':measurement,'method':{**measurement,'time_seconds':10},'communication_freeze_id':'program-freeze','assignment':'randomized','evaluator_id':'program-fixture-not-a-study','observed_first_action':'synthetic program action','observed_evidence':'synthetic metadata, not English exam evidence','stop_rule_observation':'synthetic branch','participant_restatement':'synthetic fixture, not learner speech','notes':'PROGRAM ONLY, not actual participants or teaching results','declared_primary_role':'decider','observed_actual_role':'decider','observed_at':{'communication':'2026-01-02T00:00:00Z','first_use':'2026-01-05T00:00:00Z','blind':'2026-01-06T00:00:00Z'}[phase]}
+    result['method_version']=current_versions()['R01']
     return result
 
 def design():
@@ -25,6 +27,7 @@ def design():
     for version in ['10s','30s']:
         rows.append(observation(i,'communication',version)); i+=1
     plan=load('evaluation/plan.example.json')
+    plan['method_version']=current_versions()['R01']
     plan.update(dataset_id='synthetic-protocol-fixture',communication_freeze_id='program-freeze',minimum_participants_per_version=2,frozen_before_data_collection=True)
     plan['workflow']={'study_frozen_at':'2026-01-01T00:00:00Z','communication_frozen_at':'2026-01-03T00:00:00Z','practicality_reviewed_at':'2026-01-04T00:00:00Z','communication_record_ids':[x['record_id'] for x in rows if x['phase']=='communication'],'communication_checks':{k:True for k in COMMUNICATION_CHECKS},'practicality_checks':{k:True for k in PRACTICALITY_CHECKS},'demonstration_item_ids':['program-demo-not-a-test'],'reviewer':'synthetic-program-fixture','evidence_notes':'Synthetic parser/control test, not a real audit or teaching trial.'}
     return rows,plan

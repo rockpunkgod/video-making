@@ -1,0 +1,19 @@
+case_id: G03-canonical
+method_id: G03
+question_type: 语法填空
+source:
+  repository: https://github.com/rockpunkgod/ANSWER.git
+  commit: b04ebc26d7fa096404111a0bb12f6c77cc8525b9
+  path: gaokao-grammar-fill/references/grammar-fill.md
+  heading: 冠词
+question: null
+answer: null
+trigger: 名词前缺限定且确认为冠词路线
+evidence: []
+method_role: decider
+expected_action: 圈中心名词、单复数和已有修饰，回语境核特指泛指再定冠词
+expected_output: decide
+stop_rule: 已有其他限定、中心名词未确认或所指是否唯一不清时停；of修饰或定语从句不能自动证明the，a/an按读音而非字母。
+case_type: canonical
+status: evidence_gap
+notes: 源方法可核；尚未逐题核验案例，不可当成功样例

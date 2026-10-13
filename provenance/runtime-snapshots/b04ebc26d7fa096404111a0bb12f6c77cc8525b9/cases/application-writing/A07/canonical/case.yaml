@@ -1,0 +1,19 @@
+case_id: A07-canonical
+method_id: A07
+question_type: 应用文
+source:
+  repository: https://github.com/rockpunkgod/ANSWER.git
+  commit: b04ebc26d7fa096404111a0bb12f6c77cc8525b9
+  path: gaokao-writing/references/application-writing-and-correction.md
+  heading: 反向劫匪插葱
+question: null
+answer: null
+trigger: 基础句准确且需要自然升级
+evidence: []
+method_role: interpreter
+expected_action: 先简化中文、译正确简单句，再加入服务真实逻辑的修饰或从句，搭配不明停升级
+expected_output: interpret
+stop_rule: 基础句不成立先修基础；升级引入原任务没有的事件、感受或因果时停止。动作主体、搭配或句法不明则撤回该层，不追求层层加满。
+case_type: canonical
+status: evidence_gap
+notes: 源方法可核；尚未逐题核验案例，不可当成功样例

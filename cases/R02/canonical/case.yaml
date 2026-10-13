@@ -19,3 +19,5 @@ method_role: decider
 expected_output: decide
 stop_rule: 关键词一样，不代表动作关系一样。
 notes: 完整题面与选项未在 ANSWER 运行层发布。
+method_version: 1.1.0
+source_commit: b04ebc26d7fa096404111a0bb12f6c77cc8525b9

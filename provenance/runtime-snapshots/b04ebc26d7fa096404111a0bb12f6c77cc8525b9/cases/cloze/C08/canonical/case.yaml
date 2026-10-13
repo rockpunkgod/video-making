@@ -1,0 +1,19 @@
+case_id: C08-canonical
+method_id: C08
+question_type: 完形填空
+source:
+  repository: https://github.com/rockpunkgod/ANSWER.git
+  commit: b04ebc26d7fa096404111a0bb12f6c77cc8525b9
+  path: gaokao-english/references/cloze.md
+  heading: 评价、结果与动作链
+question: null
+answer: null
+trigger: 题面给出评价或结果可核当前行为
+evidence: []
+method_role: verifier
+expected_action: 先还原结果所评价的具体行为，再核候选是否有真实题面联系，不能由猜定空互证
+expected_output: verify
+stop_rule: 结果所评价对象不清、连接关系无题面依据或仅同为积极词时暂留；相邻待定空不能互证，结果也不能补造题面未给的行为。
+case_type: canonical
+status: evidence_gap
+notes: 源方法可核；尚未逐题核验案例，不可当成功样例

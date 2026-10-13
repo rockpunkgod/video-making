@@ -1,0 +1,19 @@
+case_id: G15-canonical
+method_id: G15
+question_type: 语法填空
+source:
+  repository: https://github.com/rockpunkgod/ANSWER.git
+  commit: b04ebc26d7fa096404111a0bb12f6c77cc8525b9
+  path: gaokao-grammar-fill/references/grammar-fill.md
+  heading: 非谓语：作用、主被动与先后
+question: null
+answer: null
+trigger: 空位已确认非谓语
+evidence: []
+method_role: decider
+expected_action: 标句法作用、逻辑主语与动作的主被动、同谓语的先后关系，再选择形式
+expected_output: decide
+stop_rule: 介词、逗号或一个词尾不能替三轴；逻辑主语或搭配不明就停。形式表示相对关系，不套绝对现在/过去，也不将课程简化清单当无条件判据。
+case_type: canonical
+status: evidence_gap
+notes: 源方法可核；尚未逐题核验案例，不可当成功样例

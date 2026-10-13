@@ -1,0 +1,20 @@
+method_id: R02
+case_type: boundary
+status: evidence_gap
+objective: 三槽位一致时测试学生能否停止本法，转查范围、因果或时间。
+prompt_excerpt: null
+expected_action: 明确宣布只通过主客关系检查，不把这一项通过当整项正确。
+pass_condition: 正确使用 Stop Rule。
+gap: 需要三槽对齐但其他限定错误的完整课程题。
+source_reference: ANSWER@b04ebc26:gaokao-english/references/reading-comprehension.md#主客一致
+case_id: R02-boundary
+question_type: 阅读理解
+source: ANSWER@b04ebc26:gaokao-english/references/reading-comprehension.md#主客一致
+question: null
+answer: null
+trigger: 谁想做与谁真正做了之间可能被偷换。
+evidence: []
+method_role: decider
+expected_output: decide
+stop_rule: 关键词一样，不代表动作关系一样。
+notes: 需要三槽对齐但其他限定错误的完整课程题。

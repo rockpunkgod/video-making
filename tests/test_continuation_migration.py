@@ -1,4 +1,4 @@
-"""Continuation source, role and functional-scaffold regression tests."""
+"""Archived b04 continuation controls; do not assert these as current definitions."""
 import unittest
 from core.registry import Registry,load
 from core.analyzer import QuestionAnalyzer
@@ -8,7 +8,7 @@ IDS={'W'+str(i).zfill(2) for i in range(1,17)}
 
 class ContinuationMigrationTest(unittest.TestCase):
     @classmethod
-    def setUpClass(cls): cls.r=Registry()
+    def setUpClass(cls): cls.r=Registry(snapshot_commit='b04ebc26d7fa096404111a0bb12f6c77cc8525b9')
 
     def test_all_nodes_have_static_entries_without_branding_every_rule(self):
         self.assertEqual({m['method_id'] for m in self.r.methods.values() if m['question_type']=='读后续写'},IDS)
@@ -27,7 +27,7 @@ class ContinuationMigrationTest(unittest.TestCase):
             self.assertEqual(m['static_design_review']['source_section_ids'],m['section_ids'])
 
     def test_all_guides_preserve_independent_actions_stops_and_short_versions(self):
-        assets=build()
+        assets=build(self.r)
         for mid in IDS:
             m=self.r.methods[mid]; guide=assets['student-guides/'+mid+'-'+m['brand_name']+'.md']
             for value in [m['core_action'],m['stop_rule'],m['challenge_prompt'],*(m['compact'][key] for key in ['10s','30s','90s'])]: self.assertIn(value,guide)

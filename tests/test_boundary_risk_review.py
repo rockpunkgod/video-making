@@ -84,7 +84,8 @@ class BoundaryRiskReviewTests(unittest.TestCase):
     def test_no_review_keeps_original_hash_and_conservative_tiers(self):
         repeated = compile_plan(self.bundle, self.status, self.selection, mode='worked_example', generated_at='one')
         self.assertEqual(self.base, repeated)
-        self.assertEqual(len(repeated['boundaries']['tell_now']), 9)
+        self.assertEqual({row['text'] for row in repeated['boundaries']['tell_now']},
+                         {row['text'] for row in inventory(self.base,self.bundle)})
         self.assertNotIn('boundary_delivery', repeated)
 
     def test_wrong_scope_hash_source_and_missing_entry_are_rejected(self):

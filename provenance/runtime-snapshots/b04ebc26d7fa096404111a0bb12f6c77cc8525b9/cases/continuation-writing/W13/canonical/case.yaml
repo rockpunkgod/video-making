@@ -1,0 +1,19 @@
+case_id: W13-canonical
+method_id: W13
+question_type: 读后续写
+source:
+  repository: https://github.com/rockpunkgod/ANSWER.git
+  commit: b04ebc26d7fa096404111a0bb12f6c77cc8525b9
+  path: gaokao-writing/references/continuation-writing-and-correction.md
+  heading: 素材与考点
+question: null
+answer: null
+trigger: 故事结局需要回应主题
+evidence: []
+method_role: verifier
+expected_action: 圈原文关键细节与解决结果，让结尾回扣它们；独立升华句不是必须项
+expected_output: verify
+stop_rule: 核心矛盾未解决先停喊道理；主题与原文不符或抽象词不能换成本题内容时不保留。缺原文无法完整核回扣，没独立升华句不判重大缺失。
+case_type: canonical
+status: evidence_gap
+notes: 源方法可核；尚未逐题核验案例，不可当成功样例

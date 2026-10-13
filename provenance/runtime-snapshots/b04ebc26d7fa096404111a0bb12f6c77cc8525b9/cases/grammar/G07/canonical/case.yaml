@@ -1,0 +1,19 @@
+case_id: G07-canonical
+method_id: G07
+question_type: 语法填空
+source:
+  repository: https://github.com/rockpunkgod/ANSWER.git
+  commit: b04ebc26d7fa096404111a0bb12f6c77cc8525b9
+  path: gaokao-grammar-fill/references/grammar-fill.md
+  heading: 句间逻辑衔接
+question: null
+answer: null
+trigger: 两个结构完整的句子缺逻辑连接
+evidence: []
+method_role: decider
+expected_action: 写两侧完整意思，标实际转折/因果/并列等关系，不由单个提示词定案
+expected_output: decide
+stop_rule: 标点或中文转折不能独立定词；句子成分未完整先回从句节点。However等功能须按本句说明，不能把所有逻辑词称为并列连词。
+case_type: canonical
+status: evidence_gap
+notes: 源方法可核；尚未逐题核验案例，不可当成功样例

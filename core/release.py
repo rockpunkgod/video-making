@@ -55,7 +55,9 @@ def check_release(registry,review,applied=False,visited=None):
             'human_common_checks':all(review['checks'][key] is True for key in COMMON)}
     if applied: checks['applied_state_matches_approval']=method['maturity_status']==review['target_maturity'] and method['practical_value']==review['target_practical_value']
     inventory=registry.case_inventory()
-    checks['five_verified_case_slots']=set(method['cases'])==set(CASE_TYPES) and all(inventory[path]['status']=='verified_course_example' and bool(inventory[path]['question']) for path in method['cases'].values())
+    checks['five_verified_case_slots']=set(method['cases'])==set(CASE_TYPES) and all(
+        inventory[path]['status']=='verified_course_example' and bool(inventory[path]['question'])
+        and registry.case_is_current(inventory[path]) for path in method['cases'].values())
     stats=regression.get('after_refactor',{})
     checks['regression_matches_current_material']=all(regression.get(key)==value for key,value in regression_snapshot(registry).items())
     checks['regression_passed']=all(type(stats.get(key)) is int for key in ('tests_run','failures','errors')) and stats.get('tests_run',0)>=16 and stats.get('failures')==0 and stats.get('errors')==0 and stats.get('registry',{}).get('status')=='PASS' and stats.get('generated',{}).get('generated_assets')=='PASS' and regression.get('source_commit')==registry.index['source_baseline']['commit']

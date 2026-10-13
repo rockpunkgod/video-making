@@ -4,6 +4,12 @@ from .evidence import check_span
 MAIN_TASKS = {'main_idea','purpose','title','paragraph_main_idea'}
 FULL_TEXT_METHODS = {'R06', 'R09'}
 
+def full_text_only(mid, registry):
+    # New R06 is a candidate diagnosis within the asked range. Preserve the
+    # old full-text algorithm boundary when replaying its archived Registry.
+    return mid in FULL_TEXT_METHODS and not (
+        mid=='R06' and registry.methods[mid]['method_type']=='internal_rule')
+
 def normalize_symptom(text):
     return re.sub(r'[\s，。？！、；：,.!?;:]+','',text).casefold()
 
@@ -17,7 +23,7 @@ def match_methods(question,registry):
             raise ValueError('Cross-type method invocation: '+mid)
         if mid in {'R06','R09','R16'} and task not in MAIN_TASKS:
             raise ValueError('Main idea method used on a different task')
-        if mid in FULL_TEXT_METHODS and task=='paragraph_main_idea':
+        if full_text_only(mid,registry) and task=='paragraph_main_idea':
             raise ValueError('Full-text method cannot replace paragraph task')
         found[mid] = {'method_id':mid,'role':m['primary_role'],'confidence':'medium' if verified else 'low','reason':reason,'trigger_verified':verified}
     # Structural routing only. It suggests methods; it NEVER produces candidate truth.
@@ -37,7 +43,7 @@ def match_methods(question,registry):
         for m in registry.methods.values():
             if m['question_type'] != qtype: continue
             if m['method_id'] in {'R06','R09','R16'} and task not in MAIN_TASKS: continue
-            if m['method_id'] in FULL_TEXT_METHODS and task=='paragraph_main_idea': continue
+            if full_text_only(m['method_id'],registry) and task=='paragraph_main_idea': continue
             aliases = next((r['phrases'] for r in registry.symptom_cues if r['method_id']==m['method_id']),[])
             if any(normalized in normalize_symptom(s) or normalize_symptom(s) in normalized for s in m['student_symptoms']+aliases):
                 add(m['method_id'],'学生自述卡点，仅作为可能入口')
@@ -45,6 +51,11 @@ def match_methods(question,registry):
     # A specific student obstacle takes priority over an unrelated generic entry.
     # Observations below can independently restore any reviewed structural method.
     if symptom_ids:
+        if 'R06' in symptom_ids and task=='paragraph_main_idea' and not full_text_only('R06',registry):
+            # A diagnosis needs an established paragraph core. Do not let a
+            # generic "two summaries both look right" symptom skip that step.
+            add('R16','先核所问段落核心，再诊断候选是否遗漏；不是全文框架')
+            symptom_ids.add('R16')
         found = {mid:value for mid,value in found.items() if mid in symptom_ids}
     for observation in question.get('observations',[]):
         mid = observation['method_id']

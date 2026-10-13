@@ -1,6 +1,6 @@
 """Source-bound whole-passage order checks; external semantic review only."""
 from copy import deepcopy
-from .registry import validate_schema
+from .registry import Registry,validate_schema
 from .evidence import check_span
 from .evidence import validate_graph
 from .execution import validate_execution_trace
@@ -26,22 +26,39 @@ def expected_order(kind,items,mode):
     return ids
 
 
-def validate_order(kind,items,review,analyses):
+def evidence_driven_cloze(registry):
+    return registry.cloze_order_policy()=='evidence_driven_visits'
+
+
+def validate_order(kind,items,review,analyses,registry=None):
+    registry=registry or Registry()
     steps=review['steps']; ids=set(items); first=[s for s in steps if s['pass']==1]; second=[s for s in steps if s['pass']==2]
+    flexible=kind=='完形填空' and evidence_driven_cloze(registry)
+    final_states={}
     if kind!='阅读理解' and review['reading_mode'] is not None: raise ValueError('Do not move reading mode to another question type')
     if kind=='阅读理解' and review['reading_mode'] is None: raise ValueError('Reading order requires reviewed task mode, not passage letter')
     if {s['question_id'] for s in first}!=ids or len(first)!=len(ids): raise ValueError('First pass must visit every original question once')
-    if steps!=first+second: raise ValueError('Do not interleave second-pass recovery before first-pass completion')
+    if not flexible and steps!=first+second: raise ValueError('Do not interleave second-pass recovery before first-pass completion')
     if kind!='完形填空':
         if second or any(s['outcome']=='deferred' for s in first): raise ValueError('Only cloze uses the two-pass defer/recover delivery')
         if kind!='七选五' and [s['question_id'] for s in first]!=expected_order(kind,items,review['reading_mode']):
             raise ValueError('Spoken order violates the frozen course task order')
-    else:
+    elif not flexible:
         order=expected_order(kind,items,None)
         if [s['question_id'] for s in first]!=order: raise ValueError('Cloze first pass follows original blank numbers')
         deferred={s['question_id'] for s in first if s['outcome']=='deferred'}
         if [s['question_id'] for s in second]!=[q for q in order if q in deferred] or any(s['outcome']!='solved' for s in second):
             raise ValueError('Cloze recovery must cover exactly deferred blanks in original order')
+    else:
+        for step in steps:
+            qid=step['question_id']
+            if step['pass']==1:
+                if qid in final_states: raise ValueError('Duplicate first cloze visit')
+            elif step['pass']==2:
+                if final_states.get(qid)!='deferred':
+                    raise ValueError('Cloze return requires an earlier unresolved own visit')
+            else: raise ValueError('Cloze visit kind must be first visit or return')
+            final_states[qid]=step['outcome']
     for step in steps:
         qid=step['question_id']
         if qid not in items: raise ValueError('Unknown passage delivery question')
@@ -54,6 +71,9 @@ def validate_order(kind,items,review,analyses):
         if any(eid not in executions for eid in step['execution_ids']): raise ValueError('Order references unknown question action')
         if step['outcome']=='deferred' and (not step['execution_ids'] or not any(executions[eid]['state']=='stopped' for eid in step['execution_ids'])):
             raise ValueError('Cloze first-pass uncertainty needs its own reviewed stopped action')
+        if flexible and step['pass']==2 and step['outcome']=='solved' and (
+                not step['execution_ids'] or not any(executions[eid]['state']=='produced' for eid in step['execution_ids'])):
+            raise ValueError('Cloze recovery needs its own produced evidence action, not another answer')
     if kind=='七选五':
         partitions=[]
         for step in first:
@@ -62,6 +82,7 @@ def validate_order(kind,items,review,analyses):
                 ex={x['execution_id']:x for x in a['execution_trace']}
                 partitions.append([ex[eid]['output'] for eid in lesson['grouping_execution_ids']])
         if partitions and any(p!=partitions[0] for p in partitions): raise ValueError('Whole seven-five grouping cannot be rebuilt for each blank')
+    return all(outcome=='solved' for outcome in final_states.values()) if flexible else None
 
 
 class PassageLessonAnalyzer:
@@ -88,8 +109,8 @@ class PassageLessonAnalyzer:
             if any(item['question'].get('options')!=next(iter(items.values()))['question'].get('options') for item in items.values()):
                 raise ValueError('Seven-five blanks must share the same full candidate set')
         analyses={qid:self.analyzer.analyze(item['question']) for qid,item in items.items()}
-        validate_order(kind,items,review,analyses)
-        complete=p['material_complete'] and review['review_status']=='reviewed' and all(a['lesson_feedback'] and a['lesson_feedback']['scope']=='single_question_lesson' for a in analyses.values())
+        order_complete=validate_order(kind,items,review,analyses,r)
+        complete=order_complete is not False and p['material_complete'] and review['review_status']=='reviewed' and all(a['lesson_feedback'] and a['lesson_feedback']['scope']=='single_question_lesson' for a in analyses.values())
         result={'schema_version':'1.0.0','lesson_id':p['lesson_id'],'question_type':kind,'questions':[{'number':items[qid]['number'],'question':items[qid]['question'],'analysis':analyses[qid]} for qid in sorted(items,key=lambda q:items[q]['number'])],
                 'scope':'whole_passage_delivery' if complete else 'partial_delivery','review':review if complete else {**review,'steps':[]},'answer_summary':[{'number':items[qid]['number'],'answer':analyses[qid]['answer']} for qid in sorted(items,key=lambda q:items[q]['number'])] if complete else [],
                 'material_complete':p['material_complete'],'limitations':['篇级顺序、材料完整性与自由文字均为外部审阅声明；结构、跨度和动作检查不能认证英语语义、真实采集或旧宿主表现。','整篇一次交付；完整口播或任何题的闭合不足时扣留整篇消息及答案串，单题结构分析仍可检查。']}
@@ -122,4 +143,5 @@ def validate_passage_projection(result,registry):
         if not a['lesson_feedback'] or a['lesson_feedback']['scope']!='single_question_lesson' or a['question_type']!=result['question_type']: raise ValueError('Whole message requires every own single-question closure')
     expected=[{'number':x['number'],'answer':x['analysis']['answer']} for x in sorted(rows,key=lambda x:x['number'])]
     if result['answer_summary']!=expected: raise ValueError('Passage answer summary differs from core original-number closure')
-    validate_order(result['question_type'],items,result['review'],analyses)
+    if validate_order(result['question_type'],items,result['review'],analyses,registry) is False:
+        raise ValueError('Whole cloze delivery still has unresolved visits')

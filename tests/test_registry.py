@@ -168,10 +168,14 @@ class RegistryTest(unittest.TestCase):
 
     def test_regression_boundaries_remain_explicit(self):
         self.assertIn("直接或间接", self.methods["R01"]["decision_rule"])
-        self.assertIn("不证明范围", self.methods["R02"]["four_step_card"]["stop"])
-        self.assertIn("局部细节题", self.methods["R06"]["failure_cases"][0])
-        self.assertIn("不是机械固定三步", self.methods["R09"]["full"]["source_boundary"])
-        self.assertIn("不负责定答案", self.methods["F01"]["stop_rule"])
+        self.assertIn("一致只通过", self.methods["R02"]["decision_rule"])
+        self.assertIn("不能据剩余项定案", self.methods["R02"]["four_step_card"]["stop"])
+        self.assertIn("主旨、标题或目的", self.methods["R06"]["four_step_card"]["start"])
+        self.assertIn("全文骨架卡", self.methods["R09"]["decision_rule"])
+        self.assertIn("先读实际题干", self.methods["R09"]["core_action"])
+        self.assertIn("重复线索缺失只跳过", self.methods["R09"]["stop_rule"])
+        self.assertIn("只产出优先候选组", self.methods["F01"]["decision_rule"])
+        self.assertIn("不据组小、占用或剩一项选", self.methods["F01"]["stop_rule"])
         self.assertIn("只在空位已确认需要动词形式时进入", self.methods["G01"]["full"]["decision_tree"]["prompt_word"][True]["children"]["verb"]["gate"])
 
     def test_g01_is_a_tree_not_a_flat_list(self):

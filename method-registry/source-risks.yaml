@@ -1,35 +1,43 @@
 risks:
-  - risk_id: GRAMMAR-PARTICIPLE-QUICK-SPLIT
-    section_id: a0bcc74f05b00671
-    affected_methods: [G01, G12, G13, G14]
-    source_quote: 过去分词的快速二分：有 `be` 的是谓语被动，没有 `be` 的是非谓语。
-    status: withheld_as_standalone_rule
-    reason: 同节同时要求分清状态性过去分词、真正主语和句法作用；快速二分不能脱离这些边界作为独立判据。
-    action: 保留原文用于审计，不机械执行这条口诀；回该节完整句法、语态与状态边界求证。
-  - risk_id: CONTINUATION-VERSION-TENSION
-    affected_methods: [W01, W03, W07, W09, W11, W13, W14, W15]
-    source_path: gaokao-writing/references/continuation-writing-and-correction.md
-    status: contextual_review_required
-    reason: 原模块显式记录26S春语言重心与原文根基/冲突设计的张力，且保留无铺垫新增事件不成立、独立升华句非必须项。
-    action: 采用对应版本时同时保留不可脱离原文与不机械扣分的边界，不混用PTSD两版定义。
-  - risk_id: GRAMMAR-WHY-HOW-TEMPORAL-SHORTCUT
-    section_id: 9b496b1572cdf49b
-    affected_methods: [G06]
-    source_quote: 宾语从句不缺成分时：`why` 指已经发生，`how` 指尚未达成，`that` 未提及过程。
-    status: withheld_as_standalone_rule
-    reason: 同节要求先核从句作用、结构缺口和语义；时间概括不能独立替代这些条件，当前Case没有验证其跨题适用范围。
-    action: 原话留作审计，不把发生/未发生独立映射为连接词；回本句从句功能、完整命题与所问语义求证。
-  - risk_id: GRAMMAR-NONFINITE-UNIVERSAL-LISTS
-    section_id: 7c16410a7f1b8e4f
-    affected_methods: [G15, G16]
-    source_quote: '**完成形式不能作定语**：所有非谓语动词的完成形式都不能作定语'
-    status: contextual_review_required
-    reason: 该全称句与同节固定选择清单尚无覆盖全部形式和句法位置的案例；不能仅据清单标题作跨题无条件排除。
-    action: 原文保留用于审计；实际题先核作用、具体结构、逻辑主语与相对时间，触及此全称限制或简化清单而缺本句支持时暂留并请求独立审阅，不自行补成另一条普遍规则。
-  - risk_id: APPLICATION-TRAINING-WORDCOUNT-TENSION
-    section_id: 8cc4571377b8183a
-    affected_methods: [A01, A02, A05, A07, A09]
-    source_quote: '篇幅策略：110 词左右用两简一复从，120 词以上用句式重构。'
-    status: contextual_review_required
-    reason: 同一源文档的15分评分规范写明少于60或多于100减2分；训练句式的篇幅策略不能覆盖评分或当前题面字数限制。
-    action: 原训练说明保留用于审计；现场先核题面及适用字数规范，不将110或120词当作应用文通用目标，不靠加长触发升级。
+- risk_id: GRAMMAR-PARTICIPLE-QUICK-SPLIT
+  section_id: a0bcc74f05b00671
+  affected_methods:
+  - G01
+  - G12
+  - G13
+  - G14
+  source_quote: 过去分词的快速二分：有 `be` 的是谓语被动，没有 `be` 的是非谓语。
+  status: withheld_as_standalone_rule
+  reason: 同节同时要求分清状态性过去分词、真正主语和句法作用；快速二分不能脱离这些边界作为独立判据。
+  action: 保留原文用于审计，不机械执行这条口诀；回该节完整句法、语态与状态边界求证。
+- risk_id: CONTINUATION-VERSION-TENSION
+  affected_methods:
+  - W01
+  - W03
+  - W07
+  - W09
+  - W11
+  - W13
+  - W14
+  - W15
+  source_path: gaokao-writing/references/continuation-writing-and-correction.md
+  status: contextual_review_required
+  reason: 原模块显式记录26S春语言重心与原文根基/冲突设计的张力，且保留无铺垫新增事件不成立、独立升华句非必须项。
+  action: 逐一保留寒8板书、同课表格、寒14与旧高二PPT的定义，不混用；训练安排不作评分硬项。
+- risk_id: GRAMMAR-WHY-HOW-TEMPORAL-SHORTCUT
+  section_id: 9b496b1572cdf49b
+  affected_methods:
+  - G06
+  source_quote: 宾语从句不缺成分时：`why` 指已经发生，`how` 指尚未达成，`that` 未提及过程。
+  status: withheld_as_standalone_rule
+  reason: 同节要求先核从句作用、结构缺口和语义；时间概括不能独立替代这些条件，当前Case没有验证其跨题适用范围。
+  action: 原话留作审计，不把发生/未发生独立映射为连接词；回本句从句功能、完整命题与所问语义求证。
+- risk_id: GRAMMAR-NONFINITE-UNIVERSAL-LISTS
+  section_id: 7c16410a7f1b8e4f
+  affected_methods:
+  - G15
+  - G16
+  source_quote: '**完成形式不能作定语**：所有非谓语动词的完成形式都不能作定语'
+  status: contextual_review_required
+  reason: 该全称句与同节固定选择清单尚无覆盖全部形式和句法位置的案例；不能仅据清单标题作跨题无条件排除。
+  action: 原文保留用于审计；实际题先核作用、具体结构、逻辑主语与相对时间，触及此全称限制或简化清单而缺本句支持时暂留并请求独立审阅，不自行补成另一条普遍规则。

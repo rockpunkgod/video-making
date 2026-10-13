@@ -1,5 +1,5 @@
 repository: https://github.com/rockpunkgod/ANSWER.git
-commit: b04ebc26d7fa096404111a0bb12f6c77cc8525b9
+commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
 files:
 - path: agents/gaokao-grammar-fill.md
   sha256: 1c0436e2d4fda0fe07d5e5c56161710269db4d1200c9f60c1db04ffb4f6df878
@@ -8,23 +8,23 @@ files:
 - path: agents/gaokao-writing.md
   sha256: de5f81ec944e59b5342c219eb9bb9c1cbf35d1994a812d59d75dd0a177a91c9e
 - path: gaokao-english/references/cloze.md
-  sha256: fddf21ba17e8a5d3bcb90a7281896fbd44bd7d532b6780a375303ebe8d9211ba
+  sha256: e2135bf6605a14adb2d99804d41be8db136ef780857a16829c207b72d6ddabb4
 - path: gaokao-english/references/course-evidence.md
-  sha256: 8fc17e35d454a7d1665ec616359072bc33a6c120ac2612d84c359a898085e9e3
+  sha256: 78b7636dd168ebc701cd7eeb7f87f6a77c32e0eb1805eb86a56b2365a7e81143
 - path: gaokao-english/references/delivery-contract.md
-  sha256: 61aa9a84bf743932f4073ae93dba9db37ef9823851d04b78eaeb36b9e74a02f4
+  sha256: 05f48808abf662a83b50c38b342e1db3f9ce5b84edd8fde7de387059ef0c44d2
 - path: gaokao-english/references/evidence-gaps.md
-  sha256: 48e405dd4a42134f74d54018da5ec222bdf13b4cc4ef576a00e0c6b533eda520
+  sha256: e79832cdff169619469e343b2b51c6b55cfc4015896fd6c3ed4e03a3cac518cf
 - path: gaokao-english/references/listening.md
-  sha256: c20af004ed2ea287146a32d76fb366c228c5e76d53da1b2d2a30de0afaba34d6
+  sha256: 6056701c9b0aab1fdd2eb9b26dcb6a4c5971822d0ba0561028ac1565d59903ff
 - path: gaokao-english/references/reading-comprehension.md
-  sha256: 83559f667eb262351dc6ba90818725f1f517a1969a888bb18b831f403e3818dd
+  sha256: d48d3f361d47fc5fdd2d02bdb969e49959b8143cd702301f72d110e51300f938
 - path: gaokao-english/references/router.md
-  sha256: 61b70e95a09dbcbd9bf2701366ef10ef026ca505c208f323b72b4506a818e732
+  sha256: ac7ab78436b040f927bce2ee4a7d88e28134b399a0172433df30ce44eebf6675
 - path: gaokao-english/references/seven-five.md
-  sha256: 6beebb8d0e32297e1ab7611ffbf86a378d4ad690c0604baafe1584804d44b089
+  sha256: 11dfb9adb5da11cbb3059c0f420bdcdae6fbeb6b42826c1cedd7b540f08af0a1
 - path: gaokao-english/SKILL.md
-  sha256: af44ada25049354e8a5edfbe3b9da2698a47ac8014aeb39bf1a3cbe2b100fdf5
+  sha256: 56868efa2404288e4ab18e64bc03dfb4d66f1a0eb058968b1ebbe3ccbee02926
 - path: gaokao-grammar-fill/references/course-evidence.md
   sha256: feab1810a3788a2659633cc78f82fdb5d9d3ed52b9908edf9fe8f5b0ca751ae5
 - path: gaokao-grammar-fill/references/grammar-fill.md
@@ -38,9 +38,8 @@ files:
 - path: gaokao-grammar-fill/SKILL.md
   sha256: 4d7d0e26e6007efba8fb3aca0dbe3bc75b8b78d15b14757fa4a80a7e6460b048
 - path: gaokao-writing/references/application-writing-and-correction.md
-  sha256: 1bb8f9c2eece155a531efaf653e29ee79d515f0a7a4eb36f480bfdec9b178192
+  sha256: 3cb6331b4adf5fae7dfc1ab900eb4a2074879219aa7f907b88137e28ffa88155
 - path: gaokao-writing/references/continuation-writing-and-correction.md
-  sha256: 3149bb08249e3c8dce7f7b035bd2162d6b0ff02f6d8d19bbda1b054acaf9409b
+  sha256: d2a9c364d67f484ca9b752fc53f53754f2d407e45020f6043d6abaa9d97f7dc8
 - path: gaokao-writing/SKILL.md
   sha256: 5d6f50b52b6c2e612907bf24821aacb6012330d661ccb59439b67098a8f693e3
-usage: 只读审计快照，不是运行时人工维护事实源

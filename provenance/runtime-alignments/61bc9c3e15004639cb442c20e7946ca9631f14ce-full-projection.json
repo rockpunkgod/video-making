@@ -1,0 +1,11 @@
+{
+  "scope": "nested_source_summary_alignment_only",
+  "source_commit": "61bc9c3e15004639cb442c20e7946ca9631f14ce",
+  "changed_methods": [
+    "G01"
+  ],
+  "new_blind_samples": 0,
+  "promotion_applied": false,
+  "same_version_semantic_changes_invalidate_frozen_exports": true,
+  "backup_directory": "E:\\自媒体\\video-making\\local-data\\answer-alignment-2026-10-13\\full-projection-backup-v9ek4mb6"
+}

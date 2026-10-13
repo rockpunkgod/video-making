@@ -35,6 +35,48 @@ def review_level(record):
 
 
 class FrozenAssetExporter:
+    def status_current_epoch(self, request, registry=None, generated_at=None):
+        """Re-status explicit frozen material against the active teaching epoch.
+
+        This never re-solves, rewrites its old methods/actions/reviews, or
+        certifies it under new rules. Consumers receive only a sealed status.
+        """
+        from core.registry import Registry
+        registry=registry or Registry()
+        if registry.is_historical:
+            raise ValueError('Historical replay cannot declare the current teaching epoch')
+        if any(m.get('source_alignment',{}).get('state')=='staged_not_live'
+               for m in registry.methods.values()):
+            raise ValueError('Staged teaching rules cannot declare the current live epoch')
+        registry.validate()
+        req=deepcopy(request)
+        mids=[m['method_id'] for m in req['methods']]
+        if any(mid not in registry.methods for mid in mids):
+            raise ValueError('Frozen method is absent from current Registry; explicit retirement status required')
+        current=deepcopy(req.get('current',{}))
+        current['method_versions']={mid:registry.methods[mid]['version'] for mid in mids}
+        req['current']=current
+        result=self.status(req,generated_at)
+        changed=[m for m in req['methods'] if m['version']!=registry.methods[m['method_id']]['version']]
+        # A version declaration alone cannot authenticate unchanged teaching
+        # facts. This comparison does NOT change legacy sealed bundle hashing.
+        teaching_keys=('source_name','method_type','primary_role','secondary_roles','trigger_cues',
+                       'core_action','decision_rule','verification','stop_rule','anti_rule',
+                       'failure_cases','counterexamples','cannot_replace','full','section_ids','source_references')
+        semantic_changed=[m['method_id'] for m in req['methods'] if any(
+            m.get(k)!=registry.methods[m['method_id']].get(k) for k in teaching_keys)]
+        if semantic_changed and result['effective_status'] not in {'WITHDRAWN','SUPERSEDED'}:
+            result['effective_status']='SUPERSEDED'; result['question']['status']='SUPERSEDED'
+            result['invalidation_reasons'].append('Current teaching facts differ: '+', '.join(semantic_changed))
+        if changed:
+            result['invalidation_reasons'].append(
+                'Current teaching source '+registry.index['source_baseline']['commit']+'; '+
+                ', '.join(m['method_id']+': '+m['version']+' -> '+registry.methods[m['method_id']]['version']
+                          for m in changed))
+        if changed or semantic_changed:
+            result=seal(result); validate('artifact-status-manifest',result)
+        return result
+
     def export(self, request, generated_at=None):
         req = deepcopy(request)
         allowed = {'question', 'analysis', 'methods', 'reviews', 'withdrawals', 'source',

@@ -1,0 +1,19 @@
+case_id: A03-canonical
+method_id: A03
+question_type: 应用文
+source:
+  repository: https://github.com/rockpunkgod/ANSWER.git
+  commit: b04ebc26d7fa096404111a0bb12f6c77cc8525b9
+  path: gaokao-writing/references/application-writing-and-correction.md
+  heading: 三种句子生成法
+question: null
+answer: null
+trigger: 要点已确定但简单句写不出来
+evidence: []
+method_role: interpreter
+expected_action: 先写主体，再写动作或状态，最后嵌入题面支持的场景细节
+expected_output: interpret
+stop_rule: 主体或动作不确定先回要点，不能编背景补空；句子主干、搭配或时态不成立先修准确，不急着加修饰。
+case_type: canonical
+status: evidence_gap
+notes: 源方法可核；尚未逐题核验案例，不可当成功样例

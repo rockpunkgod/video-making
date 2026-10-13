@@ -1,0 +1,19 @@
+case_id: F08-canonical
+method_id: F08
+question_type: 七选五
+source:
+  repository: https://github.com/rockpunkgod/ANSWER.git
+  commit: b04ebc26d7fa096404111a0bb12f6c77cc8525b9
+  path: gaokao-english/references/seven-five.md
+  heading: 褒贬一致
+question: null
+answer: null
+trigger: 同一对象有可确认的评价方向
+evidence: []
+method_role: reducer
+expected_action: 圈评价词及它评价的对象，比较候选评价维度，不因同为积极词就定案
+expected_output: reduce
+stop_rule: 中性句不强分褒贬；负面处境可能引出改善，否定形式可能表达肯定。方向相同仍不能定案，更不能靠另一空占用来证明。
+case_type: canonical
+status: evidence_gap
+notes: 源方法可核；尚未逐题核验案例，不可当成功样例

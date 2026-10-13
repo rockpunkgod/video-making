@@ -1,0 +1,19 @@
+case_id: G08-canonical
+method_id: G08
+question_type: 语法填空
+source:
+  repository: https://github.com/rockpunkgod/ANSWER.git
+  commit: b04ebc26d7fa096404111a0bb12f6c77cc8525b9
+  path: gaokao-grammar-fill/references/grammar-fill.md
+  heading: 有提示词
+question: null
+answer: null
+trigger: 有提示词但不确定空位需要什么
+evidence: []
+method_role: reducer
+expected_action: 圈空位前后修饰与支配结构，标名/形/副/代/数/动功能，再进对应分支
+expected_output: reduce
+stop_rule: 提示词原词性不证明答案词性；分句主干不清先拆句，名词性位置还要区分派生名词与动名词，不能见动词提示就走非谓语。
+case_type: canonical
+status: evidence_gap
+notes: 源方法可核；尚未逐题核验案例，不可当成功样例

@@ -62,7 +62,7 @@
     {
       "execution_id": "blank-route",
       "method_id": "G01",
-      "method_version": "1.1.0",
+      "method_version": "1.2.0",
       "role": "framework",
       "input_artifact_ids": [],
       "concrete_action": "圈出提示词protect，再圈promote后宾语中心及前面的environmental，记录空位需要名词，不按提示动词进入动词路线。",
@@ -90,7 +90,7 @@
     {
       "execution_id": "noun-form",
       "method_id": "G09",
-      "method_version": "1.1.0",
+      "method_version": "1.2.0",
       "role": "decider",
       "input_artifact_ids": [
         "blank-route"

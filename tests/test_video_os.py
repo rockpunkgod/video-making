@@ -88,6 +88,36 @@ class VideoOSTest(unittest.TestCase):
             self.exporter.export(self.req)
         self.assertEqual(self.req, before)
 
+    def test_current_epoch_status_supersedes_without_rewriting_frozen_input(self):
+        before=deepcopy(self.req)
+        current=Registry()
+        current.methods['R12']['version']='99.0.0'  # synthetic future version only
+        current.index['methods']['R12']['version']='99.0.0'
+        with patch.object(QuestionAnalyzer,'analyze',side_effect=AssertionError('must not re-solve')):
+            status=self.exporter.status_current_epoch(self.req,current)
+        self.assertEqual(status['effective_status'],'SUPERSEDED')
+        self.assertEqual(self.req,before)
+        self.assertEqual(status['method_versions']['R12'],before['analysis']['method_versions']['R12'])
+        bundle=self.exporter.export(self.req)
+        candidate=make_candidate([bundle],[{'asset_id':bundle['asset_id'],'method_id':'R12','action_ids':['loc']}],
+                                 {bundle['asset_id']:self.exporter.status(self.req)})
+        updated=refresh(candidate,{bundle['asset_id']:status})
+        self.assertTrue(updated['invalidation']['teaching_stale'])
+        self.assertTrue(updated['invalidation']['editorial_stale'])
+        self.assertFalse(updated['engineering_pilot_eligible'])
+
+    def test_archived_registry_cannot_claim_current_epoch(self):
+        history=Registry(snapshot_commit='b04ebc26d7fa096404111a0bb12f6c77cc8525b9')
+        with self.assertRaisesRegex(ValueError,'Historical replay'):
+            self.exporter.status_current_epoch(self.req,history)
+
+    def test_same_version_cannot_hide_changed_teaching_facts(self):
+        current=Registry(); current.methods['R12']['core_action']='Synthetic changed facts only'
+        current.methods['R12']['full']['summary']=current.methods['R12']['core_action']+' '+current.methods['R12']['decision_rule']
+        status=self.exporter.status_current_epoch(self.req,current)
+        self.assertEqual(status['effective_status'],'SUPERSEDED')
+        self.assertTrue(any('teaching facts differ' in reason for reason in status['invalidation_reasons']))
+
     def test_ai_not_human(self):
         b, _ = self.assets()
         self.assertEqual(b['semantic_review']['level'], 'ai_reviewed')

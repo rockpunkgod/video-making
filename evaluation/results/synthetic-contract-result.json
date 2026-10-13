@@ -13,6 +13,7 @@
         "ready_for_review": false,
         "blocking_reasons": [
           "matching_frozen_plan",
+          "registry_version_role_binding",
           "workflow_artifact_present",
           "all_three_phases_present",
           "all_observation_times_present",
@@ -28,7 +29,7 @@
         ],
         "checks": {
           "matching_frozen_plan": false,
-          "registry_version_role_binding": true,
+          "registry_version_role_binding": false,
           "standalone_role_capacity": true,
           "workflow_artifact_present": false,
           "all_three_phases_present": false,
