@@ -13,7 +13,7 @@ from core.registry import ROOT, Registry
 from scripts.audit_student_entries import PRIORITY
 
 FIELDS = ('question_id','question_type','task_type','stem','passage','options',
-          'hint_word','student_draft','continuation_starters')
+          'given_word','hint_word','student_draft','continuation_starters')
 
 
 def question_fingerprint(question):
@@ -22,18 +22,31 @@ def question_fingerprint(question):
 
 
 def teaching_fingerprint(method):
-    return question_fingerprint({key:method[key] for key in (
+    fields={key:method[key] for key in (
         'method_id','version','brand_name','student_symptoms','four_step_card',
-        'primary_role','output_type','section_ids')})
+        'primary_role','output_type','section_ids')}
+    if method['method_id']=='G01':
+        fields['visual_formula']=method['visual_formula']
+    return question_fingerprint(fields)
 
 
-def read_question(path):
+def read_question(path, question_id=None):
     path = Path(path).resolve()
     data = path.read_bytes()
     artifact = json.loads(data)
     if not isinstance(artifact,dict):
         raise ValueError('An existing structured question is required')
-    raw = artifact.get('question', artifact)
+    if question_id is not None:
+        inputs=artifact.get('inputs')
+        questions=inputs.get('questions') if isinstance(inputs,dict) else None
+        if not isinstance(questions,list):
+            raise ValueError('Question selection requires existing frozen paper inputs')
+        matches=[q for q in questions if isinstance(q,dict) and q.get('question_id')==question_id]
+        if len(matches)!=1:
+            raise ValueError('Original question ID is missing or duplicated in paper inputs')
+        raw=matches[0]
+    else:
+        raw = artifact.get('question', artifact)
     if not isinstance(raw, dict):
         raise ValueError('An existing structured question is required')
     question = {key: raw[key] for key in FIELDS if key in raw}
@@ -42,6 +55,7 @@ def read_question(path):
         raise ValueError('Incomplete question text; do not fill missing source material')
     return question, {'path': str(path), 'sha256': hashlib.sha256(data).hexdigest(),
                       'question_sha256':question_fingerprint(question),
+                      'question_selector':question_id,
                       'question_text_only': True, 'historical_review_reused': False}
 
 
@@ -54,13 +68,26 @@ def check_choices(question):
             raise ValueError('Incomplete or invalid original choice set; do not invent missing options')
 
 
+def grammar_hint(question):
+    keys=[key for key in ('given_word','hint_word') if key in question]
+    if not keys:
+        raise ValueError('Missing explicit hint state for this grammar blank')
+    if any(question[key] is not None and not isinstance(question[key],str) for key in keys):
+        raise ValueError('Grammar hint must be text or explicit null')
+    values=[(question[key] or '').strip() for key in keys]
+    if len(set(values))!=1:
+        raise ValueError('Conflicting original grammar hint fields')
+    return values[0] or None
+
+
 def render_question(question):
     parts = [question['passage'], question['stem']]
     if question.get('options'):
         parts += [value if re.match(r'^\s*'+re.escape(key)+r'[.．、]',value)
                   else f'{key}. {value}' for key, value in question['options'].items()]
-    if question.get('hint_word'):
-        parts.append('提示词：'+question['hint_word'])
+    if question['question_type']=='语法填空':
+        hint=grammar_hint(question)
+        parts.append('本空提示词：'+hint if hint else '本空无提示词。')
     if question.get('student_draft'):
         parts.append(question['student_draft'])
     if question.get('continuation_starters'):
@@ -68,17 +95,20 @@ def render_question(question):
     return '\n\n'.join(parts)
 
 
-def prepare(method_id, demonstration_path, transfer_path, walkthrough_path, output, registry=None):
+def prepare(method_id, demonstration_path, transfer_path, walkthrough_path, output, registry=None,
+            demonstration_id=None, transfer_id=None):
     registry = registry or Registry()
     registry.validate()
     if registry.is_historical or method_id not in PRIORITY:
         raise ValueError('Use the current Registry and one priority method')
     method = registry.methods[method_id]
-    demo, demo_ref = read_question(demonstration_path)
-    transfer, transfer_ref = read_question(transfer_path)
+    demo, demo_ref = read_question(demonstration_path,demonstration_id)
+    transfer, transfer_ref = read_question(transfer_path,transfer_id)
     if demo['question_type'] != method['question_type'] or transfer['question_type'] != method['question_type']:
         raise ValueError('Question type does not match the teaching method')
     check_choices(demo); check_choices(transfer)
+    if method_id=='G01':
+        grammar_hint(demo); grammar_hint(transfer)
     identity = lambda question: {key: value for key, value in question.items() if key!='question_id'}
     if demo['question_id']==transfer['question_id'] or identity(demo)==identity(transfer):
         raise ValueError('The second task must use different original question material')
@@ -108,6 +138,7 @@ def prepare(method_id, demonstration_path, transfer_path, walkthrough_path, outp
         '你可能遇到：'+method['student_symptoms'][0],
         '什么时候启动：'+card['start'], '第一刀：'+card['first_cut'],
         '怎么判：'+card['judge'], '什么时候停：'+card['stop'],
+        *(['```text\n'+method['visual_formula']+'\n```'] if method_id=='G01' else []),
         '## 示范题', render_question(demo),
         '先做：'+walkthrough['first_action'], '看到的证据：'+walkthrough['evidence'],
         '只得到：'+walkthrough['output'], '这里要刹车：'+walkthrough['stop'],
@@ -176,10 +207,14 @@ def verify(output, registry=None):
     for ref in refs:
         if hashlib.sha256(Path(ref['path']).read_bytes()).hexdigest()!=ref['sha256']:
             raise ValueError('Original source artifact changed after export')
+    bound_question_ids=[]
     for ref in refs[:2]:
-        question,_=read_question(ref['path'])
+        question,_=read_question(ref['path'],ref.get('question_selector'))
         if question_fingerprint(question)!=ref.get('question_sha256'):
             raise ValueError('Original question binding mismatch')
+        bound_question_ids.append(question['question_id'])
+    if bound_question_ids!=meta.get('question_ids'):
+        raise ValueError('Study question IDs do not match selected source questions')
     return {'method_id':method['method_id'],'binding_check':'PASS',
             'status':'draft_materials_not_study_approval','collection_allowed':False,
             'scope':'consistency only; not semantic, source authenticity or learner acceptance'}
@@ -190,16 +225,19 @@ if __name__=='__main__':
     parser.add_argument('--verify',type=Path)
     parser.add_argument('--method',choices=PRIORITY)
     parser.add_argument('--demonstration',type=Path)
+    parser.add_argument('--demonstration-id')
     parser.add_argument('--transfer',type=Path)
+    parser.add_argument('--transfer-id')
     parser.add_argument('--walkthrough',type=Path)
     parser.add_argument('--output',type=Path)
     args=parser.parse_args()
     if args.verify:
-        if any((args.method,args.demonstration,args.transfer,args.walkthrough,args.output)):
+        if any((args.method,args.demonstration,args.demonstration_id,args.transfer,args.transfer_id,args.walkthrough,args.output)):
             parser.error('--verify cannot be combined with export arguments')
         result=verify(args.verify)
     else:
         if not all((args.method,args.demonstration,args.transfer,args.walkthrough,args.output)):
             parser.error('Export requires --method, --demonstration, --transfer, --walkthrough and --output')
-        result=prepare(args.method,args.demonstration,args.transfer,args.walkthrough,args.output)
+        result=prepare(args.method,args.demonstration,args.transfer,args.walkthrough,args.output,
+                       demonstration_id=args.demonstration_id,transfer_id=args.transfer_id)
     print(json.dumps(result,ensure_ascii=False))

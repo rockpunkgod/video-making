@@ -14,9 +14,13 @@ python -m scripts.prepare_first_use_materials --method F01 --demonstration DEMO.
 
 DEMO 和 TRANSFER 是已有完整原题的结构化文件（可有顶层 question）。只提取原题字段，不复制答案、历史关系、分组结果或评分。第二题须是不同题号、不同材料和不同文章；参与者是否曾见过仍须现场确认。WALKTHROUGH 显式绑定当前 method_id、method_version、source_commit、示范 question_id 及 `demonstration_question_sha256`，提供 first_action、evidence、output、stop，并声明 `review_scope=ai_authored_draft_not_learner_validation`。题面指纹由 `scripts.prepare_first_use_materials.question_fingerprint(read_question(path)[0])` 计算，题号不变但原文或选项变化也必须重新审查示范。
 
+若原题在已有整卷冻结文件的 `inputs.questions` 中，可加 `--demonstration-id 原题ID` 和/或 `--transfer-id 原题ID` 精确取题。工具不改原文件、不重建题号，也不从 predictions 读取答案；题号缺失或重复就停止。示范指纹用 `read_question(path, 原题ID)` 计算，复核时同时绑定整卷文件哈希、选中的原题 ID 与原题字段指纹。
+
 输出仅写入私有 local-data，拒绝覆盖既有材料。student-material.md 只展示方法名、症状、四步卡、示范和无提示的第二题；facilitator.json 单独保留来源文件哈希、前置研究门槛和全 null 的观察槽。材料草稿不授权采集，先完成示范及评分依据的独立审查、传播验收、版本冻结和 Practicality Gate，再进入 First-use。导出不登记新 Case，不重计 Blind，不导入或编造参与者结果。
 
 七选五须有完整 A–G，阅读须有完整 A–D；缺项、空项或非文字原文不导出，不自动补题。第二题使用 Registry 当前 Challenge，检测具体动作而非直接猜答案。原选项自带字母时不重复加字母；这些检查不证明文章未缺段或英语语义正确。
+
+G01 保留仓库题面中的 `given_word`，兼容旧 `hint_word`，两字段冲突就停止。无提示词须有显式 null 或空值，不能将字段丢失当作无提示词。学生材料展示当前 Registry 的决策树；到知识节点即停，不将路由当答案。树的同版本变化也会使旧材料指纹失效。
 
 ```powershell
 python -m scripts.prepare_first_use_materials --verify local-data/STUDY-DRAFT
