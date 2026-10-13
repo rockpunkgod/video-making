@@ -1,5 +1,11 @@
 # Final Acceptance
 
+## 无选项候选闭合修复与冻结影响核查（2026-10-14，工程独审待完成）
+
+先在固定旧实现上运行11项显式synthetic控制，真实6失败、0错误，保存旧失败事实；随后只改已知候选范围为options与实际candidate_analysis候选并集。没有选项列表也不能忽略明确未决或未审排除的竞争项；未提交的所有可能词形并不因此得到穷尽认证。typed与旧relations、Paper、已给选项缺核、重复关系、全排除不猜剩余、多个保留及单项旧兼容均有控制。192项专项实际通过、49.167秒；82方法、20来源及生成资产检查通过。另一代理独立对固定旧提交与新实现审阅，完整新版本回归尚未完成，不沿用旧包1529项。
+
+逐一读取现46份已审真实输入和旧冻结分析，44份结果逐值一致，只有63、65题的未决候选摘要、coverage及limitations变化；两答案仍null。原失败r48控制在新实现确实扣留答案。旧2份审阅因真实分析不再相等被现reader拒绝，门禁没有弱化；需要不同审阅者显式另存新绑定后才能重新准入整卷，不覆盖旧freeze，也不把绑定更新重计英语、Case或Blind信用。私人影响审计SHA为 `a155f5a77459cc9f119e842b9af7e67ffba0b7658c8a101815695c362657a39d`，公开范围见 [闭合修复](../evaluation/reports/optionless-candidate-closure-fix-r52.json)。完整目标仍PARTIAL。
+
 ## 无选项语法题闭合门禁实测缺口（2026-10-14，尚未修复）
 
 主代理不只记录摘要显示边界，实际作显式synthetic注释扰动控制：无options的语法输入给一个候选正向retain，另一个明确undetermined，其余排除。真实analyze却返回非空答案及closed=true，summary unresolved为空、coverage为true，而实际candidate_analysis仍有未决项。检查源码确认unresolved仅取options，漏掉显式提交的关系候选。控制应暂留却未暂留，记录为失败，不认证任何英语结论、Case或学生结果。完整控制只存私有，公开风险见 [闭合缺口](../evaluation/reports/grammar-no-options-closure-gap-r48.json)。

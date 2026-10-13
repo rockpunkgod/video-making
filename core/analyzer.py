@@ -110,9 +110,12 @@ class QuestionAnalyzer:
                     chain.append(bind_contract({'method_id':mid,'role':execution_role,'input':'当前空具体候选差异与独立关系证据；不是框架本身','output':'decide','action':'逐项核具体词义与当前空决定性关系，再回填闭合；'+method['secondary_role_gate'],'stop_rule':method['stop_rule'],'state':'reviewed'}))
             candidate_analysis.append({'candidate':rel['candidate'],'effect':effect,'claim':rel['claim'],'method_id':mid,'reviewer':rel['reviewer'],'evidence_ids':evidence_ids})
         if retained & eliminated: raise ValueError('Contradictory reviewed candidate effects')
-        # A supported candidate is not automatically the best/only answer. With
-        # supplied alternatives each rival needs its own reviewed elimination.
-        unresolved = sorted(set(q.get('options',{})) - retained - eliminated)
+        # A supported candidate is not automatically the best/only answer.
+        # Grammar may have no options, but submitted relations still declare
+        # known rivals. Do not silently discard their unresolved/unreviewed
+        # status. This covers declared candidates, not all possible word forms.
+        known_candidates = set(q.get('options',{})) | {x['candidate'] for x in candidate_analysis}
+        unresolved = sorted(known_candidates - retained - eliminated)
         candidate_coverage = not unresolved
         answer = next(iter(retained)) if len(retained)==1 and candidate_coverage else None
         if unresolved:
