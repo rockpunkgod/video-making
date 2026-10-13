@@ -13,10 +13,11 @@ from scripts.generate_assets import build
 PRIORITY = ('R01', 'R02', 'R06', 'R09', 'F01', 'G01')
 
 
-def audit(registry=None):
+def audit(registry=None, assets=None):
     registry = registry or Registry()
     registry.validate()
-    assets = build(registry)
+    if assets is None:
+        assets = build(registry)
     rows = []
     for mid, method in registry.methods.items():
         guide_path = f'student-guides/{mid}-{method["brand_name"]}.md'

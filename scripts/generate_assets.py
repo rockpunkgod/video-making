@@ -1,5 +1,6 @@
 """Generate public projections from Registry; --check rejects manual drift."""
 import argparse
+import json
 import yaml
 from core.registry import ROOT, Registry, load
 
@@ -81,6 +82,11 @@ def build(registry=None):
         if d['path'].startswith('agents/'):
             assets[d['path']] = '<!-- Generated compatibility contract; installed Skill uses Registry. -->\n'+r.document(d['path'])
     assets['references/method-roles.md'] = '# 方法角色（自动生成）\n\n'+'\n'.join(f'- {m["method_id"]} {m["brand_name"]}：{m["method_type"]} / {m["primary_role"]} → {m["output_type"]}' for m in r.methods.values())+'\n'
+    # The current structural report must advance with Registry projections,
+    # while immutable historical acceptance reports remain untouched.
+    from scripts.audit_student_entries import audit
+    assets['evaluation/reports/current-student-entry-audit.json'] = (
+        json.dumps(audit(r, assets=assets), ensure_ascii=False, indent=2)+'\n')
     return assets
 
 def generate(check=False,registry=None,output_root=None):

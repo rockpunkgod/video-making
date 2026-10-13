@@ -1,6 +1,8 @@
 """Current-epoch structure checks must not masquerade as student success."""
 import json
 import unittest
+from pathlib import Path
+from tempfile import TemporaryDirectory
 from unittest.mock import patch
 
 from jsonschema import Draft202012Validator, ValidationError
@@ -50,6 +52,33 @@ class CurrentEntryTests(unittest.TestCase):
     def test_checked_in_current_report_is_reproducible(self):
         stored=json.loads((ROOT/'evaluation/reports/current-student-entry-audit.json').read_text(encoding='utf-8'))
         self.assertEqual(stored,self.report)
+
+    def test_projection_generator_tracks_current_report_and_versions(self):
+        from scripts.generate_assets import build
+        assets=build(self.registry)
+        projected=json.loads(assets['evaluation/reports/current-student-entry-audit.json'])
+        self.assertEqual(projected,self.report)
+        by_id={row['method_id']:row for row in projected['methods']}
+        for mid in ('C01','C02'):
+            self.assertEqual(by_id[mid]['method_version'],self.registry.methods[mid]['version'])
+            self.assertEqual(by_id[mid]['learner_acceptance'],'pending_real_participant_validation')
+
+    def test_generation_checks_stale_report_without_touching_historical_reports(self):
+        from scripts.generate_assets import generate
+        with TemporaryDirectory() as directory:
+            destination=Path(directory)
+            historical=destination/'evaluation/reports/historical-frozen-control.json'
+            historical.parent.mkdir(parents=True)
+            historical.write_bytes(b'program-only immutable historical control\n')
+            generate(registry=self.registry,output_root=destination)
+            current=destination/'evaluation/reports/current-student-entry-audit.json'
+            self.assertEqual(json.loads(current.read_bytes()),self.report)
+            self.assertEqual(historical.read_bytes(),b'program-only immutable historical control\n')
+            current.write_text('{}\n',encoding='utf-8')
+            with self.assertRaisesRegex(ValueError,'current-student-entry-audit.json'):
+                generate(check=True,registry=self.registry,output_root=destination)
+            self.assertEqual(current.read_text(encoding='utf-8'),'{}\n')
+            self.assertEqual(historical.read_bytes(),b'program-only immutable historical control\n')
 
     def test_draft_guide_displays_actual_not_ready_flag(self):
         for row in self.report['priority_entries']:
