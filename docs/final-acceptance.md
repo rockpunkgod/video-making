@@ -369,3 +369,15 @@ R09 canonical 保存完整五段的三字段骨架，并限制局部运输排放
 真人 First-use、Baseline 收益或传播效果。82 项方法仍为 candidate，真人参与 0，升级 0。
 G7/G8/G10/G11 仍 PARTIAL，不以这两例宣称全题型、全槽或整卷完成。
 私有精确快照为 `progress/contribution-24-reports-v1.json`，只代表该检查点，不代替实时派发账本。
+
+## 2026-10-14 当前来源与优先卷增量验收
+
+远端 ANSWER HEAD/main 实查仍为 `61bc9c3e15004639cb442c20e7946ca9631f14ce`。保存的51份来源各自字节哈希及对应Git正文、当前20份正文、82方法和生成资产重新通过校验；28项对齐测试实际通过。没有重复迁移、重写原题或修改ANSWER。记录为 `evaluation/reports/answer-current-alignment-61bc9c3-reconfirmed-r58.json`。
+
+固定提交 `7f1a665` 的隔离交付全量进程36966已真实终止成功：1540项，0失败、0错误、1跳过，942.809秒。新结果哈希 `3f62acb3426a4b689a1d6dbe2452fa0a67f7c83016f81b5bf55194ed862b1247`；ZIP哈希仍与原交付相同。追加 `evaluation/reports/isolated-regression-7f1a665.json`，原启动记录保留，不把后续私有案例和讲解算入此工程结果。
+
+湖北圆创新Q67作者逐字段补齐实际原文证据后，经另一作者独审，12个框架字段及1个定位动作只准入写前指导；来源、精确重放、四输出与4项负控实际通过。新r19全卷47个非听力任务均有当前动作审阅，42题闭合，Q41/Q63/Q65安全HOLD，Q66/Q67仅写前指导，待当前动作审阅0。全卷仍PARTIAL，未认证听力、完整学生作文、评分或学习效果。旧证据/HOLD及案例目录保留；公开记录 `evaluation/reports/current-source-yuanchuang-Q67-guidance-admission-r57.json`。
+
+新Q67完整自然学生指导另存私有r59，10个自然段带具体动作桥、功能位、停止条件和动作挑战，已核原页/现行动作及原审阅绑定。原动作通过不等于新讲解通过，新全文尚待不同作者语义复核，尚未接入引擎自然讲解输出，不冒充学生原稿或完整批改。公开仅哈希与状态 `evaluation/reports/current-source-yuanchuang-Q67-natural-author-r59.json`，不含原题或完整讲解。
+
+以上推进G14工程回归与优先卷审阅，不能替代全部六题型/全语料的真实Case、整卷语义闭合、自然学生交付和真人研究链。总体仍PARTIAL，82方法没有因上述工程检查获得成熟度或Efficient/Signature升级；缺少真人的验收仍为pending_real_participant_validation。
