@@ -1,0 +1,22 @@
+{
+  "scope": "Terminal isolated engineering regression for the immutable corrected current-entry report delivery only",
+  "snapshot_commit_abbreviation": "1a28c75",
+  "archive_path": "deliverables/ANSWER-Method-Engine-1a28c75.zip",
+  "archive_sha256": "31d773c8ee2f26159d06649e34118dad2fcf57e8ccfa1ca18c5bd9f566f9bc43",
+  "session_id": 59501,
+  "terminal_exit_code": 0,
+  "registry_and_generated_validation": "PASS",
+  "methods": 82,
+  "source_documents": 20,
+  "tests_run": 1528,
+  "failures": 0,
+  "errors": 0,
+  "skipped": 1,
+  "elapsed_seconds": 940.376,
+  "result_sha256": "7a6f74cfa74c81a54946c95ce83fffb8b1fed669833811dd95a2c119f4a6ee50",
+  "prior_fb0cd0c_failed_result_preserved": true,
+  "old_failed_package_patched_or_reclassified_as_pass": false,
+  "learner_acceptance": null,
+  "whole_paper_semantic_acceptance_granted_by_engineering_tests": false,
+  "method_promotion_applied": false
+}
