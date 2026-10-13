@@ -1,0 +1,21 @@
+{
+  "scope": "Isolated committed delivery engineering regression only; no whole-paper semantic or learner acceptance",
+  "tested_snapshot_commit": "e91da0c37499e1d2f2c762557edcdd082bcb5a42",
+  "source_commit": "61bc9c3e15004639cb442c20e7946ca9631f14ce",
+  "archive_sha256": "af6a7c104d482fc915f42aed8fc2cdbb0a82b6fce4eee67675471394949dddf5",
+  "private_result_path": "deliverables/ANSWER-Method-Engine-e91da0c/ANSWER-Method-Engine-e91da0c/local-data/answer-alignment-2026-10-13/full-regression-latest.json",
+  "private_result_sha256": "ea1861b5c29d2f8098ee93f2cabcbd03d9fb05ef2d29c809446244abb7b100ac",
+  "initial_source_and_generated_asset_validation": "PASS",
+  "tests_run": 1515,
+  "failures": 0,
+  "errors": 0,
+  "skipped": 1,
+  "elapsed_seconds": 907.031,
+  "result": "PASS_WITH_ONE_SKIP",
+  "later_runtime_changes_not_covered": ["6a70e2f four local reading-task order labels"],
+  "later_private_case_registration_covered": false,
+  "later_new_student_lesson_semantics_covered": false,
+  "original_initial_running_inventory_preserved": true,
+  "learner_validation": null,
+  "method_promotion_applied": false
+}
