@@ -113,7 +113,7 @@ def text_leaves(question):
     return result
 
 
-def frozen_question(blind, request):
+def frozen_question(blind, request, root=None):
     phases = {
             'agent_before_reference_read_source_only_freeze',
             'source_only_before_reference_read',
@@ -122,7 +122,31 @@ def frozen_question(blind, request):
             ('pass' in blind and blind['pass'] not in {'blind', 'host_reviewed_blind'}) or \
             ('phase' not in blind and 'pass' not in blind):
         raise ValueError('Prediction is not a frozen pre-reveal pass')
-    question = pointer(blind, request.get('blind_question_pointer'))
+    document = blind
+    if 'blind_question_ref' in request:
+        # A real historical prediction may hash-bind full source material in a
+        # separate file. Never copy current answers into a new "blind" wrapper.
+        if root is None:
+            raise ValueError('External frozen question requires a private dataset root')
+        ref = request['blind_question_ref']
+        document = artifact(root, ref)
+        bindings = blind.get('input_sha256')
+        if not isinstance(bindings, dict) or bindings.get(Path(ref['path']).name) != ref['sha256']:
+            raise ValueError('Original prediction does not hash-bind this external source')
+        if (document.get('phase') != 'low_model_source_transcription_no_answers'
+                or document.get('reference_read') is not False
+                or document.get('paper_id') != blind.get('paper_id')
+                or not isinstance(blind.get('source_sha256'), str)
+                or document.get('source_sha256') != blind['source_sha256']):
+            raise ValueError('External source phase, paper or original identity differs')
+        if not isinstance(blind.get('reviewer_agent'), str) or not blind['reviewer_agent'].strip():
+            raise ValueError('Original prediction author required for external material')
+        predictions = blind.get('objective_predictions')
+        if not isinstance(predictions, list) or len([
+                row for row in predictions if isinstance(row, dict)
+                and row.get('question_id') == request.get('question_id')]) != 1:
+            raise ValueError('One actual original question prediction required')
+    question = pointer(document, request.get('blind_question_pointer'))
     if not isinstance(question, dict) or question.get('question_id') != request['question_id']:
         raise ValueError('Frozen blind question identity mismatch')
     if json_digest(material(question)) != request.get('question_input_sha256'):
@@ -220,8 +244,8 @@ def check_alias_material(root, original, request):
     if not source_identity(request['source'])[3]:
         return  # Preserve legacy alias requests byte-for-byte and their contract.
     previous=artifact(root,original['registration_request_ref'])
-    old=frozen_question(artifact(root,previous['blind']),previous)
-    new=frozen_question(artifact(root,request['blind']),request)
+    old=frozen_question(artifact(root,previous['blind']),previous,root)
+    new=frozen_question(artifact(root,request['blind']),request,root)
     def normalized(value):
         if isinstance(value,str):
             return re.sub(r'\s+','',unicodedata.normalize('NFKC',value))
@@ -344,7 +368,7 @@ def validate_request(root, request, registry=None):
     if method is None or method['version'] != request['method_version']:
         raise ValueError('Method identity/version mismatch')
     blind = artifact(root, request['blind'])
-    question = frozen_question(blind, request)
+    question = frozen_question(blind, request, root)
     exam_id = blind.get('exam_id',blind.get('paper_id'))
     if not isinstance(exam_id,str) or not exam_id:
         raise ValueError('Frozen blind exam/paper identity required')
@@ -404,6 +428,23 @@ def validate_request(root, request, registry=None):
         raise ValueError('Own typed produced action is required')
     review = artifact(root, request['case_review'])
     _review_checks(review, method, request, blind, question)
+    if 'blind_question_ref' in request:
+        # Historical prediction author and current action author are separate
+        # roles. Distinctness from only the old author cannot certify a new
+        # post-reveal action written by the reviewer themselves.
+        authors = {row.get('reviewer') for field in ('action_executions', 'relations')
+                   for row in action['question'].get(field, [])}
+        for field in ('grammar_hint_review', 'question_verification_review',
+                      'lesson_review', 'writing_review'):
+            annotation = action['question'].get(field)
+            if annotation is not None:
+                authors.add(annotation.get('reviewer'))
+        author = review.get('action_author')
+        if (not isinstance(author, str) or not author.strip() or authors != {author}
+                or author == review.get('reviewer')
+                or review.get('independent_from_action_author') is not True
+                or review.get('blind_question_ref') != request['blind_question_ref']):
+            raise ValueError('External-source Case Review must independently bind the actual current action author and source')
     if request['case_type']=='counterexample' and not review.get('negative_trigger_confirmed'):
         raise ValueError('Counterexample needs explicit negative trigger review')
     if request['case_type']=='boundary' and not review.get('boundary_stop_confirmed'):

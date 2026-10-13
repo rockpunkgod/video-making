@@ -1,5 +1,15 @@
 # ANSWER 来源对齐与模块交接
 
+## 原预测显式外部题面引用：实现待独立工程审阅
+
+`core.real_cases.frozen_question` 新增可选私有根参数和请求 `blind_question_ref`，不改原预测的阶段、答案或字节。仅支持原 blind 的 `input_sha256` 已按确切文件名绑定的来源：引用哈希必须一致，来源必须为未读参考答案的纯题转写，与旧预测的 paper/source 身份相同，旧作者及唯一原客观题预测必须存在，指针取出的完整核心字段必须匹配请求。没有该字段的历史直接指针路径保持原契约；不默认任何 source-only 文件都等于预测。
+
+外部引用的 Case Review 还须显式 `action_author`、`independent_from_action_author=true` 和相同的 `blind_question_ref`，真实动作及其他注释作者须一致且不同于审阅者。旧预测作者与当前动作作者分开检查，不能借“与旧作者不同”自审当前新动作。揭答、真实来源、独立方法职责、Stop、案例类型、当前重放和目录重复检查仍走既有登记门槛，没有注册新 Case 或改变 Schema。
+
+湖北圆创47个当前任务作真实历史引用检查：40个材料一致且有旧客观预测的引用通过；7个因材料变化或缺原客观预测拒绝。只核历史引用，不认证当前动作语义或案例类型。51项相关工程控制通过，其中9项新外部引用控制、20项现有登记控制、22项候选/审阅绑定控制；新登记集成测试的 analyzer/schema 使用原合成夹具 mock，不冒称真实引擎整题端到端通过。82方法、20来源及生成资产校验通过。公开绑定为 `evaluation/reports/external-case-source-contract-r1.json`。
+
+实现和新负控已交另一个代理独立工程复核，尚未拿到结果。固定 `82c98e4` 全量回归不含这次实现，不能借其结果认证新增代码。下一步仍需实际旧预测与揭答的同题审阅、独立工程接受、逐方法案例类型审阅及当前登记。原目录与原冻文件保持不变，新增 Case、独立题目、Blind 和升级信用为0。
+
 ## 湖北圆创旧预测链回查：外部哈希绑定原题并非没有历史证据
 
 不再只根据当前整题审阅文件没有 blind 字段推断无可用历史链。根只读核原 `blind-v1.json`、`source-only-checkpoint-v1.json`、`source-transcription-v6.json` 与 `reference-comparison-v1.json` 的实际阶段、字节哈希和题号：旧预测明确在揭答前，原 blind 的 input_sha256 绑定完整转写，checkpoint 绑定原 blind 并保留 reference_read=false，原对照为冻结后揭答。完整题面在转写的 `/inputs/questions`，不是 blind JSON 本体的 question 数组；既有 `frozen_question` 只解析本体指针，不能直接用这份外部绑定。
