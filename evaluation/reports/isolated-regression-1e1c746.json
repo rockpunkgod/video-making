@@ -1,0 +1,23 @@
+{
+  "scope": "Terminal isolated engineering regression for immutable 1e1c746 delivery only",
+  "snapshot_commit": "1e1c7467408144e50a8767f18ed718d0782540e7",
+  "archive_path": "deliverables/ANSWER-Method-Engine-1e1c746.zip",
+  "archive_sha256": "705157580e15fd605f268a14d20ef7dd9703f702f98aad13ac0af85a08dc1dfc",
+  "session_id": 73277,
+  "terminal_exit_code": 0,
+  "source_validation": "PASS",
+  "methods": 82,
+  "source_documents": 20,
+  "generated_assets": "PASS",
+  "tests_run": 1521,
+  "failures": 0,
+  "errors": 0,
+  "skipped": 1,
+  "elapsed_seconds": 911.742,
+  "result_sha256": "0ef73ad01914e5e3dcafc679843934f2f846ad73bd70126712c81bf7311dd74e",
+  "initial_running_inventory_preserved": true,
+  "includes_C01_C02_1_2_1_patch": false,
+  "later_patch_regression_result": null,
+  "learner_acceptance": null,
+  "method_promotion_applied": false
+}
