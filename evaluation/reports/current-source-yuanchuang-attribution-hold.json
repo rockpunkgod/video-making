@@ -1,0 +1,43 @@
+{
+  "scope": "author attribution correction after independent host challenge; not learner or independent full-paper certification",
+  "source_commit": "61bc9c3e15004639cb442c20e7946ca9631f14ce",
+  "paper_id": "mock-2026-hubei-yuanchuang-m05-v01",
+  "correction_ref": {
+    "path": "wxwork-priority-2026-10/coordinator-reviews/current-61bc9c3-r1/semantic-current-r2/method-attribution-correction-addendum-r1.json",
+    "sha256": "117fa73eb8ebf1d5ab009eca7726f976a4706438ae1f6731803c2315902d9ed5"
+  },
+  "audit_coverage": {
+    "reading_R01_execution_count": 26,
+    "affected_question_numbers": [
+      22,
+      23,
+      25,
+      26,
+      28,
+      30,
+      33,
+      35
+    ],
+    "credit_withheld_execution_count": 23,
+    "narrow_added_claim_check_only_count": 3,
+    "retained_candidates_with_no_R01_trigger": [
+      "Q22-C",
+      "Q23-B",
+      "Q26-C",
+      "Q28-C",
+      "Q30-C",
+      "Q33-A"
+    ],
+    "reading_runtime_closed_count_not_semantic_method_pass_count": 18,
+    "r2_mechanical_replay_results_rewritten": false
+  },
+  "whole_question_R01_credit_withheld_for_all_eight": true,
+  "initial_42_runtime_closed_objectives_are_not_42_method_passes": true,
+  "original_frozen_artifacts_preserved": true,
+  "new_case_count": 0,
+  "new_unique_question_count": 0,
+  "new_blind_sample_count": 0,
+  "method_promotion_applied": false,
+  "learner_validation": "pending_real_participant_validation",
+  "next_required_repair": "legitimate whole-question verification after interpretation, without fabricated branded decider triggers"
+}
