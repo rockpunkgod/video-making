@@ -1,5 +1,13 @@
 # ANSWER 来源对齐与模块交接
 
+## 湖北圆创旧预测链回查：外部哈希绑定原题并非没有历史证据
+
+不再只根据当前整题审阅文件没有 blind 字段推断无可用历史链。根只读核原 `blind-v1.json`、`source-only-checkpoint-v1.json`、`source-transcription-v6.json` 与 `reference-comparison-v1.json` 的实际阶段、字节哈希和题号：旧预测明确在揭答前，原 blind 的 input_sha256 绑定完整转写，checkpoint 绑定原 blind 并保留 reference_read=false，原对照为冻结后揭答。完整题面在转写的 `/inputs/questions`，不是 blind JSON 本体的 question 数组；既有 `frozen_question` 只解析本体指针，不能直接用这份外部绑定。
+
+与当前 strict v3 的全部核心字段逐题比较，47个任务有41个材料相同，40个同时有旧客观题预测和揭答对照，阅读15题全部具备这一候选链。五个七选五的 options 和续写 Q67 的材料有后续修复，不直接套这份旧材料；应用文没有客观选择预测也不伪造。上述数目不是新增题目或新 Blind，也不证明干净盲测、当前品牌法独立有效或正式 Case 类型。
+
+私人冻结审计为 `current-61bc9c3-r1/historical-provenance-audit-r1.json`，公开索引为 `evaluation/reports/yuanchuang-historical-provenance-audit-r1.json`。下一步应验证显式外部引用、精确题面、实际旧预测/揭答与当前独立方法动作，再单独审案例类型及重复/version信用；不通过改阶段、复制当前答案或覆盖旧冻结来填槽。已有25版目录不变，本次正式Case与Blind新增为0。当前候选索引的 not_established_by_question_review 仍准确，但不等于仓库其他历史文件也没有证据。
+
 ## 武汉 r6：D 篇三题准入，Q32 额外时间门槛退回修订
 
 主代理亲看原 Word 第7、8页完整 D 篇及全部原选项，读当前逻辑简化、例子非答案来源并核实际动作与完整候选。Q33 保留喷洒到天然防御的作用链，不把分子生产、后续产品或评估替代所问节点；不假定植物已经患病或防御不能保护。Q34 区分环境/遗传信息输入、AI预测与条件措施规划，不承诺目标产量已实现。Q35 核作者 just、despite、任重道远及继续资金的条件，支持隐含投入呼吁，不发明GDP与风投份额必须相等的规则或缺口金额。方法支持输出为空，非品牌整题终判另列。
