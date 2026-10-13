@@ -1,0 +1,17 @@
+{
+  "scope": "Committed patch delivery inventory; not learner or release acceptance",
+  "snapshot_commit_abbreviation": "fb0cd0c",
+  "source_commit": "61bc9c3e15004639cb442c20e7946ca9631f14ce",
+  "archive_path": "deliverables/ANSWER-Method-Engine-fb0cd0c.zip",
+  "folder_path": "deliverables/ANSWER-Method-Engine-fb0cd0c/ANSWER-Method-Engine-fb0cd0c",
+  "archive_sha256": "5fda737e8b5760b22a8781f0648ecaf5abfabb73b7e44eab4a5ae097853f11c0",
+  "archive_entries": 1784,
+  "private_local_data_or_original_papers_included": false,
+  "recursive_deliverables_included": false,
+  "uncommitted_user_changes_included": false,
+  "contains_C01_C02_patch_version": "1.2.1",
+  "full_regression_result_at_recording": null,
+  "older_package_results_reused": false,
+  "learner_validation": null,
+  "method_promotion_applied": false
+}
