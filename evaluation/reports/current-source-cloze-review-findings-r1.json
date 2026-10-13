@@ -1,0 +1,36 @@
+{
+  "scope": "Root semantic and layered-contract findings; pending author revision and independently verified correction",
+  "source_commit": "61bc9c3e15004639cb442c20e7946ca9631f14ce",
+  "reviewer": "/root",
+  "wuhan_cloze_author_batch": "current-61bc9c3-wuhan-cloze-r13",
+  "original_page_personally_viewed": true,
+  "full_current_source_and_method_contracts_read": true,
+  "question_42_all_own_actions_and_terminal_read": true,
+  "question_42_finding": "Direct expression or an emotion synonym is not a mandatory prerequisite for a text-supported contextual inference. Mere real-world possibility is not an equally supported competing interpretation.",
+  "question_42_author_revision_requested": true,
+  "question_42_root_answer_approved": false,
+  "whole_cloze_root_approval": false,
+  "layered_contract_conflicts": [
+    {
+      "method_id": "C01",
+      "field": "levels.L3",
+      "path": "method-registry/cloze.yaml",
+      "line": 62,
+      "finding": "Legacy mandatory original-number two-pass instruction conflicts with current full source and primary contract."
+    },
+    {
+      "method_id": "C02",
+      "field": "levels.L3",
+      "path": "method-registry/cloze.yaml",
+      "line": 198,
+      "finding": "Legacy original-number ordering constraint conflicts with the current no-forced-blank-order source."
+    }
+  ],
+  "layered_contract_readonly_impact_audit_requested": true,
+  "registry_modified": false,
+  "old_evidence_modified": false,
+  "new_case_count": 0,
+  "new_blind_sample_count": 0,
+  "learner_validation": null,
+  "method_promotion_applied": false
+}
