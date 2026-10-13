@@ -22,6 +22,7 @@ def main():
     sub=commands.add_parser('method'); sub.add_argument('method_id')
     sub=commands.add_parser('course-identity'); sub.add_argument('source_heading')
     sub=commands.add_parser('symptom'); sub.add_argument('question_type'); sub.add_argument('symptom')
+    sub.add_argument('--renderer',choices=['structured','student'],default='structured')
     sub=commands.add_parser('evaluate'); sub.add_argument('input'); sub.add_argument('--plan')
     sub=commands.add_parser('release-check'); sub.add_argument('input')
     sub=commands.add_parser('release-bindings'); sub.add_argument('input')
@@ -56,7 +57,11 @@ def main():
         result=check_release(r,review) if args.command=='release-check' else release_bindings(r,review['method_id'],review['inputs'])
     elif args.command=='method': result={'card':r.methods[args.method_id],'full_source':r.full(args.method_id)}
     elif args.command=='course-identity': result=r.course_identity(args.source_heading)
-    elif args.command=='symptom': result=symptom_route(args.question_type,args.symptom,r)
+    elif args.command=='symptom':
+        if args.renderer=='student':
+            from renderers.symptom import render_symptom
+            print(render_symptom(args.question_type,args.symptom,r)); return
+        result=symptom_route(args.question_type,args.symptom,r)
     elif args.command=='evaluate': result=evaluate(load_records(args.input),json.loads(Path(args.plan).read_text(encoding='utf-8')) if args.plan else None)
     else:
         value=json.loads(Path(args.input).read_text(encoding='utf-8-sig'))

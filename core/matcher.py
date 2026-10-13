@@ -13,7 +13,25 @@ def full_text_only(mid, registry):
 def normalize_symptom(text):
     return re.sub(r'[\s，。？！、；：,.!?;:]+','',text).casefold()
 
-def match_methods(question,registry):
+def positive_symptom_parts(text):
+    """Limited explicit-denial handling, not general Chinese semantic analysis."""
+    parts=[]; denied=False
+    for part in re.split(r'[，,。；;！？!?]|而是',text):
+        normalized=normalize_symptom(part)
+        if not normalized: continue
+        if re.match(r'^(?:我|并|也|其实|现在)?不是',normalized) and '就是' not in normalized:
+            denied=True
+            continue
+        parts.append(normalized)
+    generic={'不知道','不会','不懂','看不懂','不会做','不会选','不知道怎么做','不知道怎么选'}
+    # Punctuation alone must not turn a specific obstacle into a generic
+    # fragment such as "不知道", which would match unrelated symptom prose.
+    if not denied:
+        whole=normalize_symptom(text)
+        return [whole] if whole and whole not in generic else []
+    return [part for part in parts if part not in generic]
+
+def match_methods(question,registry,include_defaults=True):
     qtype = question['question_type']
     task = question.get('task_type','unknown')
     found = {}
@@ -28,8 +46,8 @@ def match_methods(question,registry):
         found[mid] = {'method_id':mid,'role':m['primary_role'],'confidence':'medium' if verified else 'low','reason':reason,'trigger_verified':verified}
     # Structural routing only. It suggests methods; it NEVER produces candidate truth.
     default = {'阅读理解':'R12','七选五':'F01','完形填空':'C01','语法填空':'G01','应用文':'A01','读后续写':'W01'}
-    if qtype in default: add(default[qtype],'题型结构入口；适用关系仍待核')
-    if qtype=='阅读理解' and task in MAIN_TASKS:
+    if include_defaults and qtype in default: add(default[qtype],'题型结构入口；适用关系仍待核')
+    if include_defaults and qtype=='阅读理解' and task in MAIN_TASKS:
         found.pop('R12',None)
         if task=='paragraph_main_idea':
             add('R16','先圈题干指定段，再核该段对象与核心判断；不压全文')
@@ -38,14 +56,15 @@ def match_methods(question,registry):
             add('R06','骨架形成后检查覆盖与错误关系')
     symptom_ids = set()
     for symptom in question.get('student_symptoms',[]):
-        normalized = normalize_symptom(symptom)
-        if not normalized: continue
+        parts = positive_symptom_parts(symptom)
+        if not parts: continue
         for m in registry.methods.values():
             if m['question_type'] != qtype: continue
             if m['method_id'] in {'R06','R09','R16'} and task not in MAIN_TASKS: continue
             if full_text_only(m['method_id'],registry) and task=='paragraph_main_idea': continue
             aliases = next((r['phrases'] for r in registry.symptom_cues if r['method_id']==m['method_id']),[])
-            if any(normalized in normalize_symptom(s) or normalize_symptom(s) in normalized for s in m['student_symptoms']+aliases):
+            if any(part in normalize_symptom(s) or normalize_symptom(s) in part
+                   for part in parts for s in m['student_symptoms']+aliases):
                 add(m['method_id'],'学生自述卡点，仅作为可能入口')
                 symptom_ids.add(m['method_id'])
     # A specific student obstacle takes priority over an unrelated generic entry.
@@ -64,10 +83,10 @@ def match_methods(question,registry):
         add(mid,'带可核跨度的外部触发观察；语义审阅不是统计校准',observation['reviewed'])
     return list(found.values())
 
-def symptom_route(question_type,symptom,registry):
+def symptom_route(question_type,symptom,registry,include_defaults=True):
     q = {'question_id':'symptom-query','question_type':question_type,'stem':'','student_symptoms':[symptom]}
     # Main-idea route requires the caller to establish task scope separately.
     if any(x in symptom for x in ['主旨','主题','标题']):
         q['task_type']='paragraph_main_idea' if any(x in symptom for x in ['段落','这段','本段']) else 'main_idea'
-    matches = match_methods(q,registry)
+    matches = match_methods(q,registry,include_defaults=include_defaults)
     return [{'method_id':x['method_id'],'role':x['role'],'action':registry.methods[x['method_id']]['core_action'],'stop_rule':registry.methods[x['method_id']]['stop_rule'],'confidence':x['confidence']} for x in matches]

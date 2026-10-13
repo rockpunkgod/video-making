@@ -2,9 +2,19 @@
 
 Registry索引六题型方法文件。method_type区分框架、方法、子动作、内部规则、分类与复核；primary_role只有一个，secondary_roles显式登记。source_name/source_alias保留原名；W03学生主名为剧情四格，PTSD只作源别名。
 
-82项不等于82个品牌：包括定位子动作、语法节点、训练框架与评分规则。阅读17项、七选五11项、完形9项、语法19项、应用文10项及续写16项均有独立首次接触稿。student_ready=true只证明入口静态齐备，并不证明First-use、传播或迁移效果；所有方法仍为Useful+candidate。后续修订以source_bound_editorial_review记录源绑定，真实案例和受试验证仍缺。
+82项不等于82个品牌：包括定位子动作、语法节点、训练框架与评分规则。阅读17项、七选五11项、完形9项、语法19项、应用文10项及续写16项保留。对齐61bc9c3后的实际入口状态为29项静态齐备、6项重点草稿、47项复核中；不能沿用旧版82项全部齐备的结论。student_ready=true不证明First-use、传播或迁移效果；所有方法仍为Useful+candidate。来源更新后的语义复核、真实案例及受试验证仍缺。
 
-职责：locator→locate、interpreter/framework→interpret（G01路线为reduce）、reducer→reduce、decider→decide、verifier→verify。C01框架与decider为同一课程方法两种显式阶段，首次接触只突出主要职责；F01无decider副职责。
+职责：locator→locate、interpreter/framework→interpret（G01路线为reduce）、reducer→reduce、decider→decide、verifier→verify。C01是语篇操作的内部框架整理，其显式框架/决定阶段不能被说成课程系列名对应的一套独立算法。首次接触只突出主要职责；F01无decider副职责。R06是主旨覆盖诊断，R17是内部补证核验，不能把它们当作各自独立完成整题的算法。
+
+## 从卡点进入第一步
+
+```powershell
+python -m answer_engine symptom 阅读理解 看不懂长句 --renderer student
+```
+
+学生模式仅展示一个可能入口的启动条件、第一刀、产物/判断和停止条件，再要求补实际题面核验。泛说不会或卡点互相竞争时先问具体卡点，不给几十个方法名，也不把默认定位入口冒充已适用。长句场景先展示句子处理动作，阶段/持续等其他已证分支留在完整卡；正式 Stop 不被删掉。G01 的产物是下一知识节点，不是答案候选或词形答案。
+
+不加renderer仍返回原结构化列表，兼容已有调用。自然表达变体及有限的明确否定处理只影响低置信度建议，不改变课程判据，不认证实际触发或英语语义；题面观察仍由原核心独立核对。
 
 Composer不再仅传“上一方法的输出”文本：method_chain公开角色产物类型和execution_ids，action_executions提交具体动作及类型化输出，execution_trace只将可用产物传递。未提交动作不伪造执行；副职责单列，停止产物不续用。八类结构化产物及职责/依赖/图绑定约束见method-execution.md。
 
