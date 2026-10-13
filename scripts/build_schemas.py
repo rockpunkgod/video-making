@@ -62,8 +62,10 @@ def build():
     write('action-artifact',artifact)
     execution=obj({'execution_id':STR,'method_id':STR,'method_version':{'type':'string','pattern':r'^\d+\.\d+\.\d+$'},'role':enum(ROLES),'input_artifact_ids':array(STR),'concrete_action':STR,'evidence':array(span,1),'decision_rule_check':STR,'stop_rule_check':STR,'stop_applied':BOOL,'reviewer':STR,'review_status':enum(['reviewed','unreviewed']),'output':{'anyOf':[{'type':'null'},artifact]}})
     write('method-execution',execution)
-    lesson_segment=obj({'segment_id':STR,'function':enum(['action','evidence','comparison','stop']),'method_id':STR,'text':STR,'evidence':array(span,1),'relation_indices':array({'type':'integer','minimum':0})})
-    lesson_review=obj({'schema_version':enum(['1.0.0']),'question_type':enum(TYPES[:4]),'reviewer':STR,'review_status':enum(['reviewed','unreviewed']),'source_section_ids':array(STR,1),'segments':array(lesson_segment,1)})
+    method_segment=obj({'segment_id':STR,'function':enum(['action','evidence','comparison','stop']),'method_id':STR,'text':STR,'evidence':array(span,1),'relation_indices':array({'type':'integer','minimum':0})})
+    terminal_segment=obj({'segment_id':STR,'segment_scope':{'const':'whole_question'},'function':{'const':'comparison'},'text':STR,'evidence':array(span,1),'terminal_review_id':STR,'candidate_ids':{**array(STR,1),'uniqueItems':True}})
+    lesson_segment={'oneOf':[method_segment,terminal_segment]}
+    lesson_review=obj({'schema_version':enum(['1.0.0','1.1.0']),'question_type':enum(TYPES[:4]),'reviewer':STR,'review_status':enum(['reviewed','unreviewed']),'source_section_ids':array(STR,1),'segments':array(lesson_segment,1)})
     write('lesson-review',lesson_review)
     writing_section=obj({'key':enum(['overall','diagnostics','anchors','emotion','outline','revised_text','practice','materials']),'text':STR,'evidence':array(span,1)})
     correction=obj({'original':span,'replacement':STR,'reason':STR,'kind':enum(['error','optional'])})

@@ -6,6 +6,8 @@ semantics, a lecturer's identity, or full-paper course ordering.
 from copy import deepcopy
 import re
 from .evidence import check_span
+from .execution import covered_by
+from .question_verification import validate_question_verification_projection
 
 TYPES={'阅读理解','七选五','完形填空','语法填空'}
 DELIVERY_PATH='gaokao-english/references/delivery-contract.md'
@@ -22,23 +24,77 @@ def check_spoken_text(text,evidence):
         raise ValueError('Spoken lesson exposes internal metadata or fabricated delivery persona')
 
 
+def terminal_targets(segment,analysis,used_methods):
+    """Bind a non-branded spoken comparison to actual complete-question proof."""
+    terminal=analysis.get('question_verification')
+    if not terminal or terminal['state']!='reviewed' or not analysis['answer_verification']['closed']:
+        raise ValueError('Spoken terminal comparison requires a reviewed closed question')
+    if segment['terminal_review_id']!=terminal['review']['review_id']:
+        raise ValueError('Spoken comparison must name its own terminal review')
+    trace={x['execution_id']:x for x in analysis['execution_trace']}
+    consumed={trace[x['execution_id']]['method_id'] for x in terminal['consumed_artifacts']}
+    if not consumed<=used_methods:
+        raise ValueError('Spoken terminal comparison must follow its actual supporting method actions')
+    checks={c['candidate']:c for c in terminal['review']['candidate_checks']}
+    bindings={b['candidate']:b for b in terminal['candidate_bindings']}
+    ids=segment['candidate_ids']
+    if len(ids)!=len(set(ids)) or not set(ids)<=set(checks):
+        raise ValueError('Unknown or repeated spoken terminal candidate')
+    if not any(s['field']=='passage' and s['quote'] in segment['text'] for s in segment['evidence']):
+        raise ValueError('Spoken terminal comparison must show current source words')
+    targets=[]
+    for cid in ids:
+        c=checks[cid]; b=bindings[cid]
+        if b['effect']=='undetermined' or c['backfill_verdict']!='supports' or not b['verification_node_id']:
+            raise ValueError('Spoken comparison cannot turn an unresolved terminal check into a decision')
+        if cid not in segment['text'] or not all(covered_by(s,segment['evidence']) for s in c['evidence']):
+            raise ValueError('Spoken terminal comparison lacks its own candidate and decisive evidence')
+        targets.append(b['verification_node_id'])
+    return targets
+
+
+def check_lesson_sources(kind,source_ids,registry):
+    if kind not in TYPES:
+        raise ValueError('Spoken lesson source requires a supported objective question')
+    if not any(sid in registry.sources['sections'] and registry.sources['sections'][sid]['path']==DELIVERY_PATH for sid in source_ids):
+        raise ValueError('Spoken lesson must bind the frozen student delivery contract')
+    allowed_paths={DELIVERY_PATH,'gaokao-english/references/course-evidence.md','gaokao-english/references/'+{'阅读理解':'reading-comprehension.md','七选五':'seven-five.md','完形填空':'cloze.md','语法填空':'course-evidence.md'}[kind]}
+    if kind=='语法填空': allowed_paths.update({'gaokao-grammar-fill/SKILL.md','gaokao-grammar-fill/references/grammar-fill.md','gaokao-grammar-fill/references/course-evidence.md'})
+    if len(source_ids)!=len(set(source_ids)) or any(sid not in registry.sources['sections'] or registry.sources['sections'][sid]['path'] not in allowed_paths for sid in source_ids):
+        raise ValueError('Spoken lesson source is unknown, duplicated or from another module')
+
+
 def lesson_feedback(question,analysis,registry,graph,trigger_nodes,relation_nodes):
     supplied=question.get('lesson_review')
     if supplied is None: return None
     if question['question_type'] not in TYPES or supplied['question_type']!=question['question_type']:
         raise ValueError('Spoken lesson question type mismatch')
     review=deepcopy(supplied); source_ids=review['source_section_ids']
-    if not any(sid in registry.sources['sections'] and registry.sources['sections'][sid]['path']==DELIVERY_PATH for sid in source_ids):
-        raise ValueError('Spoken lesson must bind the frozen student delivery contract')
-    allowed_paths={DELIVERY_PATH,'gaokao-english/references/course-evidence.md','gaokao-english/references/'+{'阅读理解':'reading-comprehension.md','七选五':'seven-five.md','完形填空':'cloze.md','语法填空':'course-evidence.md'}[question['question_type']]}
-    if question['question_type']=='语法填空': allowed_paths.update({'gaokao-grammar-fill/SKILL.md','gaokao-grammar-fill/references/grammar-fill.md','gaokao-grammar-fill/references/course-evidence.md'})
-    if len(source_ids)!=len(set(source_ids)) or any(sid not in registry.sources['sections'] or registry.sources['sections'][sid]['path'] not in allowed_paths for sid in source_ids):
-        raise ValueError('Spoken lesson source is unknown, duplicated or from another module')
+    check_lesson_sources(question['question_type'],source_ids,registry)
     matched={x['method_id'] for x in analysis['method_matches']}; used=set(); actions=set(); evidenced=set(); compared=set(); stopped=set(); ids=set(); evidence_ids=[]; bindings=[]
     for segment in review['segments']:
-        sid=segment['segment_id']; mid=segment['method_id']; function=segment['function']
+        sid=segment['segment_id']; function=segment['function']
         if sid in ids: raise ValueError('Duplicate spoken segment id')
         ids.add(sid)
+        if segment.get('segment_scope')=='whole_question':
+            if review['schema_version']!='1.1.0':
+                raise ValueError('Whole-question spoken segments require lesson-review 1.1.0')
+            spans=[check_span(question,s) for s in segment['evidence']]
+            check_spoken_text(segment['text'],spans)
+            targets=terminal_targets(segment,analysis,actions)
+            compared.update(segment['candidate_ids'])
+            if review['review_status']=='reviewed':
+                claim=graph.node('candidate_claim',segment['text'],candidate='spoken_segment:'+sid)
+                relation=graph.node('relation','整题候选口播记录',review_id=segment['terminal_review_id'],reviewed=True)
+                graph.edge(claim,relation,'supports')
+                for target in targets: graph.edge(target,relation,'supports')
+                own_ids=[]
+                for s in spans:
+                    nid=graph.node('source_evidence',s['quote'],span=s)
+                    evidence_ids.append(nid); own_ids.append(nid); graph.edge(nid,relation,'supports')
+                bindings.append({'segment_id':sid,'claim_node_id':claim,'relation_node_id':relation,'evidence_ids':own_ids})
+            continue
+        mid=segment['method_id']
         if mid not in matched or mid not in {x['method_id'] for x in analysis['method_chain']}:
             raise ValueError('Spoken lesson invokes an unmatched/unplanned method')
         method=registry.methods[mid]
@@ -86,7 +142,7 @@ def lesson_feedback(question,analysis,registry,graph,trigger_nodes,relation_node
     if question['question_type']=='七选五':
         partitions=[x for x in analysis['execution_trace'] if x['state']=='produced' and x['method_id']=='F01' and x['output']['kind']=='candidate_partition']
         by_axis={axis:[x for x in partitions if x['output']['axis']==axis] for axis in ['sentence','actor','time']}
-        grouping_ok='F01' in used and review['segments'][0]['method_id']=='F01' and review['segments'][0]['function']=='action' and set(question.get('options',{}))==set('ABCDEFG') and all(len(values)==1 for values in by_axis.values())
+        grouping_ok='F01' in used and review['segments'][0].get('method_id')=='F01' and review['segments'][0]['function']=='action' and set(question.get('options',{}))==set('ABCDEFG') and all(len(values)==1 for values in by_axis.values())
         complete=complete and grouping_ok
         if grouping_ok:
             grouping_ids=[by_axis[axis][0]['execution_id'] for axis in ['sentence','actor','time']]
@@ -106,6 +162,9 @@ def validate_lesson_projection(analysis,registry):
     feedback=analysis['lesson_feedback']
     if feedback is None: return
     review=feedback['review']
+    if review['question_type']!=analysis['question_type']:
+        raise ValueError('Spoken lesson question type mismatch')
+    check_lesson_sources(analysis['question_type'],review['source_section_ids'],registry)
     if feedback['scope']!='single_question_lesson':
         if review['segments'] or feedback['segment_bindings'] or feedback['grouping_execution_ids']: raise ValueError('Partial/unreviewed lesson must withhold student delivery')
         return
@@ -113,6 +172,11 @@ def validate_lesson_projection(analysis,registry):
         raise ValueError('Complete spoken lesson requires a reviewed closed answer')
     retained={c['candidate'] for c in analysis['candidate_analysis'] if c['effect']=='retain'}
     eliminated={c['candidate'] for c in analysis['candidate_analysis'] if c['effect']=='eliminate'}
+    if analysis.get('question_verification'):
+        validate_question_verification_projection(analysis,registry)
+        for c in analysis['question_verification']['candidate_bindings']:
+            if c['effect']=='retain': retained.add(c['candidate'])
+            if c['effect']=='eliminate': eliminated.add(c['candidate'])
     if retained!={analysis['answer']} or retained.intersection(eliminated) or analysis['answer_verification']['unresolved_candidates']:
         raise ValueError('Spoken final answer differs from its own candidate closure')
     nodes={n['id']:n for n in analysis['evidence_graph']['nodes']}; edges={(e['from'],e['to']) for e in analysis['evidence_graph']['edges']}
@@ -120,6 +184,22 @@ def validate_lesson_projection(analysis,registry):
     if len(bindings)!=len(feedback['segment_bindings']) or set(bindings)!={s['segment_id'] for s in review['segments']}: raise ValueError('Spoken graph bindings differ from delivery segments')
     used=set(); actions=set(); evidenced=set(); stopped=set(); compared=set()
     for s in review['segments']:
+        if s.get('segment_scope')=='whole_question':
+            if review['schema_version']!='1.1.0': raise ValueError('Whole-question spoken segments require lesson-review 1.1.0')
+            check_spoken_text(s['text'],s['evidence'])
+            targets=terminal_targets(s,analysis,actions)
+            binding=bindings[s['segment_id']]
+            claim=nodes.get(binding['claim_node_id'],{}); rel=nodes.get(binding['relation_node_id'],{})
+            if (claim.get('label')!=s['text'] or claim.get('candidate')!='spoken_segment:'+s['segment_id']
+                    or rel.get('method_id') or rel.get('review_id')!=s['terminal_review_id']
+                    or not rel.get('reviewed') or (claim.get('id'),rel.get('id')) not in edges
+                    or any((target,rel.get('id')) not in edges for target in targets)):
+                raise ValueError('Spoken terminal text detached from its own candidate proof')
+            evidence=[nodes.get(nid,{}) for nid in binding['evidence_ids']]
+            if [n.get('span') for n in evidence]!=s['evidence'] or any((n.get('id'),rel.get('id')) not in edges for n in evidence):
+                raise ValueError('Spoken terminal delivery evidence differs from graph')
+            compared.update(s['candidate_ids'])
+            continue
         mid=s['method_id']; method=registry.methods.get(mid); binding=bindings[s['segment_id']]
         if not method or method['version']!=analysis['method_versions'].get(mid) or not any(m['method_id']==mid and m['trigger_verified'] for m in analysis['method_matches']):
             raise ValueError('Spoken projection lacks current method and independent trigger')

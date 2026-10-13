@@ -28,7 +28,7 @@ def render_passage(result,kind='structured',registry=None):
                      else '先按原空号逐空核证据，拿不准的先留着，走完首轮再回收。')
     if result['question_type']=='七选五':
         first=rows[result['review']['steps'][0]['question_id']]['analysis']; f=first['lesson_feedback']
-        parts.append(next(s['text'] for s in f['review']['segments'] if s['method_id']=='F01' and s['function']=='action'))
+        parts.append(next(s['text'] for s in f['review']['segments'] if s.get('method_id')=='F01' and s['function']=='action'))
         executions={x['execution_id']:x for x in first['execution_trace']}
         for eid in f['grouping_execution_ids']:
             output=executions[eid]['output']; label={'sentence':'句型','actor':'主角','time':'时间'}[output['axis']]
@@ -40,9 +40,9 @@ def render_passage(result,kind='structured',registry=None):
         if step['outcome']=='deferred': continue
         a=rows[step['question_id']]['analysis']; f=a['lesson_feedback']
         for segment in f['review']['segments']:
-            if grouped and result['question_type']=='七选五' and segment['method_id']=='F01': continue
+            if grouped and result['question_type']=='七选五' and segment.get('method_id')=='F01': continue
             parts.append(segment['text'])
-            if f['grouping_execution_ids'] and not grouped and segment['function']=='action' and segment['method_id']=='F01':
+            if f['grouping_execution_ids'] and not grouped and segment['function']=='action' and segment.get('method_id')=='F01':
                 executions={x['execution_id']:x for x in a['execution_trace']}
                 for eid in f['grouping_execution_ids']:
                     output=executions[eid]['output']; label={'sentence':'句型','actor':'主角','time':'时间'}[output['axis']]

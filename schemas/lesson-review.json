@@ -5,7 +5,8 @@
   "properties": {
     "schema_version": {
       "enum": [
-        "1.0.0"
+        "1.0.0",
+        "1.1.0"
       ]
     },
     "question_type": {
@@ -37,78 +38,156 @@
     "segments": {
       "type": "array",
       "items": {
-        "type": "object",
-        "properties": {
-          "segment_id": {
-            "type": "string",
-            "minLength": 1
-          },
-          "function": {
-            "enum": [
-              "action",
-              "evidence",
-              "comparison",
-              "stop"
-            ]
-          },
-          "method_id": {
-            "type": "string",
-            "minLength": 1
-          },
-          "text": {
-            "type": "string",
-            "minLength": 1
-          },
-          "evidence": {
-            "type": "array",
-            "items": {
-              "type": "object",
-              "properties": {
-                "field": {
-                  "type": "string",
-                  "minLength": 1
+        "oneOf": [
+          {
+            "type": "object",
+            "properties": {
+              "segment_id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "function": {
+                "enum": [
+                  "action",
+                  "evidence",
+                  "comparison",
+                  "stop"
+                ]
+              },
+              "method_id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "text": {
+                "type": "string",
+                "minLength": 1
+              },
+              "evidence": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "field": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "start": {
+                      "type": "integer",
+                      "minimum": 0
+                    },
+                    "end": {
+                      "type": "integer",
+                      "minimum": 1
+                    },
+                    "quote": {
+                      "type": "string",
+                      "minLength": 1
+                    }
+                  },
+                  "required": [
+                    "field",
+                    "start",
+                    "end",
+                    "quote"
+                  ],
+                  "additionalProperties": false
                 },
-                "start": {
+                "minItems": 1
+              },
+              "relation_indices": {
+                "type": "array",
+                "items": {
                   "type": "integer",
                   "minimum": 0
                 },
-                "end": {
-                  "type": "integer",
-                  "minimum": 1
+                "minItems": 0
+              }
+            },
+            "required": [
+              "segment_id",
+              "function",
+              "method_id",
+              "text",
+              "evidence",
+              "relation_indices"
+            ],
+            "additionalProperties": false
+          },
+          {
+            "type": "object",
+            "properties": {
+              "segment_id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "segment_scope": {
+                "const": "whole_question"
+              },
+              "function": {
+                "const": "comparison"
+              },
+              "text": {
+                "type": "string",
+                "minLength": 1
+              },
+              "evidence": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "field": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "start": {
+                      "type": "integer",
+                      "minimum": 0
+                    },
+                    "end": {
+                      "type": "integer",
+                      "minimum": 1
+                    },
+                    "quote": {
+                      "type": "string",
+                      "minLength": 1
+                    }
+                  },
+                  "required": [
+                    "field",
+                    "start",
+                    "end",
+                    "quote"
+                  ],
+                  "additionalProperties": false
                 },
-                "quote": {
+                "minItems": 1
+              },
+              "terminal_review_id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "candidate_ids": {
+                "type": "array",
+                "items": {
                   "type": "string",
                   "minLength": 1
-                }
-              },
-              "required": [
-                "field",
-                "start",
-                "end",
-                "quote"
-              ],
-              "additionalProperties": false
+                },
+                "minItems": 1,
+                "uniqueItems": true
+              }
             },
-            "minItems": 1
-          },
-          "relation_indices": {
-            "type": "array",
-            "items": {
-              "type": "integer",
-              "minimum": 0
-            },
-            "minItems": 0
+            "required": [
+              "segment_id",
+              "segment_scope",
+              "function",
+              "text",
+              "evidence",
+              "terminal_review_id",
+              "candidate_ids"
+            ],
+            "additionalProperties": false
           }
-        },
-        "required": [
-          "segment_id",
-          "function",
-          "method_id",
-          "text",
-          "evidence",
-          "relation_indices"
-        ],
-        "additionalProperties": false
+        ]
       },
       "minItems": 1
     }

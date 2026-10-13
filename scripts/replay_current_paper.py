@@ -79,6 +79,11 @@ def read_reviewed_question(root, relative, registry):
         raise ValueError('Current question review changes original source material')
     authors = {x.get('reviewer') for field in ['action_executions', 'relations']
                for x in question.get(field, [])}
+    # New annotation channels also carry actual authors. A reviewer cannot
+    # self-certify their terminal/lesson simply by naming another action author.
+    for field in ['grammar_hint_review','question_verification_review','lesson_review','writing_review']:
+        if question.get(field) is not None:
+            authors.add(question[field].get('reviewer'))
     if not authors or authors != {author}:
         raise ValueError('Question review author does not bind actual annotations')
     analysis = QuestionAnalyzer(registry).analyze(question)

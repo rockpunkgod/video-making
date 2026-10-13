@@ -16,11 +16,11 @@ class CurrentQuestionReviewTests(unittest.TestCase):
     def setUpClass(cls):
         cls.registry = Registry()
 
-    def packet(self, change=None):
+    def packet(self, change=None, question=None):
         directory = tempfile.TemporaryDirectory()
         self.addCleanup(directory.cleanup)
         root = Path(directory.name)
-        question = fixtures.OptionOnlyPartitionTests().question()
+        question = question or fixtures.OptionOnlyPartitionTests().question()
         analysis = QuestionAnalyzer(self.registry).analyze(question)
         def write(name, value):
             raw = json.dumps(value).encode('utf-8')
@@ -43,7 +43,7 @@ class CurrentQuestionReviewTests(unittest.TestCase):
             'question_id': question['question_id'], 'question_ref': qref, 'analysis_ref': aref,
             'source_question_ref': sref, 'analysis_sha256': json_digest(analysis),
             'evidence_graph_sha256': json_digest(analysis['evidence_graph']),
-            'method_versions': analysis['method_versions'], 'answer_closed': False,
+            'method_versions': analysis['method_versions'], 'answer_closed': analysis['answer_verification']['closed'],
         }
         if change:
             change(review)
@@ -93,6 +93,26 @@ class CurrentQuestionReviewTests(unittest.TestCase):
             root, _ = self.packet(change)
             with self.assertRaisesRegex(ValueError, expected):
                 read_reviewed_question(root, 'review.json', self.registry)
+
+    def test_terminal_author_cannot_hide_behind_a_different_action_author(self):
+        from tests import test_question_verification as terminal_fixture
+        factory=terminal_fixture.QuestionVerificationTests(); factory.registry=self.registry
+        question=factory.question()
+        question['question_verification_review']['reviewer']='synthetic-review-binding-fixture-not-a-learner'
+        root,_=self.packet(question=question)
+        with self.assertRaisesRegex(ValueError,'actual annotations'):
+            read_reviewed_question(root,'review.json',self.registry)
+
+    def test_lesson_author_cannot_hide_behind_a_different_action_author(self):
+        from tests import test_terminal_lesson as lesson_fixture
+        factory=lesson_fixture.TerminalLessonTests(); factory.registry=self.registry
+        question=factory.question()
+        author=question['action_executions'][0]['reviewer']
+        question['question_verification_review']['reviewer']=author
+        question['lesson_review']['reviewer']='synthetic-review-binding-fixture-not-a-learner'
+        root,_=self.packet(question=question)
+        with self.assertRaisesRegex(ValueError,'actual annotations'):
+            read_reviewed_question(root,'review.json',self.registry)
 
 
 if __name__ == '__main__':

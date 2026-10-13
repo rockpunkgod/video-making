@@ -28,7 +28,7 @@ def render(analysis,kind='structured',registry=None):
         paragraphs=[]; grouped=False; executions={x['execution_id']:x for x in analysis['execution_trace']}
         for s in lesson['review']['segments']:
             paragraphs.append(s['text'])
-            if s['method_id']=='F01' and s['function']=='action' and not grouped and lesson['grouping_execution_ids']:
+            if s.get('method_id')=='F01' and s['function']=='action' and not grouped and lesson['grouping_execution_ids']:
                 for eid in lesson['grouping_execution_ids']:
                     output=executions[eid]['output']; label={'sentence':'句型','actor':'主角','time':'时间'}[output['axis']]
                     paragraphs.append('按'+label+'先分，'+'，'.join('和'.join(g['candidates'])+'属于'+g['label'].rstrip('。') for g in output['groups'])+'。这一步只缩范围，分完再回正文核内容。')

@@ -1,0 +1,41 @@
+{
+  "date": "2026-10-14",
+  "scope": "current_paper_structural_replay_and_named_current_AI_reviewed_actions_not_whole_paper_semantic_acceptance",
+  "source_commit": "61bc9c3e15004639cb442c20e7946ca9631f14ce",
+  "paper_id": "mock-2026-hubei-yuanchuang-m05-v01",
+  "private_report_path": "local-data/organized-pdfs/wxwork-priority-2026-10/coordinator-reviews/current-61bc9c3-r1/paper-replay-r3/report.json",
+  "private_report_sha256": "0e07e3c229cda76129b4dcd47914376f4bc1365eea03b8b187cca0ca7a68e77d",
+  "input_and_replayed_tasks": 47,
+  "explicitly_reviewed_tasks": 6,
+  "pending_current_semantic_review_tasks": 41,
+  "original_material_unchanged": true,
+  "new_independent_question_reviews": {
+    "Q31": {
+      "path": "local-data/organized-pdfs/wxwork-priority-2026-10/coordinator-reviews/current-61bc9c3-r1/question-terminal-drafts-r5/Q31/independent-review.json",
+      "sha256": "5453f6cb8ad4620cb05d643fec3ad0062f6028a7a428fd6a427ed0ba76ee5d04",
+      "supporting_role": "R11 interpreter",
+      "answer": "B",
+      "method_decision_credit": 0
+    },
+    "Q22": {
+      "path": "local-data/organized-pdfs/wxwork-priority-2026-10/coordinator-reviews/current-61bc9c3-r1/question-terminal-drafts-r5/Q22/independent-review.json",
+      "sha256": "b5502dd90d84dc843c6dcb9e13351159881d6e9d6a44e92847b747d77ac5cc57",
+      "supporting_role": "R03 interpreter",
+      "answer": "C",
+      "method_decision_credit": 0,
+      "prior_false_R01_credit": "not_restored"
+    }
+  },
+  "retained_reviewed_tasks": ["Q27", "Q35", "Q36", "Q62"],
+  "task_annotation_changes": {"Q22": "reading_comprehension_to_cause", "Q27": "reading_comprehension_to_main_idea", "Q31": "reading_comprehension_to_author_attitude"},
+  "other_seven_new_author_drafts": "not_independently_certified",
+  "whole_paper_semantic_acceptance": "PARTIAL",
+  "unannotated_control": "not_a_learner_Baseline",
+  "listening_scope": "20_source_records_not_supported_analysis",
+  "new_case_count": 0,
+  "new_unique_question_count": 0,
+  "new_blind_sample_count": 0,
+  "method_promotion_applied": false,
+  "learner_acceptance": "not_evaluated",
+  "private_source_text_included": false
+}
