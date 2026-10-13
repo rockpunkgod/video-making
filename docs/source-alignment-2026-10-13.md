@@ -1,5 +1,13 @@
 # ANSWER 来源对齐与模块交接
 
+## 最新模块交付固定包：82c98e4
+
+从已提交的 `82c98e4dc1c82a32059c50c46136e4743862aca2` 打包至 `deliverables/ANSWER-Method-Engine-82c98e4.zip`，解压工程为 `deliverables/ANSWER-Method-Engine-82c98e4/ANSWER-Method-Engine-82c98e4`。该包包含最新 Case 候选提取入口和武汉 r5 公开索引，未包含后续作者未审稿，也未包含打包时其他模块的未提交/未跟踪改动。
+
+ZIP SHA256 为 `e5186f37ec2e34f95f9dfd3b28432f4dae801da07e6ef17db8352f83b3b25be3`。检查1753个归档条目，没有 local-data 或嵌套 deliverables；voicepacks 仅保留运行测试所需的 `tools/generate_gpt_sovits.py`，不含模型、音频或个人配置。私有原题、案例实文和审阅正文需保留在原私有数据目录，不为便利开发移入公开源码。
+
+解压固定版的82方法、20来源文档与生成资产校验通过。该版全量回归已启动，但本交接记录不宣称结果通过；运行结果须绑定这份固定包，不能借用 `ad07160` 的1474项结果。公开交付描述见 `evaluation/reports/delivery-82c98e4.json`。源码快照与这份后写的交接记录属于不同提交，包不冒称包含自身后写描述。
+
 ## 武汉 r5：A、B、C 三篇当前阅读整题审阅齐备
 
 主代理亲看原 Word 第3–5页完整 A、B 篇及原选项，读取当前同源替换、三化法、逻辑简化与 mainly 来源，另审新 Q23 r4 和 B 篇 Q24–Q27。Q23 不再添加 only，承认对小说爱好者的可能宣传作用，按整篇介绍具体项目的主要任务区分候选；旧 r2 HOLD 不追认。Q24 保留 first 与 Later 阶段差异，Q25 区分学科衰退与文学评价，并保留 may/directly，不把精神陪伴改为实务优势或宣称一切现实收益不存在。Q26 只核第四段的阻力、行动和坚持，不套全文三化。Q27 核读者可能质疑、作者让步、without 条件与末句重申，不凭 But 或另段趋势定目的。

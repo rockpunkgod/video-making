@@ -1,0 +1,20 @@
+{
+  "scope": "Committed source-only module delivery; not complete objective acceptance",
+  "source_snapshot_commit": "82c98e4dc1c82a32059c50c46136e4743862aca2",
+  "upstream_source_commit": "61bc9c3e15004639cb442c20e7946ca9631f14ce",
+  "archive": "deliverables/ANSWER-Method-Engine-82c98e4.zip",
+  "archive_sha256": "e5186f37ec2e34f95f9dfd3b28432f4dae801da07e6ef17db8352f83b3b25be3",
+  "extracted_engine": "deliverables/ANSWER-Method-Engine-82c98e4/ANSWER-Method-Engine-82c98e4",
+  "archive_entries_checked": 1753,
+  "private_directory_entries": 0,
+  "voice_files": ["voicepacks/tools/generate_gpt_sovits.py"],
+  "uncommitted_other_module_changes_included": false,
+  "private_source_papers_included": false,
+  "latest_candidate_tool_included": true,
+  "wuhan_replay_r5_public_index_included": true,
+  "validation": {"methods": 82, "source_documents": 20, "status": "PASS", "generated_assets": "PASS"},
+  "isolated_full_regression": {"state_at_recording": "running", "session_id": 95522, "result": null},
+  "semantic_acceptance": "not_implied",
+  "learner_acceptance": null,
+  "full_goal_status": "incomplete"
+}
