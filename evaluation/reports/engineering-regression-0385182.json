@@ -1,0 +1,13 @@
+{
+  "scope": "engineering regression only; not semantic or learner acceptance",
+  "tests_run": 1443,
+  "failures": 0,
+  "errors": 0,
+  "skipped": 0,
+  "elapsed_seconds": 833.434,
+  "failing_tests": [],
+  "engineering_code_commit": "0385182",
+  "worktree_scope": "includes existing unrelated uncommitted module tests",
+  "revision_boundary": "before task annotation and independent-question review changes",
+  "source_commit": "61bc9c3e15004639cb442c20e7946ca9631f14ce"
+}

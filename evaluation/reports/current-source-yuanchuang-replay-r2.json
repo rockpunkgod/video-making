@@ -1,0 +1,46 @@
+{
+  "scope": "current paper structural replay plus named private AI-reviewed actions; not whole-paper semantic acceptance",
+  "source_commit": "61bc9c3e15004639cb442c20e7946ca9631f14ce",
+  "paper_id": "mock-2026-hubei-yuanchuang-m05-v01",
+  "input_task_count": 47,
+  "replayed_task_count": 47,
+  "current_action_reviewed_task_count": 4,
+  "task_type_annotation_changes": [
+    {
+      "question_id": "mock-2026-hubei-yuanchuang-m05-v01-Q27",
+      "previous_task_type": "reading_comprehension",
+      "reviewed_task_type": "main_idea",
+      "scope": "independently AI-reviewed annotation; original material unchanged"
+    }
+  ],
+  "original_material_unchanged": true,
+  "whole_paper_semantic_acceptance": "PARTIAL",
+  "new_case_count": 0,
+  "new_unique_question_count": 0,
+  "new_blind_sample_count": 0,
+  "learner_validation": "pending_real_participant_validation",
+  "method_promotion_applied": false,
+  "pending_independent_review_task_count": 43,
+  "private_report_sha256": "a4bd2aefbcafb7ee884de9a2f67ee86a8ffab08deed0fd42d36f6ad9ebd3bcd2",
+  "independent_question_reviews": [
+    {
+      "path": "wxwork-priority-2026-10/coordinator-reviews/current-61bc9c3-r1/semantic-current-r2/Q27/independent-review.json",
+      "sha256": "f2ec4e49fa6f470a60a2fd959436b1d39f49647547ef3f92a0e136a2097713e8",
+      "question_id": "mock-2026-hubei-yuanchuang-m05-v01-Q27",
+      "review_scope": "private_current_question_review_only",
+      "reviewer": "/root",
+      "question_ref": {
+        "path": "wxwork-priority-2026-10/coordinator-reviews/current-61bc9c3-r1/semantic-current-r2/Q27/input.json",
+        "sha256": "91fe844e8a8a785f4c7a2645ff24c4afabc84fd833b921377ce59919bd9851e6"
+      },
+      "analysis_ref": {
+        "path": "wxwork-priority-2026-10/coordinator-reviews/current-61bc9c3-r1/semantic-current-r2/Q27/analysis.json",
+        "sha256": "7cc8a101f19ace283511b2d18591cdc4b5f96f8f52aebcf7ed3a77aca3e8b74f"
+      }
+    }
+  ],
+  "known_runtime_terminal_role_gaps": [
+    "mock-2026-hubei-yuanchuang-m05-v01-Q24",
+    "mock-2026-hubei-yuanchuang-m05-v01-Q31"
+  ]
+}

@@ -51,13 +51,16 @@ class CurrentPaperBindingTests(unittest.TestCase):
             with self.subTest(field=field), self.assertRaisesRegex(ValueError, 'original paper'):
                 bind_questions(paper, [reviewed])
 
-    def test_changed_task_scope_is_not_silently_inherited(self):
+    def test_reviewed_task_annotation_may_be_corrected_without_changing_source(self):
         paper = self.paper()
         _, current = bind_questions(paper, [])
         reviewed = current['questions'][0]
         reviewed['task_type'] = 'title'
-        with self.assertRaisesRegex(ValueError, 'task scope'):
-            bind_questions(paper, [reviewed])
+        control, current = bind_questions(paper, [reviewed])
+        self.assertEqual(control['questions'][0]['task_type'], 'grammar_form_completion')
+        self.assertEqual(current['questions'][0]['task_type'], 'title')
+        self.assertEqual(current['questions'][0]['stem'], control['questions'][0]['stem'])
+        self.assertEqual(current['questions'][0]['passage'], control['questions'][0]['passage'])
 
     def test_duplicate_or_foreign_review_does_not_expand_paper(self):
         paper = self.paper()
