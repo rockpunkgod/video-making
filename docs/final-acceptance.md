@@ -12,6 +12,12 @@
 
 G3/G4学生入口复核、G7/G8/G11当前真实案例与整卷语义、真实传播验收、First-use、冻结 Baseline 对照及效率验证仍未完成。全量工程通过不能替代这些要求；方法不因本检查点升级为 validated、stable、Efficient 或 Signature。下文各日期、计数和失败记录保留为历史时点，不用旧结论覆盖新缺口。
 
+### 后续实际登记与整卷重放（r30/r31）
+
+上述候选准备时点之后，[两个本职案例正式登记](../evaluation/reports/current-source-yuanchuang-C01-C02-case-registration-r30.json)完成：43题C01 canonical只产框架，44题C02 canonical的四项核查整体只算一个案例。另一代理新作完整六项方法CaseReview，主代理核真实原页、当前课程、全部本职产物及类型，再实际运行完整准入、去重、来源、精确分析与四输出。私有目录第30版、30条，SHA为 `bba3840e0afc7de35a0b4f18d6219b9b704ff924a1d722a7e2bf741a6ddd00d0`；完整链校验通过，当前结构准入8条，22条历史记录保留但仍未通过当前准入。207项旧文件哈希保持，本批新增Case为2，新增独立题目、Blind、学生或效率观察均为0。
+
+[42题新证据修复主审](../evaluation/reports/current-source-yuanchuang-Q42-minimal-admission-r31.json)另完成：仅D动作、核查产物、终判追加实际后文句，所有其他输入值保留。当前圆创47任务中26个接入已审动作，21个待复核，整卷仍PARTIAL。46题虽然真实修正climbed方向，但escaped的实际入口和D理由仍偏窄，暂不消费其新peer批准；旧HOLD与撤回记录不覆盖。以上案例登记不替代整题、整篇自然交付、传播或First-use验收。
+
 ## 当前来源版本检查点（2026-10-13）
 
 当前结论仍为 **PARTIAL**，工程完成未获证明。正式来源为 ANSWER `61bc9c3e15004639cb442c20e7946ca9631f14ce`；此前版本的入口齐备、方法分类、案例覆盖和回归数字不能作为本版验收证据。下文原报告及追加记录保留为历史时点，不改写原冻结观察。
