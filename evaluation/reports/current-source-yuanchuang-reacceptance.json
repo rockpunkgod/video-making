@@ -1,0 +1,113 @@
+{
+  "scope": "private current-source AI Case version reacceptance and paper replay evidence; not learner validation",
+  "source_commit": "61bc9c3e15004639cb442c20e7946ca9631f14ce",
+  "catalog_revision": 25,
+  "catalog_sha256": "2e7c1c20d5fd3bb2becf375faab03cc3e24b0d783b0b473dc94621cf48c937dd",
+  "historical_case_records_retained_unchanged": 22,
+  "current_case_version_records": [
+    {
+      "case_id": "mock-2026-hubei-yuanchuang-m05-v01-Q62-G01-canonical-current-1-2-0",
+      "question_id": "mock-2026-hubei-yuanchuang-m05-v01-Q62",
+      "method_id": "G01",
+      "method_version": "1.2.0",
+      "case_type": "canonical",
+      "case_ref": {
+        "path": "real-case-catalog/cases/mock-2026-hubei-yuanchuang-m05-v01-Q62-G01-canonical-current-1-2-0.json",
+        "sha256": "680f56ab1c9db377063230229b471aa01e65425bad5acf653994e8d03d33140a"
+      },
+      "registration_request_ref": {
+        "path": "wxwork-priority-2026-10/coordinator-reviews/current-61bc9c3-r1/G01-packet/REQUEST.json",
+        "sha256": "26cb66086d5ecd14724fd348623dd4d61815adfe072c613011abf49b3a224199"
+      },
+      "action_ref": {
+        "path": "wxwork-priority-2026-10/coordinator-reviews/current-61bc9c3-r1/G01-packet/action.json",
+        "sha256": "3763fa82e4fba4edd07a530631dae9f9452fcc6c52342ca2cf8129127a5fae1e"
+      },
+      "review_ref": {
+        "path": "wxwork-priority-2026-10/coordinator-reviews/current-61bc9c3-r1/G01-packet/review.json",
+        "sha256": "4b012fc43fe0f6d8bab2044bbe127c6c7665f27cdcf49c338911e1b3a5b4a12f"
+      },
+      "reviewer": "/root/yuanchuang_current_case_review",
+      "review_scope": "private_AI_reviewed",
+      "produced_artifact_kinds": [
+        "route_selection"
+      ],
+      "answer": null
+    },
+    {
+      "case_id": "mock-2026-hubei-yuanchuang-m05-v01-Q35-R09-canonical-current-1-2-0",
+      "question_id": "mock-2026-hubei-yuanchuang-m05-v01-Q35",
+      "method_id": "R09",
+      "method_version": "1.2.0",
+      "case_type": "canonical",
+      "case_ref": {
+        "path": "real-case-catalog/cases/mock-2026-hubei-yuanchuang-m05-v01-Q35-R09-canonical-current-1-2-0.json",
+        "sha256": "1410c45c26af986fbaa908aa1f7aae92695b3bf0aa72481c4b3aaa8f6dbb177d"
+      },
+      "registration_request_ref": {
+        "path": "wxwork-priority-2026-10/coordinator-reviews/current-61bc9c3-r1/R09-packet/REQUEST.json",
+        "sha256": "1f330f8846959e802f0176579fbb00767a2d262bb4b6e9cafb1412309fbc0415"
+      },
+      "action_ref": {
+        "path": "wxwork-priority-2026-10/coordinator-reviews/current-61bc9c3-r1/R09-packet/action.json",
+        "sha256": "cc189c67c6aab49360166c6690b9510457b05091c4d2f68065a3233881a6b628"
+      },
+      "review_ref": {
+        "path": "wxwork-priority-2026-10/coordinator-reviews/current-61bc9c3-r1/R09-packet/review.json",
+        "sha256": "4ebe537aa24c74167af3c01db6dd9061bea5687c3e6fc64003306ae6a7edbc83"
+      },
+      "reviewer": "/root/yuanchuang_current_case_review",
+      "review_scope": "private_AI_reviewed",
+      "produced_artifact_kinds": [
+        "framework_card"
+      ],
+      "answer": null
+    },
+    {
+      "case_id": "mock-2026-hubei-yuanchuang-m05-v01-Q36-F01-boundary-current-1-2-0",
+      "question_id": "mock-2026-hubei-yuanchuang-m05-v01-Q36",
+      "method_id": "F01",
+      "method_version": "1.2.0",
+      "case_type": "boundary",
+      "case_ref": {
+        "path": "real-case-catalog/cases/mock-2026-hubei-yuanchuang-m05-v01-Q36-F01-boundary-current-1-2-0.json",
+        "sha256": "5bf19a758b6482fd4de31ad3ea3808069e2b240c37c4914a8630ba1373e1ba0a"
+      },
+      "registration_request_ref": {
+        "path": "wxwork-priority-2026-10/coordinator-reviews/current-61bc9c3-r1/F01-packet/REQUEST.json",
+        "sha256": "752d93938c250803cd88fd57c84dafc9f03e2df2ba39263dcb120e4f614ba556"
+      },
+      "action_ref": {
+        "path": "wxwork-priority-2026-10/coordinator-reviews/current-61bc9c3-r1/F01-packet/action.json",
+        "sha256": "012cfc6a2c6ce939edc70545427b82fff0dfb19a35dcf4f05a22c3a9433a45e8"
+      },
+      "review_ref": {
+        "path": "wxwork-priority-2026-10/coordinator-reviews/current-61bc9c3-r1/F01-packet/review.json",
+        "sha256": "b83cabf6dd2a56e9645932cd725bc1b012e916f9416a92c91c8ac0af063a484d"
+      },
+      "reviewer": "/root/yuanchuang_current_case_review",
+      "review_scope": "private_AI_reviewed",
+      "produced_artifact_kinds": [
+        "candidate_partition",
+        "candidate_partition",
+        "candidate_partition"
+      ],
+      "answer": null
+    }
+  ],
+  "new_unique_question_count": 0,
+  "new_blind_sample_count": 0,
+  "paper": {
+    "paper_id": "mock-2026-hubei-yuanchuang-m05-v01",
+    "input_task_count": 47,
+    "replayed_task_count": 47,
+    "current_action_reviewed_task_count": 3,
+    "original_material_unchanged": true,
+    "whole_paper_semantic_acceptance": "PARTIAL",
+    "structural_control_scope": "unannotated same-material engine control; not learner Baseline"
+  },
+  "pending_current_semantic_review_task_count": 44,
+  "paper_source_scope_review_sha256": "50f47c043e8bf0f3bf86a80d317f3763d3c35a6d653cfca234c28195c290535a",
+  "learner_validation": "pending_real_participant_validation",
+  "method_promotion_applied": false
+}

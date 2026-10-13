@@ -128,3 +128,5 @@ python -m answer_engine export-status <export-request.json>
 渲染进度统一由低档 subagent 只读追踪；制作、异常恢复与最终核验由主代理负责。旧版本独立保留绑定，重渲染或更换配音后重新核验时间线和媒体。
 
 ANSWER Method Engine 是仓库内保留的教学核心源码。其方法执行、宿主审阅、整篇讲解与真实材料导入分别见[方法执行](docs/method-execution.md)、[单题审阅](docs/lesson-review.md)、[整篇接口](docs/passage-lesson.md)和[试卷导入](docs/exam-ingestion.md)。本仓库的增量不自动修改 `rockpunkgod/ANSWER` 源仓库。
+
+它以课程证据为根基，把高考英语方法转化为可触发、可执行、可验证、可迁移的考试决策系统，不是无证据的答案生成器。当前来源、历史案例保留、新版动作重验与整卷回放入口见[ANSWER 来源对齐与交接](docs/source-alignment-2026-10-13.md)；[实际重验记录](evaluation/reports/current-source-yuanchuang-reacceptance.json)区分版本化案例、独立题目、机械覆盖及未完成语义审阅，真实学生验收另行进行。

@@ -105,8 +105,19 @@ def execute_actions(question, chain, matches, registry, graph, trigger_nodes, co
             if produced[source_id]['output']['kind'] not in INPUT_ARTIFACTS[role]:
                 raise ValueError('Incompatible action artifact dependency')
         evidence=[check_span(question,s) for s in x['evidence']]
-        if not any(s['field'] in {'passage','stem','student_text'} for s in evidence): raise ValueError('Action cannot be supported only by option wording')
-        if question['question_type'] in {'阅读理解','七选五','完形填空'} and not any(s['field']=='passage' for s in evidence):
+        # Initial seven-five grouping inspects the options before returning to
+        # the passage. It produces a partition, never candidate truth. Requiring
+        # a token passage quote here encourages invented/irrelevant evidence.
+        option_partition = (question['question_type']=='七选五'
+                            and mid in {'F01','F02','F03','F04'} and role=='reducer'
+                            and x['output'] is not None
+                            and x['output']['kind']=='candidate_partition'
+                            and bool(question.get('options'))
+                            and {s['field'] for s in evidence if s['field'].startswith('option:')}
+                                >= {'option:'+key for key in question['options']})
+        if not option_partition and not any(s['field'] in {'passage','stem','student_text'} for s in evidence):
+            raise ValueError('Action cannot be supported only by option wording')
+        if not option_partition and question['question_type'] in {'阅读理解','七选五','完形填空'} and not any(s['field']=='passage' for s in evidence):
             raise ValueError('Objective action requires current passage evidence')
         if x['stop_applied'] and x['output'] is not None: raise ValueError('Stopped action must not produce an artifact')
         if not x['stop_applied'] and x['output'] is None: raise ValueError('Continuing action requires a concrete output')

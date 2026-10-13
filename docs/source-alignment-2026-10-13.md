@@ -42,6 +42,18 @@ python -X utf8 -m scripts.audit_real_case_epoch --dataset local-data/organized-p
 
 另存的一份 G01 湖北圆创 Q62 当前版动作已执行并通过四种输出检查：先标提示词，再核空位功能，产物仅为名词路线节点，不生成词形或答案。原题面与旧动作字节校验保持一致。这是揭答后的 AI 重建，不是独立审阅、正式新 Case 或新 Blind 样本；私人材料不随源码打包。
 
+后续重验已推进：湖北圆创 Q62/G01、Q35/R09、Q36/F01 经另一个 AI 审阅者重新核原 PDF、当前课程、动作、图和重放后，以 1.2.0 版本另存登记。目录增至第 25 版；旧 22 个记录没有改写。这里新增的是三个版本化验收记录，不是三道新题或三个新 Blind 样本。G01 只给路线，R09 只给骨架，F01 只分组；三个动作均不报答案。F01 的 boundary 仅是时间轴无区分度时停止该轴筛选，整个分组动作仍 produced，不能冒称整个方法停机。
+
+新准备入口要求提供实际当前版动作，拒绝原题变化、复用旧执行 ID、错误版本、重复当前版信用及覆盖旧目录：
+
+```powershell
+python -X utf8 -m scripts.prepare_current_case_action --dataset DATASET --prior-request OLD-REQUEST.json --current-question NEW-INPUT.json --output NEW-PACKET
+```
+
+输出 action、待审请求及来源绑定；不生成独立审阅、不自动登记。只有另行获得真实独立 AI 审阅并绑定当前图和来源，才交给既有 register-real-case 接口。
+
+`scripts.replay_current_paper` 可把显式审过的当前动作接回同一卷。湖北圆创的 Q21–Q67 共 47 个非听力任务已执行当前回放，三题有新版独立动作审阅，其余 44 题明确待语义复核。20 道听力仅有来源记录，不纳入已支持分析。原始 v6 到 strict v3 的标题任务、七选五方向误吞修复及续写字段拆分由卷审阅者重新核对；共享方向缺口保留。工具的未标注对照只是同题面工程控制，不是学生 Baseline，不能据此计算学习效率。整卷英语语义验收仍为 PARTIAL。
+
 ## 下游失效检查
 
 `export-status` 只投影请求提供的冻结状态。要检查冻结素材是否仍符合当前正式教学版本，使用：
