@@ -23,8 +23,29 @@
     "First wider command named two nonexistent test modules: 65 attempted, 2 import errors; corrected names, not acceptance",
     "One new negative test expected ValueError instead of jsonschema.ValidationError: 32 run, 1 test error; corrected assertion type, rejection remained intact"
   ],
-  "independent_engineering_review": "pending",
-  "real_question_new_interface_replay": "pending",
+  "independent_engineering_review": {
+    "r1": "HOLD_actual_four_renderer_rehash_quote_bypass",
+    "r1_report_path": "local-data/organized-pdfs/wxwork-priority-2026-10/coordinator-reviews/current-61bc9c3-r1/seven-five-terminal-drafts-r8/engineering-Q38-r1/rehash-output-evidence-probe-results.json",
+    "r1_report_sha256": "a7a9ae885f68450b6edf5e108c9b4c10f5937f7af791fc6f967a1b1d1362584d",
+    "subsequent_final_r2": "pending_independent_review_of_quote_content_fix"
+  },
+  "quote_content_fix": {
+    "scope": "All output_spans-bearing serialized artifacts must preserve the exact substring of their own covering action quote, not merely coordinates and declared hashes",
+    "host_report_path": "local-data/organized-pdfs/wxwork-priority-2026-10/coordinator-reviews/current-61bc9c3-r1/seven-five-terminal-drafts-r8/engineering-Q38-host-r3/report.json",
+    "host_report_sha256": "370c5a76822ef14ea9a8b7802d21bca5c87e68f2bd38b79d6e876c7260dfa2f0",
+    "actual_peer_attack_rejected_by_renderers": 4,
+    "final_host_regression": {"tests_run": 95, "failures": 0, "errors": 0, "elapsed_seconds": 25.231},
+    "frozen_independent_question_replays": 19,
+    "changed_frozen_analyses": 0,
+    "intermediate_fixture_failure": "94 run with 4 error-message assertion failures because Python span aliases also mutated action/graph evidence; fixture changed to JSON roundtrip before output-only mutation; subsequent 94 and final 95 pass. Real independent attack file was never altered."
+  },
+  "real_question_new_interface_replay": {
+    "scope": "Five existing seven-five questions, author drafts only, not independent English acceptance",
+    "support_and_terminal_exact_replays": 10,
+    "support_and_terminal_renderer_checks": 40,
+    "support_only_answers_null": true,
+    "independent_semantic_acceptance": "pending"
+  },
   "current_repair_full_regression": "pending_not_covered_by_f0933b0_result",
   "new_case_count": 0,
   "new_unique_question_count": 0,

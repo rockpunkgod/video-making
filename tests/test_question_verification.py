@@ -129,6 +129,39 @@ class QuestionVerificationTests(unittest.TestCase):
             for mode in ('structured','student','legacy-wechat','content-export'):
                 with self.subTest(mutation=mutation,mode=mode),self.assertRaises(ValueError):render(changed,mode,self.registry)
 
+    def test_relation_projected_quote_cannot_be_forged_by_rehashing_output(self):
+        from core.execution import artifact_fingerprint
+        result=self.engine.analyze(self.relation_question())
+        # A serialized artifact has no Python object aliases to action spans.
+        # Mutate only exported output evidence, as in the real peer reproducer.
+        changed=json.loads(json.dumps(result)); x=changed['execution_trace'][0]
+        x['output']['evidence'][0]['quote']='FABRICATED CURRENT PASSAGE QUOTE'
+        fingerprint=artifact_fingerprint(x['output'])
+        artifact=next(n for n in changed['evidence_graph']['nodes'] if n['id']==x['artifact_node_id'])
+        artifact['artifact_fingerprint']=fingerprint
+        changed['question_verification']['consumed_artifacts'][0]['output_sha256']=fingerprint
+        for mode in ('structured','student','legacy-wechat','content-export'):
+            with self.subTest(mode=mode),self.assertRaisesRegex(ValueError,'own concrete evidence'):
+                render(changed,mode,self.registry)
+
+    def test_relation_projected_subspan_is_recovered_from_covering_action_quote(self):
+        q=self.relation_question()
+        q['action_executions'][0]['output']['evidence']=[{'field':'passage','start':6,'end':10,'quote':'beta'}]
+        result=self.engine.analyze(q)
+        for mode in ('structured','student','legacy-wechat','content-export'):render(result,mode,self.registry)
+
+    def test_interpretation_quote_also_cannot_be_forged_by_rehashing_output(self):
+        from core.execution import artifact_fingerprint
+        changed=json.loads(json.dumps(self.engine.analyze(self.question())))
+        x=changed['execution_trace'][0]
+        x['output']['parts'][0]['evidence'][0]['quote']='FORGED INTERPRETATION QUOTE'
+        fingerprint=artifact_fingerprint(x['output'])
+        next(n for n in changed['evidence_graph']['nodes'] if n['id']==x['artifact_node_id'])['artifact_fingerprint']=fingerprint
+        changed['question_verification']['consumed_artifacts'][0]['output_sha256']=fingerprint
+        for mode in ('structured','student','legacy-wechat','content-export'):
+            with self.subTest(mode=mode),self.assertRaisesRegex(ValueError,'own concrete evidence'):
+                render(changed,mode,self.registry)
+
     def test_legacy_input_still_has_no_terminal_field_or_answer(self):
         q=self.question(); q.pop('question_verification_review')
         result=self.engine.analyze(q)

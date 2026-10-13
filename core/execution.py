@@ -26,6 +26,13 @@ def covered_by(span, evidence):
     return any(s['field']==span['field'] and s['start']<=span['start'] and span['end']<=s['end'] for s in evidence)
 
 
+def quote_bound_to_action(span, evidence):
+    """Recover a projected subspan from the action's already bound raw quote."""
+    return any(s['field']==span['field'] and s['start']<=span['start']<span['end']<=s['end']
+               and span['quote']==s['quote'][span['start']-s['start']:span['end']-s['start']]
+               for s in evidence)
+
+
 def artifact_fingerprint(output):
     return hashlib.sha256(json.dumps(output,ensure_ascii=False,sort_keys=True,separators=(',',':')).encode('utf-8')).hexdigest()
 
@@ -196,6 +203,8 @@ def validate_execution_trace(analysis,registry=None):
         if x['state']=='produced':
             if x['stop_applied'] or x['review_status']!='reviewed' or x['output'] is None or x['output']['kind'] not in ROLE_ARTIFACTS[role]:
                 raise ValueError('Serialized artifact must have a reviewed continuing role')
+            if not all(quote_bound_to_action(s,x['evidence']) for s in output_spans(x['output'])):
+                raise ValueError('Serialized artifact lost its own concrete evidence quote')
             artifact=nodes.get(x['artifact_node_id'],{}); action=nodes.get(x['action_node_id'],{})
             if (artifact.get('type')!='action_artifact' or artifact.get('execution_id')!=eid or artifact.get('method_id')!=mid
                     or artifact.get('artifact_kind')!=x['output']['kind'] or artifact.get('artifact_fingerprint')!=artifact_fingerprint(x['output'])
@@ -209,7 +218,7 @@ def validate_execution_trace(analysis,registry=None):
             if relation_check and (x['output']['target_execution_ids'] or
                     not all(x['output'][key].strip() for key in ['claim','relation_check','backfill_check']) or
                     not any(s['field']=='passage' for s in x['output']['evidence']) or
-                    not all(covered_by(s,x['evidence']) for s in x['output']['evidence'])):
+                    not all(quote_bound_to_action(s,x['evidence']) for s in x['output']['evidence'])):
                 raise ValueError('Serialized candidate relation check lost its own concrete evidence')
             if not any(e['from']==x['action_node_id'] and e['to']==x['artifact_node_id'] for e in analysis['evidence_graph']['edges']):
                 raise ValueError('Serialized artifact lacks direct producing action edge')
