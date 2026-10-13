@@ -1,5 +1,15 @@
 # ANSWER 来源对齐与模块交接
 
+## 武汉 A、B 自然稿及真实接口绑定：语义通过，自动排版仍待精简
+
+主代理完整读原 Word 第3–5页、完整两篇自然稿、当前来源方法和实际绑定脚本。A按21→22→23展示同义活动、参加与主持差别、可选周的or/日期核查及完整目的比较。B新r6保持first/Later、may/directly及指定段范围，修正Q27将misunderstanding窄化为书性质的问题：承认可能澄清阅读与现实生活印象，按问答、让步、without条件与重申比较整段主作用。旧B r5口播HOLD及底层终判、原题、审阅均不覆盖。
+
+两篇完整原生自然稿获得另一个AI的语义/交付审阅；7个已批准的底层整题输入和审阅重放、来源核查通过，新增已审题目为0。新口播身份与底层动作作者分开保存，不给原题重记独立信用。现行篇级接口实际装载7题，两个 `whole_passage_delivery` 产物及8次输出检查通过，32次投影负控拒绝改答案、错终判引用、脱证据口播和缺执行。接口结构通过不能冒称真人首用通过。
+
+优先阅读私人批准的 `current-61bc9c3-wuhan-natural-A-root-r6/approved-native-author-message.txt` 与 `current-61bc9c3-wuhan-natural-B-root-r7/approved-native-author-message.txt`，原生稿均含动作Challenge。现行renderer没有Challenge字段，另存的附Challenge消息明确是外部附件，不假称原生自动支持。根检查实际renderer文本还发现重复逐题过渡句和半句切段，语义没有缺失，但自然排版仍待精简，不把接口scope当学生端风格全通过。公开索引为 `evaluation/reports/current-source-wuhan-natural-AB-r7.json`。
+
+本次不改运行代码、方法成熟度、原题或Case目录；整卷仍PARTIAL。传播效果、真人First-use、Baseline、迁移与效率数据仍未采集，不能由AI稿件验收升级 Signature 或通过 Practicality Gate。
+
 ## 外部旧预测/揭答适配的独立工程验收
 
 根完整读取独立 r2 首轮、补测与最终报告及两个运行脚本，核报告/源码快照哈希后，对固定 `082d687ce22525342c1db73edb54440d0842b7d3326346925eca8e24c465beb1` 亲重跑43个未mock真实 typed validate_request：4个合法正例通过，39个定向负控按具体坏字段拒绝；没有 register 调用。合法样本包括真实 null 的历史预测保留、当前合成动作另有答案，以及 legacy 直接指针重放；新修复未把 null  retrofill 成答案。
