@@ -419,3 +419,9 @@ Z20已有完形15空r34作者包已交新的不同作者并行独审，不重复
 武汉r62新五题独审完成后，仅Q57/Q61/Q64/Q65四项安全暂留接入新的r82/r16整卷，Q63实际被reader拒绝。根读完整独审grounds/执行体、四题具体关系动作与当前方法，核441个保护文件，实际4source/4exact/16输出及Q63+4准入负控拒，47任务完整重放成功。当前已审39、闭合31、安全HOLD8、待审8，整卷PARTIAL，无新闭合答案或Case信用。根第一次核验仅因G01 YAML布尔键与JSON字符串键表示不同在整卷前失败，脚本/erratum保留；最终比较相同JSON表示的全部卡值及独立全文原字串，不改变方法或原引用。公开 `evaluation/reports/current-source-wuhan-grammar-corrections-admission-r82.json`。
 
 武汉Q66新作者包实际完成source/analyze/四输出，但自然指导仍unreviewed，原生学生输出正确扣留，不冒称已交付。其首次content字段误用造成Schema拒绝保留，新verified-r2只按既有value字段机械适配，未扩Schema。当前已交另一作者亲读原页、逐字段和完整自然稿独审；Q63则另存作者新修订，尚待实际交接及新审阅。Z20完形独审已发现若干作者拟闭合项仍欠决定性差异，未照收作者答案；原稿、当前核验、未来学生稿各自信用分开。
+
+## 固定347a0b9全量终局与正式案例当前准入核查
+
+原session1211已真实退出成功：固定交接版1575项，0失败、0错误、1跳过，1143.772秒。结果SHA256为 `421b08c5331018830a2db8a881b416a2ae79798a13106fb6ca29bb909b9d5265`，原ZIP哈希不变。新终局记录 `evaluation/reports/isolated-regression-347a0b9.json` 单列，原running记录保持。该包包含已接受的写作投影修补；不认证私有英语判项、完整语料、其他模块未提交改动或真实学生效果。固定347与本时点已提交core/renderers/tests/method-registry/skills/scripts没有差异，但后写验收文档不冒称在旧包内。
+
+现有Case目录第30版也完成当前规则只读核查：历史30项仍合法留存，8项当前结构准入通过，22项当前绑定拒绝并保留历史；目录哈希原封。当前8项为G01/R09/R03/R11/R16/C01/C02的canonical及F01的boundary，不是8套卷或8次独立学生验证。R01/R02/R06仍没有当前正式案例，现有三黄金方法也并未补齐五类槽。公开 `evaluation/reports/current-case-epoch-audit-writing-repair-r83.json`；新Case/Blind/独立题数及方法升级为0，G7完整覆盖未完成。工程全量通过不掩盖这些真实缺口，总体保持PARTIAL。

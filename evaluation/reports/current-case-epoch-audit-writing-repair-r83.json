@@ -1,0 +1,31 @@
+{
+  "scope": "Read-only historical Case validation and current structural admission; no new English review or re-registration",
+  "checked_on": "2026-10-14",
+  "source_commit": "61bc9c3e15004639cb442c20e7946ca9631f14ce",
+  "private_audit_sha256": "a7b9ead2a6cf54c6a1ffc387f28f8ff8396c5cac38cfbb35a761f765e8d5bc8a",
+  "actual_exit_code": 0,
+  "catalog_revision": 30,
+  "catalog_sha256_unchanged": "bba3840e0afc7de35a0b4f18d6219b9b704ff924a1d722a7e2bf741a6ddd00d0",
+  "historical_catalog_validation": "PASS",
+  "historical_record_count": 30,
+  "current_structural_admission_passed": 8,
+  "current_binding_rejected_retained_as_history": 22,
+  "current_method_case_slots": {
+    "G01": {"canonical": 1},
+    "R09": {"canonical": 1},
+    "F01": {"boundary": 1},
+    "R03": {"canonical": 1},
+    "R11": {"canonical": 1},
+    "R16": {"canonical": 1},
+    "C01": {"canonical": 1},
+    "C02": {"canonical": 1}
+  },
+  "golden_methods_without_current_formal_case": ["R01", "R02", "R06"],
+  "current_semantic_reacceptance": "Not established by this structural audit",
+  "new_case_count": 0,
+  "new_blind_or_unique_question_count": 0,
+  "catalog_or_frozen_actions_modified": false,
+  "learner_validation": "pending_real_participant_validation",
+  "method_promotion_applied": false,
+  "overall_goal_complete": false
+}
