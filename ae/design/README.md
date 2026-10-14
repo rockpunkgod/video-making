@@ -2,7 +2,9 @@
 
 2026-10-14 新增[明暗双场候选](light-dual-space-v1.json)及
 [镜头实施说明](../../docs/design/light-dual-space.md)：灯下暖纸进入暗场思考，
-以照明或曝光替代透明度退场。该候选尚未接入静帧模板，保留旧输出供比较。
+以照明或曝光替代透明度退场。独立的 `dual-space-stills.jsx` 已接入原生灯光、
+景深和 4K 静帧；旧模板保留。制作与剩余验证见
+[P1 进度](../../docs/design/p1-dual-space-progress.md)。
 
 [style-v1.json](style-v1.json) 是新制作方向的候选规范。B站 16:9 横屏为主，
 竖屏从已完成横屏片中派生。所有字号使用 1920×1080 作者坐标，交付母版按 2 倍输出；
