@@ -1,0 +1,41 @@
+{
+  "scope": "Scoped structural answer integrity and readonly historical serialization compatibility; not English, learner or release certification",
+  "checked_on": "2026-10-14",
+  "source_commit": "61bc9c3e15004639cb442c20e7946ca9631f14ce",
+  "actual_Q27_root_replay": {"valid_renderer_calls": 4, "negative_renderer_calls_rejected": 20, "only_legal_analysis_delta": ["/evidence_graph/nodes/0/material_sha256", "/evidence_graph/nodes/0/candidate_ids"]},
+  "root_targeted_tests": {"tests_run": 125, "failures": 0, "errors": 0, "elapsed_seconds": 48.254, "exit_code": 0},
+  "root_additional_regression": {"tests_run": 96, "failures": 0, "errors": 0, "elapsed_seconds": 88.292, "exit_code": 0},
+  "root_latest_historical_regression": {"tests_run": 36, "failures": 0, "errors": 0, "elapsed_seconds": 83.374, "exit_code": 0},
+  "independent_projection_engineering": {
+    "report_sha256": "2b6deea8928167fe0a1b4d97a1dfa52cd1561ce7915253e9e197af7a85381970",
+    "positive_inputs": 15, "positive_renderer_calls": 60,
+    "negative_inputs": 15, "negative_renderer_calls_rejected": 60,
+    "targeted_tests_passed": 13, "protected_files_unchanged": 153, "actual_exit_code": 0
+  },
+  "independent_historical_engineering": {
+    "report_sha256": "990980cf37a6f3691abbb3f992022c985c7b45323145b7c7eea160326a922a09",
+    "actual_historical_full_request_checks": 30,
+    "strict_current_requests_rejected": 30,
+    "real_rehashed_mutations_rejected": 6,
+    "public_switch_attempts_rejected": 2,
+    "helper_negative_controls_rejected": 6,
+    "actual_synthetic_tests_passed": 26,
+    "protected_files_unchanged": 347,
+    "actual_exit_code": 0,
+    "first_failed_selection_StopIteration_preserved": true
+  },
+  "root_current_catalog_audit_sha256": "a844af91a72932989f1186518a07ce5735ae15398d2bc247467b7761042c5993",
+  "historical_catalog_revision": 30,
+  "historical_catalog_sha256_unchanged": "bba3840e0afc7de35a0b4f18d6219b9b704ff924a1d722a7e2bf741a6ddd00d0",
+  "historical_catalog_validation": "PASS via explicit archived serialization projection; not current scoped proof",
+  "current_structural_case_slots": 0,
+  "historical_or_unbound_cases": 30,
+  "historical_projection_adapter_available_to_public_registration": false,
+  "truth_boundary": "A bare renderer checks consistency against trusted serialized scope, not authenticity. Coordinated root-domain forgery was actually accepted by bare renderers and rejected by validation with the original question. Preserve original material and hash-bound provenance before release.",
+  "schema_or_method_versions_changed": false,
+  "generated_assets_check": "PASS",
+  "new_full_regression": "not_started",
+  "new_case_blind_student_credit": 0,
+  "method_promotion_applied": false,
+  "overall_goal_complete": false
+}

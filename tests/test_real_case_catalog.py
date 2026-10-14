@@ -420,8 +420,10 @@ class PrivateRealCaseTest(unittest.TestCase):
                 patch('core.real_cases.QuestionAnalyzer.analyze',return_value=self._analysis()):
             register(self.root,self.request_ref['path'])
             register(self.root,second_request_ref['path'])
-            actual_validate=real_cases.validate_request
-            with patch('core.real_cases.validate_request',wraps=actual_validate) as counted:
+            # The readonly catalog now uses the private historical projection
+            # adapter; count actual full request checks, not the admission API.
+            actual_validate=real_cases._validate_request
+            with patch('core.real_cases._validate_request',wraps=actual_validate) as counted:
                 catalog=load_catalog(self.root)
             self.assertEqual(catalog['revision'],2)
             self.assertEqual(counted.call_count,2)

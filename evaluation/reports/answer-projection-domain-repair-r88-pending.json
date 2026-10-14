@@ -1,0 +1,25 @@
+{
+  "scope": "Answer projection correctness repair in progress; not English or student validation",
+  "checked_on": "2026-10-14",
+  "source_commit": "61bc9c3e15004639cb442c20e7946ca9631f14ce",
+  "initial_real_failure": "Changing only the actual Q27 answer A to B was accepted by all four renderers",
+  "first_patch_independent_result": "HOLD: an unrepresented original option C could be deleted from the summary to forge closure",
+  "repair": "Bind original material and complete known candidate domain to question signal; check relation projections, typed decisions, summary, answer and verification gates",
+  "root_targeted_tests": {"tests_run": 125, "failures": 0, "errors": 0, "elapsed_seconds": 48.254, "exit_code": 0},
+  "actual_Q27_replay": {
+    "valid_renderer_calls": 4,
+    "negative_renderer_calls_rejected": 20,
+    "analysis_delta": ["/evidence_graph/nodes/0/material_sha256", "/evidence_graph/nodes/0/candidate_ids"],
+    "other_analysis_fields_exactly_unchanged": true
+  },
+  "second_patch_independent_engineering_review": "pending",
+  "new_full_regression": "not_started",
+  "historical_catalog_audit": "EXIT1: current analyzer emits new candidate-domain metadata; historical replay path needs explicit handling before historical catalog can be revalidated",
+  "historical_catalog_revision": 30,
+  "historical_catalog_sha256_unchanged": "bba3840e0afc7de35a0b4f18d6219b9b704ff924a1d722a7e2bf741a6ddd00d0",
+  "previous_current_case_admission_count_8_reused_as_new_epoch_proof": false,
+  "older_failures_and_frozen_analyses_overwritten": false,
+  "new_case_blind_student_credit": 0,
+  "method_promotion_applied": false,
+  "overall_goal_complete": false
+}

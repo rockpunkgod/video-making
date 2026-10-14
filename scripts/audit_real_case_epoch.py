@@ -70,6 +70,7 @@ def audit(dataset,registry=None):
         'source_commit':registry.index['source_baseline']['commit'],
         'catalog_revision':catalog['revision'],'catalog_sha256':catalog['sha256'],
         'historical_catalog_validation':'PASS','case_count':len(rows),
+        'historical_analysis_replay_policy':catalog.get('historical_analysis_replay_policy'),
         'admission_counts':dict(Counter(row['current_admission'] for row in rows)),
         'method_counts':dict(Counter(row['method_id'] for row in rows)),
         'cases':rows,'new_case_count':0,'new_blind_sample_count':0,

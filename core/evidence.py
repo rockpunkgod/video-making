@@ -25,6 +25,15 @@ def validate_graph(graph, question=None):
         manifest=image_manifest(question)
     if len(nodes) != len(graph['nodes']):
         raise ValueError('Duplicate evidence node')
+    if question is not None and graph['nodes']:
+        root = graph['nodes'][0]
+        if root['type'] == 'question_signal' and 'material_sha256' in root:
+            from .question_verification import material_fingerprint
+            candidates = sorted(set(question.get('options',{}))
+                                | {r['candidate'] for r in question.get('relations',[])})
+            if (root['material_sha256'] != material_fingerprint(question)
+                    or root.get('candidate_ids',[]) != candidates):
+                raise ValueError('Question signal scope differs from original material/candidates')
     adjacency = {i:[] for i in nodes}
     incoming = {i:[] for i in nodes}
     for e in graph['edges']:

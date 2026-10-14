@@ -3,6 +3,7 @@ import json
 from core.registry import Registry, validate_schema
 from core.evidence import validate_graph
 from core.execution import validate_execution_trace
+from core.answer_projection import validate_answer_projection
 from core.lesson_feedback import validate_lesson_projection
 from core.writing_feedback import validate_writing_projection
 from core.question_verification import validate_question_verification_projection
@@ -15,6 +16,7 @@ def render(analysis,kind='structured',registry=None):
     validate_lesson_projection(analysis,r)
     validate_writing_projection(analysis,r)
     validate_question_verification_projection(analysis,r)
+    validate_answer_projection(analysis)
     if kind=='structured': return json.dumps(analysis,ensure_ascii=False,indent=2)
     if kind=='content-export':
         assets = [{'method_id':x['method_id'],'method_version':r.methods[x['method_id']]['version'],'role':x['role'],'action':x['action'],'stop_rule':x['stop_rule'],'visual_formula':r.methods[x['method_id']]['visual_formula'],'compact':r.methods[x['method_id']]['compact'],'anti_rule':r.methods[x['method_id']]['anti_rule']} for x in analysis['method_chain']]

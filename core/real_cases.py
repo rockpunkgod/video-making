@@ -404,6 +404,34 @@ def _review_checks(review, method, request, blind, frozen_question):
 
 
 def validate_request(root, request, registry=None):
+    """Strict current admission; archived projection adapters cannot be requested."""
+    return _validate_request(root, request, registry)
+
+
+def _archived_scope_projection_equal(expected, frozen):
+    """Read-only compatibility for the two newly emitted root-scope attributes.
+
+    This does NOT upgrade old proofs to scoped/current admission. All old
+    relation/answer/artifact fields must still exactly match the replay.
+    """
+    from copy import deepcopy
+    old_nodes = frozen.get('evidence_graph', {}).get('nodes', [])
+    new_nodes = expected.get('evidence_graph', {}).get('nodes', [])
+    if not old_nodes or not new_nodes:
+        return False
+    old, new = old_nodes[0], new_nodes[0]
+    if (old.get('type') != 'question_signal' or new.get('type') != 'question_signal'
+            or 'material_sha256' in old or 'candidate_ids' in old
+            or 'material_sha256' not in new):
+        return False
+    projected = deepcopy(expected)
+    root = projected['evidence_graph']['nodes'][0]
+    root.pop('material_sha256')
+    root.pop('candidate_ids', None)
+    return projected == frozen
+
+
+def _validate_request(root, request, registry=None, *, _catalog_replay=False):
     registry = registry or Registry()
     if not isinstance(request, dict):
         raise ValueError('Case registration request must be an object')
@@ -464,7 +492,8 @@ def validate_request(root, request, registry=None):
         raise ValueError('Post-reveal action changed frozen core question material')
     analysis = action['analysis']
     validate_schema('question-analysis',analysis)
-    if QuestionAnalyzer(registry).analyze(action['question']) != analysis:
+    replay = QuestionAnalyzer(registry).analyze(action['question'])
+    if replay != analysis and not (_catalog_replay and _archived_scope_projection_equal(replay, analysis)):
         raise ValueError('Current analyzer replay differs from frozen own action')
     validate_graph(analysis['evidence_graph'], action['question'])
     validate_execution_trace(analysis, registry)
@@ -657,7 +686,10 @@ def load_catalog(dataset, *, registry=None, use_runtime_contexts=True):
         if identity not in validated_requests:
             request=artifact(root,ref)
             request_registry=contexts.get(identity,{}).get('registry',registry)
-            validated_requests[identity]=(request,*validate_request(root,request,request_registry),request_registry)
+            # Only an immutable existing catalog reference reaches this path.
+            # register()/validate_request() remain strict current admission.
+            validated_requests[identity]=(request,*_validate_request(root,request,request_registry,
+                                                                     _catalog_replay=True),request_registry)
         return validated_requests[identity]
 
     for number, path in numbered:
@@ -710,6 +742,9 @@ def load_catalog(dataset, *, registry=None, use_runtime_contexts=True):
         preceding_aliases=aliases
         previous = digest(raw); result = entry
     result['sha256'] = previous
+    result['historical_analysis_replay_policy'] = (
+        'immutable_catalog_only; exact_replay_or_exact_archived_projection_without_two_new_root_scope_attributes; '
+        'not_current_scoped_admission')
     case_dir=root/CATALOG/'cases'
     actual={p.resolve() for p in case_dir.glob('*.json')} if case_dir.exists() else set()
     expected={(root/ref['path']).resolve() for ref in result['cases']}
@@ -833,6 +868,20 @@ def register(dataset, request_path):
 def coverage_overlay(coverage, dataset):
     root = private_root(dataset); catalog = load_catalog(root)
     records = [artifact(root, ref) for ref in catalog['cases']]
+    registry = Registry()
+    current_records = []
+    for case in records:
+        current_method = registry.methods.get(case['method_id'])
+        if not current_method or case['registration_key'][3] != current_method['version']:
+            continue
+        request = artifact(root, case['registration_request_ref'])
+        try:
+            validate_request(root, request, registry)
+        except ValueError:
+            # Immutable history remains counted below, but matching a method
+            # version alone cannot make an unscoped/obsolete action current.
+            continue
+        current_records.append(case)
     seen = set(); pairs = set(); questions = set()
     for case in records:
         key = tuple(case['registration_key'])
@@ -841,7 +890,7 @@ def coverage_overlay(coverage, dataset):
         questions.add(case['registration_key'][0])
     for method in coverage['methods']:
         for slot in method['slots']:
-            own = [c for c in records if c['method_id'] == method['method_id']
+            own = [c for c in current_records if c['method_id'] == method['method_id']
                    and c['case_type'] == slot['case_type']
                    and c['registration_key'][3] == method['method_version']]
             slot['private_registered_case_count'] = len(own)
@@ -849,6 +898,9 @@ def coverage_overlay(coverage, dataset):
             slot['private_review_status'] = STATUS if own else None
     coverage['private_catalog'] = {'revision': catalog['revision'],
                                    'private_reviewed_case_count': len(records),
+                                   'current_structural_case_count': len(current_records),
+                                   'historical_or_unbound_case_count': len(records)-len(current_records),
+                                   'historical_analysis_replay_policy': catalog.get('historical_analysis_replay_policy'),
                                    'historical_version_case_count':sum(
                                        c['registration_key'][3]!=next((m['method_version'] for m in coverage['methods']
                                                                        if m['method_id']==c['method_id']),None)

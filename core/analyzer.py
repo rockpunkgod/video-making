@@ -3,12 +3,14 @@ from .registry import Registry, validate_schema
 from .matcher import match_methods
 from .composer import compose, bind_contract
 from .execution import execute_actions, validate_execution_trace
+from .answer_projection import validate_answer_projection
 from .evidence import EvidenceGraph, check_span
 from .grammar_navigation import navigate_grammar
 from .writing_feedback import writing_feedback, validate_writing_projection
 from .lesson_feedback import lesson_feedback, validate_lesson_projection
 from .question_verification import (verify_question, apply_question_verification,
-                                    validate_question_verification_projection)
+                                    validate_question_verification_projection,
+                                    material_fingerprint)
 
 class QuestionAnalyzer:
     def __init__(self,registry=None,review_provider=None):
@@ -34,7 +36,11 @@ class QuestionAnalyzer:
         matches = match_methods(q,self.registry)
         chain = compose(q,matches,self.registry)
         graph = EvidenceGraph()
-        graph.node('question_signal',q['stem'] or '空题干；只允许结构路由')
+        known_candidates = set(q.get('options',{})) | {x['candidate'] for x in q.get('relations',[])}
+        scope = {'material_sha256': material_fingerprint(q)}
+        if known_candidates:
+            scope['candidate_ids'] = sorted(known_candidates)
+        graph.node('question_signal',q['stem'] or '空题干；只允许结构路由',**scope)
         triggers = []
         trigger_nodes = {}
         for obs in q.get('observations',[]):
@@ -170,6 +176,7 @@ class QuestionAnalyzer:
         validate_lesson_projection(result,self.registry)
         validate_writing_projection(result,self.registry)
         validate_question_verification_projection(result,self.registry)
+        validate_answer_projection(result)
         return result
 
     def demonstration(self,matches,candidates,chain):
