@@ -397,3 +397,11 @@ Q66应用文的新完整自然写前指导另存私有r61，8段从圈投稿/尺
 圆创两份完整自然写前讲解通过既有guidance接口正式进入四输出，新r75当前分析另经不同作者r76逐段/原页/代码绑定审阅，实际2source/2exact/8原生输出/32负控拒。student正文与前期已审稿一致，legacy仅增加既有固定问候，未改作者metadata来伪装独立。只批准新原生交付层，旧typed动作不重新批准、旧r68/r70/r73分析不接受，也不是新增mixed-author整题审阅。两题仍guidance，未造学生全文、原句纠错、档次、分数、实际词数或学习/Gate结果。公开 `evaluation/reports/current-source-yuanchuang-native-writing-accepted-r76.json`，私人题文/讲解不上传，整卷仍PARTIAL。
 
 以上推进G14工程回归与优先卷审阅，不能替代全部六题型/全语料的真实Case、整卷语义闭合、自然学生交付和真人研究链。总体仍PARTIAL，82方法没有因上述工程检查获得成熟度或Efficient/Signature升级；缺少真人的验收仍为pending_real_participant_validation。
+
+## 最新固定工程交接包与后续实卷修订
+
+`347a0b9` 已另存为 `deliverables/ANSWER-Method-Engine-347a0b9.zip` 及同名解压目录，含1262项提交文件；ZIP SHA256 为 `9fe20c25c0164609e1be49574a376b91dc02f02e954050f9782d421eda1936c9`。逐文件等于固定Git资产，不含私人题文、完整讲解、其他模块未提交改动、递归交付或声音模型。隔离Registry（82方法/20文档）与生成资产检查通过。该包包含最新写作投影修复；自己的全量回归已真实启动，session 1211尚未结束，不借d13add8的1556项结果认证。启动记录另存 `evaluation/reports/isolated-delivery-347a0b9.json`，旧包和旧测试记录保持。
+
+当前来源再次与远端HEAD/main核实相同；51份保存来源及21份运行来源文件的原字节哈希与上游Git正文逐一核验通过，34项对齐及历史重放测试通过，见 `evaluation/reports/answer-current-alignment-61bc9c3-reconfirmed-r78.json`。这不认证教学效果或完整目标完成。
+
+武汉语法不同作者r59独审仅批准Q62闭合，Q56/Q58/Q59/Q60的安全暂留处理获认可；Q57/Q61/Q63/Q64/Q65仍需修订具体排除理由或候选范围。根读完整独审grounds后已要求原作者另存针对性新版，不追认原r58整包或重复已审题；尚未并入新的整卷结果。冠词族中的The成立不能替代全空候选核查，安全null也不能掩盖已提交的无证排除。本阶段无新增Case、Blind、学生或方法升级信用，整卷及完整工程目标仍PARTIAL。

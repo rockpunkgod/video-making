@@ -1,0 +1,23 @@
+{
+  "scope": "New pinned committed-source delivery including the accepted writing projection repair; its own full engineering regression is running",
+  "checked_on": "2026-10-14",
+  "snapshot_repository_commit": "347a0b95b8b60a739db491451da4d39d7703076c",
+  "source_commit": "61bc9c3e15004639cb442c20e7946ca9631f14ce",
+  "archive_path": "deliverables/ANSWER-Method-Engine-347a0b9.zip",
+  "archive_sha256": "9fe20c25c0164609e1be49574a376b91dc02f02e954050f9782d421eda1936c9",
+  "folder_path": "deliverables/ANSWER-Method-Engine-347a0b9/ANSWER-Method-Engine-347a0b9",
+  "archive_file_count": 1262,
+  "archive_and_extracted_files_match_committed_source": true,
+  "private_papers_or_complete_lessons_included": false,
+  "uncommitted_unrelated_modules_included": false,
+  "recursive_deliverables_or_voice_models_included": false,
+  "required_committed_voice_helper_included": true,
+  "isolated_registry_validation": {"methods": 82, "source_documents": 20, "status": "PASS"},
+  "isolated_generated_assets_check": "PASS",
+  "full_regression_session": 1211,
+  "full_regression_state": "running_at_this_check",
+  "full_regression_completed": false,
+  "older_full_regression_result_reused": false,
+  "ANSWER_repository_modified": false,
+  "overall_goal_complete": false
+}
