@@ -124,7 +124,7 @@ def visual_fingerprint(feedback):
     return hashlib.sha256(json.dumps(payload,sort_keys=True,ensure_ascii=False,separators=(',',':')).encode()).hexdigest()
 
 
-def validate_writing_projection(analysis,registry):
+def _validate_existing_writing_projection(analysis,registry):
     feedback=analysis['writing_feedback']
     if feedback is None: return
     review=feedback['review']; manifest=feedback['image_manifest']
@@ -171,6 +171,93 @@ def validate_writing_projection(analysis,registry):
         if not relations or any(not any(e['from']==nid and e['to'] in relations and e['type']=='supports' for e in analysis['evidence_graph']['edges']) for nid in ids):
             raise ValueError('Handwriting score lost its original-image evidence path')
 
+def writing_projection_fingerprint(feedback):
+    """Consistency binding only, not a signature or semantic authentication."""
+    return hashlib.sha256(json.dumps(feedback,sort_keys=True,ensure_ascii=False,separators=(',',':')).encode()).hexdigest()
+
+
+def writing_projection_state_label(feedback):
+    review=feedback['review']
+    return '写作交付投影绑定：'+feedback['scope']+' / '+review['kind']+' / '+review['review_status']+' / '+feedback['score_status']
+
+
+def validate_writing_review_metadata(review,kind,registry,source_document=None,section_order=None):
+    """Shared input/projection admission; payload hashes cannot replace this gate."""
+    if kind not in ORDERS or review['question_type']!=kind:
+        raise ValueError('Writing review question type mismatch')
+    filename='application-writing-and-correction.md' if kind=='应用文' else 'continuation-writing-and-correction.md'
+    path='gaokao-writing/references/'+filename
+    if source_document is not None and source_document!=path:
+        raise ValueError('Writing projection source document belongs to another course module')
+    if section_order is not None and section_order!=ORDERS[kind]:
+        raise ValueError('Writing projection changed the frozen module delivery order')
+    for sid in review['source_section_ids']:
+        if sid not in registry.sources['sections'] or registry.sources['sections'][sid]['path']!=path:
+            raise ValueError('Writing review source belongs to another course module')
+    keys=[s['key'] for s in review['sections']]
+    if len(keys)!=len(set(keys)):raise ValueError('Duplicate writing feedback section')
+    if set(keys)-set(ORDERS[kind]):raise ValueError('Writing feedback section is from another module')
+    if review['kind']=='guidance' and (review['corrections'] or review['proposed_score'] is not None):
+        raise ValueError('Writing guidance cannot invent corrections or grades')
+    occupied=[]
+    for correction in review['corrections']:
+        s=correction['original']
+        if s['field']!='student_text':raise ValueError('Correction must identify actual student text')
+        if any(s['start']<end and start<s['end'] for start,end in occupied):
+            raise ValueError('Overlapping corrections require one explicit reviewed replacement')
+        occupied.append((s['start'],s['end']))
+    if any(s['field']!='student_text' for s in review['reviewed_student_spans']):
+        raise ValueError('Language coverage must refer to student text')
+    return path
+
+
+def validate_writing_projection(analysis,registry):
+    # Retain established score and image diagnostics before the new payload gate.
+    _validate_existing_writing_projection(analysis,registry)
+    feedback=analysis['writing_feedback']
+    if feedback is None: return
+    validate_writing_review_metadata(feedback['review'],analysis['question_type'],registry,
+                                    feedback['source_document'],feedback['section_order'])
+    nodes={n['id']:n for n in analysis['evidence_graph']['nodes']}
+    edges=analysis['evidence_graph']['edges']
+    anchors=[n for n in nodes.values() if n['type']=='candidate_claim'
+             and n.get('candidate')=='writing_feedback_projection']
+    if (len(anchors)!=1 or anchors[0]['label']!=writing_projection_state_label(feedback)
+            or anchors[0].get('reviewed')!=(feedback['review']['review_status']=='reviewed')
+            or anchors[0].get('artifact_fingerprint')!=writing_projection_fingerprint(feedback)):
+        raise ValueError('Writing feedback changed after payload binding; reanalyze original reviewed input')
+    expected=set(feedback['evidence_ids']+feedback['image_evidence_ids'])
+    incoming=[e for e in edges if e['to']==anchors[0]['id']]
+    if (len(incoming)!=len(expected) or {e['from'] for e in incoming}!=expected
+            or any(e['type']!='supports' for e in incoming)
+            or any(nid not in nodes or nodes[nid]['type'] not in {'source_evidence','image_evidence'} for nid in expected)):
+        raise ValueError('Writing feedback lost its own source evidence binding')
+    review=feedback['review'];kind=analysis['question_type']
+    if ((feedback['scope']=='unreviewed')!=(review['review_status']=='unreviewed')
+            or (feedback['scope']=='guidance' and review['kind']!='guidance')
+            or (feedback['scope']=='full_correction' and
+                (review['kind']!='correction' or not review['student_text_complete']))):
+        raise ValueError('Writing feedback scope contradicts its reviewed delivery state')
+    mid=('A01' if kind=='应用文' else 'W01') if review['kind']=='guidance' else ('A09' if kind=='应用文' else 'W15')
+    entries=[(s['text'],s['evidence']) for s in review['sections']]
+    entries += [(c['replacement']+'；'+c['reason'],[c['original']]) for c in review['corrections']]
+    for claim,spans in entries:
+        candidates={n['id'] for n in nodes.values() if n['type']=='candidate_claim'
+                    and n.get('candidate')=='student_draft' and n['label']==claim
+                    and n.get('reviewed')==(review['review_status']=='reviewed')}
+        relations=[n for n in nodes.values() if n['type']=='relation' and n.get('method_id')==mid
+                   and n.get('candidate')=='student_draft' and n['label']=='外部写作审阅：'+claim]
+        def bound(rel):
+            parents={e['from'] for e in edges if e['to']==rel['id'] and e['type']=='supports'}
+            trigger=any(nodes[nid]['type']=='question_signal' and nodes[nid].get('reviewed')
+                        and nodes[nid].get('method_id')==mid for nid in parents)
+            expected_reviewed=review['review_status']=='reviewed' and trigger and bool(spans)
+            return rel.get('reviewed')==expected_reviewed and bool(parents & candidates) and all(any(nodes[nid]['type']=='source_evidence'
+                and nodes[nid].get('span')==s for nid in parents) for s in spans)
+        if not any(bound(rel) for rel in relations):
+            raise ValueError('Writing feedback text lost its own reviewed claim and evidence path')
+
+
 def writing_feedback(question,registry,graph=None,triggers=None):
     supplied=question.get('writing_review')
     if supplied is None: return None
@@ -184,31 +271,19 @@ def writing_feedback(question,registry,graph=None,triggers=None):
     if review.get('handwriting_review') and review['handwriting_review']['student_text_sha256']!=hashlib.sha256(question.get('student_text','').encode()).hexdigest():
         raise ValueError('Original-image review belongs to another student draft')
     if not review['sections'] and not review['corrections']: raise ValueError('Empty writing review')
-    filename='application-writing-and-correction.md' if kind=='应用文' else 'continuation-writing-and-correction.md'
-    path='gaokao-writing/references/'+filename
-    for sid in review['source_section_ids']:
-        if sid not in registry.sources['sections'] or registry.sources['sections'][sid]['path']!=path:
-            raise ValueError('Writing review source belongs to another course module')
+    path=validate_writing_review_metadata(review,kind,registry)
     keys=[s['key'] for s in review['sections']]
-    if len(keys)!=len(set(keys)): raise ValueError('Duplicate writing feedback section')
-    if set(keys)-set(ORDERS[kind]): raise ValueError('Writing feedback section is from another module')
     for section in review['sections']:
         for s in section['evidence']: check_span(question,s)
         if section['key'] in {'overall','diagnostics','anchors','emotion'} and not section['evidence']:
             raise ValueError('Writing diagnosis needs current material evidence')
         if review['kind']=='correction' and section['key']=='overall' and not any(s['field']=='student_text' for s in section['evidence']):
             raise ValueError('Correction cannot praise or diagnose an unseen student draft')
-    occupied=[]
     for correction in review['corrections']:
-        s=check_span(question,correction['original'])
-        if s['field']!='student_text': raise ValueError('Correction must identify actual student text')
-        if any(s['start']<end and start<s['end'] for start,end in occupied):
-            raise ValueError('Overlapping corrections require one explicit reviewed replacement')
-        occupied.append((s['start'],s['end']))
+        check_span(question,correction['original'])
     covered=set()
     for s in review['reviewed_student_spans']:
         check_span(question,s)
-        if s['field']!='student_text': raise ValueError('Language coverage must refer to student text')
         covered.update(range(s['start'],s['end']))
     student=question.get('student_text','')
     language_complete=bool(student.strip()) and all(i in covered for i,c in enumerate(student) if not c.isspace())
@@ -226,8 +301,6 @@ def writing_feedback(question,registry,graph=None,triggers=None):
     if kind=='读后续写': full=full and review['student_text_excludes_given_starters']
     limitations=['外部审阅意见已绑定题面与原稿；结构/引用检查不认证英语判断、改写保真、评分正确或审阅者身份。']
     if review['kind']=='guidance':
-        if review['corrections'] or review['proposed_score'] is not None:
-            raise ValueError('Writing guidance cannot invent corrections or grades')
         scope='guidance' if materials_complete else 'partial_feedback'
     else:
         scope='full_correction' if full else 'partial_feedback'
@@ -252,7 +325,7 @@ def writing_feedback(question,registry,graph=None,triggers=None):
         review['sections']=[s for s in review['sections'] if s['key']!='revised_text']
         limitations.append('局部批改不交付冒充完整稿的整篇修改稿。')
     evidence_ids=[]; image_ids=[]
-    feedback={'review':review,'scope':scope,'score_status':score_status,'source_document':path,'section_order':order,'evidence_ids':evidence_ids,'image_manifest':manifest,'image_evidence_ids':image_ids,'student_text_sha256':hashlib.sha256(student.encode()).hexdigest(),'limitations':limitations}
+    feedback={'review':review,'scope':scope,'score_status':score_status,'source_document':path,'section_order':list(order),'evidence_ids':evidence_ids,'image_manifest':manifest,'image_evidence_ids':image_ids,'student_text_sha256':hashlib.sha256(student.encode()).hexdigest(),'limitations':limitations}
     visual=review.get('handwriting_review')
     if visual:
         limitations.append('原图字节、尺寸、区域和原稿指纹已绑定；原稿身份、清晰度及交际影响仍是外部审阅声明，不是自动视觉评分。')
@@ -271,7 +344,8 @@ def writing_feedback(question,registry,graph=None,triggers=None):
             reviewed=review['review_status']=='reviewed' and independent_trigger and bool(spans)
             is_score=review['proposed_score'] is not None and claim==review['proposed_score']['rationale']
             binding={'artifact_fingerprint':score_fingerprint(review['proposed_score'])} if is_score else {}
-            candidate=graph.node('candidate_claim',claim,candidate='student_draft',**binding)
+            candidate=graph.node('candidate_claim',claim,candidate='student_draft',
+                                 reviewed=review['review_status']=='reviewed',**binding)
             rel=graph.node('relation','外部写作审阅：'+claim,method_id=mid,candidate='student_draft',reviewed=reviewed)
             graph.edge(candidate,rel,'supports')
             if review['proposed_score'] is not None and claim==review['proposed_score']['rationale'] and review['proposed_score']['handwriting_applied']:
@@ -285,4 +359,8 @@ def writing_feedback(question,registry,graph=None,triggers=None):
                 graph.edge(rel,action,'supports')
                 verification=graph.node('verification','外部建议，非自动语义认证：'+claim,method_id=mid,candidate='student_draft')
                 graph.edge(action,verification,'verifies')
+        anchor=graph.node('candidate_claim',writing_projection_state_label(feedback),candidate='writing_feedback_projection',
+                          reviewed=review['review_status']=='reviewed',
+                          artifact_fingerprint=writing_projection_fingerprint(feedback))
+        for nid in dict.fromkeys(evidence_ids+image_ids): graph.edge(nid,anchor,'supports')
     return feedback

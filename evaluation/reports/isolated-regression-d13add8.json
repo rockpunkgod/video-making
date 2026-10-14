@@ -1,0 +1,22 @@
+{
+  "scope": "Completed isolated engineering regression of the pinned numeric-adapter snapshot, not later writing repairs or English/learner acceptance",
+  "checked_on": "2026-10-14",
+  "snapshot_repository_commit": "d13add85dc72dbcd4c6a316db6cab097473189d8",
+  "source_commit": "61bc9c3e15004639cb442c20e7946ca9631f14ce",
+  "archive_sha256": "6857f1b47c2825bdde570b6f083d28c403abb2b38fa6f124535de62520b75d6c",
+  "full_regression_session": 32605,
+  "full_regression_state": "completed",
+  "full_regression_result_sha256": "f46f0560ff9ed80bd860c34677d39368a7d0574f9870bcb77a52151605e00e52",
+  "tests_run": 1556,
+  "failures": 0,
+  "errors": 0,
+  "skipped": 1,
+  "elapsed_seconds": 942.908,
+  "unittest_summary_elapsed_seconds": 942.907,
+  "exit_code": 0,
+  "older_result_reused": false,
+  "previous_running_snapshot_report_preserved": "evaluation/reports/isolated-delivery-d13add8.json",
+  "later_writing_feedback_repairs_included": false,
+  "private_native_guidance_or_whole_paper_semantics_certified": false,
+  "overall_goal_complete": false
+}

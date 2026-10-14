@@ -2,6 +2,10 @@
 
 # 写作审阅通道
 
+完整写前讲解可直接使用现有 `writing_review.kind=guidance`，不用伪造学生全文或批改。已审自然段可作为section text（如overall内完整消息），配当前题面/原文/两首句的自身跨度、正确模块source_section_ids；corrections、reviewed_student_spans为空，proposed_score=null。学生与微信输出保留正文，结构化与内容输出同时保留同一feedback及图。自然文字正确性、来源与新输出层仍需分阶段独立审阅，不能因旧框架批准而自动批准新文字，也不能把mixed-author输入冒充一次全面不同作者的整题审阅。
+
+输入和四输出共用模块来源、固定功能顺序、栏目唯一/题型匹配、guidance禁止修改/评分及修改原句必须student_text等准入。投影另核完整payload、原交付状态与每段自己的claim/关系/原文跨度/触发路径，不能改已审文字或把未审/局部稿升级后沿用旧图。返回的section_order是独立列表，不会改变模块全局顺序。旧已序列化的写作分析须从原已审输入重新分析，不能只改指纹或补一个节点当成新审阅；原合法输入、正文、15/25分及无独立方法触发的guidance例外不变。此为一致性检查，不是签名或审阅者身份、英语、评分正确性的自动认证。
+
 这是宿主批改进入统一核心的结构接口，不是本地自动评分模型。课程事实仍来自Registry冻结章节；15分应用文和25分续写独立。Schema：schemas/writing-review.json；作为单题输入的writing_review字段传入，四种Renderer复用同一writing_feedback结果。
 
 ## 提交什么

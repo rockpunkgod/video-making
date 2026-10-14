@@ -390,4 +390,10 @@ Q66应用文的新完整自然写前指导另存私有r61，8段从圈投稿/尺
 
 固定新提交d13add8另存1255项提交资产的新文件夹与ZIP，逐文件验证等于Git archive；无private题文、完整讲解、未提交模块、递归交付或声音模型。隔离生成校验已通过，全量实际进程32605仍运行，未得到终局结果不得报通过或重启。记录 `evaluation/reports/isolated-delivery-d13add8.json`。旧7f包及1540项结果仅认证旧固定版本，完整项目目标依然PARTIAL。
 
+进程32605后续真实终止成功：1556项、0失败、0错误、1跳过，落盘结果942.908秒（unittest摘要942.907秒），结果SHA `f46f0560ff9ed80bd860c34677d39368a7d0574f9870bcb77a52151605e00e52`。追加 `evaluation/reports/isolated-regression-d13add8.json`，原running记录保留，不认证之后写作修补。
+
+真实接入写前讲解时先复现旧投影漏洞，随后不同作者确实发现三轮HOLD：未审/局部范围重hash升级，跨模块来源/借stem伪造学生修改，及返回列表污染模块固定顺序。原失败代码、观察、脚本及首次负控异常保留；最终F8ED修复共享输入/输出准入、状态/文字/触发及图绑定，并复制返回顺序。166项当前专项通过；独立49项、37组serialized负控148拒、另8内存拒及五版12合法情景240输出实际完成，根全读执行体并另存亲自重跑，全部控制精确复现。接受仅当前代码，有关真相/身份仍是外部信任边界，见 `evaluation/reports/writing-projection-engineering-accepted-r77.json`，新代码自己的隔离全量仍待。
+
+圆创两份完整自然写前讲解通过既有guidance接口正式进入四输出，新r75当前分析另经不同作者r76逐段/原页/代码绑定审阅，实际2source/2exact/8原生输出/32负控拒。student正文与前期已审稿一致，legacy仅增加既有固定问候，未改作者metadata来伪装独立。只批准新原生交付层，旧typed动作不重新批准、旧r68/r70/r73分析不接受，也不是新增mixed-author整题审阅。两题仍guidance，未造学生全文、原句纠错、档次、分数、实际词数或学习/Gate结果。公开 `evaluation/reports/current-source-yuanchuang-native-writing-accepted-r76.json`，私人题文/讲解不上传，整卷仍PARTIAL。
+
 以上推进G14工程回归与优先卷审阅，不能替代全部六题型/全语料的真实Case、整卷语义闭合、自然学生交付和真人研究链。总体仍PARTIAL，82方法没有因上述工程检查获得成熟度或Efficient/Signature升级；缺少真人的验收仍为pending_real_participant_validation。
