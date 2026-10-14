@@ -47,6 +47,12 @@ def build(request_path, output):
         (output / f'case-{index+1}-plan.json').write_text(json.dumps(plan,ensure_ascii=False,indent=2),encoding='utf-8')
         pairs = {}
         for name, words, windows in variants:
+            # Center the paragraph block, never individual lines. Keep the same
+            # anchor across windows so a short final page does not jump around.
+            centered = name == 'after' and request.get('alignment') == 'block_center'
+            block_width = max((w['x']+w['w'] for w in words), default=width)
+            origin_x = (1920-block_width)/2 if centered else 180
+            origin_y = 494-((limit-1)*size*leading-size)/2 if centered else 230
             images = []
             for n, window in enumerate(windows):
                 im = Image.new('RGB', (3840,2160), palette['environment'])
@@ -55,7 +61,7 @@ def build(request_path, output):
                 selected = [w for w in words if window['start'] <= w['start'] < window['end']]
                 first_y = selected[0]['y']
                 for word in selected:
-                    draw.text((int((180+word['x'])*2),int((230+word['y']-first_y)*2)),
+                    draw.text((int((origin_x+word['x'])*2),int((origin_y+word['y']-first_y)*2)),
                               word['text'],font=fallback if fallback and re.search(r'[\u3400-\u9fff]',word['text']) else font,fill=palette['ink'],anchor='ls')
                 label=f'{name.upper()}   /   {n+1:02d} of {len(windows):02d}   /   {size}px @1080p'
                 draw.text((192,1970),label,font=label_font,fill=palette['paper'])
@@ -71,6 +77,7 @@ def build(request_path, output):
         record=dict(label=item['label'],source_sha256=before_sha,source_unchanged=True,
             tokens=len(plan['words']),before_lines=legacy[-1]['line']+1 if legacy else 0,
             after_lines=len(plan['lines']),before_windows=len(pairs['before']),after_windows=len(pairs['after']),
+            alignment=request.get('alignment','original'),
             warnings=[dict(line=l['line']+1,reasons=l['warnings']) for l in plan['lines'] if l['warnings']],images=pairs)
         records.append(record)
         rows=[]
