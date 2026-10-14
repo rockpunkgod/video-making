@@ -58,8 +58,6 @@ def prepare_samples(catalog, inventory, *, per_move=10):
             for exam in exam_order:
                 if by_exam[exam] and len(pool) < per_move:
                     pool.append(by_exam[exam].pop(0))
-        if len(pool) < per_move:
-            raise ValueError(f'Insufficient real question pool for {move["name"]}')
         for row in pool:
             binding = {'move_name': move['name'], 'question_id': row['question_id'],
                 'question_sha': row['question_sha'], 'source_commit': catalog['source_commit'],
@@ -155,12 +153,30 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--catalog', type=Path, default=CATALOG_PATH)
     parser.add_argument('--exam-root', type=Path)
-    parser.add_argument('--samples', type=Path, required=True)
+    parser.add_argument('--samples', type=Path)
     parser.add_argument('--prepare', action='store_true')
     parser.add_argument('--output', type=Path, required=True)
     parser.add_argument('--min-hit-rate', type=float)
     parser.add_argument('--write-evaluation', action='store_true')
+    parser.add_argument('--role-records', type=Path,
+        help='JSON requests with bundle/status paths, selection and role observation; no solving')
     args = parser.parse_args()
+    if args.role_records:
+        from creative_os.role_evaluation import evaluate, summarize as role_summary
+        root = args.role_records.parent
+        requests = json.loads(args.role_records.read_bytes())
+        records = [evaluate(json.loads((root / row['bundle']).read_bytes()),
+                    json.loads((root / row['status']).read_bytes()), row['selection'], row['observation'])
+                   for row in requests]
+        report = {**role_summary(records), 'records': records}
+        if args.prepare or args.write_evaluation:
+            parser.error('Role observations do not rewrite catalog evaluation or sampling')
+        args.output.parent.mkdir(parents=True, exist_ok=True)
+        args.output.write_text(json.dumps(report, ensure_ascii=False, indent=2)+'\n', encoding='utf-8')
+        print(json.dumps({'role_observations': len(records), 'public_render_ready': False}))
+        return
+    if args.samples is None:
+        parser.error('--samples is required unless --role-records is supplied')
     catalog = load_catalog(args.catalog)
     if args.prepare:
         if args.samples.exists():

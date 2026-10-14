@@ -21,4 +21,6 @@ Schema, CLI and replay validation use the same scope. Resealing an edited answer
 
 The prior audit found a closed C answer for the Bond question, and only D elimination for the cat question. Both old bundles were SUPERSEDED against the audited current epoch. This code change does not refresh or revive them: production still needs current ANSWER exports. Cat A/B/C closure remains an upstream task.
 
-Role-specific sampling, six-field move cards, new trap activation records and camera changes are subsequent work, not completed by this patch.
+## P0 continuation
+
+Six-field cards and role-specific observation code are now implemented; see CONTENT_REVIEW.md and ROLE_EVALUATION.md. All trap names remain candidates until three reviewed examples exist. The revised local R06 draft removes the unactivated trap label. Speech checks support explained reading/cognitive pauses and retain raw timing statistics. Actual annotations, trap activation evidence, current real teaching exports, recordings and camera changes remain outstanding.

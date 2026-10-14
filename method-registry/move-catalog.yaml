@@ -1,4 +1,4 @@
-version: 0.1.0
+version: 0.2.0
 source_commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
 scope: brand_projection_only
 runtime_aliases_changed: false
@@ -95,10 +95,11 @@ entries:
   first_batch: true
   move_card:
     trigger: 题干问标题或主旨。
-    action_3s: 圈出标题之间不同的判断。
-    trap_name: 话题跑偏
+    trap_name: 同题跑偏
     counterexample: 只问一段时，别拿全文替它作答。
-    mantra: 相关还不够，要盖住所问内容。
+    mantra: 相关不够，要盖住所问
+    first_step: 圈出标题之间不同的判断。
+    role: framework / framework / decider
   field_bindings:
     trigger:
     - method_id: R16
@@ -113,19 +114,6 @@ entries:
       version: 1.2.0
       field: trigger_cues
       sha: 269251950abdd9198b2463a5d00ffdded38407d226e00b0fbe3ddca8c9f6e1e9
-    action_3s:
-    - method_id: R16
-      version: 1.2.0
-      field: four_step_card
-      sha: 11e323d0141b3b562314ee9bf941feeba4b92fe903676bf6bb1c89c8f8ff0211
-    - method_id: R09
-      version: 1.2.0
-      field: four_step_card
-      sha: c9be31b908e0fe01df52a94c2f3d377bed33efd732e53d47de57b9039bca2619
-    - method_id: R06
-      version: 1.2.0
-      field: four_step_card
-      sha: c3255e5ae4a165c0e386f4843b0f25ea5a1ceec8b59ae7973c5024022f85492c
     trap_name:
     - method_id: R16
       version: 1.2.0
@@ -165,6 +153,32 @@ entries:
       version: 1.2.0
       field: memory_line
       sha: 6f5031644e9541e74e3e5f5a57d8f8460e25c0e1948e872085b0095e9e9ae7e6
+    first_step:
+    - method_id: R16
+      version: 1.2.0
+      field: four_step_card
+      sha: 11e323d0141b3b562314ee9bf941feeba4b92fe903676bf6bb1c89c8f8ff0211
+    - method_id: R09
+      version: 1.2.0
+      field: four_step_card
+      sha: c9be31b908e0fe01df52a94c2f3d377bed33efd732e53d47de57b9039bca2619
+    - method_id: R06
+      version: 1.2.0
+      field: four_step_card
+      sha: c3255e5ae4a165c0e386f4843b0f25ea5a1ceec8b59ae7973c5024022f85492c
+    role:
+    - method_id: R16
+      version: 1.2.0
+      field: primary_role
+      sha: 48eaba4ef6c3a80501ac30f424312e9683f4c067e2be07abe72c43bc5bc51818
+    - method_id: R09
+      version: 1.2.0
+      field: primary_role
+      sha: 48eaba4ef6c3a80501ac30f424312e9683f4c067e2be07abe72c43bc5bc51818
+    - method_id: R06
+      version: 1.2.0
+      field: primary_role
+      sha: ed1bfef76f183f1b39ee13106b05ace65202e5d1a00bbeb6a3f4db8f585245f3
   methods:
   - method_id: R16
     version: 1.2.0
@@ -211,6 +225,7 @@ entries:
     human_audit_fraction: null
   wording_review: pending
   student_test: not_run
+  trap_status: candidate_pending_three_reviewed_cases
 - name: 关键词追踪
   method_ids:
   - R12
@@ -222,10 +237,11 @@ entries:
   first_batch: true
   move_card:
     trigger: 题干要找一个对象或一件事。
-    action_3s: 圈题干里有区分力的词。
     trap_name: 同词误认
     counterexample: 同一个词指向不同对象时，不能算命中。
-    mantra: 带着问题找，再读完整意思。
+    mantra: 带题干词找，再读完整
+    first_step: 圈题干里有区分力的词。
+    role: locator / locator / locator / interpreter / verifier
   field_bindings:
     trigger:
     - method_id: R12
@@ -248,27 +264,6 @@ entries:
       version: 1.2.0
       field: trigger_cues
       sha: e1ef140e1acc783d923026c0d5e9d92cb5bf4ad7dd53ea08178089b9ee156d29
-    action_3s:
-    - method_id: R12
-      version: 1.2.0
-      field: four_step_card
-      sha: 94670d61378eb67295853e10f57e8eee9305c0e9d75ae51df90e0b470acfeb98
-    - method_id: R13
-      version: 1.2.0
-      field: four_step_card
-      sha: 38cf3734d2bb6b0f92ec99eaf28f704c4c51851deaf120766913a021d32c6b23
-    - method_id: R14
-      version: 1.2.0
-      field: four_step_card
-      sha: 4425326276f9c154b1d518e15666df1c62f3dad5b32a1e64797f243c3866f6c3
-    - method_id: R15
-      version: 1.2.0
-      field: four_step_card
-      sha: f9e352212002c0d114621f55ecadc60eeb5e792ed1c21cbe6615083dcf9e91f0
-    - method_id: R17
-      version: 1.2.0
-      field: four_step_card
-      sha: 51d20381068c0b11033e8eba885b55e087ade94566f72b21dc2f9b48dbf650e3
     trap_name:
     - method_id: R12
       version: 1.2.0
@@ -332,6 +327,48 @@ entries:
       version: 1.2.0
       field: memory_line
       sha: f8d1403d635e66d53ae20ab8879a16a828d8ffd8a52c6314d6307a222b3cc435
+    first_step:
+    - method_id: R12
+      version: 1.2.0
+      field: four_step_card
+      sha: 94670d61378eb67295853e10f57e8eee9305c0e9d75ae51df90e0b470acfeb98
+    - method_id: R13
+      version: 1.2.0
+      field: four_step_card
+      sha: 38cf3734d2bb6b0f92ec99eaf28f704c4c51851deaf120766913a021d32c6b23
+    - method_id: R14
+      version: 1.2.0
+      field: four_step_card
+      sha: 4425326276f9c154b1d518e15666df1c62f3dad5b32a1e64797f243c3866f6c3
+    - method_id: R15
+      version: 1.2.0
+      field: four_step_card
+      sha: f9e352212002c0d114621f55ecadc60eeb5e792ed1c21cbe6615083dcf9e91f0
+    - method_id: R17
+      version: 1.2.0
+      field: four_step_card
+      sha: 51d20381068c0b11033e8eba885b55e087ade94566f72b21dc2f9b48dbf650e3
+    role:
+    - method_id: R12
+      version: 1.2.0
+      field: primary_role
+      sha: 25b97879bc4537cf5027e625f6e30e5c2651b656e90c36bb4f29672cc8f295a1
+    - method_id: R13
+      version: 1.2.0
+      field: primary_role
+      sha: 25b97879bc4537cf5027e625f6e30e5c2651b656e90c36bb4f29672cc8f295a1
+    - method_id: R14
+      version: 1.2.0
+      field: primary_role
+      sha: 25b97879bc4537cf5027e625f6e30e5c2651b656e90c36bb4f29672cc8f295a1
+    - method_id: R15
+      version: 1.2.0
+      field: primary_role
+      sha: 0d0e24d689e78a3982ad3b99a31769bb7f817212927d185497145640f9831ef3
+    - method_id: R17
+      version: 1.2.0
+      field: primary_role
+      sha: 21ec31b3140e223fc25bdac6de13863b41009fa92299b5895b185a2ea9f4f77a
   methods:
   - method_id: R12
     version: 1.2.0
@@ -408,6 +445,7 @@ entries:
     human_audit_fraction: null
   wording_review: pending
   student_test: not_run
+  trap_status: candidate_pending_three_reviewed_cases
 - name: 选项加戏
   method_ids:
   - R01
@@ -415,21 +453,17 @@ entries:
   first_batch: true
   move_card:
     trigger: 选项比原文多说了一截。
-    action_3s: 框出多出来的那一截。
     trap_name: 无据加戏
     counterexample: 原文能间接支持时，不能因为没原词就排除。
     mantra: 只查多出来的那一截。
+    first_step: 框出多出来的那一截。
+    role: decider
   field_bindings:
     trigger:
     - method_id: R01
       version: 1.2.0
       field: trigger_cues
       sha: 7f5add26b792584a35a8b7fa14bdaf12ca765a0e69fe541908f6cb8864041778
-    action_3s:
-    - method_id: R01
-      version: 1.2.0
-      field: four_step_card
-      sha: 1928407f3971d61160834f57ae6be937162e1f94da66a18bb18c1b5885a4d9a8
     trap_name:
     - method_id: R01
       version: 1.2.0
@@ -445,6 +479,16 @@ entries:
       version: 1.2.0
       field: memory_line
       sha: 7c79d66c3c66a6241b9141bfed52c22528e60b12300c57addb5fe1465e510924
+    first_step:
+    - method_id: R01
+      version: 1.2.0
+      field: four_step_card
+      sha: 1928407f3971d61160834f57ae6be937162e1f94da66a18bb18c1b5885a4d9a8
+    role:
+    - method_id: R01
+      version: 1.2.0
+      field: primary_role
+      sha: ed1bfef76f183f1b39ee13106b05ace65202e5d1a00bbeb6a3f4db8f585245f3
   methods:
   - method_id: R01
     version: 1.2.0
@@ -469,6 +513,7 @@ entries:
     human_audit_fraction: null
   wording_review: pending
   student_test: not_run
+  trap_status: candidate_pending_three_reviewed_cases
 - name: 谁干的陷阱
   method_ids:
   - R02
@@ -476,21 +521,17 @@ entries:
   first_batch: true
   move_card:
     trigger: 词很像，做事的人或状态却不同。
-    action_3s: 圈主体和完整谓语。
     trap_name: 偷换关系
     counterexample: 题干已说明主体时，选项可以省略它。
     mantra: 先看谁，再对完整动作。
+    first_step: 圈主体和完整谓语。
+    role: decider
   field_bindings:
     trigger:
     - method_id: R02
       version: 1.2.0
       field: trigger_cues
       sha: 4cf1bde5726342f4660ee6b9e27d1376b6f65ddf5ea884b155777b995eaa9f2d
-    action_3s:
-    - method_id: R02
-      version: 1.2.0
-      field: four_step_card
-      sha: ea5e347676f87d529f5992bd969289578840eb18fab700861c07621b3d9dd131
     trap_name:
     - method_id: R02
       version: 1.2.0
@@ -506,6 +547,16 @@ entries:
       version: 1.2.0
       field: memory_line
       sha: 365c2ed6390d768e49a4233c095475b106f694bd38d549ec6a976d079aadbea9
+    first_step:
+    - method_id: R02
+      version: 1.2.0
+      field: four_step_card
+      sha: ea5e347676f87d529f5992bd969289578840eb18fab700861c07621b3d9dd131
+    role:
+    - method_id: R02
+      version: 1.2.0
+      field: primary_role
+      sha: ed1bfef76f183f1b39ee13106b05ace65202e5d1a00bbeb6a3f4db8f585245f3
   methods:
   - method_id: R02
     version: 1.2.0
@@ -530,6 +581,7 @@ entries:
     human_audit_fraction: null
   wording_review: pending
   student_test: not_run
+  trap_status: candidate_pending_three_reviewed_cases
 - name: 换词不换义
   method_ids:
   - R03
@@ -537,21 +589,17 @@ entries:
   first_batch: true
   move_card:
     trigger: 原文和选项换了一种说法。
-    action_3s: 并排放好对应的两句。
     trap_name: 只看同词
     counterexample: 结构像，但动作或限制不同，就不能互换。
     mantra: 换词以后，意思还一样吗？
+    first_step: 并排放好对应的两句。
+    role: interpreter
   field_bindings:
     trigger:
     - method_id: R03
       version: 1.2.0
       field: trigger_cues
       sha: e0071dde9b0a592139ea6cea0bd6f580d24a138354d95083a41058154367ccdd
-    action_3s:
-    - method_id: R03
-      version: 1.2.0
-      field: four_step_card
-      sha: fd983ccec0f3bbf4a0d978f096545cdb09da0e6c1a1a8ef7035f0ee5f072ad3e
     trap_name:
     - method_id: R03
       version: 1.2.0
@@ -567,6 +615,16 @@ entries:
       version: 1.2.0
       field: memory_line
       sha: 86219640e3f75250c961ade28e1e54e7ecf91dbc10c7a136bd19fe2f3d5a0ac2
+    first_step:
+    - method_id: R03
+      version: 1.2.0
+      field: four_step_card
+      sha: fd983ccec0f3bbf4a0d978f096545cdb09da0e6c1a1a8ef7035f0ee5f072ad3e
+    role:
+    - method_id: R03
+      version: 1.2.0
+      field: primary_role
+      sha: 0d0e24d689e78a3982ad3b99a31769bb7f817212927d185497145640f9831ef3
   methods:
   - method_id: R03
     version: 1.2.0
@@ -587,6 +645,7 @@ entries:
     human_audit_fraction: null
   wording_review: pending
   student_test: not_run
+  trap_status: candidate_pending_three_reviewed_cases
 - name: 比较别偷换
   method_ids:
   - R04
@@ -594,21 +653,17 @@ entries:
   first_batch: true
   move_card:
     trigger: 选项在比大小、强弱或程度。
-    action_3s: 圈出比较的双方。
     trap_name: 比较换轴
     counterexample: 不同阶段、范围或属性，不能直接比。
     mantra: 先对齐，再比。
+    first_step: 圈出比较的双方。
+    role: decider
   field_bindings:
     trigger:
     - method_id: R04
       version: 1.2.0
       field: trigger_cues
       sha: 52c822cf2b3cbdf3958379dd0e8b13ac6d64cbf3520d57ecdc289a2a1720c74c
-    action_3s:
-    - method_id: R04
-      version: 1.2.0
-      field: four_step_card
-      sha: e5b96568abebac66162963ea84bee5f025f2ca367c0bc8e43b442cc10dd5db41
     trap_name:
     - method_id: R04
       version: 1.2.0
@@ -624,6 +679,16 @@ entries:
       version: 1.2.0
       field: memory_line
       sha: c6f98c04563177b98ecd7fabdae302697ba4d2f2c0d985c7c6ae58c4ca8bd1a9
+    first_step:
+    - method_id: R04
+      version: 1.2.0
+      field: four_step_card
+      sha: e5b96568abebac66162963ea84bee5f025f2ca367c0bc8e43b442cc10dd5db41
+    role:
+    - method_id: R04
+      version: 1.2.0
+      field: primary_role
+      sha: ed1bfef76f183f1b39ee13106b05ace65202e5d1a00bbeb6a3f4db8f585245f3
   methods:
   - method_id: R04
     version: 1.2.0
@@ -644,6 +709,7 @@ entries:
     human_audit_fraction: null
   wording_review: pending
   student_test: not_run
+  trap_status: candidate_pending_three_reviewed_cases
 - name: 因果别选反
   method_ids:
   - R05
@@ -651,21 +717,17 @@ entries:
   first_batch: true
   move_card:
     trigger: 题干问原因、结果或某个环节。
-    action_3s: 圈出题干所问的那一步。
     trap_name: 因果倒置
     counterexample: 先发生不等于造成；原因题不能只找结果。
     mantra: 问题问哪步，就对哪步。
+    first_step: 圈出题干所问的那一步。
+    role: decider
   field_bindings:
     trigger:
     - method_id: R05
       version: 1.2.0
       field: trigger_cues
       sha: 10d6efe63a4bec5e87472554698a216cb8d52ddcd48337a7f87fdd43445a24b8
-    action_3s:
-    - method_id: R05
-      version: 1.2.0
-      field: four_step_card
-      sha: 3b166fc6e3f132f34bfdacc655d4bc2ba7831587f1299f020ebd53699f05cb6f
     trap_name:
     - method_id: R05
       version: 1.2.0
@@ -681,6 +743,16 @@ entries:
       version: 1.2.0
       field: memory_line
       sha: 2f252f26dec989fbeb5c668809aa2d7388212e511f6b0cf322cf9de269dc5726
+    first_step:
+    - method_id: R05
+      version: 1.2.0
+      field: four_step_card
+      sha: 3b166fc6e3f132f34bfdacc655d4bc2ba7831587f1299f020ebd53699f05cb6f
+    role:
+    - method_id: R05
+      version: 1.2.0
+      field: primary_role
+      sha: ed1bfef76f183f1b39ee13106b05ace65202e5d1a00bbeb6a3f4db8f585245f3
   methods:
   - method_id: R05
     version: 1.2.0
@@ -701,6 +773,7 @@ entries:
     human_audit_fraction: null
   wording_review: pending
   student_test: not_run
+  trap_status: candidate_pending_three_reviewed_cases
 - name: 并列打包
   method_ids:
   - R07
@@ -708,21 +781,17 @@ entries:
   first_batch: true
   move_card:
     trigger: 原文有同层、同范围的并列内容。
-    action_3s: 框住同层并列项。
     trap_name: 局部冒充
     counterexample: 不同阶段或不同层级，不能硬打成一组。
     mantra: 一组内容，别只拿一块。
+    first_step: 框住同层并列项。
+    role: reducer
   field_bindings:
     trigger:
     - method_id: R07
       version: 1.2.0
       field: trigger_cues
       sha: f9a052cc9352c618f99862e9a2bccb2f2992aecae714eb992d8b9505fcaf371c
-    action_3s:
-    - method_id: R07
-      version: 1.2.0
-      field: four_step_card
-      sha: e6eb7e3a2ebb7e937a11fcddee67ee81da768f7dae0352d86cdf670975b4ce25
     trap_name:
     - method_id: R07
       version: 1.2.0
@@ -738,6 +807,16 @@ entries:
       version: 1.2.0
       field: memory_line
       sha: bb1e6db2d6920af82e6f9f35ae065988e5ec3a5573c50d09cd93616be6a303b7
+    first_step:
+    - method_id: R07
+      version: 1.2.0
+      field: four_step_card
+      sha: e6eb7e3a2ebb7e937a11fcddee67ee81da768f7dae0352d86cdf670975b4ce25
+    role:
+    - method_id: R07
+      version: 1.2.0
+      field: primary_role
+      sha: f009d00633be069b2712b9e4cd51db4aadfbd67593adf847bc8e235d61249dd0
   methods:
   - method_id: R07
     version: 1.2.0
@@ -758,6 +837,7 @@ entries:
     human_audit_fraction: null
   wording_review: pending
   student_test: not_run
+  trap_status: candidate_pending_three_reviewed_cases
 - name: 例子只作证
   method_ids:
   - R08
@@ -765,21 +845,17 @@ entries:
   first_batch: true
   move_card:
     trigger: 题干问例子的作用或所支持的观点。
-    action_3s: 圈例子前后的观点。
     trap_name: 细节顶替
     counterexample: 直接问例子事实时，就回答那条事实。
-    mantra: 例子发生什么，还要看它证明什么。
+    mantra: 看例子证明什么
+    first_step: 圈例子前后的观点。
+    role: interpreter
   field_bindings:
     trigger:
     - method_id: R08
       version: 1.2.0
       field: trigger_cues
       sha: ce52f6e234cc2dae53889ded53fd662218b5577a5212b9eba65c2c09c9c8a9a2
-    action_3s:
-    - method_id: R08
-      version: 1.2.0
-      field: four_step_card
-      sha: 3c09e64738e826b492fd54848b7956356055c447290870236eb1f41446553257
     trap_name:
     - method_id: R08
       version: 1.2.0
@@ -795,6 +871,16 @@ entries:
       version: 1.2.0
       field: memory_line
       sha: 84709b15a9a8bd155468b8fc2bdaf9b2e247b1d269f0a1e82ae7be9f2c8904b6
+    first_step:
+    - method_id: R08
+      version: 1.2.0
+      field: four_step_card
+      sha: 3c09e64738e826b492fd54848b7956356055c447290870236eb1f41446553257
+    role:
+    - method_id: R08
+      version: 1.2.0
+      field: primary_role
+      sha: 0d0e24d689e78a3982ad3b99a31769bb7f817212927d185497145640f9831ef3
   methods:
   - method_id: R08
     version: 1.2.0
@@ -815,6 +901,7 @@ entries:
     human_audit_fraction: null
   wording_review: pending
   student_test: not_run
+  trap_status: candidate_pending_three_reviewed_cases
 - name: 代词回填
   method_ids:
   - R10
@@ -822,21 +909,17 @@ entries:
   first_batch: true
   move_card:
     trigger: 题干或证据里有需要确认的指代。
-    action_3s: 圈代词及所在的完整谓语。
     trap_name: 近词误指
     counterexample: 事件或整句指代，不能硬换成最近的名词。
     mantra: 换回去，这句话还成立吗？
+    first_step: 圈代词及所在的完整谓语。
+    role: interpreter
   field_bindings:
     trigger:
     - method_id: R10
       version: 1.2.0
       field: trigger_cues
       sha: 5ab179057dc500908921a5b7cde99b4b647f08aa4cb44d186fefa4515f929ce5
-    action_3s:
-    - method_id: R10
-      version: 1.2.0
-      field: four_step_card
-      sha: 35d6664f1d076a53a9471da30086f69878e9f15563a2194d644fc03ff7fa1f42
     trap_name:
     - method_id: R10
       version: 1.2.0
@@ -852,6 +935,16 @@ entries:
       version: 1.2.0
       field: memory_line
       sha: f4bda1700354f853484f1bcc412e9b46a5d1e43279a630fcac36b52c09ef2b58
+    first_step:
+    - method_id: R10
+      version: 1.2.0
+      field: four_step_card
+      sha: 35d6664f1d076a53a9471da30086f69878e9f15563a2194d644fc03ff7fa1f42
+    role:
+    - method_id: R10
+      version: 1.2.0
+      field: primary_role
+      sha: 0d0e24d689e78a3982ad3b99a31769bb7f817212927d185497145640f9831ef3
   methods:
   - method_id: R10
     version: 1.2.0
@@ -872,6 +965,7 @@ entries:
     human_audit_fraction: null
   wording_review: pending
   student_test: not_run
+  trap_status: candidate_pending_three_reviewed_cases
 - name: 长句拆骨
   method_ids:
   - R11
@@ -879,21 +973,17 @@ entries:
   first_batch: true
   move_card:
     trigger: 长句里主体、动作或层次看不清。
-    action_3s: 圈谓语和对应主体。
     trap_name: 修饰误删
     counterexample: 影响否定、条件或答案范围的修饰不能删。
     mantra: 先看骨架，限制留住。
+    first_step: 圈谓语和对应主体。
+    role: interpreter
   field_bindings:
     trigger:
     - method_id: R11
       version: 1.2.0
       field: trigger_cues
       sha: 6774f1fade95e65048f61e0b90f3aa8a897f7b2b890878ee2b1954563e89e78b
-    action_3s:
-    - method_id: R11
-      version: 1.2.0
-      field: four_step_card
-      sha: 633e8eb8b9a7af8c119e4096711d87b334eea25a000a25d245abf18b880a01ec
     trap_name:
     - method_id: R11
       version: 1.2.0
@@ -909,6 +999,16 @@ entries:
       version: 1.2.0
       field: memory_line
       sha: 8072a6fb6cff613a1d5f47ae132ae8795de29598965cd713f4484e3a0b25d5c8
+    first_step:
+    - method_id: R11
+      version: 1.2.0
+      field: four_step_card
+      sha: 633e8eb8b9a7af8c119e4096711d87b334eea25a000a25d245abf18b880a01ec
+    role:
+    - method_id: R11
+      version: 1.2.0
+      field: primary_role
+      sha: 0d0e24d689e78a3982ad3b99a31769bb7f817212927d185497145640f9831ef3
   methods:
   - method_id: R11
     version: 1.2.0
@@ -929,6 +1029,7 @@ entries:
     human_audit_fraction: null
   wording_review: pending
   student_test: not_run
+  trap_status: candidate_pending_three_reviewed_cases
 - name: 选项三分
   method_ids:
   - F01
@@ -939,10 +1040,11 @@ entries:
   first_batch: true
   move_card:
     trigger: 七选五选项有可见的结构、主角或时间差异。
-    action_3s: 先标一组实际句型。
     trap_name: 同组即选
     counterexample: 没有区分度就不编组；同组仍要回正文。
     mantra: 先让选项站队，再回正文。
+    first_step: 先标一组实际句型。
+    role: reducer / reducer / reducer / reducer
   field_bindings:
     trigger:
     - method_id: F01
@@ -961,23 +1063,6 @@ entries:
       version: 1.2.0
       field: trigger_cues
       sha: d581b04466aec8ea0f69b5cde51d098af4b8718b9a040392d7390667c28a0700
-    action_3s:
-    - method_id: F01
-      version: 1.2.0
-      field: four_step_card
-      sha: b17717728497958337f9ee1bae2cee0794606d6664bde4d43e23488b5b518292
-    - method_id: F02
-      version: 1.2.0
-      field: four_step_card
-      sha: 926bd9cc45ebb55dcc7695f00dc7e9fed0231282f2df676f7ae2836f58ce7068
-    - method_id: F03
-      version: 1.2.0
-      field: four_step_card
-      sha: 6e0462fe2cfcf1abd1ea35b5dfe71046bbbb67b0762a6abfc95058d7d106439a
-    - method_id: F04
-      version: 1.2.0
-      field: four_step_card
-      sha: 832de45eb95c2f1fd88096082abeb3da5f4bb62177a9e370216d664cbf592f22
     trap_name:
     - method_id: F01
       version: 1.2.0
@@ -1029,6 +1114,40 @@ entries:
       version: 1.2.0
       field: memory_line
       sha: d7daa67d9c1ff817911b02ff444c56b662765e7a746f2025659998ac9ee5a982
+    first_step:
+    - method_id: F01
+      version: 1.2.0
+      field: four_step_card
+      sha: b17717728497958337f9ee1bae2cee0794606d6664bde4d43e23488b5b518292
+    - method_id: F02
+      version: 1.2.0
+      field: four_step_card
+      sha: 926bd9cc45ebb55dcc7695f00dc7e9fed0231282f2df676f7ae2836f58ce7068
+    - method_id: F03
+      version: 1.2.0
+      field: four_step_card
+      sha: 6e0462fe2cfcf1abd1ea35b5dfe71046bbbb67b0762a6abfc95058d7d106439a
+    - method_id: F04
+      version: 1.2.0
+      field: four_step_card
+      sha: 832de45eb95c2f1fd88096082abeb3da5f4bb62177a9e370216d664cbf592f22
+    role:
+    - method_id: F01
+      version: 1.2.0
+      field: primary_role
+      sha: f009d00633be069b2712b9e4cd51db4aadfbd67593adf847bc8e235d61249dd0
+    - method_id: F02
+      version: 1.2.0
+      field: primary_role
+      sha: f009d00633be069b2712b9e4cd51db4aadfbd67593adf847bc8e235d61249dd0
+    - method_id: F03
+      version: 1.2.0
+      field: primary_role
+      sha: f009d00633be069b2712b9e4cd51db4aadfbd67593adf847bc8e235d61249dd0
+    - method_id: F04
+      version: 1.2.0
+      field: primary_role
+      sha: f009d00633be069b2712b9e4cd51db4aadfbd67593adf847bc8e235d61249dd0
   methods:
   - method_id: F01
     version: 1.2.0
@@ -1100,6 +1219,7 @@ entries:
     human_audit_fraction: null
   wording_review: pending
   student_test: not_run
+  trap_status: candidate_pending_three_reviewed_cases
 - name: 段首统领
   method_ids:
   - F05
@@ -1107,21 +1227,17 @@ entries:
   first_batch: true
   move_card:
     trigger: 空位需要概括并引出后面的内容。
-    action_3s: 框出它要管的范围。
     trap_name: 局部统领
     counterexample: 只概括一个例子，不能统领其他分项。
     mantra: 这一句，管得住后面吗？
+    first_step: 框出它要管的范围。
+    role: interpreter
   field_bindings:
     trigger:
     - method_id: F05
       version: 1.3.0
       field: trigger_cues
       sha: 44bc6af1c2f25cfa632f269e171938564dbb67a494e23a3e8bc734f40eec46b8
-    action_3s:
-    - method_id: F05
-      version: 1.3.0
-      field: four_step_card
-      sha: 28837435d5ccb60613c88a44853148137229636847955b9bd22c612e6dbfec50
     trap_name:
     - method_id: F05
       version: 1.3.0
@@ -1137,6 +1253,16 @@ entries:
       version: 1.3.0
       field: memory_line
       sha: 13235e21b4e9f1bead6e82aae6ad72b5e075674aeaaa67028b8621d1e7f86814
+    first_step:
+    - method_id: F05
+      version: 1.3.0
+      field: four_step_card
+      sha: 28837435d5ccb60613c88a44853148137229636847955b9bd22c612e6dbfec50
+    role:
+    - method_id: F05
+      version: 1.3.0
+      field: primary_role
+      sha: 0d0e24d689e78a3982ad3b99a31769bb7f817212927d185497145640f9831ef3
   methods:
   - method_id: F05
     version: 1.3.0
@@ -1157,6 +1283,7 @@ entries:
     human_audit_fraction: null
   wording_review: pending
   student_test: not_run
+  trap_status: candidate_pending_three_reviewed_cases
 - name: 前后呼应
   method_ids:
   - F06
@@ -1164,21 +1291,17 @@ entries:
   first_batch: true
   move_card:
     trigger: 空位两侧有明确的词、指代或内容呼应。
-    action_3s: 圈出相互承接的表达。
     trap_name: 重词当证
     counterexample: 只是同一话题，不能算内容承接。
     mantra: 接的是哪件事？
+    first_step: 圈出相互承接的表达。
+    role: verifier
   field_bindings:
     trigger:
     - method_id: F06
       version: 1.2.0
       field: trigger_cues
       sha: b41c42ecb973288e333a3d99efe7a64d0bb0913fd30a1f5442f5259780a18917
-    action_3s:
-    - method_id: F06
-      version: 1.2.0
-      field: four_step_card
-      sha: 9ef78240175044eac0857ce67d087d684d77674852160c128b846336536547b9
     trap_name:
     - method_id: F06
       version: 1.2.0
@@ -1194,6 +1317,16 @@ entries:
       version: 1.2.0
       field: memory_line
       sha: a15dea19e82cad5a1d7d14ecad712c3ecb7ef8eba4fc71be599076708f1a405d
+    first_step:
+    - method_id: F06
+      version: 1.2.0
+      field: four_step_card
+      sha: 9ef78240175044eac0857ce67d087d684d77674852160c128b846336536547b9
+    role:
+    - method_id: F06
+      version: 1.2.0
+      field: primary_role
+      sha: 21ec31b3140e223fc25bdac6de13863b41009fa92299b5895b185a2ea9f4f77a
   methods:
   - method_id: F06
     version: 1.2.0
@@ -1214,6 +1347,7 @@ entries:
     human_audit_fraction: null
   wording_review: pending
   student_test: not_run
+  trap_status: candidate_pending_three_reviewed_cases
 - name: 关系拼接
   method_ids:
   - F07
@@ -1221,21 +1355,17 @@ entries:
   first_batch: true
   move_card:
     trigger: 空前后存在需要补清的真实关系。
-    action_3s: 并排摆出两侧的完整意思。
     trap_name: 接前丢后
     counterexample: 只接得上前句，或措施时点错了，都不够。
     mantra: 前后都接得上。
+    first_step: 并排摆出两侧的完整意思。
+    role: verifier
   field_bindings:
     trigger:
     - method_id: F07
       version: 1.2.0
       field: trigger_cues
       sha: b0417225dd95afa6c733dd704de662a258fc60acd78c5167696469f17ea34ddf
-    action_3s:
-    - method_id: F07
-      version: 1.2.0
-      field: four_step_card
-      sha: 82d6b21f9cd208b6b73bd255df411c93c99f3d7806c901de26647d332f9e8543
     trap_name:
     - method_id: F07
       version: 1.2.0
@@ -1251,6 +1381,16 @@ entries:
       version: 1.2.0
       field: memory_line
       sha: 681f98587240869c72d084a5eceb92f465a55697a4505a512f9a062a7f96fa3b
+    first_step:
+    - method_id: F07
+      version: 1.2.0
+      field: four_step_card
+      sha: 82d6b21f9cd208b6b73bd255df411c93c99f3d7806c901de26647d332f9e8543
+    role:
+    - method_id: F07
+      version: 1.2.0
+      field: primary_role
+      sha: 21ec31b3140e223fc25bdac6de13863b41009fa92299b5895b185a2ea9f4f77a
   methods:
   - method_id: F07
     version: 1.2.0
@@ -1271,6 +1411,7 @@ entries:
     human_audit_fraction: null
   wording_review: pending
   student_test: not_run
+  trap_status: candidate_pending_three_reviewed_cases
 - name: 前后夹击
   method_ids:
   - C02
@@ -1278,21 +1419,17 @@ entries:
   first_batch: true
   move_card:
     trigger: 完形当前空需要前后文的具体提示。
-    action_3s: 圈空位两侧的对象或动作。
     trap_name: 猜词互证
     counterexample: 两个未定空不能互相证明；不足就找独立提示。
     mantra: 近处够就用，不够再扩。
+    first_step: 圈空位两侧的对象或动作。
+    role: verifier
   field_bindings:
     trigger:
     - method_id: C02
       version: 1.2.0
       field: trigger_cues
       sha: ff531befda36466647731c528f7e21ae4afcf3d55de6cb1866ff8f538bb9291f
-    action_3s:
-    - method_id: C02
-      version: 1.2.0
-      field: four_step_card
-      sha: b1c47e1aec7cd2bf144c33c540614d1317ecb752d7f6b2186f90a8901740eff9
     trap_name:
     - method_id: C02
       version: 1.2.0
@@ -1308,6 +1445,16 @@ entries:
       version: 1.2.0
       field: memory_line
       sha: c32eea462f653bb805658e04051482202dcbad27d1b362d31ac4e2333d4232b4
+    first_step:
+    - method_id: C02
+      version: 1.2.0
+      field: four_step_card
+      sha: b1c47e1aec7cd2bf144c33c540614d1317ecb752d7f6b2186f90a8901740eff9
+    role:
+    - method_id: C02
+      version: 1.2.0
+      field: primary_role
+      sha: 21ec31b3140e223fc25bdac6de13863b41009fa92299b5895b185a2ea9f4f77a
   methods:
   - method_id: C02
     version: 1.2.0
@@ -1332,6 +1479,7 @@ entries:
     human_audit_fraction: null
   wording_review: pending
   student_test: not_run
+  trap_status: candidate_pending_three_reviewed_cases
 - name: 结果与动作
   method_ids:
   - C08
@@ -1340,10 +1488,11 @@ entries:
   first_batch: true
   move_card:
     trigger: 正文给出了动作的结果或评价。
-    action_3s: 圈结果实际评价的行为。
     trap_name: 评价错位
     counterexample: 结果没指向这个行为，不能补出联系。
-    mantra: 这结果，到底说的是哪件事？
+    mantra: 结果在说哪件事
+    first_step: 圈结果实际评价的行为。
+    role: verifier / interpreter
   field_bindings:
     trigger:
     - method_id: C08
@@ -1354,15 +1503,6 @@ entries:
       version: 1.2.0
       field: trigger_cues
       sha: 4fe3022c0086f9a6d7eaf59425d707cf90dcc83bb81014615d93134b13ffb2c6
-    action_3s:
-    - method_id: C08
-      version: 1.2.0
-      field: four_step_card
-      sha: af4412f9fa1074df8a8115f779e3e2f34b3322a9b8cfa4a4d59f4fabf4f1e8ff
-    - method_id: C09
-      version: 1.2.0
-      field: four_step_card
-      sha: 0995c7e446eb2b717bfc9b4e7b21509405a0cae63829c854b4a19858f6832e20
     trap_name:
     - method_id: C08
       version: 1.2.0
@@ -1390,6 +1530,24 @@ entries:
       version: 1.2.0
       field: memory_line
       sha: d63594509dd19bd658f93a8bcd2aeac5a631036a71d224c33d0ab2759aa42be6
+    first_step:
+    - method_id: C08
+      version: 1.2.0
+      field: four_step_card
+      sha: af4412f9fa1074df8a8115f779e3e2f34b3322a9b8cfa4a4d59f4fabf4f1e8ff
+    - method_id: C09
+      version: 1.2.0
+      field: four_step_card
+      sha: 0995c7e446eb2b717bfc9b4e7b21509405a0cae63829c854b4a19858f6832e20
+    role:
+    - method_id: C08
+      version: 1.2.0
+      field: primary_role
+      sha: 21ec31b3140e223fc25bdac6de13863b41009fa92299b5895b185a2ea9f4f77a
+    - method_id: C09
+      version: 1.2.0
+      field: primary_role
+      sha: 0d0e24d689e78a3982ad3b99a31769bb7f817212927d185497145640f9831ef3
   methods:
   - method_id: C08
     version: 1.2.0
@@ -1419,6 +1577,7 @@ entries:
     human_audit_fraction: null
   wording_review: pending
   student_test: not_run
+  trap_status: candidate_pending_three_reviewed_cases
 - name: 先判空位
   method_ids:
   - G01
@@ -1428,10 +1587,11 @@ entries:
   first_batch: true
   move_card:
     trigger: 语法填空还没确定空位需要什么。
-    action_3s: 圈空位前后的支配或修饰词。
     trap_name: 见词就变
     counterexample: 功能没看清就先停；路由不能替词形核验。
     mantra: 先看缺什么，再动提示词。
+    first_step: 圈空位前后的支配或修饰词。
+    role: framework / framework / interpreter
   field_bindings:
     trigger:
     - method_id: G01
@@ -1446,19 +1606,6 @@ entries:
       version: 1.2.0
       field: trigger_cues
       sha: 6931ae3544380bd9e856ca740201d0f26cc86836c932982a6fe261c12eabe753
-    action_3s:
-    - method_id: G01
-      version: 1.2.0
-      field: four_step_card
-      sha: 145918d4f1c4afb4102a40e699755ac99c42b0be4595b36a41ef6063db53d229
-    - method_id: G02
-      version: 1.2.0
-      field: four_step_card
-      sha: 768f1b0b7e40a9d323a4146b5ef35eca2e7dfe420384fa30921426d3adb8c052
-    - method_id: G17
-      version: 1.2.0
-      field: four_step_card
-      sha: edd9abe05caf20a5dcaad5b69da7819101a266924a93c0b2cdc40c3105aeb7ec
     trap_name:
     - method_id: G01
       version: 1.2.0
@@ -1498,6 +1645,32 @@ entries:
       version: 1.2.0
       field: memory_line
       sha: 04978742ec0739cdbf89a3f5fe635d06a35233fb7b170960721b44126805f3fe
+    first_step:
+    - method_id: G01
+      version: 1.2.0
+      field: four_step_card
+      sha: 145918d4f1c4afb4102a40e699755ac99c42b0be4595b36a41ef6063db53d229
+    - method_id: G02
+      version: 1.2.0
+      field: four_step_card
+      sha: 768f1b0b7e40a9d323a4146b5ef35eca2e7dfe420384fa30921426d3adb8c052
+    - method_id: G17
+      version: 1.2.0
+      field: four_step_card
+      sha: edd9abe05caf20a5dcaad5b69da7819101a266924a93c0b2cdc40c3105aeb7ec
+    role:
+    - method_id: G01
+      version: 1.2.0
+      field: primary_role
+      sha: 48eaba4ef6c3a80501ac30f424312e9683f4c067e2be07abe72c43bc5bc51818
+    - method_id: G02
+      version: 1.2.0
+      field: primary_role
+      sha: 48eaba4ef6c3a80501ac30f424312e9683f4c067e2be07abe72c43bc5bc51818
+    - method_id: G17
+      version: 1.2.0
+      field: primary_role
+      sha: 0d0e24d689e78a3982ad3b99a31769bb7f817212927d185497145640f9831ef3
   methods:
   - method_id: G01
     version: 1.2.0
@@ -1552,6 +1725,7 @@ entries:
     human_audit_fraction: null
   wording_review: pending
   student_test: not_run
+  trap_status: candidate_pending_three_reviewed_cases
 - name: 动词二分
   method_ids:
   - G12
@@ -1561,10 +1735,11 @@ entries:
   first_batch: true
   move_card:
     trigger: 空位已经确认需要动词形式。
-    action_3s: 圈本分句的谓语和连接词。
     trap_name: 全句误数
     counterexample: 主句已有谓语，不代表另一个分句不用谓语。
-    mantra: 先看这个分句缺不缺谓语。
+    mantra: 先看本分句缺不缺谓语
+    first_step: 圈本分句的谓语和连接词。
+    role: reducer / decider / verifier
   field_bindings:
     trigger:
     - method_id: G12
@@ -1579,19 +1754,6 @@ entries:
       version: 1.2.0
       field: trigger_cues
       sha: 3d2f9fec1e1e780dbbf17fc6f4a28659d79503f511fec2e8563bbc3a58b9af7f
-    action_3s:
-    - method_id: G12
-      version: 1.2.0
-      field: four_step_card
-      sha: ea02e45f8b23fa4bcfbafedfd08185873b8a4c75a66d1440c0a5dfd19c4f9f92
-    - method_id: G13
-      version: 1.2.0
-      field: four_step_card
-      sha: b5744f0984ed4e4ab5d28ace5edf43020c5f427192908acb23d334b4dfd757d5
-    - method_id: G14
-      version: 1.2.0
-      field: four_step_card
-      sha: 085cae67dd1c2177fa919bf3f770e94623907edef272ec7565115d9a1c54acaa
     trap_name:
     - method_id: G12
       version: 1.2.0
@@ -1631,6 +1793,32 @@ entries:
       version: 1.2.0
       field: memory_line
       sha: ac1cf6bfa78a9f86438bcf3ded62bafb79d55fd6bdb03f8e595abd523b47aeaa
+    first_step:
+    - method_id: G12
+      version: 1.2.0
+      field: four_step_card
+      sha: ea02e45f8b23fa4bcfbafedfd08185873b8a4c75a66d1440c0a5dfd19c4f9f92
+    - method_id: G13
+      version: 1.2.0
+      field: four_step_card
+      sha: b5744f0984ed4e4ab5d28ace5edf43020c5f427192908acb23d334b4dfd757d5
+    - method_id: G14
+      version: 1.2.0
+      field: four_step_card
+      sha: 085cae67dd1c2177fa919bf3f770e94623907edef272ec7565115d9a1c54acaa
+    role:
+    - method_id: G12
+      version: 1.2.0
+      field: primary_role
+      sha: f009d00633be069b2712b9e4cd51db4aadfbd67593adf847bc8e235d61249dd0
+    - method_id: G13
+      version: 1.2.0
+      field: primary_role
+      sha: ed1bfef76f183f1b39ee13106b05ace65202e5d1a00bbeb6a3f4db8f585245f3
+    - method_id: G14
+      version: 1.2.0
+      field: primary_role
+      sha: 21ec31b3140e223fc25bdac6de13863b41009fa92299b5895b185a2ea9f4f77a
   methods:
   - method_id: G12
     version: 1.2.0
@@ -1669,6 +1857,7 @@ entries:
     human_audit_fraction: null
   wording_review: pending
   student_test: not_run
+  trap_status: candidate_pending_three_reviewed_cases
 - name: 非谓语三轴
   method_ids:
   - G15
@@ -1677,10 +1866,11 @@ entries:
   first_batch: true
   move_card:
     trigger: 空位已经确认需要非谓语。
-    action_3s: 圈这个动作的逻辑主语。
     trap_name: 只看词尾
     counterexample: 逗号或词尾不能替代作用、主被动和先后核验。
     mantra: 谁做，怎么用，先还是后？
+    first_step: 圈这个动作的逻辑主语。
+    role: decider / verifier
   field_bindings:
     trigger:
     - method_id: G15
@@ -1691,15 +1881,6 @@ entries:
       version: 1.2.0
       field: trigger_cues
       sha: e377a7d27332d60426172fa2166e9d3bdeb57c2348fff9b80b0ca38b68b4c97e
-    action_3s:
-    - method_id: G15
-      version: 1.2.0
-      field: four_step_card
-      sha: e96d2d20f7cec1bbebb16504bf3c4a295341686b1d4195ef3fcd2331c030b247
-    - method_id: G16
-      version: 1.2.0
-      field: four_step_card
-      sha: 96fb9d40aeb5038adeff87a7703fc9798c75e590589a4c143f233cf3f7efb07d
     trap_name:
     - method_id: G15
       version: 1.2.0
@@ -1727,6 +1908,24 @@ entries:
       version: 1.2.0
       field: memory_line
       sha: ed9329ba03ac1daf7273fe988a574ce5f791c3969b2b3f88a1a7c03935ef412c
+    first_step:
+    - method_id: G15
+      version: 1.2.0
+      field: four_step_card
+      sha: e96d2d20f7cec1bbebb16504bf3c4a295341686b1d4195ef3fcd2331c030b247
+    - method_id: G16
+      version: 1.2.0
+      field: four_step_card
+      sha: 96fb9d40aeb5038adeff87a7703fc9798c75e590589a4c143f233cf3f7efb07d
+    role:
+    - method_id: G15
+      version: 1.2.0
+      field: primary_role
+      sha: ed1bfef76f183f1b39ee13106b05ace65202e5d1a00bbeb6a3f4db8f585245f3
+    - method_id: G16
+      version: 1.2.0
+      field: primary_role
+      sha: 21ec31b3140e223fc25bdac6de13863b41009fa92299b5895b185a2ea9f4f77a
   methods:
   - method_id: G15
     version: 1.2.0
@@ -1756,6 +1955,7 @@ entries:
     human_audit_fraction: null
   wording_review: pending
   student_test: not_run
+  trap_status: candidate_pending_three_reviewed_cases
 - name: 续写升级
   method_ids:
   - W06
@@ -1769,10 +1969,12 @@ entries:
   first_batch: false
   move_card:
     trigger: 情节与基础句子准确后，需要局部完善。
-    action_3s: 先圈当前要完善的一处。
     trap_name: 盲目升级
     counterexample: 基础意思不准，先修意思；不能按替换数量评分。
     mantra: 只改需要改的那一处。
+    first_step: 先圈当前要完善的一处。
+    role: locator / verifier / interpreter / interpreter / interpreter / interpreter
+      / interpreter
   field_bindings:
     trigger:
     - method_id: W06
@@ -1803,35 +2005,6 @@ entries:
       version: 1.2.0
       field: trigger_cues
       sha: 9ae7ddf4d45783864f28b664074883ab39b69deb7477bfca6c31287c9b545963
-    action_3s:
-    - method_id: W06
-      version: 1.2.0
-      field: four_step_card
-      sha: 3cb6404337f959fa23f90ff83239e587caed9bdf525cd4b3a84b5a98404adba9
-    - method_id: W07
-      version: 1.2.0
-      field: four_step_card
-      sha: cd6bc2386796b077351ba1f60b996bc783d8e4cd2c58ceda7322d48187db245f
-    - method_id: W08
-      version: 1.2.0
-      field: four_step_card
-      sha: 54b9d3273fee7970abd30785806e39b3cd147a55f895b0828728603b5fffe374
-    - method_id: W09
-      version: 1.2.0
-      field: four_step_card
-      sha: 98be6d02bd954efaa229ca29860483ae99c5d77431cafd25b363de2e447f856d
-    - method_id: W10
-      version: 1.2.0
-      field: four_step_card
-      sha: 1248127876f4bf2c9e6325231bc0967d121144a8a4cec5f3cdcd85e6df2a308c
-    - method_id: W11
-      version: 1.2.0
-      field: four_step_card
-      sha: 388c9c6b2bef66735f2191a08c21a0181b218b0dfa26af89ed753a3f73eeba87
-    - method_id: W12
-      version: 1.2.0
-      field: four_step_card
-      sha: 2758634e3434688aa957f2e9e06dd0184f40461df415e02ff91ac05933fe0549
     trap_name:
     - method_id: W06
       version: 1.2.0
@@ -1919,6 +2092,64 @@ entries:
       version: 1.2.0
       field: memory_line
       sha: 8743f05cf6fb771f517256340d194e5a80f82e0cdc6afff603f5e62fd9c7ebea
+    first_step:
+    - method_id: W06
+      version: 1.2.0
+      field: four_step_card
+      sha: 3cb6404337f959fa23f90ff83239e587caed9bdf525cd4b3a84b5a98404adba9
+    - method_id: W07
+      version: 1.2.0
+      field: four_step_card
+      sha: cd6bc2386796b077351ba1f60b996bc783d8e4cd2c58ceda7322d48187db245f
+    - method_id: W08
+      version: 1.2.0
+      field: four_step_card
+      sha: 54b9d3273fee7970abd30785806e39b3cd147a55f895b0828728603b5fffe374
+    - method_id: W09
+      version: 1.2.0
+      field: four_step_card
+      sha: 98be6d02bd954efaa229ca29860483ae99c5d77431cafd25b363de2e447f856d
+    - method_id: W10
+      version: 1.2.0
+      field: four_step_card
+      sha: 1248127876f4bf2c9e6325231bc0967d121144a8a4cec5f3cdcd85e6df2a308c
+    - method_id: W11
+      version: 1.2.0
+      field: four_step_card
+      sha: 388c9c6b2bef66735f2191a08c21a0181b218b0dfa26af89ed753a3f73eeba87
+    - method_id: W12
+      version: 1.2.0
+      field: four_step_card
+      sha: 2758634e3434688aa957f2e9e06dd0184f40461df415e02ff91ac05933fe0549
+    role:
+    - method_id: W06
+      version: 1.2.0
+      field: primary_role
+      sha: 25b97879bc4537cf5027e625f6e30e5c2651b656e90c36bb4f29672cc8f295a1
+    - method_id: W07
+      version: 1.2.0
+      field: primary_role
+      sha: 21ec31b3140e223fc25bdac6de13863b41009fa92299b5895b185a2ea9f4f77a
+    - method_id: W08
+      version: 1.2.0
+      field: primary_role
+      sha: 0d0e24d689e78a3982ad3b99a31769bb7f817212927d185497145640f9831ef3
+    - method_id: W09
+      version: 1.2.0
+      field: primary_role
+      sha: 0d0e24d689e78a3982ad3b99a31769bb7f817212927d185497145640f9831ef3
+    - method_id: W10
+      version: 1.2.0
+      field: primary_role
+      sha: 0d0e24d689e78a3982ad3b99a31769bb7f817212927d185497145640f9831ef3
+    - method_id: W11
+      version: 1.2.0
+      field: primary_role
+      sha: 0d0e24d689e78a3982ad3b99a31769bb7f817212927d185497145640f9831ef3
+    - method_id: W12
+      version: 1.2.0
+      field: primary_role
+      sha: 0d0e24d689e78a3982ad3b99a31769bb7f817212927d185497145640f9831ef3
   methods:
   - method_id: W06
     version: 1.2.0
@@ -1992,3 +2223,4 @@ entries:
     human_audit_fraction: null
   wording_review: pending
   student_test: not_run
+  trap_status: candidate_pending_three_reviewed_cases

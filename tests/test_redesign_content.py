@@ -123,11 +123,11 @@ class RedesignContentTest(unittest.TestCase):
 
     def test_stale_catalog_field_binding_is_rejected(self):
         value = deepcopy(self.catalog)
-        value['entries'][0]['field_bindings']['action_3s'][0]['sha'] = '0' * 64
+        value['entries'][0]['field_bindings']['first_step'][0]['sha'] = '0' * 64
         with self.assertRaises(ValueError):
             validate_catalog(value, registry=self.registry)
 
-    def test_student_cards_only_contain_five_fields_and_display_names(self):
+    def test_student_cards_contain_six_fields_without_unactivated_traps(self):
         cards = student_cards(self.catalog)
         self.assertEqual(len(cards), 20)
         for path, text in cards.items():
@@ -135,6 +135,10 @@ class RedesignContentTest(unittest.TestCase):
             self.assertNotIn('student_ready', text)
             self.assertNotIn('validated', text)
             self.assertNotIn('Registry', text)
+            self.assertEqual(text.count('**'), 12)
+        for row in self.catalog['entries']:
+            if row['first_batch']:
+                self.assertNotIn(row['move_card']['trap_name'], cards[f'student-guides/moves/{row["name"]}.md'])
 
     def samples(self):
         inventory = []

@@ -9,7 +9,8 @@ presentation_extension:
     - knowledge
     move_card:
     - trigger
-    - action_3s
+    - role
+    - first_step
     - trap_name
     - counterexample
     - mantra

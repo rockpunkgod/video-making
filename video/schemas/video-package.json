@@ -4075,37 +4075,79 @@
                   ]
                 },
                 "move_card": {
-                  "type": "object",
-                  "required": [
-                    "trigger",
-                    "action_3s",
-                    "trap_name",
-                    "counterexample",
-                    "mantra"
-                  ],
-                  "properties": {
-                    "trigger": {
-                      "type": "string",
-                      "minLength": 1
+                  "oneOf": [
+                    {
+                      "type": "object",
+                      "properties": {
+                        "trigger": {
+                          "type": "string",
+                          "minLength": 1
+                        },
+                        "action_3s": {
+                          "type": "string",
+                          "minLength": 1
+                        },
+                        "trap_name": {
+                          "type": "string",
+                          "minLength": 1
+                        },
+                        "counterexample": {
+                          "type": "string",
+                          "minLength": 1
+                        },
+                        "mantra": {
+                          "type": "string",
+                          "minLength": 1
+                        }
+                      },
+                      "required": [
+                        "trigger",
+                        "action_3s",
+                        "trap_name",
+                        "counterexample",
+                        "mantra"
+                      ],
+                      "additionalProperties": false
                     },
-                    "action_3s": {
-                      "type": "string",
-                      "minLength": 1
-                    },
-                    "trap_name": {
-                      "type": "string",
-                      "minLength": 1
-                    },
-                    "counterexample": {
-                      "type": "string",
-                      "minLength": 1
-                    },
-                    "mantra": {
-                      "type": "string",
-                      "minLength": 1
+                    {
+                      "type": "object",
+                      "properties": {
+                        "trigger": {
+                          "type": "string",
+                          "minLength": 1
+                        },
+                        "role": {
+                          "type": "string",
+                          "minLength": 1
+                        },
+                        "first_step": {
+                          "type": "string",
+                          "minLength": 1
+                        },
+                        "trap_name": {
+                          "type": "string",
+                          "minLength": 1
+                        },
+                        "counterexample": {
+                          "type": "string",
+                          "minLength": 1
+                        },
+                        "mantra": {
+                          "type": "string",
+                          "minLength": 1
+                        }
+                      },
+                      "required": [
+                        "trigger",
+                        "role",
+                        "first_step",
+                        "trap_name",
+                        "counterexample",
+                        "mantra"
+                      ],
+                      "additionalProperties": false
                     }
-                  },
-                  "additionalProperties": false
+                  ]
                 }
               },
               "required": [

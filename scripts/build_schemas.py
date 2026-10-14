@@ -35,7 +35,9 @@ def build():
     method_contract['properties'].update(student_ready=BOOL,entry_copy=STR,static_design_review=obj({'status':enum(['source_bound_editorial_review','source_rebound_semantic_reacceptance_pending']),'source_section_ids':array(STR,1),'participant_validation':enum(['pending_real_participant_validation']),'example_scope':STR}))
     # Optional display metadata; existing and historical teaching cards need no migration.
     method_contract['properties'].update(tier=enum(['move','sub_action','knowledge']),
-        move_card=obj({key:STR for key in ['trigger','action_3s','trap_name','counterexample','mantra']}))
+        move_card={'oneOf': [obj({key:STR for key in fields}) for fields in (
+            ['trigger','action_3s','trap_name','counterexample','mantra'],
+            ['trigger','role','first_step','trap_name','counterexample','mantra'])]})
     method_contract['allOf']=[{'if':{'properties':{'student_ready':{'const':True}},'required':['student_ready']},'then':{'required':['entry_copy']}}]
     write('method-card',method_contract)
     write('case',obj({'case_id':STR,'method_id':STR,'question_type':enum(TYPES),'source':{'type':['object','string']},'question':NULLSTR,'answer':NULLSTR,'trigger':STR,'evidence':array({'type':'object'}),'method_role':enum(ROLES),'expected_action':STR,'expected_output':enum(OUTPUTS),'stop_rule':STR,'case_type':enum(['canonical','counterexample','boundary','transfer','hard']),'status':enum(['verified_course_example','source_pattern_only','evidence_gap']),'notes':STR},extra=True))
