@@ -69,9 +69,18 @@ class MethodChoreographyTests(unittest.TestCase):
         self.assertEqual(self.value['compilation_status'],'PASS');self.assertTrue(self.validate()['consumption_allowed'])
 
     def test_changed_frozen_teaching_source_invalidates_old_choreography(self):
-        request=decisions.request();request['question']['options']['A']='SYNTHETIC CHANGED SOURCE'
+        # Build a genuinely new synthetic source/analysis/credential together.
+        # Mutating only the question must now fail at the upstream scope gate,
+        # before a legitimate new frozen bundle can reach choreography checks.
+        request=decisions.request(options={'A':'SYNTHETIC CHANGED SOURCE',
+            'B':'SYNTHETIC beta','C':'SYNTHETIC gamma','D':'SYNTHETIC delta'})
         b,s,_=decisions.freeze(request)
         with self.assertRaises(ValueError):validate_choreography(self.value,self.experience,self.plan,self.copy,self.motion,b,s)
+
+    def test_changed_question_cannot_freeze_unchanged_analysis(self):
+        request=decisions.request();request['question']['options']['A']='SYNTHETIC CHANGED SOURCE'
+        with self.assertRaisesRegex(ValueError,'Question signal scope differs'):
+            decisions.freeze(request)
 
     def test_changed_plan_or_student_path_invalidates_old_choreography(self):
         p=deepcopy(self.plan);p['primary_action']['instruction']['text']='SYNTHETIC forged instruction'

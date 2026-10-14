@@ -80,7 +80,8 @@ class PedagogyV04Tests(unittest.TestCase):
     def test_repeat_hash_and_changed_frozen_asset_invalidates_v04(self):
         one=self.plan(); two=self.plan()
         self.assertEqual(one,two)
-        req=decision_fixtures.request(); req['question']['options']['A']='SYNTHETIC revised A'
+        req=decision_fixtures.request(options={'A':'SYNTHETIC revised A',
+            'B':'SYNTHETIC beta','C':'SYNTHETIC gamma','D':'SYNTHETIC delta'})
         b,s,_=decision_fixtures.freeze(req)
         with self.assertRaises(ValueError): validate_plan(one,b,s)
         self.assertFalse(inspect_historical(one)['current_upstream_verified'])

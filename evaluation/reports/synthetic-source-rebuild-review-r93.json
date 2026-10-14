@@ -1,0 +1,28 @@
+{
+  "scope": "Synthetic fixture construction repair only; not English, learner, release or complete frozen-path certification",
+  "checked_on": "2026-10-14",
+  "changed_test_modules": ["tests/test_method_choreography.py", "tests/test_pedagogy_v04.py", "tests/test_student_experience.py"],
+  "production_gates_relaxed": false,
+  "root_test_batches": [
+    {"tests_run": 63, "failures": 0, "errors": 0, "elapsed_seconds": 58.780, "exit_code": 0},
+    {"tests_run": 59, "failures": 0, "errors": 0, "elapsed_seconds": 51.877, "exit_code": 0}
+  ],
+  "independent_report_sha256": "da5ed20cd5e21684a8277b6858af5fbbfe37aa32ee886fa076d046bf3622f905",
+  "independent_tests_passed": 122,
+  "independent_old_inconsistent_source_rejections": 3,
+  "independent_stale_credential_rejections": 3,
+  "independent_legal_rebuilt_source_pipelines": 4,
+  "independent_legal_downstream_gates": 12,
+  "independent_old_downstream_new_source_rejections": 9,
+  "independent_protected_files_unchanged": 451,
+  "additional_frozen_exporter_failure": {
+    "status": "reproduced_not_fixed",
+    "independent_failure_report_sha256": "ad826d34c0a84b3acb8f4cd4282389c6a11cc376c4509cf19c2fb343890c01cd",
+    "root_failure_report_sha256": "e728a6d90c46a4f480be761888c0682ed4c9b18d31495c04d72b7b0734edc80c",
+    "actual_behavior": "False closed answer with unchanged relation graph was rejected by four renderers, but accepted by export, portable verify_bundle and ACTIVE status",
+    "boundary": "Explicitly rebound synthetic credential, not a claim of forged real reviewer identity",
+    "required_next_work": "Share pure structural answer/terminal checks across producer and portable verification without introducing solver or teaching imports into consumers"
+  },
+  "new_case_blind_student_credit": 0,
+  "overall_goal_complete": false
+}

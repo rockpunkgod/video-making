@@ -1,0 +1,26 @@
+{
+  "scope": "Actual completed fixed-commit engineering regression; not learner validation",
+  "checked_on": "2026-10-14",
+  "source_repository_commit": "5b3e017b71d4464c3b7a786db7f1c55c3a6e8e08",
+  "execution_session": 54398,
+  "state": "completed",
+  "actual_exit_code": 1,
+  "tests_run": 1594,
+  "failures": 0,
+  "errors": 3,
+  "skipped": 1,
+  "elapsed_seconds": 1131.051,
+  "actual_result_sha256": "64ce995ea189e121473d13ea9f76a9434a8355e662fb9cd0206418b79ede291c",
+  "failing_tests": [
+    "test_method_choreography.MethodChoreographyTests.test_changed_frozen_teaching_source_invalidates_old_choreography",
+    "test_pedagogy_v04.PedagogyV04Tests.test_repeat_hash_and_changed_frozen_asset_invalidates_v04",
+    "test_student_experience.StudentExperienceTests.test_current_source_and_plan_changes_invalidate_experience"
+  ],
+  "shared_error": "Question signal scope differs from original material/candidates",
+  "diagnosis": "Old synthetic fixture mutation changed question wording but retained the previous analysis; the new raw-material scope gate correctly rejected it before the intended downstream invalidation check",
+  "working_tree_fixture_repair": "Rebuild the question, analysis and explicitly synthetic credential together; preserve downstream rejection assertions and add a direct stale-analysis freeze rejection",
+  "repair_related_tests_not_substituted_for_new_full_regression": true,
+  "old_fixed_package_or_failure_results_overwritten": false,
+  "new_full_regression": "not_started",
+  "overall_goal_complete": false
+}

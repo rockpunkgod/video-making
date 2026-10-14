@@ -51,7 +51,8 @@ class StudentExperienceTests(unittest.TestCase):
     def line(self,text,path): return {'text':text,'pedagogy_refs':[pedagogy_ref(self.plan,path)]}
 
     def test_current_source_and_plan_changes_invalidate_experience(self):
-        v=self.experience(); request=decisions.request(); request['question']['options']['A']='SYNTHETIC changed literal'
+        v=self.experience(); request=decisions.request(options={'A':'SYNTHETIC changed literal',
+            'B':'SYNTHETIC beta','C':'SYNTHETIC gamma','D':'SYNTHETIC delta'})
         b,s,_=decisions.freeze(request)
         with self.assertRaises(ValueError): validate_experience(v,self.copy,self.motion,self.plan,b,s)
         changed=deepcopy(self.plan); changed['primary_action']['instruction']['text']='SYNTHETIC forged instruction'
