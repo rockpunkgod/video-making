@@ -75,6 +75,22 @@ class TypesetTests(unittest.TestCase):
         self.assertNotEqual(a['style_sha256'],b['style_sha256'])
         self.assertNotEqual(a['source_sha256'],typeset(text+'!',self.font,s)['source_sha256'])
 
+    def test_style_character_limit_is_applied_without_changing_tokens(self):
+        style=deepcopy(self.style);style['layout']['focus_characters_per_line']=[10,24]
+        text=' '.join(['alpha beta gamma delta']*4)
+        plan=typeset(text,self.font,style)
+        self.assertTrue(all(len(l['text'])<=24 for l in plan['lines']))
+        self.assertEqual([w['text'] for w in plan['words']],text.split())
+
+    def test_cjk_fallback_uses_explicit_font_and_requires_it_for_partial_binding(self):
+        from creative_os.semantic_text_layout import bind_words
+        words=layout_words('中文 text',str(self.font),30,420,flow=True,fallback_font_path=self.font)
+        self.assertEqual(words[0]['font_role'],'fallback')
+        with self.assertRaisesRegex(ValueError,'fallback token'):
+            bind_words(words,[dict(span_id='part',start=0,end=1)],str(self.font))
+        parts=bind_words(words,[dict(span_id='part',start=0,end=1)],str(self.font),self.font)
+        self.assertEqual(''.join(w['text'] for w in parts),'中文text')
+
     def test_empty_and_paragraph_boundaries(self):
         self.assertEqual(typeset('',self.font,self.style)['focus_windows'],[])
         plan=typeset('one\n\ntwo',self.font,self.style)

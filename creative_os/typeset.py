@@ -11,7 +11,7 @@ def digest(data):
     return hashlib.sha256(data).hexdigest()
 
 
-def typeset(text, font_path, style, *, role='focus_text', width=None):
+def typeset(text, font_path, style, *, role='focus_text', width=None, fallback_font_path=None):
     size = style['type_scale'][role]
     layout = style['layout']
     width = layout['focus_width'] if width is None else width
@@ -19,8 +19,11 @@ def typeset(text, font_path, style, *, role='focus_text', width=None):
     if line_height < size:
         raise ValueError('Line height cannot be smaller than font size')
     font_path = Path(font_path)
+    limits = layout.get('focus_characters_per_line')
     words = layout_words(text, str(font_path), size, width,
-                         leading=line_height/size, flow=True)
+                         leading=line_height/size, flow=True,
+                         max_characters=limits[1] if limits else None,
+                         fallback_font_path=fallback_font_path)
     windows = focus_windows(words, layout['focus_max_lines'])
     lines = []
     for word in words:
@@ -30,12 +33,12 @@ def typeset(text, font_path, style, *, role='focus_text', width=None):
         else:
             lines[-1]['text'] += ' ' + word['text']
             lines[-1]['end'] = word['end']
-    limits = layout.get('focus_characters_per_line')
     for line in lines:
         if limits and not limits[0] <= len(line['text']) <= limits[1]:
             line['warnings'] = [*line['warnings'], 'CHARACTER_COUNT_REVIEW']
     return dict(schema='typeset-plan/v1', geometry='PROVISIONAL_REQUIRES_AE_MEASUREMENT',
         source_sha256=digest(text.encode('utf-8')), font_sha256=digest(font_path.read_bytes()),
+        fallback_font_sha256=digest(Path(fallback_font_path).read_bytes()) if fallback_font_path else None,
         style_sha256=digest(json.dumps(style, ensure_ascii=False, sort_keys=True,
                                       separators=(',', ':'), allow_nan=False).encode('utf-8')),
         role=role, size=size, width=width, line_height=line_height,
@@ -48,11 +51,13 @@ def main():
     parser.add_argument('--text-file', type=Path, required=True)
     parser.add_argument('--font', type=Path, required=True)
     parser.add_argument('--style', type=Path, required=True)
+    parser.add_argument('--fallback-font', type=Path)
     parser.add_argument('--output', type=Path, required=True)
     args = parser.parse_args()
     # Preserve CRLF offsets; Path.read_text would normalize them.
     text = args.text_file.read_bytes().decode('utf-8')
-    plan = typeset(text, args.font, json.loads(args.style.read_text(encoding='utf-8')))
+    plan = typeset(text, args.font, json.loads(args.style.read_text(encoding='utf-8')),
+                   fallback_font_path=args.fallback_font)
     if args.output.exists():
         raise ValueError('Choose a fresh output path')
     args.output.parent.mkdir(parents=True, exist_ok=True)

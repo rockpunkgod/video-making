@@ -16,7 +16,7 @@ def strip_hard_breaks(text):
                        for p in re.split(r'\n[ \t]*\n+', text))
 
 
-def balance_lines(words, width, min_fill=0.72, keep_with_next=KEEP_WITH_NEXT):
+def balance_lines(words, width, min_fill=0.72, keep_with_next=KEEP_WITH_NEXT, max_characters=None):
     """Balance measured tokens per paragraph; keep source offsets immutable.
 
     Short paragraphs and impossible connector chains are reported, not stretched.
@@ -26,6 +26,8 @@ def balance_lines(words, width, min_fill=0.72, keep_with_next=KEEP_WITH_NEXT):
         raise ValueError('Positive width and min_fill in (0, 1] required')
     if not words:
         return []
+    if max_characters is not None and (isinstance(max_characters, bool) or not isinstance(max_characters,int) or max_characters<1):
+        raise ValueError('Positive integer max_characters required')
     if any(not math.isfinite(w['w']) or w['w'] < 0 or w['w'] > width for w in words):
         raise ValueError('A source token exceeds the readable width')
     from itertools import groupby
@@ -38,13 +40,21 @@ def balance_lines(words, width, min_fill=0.72, keep_with_next=KEEP_WITH_NEXT):
         # then balances lines. Finite penalties allow an honest impossible case.
         costs = [float('inf')] * (n + 1); costs[n] = 0; choices = {}
         for i in range(n - 1, -1, -1):
-            used = 0
+            used = 0; characters = 0
             for j in range(i, n):
+                characters += len(tokens[j]['text']) + (1 if j>i else 0)
+                # Never split a literal source token to satisfy a display target.
+                if max_characters is not None and characters>max_characters and j>i:
+                    break
                 used += tokens[j]['w'] + (tokens[j]['space_width'] if j > i else 0)
                 if used > width + 1e-8:
                     break
                 fill = used / width
-                connector = j < n - 1 and tokens[j]['text'].casefold() in forbidden
+                connector = j < n - 1 and (
+                    tokens[j]['text'].casefold() in forbidden
+                    or tokens[j]['text'].endswith(('(', '（', '['))
+                    or bool(re.search(r'[\u3400-\u9fff]$', tokens[j]['text'])
+                            and re.match(r'[\u3400-\u9fff]', tokens[j+1]['text'])))
                 singleton = i == j and n > 1
                 cost = (1-fill)**2 + max(0, min_fill-fill)*4
                 cost += 1000*connector + 10*singleton + costs[j+1]
@@ -87,12 +97,16 @@ def focus_windows(words, max_lines=9):
 
 
 def layout_words(text, font_path, size, width, x=0, y=0, leading=1.42,
-                 *, flow=False, keep_with_next=KEEP_WITH_NEXT, min_fill=0.72):
+                 *, flow=False, keep_with_next=KEEP_WITH_NEXT, min_fill=0.72,
+                 max_characters=None, fallback_font_path=None):
     # Legacy calls retain their byte-for-byte geometry; P2 explicitly opts in.
     if not all(math.isfinite(v) for v in (size, width, x, y, leading)) or min(size, width, leading) <= 0:
         raise ValueError('Finite positive size, width and leading required')
     from PIL import ImageFont
     font = ImageFont.truetype(font_path, size)
+    fallback = ImageFont.truetype(str(fallback_font_path),size) if fallback_font_path else None
+    def token_font(value):
+        return fallback if fallback and re.search(r'[\u3400-\u9fff]',value) else font
     if flow:
         tokens = []; previous_end = 0; paragraph = 0; utf16_cursor = 0
         for match in re.finditer(r'\S+', text):
@@ -102,18 +116,19 @@ def layout_words(text, font_path, size, width, x=0, y=0, leading=1.42,
             gap = text[previous_end:match.start()].replace('\r\n', '\n').replace('\r', '\n')
             if tokens and re.search(r'\n[ \t]*\n', gap): paragraph += 1
             tokens.append(dict(text=match.group(), start=match.start(), end=match.end(),
-                x=x, y=y, w=font.getlength(match.group()), space_width=font.getlength(' '),
+                x=x, y=y, w=token_font(match.group()).getlength(match.group()), space_width=font.getlength(' '),
                 size=size, line=0, paragraph=paragraph, line_height=size*leading,
+                font_role='fallback' if token_font(match.group()) is fallback else 'primary',
                 utf16_start=utf16_start, utf16_end=utf16_cursor))
             previous_end = match.end()
-        return balance_lines(tokens, width, min_fill, keep_with_next)
+        return balance_lines(tokens, width, min_fill, keep_with_next, max_characters)
     words = []; cursor_x = x; baseline = y; line = 0; previous_end = 0
     for match in re.finditer(r'\S+', text):
         gap = text[previous_end:match.start()]
         if '\n' in gap and words:
             baseline += size * leading; cursor_x = x; line += 1
         space = font.getlength(' ') if cursor_x != x else 0
-        measured = font.getlength(match.group())
+        measured = token_font(match.group()).getlength(match.group())
         if measured > width:
             raise ValueError('A source token exceeds the readable width')
         if cursor_x + space + measured > x + width:
@@ -125,7 +140,7 @@ def layout_words(text, font_path, size, width, x=0, y=0, leading=1.42,
     return words
 
 
-def bind_words(words, spans, font_path=None):
+def bind_words(words, spans, font_path=None, fallback_font_path=None):
     """Split at explicit semantic boundaries without interpreting English."""
     result = []
     for word in words:
@@ -135,7 +150,12 @@ def bind_words(words, spans, font_path=None):
         if hits and not (hits[0]['start'] <= word['start'] and word['end'] <= hits[0]['end']):
             if font_path is None: raise ValueError('Partially bound token needs exact glyph measurement')
             from PIL import ImageFont
-            font=ImageFont.truetype(font_path,word['size'])
+            selected_font=font_path
+            if word.get('font_role')=='fallback':
+                if fallback_font_path is None:
+                    raise ValueError('Partially bound fallback token needs its measurement font')
+                selected_font=str(fallback_font_path)
+            font=ImageFont.truetype(selected_font,word['size'])
             cuts=sorted({word['start'],word['end']} | {
                 p for s in hits for p in (s['start'],s['end']) if word['start']<p<word['end']})
             for start,end in zip(cuts,cuts[1:]):

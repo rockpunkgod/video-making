@@ -38,6 +38,9 @@ python -m creative_os.typeset --text-file <原文.txt> --font <本地字体> --s
 ## 不可满足的情况
 
 72% 填充率、45–65 字符是排版复看目标，不是绝对保证。
+当前已按规范提供的字符上限限制断行；单个原词本身超过上限时不拆词，仍明确提示。
+可显式提供 `fallback_font_path`（CLI 为 `--fallback-font`）处理中文注释：
+使用该字体测量并输出 `font_role` 与字体 hash；部分证据切片也必须使用相同回退字体。
 短段落、长词和连接词链可能让目标不可满足：
 短行、单词行、无法避免的连接词行尾都会明确标记；单词本身比窗口宽则拒绝。
 不加字、不改词、不拉伸，也不隐藏这些提示。
@@ -51,12 +54,25 @@ python -m creative_os.typeset --text-file <原文.txt> --font <本地字体> --s
 
 | 原文 | 词数 | 行数 | 焦点窗 | 短行 | 连接词行尾 |
 |---|---:|---:|---:|---:|---:|
-| Bond | 314 | 24 | 3 | 0 | 0 |
-| 猫 | 306 | 23 | 3 | 0 | 0 |
+| Bond | 314 | 28 | 4 | 0 | 0 |
+| 猫 | 306 | 28 | 4 | 1 | 0 |
 
 两份原文词序和源文件 hash 不变。真实原文与排版 JSON 保留本地忽略目录 `local-data/p2/`。
 没有进行前端图像或 AE 测量验收；本轮交付的是后端接口与验证数据。
 
-`python -m unittest tests.test_typeset_v1 tests.test_method_application -q`：16 项通过。
+`python -m unittest tests.test_typeset_v1 tests.test_method_application -q`：18 项通过。
 尝试 `python -m unittest discover -s tests` 后数分钟未产生任何输出，已中止；
 全量回归未完成，不记为通过，也未据此修改无关测试或教学模块。
+
+## 可视审阅交付
+
+`scripts/review_typeset.py <本地 request.json> <新 local-data 目录>` 将同一输入的
+旧接口与 P2 接口分别绘成原词位置预览。请求包含现有 style 路径、实际英文字体、
+中文回退字体和本地 bundle 路径；只消费 `source_snapshot.passage`，不补教学事实。
+当前交付位于 `local-data/p2/review-r3/REVIEW.html`，包含两题共 16 张 4K 窗口图、
+720p 和手机预览、新旧总览、排版 JSON 与未满足约束提示。
+
+左旧右新，同样字号、宽度和源文；按窗口序号配对，阅读进度不强行对应。
+原先仅按像素宽度得到 23/24 行，实际预览暴露超过 65 字符和中文缺字问题；
+本次修正后的 28 行结果替代先前统计。没有用减少窗口数量作为“更好”的证明。
+这是一份后端 QA 预览，不是新前端页面设计，不替代 AE 原生字形或镜头审核。
