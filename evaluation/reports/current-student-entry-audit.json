@@ -4,8 +4,8 @@
   "historical_registry": false,
   "method_count": 82,
   "entry_counts": {
-    "draft": 6,
-    "held_for_reacceptance": 47,
+    "draft": 7,
+    "held_for_reacceptance": 46,
     "static_entry_ready": 29
   },
   "priority_entries": [
@@ -2772,7 +2772,7 @@
     },
     {
       "method_id": "W02",
-      "method_version": "1.2.0",
+      "method_version": "1.3.0",
       "question_type": "读后续写",
       "method_type": "framework",
       "primary_role": "framework",
@@ -2784,7 +2784,7 @@
         "27662f3285730b79"
       ],
       "guide_path": "student-guides/W02-十句五锚.md",
-      "entry_state": "held_for_reacceptance",
+      "entry_state": "draft",
       "structural_checks": {
         "symptom_present": true,
         "trigger_present": true,
@@ -2799,11 +2799,9 @@
         "challenge_present": true,
         "counterexample_present": true,
         "all_short_forms_present": true,
-        "independent_guide_exposes_four_steps": false
+        "independent_guide_exposes_four_steps": true
       },
-      "structural_gaps": [
-        "independent_guide_exposes_four_steps"
-      ],
+      "structural_gaps": [],
       "semantic_review": "source_rebound_semantic_reacceptance_pending",
       "first_use_status": "pending_real_student_test",
       "timed_delivery": "unmeasured",

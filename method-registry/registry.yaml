@@ -350,7 +350,7 @@ methods:
   W02:
     brand_name: 十句五锚
     status: candidate
-    version: 1.2.0
+    version: 1.3.0
     file: method-registry/continuation-writing.yaml
   W03:
     brand_name: 剧情四格
