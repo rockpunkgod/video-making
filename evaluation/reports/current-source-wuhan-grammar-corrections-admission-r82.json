@@ -1,0 +1,33 @@
+{
+  "scope": "Merge only four distinct-author r62-approved safe-HOLD revisions into current Wuhan paper; keep Q63 semantic HOLD excluded",
+  "checked_on": "2026-10-14",
+  "source_commit": "61bc9c3e15004639cb442c20e7946ca9631f14ce",
+  "paper_id": "mock-2027-wuhan-september-v01",
+  "independent_handoff_sha256": "6ce7f30c56c67ce0260d869a6dfcc8656d1cfa0be870437e459a45916dd7c988",
+  "private_root_admission_handoff_sha256": "bc9e4e185c10f0c9ab4c087a7d5be6d155798a9705f7889d6207120ea4a56439",
+  "private_paper_report_sha256": "f257ab697ad7129443c160008eb0bc2c6ff954b7724abe151a5f318452056afb",
+  "fresh_source_checks": 4,
+  "fresh_exact_replays": 4,
+  "actual_renderer_calls": 16,
+  "actual_review_reader_rejections": 5,
+  "protected_existing_files_unchanged": 441,
+  "accepted_safe_HOLD_question_numbers": [57, 61, 64, 65],
+  "Q63_current_author_package": "Still excluded: existing-object argument does not examine what as an interrogative determiner modifying the subject noun phrase",
+  "current_supplied_tasks": 47,
+  "current_reviewed_tasks": 39,
+  "current_closed_tasks": 31,
+  "current_safe_HOLD_tasks": 8,
+  "pending_current_review_tasks": 8,
+  "whole_paper_semantic_acceptance": "PARTIAL",
+  "root_verifier_setup_failure_preserved": {
+    "actual_exit_code": 1,
+    "cause": "Serialized JSON G01 decision-tree boolean keys differ in representation from in-memory YAML keys",
+    "correction": "Compare exact standard JSON-roundtripped card values and separately exact full source text",
+    "before_whole_paper_replay": true,
+    "failed_attempt_counted_as_pass": false
+  },
+  "runtime_or_source_or_review_references_modified": false,
+  "new_Case_Blind_unique_student_gate_method_Stop_boundary_credit": 0,
+  "method_promotion_applied": false,
+  "overall_goal_complete": false
+}
