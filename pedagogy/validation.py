@@ -43,7 +43,8 @@ def validate_plan(plan, bundle, status, *, required_version=None):
         audience=plan['audience'], channel=plan['channel'], duration_target=plan['duration_target'],
         fields=request['fields'], extra_boundary_refs=request['extra_boundary_refs'],
         generated_at=plan['generated_at'], boundary_review=request.get('boundary_review'),
-        contract_version=version, structure_input=request.get('structure_input'))
+        contract_version=version, structure_input=request.get('structure_input'),
+        answer_scope=request.get('answer_scope', 'method_action_demo'))
     if expected != plan:
         raise ValueError('PedagogyPlan differs from the frozen source projection or current bindings')
     return {'status': 'PASS', 'current_upstream_verified': True,

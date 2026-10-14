@@ -52,10 +52,39 @@ class RedesignContentTest(unittest.TestCase):
         self.assertEqual(errors, [])
 
     def test_wrong_answer_and_marketing_still_fail(self):
-        for text in ('所以选 A。', '我选 A。', '答案是 A。', '一招秒杀，所以选 C。'):
+        for text in ('所以选 A。', '我选 A。', '答案是 A。', '就是 A。', '一招秒杀，所以选 C。'):
             _, errors = tone_lint(self.beats(text), 'decider', False,
                                 frozen_bundle=self.bundle, frozen_status=self.status)
             self.assertTrue(errors)
+
+    def test_compiler_explicit_full_solution_preserves_frozen_answer(self):
+        from pedagogy import compile_plan, validate_plan
+        selection = frozen_answer_binding(self.bundle, self.status)['selections'][0]
+        before = sha(self.bundle)
+        legacy = compile_plan(self.bundle, self.status, selection, mode='worked_example')
+        self.assertFalse(legacy['answer_scope']['may_output_final_answer'])
+        plan = compile_plan(self.bundle, self.status, selection, mode='worked_example',
+                            answer_scope='full_solution')
+        self.assertEqual(plan['answer_scope']['answer'], 'C')
+        self.assertTrue(plan['answer_scope']['may_output_final_answer'])
+        self.assertEqual(validate_plan(plan, self.bundle, self.status)['status'], 'PASS')
+        self.assertFalse(plan['public_render_ready'])
+        self.assertEqual(before, sha(self.bundle))
+        from tests.test_pedagogy import reseal_plan
+        forged = deepcopy(plan)
+        forged['answer_scope']['answer'] = 'B'
+        with self.assertRaises(ValueError):
+            validate_plan(reseal_plan(forged), self.bundle, self.status)
+
+    def test_compiler_does_not_borrow_closure_from_unselected_actions(self):
+        from pedagogy import compile_plan
+        selection = frozen_answer_binding(self.bundle, self.status)['selections'][0]
+        partial = {**selection, 'action_ids': selection['action_ids'][:1]}
+        for chosen, current, mode in ((partial, self.status, 'worked_example'),
+                                     (selection, None, 'worked_example'),
+                                     (selection, self.status, 'first_touch')):
+            with self.assertRaises(ValueError):
+                compile_plan(self.bundle, current, chosen, mode=mode, answer_scope='full_solution')
 
     def test_answer_binding_does_not_override_role_of_helper_action(self):
         self.assertIn('role_overclaim', lint_copy('找到这里就能选。', 'locator', True))

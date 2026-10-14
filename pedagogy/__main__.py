@@ -47,11 +47,11 @@ def main():
     if args.command == 'compile':
         allowed = {'bundle', 'status', 'selection', 'mode', 'audience', 'channel',
                    'duration_target', 'fields', 'extra_boundary_refs', 'boundary_review', 'output',
-                   'contract_version', 'structure_input'}
+                   'contract_version', 'structure_input', 'answer_scope'}
         if set(request) - allowed:
             raise ValueError('Unknown compile request field')
         kwargs = {k: request[k] for k in ('mode', 'audience', 'channel', 'duration_target',
-                                         'fields', 'extra_boundary_refs', 'contract_version') if k in request}
+                                         'fields', 'extra_boundary_refs', 'contract_version', 'answer_scope') if k in request}
         if 'boundary_review' in request:
             kwargs['boundary_review'] = load('boundary_review')
         if 'structure_input' in request:

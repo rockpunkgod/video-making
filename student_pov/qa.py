@@ -127,13 +127,14 @@ def frozen_answer_binding(bundle, status):
 
 def answer_letters(text):
     """Conservative literal answer-claim lint; not a semantic truth recognizer."""
-    pattern = r'(?:选(?:择)?\s*|答案(?:已经)?(?:是|为|确定为)\s*)([A-G])|([A-G])\s*(?:就是|是)答案'
+    pattern = (r'(?:选(?:择)?\s*|答案(?:已经)?(?:是|为|确定为)\s*)([A-G])'
+               r'|([A-G])\s*(?:就是|是)答案|(?:^|[。！？\n])\s*就是\s*([A-G])')
     letters = []
     for match in re.finditer(pattern, text):
         prefix = text[max(0, match.start() - 8):match.start()]
         if re.search(r'(?:不|别|不能|不该|不应|不要|不能直接|不要直接)$', prefix):
             continue
-        letters.append(match.group(1) or match.group(2))
+        letters.append(next(value for value in match.groups() if value is not None))
     return letters
 
 

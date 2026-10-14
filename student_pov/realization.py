@@ -163,7 +163,7 @@ def realize(projection, plan, bundle, status, *, draft_lines=None, copy_review=N
     all_copy = '\n'.join(row['text'] for key, row in script.items()
                          if isinstance(row, dict) and isinstance(row.get('text'), str))
     issues += ['COPY_LINT:' + flag for flag in lint_copy(all_copy, plan['role'],
-                                                       plan['answer_scope']['may_output_final_answer'])]
+        plan['answer_scope']['may_output_final_answer'], frozen_answer=plan['answer_scope']['answer'])]
     if re.search(r'(?<![A-Za-z0-9])[RFCGWS]\d{2}(?![A-Za-z0-9])', all_copy):
         issues.append('INTERNAL_METHOD_CODE_ON_CONSUMER_SURFACE')
     # A shortcut is never supported merely because another line says it is scoped.

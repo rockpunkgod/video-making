@@ -94,7 +94,12 @@ def _original_question(source):
 
 def compile_plan(bundle, status, selection, *, mode='first_touch', audience='first_time_student',
                  channel='video', duration_target=30, fields=None, extra_boundary_refs=None,
-                 generated_at=None, boundary_review=None, contract_version=VERSION, structure_input=None):
+                 generated_at=None, boundary_review=None, contract_version=VERSION, structure_input=None,
+                 answer_scope='method_action_demo'):
+    if answer_scope not in ('method_action_demo', 'full_solution'):
+        raise ValueError('Unsupported answer scope')
+    if answer_scope == 'full_solution' and (contract_version != VERSION or boundary_review is not None):
+        raise ValueError('Full solution requires the explicit 0.3 frozen-asset path without boundary review')
     if contract_version == CURRENT_VERSION:
         from .v04 import compile_v04
         return compile_v04(bundle, status, selection, mode=mode, audience=audience, channel=channel,
@@ -117,6 +122,23 @@ def compile_plan(bundle, status, selection, *, mode='first_touch', audience='fir
         raise ValueError('Finite positive duration target required')
     request = _request(selection, fields or {}, extra_boundary_refs or [])
     source = FrozenSource(bundle, status, request['selection'])
+    final_answer = None
+    if answer_scope == 'full_solution':
+        from content_os.candidates import engineering_gate
+        if (mode != 'worked_example' or source.transport != 'frozen_asset'
+                or source.method['primary_role'] != 'decider'):
+            raise ValueError('Full solution requires a frozen decider worked example')
+        decisions = [a['output'] for a in source.actions
+                     if a['output'].get('kind') == 'candidate_decision']
+        answer = source.upstream_answer
+        if (not source.upstream_closed or answer is None
+                or {d['candidate'] for d in decisions} != set(source.question.get('options', {}))
+                or any(d['effect'] != ('retain' if d['candidate'] == answer else 'eliminate')
+                       for d in decisions)
+                or engineering_gate(bundle, source.selection, 'full_solution', status)['status'] != 'PASS'):
+            raise ValueError('Selected reviewed actions must close every option to the frozen answer')
+        final_answer = deepcopy(answer)
+        request['answer_scope'] = answer_scope
     original_question, original_question_refs = _original_question(source)
     guard = source.guard()
     fields_out, gaps = {}, []
@@ -287,8 +309,8 @@ def compile_plan(bundle, status, selection, *, mode='first_touch', audience='fir
         'cognitive_load': {'budget': deepcopy(policy.FIRST_TOUCH_BUDGET), 'metrics': metrics,
             'status': 'PEDAGOGY_OVERLOAD' if excess else 'PASS' if mode == 'first_touch' else 'NOT_FIRST_TOUCH',
             'exceeded': excess},
-        'answer_scope': {'scope': 'method_action_demo', 'answer': None,
-            'may_output_final_answer': False, 'upstream_answer': deepcopy(source.upstream_answer),
+        'answer_scope': {'scope': answer_scope, 'answer': final_answer,
+            'may_output_final_answer': final_answer is not None, 'upstream_answer': deepcopy(source.upstream_answer),
             'upstream_closed': source.upstream_closed,
             'actual_outputs': [deepcopy(a['output']) for a in source.actions]},
         'stop_state': {'state': 'produced_bounded_action', 'stop_applied': False,

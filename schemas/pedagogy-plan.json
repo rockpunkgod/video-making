@@ -741,35 +741,71 @@
           }
         },
         "answer_scope": {
-          "type": "object",
-          "additionalProperties": false,
-          "required": [
-            "scope",
-            "answer",
-            "may_output_final_answer",
-            "upstream_answer",
-            "upstream_closed",
-            "actual_outputs"
-          ],
-          "properties": {
-            "scope": {
-              "const": "method_action_demo"
+          "oneOf": [
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "scope",
+                "answer",
+                "may_output_final_answer",
+                "upstream_answer",
+                "upstream_closed",
+                "actual_outputs"
+              ],
+              "properties": {
+                "scope": {
+                  "const": "method_action_demo"
+                },
+                "answer": {
+                  "type": "null"
+                },
+                "may_output_final_answer": {
+                  "const": false
+                },
+                "upstream_answer": {},
+                "upstream_closed": {
+                  "type": "boolean"
+                },
+                "actual_outputs": {
+                  "type": "array",
+                  "minItems": 1
+                }
+              }
             },
-            "answer": {
-              "type": "null"
-            },
-            "may_output_final_answer": {
-              "const": false
-            },
-            "upstream_answer": {},
-            "upstream_closed": {
-              "type": "boolean"
-            },
-            "actual_outputs": {
-              "type": "array",
-              "minItems": 1
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "scope",
+                "answer",
+                "may_output_final_answer",
+                "upstream_answer",
+                "upstream_closed",
+                "actual_outputs"
+              ],
+              "properties": {
+                "scope": {
+                  "const": "full_solution"
+                },
+                "answer": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "may_output_final_answer": {
+                  "const": true
+                },
+                "upstream_answer": {},
+                "upstream_closed": {
+                  "const": true
+                },
+                "actual_outputs": {
+                  "type": "array",
+                  "minItems": 1
+                }
+              }
             }
-          }
+          ]
         },
         "stop_state": {
           "type": "object",
@@ -1150,6 +1186,9 @@
                 "envelope_sha"
               ],
               "description": "Explicit supplied Pedagogy review, validated against its standalone schema and base Plan on replay."
+            },
+            "answer_scope": {
+              "const": "full_solution"
             }
           }
         },

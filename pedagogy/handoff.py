@@ -31,7 +31,7 @@ def _ready(plan, bundle, status):
 def _base(plan, kind):
     return {'schema_version': VERSION, 'kind': kind, 'plan_id': plan['plan_id'],
         'plan_sha': plan['plan_sha'], 'input_binding': deepcopy(plan['input_binding']),
-        'mode': plan['mode'], 'scope': 'method_action_demo', 'public_render_ready': False,
+        'mode': plan['mode'], 'scope': plan['answer_scope']['scope'], 'public_render_ready': False,
         'generated_at': plan['generated_at'],
         'revalidation_required': 'validate_handoff with frozen source and current upstream status'}
 
