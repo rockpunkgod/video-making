@@ -405,3 +405,5 @@ Q66应用文的新完整自然写前指导另存私有r61，8段从圈投稿/尺
 当前来源再次与远端HEAD/main核实相同；51份保存来源及21份运行来源文件的原字节哈希与上游Git正文逐一核验通过，34项对齐及历史重放测试通过，见 `evaluation/reports/answer-current-alignment-61bc9c3-reconfirmed-r78.json`。这不认证教学效果或完整目标完成。
 
 武汉语法不同作者r59独审仅批准Q62闭合，Q56/Q58/Q59/Q60的安全暂留处理获认可；Q57/Q61/Q63/Q64/Q65仍需修订具体排除理由或候选范围。根读完整独审grounds后已要求原作者另存针对性新版，不追认原r58整包或重复已审题；尚未并入新的整卷结果。冠词族中的The成立不能替代全空候选核查，安全null也不能掩盖已提交的无证排除。本阶段无新增Case、Blind、学生或方法升级信用，整卷及完整工程目标仍PARTIAL。
+
+当前F8ED写作代码上，圆创47个原已审typed问题另在私有r79完整重放成功：47份实际审阅指纹/来源/当前analyze准入通过，新旧control/current输入和分析JSON逐值完全相同，报告哈希亦相同。原47任务仍为42闭合、3安全HOLD、2guidance，原记录不改。r76新原生自然交付仍为单独交付层，不假装借旧单作者整题审阅给混合作者新输入准入；无新Case或题目信用。公开索引 `evaluation/reports/current-source-yuanchuang-writing-repair-paper-replay-r79.json`，整卷仍PARTIAL。

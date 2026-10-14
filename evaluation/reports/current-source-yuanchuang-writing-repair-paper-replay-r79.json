@@ -1,0 +1,31 @@
+{
+  "scope": "Fresh full non-listening Hubei typed-action replay after the accepted writing projection repair; not a new semantic review or a native-writing-layer merge",
+  "checked_on": "2026-10-14",
+  "source_commit": "61bc9c3e15004639cb442c20e7946ca9631f14ce",
+  "paper_id": "mock-2026-hubei-yuanchuang-m05-v01",
+  "current_writing_feedback_sha256": "f8ed39020de9d54b2b4ad12469e6c3dcaa58627c4922b409cb13dd7270a537dd",
+  "private_replay_directory": "wxwork-priority-2026-10/coordinator-reviews/current-61bc9c3-r1/current-writing-repair-full-paper-replay-r79",
+  "private_replay_acceptance_sha256": "0122a46a14f37a2d6fd048fde17f28aa848e0eb4b720084f0808cf6358c616d6",
+  "original_report_sha256": "b30b4e0d624c6f13d577def03b4205e435d5d098e68592547f72d3fff638a17b",
+  "fresh_report_sha256": "b30b4e0d624c6f13d577def03b4205e435d5d098e68592547f72d3fff638a17b",
+  "actual_process_exit_code": 0,
+  "supplied_task_count": 47,
+  "previous_review_bindings_freshly_verified": 47,
+  "closed_tasks": 42,
+  "safe_HOLD_tasks": 3,
+  "guidance_only_tasks": 2,
+  "unreviewed_supplied_tasks": 0,
+  "exact_previous_json_values": {
+    "control-input.json": true,
+    "current-input.json": true,
+    "control-analysis.json": true,
+    "current-analysis.json": true
+  },
+  "historical_report_unchanged": true,
+  "native_guidance_delivery_layer": "Separately accepted under r76; not incorporated into mixed-author whole-question reviews here",
+  "whole_paper_semantic_acceptance": "PARTIAL",
+  "listening_student_drafts_grades_or_learning_effects_certified": false,
+  "new_case_blind_unique_question_student_credit": 0,
+  "method_promotion_applied": false,
+  "overall_goal_complete": false
+}
