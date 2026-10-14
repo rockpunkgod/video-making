@@ -1,0 +1,40 @@
+{
+  "version": "0.1.0",
+  "status": "design_candidate_not_render_validated",
+  "base_style": "style-v1.json",
+  "automatic_application_to_existing_templates": false,
+  "coordinates": {"authoring": [1920, 1080], "delivery": [3840, 2160], "fps": 24},
+  "palette": {"environment": "#17181A", "paper": "#F2F0EA", "ink": "#20211F", "attention_orange": "#C8622E", "comparison_blue": "#3A6A8A"},
+  "reading": {"paper_opacity": 100, "paper_relative_luminance": 1, "camera_state": "slow_drift"},
+  "thinking": {
+    "transition_frames": 12,
+    "paper_opacity": 100,
+    "paper_relative_luminance_target": 0.25,
+    "exposure_stops_initial_trial": -2,
+    "dimming_method": "light_or_exposure_not_opacity",
+    "dimming_scope": "source_world_only",
+    "world_z_retreat": 600,
+    "dof": "native_camera",
+    "extracted_text_color": "paper",
+    "extracted_text_background": "transparent",
+    "original_world_remains_visible": true,
+    "return": "reverse_retreat_and_restore_reading_light"
+  },
+  "shadow": {"renderer_candidate": "Classic 3D", "receiver": "paper", "caster": "extracted_glyphs", "soft": true, "opacity_decreases_with_height": true, "softness_increases_with_height": true, "native_test_required": true},
+  "judgment_emphasis": {"maximum_events_per_question": 1, "screen_font_size_px": [200, 240], "hold_seconds": [1, 1.5], "requires": "frozen_decisive_evidence", "bounded_exclusion_is_not_whole_question_answer": true, "fit_without_crop": true, "force_when_evidence_missing": false},
+  "camera": {
+    "read": "slow_continuous_drift",
+    "search_transfer_frames": [6, 8],
+    "recognition": "decelerate_while_candidate_is_read",
+    "hit_and_judgment": "settle_to_zero",
+    "shutter_angle_degrees": 180,
+    "speed_contrast_target": 5,
+    "speed_contrast_is_hard_gate": false,
+    "continuous_position_and_velocity": true,
+    "overshoot": false,
+    "readable_recognition_hold_has_priority": true
+  },
+  "attention": {"question": "attention_orange", "comparison": "comparison_blue", "hit": "attention_orange", "maximum_simultaneous_orange_regions": 1, "maximum_color_families": 3, "neutral_tones_count_as_one_family": true, "no_glow": true, "no_red": true, "no_underline": true},
+  "audio": {"continuous_piano_bed": false, "world_darkens": "narrow_ambient_presence_preserve_voice", "lift_sfx": "short_dry", "hit_sfx": "short_dry", "assets_require_documented_license": true, "listening_review": "PENDING"},
+  "validation": {"native_shadow": "PENDING", "exposure_and_dof": "PENDING", "motion_continuity": "PENDING", "human_visual_review": "PENDING", "public_render_ready": false}
+}
