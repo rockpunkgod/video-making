@@ -7,6 +7,14 @@ from scripts.contrast_check import rgb,contrast,evaluate
 
 
 class StyleV1Tests(unittest.TestCase):
+    def test_dark_scene_composites_against_its_own_background(self):
+        style=read(ROOT/'ae/design/light-dual-space-v1.json')
+        self.assertTrue(all(r['passed'] for r in evaluate(style)))
+        style['contrast']['combinations']=[dict(foreground='paper',background='comparison_blue',background_opacity=0.25,base='environment',minimum=7)]
+        dark=evaluate(style)[0]['ratio']
+        del style['contrast']['combinations'][0]['base']
+        self.assertGreater(dark,evaluate(style)[0]['ratio'])
+
     def test_known_wcag_reference(self):
         self.assertAlmostEqual(contrast(rgb('#FFFFFF'),rgb('#000000')),21)
         self.assertEqual(contrast(rgb('#F2F0EA'),rgb('#F2F0EA')),1)

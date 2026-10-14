@@ -36,5 +36,10 @@
   },
   "attention": {"question": "attention_orange", "comparison": "comparison_blue", "hit": "attention_orange", "maximum_simultaneous_orange_regions": 1, "maximum_color_families": 3, "neutral_tones_count_as_one_family": true, "no_glow": true, "no_red": true, "no_underline": true},
   "audio": {"continuous_piano_bed": false, "world_darkens": "narrow_ambient_presence_preserve_voice", "lift_sfx": "short_dry", "hit_sfx": "short_dry", "assets_require_documented_license": true, "listening_review": "PENDING"},
+  "contrast": {"combinations": [
+    {"foreground": "paper", "background": "environment", "minimum": 7, "role": "extracted_words"},
+    {"foreground": "ink", "background": "paper", "minimum": 7, "role": "reading"},
+    {"foreground": "paper", "background": "comparison_blue", "minimum": 4.5, "role": "comparison"}
+  ]},
   "validation": {"native_shadow": "PENDING", "exposure_and_dof": "PENDING", "motion_continuity": "PENDING", "human_visual_review": "PENDING", "public_render_ready": false}
 }

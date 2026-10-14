@@ -27,7 +27,7 @@ def evaluate(style):
         fg=rgb(palette[pair['foreground']]);bg=rgb(palette[pair['background']])
         alpha=pair.get('background_opacity',1)
         if not 0<=alpha<=1:raise ValueError('Invalid fill opacity')
-        paper=rgb(palette['paper']);bg=[x*alpha+y*(1-alpha) for x,y in zip(bg,paper)]
+        base=rgb(palette[pair.get('base','paper')]);bg=[x*alpha+y*(1-alpha) for x,y in zip(bg,base)]
         value=contrast(fg,bg)
         rows.append(dict(pair,ratio=round(value,4),passed=value>=pair['minimum']))
     return rows
