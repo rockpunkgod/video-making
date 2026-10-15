@@ -81,10 +81,14 @@ try{
  var state=cp.layers.addNull();state.name='COGNITIVE_DIM';state.enabled=false;state.property('ADBE Effect Parade').addProperty('ADBE Slider Control');
  var dim=state.property('ADBE Effect Parade').property(1).property(1);dim.setValue(100);
  // Stem and options occupy stable authored positions, with the user's requested sizes.
- var stem=flow('STEM',H.source.stem,48,100,142,1720,null,H.source_refs.stem);
+ var stem=flow('STEM',H.source.stem,48,96,126,1728,null,H.source_refs.stem);
  highlight(range(stem,13,27),3,4,'#C8622E');
- var source=flow('PASSAGE',H.source.passage,46,100,292,1020,rail,H.source_refs.passage);
- for(var i=0;i<source.length;i++)source[i].layer.transform.opacity.expression='var y=transform.position[1]+thisComp.layer("PASSAGE_READING_RAIL").transform.position[1]; var edge=Math.min(linear(y,470,550,0,1),linear(y,1680,1760,1,0));edge*thisComp.layer("COGNITIVE_DIM").effect(1)(1);';
+ var source=flow('PASSAGE',H.source.passage,46,96,276,1020,rail,H.source_refs.passage);
+ // Reading and comparison occupy different screen areas. During a lift, the
+ // original reading rail slides upward into a shallow context band; it never
+ // remains as a second page of text behind the projected comparison words.
+ rail.transform.position.expression='var a=thisComp.layer("COGNITIVE_DIM").effect(1)(1);value+[0,-240*(100-a)/65,0];';
+ for(var i=0;i<source.length;i++)source[i].layer.transform.opacity.expression='var a=thisComp.layer("COGNITIVE_DIM").effect(1)(1);var c=(100-a)/65;var y=transform.position[1]+thisComp.layer("PASSAGE_READING_RAIL").transform.position[1];var bottom=1680-940*c;var edge=Math.min(linear(y,440,492,0,1),linear(y,bottom-52,bottom,1,0));edge*a;';
  var options={},allOptions=[];
  for(var oi=0;oi<4;oi++){
   var letter='ABCD'.charAt(oi),label=text('OPTION_'+letter,letter+'.',44,1200,296+oi*146,font,true);
@@ -103,7 +107,7 @@ try{
  var passes=[{start:10,step:4,label:'原速'},{start:30,step:8,label:'慢放'}];
  var health=H.source.options.D.indexOf('Keep');var dwords=range(options.D,health,H.source.options.D.length);
  for(var pi=0;pi<passes.length;pi++){
-  var pass=passes[pi],tag=text('PASS_LABEL_'+pi,pass.label,28,100,212,cn,false);tag.inPoint=pass.start;tag.outPoint=pi===0?28:64;
+  var pass=passes[pi],tag=text('PASS_LABEL_'+pi,pass.label,28,1740,126,cn,false);tag.inPoint=pass.start;tag.outPoint=pi===0?28:64;
   for(var qi=0;qi<3;qi++){
    var p=H.projections[qi],at=pass.start+qi*pass.step,hits=range(source,p.range[0],p.range[1]);if(!hits.length)throw Error('No bound glyph');
    var shift=-Math.max(0,hits[0].line-2)*62,oldShift=railKeys[railKeys.length-1][1];
@@ -111,8 +115,8 @@ try{
    var lift=at+1.5,back=at+pass.step-.8;
    highlight(hits,at+1,at+1.5,'#C8622E');
    // Exact source words and the original option keywords, not replacement cards.
-   project(hits,lift,back,120,448,'EVIDENCE_'+pi+'_'+qi);
-   project(dwords,lift,back,120,760,'OPTION_KEYWORDS_'+pi+'_'+qi);
+   project(hits,lift,back,96,520,'EVIDENCE_'+pi+'_'+qi);
+   project(dwords,lift,back,96,672,'OPTION_KEYWORDS_'+pi+'_'+qi);
    dims.push([lift,100],[lift+.5,35],[back,35],[back+16/24,100]);
    focusKeys.push([lift,vec(960,540,0)],[lift+.5,vec(960,540,-160)],[back,vec(960,540,-160)],[back+16/24,vec(960,540,0)]);
   }
@@ -144,7 +148,7 @@ try{
   var pos=l.transform.position.valueAtTime(0,true);
   SG_eliminate([l],22,10,24);SG_keys(l.transform.position,[[29.8,[pos[0],pos[1]+48,0]],[30,pos]],false);SG_eliminate([l],56,10,24);
  }
- for(var ji=0;ji<2;ji++){var dec=text('BOUNDED_DECISION_'+ji,'排除 D',100,130,570,serif,false);dec.inPoint=ji===0?23:57;dec.outPoint=ji===0?25:62;}
+ for(var ji=0;ji<2;ji++){var dec=text('BOUNDED_DECISION_'+ji,'排除 D',100,96,570,serif,false);dec.inPoint=ji===0?23:57;dec.outPoint=ji===0?25:62;}
  var memory=text('FROZEN_MEMORY',H.memory_line,48,100,902,cn,false);memory.inPoint=66;memory.outPoint=70;memory.comment=JSON.stringify(H.memory_ref);
  // Caption is lexical projection of existing WAV transcripts, never improvised VO.
  for(i=0;i<H.voices.length;i++){

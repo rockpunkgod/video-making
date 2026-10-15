@@ -63,4 +63,8 @@ function SG_return(projection,at,frames,fps){
     // Reversed lift path, ending at the exact glyph origin and original scale.
     var l=projection.layer;SG_keys(l.transform.position,[[at,projection.target],[at+frames/fps,projection.origin]],false);
     SG_keys(l.transform.scale,[[at,[projection.scale,projection.scale,projection.scale]],[at+frames/fps,[100,100,100]]],false);
+    // Hand the glyph back to the original over the final four frames. Keeping
+    // two opaque copies alive until after arrival creates a visibly bold echo.
+    SG_keys(l.transform.opacity,[[at,100],[at+(frames-4)/fps,100],[at+frames/fps,0]],false);
+    l.outPoint=at+frames/fps;
 }
