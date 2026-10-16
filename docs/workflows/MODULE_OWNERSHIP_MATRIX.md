@@ -2,6 +2,21 @@
 
 当前入口：[CURRENT_PRODUCTION_WORKFLOW](CURRENT_PRODUCTION_WORKFLOW.md)。原始审计基于 `d9fa2da`；本矩阵增补其后 B06 r3 的限定制作能力，研究/Cinema 的 LOCAL_UNMERGED 增量仍不属于已提交能力。E01–E20 对应原始审计报告，后续 E21 对应独立 B06 制作凭证；逐项六维状态、证据路径与可用性见[能力索引](PRODUCTION_CAPABILITY_INDEX.json)。下面每条卡片的“有权/禁止”界定职责，不授予额外操作权限。
 
+## 当前主片的实际消费增量
+
+唯一主片为 `mainfilm-integration-r01`，默认入口仍是 `adaptive-episode/run.py`。
+下方 R06/B06 卡片保留各自历史范围，不把它们的「当前」字样解释成本次默认主片。
+有效要求和冲突处理只维护在上述当前入口页。
+
+| 输入 / 作者职责 | 当前实际消费者与作品变化 | 原模块边界 |
+|---|---|---|
+| 两份有效冻结资产、当前状态、逐项完整结论 | `authored_episode.checked_author` 调用原 `video_contracts`；限制逐题四项核对、答案闭合、一次无新增判断的回放 | 不调用解题器，不重写 ANSWER；旧 Episode 验证器仍有其独立消费者，本片作者输入不是其编译输出 |
+| 连续完整稿、观看理由、来源范围、辨认与口播锚点 | `compile_clock` 把真实完整声音、字幕与场景时序写入 `AV_PLAN`；`authored-episode.jsx` 实际生成定位、原位提取、候选整体运动与注意力提示 | 作者完成创作判断；Audience 理由字段不是自动编译参数。Pedagogy/Student POV/Choreography/Direction 0.2 未因此自动接入 |
+| 新稿与既有声音 Producer、`voice-delivery/v1` | 现有生成器 → 可复用声音对齐 → 原生字幕与 PR 完整音轨；改变声音长度必须传播 | 保留失败 take 与对齐诊断，不以强制对齐或 ASR 代替听审 |
+| 当前 AE/PR 目标、既有桥接、共享宿主占用 | `authored_native.Host` 对每个原生写操作前后读回身份，复用完成分段，新工程保存并恢复父工程 | 旧 native-request 写入仅历史显式重放；不能静默绕过当前作者。原生执行、编码媒体、人工作品认可分开 |
+
+可复用编排已从私有 R02 作者脚本提到公共消费者；真实题材、机器路径、声音和媒体仍在忽略目录。对应 E22 只支持当前明确记录的阶段，不扩大到历史模块整体完成。
+
 ## 教学事实与节目
 
 | 模块 / 目的 | Inputs → Outputs / Contract | Producer → 实际 Consumer |

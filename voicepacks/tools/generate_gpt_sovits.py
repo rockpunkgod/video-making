@@ -59,6 +59,7 @@ def main():
     scripts.add_argument('--performance-request', type=Path)
     parser.add_argument('--output', type=Path, required=True)
     parser.add_argument('--cpu', action='store_true')
+    parser.add_argument('--offline', action='store_true', help='Use installed model and tokenizer resources only')
     args = parser.parse_args()
     pack, runtime, output = args.pack.resolve(), args.runtime.resolve(), args.output.resolve()
     performance = None
@@ -100,6 +101,10 @@ def main():
     sys.path[:0] = [str(runtime), str(runtime / 'GPT_SoVITS')]
     os.environ.update(HF_HUB_OFFLINE='1', HF_HUB_DISABLE_TELEMETRY='1',
                       version='v2ProPlus', language='zh_CN', is_g2pw='False')
+    if args.offline:
+        os.environ.update(TRANSFORMERS_OFFLINE='1', HF_DATASETS_OFFLINE='1')
+        import nltk
+        nltk.download = lambda *unused, **kwargs: False
     import numpy as np
     import soundfile as sf
     import torch

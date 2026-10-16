@@ -2,13 +2,52 @@
 
 从本页进入当前制作；模块权限见[职责矩阵](MODULE_OWNERSHIP_MATRIX.md)，逐项能力与证据见[能力索引](PRODUCTION_CAPABILITY_INDEX.json)，本次核查记录见[审计报告](WORKFLOW_AUDIT.md)。本页是操作导航，不增加 Runtime、必填生产表或发布门禁。
 
-原始审计基线：`main@d9fa2da8bf893745f567e21cb631a4d43299c110`；文档整理已提交于 `c97c16b`。2026-10-11 的后续制作状态在本页增量更新，原始[审计报告](WORKFLOW_AUDIT.md)保留当时事实。本机研究/Cinema 增量继续独立保留。继续任何生产前读取该 revision 的实际收据与当前提供的上游状态，不凭目录名字或本页日期推定有效。
+原始审计基线：`main@d9fa2da8bf893745f567e21cb631a4d43299c110`；文档整理已提交于 `c97c16b`。后续制作状态在本页增量更新，原始[审计报告](WORKFLOW_AUDIT.md)保留当时事实。本机研究/Cinema 增量继续独立保留。继续任何生产前读取该 revision 的实际收据与当前提供的上游状态，不凭目录名字或本页日期推定有效。
 
-## 当前首发停止点 · 2026-10-16
+## 当前主片整合入口
 
-当前首发 revision 为 `local-data/free-showcase/first-release-rescue-r02/`，R03 双题已完成 G1 当前准入、G2 完整稿与 G3 完整声画粗剪（163 秒、720p24）。用户反馈“这个叙事节奏可以”，只认可本条媒体的叙事节奏，后续保留双题递进和快慢安排；整体 G4 尚未完整确认，学生首看为 `EMPIRICAL_PENDING`，正式 4K / 发布未启动。
+当前唯一主片 revision 为 `local-data/free-showcase/mainfilm-integration-r01/`，由私有 `local-data/free-showcase/PRODUCTION_INDEX.json` 指向。继续制作使用原有 `python -X utf8 ae/experiments/adaptive-episode/run.py`；不带目录时读取该指针，不回到历史 R06、163 秒粗剪或局部试片。`status / check / voice / align / prepare / build / audit / preview / render / premiere / package / restore` 都消费同一 revision。真实输入缺失时明确报错，公共克隆不凭本页生成题材。
 
-接手先读该 revision 的 `PRODUCTION_RECEIPT.json`、`AV_DIRECTION.md`、`CREATIVE_REVIEW.md` 及新增 `USER_FEEDBACK.json`；原收据是交付时历史快照。按用户要求保持停在 G3，不重新选题、重做已完成媒体或自动推进 G5。公开可读的交接及指纹见 [R02 记录](../first-release-rescue-r02.md)。下方 R06 / B06 章节保留其独立版本、历史门禁编号和交接范围，不代表当前首发尚无完整声画。
+本轮用户明确要求形成同一版连续声画粗剪，替代此前“交局部试片后暂停扩展”的任务边界；不继承整期认可或发布许可。已核实两题当前冻结资产及完整候选结论，新稿按来源由作者核查，独立新稿审阅、听审与人工作品审片仍另记。目标为约 5–8 分钟，最终时长取完整声音及实际阅读/动作，不填充或加速凑数。
+
+父版本 `first-release-rescue-r02` 的 163 秒双题粗剪及其叙事节奏反馈保留原范围。`longform-director-r01` 提供连续新稿与 30/77 秒对照，`longform-director-r02-locator` 提供 83 秒定位修正；它们是当前主片的输入或对照，不再各自代表当前全局版本。77 秒片实际反馈指出定位过程没有被看见；83 秒修正版尚未获得复看认可。旧 R06 / B06 章节保留历史证据，不作为本次继续制作指令。
+
+推荐依次使用 `check → voice → align → prepare → build → audit → preview → render --proof → render → premiere → package → restore`。先查看现有收据；已完成的完整声音及原生分段按指纹复用，不能再次执行 build 覆盖项目。`--proof` 只先渲染同一主片的开场，后续整片复用这些帧，不另建实验版本。输出统一标记 `EDITORIAL_PROXY`；4K 合成与正式 4K 渲染分开记录。
+
+### 本轮实际交付与接手点
+
+同一目录已生成 `MAIN_FILM_EDITORIAL_PROXY.mp4`：**293.458333 秒、7,043 帧、1920×1080、24fps**，含两题完整核对、一次重点回看、24 段完整新声音及音频对齐字幕。`MAIN_FILM.aep` 保存当前代理与未渲染的 4K24 主合成；`MAIN_FILM.prproj` 保存实际声画剪辑。`DELIVERY_QA.json`、`native-audit.json`、`PR_TIMELINE.json` 是对应当前版本的执行依据，不是人工认可。
+
+实际观看路径：00:10–00:19 展示产品名从题干到原文同名对象及整个产品段；约 01:15 先展示原题中的 D，再连续带入工作空间；01:50.667–02:18 只回看一次价格比较关系；02:18 后进入第二题，最后完成四项核对与 D 的答案落定。原题/工作空间、真实相机、整项字母身份、透明提取和物理退出均有原生及编码帧检查。`D-entry-regression/` 对照的是已有明确反馈的 18 秒 B 片，认可范围没有转授本片。
+
+原生回归修复了提前变灰的候选、段落被标题裁切、Orientation 切线把角度清零，以及 D 原位辨认没有被镜头看见的问题。D 的修复保持所有声音、字幕、判断时刻和总时长；段外 6,447 帧相机读回完全一致，14 个完整渲染分段复用，仅重做两个受影响分段。旧尝试保存在 `native-attempt-01/02`，声音漏读和导出失败记录也保留。
+
+实际 PR 导出存在统一的 1,024 样本（约 0.021333 秒）延迟；`package` 先逐段测量，只接受零延迟或这一明确的 AAC 帧偏移，再仅修正封装时间戳。最终每段完整声音在实际起点的相关性均高于 0.99999；视频包与时间戳不变，音频编码包不变。字幕对齐、完整解码和相关回归已核验；**未运行全仓测试**，也没有将既有独立失败改为通过。
+
+本版仍是旁白粗剪：**正式 4K 输出、音乐/音效混音、整片受控景深精修、独立新稿审阅、人工完整观看与试听、学生效果及发布资格尚未完成**。当前 AE 相机保留三维运动与运动模糊，DOF 关闭；这不把历史零景深设定升为全局要求。快移过程中纸面与暗色空间的文字对比、全片节奏、英文名称和选项字母读音仍需随最终媒体复核；抽帧与 ASR 不代签这些判断。
+
+接手先播放当前 MP4 并读取上述收据；需要继续原生编辑时打开同目录 AEP/PR 工程，不重跑 build。宿主恢复父工程的结果见 `RESTORED_HOSTS.json`，此前工程和媒体继续保留。下一次修改只针对新反馈涉及的台词或镜头，其余有效要求按本页继续继承。
+
+### 要求实际进入哪里
+
+| 有效要求 / 当前状态 | 实际输入或作者决定 | 当前消费者 | 作品变化与证据 |
+|---|---|---|---|
+| 两题递进、完整候选、核心方法只重点拆一次 / 有效 | `AV_AUTHOR.json` 的两题来源、15 场连续故事、完整 terminal refs | `authored_episode.checked_author / compile_clock` | 逐题四项检查后才给最终选项；重点回看只一次、不重复排除。冻结与状态检查不是作者自造答案 |
+| 观看理由和自然叙事 / 有效，新稿观感未确认 | 先写成完整稿，再拆精确台词；题间由表达不同转为名词相同但动作不同 | 同一作者输入中的 `voices / scenes / attention / candidate_anchor` → 原生模板与声音 | 台词进入新 take；明确的口播锚点改变提示和候选入场。Audience 模块本身仍非自动镜头编译器，作者决策已进入消费者 |
+| 题干到原文定位 / 实际缺失反馈后的有效修正 | 同名对象、原文精确范围、辨认停留 | `compile_clock` → `authored-episode.jsx` 的原生定位镜头 | 先看题干对象，再从文章开头找同名对象、确认整个段落，随后才提取证据；新媒体仍须复看 |
+| 原生 3D、来源提取、整项物理退出 / 有效 | 从已执行私有编排提取的原位复制、父层运动、深度与遮挡、源字返回 | 原有 adaptive 入口 → `authored_native` → 同一 AE 工程 | 原文字句、来源、候选字母与完整选项核对；相机和提取共用移动时钟。工程检查不代签空间感 |
+| 单次重点回看 / 有效 | `kind=replay / replay_of` 和已闭合候选状态 | `compile_clock` 与原生 replay 场景 | 回看第一题价格关系的比较对象；不重复整题、不开新的候选事件 |
+| 改稿必须改声音/字幕/时间 / 有效 | 同一个逐字稿、已有 GPT-SoVITS Producer、`voice-delivery/v1`、实际声音对齐 | `voice → align → prepare`，随后 AE 字幕与 PR 完整音轨 | 每段完整 take、无剪短/变速；时长改变传播到后续场景、字幕和判断。ASR 差异不伪装听审通过 |
+| A/C 视觉方向 / 历史探索范围 | v0.4 的 A=Paper/Evidence，C=Fog/Architecture；后来 G/H/I 与连续空间试片另有范围 | 本轮保留兼容的纸面、克制层级与空间连续；不自动启用旧字母预设 | 原定义见 `ae/design/swiss-cinematic-hero-v0.4.json`。未找到把 A/C 两套整体升为当前全片认可的凭证，不猜方案或恢复旧固定构图 |
+| Pedagogy / Student POV / Choreography / Direction 0.2 | 既有独立设计链和来源职责保持 | 没有强制导入这些尚未提供适配输入的历史编译器 | 本轮由显式作者输入兑现自然文案、辨认和动作；这些模块本体不因主片产出而被标为已接通 |
+
+`audience_intent` 记录作者的观看理由，本身不是自动导演参数。实际改变作品的是同场逐字稿、辨认/落稳时机、口播锚点、来源范围和相机实现；不能仅凭理由字段或其 hash 宣称观看意图已兑现。当前作者输入也不是旧 Episode/Pedagogy 编译器的输出，现有模块各自的集成范围保持原记录。
+
+### 后续新增或修改板块
+
+只引用本页“制作要求的延续”，不复制第二份全局清单。每次指出改变的有效要求、继续适用的旧要求、具体消费者、预期作品变化和相关回归；用户没有明确替代的兼容要求继续有效。实验默认值不改全局默认。改台词重新生成受影响 take；改声音重新准备字幕和时钟；改排版检查提取、遮挡和相机；改节奏检查证据、候选和停留。已有 native 输出后发现输入改变时明确报 stale，另存制作修订，不靠刷新 hash 冒充旧输出有效。
+
+代码状态、原生执行、媒体交付、人工创意、听感、学生效果和公开资格继续分别记录。当前工程消费关系见 `ae_production/authored_episode.py`、`ae_production/authored_native.py` 和 `ae/templates/authored-episode.jsx`；本页下方旧路径是历史范围，不取消当前主片要求。
 
 ## 制作要求的延续
 
@@ -40,7 +79,7 @@
 
 ## 接手时先做哪一步
 
-1. 核对 HEAD、工作树及实际任务 revision；保留并行工作。当前首发为 `local-data/free-showcase/first-release-rescue-r02/`。仅在继续旧 R06 / B06 专项时读取 `local-data/free-showcase/title-task-episode-r3/` 和 `local-data/free-showcase/b06-judgement-r2/`。真实材料不随 Git 分发；缺失时记录 `LOCAL_PRODUCTION_EVIDENCE_UNAVAILABLE`。
+1. 核对 HEAD、工作树及实际任务 revision；保留并行工作。当前主片从 `local-data/free-showcase/PRODUCTION_INDEX.json` 进入，父粗剪为 `first-release-rescue-r02`。仅在显式继续旧 R06 / B06 专项时读取其原 revision。真实材料不随 Git 分发；缺失时记录 `LOCAL_PRODUCTION_EVIDENCE_UNAVAILABLE`。
 2. 已有产物先读收据、依赖和失败原因。B06 **不要重新运行 prepare/G0**：从 `PREPARATION_RECEIPT.json`、`PRODUCTION_INDEX.json`、`CANDIDATE_PREFIX.json`、`ANNOTATION_REQUEST.json` 开始。
 3. 确认产品为 `FREE_SHOWCASE`。`PAID_MASTERY` 转到其教学目标、练习和迁移设计；当前免费发布检查器明确拒绝 Paid，尚无完整 Paid 课程验收实现。
 4. 找到本次真正缺少的一层再继续。没有新上游语义许可时不制作新的语义拆分；有许可也仍需消费者、原生执行和实际媒体核验。
@@ -48,7 +87,7 @@
 
 历史 R06 是内部制作：完整带字幕纯画面已经存在，十九条逐字声音已准备；原审计基线未发现该 revision 的完整原生 PR 声画交付与最终审核。其 `public_render_ready=false`。这些事实不否定 R02 当前首发、历史 R09 或 Reading D 的各自交付。
 
-## As-Is：真正执行过的路径
+## 历史 R06：当时真正执行过的路径
 
 ```mermaid
 flowchart TD
@@ -76,7 +115,7 @@ flowchart TD
 
 R06 的 AEP、Native Spec、实际帧和画面收据是执行证据；`DIRECTION_REALIZED.json` 这个文件名本身不证明实际媒体时码。[Audience 交接](../../creative_os/audience_engagement.py) 的时间明确仍为 `PLANNED_NATIVE_DIRECTION_NOT_ACTUAL_EXPORT`。
 
-## 实际接口、依赖和停止点
+## 历史 R06/B06 接口、依赖和停止点（保留原记录）
 
 | 步骤 / 入口 | 输入 → 输出 / 真正消费者 | 可以继续的条件；缺口返回处 |
 |---|---|---|
@@ -101,7 +140,7 @@ python -m scripts.voice_delivery <delivery.json>
 # 以下记录旧版原生接口的真实语法；render 不是当前 B06 的制作入口。
 # 旧执行器尚未接入逐次 HostOwnership，新增写操作需先完成该接线。
 python ae/experiments/adaptive-episode/run.py audit local-data/<revision>
-python ae/experiments/adaptive-episode/run.py render local-data/<revision> --pid <verified-AE-PID> --hwnd <verified-AE-window>
+python ae/experiments/adaptive-episode/run.py render local-data/<revision> --historical-replay --pid <verified-AE-PID> --hwnd <verified-AE-window>
 python ae/experiments/adaptive-episode/run.py package local-data/<revision>
 python -m scripts.free_showcase <request.json> --statuses <status.json> --output <new-decision.json>
 ```
@@ -129,7 +168,7 @@ R3 当前只绑定所供状态清单的完整 SHA；无害重导出也可能要�
 
 完整动作前缀导出 B/C/D，B06 仅排除 B 得 C/D，B07 保留 C 仍是 C/D。`candidate_motion` 证明状态与上游一致，不能证明观众理解。**G3** 用户分别观看视觉版和声画版，判断对象差异、排除原因、剩余候选和接缝；未通过只改 B06 及必要接缝。通过后才讨论 **G4** 整期应用。精细标注不支持的关键操作继续 HOLD，不能用 `approved=true` 解锁。
 
-## To-Be：收敛交接，不重建系统
+## 历史审计提出的目标职责图
 
 ```mermaid
 flowchart TD

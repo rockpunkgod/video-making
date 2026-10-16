@@ -2,6 +2,12 @@
 
 本报告保存审计证据与当时结论；长期入口是 [CURRENT_PRODUCTION_WORKFLOW](CURRENT_PRODUCTION_WORKFLOW.md)。范围为 Phase A 只读审计和 Phase B 文档收敛。没有证据要求本轮修改运行时，Phase C 不实施代码适配。
 
+后续实际接入记录（2026-10-17）：新的用户任务已授权修改消费者并制作同一版连续粗剪，上述只读范围仍仅属于本报告的原始审计。当次实查主工作区为 `main@517485f`，远端 main 为 `3f30b668`；叙事分支为 `3b8c3b7`，电影节奏分支为 `0904558`。实查工作树没有未解决合并冲突，既有并行脏改动和 worktree 保留，未盲合分支。
+
+实际断点是默认 adaptive 入口仍消费旧 native-request，而 163 秒 R02 作者脚本、长稿和 83 秒定位修正在私有目录各自存在。现已将可复用作者/时钟/原生适配接回这个默认入口，唯一主片为 `mainfilm-integration-r01`。两题、单次回看、新声音、字幕、AE/PR 和 293.458333 秒代理媒体已有同版产物；E22/E23 在[能力索引](PRODUCTION_CAPABILITY_INDEX.json)记录具体消费与证据。Pedagogy/Student POV/Choreography/Direction 0.2/Audience 的自动编译边界没有因此被升级为已接通。
+
+当前粗剪执行与未兑现项见[当前入口](CURRENT_PRODUCTION_WORKFLOW.md#本轮实际交付与接手点)。53 项相关回归通过，未跑全仓测试；37 份受保护父资产前后 SHA 一致。历史测试失败、漏读 take、原生失败与修复前媒体均保留。本增量不改写下方原始审计结论，也不把技术执行转换为人工创意、听感、学生效果或发布认可。
+
 ## 基线、保护与并行任务
 
 - 本地与 `git ls-remote --heads origin main` 均为 `d9fa2da8bf893745f567e21cb631a4d43299c110`，未回退。

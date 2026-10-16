@@ -239,10 +239,21 @@ def verify_rendered_frames(folder,receipt):
 
 
 def main():
-    p=argparse.ArgumentParser(description=__doc__);p.add_argument('operation',choices=('build','audit','preview','render','package'));p.add_argument('folder')
+    p=argparse.ArgumentParser(description=__doc__);p.add_argument('operation',nargs='?',default='status',choices=('status','check','voice','align','prepare','build','audit','preview','render','premiere','package','restore'));p.add_argument('folder',nargs='?')
     p.add_argument('--pid',type=int);p.add_argument('--hwnd',type=int);p.add_argument('--batch-size',type=int,default=96)
-    a=p.parse_args();folder=Path(a.folder).resolve()
+    p.add_argument('--historical-replay',action='store_true',help='Explicit historical executor use; does not change the current main film')
+    p.add_argument('--proof',action='store_true',help='Render the current main film introduction before the full render')
+    a=p.parse_args()
+    from ae_production.authored_episode import current_folder,dispatch,AUTHOR
+    folder=Path(a.folder).resolve() if a.folder else current_folder()
     if not folder.is_relative_to(ROOT/'local-data'):raise ValueError('Real assets belong in ignored local-data')
+    if (folder/AUTHOR).exists():
+        result=dispatch(a.operation,folder,proof=a.proof,batch_size=a.batch_size)
+        print(json.dumps(result,ensure_ascii=False));return
+    if a.operation not in ('audit','package') and not a.historical_replay:
+        raise ValueError('Historical input cannot silently bypass current author decisions; use the current production index')
+    if a.operation not in ('build','audit','preview','render','package'):
+        raise ValueError('This operation requires the current AV_AUTHOR input')
     result=render(folder,a.pid,a.hwnd,a.batch_size) if a.operation=='render' else globals()[a.operation](folder)
     print(json.dumps(result,ensure_ascii=True))
 

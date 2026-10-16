@@ -1,10 +1,10 @@
 {
   "index_version": "1.0",
   "kind": "documentation_capability_index",
-  "as_of": "2026-10-11T19:10:12+08:00",
-  "repository_base": "c97c16b06f2657c9a182a37025876058aecec083",
+  "as_of": "2026-10-17T01:05:44+08:00",
+  "repository_base": "517485f44ec798da7482e58ae4dba77dc4a7c184",
   "recommended_workflow": "docs/workflows/CURRENT_PRODUCTION_WORKFLOW.md",
-  "scope": "Original audit preserved in WORKFLOW_AUDIT.md; incremental B06 r3 production evidence is separate. Research/Cinema local overlays remain explicitly labelled. This index is not a release credential.",
+  "scope": "Historical audit/B06 evidence remains scoped to those revisions. Current mainfilm-integration-r01 is the sole default authored production: actual continuous 1080p24 editorial proxy, 293.458333 seconds. Current consumer changes are maintained in repository source; private material is not distributed. This index is not a release credential.",
   "not_runtime_contract": true,
   "not_release_authority": true,
   "production_roles": [
@@ -231,6 +231,41 @@
       ],
       "scope": "B06 r3 four explicit AI phrase reviews, actual guarded AE/PR execution, six verified 4K24 deliveries and native frame/sample mappings; G3 viewing/listening pending, no whole-episode expansion",
       "availability": "MIXED_TRACKED_AND_LOCAL_PRIVATE"
+    },
+    "E22": {
+      "paths": [
+        "ae/experiments/adaptive-episode/run.py",
+        "ae_production/authored_episode.py",
+        "ae_production/authored_native.py",
+        "ae/templates/authored-episode.jsx",
+        "voicepacks/tools/align_delivery.py",
+        "tests/test_authored_episode.py",
+        "AGENTS.md"
+      ],
+      "scope": "Current default consumer, measured copy/voice/scene propagation, source-bound native realization and guarded AE/PR execution; portable implementation is repository source. Author rationale alone is not automatic Audience execution.",
+      "availability": "TRACKED"
+    },
+    "E23": {
+      "paths": [
+        "local-data/free-showcase/mainfilm-integration-r01/AV_AUTHOR.json",
+        "local-data/free-showcase/mainfilm-integration-r01/AV_PLAN.json",
+        "local-data/free-showcase/mainfilm-integration-r01/voice-current/delivery.json",
+        "local-data/free-showcase/mainfilm-integration-r01/VOICE_ALIGNMENT.json",
+        "local-data/free-showcase/mainfilm-integration-r01/native-audit.json",
+        "local-data/free-showcase/mainfilm-integration-r01/D_ENTRY_NATIVE_REPAIR.json",
+        "local-data/free-showcase/mainfilm-integration-r01/SCOPED_RENDER_REUSE.json",
+        "local-data/free-showcase/mainfilm-integration-r01/D-entry-regression/FRAME_SOURCES.json",
+        "local-data/free-showcase/mainfilm-integration-r01/PICTURE_RECEIPT.json",
+        "local-data/free-showcase/mainfilm-integration-r01/PR_TIMELINE.json",
+        "local-data/free-showcase/mainfilm-integration-r01/PR_EXPORT_RECEIPT.json",
+        "local-data/free-showcase/mainfilm-integration-r01/NATIVE_AUDIO_DELAY.json",
+        "local-data/free-showcase/mainfilm-integration-r01/DELIVERY_QA.json",
+        "local-data/free-showcase/mainfilm-integration-r01/MAIN_FILM.aep",
+        "local-data/free-showcase/mainfilm-integration-r01/MAIN_FILM.prproj",
+        "local-data/free-showcase/mainfilm-integration-r01/MAIN_FILM_EDITORIAL_PROXY.mp4"
+      ],
+      "scope": "Actual 7043-frame continuous proxy; two closed frozen questions, one focused replay, 24 intact takes. Visual source/option/clock readback and encoded frame samples; complete audio at measured starts; 1024-sample uniform native export delay corrected by timestamps only, audio payload unchanged. Formal 4K, music mix, independent new-copy review, human creative/listening review and student outcomes are not established.",
+      "availability": "PRIVATE_LOCAL"
     }
   },
   "capabilities": [
@@ -375,7 +410,8 @@
       ],
       "known_limits": [
         "Author chooses questions and Establish/Variation",
-        "Validated narrative structure is not a viewing result"
+        "Validated narrative structure is not a viewing result",
+        "Current authored mainfilm uses its explicit two-question frozen closure checks; this legacy Episode compiler is not its input producer."
       ],
       "human_approval_scope": "PENDING; engineering or plan checks are not human approval",
       "availability": "TRACKED",
@@ -451,7 +487,8 @@
       ],
       "known_limits": [
         "adaptive executor does not automatically consume suggestions",
-        "Actual media mapping remains unavailable without media/timeline/human anchors"
+        "Actual media mapping remains unavailable without media/timeline/human anchors",
+        "Current mainfilm manually authors copy, holds, cues and camera choices in AV_AUTHOR; it does not automatically compile this module output."
       ],
       "human_approval_scope": "PENDING; engineering or plan checks are not human approval",
       "availability": "TRACKED",
@@ -742,7 +779,7 @@
     },
     {
       "capability_id": "r06_authored_native_input",
-      "production_role": "CURRENT_PRODUCTION",
+      "production_role": "LEGACY_COMPAT",
       "entrypoint": "local-data/free-showcase/prepare_title_task_episode.py::prepare",
       "version": "private r1, r2/r3 patches",
       "input_contracts": [
@@ -782,24 +819,65 @@
         "HUMAN_APPROVED": "PENDING",
         "RELEASE_APPROVED": "NOT_ESTABLISHED"
       },
-      "recommended_action": "保留边界与当前契约；按明确缺口推进"
+      "recommended_action": "历史 R06 私有作者仅供对应 revision 重放；当前主片使用同一 adaptive 入口中的公共 authored consumer。"
+    },
+    {
+      "capability_id": "authored_mainfilm_input",
+      "production_role": "CURRENT_PRODUCTION",
+      "entrypoint": "ae/experiments/adaptive-episode/run.py -> ae_production/authored_episode.py",
+      "version": "bounded authored AV adapter; existing voice-delivery/v1",
+      "input_contracts": [
+        "private AV_AUTHOR",
+        "supplied valid frozen bundles/statuses",
+        "complete voice-delivery/v1",
+        "actual audio alignment"
+      ],
+      "output_contracts": [
+        "AV_PLAN with source spans, scene/voice/caption clock and candidate events",
+        "exact subtitles"
+      ],
+      "known_consumers": [
+        "authored-episode.jsx",
+        "authored_native guarded AE/PR chain"
+      ],
+      "evidence_refs": [
+        "E22",
+        "E23"
+      ],
+      "known_limits": [
+        "Author makes creative choices; not an automatic solver or universal director",
+        "No automatic Pedagogy/Student POV/Choreography/Direction 0.2/Audience compiler consumption",
+        "Current private input must be supplied; no invented sample content",
+        "ASR alignment is not listening approval"
+      ],
+      "human_approval_scope": "Current media PENDING; prior scoped D-entry feedback is a regression reference only",
+      "availability": "MIXED_TRACKED_AND_LOCAL_PRIVATE",
+      "scope": "mainfilm-integration-r01; actual 293.458333-second editorial proxy, not formal 4K/release",
+      "dimensions": {
+        "DESIGNED": "CONFIRMED",
+        "IMPLEMENTED": "CONFIRMED",
+        "INTEGRATED": "CONFIRMED",
+        "NATIVE_VERIFIED": "CONFIRMED",
+        "HUMAN_APPROVED": "PENDING",
+        "RELEASE_APPROVED": "NOT_ESTABLISHED"
+      },
+      "recommended_action": "从同一主片媒体与实际收据接手；反馈只改变相关作者输入并检查已认可的兼容效果。"
     },
     {
       "capability_id": "adaptive_native_episode",
       "production_role": "CURRENT_PRODUCTION",
       "entrypoint": "ae/experiments/adaptive-episode/run.py",
-      "version": "unversioned adapter; cognitive-pov-v0.1.jsx",
+      "version": "current authored adapter; native-request retained as explicit historical replay",
       "input_contracts": [
-        "native-request",
-        "current dependencies",
-        "source geometry",
-        "voice hashes"
+        "current private PRODUCTION_INDEX + AV_AUTHOR/AV_PLAN",
+        "valid frozen sources/status",
+        "actual complete takes and captions"
       ],
       "output_contracts": [
-        "AEP",
-        "native audits",
-        "frame receipts",
-        "silent 4K picture"
+        "AE 1080p24 proxy and unrendered 4K24 master",
+        "native audits and scoped resumable picture parts",
+        "Premiere editable timeline and actual export",
+        "continuous editorial proxy with measured full-take timing"
       ],
       "known_consumers": [
         "Premiere",
@@ -807,21 +885,23 @@
       ],
       "evidence_refs": [
         "E07",
-        "E08"
+        "E08",
+        "E22",
+        "E23"
       ],
       "known_limits": [
-        "Existing build/render not globally wrapped in HostOwnership",
-        "No auto Audience/Direction 0.2 execution",
-        "Silent picture is not complete AV"
+        "Shared HostOwnership guards all current authored AE/PR writes; old native-request writes require explicit historical replay",
+        "No automatic Audience/Direction 0.2 execution",
+        "Formal 4K render, music mix, human creative/listening review remain pending"
       ],
-      "human_approval_scope": "PENDING; engineering or plan checks are not human approval",
+      "human_approval_scope": "New whole-film creative/listening review PENDING; no inherited acceptance",
       "availability": "TRACKED",
-      "scope": "Audited R06 workflow; see limits",
+      "scope": "Current mainfilm-integration-r01; historical R06 evidence remains historical",
       "dimensions": {
         "DESIGNED": "CONFIRMED",
         "IMPLEMENTED": "CONFIRMED",
         "INTEGRATED": "CONFIRMED",
-        "NATIVE_VERIFIED": "CONFIRMED_R06_R3",
+        "NATIVE_VERIFIED": "CONFIRMED",
         "HUMAN_APPROVED": "PENDING",
         "RELEASE_APPROVED": "NOT_ESTABLISHED"
       },
@@ -880,11 +960,14 @@
       ],
       "known_consumers": [
         "B06 OwnedAE build/render",
-        "B06 OwnedPR native editing/export"
+        "B06 OwnedPR native editing/export",
+        "current authored_native.Host AE/PR build, preview, render, edit, export and restore"
       ],
       "evidence_refs": [
         "E15",
-        "E21"
+        "E21",
+        "E22",
+        "E23"
       ],
       "known_limits": [
         "Cooperative clients only; manual users can still change the host",
@@ -894,12 +977,12 @@
       ],
       "human_approval_scope": "PENDING; engineering or plan checks are not human approval",
       "availability": "TRACKED",
-      "scope": "Actual B06 r3 host integration only; older executors are not globally retrofitted",
+      "scope": "Actual B06 and current mainfilm guarded native operations; no automatic retrofit of unrelated historical executors",
       "dimensions": {
         "DESIGNED": "CONFIRMED",
         "IMPLEMENTED": "CONFIRMED",
-        "INTEGRATED": "CONFIRMED_FOR_B06_R3",
-        "NATIVE_VERIFIED": "CONFIRMED_FOR_B06_GUARDED_WRITES",
+        "INTEGRATED": "CONFIRMED",
+        "NATIVE_VERIFIED": "CONFIRMED",
         "HUMAN_APPROVED": "PENDING",
         "RELEASE_APPROVED": "NOT_ESTABLISHED"
       },
@@ -1035,11 +1118,14 @@
       "known_consumers": [
         "private R06 author",
         "Premiere",
-        "historical voice consumers"
+        "historical voice consumers",
+        "current authored mainfilm 24 complete takes through native PR and encoded sample checks"
       ],
       "evidence_refs": [
         "E09",
-        "E10"
+        "E10",
+        "E22",
+        "E23"
       ],
       "known_limits": [
         "Model and producer replaceable",
@@ -1048,11 +1134,11 @@
       ],
       "human_approval_scope": "PENDING; engineering or plan checks are not human approval",
       "availability": "TRACKED",
-      "scope": "Audited R06 workflow; see limits",
+      "scope": "Existing R06 handoffs plus actual current 24-take mainfilm delivery; listening still pending",
       "dimensions": {
         "DESIGNED": "CONFIRMED",
         "IMPLEMENTED": "CONFIRMED",
-        "INTEGRATED": "CONFIRMED_R06_19_TAKES",
+        "INTEGRATED": "CONFIRMED",
         "NATIVE_VERIFIED": "NOT_APPLICABLE",
         "HUMAN_APPROVED": "PENDING",
         "RELEASE_APPROVED": "NOT_ESTABLISHED"
@@ -1329,16 +1415,20 @@
       ],
       "known_consumers": [
         "historical R09 delivery",
-        "B06 r3 bounded delivery"
+        "B06 r3 bounded delivery",
+        "Current proxy package reuses packet_binding only; it does not call the 4K-only assemble function."
       ],
       "evidence_refs": [
         "E19",
-        "E21"
+        "E21",
+        "E22",
+        "E23"
       ],
       "known_limits": [
         "Engineering reuse only",
         "Does not fix native Premiere color conversion",
-        "New parent media require exact new validation"
+        "New parent media require exact new validation",
+        "Current proxy has unchanged native video packets and audio payload with explicit measured AAC timestamp correction; no new Rec.709 or aesthetic approval claim."
       ],
       "human_approval_scope": "PENDING; proven scope is packet-preserving technical transfer only",
       "availability": "TRACKED",

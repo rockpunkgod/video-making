@@ -1,5 +1,31 @@
 # Adaptive episode native adapter
 
+The current main-film entry is this existing `run.py`, following the private
+`local-data/free-showcase/PRODUCTION_INDEX.json` when no folder is supplied.
+Requirements and review scope are maintained only in
+[CURRENT_PRODUCTION_WORKFLOW](../../../docs/workflows/CURRENT_PRODUCTION_WORKFLOW.md).
+For a current `AV_AUTHOR.json`, the portable consumers are
+`ae_production/authored_episode.py`, `ae_production/authored_native.py` and
+`ae/templates/authored-episode.jsx`. Missing private input is an explicit error.
+
+Use `status/check` first. Production stages are `voice`, `align`, `prepare`,
+`build`, `audit`, `preview`, `render --proof --batch-size 480`, `render
+--batch-size 480`, `premiere`, `package`, and `restore`. Each consumes the same
+revision. Completed render parts are reused only with matching author-plan,
+native-realization and actual-media bindings. Read receipts before continuing;
+an uncertain native dispatch is inspected, not blindly repeated.
+
+This current authorized rough cut is a 1080p24 `EDITORIAL_PROXY`. Its separate
+4K24 AE master is not a rendered formal delivery. Full takes and exact captions
+use the measured voice clock; the default adapter guards every AE/PR mutation
+with the shared host ownership mechanism. Human viewing and listening remain
+separate from native and encoded-media checks.
+
+## Historical native-request adapter
+
+The following describes the retained R06 interface. Historical writes require
+explicit `--historical-replay`; they cannot silently bypass the current author.
+
 This small adapter executes an authored, source-bound episode through the existing
 `cognitive-pov-v0.1.jsx` and JUNKDOGE bridge. It does not solve questions, assign
 methods, decide disclosure, invent a motion library, or certify viewing quality.
@@ -10,10 +36,10 @@ identities, exact voice WAV files and an explicitly owned scratch directory. Rea
 inputs, projects, receipts and media belong in ignored `local-data`.
 
 ```powershell
-python ae/experiments/adaptive-episode/run.py build local-data/<revision>
+python ae/experiments/adaptive-episode/run.py build local-data/<revision> --historical-replay
 python ae/experiments/adaptive-episode/run.py audit local-data/<revision>
-python ae/experiments/adaptive-episode/run.py preview local-data/<revision>
-python ae/experiments/adaptive-episode/run.py render local-data/<revision> --pid <verified-AE-PID> --hwnd <verified-AE-window>
+python ae/experiments/adaptive-episode/run.py preview local-data/<revision> --historical-replay
+python ae/experiments/adaptive-episode/run.py render local-data/<revision> --historical-replay --pid <verified-AE-PID> --hwnd <verified-AE-window>
 python ae/experiments/adaptive-episode/run.py package local-data/<revision>
 ```
 
