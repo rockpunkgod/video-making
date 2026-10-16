@@ -194,7 +194,13 @@ class MechanicalPayoffTests(unittest.TestCase):
                        lambda a: a['answer_verification'].update(unresolved_candidates=['A', 'B']),
                        lambda a: a['answer_verification'].update(eliminated_candidates=['C'])]:
             req = request(); change(req['analysis'])
-            bundle, status, selected = freeze(req)
+            with self.assertRaisesRegex(ValueError, 'Answer projection'):
+                freeze(req)
+            # Explicitly adversarial SYNTHETIC transport: the strengthened
+            # producer must reject above. Bypass only that producer check to
+            # retain the original real-consumer rejection assertion below.
+            with patch('answer_engine.frozen_export.validate_frozen_answer'):
+                bundle, status, selected = freeze(req)
             self.assertIsNone(frozen_candidate_transition(bundle, status, selected))
 
     def test_exact_review_attribution_and_output_stop_support_required(self):
