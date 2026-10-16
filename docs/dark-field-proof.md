@@ -77,3 +77,12 @@ glyphs and five native rendered frames between the two builds. Rendered
 background pixels must be exactly the requested paper and dark values; solid
 judgment glyph interiors must be paper-white, giving 15.59:1 contrast. These
 are mechanical checks, not human visual approval. Public release stays false.
+
+## Human visual feedback
+
+2026-10-16 — After delivery of the 20-second combined, 10-second field and
+5-second lift 4K proofs built from `14ab6f1`, the user replied: “可以”.
+This accepts this bounded visual proof as the baseline for later integration:
+the bright/dark transition, original-glyph extraction/return and elimination
+gesture. Preserve these delivered versions. This feedback does not approve a
+complete episode, sound, teaching certification or public release.
