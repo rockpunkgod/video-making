@@ -1,6 +1,7 @@
 """Synthetic checks: frozen semantics, protected speech, and voice-only handoff."""
 from copy import deepcopy
 from pathlib import Path
+import json
 import tempfile
 import unittest
 import wave
@@ -31,6 +32,7 @@ class QuestionTests(unittest.TestCase):
                          {v['id']:v['audio_sha256'] for v in current['voices']})
         self.assertFalse(p['replay']['changes_candidate_state'])
         self.assertFalse(p['integration']['master_render_allowed'])
+        self.assertEqual(p,json.loads(json.dumps(p)))
 
     def test_changed_frozen_input_rejects_reuse(self):
         current=fixture();old=deepcopy(current);current['source']['answer']='X'

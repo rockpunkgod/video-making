@@ -20,7 +20,7 @@ def integrate(baseline, current):
     if original != current:
         raise ValueError('Accepted proof differs from current frozen inputs/status or style')
     plan = deepcopy(current)
-    previous = {v['id']: (v['start_frame'], v['end_frame']) for v in plan['voices']}
+    previous = {v['id']: [v['start_frame'], v['end_frame']] for v in plan['voices']}
     if set(previous) != set(VOICE_STARTS):
         raise ValueError('Expected the six existing exact voice clips')
     for v in plan['voices']:
