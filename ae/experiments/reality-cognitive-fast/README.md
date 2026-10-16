@@ -189,3 +189,11 @@ direction approval as acceptance of the new camera proof.
 
 Real exam text, AEP, TIFFs, MP4s and private receipts remain ignored local data.
 Public render readiness remains false.
+
+## Later cinematic rhythm revision
+
+The bounded [cinematic rhythm workflow](CINEMATIC_RHYTHM_WORKFLOW.md) retains the
+actual baseline as A, retimes native motion as B, and tests parented spatial
+relationships as C. That creative comparison has a different purpose from this
+original camera-only control. It does not weaken `validate_spec`, expand the
+frozen judgment, or inherit a human approval.
