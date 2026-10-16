@@ -58,7 +58,7 @@ def prepare_audio(plan,output):
     write(out/'AUDIO_RECEIPT.json',receipt);return receipt
 
 
-def interchange(plan,picture,audio,path):
+def interchange(plan,picture,audio,path,include_original_cues=True):
     """Native Premiere-importable edit list; source WAVs stay as 19 separate clips."""
     root=ET.Element('xmeml',version='5');sequence=ET.SubElement(root,'sequence',id='p4-internal')
     def leaf(node,key,value):ET.SubElement(node,key).text=str(value)
@@ -79,7 +79,7 @@ def interchange(plan,picture,audio,path):
     clip(ET.SubElement(video,'track'),'picture',picture,0,plan['duration_frames'],'video')
     track=ET.SubElement(sound,'track')
     for v in plan['voices']:clip(track,v['id'],v['path'],v['start_frame'],v['end_frame'],'audio')
-    for i,name in enumerate(('SFX_ORIGINAL.wav','TRANSITIONS_ORIGINAL.wav')):
+    for i,name in enumerate(('SFX_ORIGINAL.wav','TRANSITIONS_ORIGINAL.wav') if include_original_cues else ()):
         clip(ET.SubElement(sound,'track'),'original-'+str(i),audio['files'][name]['path'],0,plan['duration_frames'],'audio')
     ET.indent(root);ET.ElementTree(root).write(path,encoding='utf-8',xml_declaration=True)
 

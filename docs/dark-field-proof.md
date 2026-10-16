@@ -86,3 +86,65 @@ This accepts this bounded visual proof as the baseline for later integration:
 the bright/dark transition, original-glyph extraction/return and elimination
 gesture. Preserve these delivered versions. This feedback does not approve a
 complete episode, sound, teaching certification or public release.
+
+## Single-question integration review
+
+`creative_os.dark_field_question` reuses these exact field/lift functions and
+copies the accepted `PLAN.style` unchanged. It compares the accepted plan with
+freshly validated frozen inputs before assembling a separate 70-second version.
+Original glyphs remain in a native camera-driven reading window; the question
+and options retain their positions. The foreground collects three bound evidence
+phrases and the original D keyword. This still only eliminates D.
+
+The user approved rearranging the existing WAVs to the new 70-second structure.
+Old and new frame windows are recorded in `integration`; no transcript, WAV,
+gain or speaking speed changes. At 24fps the voice windows are:
+
+| Clip | Start frame | End frame (exclusive) | Purpose |
+|---|---:|---:|---|
+| A01 | 0 | 109 | Establish the task |
+| A03 | 416 | 479 | First evidence |
+| A04 | 486 | 547 | Second evidence |
+| A05 | 555 | 637 | Third evidence |
+| A02 | 645 | 743 | D's promised task |
+| A06 | 747 | 864 | Compare and eliminate |
+
+The four lifts complete within their respective voice slots. The actual field
+transition is 12 frames starting at 16s, with the rest of the interval left for
+orientation. Comparison is 30–34s; elimination starts at 35.25s. The field returns
+to paper over 36–36.5s; originals return sequentially over 37–47.5s, with the
+camera reaching each source before its return. At 50–60s only the 30–36s visual
+judgment is replayed at 0.6x. Speech is not stretched or repeated. At 60–70s the
+existing frozen memory sentence appears in the empty lower work area.
+
+Review subtitles use 36px NotoSansSC-Medium, paper text and a 60% ink strip.
+Spoken subtitles preserve the exact copy; within-clip sentence splits are
+proportional estimates, not a new forced alignment. In speech gaps, neutral
+operation captions explain what to inspect. The upper reading window remains
+visible during the memory hold; no pale opacity veil is placed over the question.
+
+```powershell
+python -m creative_os.dark_field_question REQUEST.json DIRECTION.json ACCEPTED_PROOF NEW_REVIEW
+# Execute build.jsx; inspect the ten native stills, then execute render.jsx.
+python -m scripts.dark_question_audio NEW_REVIEW
+python -m scripts.encode_native_question NEW_REVIEW
+python -m scripts.dark_question_audio NEW_REVIEW --mux
+```
+
+The native render emits 1680 **1920×1080** frames, encoded as H.264 CRF18/24fps.
+`QUESTION_REVIEW_1080.mp4` contains only the exact voice reference mix, AAC encoded,
+and the native picture/subtitles. `QUESTION_PREMIERE.xml` retains the six separate
+WAV clips for native editing and has no music/SFX tracks. The proxy mux is explicitly
+recorded as a reference mux, not falsely described as a Premiere-native export.
+The AE project retains resolution-independent 4K authoring, but no 4K movie is
+rendered until the user approves this proxy. Mechanical tests and encoded-audio
+correlation do not constitute a new human listening or full-video approval.
+
+For memory pressure, stop only this render and run
+`python -m scripts.render_question_chunks NEW_REVIEW`. It verifies all completed
+1080p frames and emits `render-chunks.jsx`, which resumes in 48-frame batches
+with native AE cache purging between batches. After executing that script, use
+`python -m scripts.render_question_chunks NEW_REVIEW --collect` to normalize the
+verified remainder into the contiguous frame sequence. No completed frames,
+source media or previous revisions are deleted; an earlier interrupted-render
+log is retained alongside the new chunk receipt.
