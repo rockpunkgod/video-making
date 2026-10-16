@@ -71,6 +71,20 @@ class HostOwnershipTests(unittest.TestCase):
         self.assertEqual(calls,['abcdef']);self.assertEqual(recovered.record['token'],self.lease.record['token'])
         self.assertEqual(recovered.record['state'],'OWNED');recovered.release(lambda:self.state)
 
+    def test_inspected_unsaved_build_can_be_preserved_and_original_restored(self):
+        self.make_uncertain();path,digest=self.failed_evidence();original=dict(self.state)
+        self.state.update(project_path='',target_id='comp:2')
+        partial=self.directory/'partial.json'
+        write(partial,{'identity':dict(self.state),'state':'INSPECTED_PARTIAL_NOT_COMPLETED',
+                      'recovery_id':'abcdef','compositions':[{'id':2}], 'plan_sha256':'bound-plan'})
+        evidence=(str(partial),hashlib.sha256(partial.read_bytes()).hexdigest())
+        recovered,_=HostOwnership.recover_failed_dispatch('after_effects','synthetic-worker','synthetic-r1',
+            self.lease.record['token'],lambda:self.state,lambda identifier:self.state.update(original),path,digest,
+            target_after=lambda value:original,directory=self.directory,partial_state_evidence=evidence)
+        self.assertEqual(read(recovered.path),recovered.record)
+        recovered.release(lambda:self.state)
+        self.assertFalse(recovered.path.exists())
+
     def test_failed_script_recovery_rejects_timeout_or_wrong_owner(self):
         self.make_uncertain();path,digest=self.failed_evidence(error='timeout after dispatch');calls=[]
         with self.assertRaises(ValueError):HostOwnership.recover_failed_dispatch('after_effects','synthetic-worker','synthetic-r1',

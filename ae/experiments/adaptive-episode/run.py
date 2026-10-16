@@ -239,7 +239,7 @@ def verify_rendered_frames(folder,receipt):
 
 
 def main():
-    p=argparse.ArgumentParser(description=__doc__);p.add_argument('operation',nargs='?',default='status',choices=('status','check','voice','align','prepare','build','audit','preview','render','premiere','package','restore'));p.add_argument('folder',nargs='?')
+    p=argparse.ArgumentParser(description=__doc__);p.add_argument('operation',nargs='?',default='status',choices=('status','check','script','voice','align','prepare','build','audit','preview','render','premiere','package','restore'));p.add_argument('folder',nargs='?')
     p.add_argument('--pid',type=int);p.add_argument('--hwnd',type=int);p.add_argument('--batch-size',type=int,default=96)
     p.add_argument('--historical-replay',action='store_true',help='Explicit historical executor use; does not change the current main film')
     p.add_argument('--proof',action='store_true',help='Render the current main film introduction before the full render')

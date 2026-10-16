@@ -8,9 +8,9 @@ For a current `AV_AUTHOR.json`, the portable consumers are
 `ae_production/authored_episode.py`, `ae_production/authored_native.py` and
 `ae/templates/authored-episode.jsx`. Missing private input is an explicit error.
 
-Use `status/check` first. Production stages are `voice`, `align`, `prepare`,
-`build`, `audit`, `preview`, `render --proof --batch-size 480`, `render
---batch-size 480`, `premiere`, `package`, and `restore`. Each consumes the same
+Use `status/check` first. Run `script` for each copy revision and paste its complete exact text in chat for independent user review. An export is not approval. Production stages are `voice`, `align`, `prepare`,
+`build`, `audit`, `preview`, `render --proof --batch-size 96`, `render
+--batch-size 96`, `premiere`, `package`, and `restore`. Each consumes the same
 revision. Completed render parts are reused only with matching author-plan,
 native-realization and actual-media bindings. Read receipts before continuing;
 an uncertain native dispatch is inspected, not blindly repeated.
@@ -18,7 +18,7 @@ an uncertain native dispatch is inspected, not blindly repeated.
 This current authorized rough cut is a 1080p24 `EDITORIAL_PROXY`. Its separate
 4K24 AE master is not a rendered formal delivery. Full takes and exact captions
 use the measured voice clock; the default adapter guards every AE/PR mutation
-with the shared host ownership mechanism. Human viewing and listening remain
+with the shared host ownership mechanism. The current author provides explicit per-scene reading paths, motion intervals and voice placements. AE measures the actual composed source lines; camera/focus and complete candidate movements consume those intervals. Only the scene-bound passage blocks enter the comparison; separated paragraphs compact continuously and return to their own origins. Recap cuts use an actual caption boundary near the first take midpoint, which still requires an author check of the topic change. Unchanged complete takes can be selected from explicit existing deliveries, with only missing copy sent to the producer. Human viewing and listening remain
 separate from native and encoded-media checks.
 
 ## Historical native-request adapter

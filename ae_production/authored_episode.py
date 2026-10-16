@@ -8,22 +8,58 @@ from copy import deepcopy
 import math
 from pathlib import Path
 import re
+import shutil
 import subprocess
 import sys
 import wave
 
 from video_contracts import ROOT, read, write, sha, pointer, verify_bundle, status_matches
-from scripts.voice_delivery import validate as validate_voice, asset, sha256, pad_to_video_frame
+from scripts.voice_delivery import validate as validate_voice, asset, sha256, pad_to_video_frame, describe_clip
 
 CURRENT = ROOT / 'local-data/free-showcase/PRODUCTION_INDEX.json'
 AUTHOR = 'AV_AUTHOR.json'
+AUTHOR_KEYS = {'revision','product','format','media_role','public_render_ready','copy_review',
+               'sources','input_files','voices','scenes','excerpts','producer','host',
+               'voice_delivery','voice_inputs','music'}
 KINDS = {'task', 'locate', 'compare', 'answer', 'replay', 'recap'}
 SHOT_KEYS = {'id', 'kind', 'world', 'voice_ids', 'title', 'excerpt', 'candidate',
              'event', 'replay_of', 'source_refs', 'action_refs', 'terminal_refs',
              'recognition_seconds', 'travel_seconds', 'post_seconds', 'voice_pre',
              'candidate_anchor', 'event_anchor', 'attention', 'locator',
              'audience_intent', 'pre_excerpt', 'secondary_excerpt', 'secondary_anchor', 'recap_worlds',
-             'candidate_entry_seconds'}
+             'candidate_entry_seconds', 'choreography', 'reading_path', 'voice_placements', 'screen_title'}
+
+MOTION_KEYS = {'orient_seconds', 'candidate_read_seconds', 'candidate_travel_seconds',
+               'source_read_seconds', 'extract_seconds', 'comparison_seconds',
+               'decision_seconds', 'result_seconds', 'return_seconds'}
+
+
+def script_text(author):
+    """One exact copy view for the user and the existing voice producer."""
+    voices = {v['id']: v['text'] for v in author['voices']}
+    lines = ['# 英语有画说 · ' + author['revision'] + ' 完整文案',
+             '文案状态：' + author['copy_review'],
+             '段落标签不读入旁白。文案审阅与画面、听感、整片认可分别记录。', '']
+    for scene in author['scenes']:
+        lines += ['## ' + scene['id'] + ' · ' + scene['title'], '']
+        for vid in scene['voice_ids']:
+            lines += [voices[vid], '']
+    return '\n'.join(lines)
+
+
+def script(folder):
+    author, _ = checked_author(folder)
+    output = folder / 'EPISODE_SCRIPT.md'
+    output.write_text(script_text(author), encoding='utf-8')
+    return {'revision': author['revision'], 'script': str(output),
+            'complete_copy': script_text(author), 'copy_review': author['copy_review'],
+            'handoff': 'Paste the complete copy in chat on every copy revision; exporting is not user approval.'}
+
+
+def check_script(folder, author):
+    output = folder / 'EPISODE_SCRIPT.md'
+    if not output.exists() or output.read_text('utf-8') != script_text(author):
+        raise ValueError('Full copy review export is missing or stale; run script and send the complete new copy to the user')
 
 
 def current_folder():
@@ -37,6 +73,7 @@ def current_folder():
 
 def checked_author(folder):
     a = read(folder / AUTHOR)
+    if set(a)-AUTHOR_KEYS:raise ValueError('Unsupported production input: '+str(sorted(set(a)-AUTHOR_KEYS)))
     if a['product'] != 'FREE_SHOWCASE' or a['public_render_ready'] is not False:
         raise ValueError('This consumer is an internal FREE_SHOWCASE rough-cut adapter')
     if a['media_role'] != 'EDITORIAL_PROXY' or a['format'] != {'width': 1920, 'height': 1080, 'fps': 24}:
@@ -44,6 +81,9 @@ def checked_author(folder):
     for p, digest in a['input_files'].items():
         if sha256(p) != digest:
             raise ValueError('Bound input changed: ' + p)
+    for music in a.get('music',[]):
+        if sha256(music['clip_path'])!=music['clip_sha'] or music.get('public_use_allowed') is not False:
+            raise ValueError('Scratch music must retain its actual source and review scope')
     bundles = {}
     for world, paths in a['sources'].items():
         b, st = read(paths['bundle']), read(paths['status'])
@@ -54,6 +94,8 @@ def checked_author(folder):
     if len(bundles) < 2 or len({b['source_snapshot']['question_id'] for b in bundles.values()}) != len(bundles):
         raise ValueError('The main film requires distinct, source-bound questions')
     voices = {v['id']: v for v in a['voices']}
+    if any('choreography' in s for s in a['scenes']) and not all('choreography' in s for s in a['scenes']):
+        raise ValueError('Current film cannot silently mix explicit and historical motion timing')
     if len(voices) != len(a['voices']):
         raise ValueError('Duplicate voice identity')
     used, decided, finals, ids, replay_count = [], {}, set(), set(), 0
@@ -65,9 +107,32 @@ def checked_author(folder):
         ids.add(s['id']); used.extend(s['voice_ids'])
         if not s['audience_intent'].strip():
             raise ValueError('The author must specify the concrete viewing purpose')
-        for name in ('recognition_seconds', 'travel_seconds', 'post_seconds', 'voice_pre'):
+        timing_names=('voice_pre',) if 'choreography' in s else ('recognition_seconds','travel_seconds','post_seconds','voice_pre')
+        for name in timing_names:
             if type(s[name]) not in (int, float) or not math.isfinite(s[name]) or s[name] < 0:
                 raise ValueError('Invalid authored timing: ' + name)
+        if 'choreography' in s:
+            motion=s['choreography']
+            if set(motion)!=MOTION_KEYS or any(type(v) not in (int,float) or not math.isfinite(v) or v<=0 for v in motion.values()):
+                raise ValueError('Unsupported or incomplete choreography')
+            if any(k in s for k in ('recognition_seconds','travel_seconds','post_seconds','candidate_entry_seconds','candidate_anchor','pre_excerpt','secondary_excerpt')):
+                raise ValueError('Replace historical timing overrides with the current reading path and voice placements')
+            if s['kind']=='locate' and not s.get('reading_path'):
+                raise ValueError('A locator needs an actual source reading path')
+            for step in s.get('reading_path',[]):
+                if set(step)!={'start','end','quote','move_seconds','read_seconds','mode','phrase'}:
+                    raise ValueError('Unsupported reading path decision')
+                q=bundles[s['world']]['source_snapshot']['passage']
+                if (type(step['start']) is not int or type(step['end']) is not int or not 0<=step['start']<step['end']<=len(q)
+                        or q[step['start']:step['end']]!=step['quote'] or step['phrase'] not in step['quote']):
+                    raise ValueError('Reading path must use an exact source span')
+                if step['mode'] not in ('scan','hit','scope') or any(type(step[k]) not in (int,float) or not math.isfinite(step[k]) or step[k]<=0 for k in ('move_seconds','read_seconds')):
+                    raise ValueError('Invalid reading event')
+            placements=s.get('voice_placements',{})
+            if set(placements)-set(s['voice_ids']):raise ValueError('Voice placement has no complete take')
+            for phase in placements.values():
+                if phase not in ('candidate','comparison','start') and not (phase.startswith('reading:') and phase[8:].isdigit() and int(phase[8:])<len(s.get('reading_path',[]))):
+                    raise ValueError('Unsupported spoken scene phase')
         lead=s.get('candidate_entry_seconds',0)
         if (type(lead) not in (int,float) or not math.isfinite(lead) or lead<0
                 or lead and (lead<2.1 or s['kind']!='compare' or s.get('pre_excerpt') or s.get('secondary_excerpt') or s.get('candidate_anchor'))):
@@ -128,12 +193,17 @@ def checked_author(folder):
 
 def voice(folder):
     a, _ = checked_author(folder)
+    check_script(folder, a)
     selected=delivery_path(folder,a)
     if selected.exists():
         delivery=validate_voice(selected)
+        if a.get('voice_inputs') and delivery.get('selection_sha256')!=sha([(str(Path(p).resolve()),sha256(p)) for p in a['voice_inputs']]):
+            raise ValueError('Selected producer takes changed; choose a new voice delivery revision')
         actual={x['id']:asset(selected.parent,x['transcript']).read_text('utf-8-sig').strip() for x in delivery['clips']}
         if actual!={v['id']:v['text'] for v in a['voices']}:raise ValueError('Selected voice copy is stale')
         return {'reused_complete_delivery':len(actual),'delivery':str(selected)}
+    if a.get('voice_inputs'):
+        return select_takes(folder,a)
     clips = folder / 'VOICE_INPUT.json'; rows = [{'id': v['id'], 'text': v['text']} for v in a['voices']]
     if clips.exists() and read(clips) != rows:
         raise ValueError('Changed copy needs a new voice delivery revision')
@@ -149,6 +219,43 @@ def voice(folder):
                     '--pack', p['pack'], '--runtime', p['runtime'], '--clips-file', str(clips),
                     '--output', str(dest), '--offline'], check=True)
     return {'delivery': str(dest / 'delivery.json')}
+
+
+def select_takes(folder, author):
+    """Explicit producer deliveries, exact-text reuse, later listed takes win.
+
+    Missing copy alone goes back to the existing producer. Nothing is selected
+    by an invented listening score and old/failed deliveries are not overwritten.
+    """
+    wanted={v['id']:v['text'] for v in author['voices']};chosen={}
+    def add(path):
+        path=Path(path).resolve();delivery=validate_voice(path)
+        for c in delivery['clips']:
+            if c['id'] in wanted and asset(path.parent,c['transcript']).read_text('utf-8-sig').strip()==wanted[c['id']]:
+                if c['listening_review']=='REJECTED':continue
+                chosen[c['id']]=(path,c)
+    for path in author['voice_inputs']:add(path)
+    missing=[v for v in author['voices'] if v['id'] not in chosen]
+    if missing:
+        name=sha(missing)[:16];request=folder/('VOICE_INPUT-'+name+'.json');dest=folder/('voice-generated-'+name)
+        if not request.exists():write(request,missing)
+        if not (dest/'delivery.json').exists():
+            p=author['producer']
+            subprocess.run([p['python'],'-X','utf8',str(ROOT/'voicepacks/tools/generate_gpt_sovits.py'),
+                '--pack',p['pack'],'--runtime',p['runtime'],'--clips-file',str(request),'--output',str(dest),'--offline'],check=True)
+        add(dest/'delivery.json')
+    if set(chosen)!=set(wanted):raise ValueError('Producer did not deliver every exact requested take')
+    output=delivery_path(folder,author);output.parent.mkdir(exist_ok=False);rows=[];origins=[]
+    for vid in wanted:
+        src,c=chosen[vid];wav=vid+'.wav';txt=vid+'.txt'
+        shutil.copyfile(asset(src.parent,c['audio']),output.parent/wav)
+        shutil.copyfile(asset(src.parent,c['transcript']),output.parent/txt)
+        rows.append(describe_clip(output.parent,vid,wav,txt,c['listening_review']))
+        origins.append({'id':vid,'delivery':str(src),'delivery_sha256':sha256(src),'audio_sha256':c['audio_sha256']})
+    write(output,{'schema':'voice-delivery/v1','clips':rows,'producer':'existing producer, explicit complete-take selection','sources':origins,
+                  'selection_sha256':sha([(str(Path(p).resolve()),sha256(p)) for p in author['voice_inputs']])})
+    validate_voice(output)
+    return {'delivery':str(output),'complete_takes':len(rows),'new_copy_takes':len(missing),'reused_exact_takes':len(rows)-len(missing)}
 
 
 def grid(t, fps=24):
@@ -167,15 +274,42 @@ def compile_clock(a, clips, aligned):
     voice_by_id = {x['id']: x for x in a['voices']}
     for shot in a['scenes']:
         s = deepcopy(shot); s['start'] = cursor
-        lead=s.get('candidate_entry_seconds',0)
-        s['recognition_end'] = grid(cursor + lead + s['recognition_seconds'], fps)
-        s['extract_start'] = s['recognition_end']
-        s['settled'] = grid(s['extract_start'] + s['travel_seconds'], fps)
+        motion=s.get('choreography')
+        if motion:
+            orient=grid(cursor+motion['orient_seconds'],fps)
+            s['oriented']=orient
+            visual=orient
+            if s.get('candidate') and s['kind'] in ('compare','replay'):
+                s['candidate_start']=grid(orient+motion['candidate_read_seconds'],fps)
+                s['candidate_arrive']=grid(s['candidate_start']+motion['candidate_travel_seconds'],fps)
+                visual=s['candidate_arrive']
+            s['reading_events']=[]
+            for step in s.get('reading_path',[]):
+                arrival=grid(visual+step['move_seconds'],fps);end=grid(arrival+step['read_seconds'],fps)
+                s['reading_events'].append({**step,'depart':visual,'arrival':arrival,'end_time':end})
+                visual=end
+            if s['kind'] in ('compare','replay'):
+                s['source_arrive']=grid(visual+motion['orient_seconds'],fps)
+                s['extract_start']=grid(s['source_arrive']+motion['source_read_seconds'],fps)
+                s['settled']=grid(s['extract_start']+motion['extract_seconds'],fps)
+                s['travel_seconds']=motion['extract_seconds']
+            else:s['extract_start']=s['settled']=visual
+            s['recognition_end']=s['extract_start']
+        else:
+            lead=s.get('candidate_entry_seconds',0)
+            s['recognition_end']=grid(cursor+lead+s['recognition_seconds'],fps)
+            s['extract_start']=s['recognition_end']
+            s['settled']=grid(s['extract_start']+s['travel_seconds'],fps)
         clock = grid(cursor + s['voice_pre'], fps); positions = []
         for vid in s['voice_ids']:
             v, c, align = voice_by_id[vid], clips[vid], aligned[vid]
             if align['transcript'] != v['text'] or align['audio_sha256'] != c['audio_sha256']:
                 raise ValueError('Audio alignment belongs to another take or transcript')
+            if motion:
+                phase=s.get('voice_placements',{}).get(vid,'comparison')
+                cue=(cursor+s['voice_pre'] if phase=='start' else s['oriented'] if phase=='candidate' else
+                     s['reading_events'][int(phase[8:])]['arrival'] if phase.startswith('reading:') else s['settled'])
+                clock=max(clock,grid(cue,fps))
             start = clock; end = start + c['duration_seconds']
             segments.append({**v, 'scene_id': s['id'], 'voice_start': start, 'voice_end': end,
                              'voice': deepcopy(c), 'time_stretch': False, 'truncated': False})
@@ -188,7 +322,11 @@ def compile_clock(a, clips, aligned):
                              'segment': vid, 'start': start + cue['start'], 'end': start + cue['end']})
             positions.append((vid, start, end)); clock = grid(end + .12, fps)
         s['voice_start'] = positions[0][1]; s['voice_end'] = positions[-1][2]
-        s['end'] = grid(max(s['voice_end'], s['settled']) + s['post_seconds'], fps)
+        s['end'] = grid(max(s['voice_end'], s['settled']) + s.get('post_seconds',0), fps)
+        if motion:
+            s['comparison_until']=grid(s['settled']+motion['comparison_seconds'],fps)
+            s['return_start']=grid(max(s['voice_end']+motion['result_seconds'],s['comparison_until']),fps)
+            s['end']=grid(s['return_start']+motion['return_seconds'],fps)
         def anchor(phrase, fallback):
             if not phrase: return fallback
             for vid, start, _ in positions:
@@ -198,15 +336,21 @@ def compile_clock(a, clips, aligned):
                     if len(matches) != 1: raise ValueError('Ambiguous spoken anchor')
                     return grid(start + matches[0]['start'], fps)
             raise ValueError('Authored spoken anchor is absent: ' + phrase)
-        s['candidate_start'] = grid(cursor+lead-1.6,fps) if lead else max(s['settled'] + .12, anchor(s.get('candidate_anchor'), s['settled'] + .12))
+        if not motion:s['candidate_start'] = grid(cursor+lead-1.6,fps) if lead else max(s['settled'] + .12, anchor(s.get('candidate_anchor'), s['settled'] + .12))
+        elif 'candidate_start' not in s:s['candidate_start']=s['oriented']
         s['attention_events'] = [{**x, 'time': anchor(x['anchor'], s['settled'])} for x in s.get('attention', [])]
         if s.get('secondary_excerpt'):
             s['secondary_at'] = anchor(s['secondary_anchor'], None)
         if s.get('event'):
             t = anchor(s.get('event_anchor'), grid(s['voice_end'] + .08, fps))
+            if motion:
+                t=max(t,s['comparison_until'])
+                s['decision_end']=grid(t+motion['decision_seconds'],fps)
+                s['return_start']=grid(max(s['return_start'],s['decision_end']+motion['result_seconds']),fps)
+                s['end']=grid(s['return_start']+motion['return_seconds'],fps)
             if t < s['settled'] or t >= s['end'] - .5:
                 raise ValueError('Decision requires visible comparison and time for its complete movement')
-            if s['event']!='final' and t<s['candidate_start']+.8:
+            if s['event']!='final' and t<s.get('candidate_arrive',s['candidate_start']+.8):
                 raise ValueError('Candidate must arrive before its decision')
             s['event_time'] = t
             events.append({'scene': s['id'], 'world': s['world'], 'candidate': s['candidate'],
@@ -219,6 +363,7 @@ def compile_clock(a, clips, aligned):
 
 def prepare(folder):
     a, bundles = checked_author(folder)
+    check_script(folder, a)
     delivery_file = delivery_path(folder,a); delivery = validate_voice(delivery_file)
     aligned_path = folder / 'VOICE_ALIGNMENT.json'
     if not aligned_path.exists(): raise FileNotFoundError('Run align for the actual new voice delivery first')
@@ -265,6 +410,11 @@ def prepare(folder):
                 author_sha256=sha256(folder / AUTHOR), voice_delivery_sha256=sha256(delivery_file),
                 alignment_sha256=sha256(aligned_path), public_render_ready=False,
                 human_creative_review='PENDING', listening_review='PENDING', student_count=0)
+    if all('choreography' in s for s in a['scenes']):
+        plan['realization']='continuous_paper_scan'
+    plan['copy_review']=a['copy_review']
+    plan['complete_copy_sha256']=sha(script_text(a))
+    plan['music']=deepcopy(a.get('music',[]))
     dest = folder / 'AV_PLAN.json'
     if dest.exists() and read(dest) != plan:
         if (folder / 'native-identity.json').exists():
@@ -283,10 +433,18 @@ def check(folder):
 
 
 def dispatch(operation, folder, **kwargs):
+    if operation == 'script': return script(folder)
     if operation == 'check': return check(folder)
     if operation == 'voice': return voice(folder)
     if operation == 'align':
         a, _ = checked_author(folder)
+        current=folder/'VOICE_ALIGNMENT.json'
+        if current.exists() and read(current)['delivery_sha256']!=sha256(delivery_path(folder,a)):
+            if (folder/'native-identity.json').exists():raise ValueError('Changed voice requires a new production revision')
+            archive=folder/'alignment-history';archive.mkdir(exist_ok=True)
+            dest=archive/(sha256(current)+'.json')
+            if dest.exists():raise ValueError('Inspect already archived alignment before repeating')
+            current.rename(dest)
         subprocess.run([a['producer']['python'], '-X', 'utf8', str(ROOT/'voicepacks/tools/align_delivery.py'),
                         str(delivery_path(folder,a)), '--model', a['producer']['alignment_model'],
                         '--output', str(folder/'VOICE_ALIGNMENT.json')], check=True)

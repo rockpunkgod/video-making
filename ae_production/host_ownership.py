@@ -91,7 +91,8 @@ class HostOwnership:
 
     @classmethod
     def recover_failed_dispatch(cls, host, owner, revision, token, reader, mutation,
-                                evidence_path, evidence_sha, *, target_after, directory=None):
+                                evidence_path, evidence_sha, *, target_after, directory=None,
+                                partial_state_evidence=None):
         """One explicit server-issued script recovery, retaining the occupied token.
 
         This is not timeout reconciliation or a generic retry. A byte-bound AE
@@ -114,7 +115,23 @@ class HostOwnership:
             raise ValueError('A terminal script failure in this project is required; not a timeout')
         lease=cls(host,owner,revision,previous['target'],directory)
         lease.record=deepcopy(previous);lease.acquired=True
-        lease._inspect(reader,previous['target']);lease._inspect(reader,previous['target'])
+        inspect_target=previous['target']
+        if partial_state_evidence is not None:
+            # A failed new-project save can leave a fully built, unsaved project.
+            # Bind the separately read native identity rather than pretending
+            # it is still the old project or claiming the build completed.
+            path,digest=partial_state_evidence
+            if hashlib.sha256(Path(path).read_bytes()).hexdigest()!=digest:
+                raise ValueError('Partial native state evidence changed')
+            partial=read(path)
+            inspect_target=partial.get('identity',{})
+            if (partial.get('recovery_id')!=evidence['recoveryId']
+                    or partial.get('state')!='INSPECTED_PARTIAL_NOT_COMPLETED'
+                    or not {'process_id','project_path','target_id'}<=inspect_target.keys()
+                    or inspect_target['process_id']!=previous['target']['process_id']
+                    or not partial.get('compositions') or not partial.get('plan_sha256')):
+                raise ValueError('Explicit same-failure partial project evidence required')
+        lease._inspect(reader,inspect_target);lease._inspect(reader,inspect_target)
         if read(lease.path)!=previous:raise RuntimeError('Owner changed before explicit recovery')
         try:
             result=mutation(evidence['recoveryId'])
@@ -130,6 +147,7 @@ class HostOwnership:
         lease.record={**previous,'state':'OWNED','controller_pid':os.getpid(),'target':dict(expected),
             'reconciliation':{'resolution':'FAILED_DISPATCH_RECOVERED','recovery_id':evidence['recoveryId'],
                 'failure_evidence':str(evidence_path),'failure_evidence_sha':evidence_sha,
+                'partial_state_evidence':list(partial_state_evidence) if partial_state_evidence else None,
                 'previous_record':previous}}
         write(lease.path,lease.record)
         return lease,result

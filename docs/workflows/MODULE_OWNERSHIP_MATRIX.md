@@ -2,20 +2,20 @@
 
 当前入口：[CURRENT_PRODUCTION_WORKFLOW](CURRENT_PRODUCTION_WORKFLOW.md)。原始审计基于 `d9fa2da`；本矩阵增补其后 B06 r3 的限定制作能力，研究/Cinema 的 LOCAL_UNMERGED 增量仍不属于已提交能力。E01–E20 对应原始审计报告，后续 E21 对应独立 B06 制作凭证；逐项六维状态、证据路径与可用性见[能力索引](PRODUCTION_CAPABILITY_INDEX.json)。下面每条卡片的“有权/禁止”界定职责，不授予额外操作权限。
 
-## 当前主片的实际消费增量
+## 当前主片的实际消费
 
-唯一主片为 `mainfilm-integration-r01`，默认入口仍是 `adaptive-episode/run.py`。
-下方 R06/B06 卡片保留各自历史范围，不把它们的「当前」字样解释成本次默认主片。
-有效要求和冲突处理只维护在上述当前入口页。
+唯一当前 revision 与有效要求只由 [当前入口](CURRENT_PRODUCTION_WORKFLOW.md)维护。历史 R06/B06 卡片下的“当前”只指其记录范围。
 
-| 输入 / 作者职责 | 当前实际消费者与作品变化 | 原模块边界 |
+| 输入 / 作者职责 | 实际消费者与作品变化 | 边界 |
 |---|---|---|
-| 两份有效冻结资产、当前状态、逐项完整结论 | `authored_episode.checked_author` 调用原 `video_contracts`；限制逐题四项核对、答案闭合、一次无新增判断的回放 | 不调用解题器，不重写 ANSWER；旧 Episode 验证器仍有其独立消费者，本片作者输入不是其编译输出 |
-| 连续完整稿、观看理由、来源范围、辨认与口播锚点 | `compile_clock` 把真实完整声音、字幕与场景时序写入 `AV_PLAN`；`authored-episode.jsx` 实际生成定位、原位提取、候选整体运动与注意力提示 | 作者完成创作判断；Audience 理由字段不是自动编译参数。Pedagogy/Student POV/Choreography/Direction 0.2 未因此自动接入 |
-| 新稿与既有声音 Producer、`voice-delivery/v1` | 现有生成器 → 可复用声音对齐 → 原生字幕与 PR 完整音轨；改变声音长度必须传播 | 保留失败 take 与对齐诊断，不以强制对齐或 ASR 代替听审 |
-| 当前 AE/PR 目标、既有桥接、共享宿主占用 | `authored_native.Host` 对每个原生写操作前后读回身份，复用完成分段，新工程保存并恢复父工程 | 旧 native-request 写入仅历史显式重放；不能静默绕过当前作者。原生执行、编码媒体、人工作品认可分开 |
+| 冻结资产、状态、完整候选结论 | `checked_author` → 场景与候选事件 → 原生状态 | 不解题、不补事实；每题四项检查后落答案 |
+| 完整稿和用户独立审阅 | `script` → 同一逐字稿 → `voice`；旧导出与新词不一致即停止 | 每次全文发聊天，文件导出和暂未反馈都不是认可 |
+| 作者的观看任务、阅读与动作安排 | `reading_path / choreography / voice_placements / attention` → 实测时钟 → AE 排版行/相机/焦点/完整候选 | 这些具体决定改变作品；`audience_intent` 理由字段不自动产生效果 |
+| 现有 Producer 交付与指定 retake | `select_takes` 按精确文本复用完整 take，只生成缺失台词 → 对齐/字幕/时钟 → PR | 旧/失败 take 保留；不以 ASR 或对齐替代听审 |
+| 克制音乐 | 已有本地短乐句 → 既有 `premiere_production.music.apply_music` → 原生 PR 音量与轨道 | 内部 scratch，录音公开权限与听感未获得新认可 |
+| AE / PR / 实际媒体 | 共享宿主占用、固定工程/目标身份 → 新保存 → 原生回读 → 分段渲染/剪辑/封装 | 不用模块实现或关键帧正确代签观感；交付状态以实际收据为准 |
 
-可复用编排已从私有 R02 作者脚本提到公共消费者；真实题材、机器路径、声音和媒体仍在忽略目录。对应 E22 只支持当前明确记录的阶段，不扩大到历史模块整体完成。
+Pedagogy、Student POV、Choreography、Cognitive Direction 和 Audience 的独立编译器及其未提供的审核/细结构输入不被伪造。本片作者承担相应创作判断，进入上述同一消费者；不声称所有历史模块均自动串线。下方能力按原范围保留，未被明确舍弃的并行工作不删除。
 
 ## 教学事实与节目
 

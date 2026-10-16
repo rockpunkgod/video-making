@@ -7,7 +7,8 @@ from pathlib import Path
 from unittest.mock import patch
 
 from video_contracts import write
-from ae_production.authored_episode import compile_clock, checked_author, current_folder
+from ae_production.authored_episode import compile_clock, checked_author, current_folder, script_text, check_script, select_takes
+from scripts.voice_delivery import describe_clip, validate as validate_voice, sha256
 from ae_production.authored_native import validate_edit, measured_audio_delay
 from voicepacks.tools.align_delivery import spans
 
@@ -29,6 +30,47 @@ def clock_input():
 
 
 class ClockConsumption(unittest.TestCase):
+    def motion_input(self):
+        a,c,l=clock_input()
+        for s in a['scenes']:
+            s['choreography']={'orient_seconds':1.8,'candidate_read_seconds':2,
+                'candidate_travel_seconds':2.6,'source_read_seconds':2.2,'extract_seconds':2.4,
+                'comparison_seconds':3.2,'decision_seconds':1.2,'result_seconds':1.6,'return_seconds':2.4}
+            s['reading_path']=[{'start':0,'end':6,'quote':'Source','phrase':'',
+                                'mode':'scan','move_seconds':2,'read_seconds':4}]
+        return a,c,l
+
+    def test_slow_reading_propagates_to_camera_take_caption_and_decision(self):
+        a,c,l=self.motion_input();before=compile_clock(a,c,l)
+        a['scenes'][0]['reading_path'][0]['read_seconds']+=3
+        after=compile_clock(a,c,l)
+        for field in ('settled','extract_start','event_time','end'):
+            self.assertAlmostEqual(after['scenes'][0][field]-before['scenes'][0][field],3)
+        self.assertAlmostEqual(after['segments'][0]['voice_start']-before['segments'][0]['voice_start'],3)
+        self.assertAlmostEqual(after['cues'][0]['start']-before['cues'][0]['start'],3)
+        self.assertEqual(after['candidate_events'][0]['refs'],before['candidate_events'][0]['refs'])
+        self.assertEqual(after['scenes'][0]['source_refs'],before['scenes'][0]['source_refs'])
+        self.assertEqual(after['scenes'][0]['candidate_arrive'],before['scenes'][0]['candidate_arrive'])
+
+    def test_candidate_read_and_movement_are_distinct_consumed_intervals(self):
+        a,c,l=self.motion_input();before=compile_clock(a,c,l)
+        a['scenes'][0]['choreography']['candidate_read_seconds']+=2
+        after=compile_clock(a,c,l);s=after['scenes'][0]
+        self.assertAlmostEqual(s['candidate_start']-before['scenes'][0]['candidate_start'],2)
+        self.assertAlmostEqual(s['candidate_arrive']-s['candidate_start'],2.625)
+        self.assertGreater(s['event_time'],s['settled'])
+        self.assertGreaterEqual(s['extract_start']-s['source_arrive'],2.2)
+        self.assertGreater(s['return_start'],s['decision_end'])
+        self.assertEqual(after['segments'][0]['voice'],before['segments'][0]['voice'])
+
+    def test_full_copy_export_cannot_mask_changed_spoken_words(self):
+        a,_,_=clock_input();a.update(revision='synthetic',copy_review='PENDING')
+        for s in a['scenes']:s['title']='Synthetic chapter'
+        with tempfile.TemporaryDirectory() as d:
+            p=Path(d);(p/'EPISODE_SCRIPT.md').write_text(script_text(a),encoding='utf-8');check_script(p,a)
+            a['voices'][0]['text']='Different exact words.'
+            with self.assertRaisesRegex(ValueError,'missing or stale'):check_script(p,a)
+
     def test_recognition_hold_moves_the_actual_lift_and_candidate(self):
         a,c,l=clock_input();old=compile_clock(a,c,l);a['scenes'][0]['recognition_seconds']=3
         new=compile_clock(a,c,l)
@@ -165,6 +207,27 @@ class Captions(unittest.TestCase):
         self.assertEqual(''.join(text[a:b] for a,b in ranges),text)
         self.assertTrue(any('Fitbit' in text[a:b] for a,b in ranges))
 
+    def test_selected_delivery_reuses_whole_unchanged_take_and_explicit_retake(self):
+        with tempfile.TemporaryDirectory() as d:
+            root=Path(d)
+            def delivery(name,takes):
+                out=root/name;out.mkdir();clips=[]
+                for vid,word,sample in takes:
+                    with wave.open(str(out/(vid+'.wav')),'wb') as w:
+                        w.setnchannels(1);w.setsampwidth(2);w.setframerate(48000);w.writeframes(sample.to_bytes(2,'little',signed=True)*4800)
+                    (out/(vid+'.txt')).write_text(word,encoding='utf-8')
+                    clips.append(describe_clip(out,vid,vid+'.wav',vid+'.txt'))
+                write(out/'delivery.json',{'schema':'voice-delivery/v1','clips':clips});return out/'delivery.json'
+            before=delivery('first',[('keep','Exact first words.',10),('retake','Exact second words.',20)])
+            replacement=delivery('second',[('retake','Exact second words.',30)])
+            author={'voice_delivery':'selected/delivery.json','voice_inputs':[str(before),str(replacement)],
+                    'voices':[{'id':'keep','text':'Exact first words.'},{'id':'retake','text':'Exact second words.'}]}
+            result=select_takes(root,author);validate_voice(result['delivery'])
+            self.assertEqual(sha256(root/'selected/keep.wav'),sha256(root/'first/keep.wav'))
+            self.assertEqual(sha256(root/'selected/retake.wav'),sha256(root/'second/retake.wav'))
+            self.assertNotEqual(sha256(root/'selected/retake.wav'),sha256(root/'first/retake.wav'))
+            self.assertEqual(result['new_copy_takes'],0)
+
 
 class NativeEditorial(unittest.TestCase):
     def test_measured_aac_delay_does_not_accept_arbitrary_sync_error(self):
@@ -195,6 +258,24 @@ class NativeEditorial(unittest.TestCase):
             timeline['audioTracks'][0]['clips'][0]['start']=.5
             timeline['videoTracks'][0]['clips'][0]['inPoint']=.2
             with self.assertRaisesRegex(ValueError,'cut, shifted or replaced'):validate_edit(plan,timeline,'picture.mp4')
+
+    def test_native_edit_checks_music_without_hiding_missing_voice(self):
+        with tempfile.TemporaryDirectory() as d:
+            wav=Path(d)/'take-frame.wav'
+            with wave.open(str(wav),'wb') as w:
+                w.setnchannels(1);w.setsampwidth(2);w.setframerate(48000);w.writeframes(bytes(9600))
+            plan={'duration':2,'segments':[{'id':'take','voice_start':.5,'voice':{'padded_path':str(wav)}}],
+                  'music':[{'clip_path':'music.wav','audio_track_index':1,'timeline_start':0,'duration':1}]}
+            timeline={'frameSizeHorizontal':1920,'frameSizeVertical':1080,
+                'videoTracks':[{'clips':[{'name':'picture.mp4','start':0,'duration':2,'inPoint':0}]}],
+                'audioTracks':[{'clips':[{'name':wav.name,'start':.5,'duration':.1}]},
+                               {'clips':[{'name':'music.wav','start':0,'duration':1}]}]}
+            validate_edit(plan,timeline,'picture.mp4')
+            timeline['audioTracks'][1]['clips'][0]['start']=.1
+            with self.assertRaisesRegex(ValueError,'music placement'):validate_edit(plan,timeline,'picture.mp4')
+            timeline['audioTracks'][1]['clips'][0]['start']=0
+            timeline['audioTracks'][0]['clips'][0]['name']='music.wav'
+            with self.assertRaisesRegex(ValueError,'take placement'):validate_edit(plan,timeline,'picture.mp4')
 
 
 if __name__=='__main__':unittest.main()
