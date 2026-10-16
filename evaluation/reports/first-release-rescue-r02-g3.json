@@ -1,0 +1,188 @@
+{
+  "revision": "first-release-rescue-r02",
+  "recorded_on": "2026-10-16",
+  "scope": "Redacted G3 delivery and user narrative-pacing feedback for this revision only",
+  "gate_namespace": "FIRST_RELEASE_RESCUE_R02; not the global teaching-system gates",
+  "gates": {
+    "G1": "CURRENT_ADMISSION_PASS_TWO_SELECTED_QUESTIONS",
+    "G2": "COMPLETE_SCRIPT_INDEPENDENT_SEMANTIC_REVIEW_PASS",
+    "G3": "COMPLETE_PRIVATE_AUDIOVISUAL_ROUGH_CUT",
+    "G4": "PARTIAL_USER_FEEDBACK_ONLY_OVERALL_ACCEPTANCE_PENDING",
+    "G5": "NOT_STARTED"
+  },
+  "production_stop": "G3",
+  "user_feedback": {
+    "quote": "这个叙事节奏可以",
+    "scope": [
+      "narrative_pacing_of_this_actual_rough_cut"
+    ],
+    "narrative_pacing": "USER_ACCEPTED",
+    "baseline": {
+      "two_question_progression": "retain",
+      "content_driven_fast_slow_reading_judgement_rhythm": "retain",
+      "fixed_duration_requirement": false
+    },
+    "media_sha256": "a0e81bf3a0a3a531d954d5db743554f6a972d74c19629717617269d5b732b091",
+    "script_sha256": "5869fb6fab4a8a8e6c4c3d55fd0eb84da5fb84b7dc6f4a8414b33b253d664943",
+    "recording_instruction": "commit进入main，记录这些",
+    "private_feedback_sha256": "f3bc0cd1b7425a962b66256f79b43712892948ec4b863454078683f30298ebc5"
+  },
+  "engineering": {
+    "fix_commit": "bd965d917c7e178b3763cc3532c605b3d57fe22e",
+    "previous_main": "3f30b668496ce8fe6d08906daab0305cecd0d889",
+    "integration": "fast_forward_existing_reviewed_revision_into_main",
+    "new_runtime_implementation": false,
+    "validators_relaxed": false,
+    "portable_consumer_imports_solver": false,
+    "full_regression": {
+      "commit": "bd965d917c7e178b3763cc3532c605b3d57fe22e",
+      "tests": 1612,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 1,
+      "seconds": 1234.365,
+      "exit_code": 0,
+      "log_sha256": "5f733969b79ca3c588482c576ddac1ef3890b53b17345a3d26b2ad72c556c4ad"
+    },
+    "test_scope": "Recorded completed full regression on the exact fixed code; this recording commit changes documentation and redacted metadata only."
+  },
+  "admission": {
+    "questions": 2,
+    "source_materials": "two independent mock diagnostic sources; not official gaokao papers",
+    "complete_candidate_domain_per_question": 4,
+    "all_answers_closed": true,
+    "actual_method": "R03",
+    "method_version": "1.2.0",
+    "method_role": "interpreter",
+    "whole_question_attribution": "external_whole_question_review_not_brand_method_credit",
+    "migration": "material_sha256 and candidate_ids added at original question scope; existing teaching semantics unchanged",
+    "real_independent_review_tasks": true,
+    "strict_reader_export_status_portable": "PASS",
+    "negative_control_records": 20,
+    "expected_rejections": 44,
+    "new_semantic_case_blind_student_credit": 0
+  },
+  "media": {
+    "video_sha256": "a0e81bf3a0a3a531d954d5db743554f6a972d74c19629717617269d5b732b091",
+    "size_bytes": 34476296,
+    "duration_seconds": 163.0,
+    "video_duration": 163.0,
+    "audio_duration": 163.0,
+    "format": {
+      "width": 1280,
+      "height": 720,
+      "fps": 24,
+      "frames": 3912,
+      "video_codec": "h264",
+      "audio_codec": "aac",
+      "audio_sample_rate": "48000",
+      "audio_channels": 2
+    },
+    "full_video_and_audio_decode": "PASS_ZERO_ERRORS",
+    "full_audio_clips_compared": 14,
+    "minimum_full_clip_correlation": 0.9999978108765414,
+    "maximum_alignment_error_seconds": 0.021333333333333333,
+    "phone_preview_width": 390,
+    "motion_sample_windows": [
+      [
+        9.4,
+        11.4
+      ],
+      [
+        39.4,
+        40.083333
+      ]
+    ]
+  },
+  "native_checks": {
+    "layers": 199,
+    "source_passage_blocks": 42,
+    "captions": 68,
+    "candidate_events": 10,
+    "camera_position_keys": 65,
+    "actual_host_identity_before_after_writes": true,
+    "shared_host_locks_released": true,
+    "temporary_transport_stopped": true
+  },
+  "limitations": {
+    "scratch_voice": true,
+    "full_spoken_transcript_verified": false,
+    "letter_and_brand_pronunciation_human_review": "PENDING",
+    "short_extraction_overlap_at_seconds": 10.65,
+    "recap_cross_world_transition_seconds": 0.8,
+    "two_recap_layer_labels_use_old_times": "actual native keyframes and current plan are authoritative",
+    "visual_sampling_is_not_full_human_experience_acceptance": true,
+    "user_narrative_pacing_feedback_is_not_student_effectiveness": true
+  },
+  "student_first_view": {
+    "status": "EMPIRICAL_PENDING",
+    "actual_participants": 0,
+    "user_will_arrange": true
+  },
+  "public_render_ready": false,
+  "formal_4k_render_performed": false,
+  "public_upload_performed": false,
+  "original_g3_receipt_preserved": true,
+  "private_artifact_fingerprints": [
+    {
+      "artifact": "PRODUCTION_RECEIPT.json",
+      "sha256": "989553bb59ebb1a55a8ea9c3d3ce7412718e53ce9f314bbebe1cecbd7727ae65"
+    },
+    {
+      "artifact": "ADMISSION_RECOVERY.md",
+      "sha256": "d0ebf08a0a53401db5a9d96155fa6401d90d62c1e007ddce8d2950eed5532024"
+    },
+    {
+      "artifact": "EPISODE_SCRIPT.md",
+      "sha256": "5869fb6fab4a8a8e6c4c3d55fd0eb84da5fb84b7dc6f4a8414b33b253d664943"
+    },
+    {
+      "artifact": "AV_DIRECTION.md",
+      "sha256": "56f7cf4aed37e7dd1ec8cab0dd98f1747b5e0139e29fa95d52372dae1ecfd294"
+    },
+    {
+      "artifact": "CREATIVE_REVIEW.md",
+      "sha256": "35b60bdb38106bdbde3a6f632232df6e713acc07e8c308a8020b71f495abc5e5"
+    },
+    {
+      "artifact": "EPISODE_ROUGH_CUT.mp4",
+      "sha256": "a0e81bf3a0a3a531d954d5db743554f6a972d74c19629717617269d5b732b091"
+    },
+    {
+      "artifact": "R02_EPISODE_ROUGH.aep",
+      "sha256": "ab3e15122a7fba3ad81ea688769ed6ea1c85843c82aeaef397fa1b56eff24ebb"
+    },
+    {
+      "artifact": "R02_EPISODE_ROUGH.prproj",
+      "sha256": "05f80425dc2a36d68e54abda3d6d9032d6cfe528f8c8ffbf0727f7bcbcd8ddc5"
+    },
+    {
+      "artifact": "admission/admission-results.json",
+      "sha256": "e3d77dff4f44f1d45499c61cba317c521a00e176d6454cd48334d5258be28c73"
+    },
+    {
+      "artifact": "admission/full-regression-result.json",
+      "sha256": "10b36f5a4c0c3adaf2cb8a52bc8809c235a42fabbaa4d7bc4c4e473b40fb3960"
+    },
+    {
+      "artifact": "production/FINAL_G3_BINDING_REVIEW.json",
+      "sha256": "5506b56c345a275a92f2a88372596ed4396bdb99a53fb1b8f8559e6fe32dc168"
+    },
+    {
+      "artifact": "production/VOICE_SELECTION.json",
+      "sha256": "83f015b4671a7ac213783cd68bd2fab35390601a8762ff8cadf2b44bc163ffb3"
+    },
+    {
+      "artifact": "production/final-media-qa/MEDIA_QA.json",
+      "sha256": "57dfd6721da665439ac25268f03d93b0f5a0d89fa101807a977f78f7c5cb12cf"
+    }
+  ],
+  "privacy": {
+    "private_content_included": false,
+    "question_text_included": false,
+    "full_script_included": false,
+    "voice_video_adobe_files_included": false,
+    "private_absolute_paths_included": false,
+    "public_record_contains": "status, counts, exact user pacing feedback, hashes and bounded limitations"
+  }
+}

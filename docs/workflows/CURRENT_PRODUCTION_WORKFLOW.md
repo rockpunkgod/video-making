@@ -4,6 +4,12 @@
 
 原始审计基线：`main@d9fa2da8bf893745f567e21cb631a4d43299c110`；文档整理已提交于 `c97c16b`。2026-10-11 的后续制作状态在本页增量更新，原始[审计报告](WORKFLOW_AUDIT.md)保留当时事实。本机研究/Cinema 增量继续独立保留。继续任何生产前读取该 revision 的实际收据与当前提供的上游状态，不凭目录名字或本页日期推定有效。
 
+## 当前首发停止点 · 2026-10-16
+
+当前首发 revision 为 `local-data/free-showcase/first-release-rescue-r02/`，R03 双题已完成 G1 当前准入、G2 完整稿与 G3 完整声画粗剪（163 秒、720p24）。用户反馈“这个叙事节奏可以”，只认可本条媒体的叙事节奏，后续保留双题递进和快慢安排；整体 G4 尚未完整确认，学生首看为 `EMPIRICAL_PENDING`，正式 4K / 发布未启动。
+
+接手先读该 revision 的 `PRODUCTION_RECEIPT.json`、`AV_DIRECTION.md`、`CREATIVE_REVIEW.md` 及新增 `USER_FEEDBACK.json`；原收据是交付时历史快照。按用户要求保持停在 G3，不重新选题、重做已完成媒体或自动推进 G5。公开可读的交接及指纹见 [R02 记录](../first-release-rescue-r02.md)。下方 R06 / B06 章节保留其独立版本、历史门禁编号和交接范围，不代表当前首发尚无完整声画。
+
 ## 制作要求的延续
 
 2026-10-11，用户认可 D 连续入场修订后强调“之前的3D感和镜头感不要丢了”，并要求“之前的一些和这个不冲突的要求不要丢了”。新反馈增量作用于旧要求；一次入场或排版修订不重置整套创作方向。下表用于制作交接和实际审片，不增加 Runtime 或程序门禁。
@@ -34,13 +40,13 @@
 
 ## 接手时先做哪一步
 
-1. 核对 HEAD、工作树及实际任务 revision；保留并行工作。当前整期参考是 `local-data/free-showcase/title-task-episode-r3/`，B06 已完成的交接是 `local-data/free-showcase/b06-judgement-r2/`。真实材料不随 Git 分发；缺失时记录 `LOCAL_PRODUCTION_EVIDENCE_UNAVAILABLE`。
+1. 核对 HEAD、工作树及实际任务 revision；保留并行工作。当前首发为 `local-data/free-showcase/first-release-rescue-r02/`。仅在继续旧 R06 / B06 专项时读取 `local-data/free-showcase/title-task-episode-r3/` 和 `local-data/free-showcase/b06-judgement-r2/`。真实材料不随 Git 分发；缺失时记录 `LOCAL_PRODUCTION_EVIDENCE_UNAVAILABLE`。
 2. 已有产物先读收据、依赖和失败原因。B06 **不要重新运行 prepare/G0**：从 `PREPARATION_RECEIPT.json`、`PRODUCTION_INDEX.json`、`CANDIDATE_PREFIX.json`、`ANNOTATION_REQUEST.json` 开始。
 3. 确认产品为 `FREE_SHOWCASE`。`PAID_MASTERY` 转到其教学目标、练习和迁移设计；当前免费发布检查器明确拒绝 Paid，尚无完整 Paid 课程验收实现。
 4. 找到本次真正缺少的一层再继续。没有新上游语义许可时不制作新的语义拆分；有许可也仍需消费者、原生执行和实际媒体核验。
 5. Adobe 操作归正在制作的唯一执行者。审计与研究代理不切换项目、不启动制作。不因锁文件存在就认定写入受保护。
 
-当前 R06 是内部制作：完整带字幕纯画面已经存在，十九条逐字声音已准备；本次审计基线未发现该 revision 的完整原生 PR 声画交付与最终审核。`public_render_ready=false`。这些事实不否定历史 R09 或 Reading D 的各自交付。
+历史 R06 是内部制作：完整带字幕纯画面已经存在，十九条逐字声音已准备；原审计基线未发现该 revision 的完整原生 PR 声画交付与最终审核。其 `public_render_ready=false`。这些事实不否定 R02 当前首发、历史 R09 或 Reading D 的各自交付。
 
 ## As-Is：真正执行过的路径
 

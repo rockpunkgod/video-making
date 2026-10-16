@@ -40,13 +40,15 @@ flowchart TD
     H --> I[内部成片与独立审核]
 ```
 
-当前 R06 整期已到完整带字幕纯画面；B06 局部另已完成六份原生 AE → Premiere 4K24 A/B，停在 G3 人工观看。整期声画合成与审核分别记录。Pedagogy / Student POV 0.4 → Choreography → Cognitive Direction 0.2 是已有的显式计划链，尚未成为本期原生参数的自动生成路径；默认 0.3 兼容链继续保留。两条路径的真实输入、人工交接和建议收敛方式见[工作流](docs/workflows/CURRENT_PRODUCTION_WORKFLOW.md)。
+当前首发候选为 R03「换词不换义」双题：已完成当前准入、完整脚本和 **2 分 43 秒、720p24 的完整声画粗剪**。2026-10-16，用户反馈“这个叙事节奏可以”，当前节奏作为后续基准；生产停在本轮 G3，整体创意验收与学生首看未完成，`public_render_ready=false`。见[交付与叙事节奏记录](docs/first-release-rescue-r02.md)。
+
+此前 R06 整期纯画面和 B06 六份原生 4K24 A/B 保留各自历史状态。Pedagogy / Student POV 0.4 → Choreography → Cognitive Direction 0.2 是已有的显式计划链，尚未成为本期原生参数的自动生成路径；默认 0.3 兼容链继续保留。实际交接与版本化停止点见[工作流](docs/workflows/CURRENT_PRODUCTION_WORKFLOW.md)。
 
 ANSWER 提供教学事实与生命周期。Video OS 只消费冻结结构化输出和显式状态清单，不从 Registry、教学 Markdown 或原始题库补推断；教学疑点交回上游。认知设计研究辅助呈现决策，不成为第二个教学事实源。
 
 公开放行绑定当前依赖、最终文案、实际展示内容和最终媒体，要求教学、来源与编辑审核同时通过。工程检查、真人观看、试听、教学效果和传播结果分别记录。
 
-## 当前进展 · 2026-10-12
+## 历史制作进展 · 2026-10-12
 
 | 模块或产出 | 当前状态 |
 |---|---|
