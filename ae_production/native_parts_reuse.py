@@ -502,18 +502,22 @@ def _display_difference(old, new):
                     raise ValueError('Display decision and editorial mirror disagree: ' + sid)
             if a == b:
                 continue
-            if (previous.get('kind') != 'compare' or current.get('kind') != 'compare'
-                    or previous.get('motion_treatment') != 'critical_comparison'):
-                raise ValueError('Display repair is limited to extracted candidate comparisons')
+            kinds = ('compare', 'locate') if key == 'screen_title' else ('compare', 'replay')
+            extracted = key != 'screen_title' or previous.get('kind') != 'locate'
+            if (previous.get('kind') not in kinds or current.get('kind') not in kinds
+                    or (extracted and previous.get('motion_treatment') != 'critical_comparison')):
+                raise ValueError('Display repair is limited to extracted candidate comparisons and locate title deletion')
             if key == 'screen_title':
                 if (not isinstance(a, str) or not a or b != ''
                         or current.get(key) != '' or authors[1][sid].get(key) != ''):
                     raise ValueError('Only a nonempty-to-empty screen title repair is allowed')
-                reason = 'hide_comparison_screen_title'
+                reason = ('hide_locate_screen_title' if previous['kind'] == 'locate'
+                          else 'hide_comparison_screen_title')
             else:
                 if (a != 'visible' or b != 'isolate_selected_passage'
                         or not current.get('reading_events')
-                        or current.get('candidate_reading_policy') != 'quiet_source_until_read'):
+                        or current.get('candidate_reading_policy', 'visible')
+                           not in ('visible', 'quiet_source_until_read')):
                     raise ValueError('Only visible-to-isolate comparison background repair is allowed')
                 reason = 'isolate_nonselected_comparison_background'
             if key not in mirrors[1][sid] or mirrors[1][sid][key] != b:
@@ -549,10 +553,10 @@ def _background_scope(revision):
     for scene in revision['plan']['scenes']:
         if scene.get('comparison_background_policy') != 'isolate_selected_passage':
             continue
-        if (scene['kind'] != 'compare' or scene.get('motion_treatment') != 'critical_comparison'
-                or scene.get('candidate_reading_policy') != 'quiet_source_until_read'
+        if (scene['kind'] not in ('compare', 'replay') or scene.get('motion_treatment') != 'critical_comparison'
+                or scene.get('candidate_reading_policy', 'visible') not in ('visible', 'quiet_source_until_read')
                 or not scene.get('reading_events')):
-            raise ValueError('Background isolation requires a quiet extracted comparison reading')
+            raise ValueError('Background isolation requires an extracted comparison or replay reading')
         excerpt = revision['plan']['excerpts'][scene['excerpt']]
         blocks = revision['plan']['worlds'][excerpt['world']]['blocks']
         by_id = _unique(blocks, 'id', 'source block')
@@ -715,8 +719,10 @@ def _display_context(old, new):
     for change in titles:
         scene = next(s for s in old['plan']['scenes'] if s['id'] == change['scene'])
         layer = old['layers']['TASK_TITLE_' + scene['id']]
+        fades = (scene['kind'] in ('compare', 'replay')
+                 and scene.get('motion_treatment') != 'in_place_check' and scene.get('reading_events'))
         end = (min(scene['end'], max(scene['start'] + .25, scene['reading_events'][0]['depart']))
-               if scene.get('reading_events') else scene['end'])
+               if fades else scene['end'])
         if (layer.get('text') != change['from'] or layer.get('parent') is not None
                 or abs(layer.get('inPoint', -1) - scene['start']) > 1e-6
                 or abs(layer.get('outPoint', -1) - end) > 1e-6):

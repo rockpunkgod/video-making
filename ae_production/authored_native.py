@@ -221,10 +221,10 @@ def background_isolation_rows(p):
     rows=[]
     for s in p['scenes']:
         if s.get('comparison_background_policy')!='isolate_selected_passage':continue
-        if (s['kind']!='compare' or s.get('motion_treatment')!='critical_comparison'
-                or s.get('candidate_reading_policy')!='quiet_source_until_read'
+        if (s['kind'] not in ('compare','replay') or s.get('motion_treatment')!='critical_comparison'
+                or s.get('candidate_reading_policy','visible') not in ('visible','quiet_source_until_read')
                 or not s.get('reading_events')):
-            raise ValueError('Background isolation requires a quiet comparison reading path')
+            raise ValueError('Background isolation requires an explicit comparison reading path')
         ex=p['excerpts'][s['excerpt']];blocks=p['worlds'][ex['world']]['blocks']
         refs=[r for r in s['source_refs'] if r['world']==ex['world'] and r['pointer']=='/passage']
         selected={b['id'] for b in blocks if b['id'] in ex['block_ids']

@@ -118,6 +118,72 @@ class NativeBackgroundReuseTests(unittest.TestCase):
             write(folder / 'native-identity.json', native)
         self.bind_parent_parts(); self.write_readbacks()
 
+    def background_only_scene(self, kind='compare', policy='visible'):
+        """Same reviewed template, existing candidate visibility left intact."""
+        for folder in (self.parent, self.child):
+            self.display(folder, screen_title='')
+            def visibility(scene):
+                if policy is None:
+                    scene.pop('candidate_reading_policy', None)
+                else:
+                    scene['candidate_reading_policy'] = policy
+            self.change_scene(folder, visibility)
+            author, plan = read(folder / 'AV_AUTHOR.json'), read(folder / 'AV_PLAN.json')
+            for scene in (author['scenes'][2], plan['scenes'][2]):
+                scene['kind'] = kind
+                if kind == 'replay':
+                    scene.update(event=None, replay_of='CHECK_X')
+            self.save_author_plan(folder, author, plan)
+            audit = read(folder / 'native-audit.json')
+            audit['layers'] = [l for l in audit['layers'] if l['name'] != 'TASK_TITLE_COMPARE_Y']
+            if kind == 'replay':
+                for layer in audit['layers']:
+                    if layer['name'] == 'CANDIDATE_FLIGHT_COMPARE_Y':
+                        layer['name'] = 'REPLAY_CANDIDATE_COMPARE_Y'
+            write(folder / 'native-audit.json', audit); self.sync_native_count(folder)
+            if kind == 'replay':
+                native = read(folder / 'native-identity.json')
+                native['audit'].update(candidates=[], replays=[{
+                    'scene': 'COMPARE_Y', 'replay_of': 'CHECK_X', 'no_new_candidate_event': True}])
+                write(folder / 'native-identity.json', native)
+            self.set_template_snapshot(folder, self.template.replace(reuse.BACKGROUND_OLD, reuse.BACKGROUND_NEW))
+        self.bind_parent_parts(); self.write_readbacks()
+
+    def locate_title_only(self):
+        for folder in (self.parent, self.child):
+            author, plan = read(folder / 'AV_AUTHOR.json'), read(folder / 'AV_PLAN.json')
+            for scene in (author['scenes'][2], plan['scenes'][2]):
+                scene.update(kind='locate', locator={'identity': 'Alpha', 'stem_span': [0, 5],
+                                                   'passage_span': [0, 5], 'block_span': [0, 45]})
+                scene.pop('motion_treatment', None); scene.pop('candidate_reading_policy', None)
+                scene.pop('comparison_background_policy', None)
+            manifest = read(author['editorial']['manifest'])
+            decisions = manifest['scenes']['COMPARE_Y']['consumed_decisions']
+            decisions.pop('candidate_reading_policy', None); decisions.pop('comparison_background_policy', None)
+            write(author['editorial']['manifest'], manifest)
+            author['editorial']['sha256'] = sha256(author['editorial']['manifest'])
+            mirror = plan['editorial_consumption']['rows'][2]
+            mirror.update(candidate_reading_policy='visible'); mirror.pop('comparison_background_policy', None)
+            self.save_author_plan(folder, author, plan)
+            audit = read(folder / 'native-audit.json')
+            for layer in audit['layers']:
+                if layer['name'] == 'TASK_TITLE_COMPARE_Y':
+                    layer['outPoint'] = 5
+            ident = max(l['id'] for l in audit['layers']) + 50
+            audit['layers'].append({'name': 'CARRIED_QUERY_COMPARE_Y', 'id': ident,
+                'parent': None, 'threeD': True, 'inPoint': 3.1, 'outPoint': 5,
+                'text': 'Alpha', 'font': 'ArialMT',
+                'position': [[3.1, [0, 0, 0]], [4.8, [1, 2, 3]]],
+                'comment': json.dumps({'kind': 'query_from_original_stem', 'span': [0, 5],
+                                       'exact_text': 'Alpha', 'origin': [0, 0, 0]})})
+            write(folder / 'native-audit.json', audit); self.sync_native_count(folder)
+            native = read(folder / 'native-identity.json')
+            native['audit']['query_carries'] = [{'scene': 'COMPARE_Y', 'layer_id': ident,
+                                                'origin': [0, 0, 0], 'start': 3.1, 'end': 5}]
+            write(folder / 'native-identity.json', native)
+            self.set_template_snapshot(folder, self.template.replace(reuse.BACKGROUND_OLD, reuse.BACKGROUND_NEW))
+        self.bind_parent_parts()
+
     def test_exact_display_patch_reuses_only_disjoint_bytes_and_preserves_renderer(self):
         self.assertEqual(hashlib.sha256(self.template.replace(reuse.BACKGROUND_OLD, reuse.BACKGROUND_NEW)).hexdigest(),
                          reuse.BACKGROUND_TEMPLATE_SHA256)
@@ -196,6 +262,127 @@ class NativeBackgroundReuseTests(unittest.TestCase):
         report = reuse.reuse_unchanged_parts(self.parent, self.child)
         self.assertEqual(report['template_repairs'], [])
         self.assertEqual(report['reused_frames'], 144)
+
+    def test_background_repair_preserves_existing_visible_candidate_without_adding_quiet_policy(self):
+        self.background_only_scene()
+        report = reuse.reuse_unchanged_parts(self.parent, self.child)
+        self.assertEqual(report['template_repairs'], [])
+        self.assertEqual(report['removed_native_layers'], [])
+        self.assertEqual([r['field'] for r in report['display_repairs']], ['comparison_background_policy'])
+        for folder in (self.parent, self.child):
+            self.assertEqual(read(folder / 'AV_AUTHOR.json')['scenes'][2]['candidate_reading_policy'], 'visible')
+        self.assertEqual(report['reused_frames'], 144)
+
+    def test_replay_background_repair_keeps_default_candidate_visibility_and_no_new_event(self):
+        self.background_only_scene(kind='replay', policy=None)
+        report = reuse.reuse_unchanged_parts(self.parent, self.child)
+        self.assertEqual(report['template_repairs'], [])
+        self.assertEqual(report['affected_frame_ranges'], [{'scene': 'COMPARE_Y', 'start': 71, 'end': 121,
+            'repairs': ['isolate_nonselected_comparison_background']}])
+        for folder in (self.parent, self.child):
+            scene = read(folder / 'AV_PLAN.json')['scenes'][2]
+            self.assertNotIn('candidate_reading_policy', scene)
+            self.assertIsNone(scene['event'])
+            self.assertEqual(read(folder / 'native-identity.json')['audit']['candidates'], [])
+        for path in (self.child / 'native-master-parts').glob('part-*.json'):
+            row = read(path); reuse.validate_reused_part(self.child, row, row['path'])
+
+    def test_explicit_visible_replay_is_valid_but_quiet_policy_cannot_change_during_background_repair(self):
+        self.background_only_scene(kind='replay', policy='visible')
+        _, _, report = reuse._context(self.parent, self.child)
+        self.assertEqual(len(report['display_repairs']), 1)
+        self.change_scene(self.child, lambda s: s.update(candidate_reading_policy='quiet_source_until_read'))
+        with self.assertRaisesRegex(ValueError, 'Plans differ beyond'):
+            reuse.reuse_unchanged_parts(self.parent, self.child)
+
+    def test_replay_background_repair_cannot_acquire_a_new_candidate_event(self):
+        self.background_only_scene(kind='replay', policy='visible')
+        author, plan = read(self.child / 'AV_AUTHOR.json'), read(self.child / 'AV_PLAN.json')
+        author['scenes'][2]['event'] = plan['scenes'][2]['event'] = 'supported'
+        manifest = read(author['editorial']['manifest'])
+        manifest['scenes']['COMPARE_Y']['consumed_decisions']['event'] = 'supported'
+        write(author['editorial']['manifest'], manifest); author['editorial']['sha256'] = sha256(author['editorial']['manifest'])
+        self.save_author_plan(self.child, author, plan)
+        native = read(self.child / 'native-identity.json')
+        native['audit']['candidates'].append({'scene': 'COMPARE_Y', 'kind': 'supported'})
+        write(self.child / 'native-identity.json', native); self.write_readbacks()
+        with self.assertRaisesRegex(ValueError, 'Plans differ beyond'):
+            reuse.reuse_unchanged_parts(self.parent, self.child)
+
+    def test_replay_still_refuses_to_hide_its_last_necessary_source_reading(self):
+        self.background_only_scene(kind='replay', policy='visible')
+        for folder in (self.parent, self.child):
+            author, plan = read(folder / 'AV_AUTHOR.json'), read(folder / 'AV_PLAN.json')
+            for scene in (author['scenes'][2], plan['scenes'][2]):
+                scene['reading_events'][0]['end'] = plan['worlds']['toy']['blocks'][1]['end']
+            self.save_author_plan(folder, author, plan)
+        self.bind_parent_parts(); self.write_readbacks()
+        with self.assertRaisesRegex(ValueError, 'hide necessary reading'):
+            reuse.reuse_unchanged_parts(self.parent, self.child)
+
+    def test_locate_title_deletion_uses_full_scene_lifetime_and_preserves_query_carry(self):
+        self.locate_title_only()
+        report = reuse.reuse_unchanged_parts(self.parent, self.child)
+        self.assertEqual(report['template_repairs'], [])
+        self.assertEqual(report['removed_native_layers'], ['TASK_TITLE_COMPARE_Y'])
+        self.assertEqual(report['background_isolation_scope'], [])
+        self.assertEqual(report['affected_frame_ranges'], [{'scene': 'COMPARE_Y', 'start': 71, 'end': 121,
+            'repairs': ['hide_locate_screen_title']}])
+        old, new, _ = reuse._context(self.parent, self.child)
+        self.assertEqual(old['layers']['CARRIED_QUERY_COMPARE_Y'], new['layers']['CARRIED_QUERY_COMPARE_Y'])
+        for path in (self.child / 'native-master-parts').glob('part-*.json'):
+            row = read(path); reuse.validate_reused_part(self.child, row, row['path'])
+
+    def test_locate_title_cannot_claim_the_comparison_first_read_depart_outpoint(self):
+        self.locate_title_only()
+        path = self.parent / 'native-audit.json'; audit = read(path)
+        next(l for l in audit['layers'] if l['name'] == 'TASK_TITLE_COMPARE_Y')['outPoint'] = 3.25
+        write(path, audit)
+        with self.assertRaisesRegex(ValueError, 'actual bounded authored native title'):
+            reuse.reuse_unchanged_parts(self.parent, self.child)
+
+    def test_locate_title_repair_cannot_change_query_reading_camera_or_carry_observations(self):
+        self.locate_title_only()
+        paths = [self.child / name for name in ('AV_AUTHOR.json', 'AV_PLAN.json', 'EPISODE_SCRIPT.md',
+                                               'native-identity.json', 'native-audit.json')]
+        original = {p: p.read_bytes() for p in paths}
+        for edit in [lambda a, p: p['scenes'][2]['locator'].update(identity='Beta'),
+                     lambda a, p: p['scenes'][2]['reading_events'][0].update(end_time=4.125),
+                     lambda a, p: p['scenes'][2].update(return_start=4.7)]:
+            for path, content in original.items():
+                path.write_bytes(content)
+            author, plan = read(self.child / 'AV_AUTHOR.json'), read(self.child / 'AV_PLAN.json')
+            edit(author, plan); self.save_author_plan(self.child, author, plan)
+            with self.subTest(edit=edit), self.assertRaises(ValueError):
+                reuse.reuse_unchanged_parts(self.parent, self.child)
+        for edit in [lambda a: next(l for l in a['layers'] if l['name'] == 'CARRIED_QUERY_COMPARE_Y').update(text='Beta'),
+                     lambda a: next(l for l in a['layers'] if l['name'] == 'CARRIED_QUERY_COMPARE_Y').update(outPoint=5.25),
+                     lambda a: next(l for l in a['layers'] if l['name'] == 'CARRIED_QUERY_COMPARE_Y')['position'][0][1].__setitem__(0, 9),
+                     lambda a: a['reading_camera_and_focus']['keys'][0].update(aperture=65)]:
+            for path, content in original.items():
+                path.write_bytes(content)
+            audit = read(self.child / 'native-audit.json'); edit(audit); write(self.child / 'native-audit.json', audit)
+            with self.subTest(edit=edit), self.assertRaises(ValueError):
+                reuse.reuse_unchanged_parts(self.parent, self.child)
+        for path, content in original.items():
+            path.write_bytes(content)
+        native = read(self.child / 'native-identity.json'); native['audit']['query_carries'][0]['origin'][0] = 9
+        write(self.child / 'native-identity.json', native)
+        with self.assertRaisesRegex(ValueError, 'build layout'):
+            reuse.reuse_unchanged_parts(self.parent, self.child)
+
+    def test_background_repair_still_refuses_unknown_candidate_visibility_or_noncomparison(self):
+        self.background_only_scene(policy='unknown_hidden_candidate')
+        with self.assertRaisesRegex(ValueError, 'visible-to-isolate'):
+            reuse.reuse_unchanged_parts(self.parent, self.child)
+        for folder in (self.parent, self.child):
+            self.change_scene(folder, lambda s: s.update(candidate_reading_policy='visible'))
+            author, plan = read(folder / 'AV_AUTHOR.json'), read(folder / 'AV_PLAN.json')
+            author['scenes'][2]['kind'] = plan['scenes'][2]['kind'] = 'task'
+            self.save_author_plan(folder, author, plan)
+        self.bind_parent_parts(); self.write_readbacks()
+        with self.assertRaisesRegex(ValueError, 'extracted candidate comparisons'):
+            reuse.reuse_unchanged_parts(self.parent, self.child)
 
     def test_background_policy_cannot_be_claimed_without_the_actual_consumer(self):
         self.set_template_snapshot(self.child, self.template)

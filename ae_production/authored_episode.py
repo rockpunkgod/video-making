@@ -206,10 +206,9 @@ def checked_author(folder):
         background=s.get('comparison_background_policy','visible')
         if background not in ('visible','isolate_selected_passage'):
             raise ValueError('Unsupported comparison background policy')
-        if background=='isolate_selected_passage' and (s['kind']!='compare'
-                or not s.get('choreography') or not s.get('reading_path')
-                or s.get('candidate_reading_policy')!='quiet_source_until_read'):
-            raise ValueError('Background isolation requires an explicit quiet comparison reading path')
+        if background=='isolate_selected_passage' and (s['kind'] not in ('compare','replay')
+                or not s.get('choreography') or not s.get('reading_path')):
+            raise ValueError('Background isolation requires an explicit comparison reading path')
         timing_names=('voice_pre',) if 'choreography' in s else ('recognition_seconds','travel_seconds','post_seconds','voice_pre')
         for name in timing_names:
             if type(s[name]) not in (int, float) or not math.isfinite(s[name]) or s[name] < 0:

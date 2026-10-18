@@ -1,4 +1,5 @@
 """Isolation must preserve necessary reading and remain inside its own scene."""
+from copy import deepcopy
 import unittest
 
 from ae_production.authored_native import background_isolation_rows
@@ -39,14 +40,22 @@ class ComparisonBackground(unittest.TestCase):
         with self.assertRaisesRegex(ValueError,'inside its comparison scene'):
             background_isolation_rows(p)
 
-    def test_no_legacy_or_unquiet_scene_is_silently_isolated(self):
-        for key,value in [('kind','locate'),('candidate_reading_policy','visible'),
+    def test_no_legacy_or_unknown_scene_is_silently_isolated(self):
+        for key,value in [('kind','locate'),('candidate_reading_policy','unknown'),
                           ('motion_treatment','in_place_check')]:
             p=specimen();p['scenes'][0][key]=value
-            with self.assertRaisesRegex(ValueError,'quiet comparison reading path'):
+            with self.assertRaisesRegex(ValueError,'explicit comparison reading path'):
                 background_isolation_rows(p)
         p=specimen();p['scenes'][0].pop('comparison_background_policy')
         self.assertEqual(background_isolation_rows(p),[])
+
+    def test_explicit_replay_isolation_preserves_candidate_policy_and_adds_no_decision(self):
+        p=specimen();p['scenes'][0].update(kind='replay',candidate_reading_policy='visible')
+        before=deepcopy(p)
+        row=background_isolation_rows(p)[0]
+        self.assertEqual(row['hidden'],['background'])
+        self.assertEqual(p,before)
+        self.assertNotIn('event',p['scenes'][0])
 
 
 if __name__=='__main__':unittest.main()
