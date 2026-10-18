@@ -60,3 +60,14 @@ progress. Pending frames are reported separately from verified transfers; a file
 appearing is not completion. The monitor does not alter projects, restart jobs,
 delete files or approve quality. The primary agent owns production, recovery and
 final verification.
+
+
+Opt-in Audience event handoff is now checked by `current()` and consumed by
+`preview()` for planned observation/decision/confirmation sampling. Run the
+host-free `audience_preflight` operation on a new revision with a SHA-bound
+`audience_adapter` config. See [the interface and B06 execution specification](../../../docs/audience-adaptive-handoff.md).
+This is code-level consumption of authored scene/event bindings; no native
+execution, media anchor, aesthetic approval or duration extension is inferred.
+Existing requests without the config retain their original behavior. The older
+Adaptive Adobe write operations still need their existing host-ownership gap
+resolved; B06 writes continue through its protected bounded executor.

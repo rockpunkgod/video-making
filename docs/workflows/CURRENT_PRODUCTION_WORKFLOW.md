@@ -172,3 +172,18 @@ flowchart TD
 | 无法公开 | 对应 Claim、展示/录音权利、编辑或实际媒体凭证；不要混成一个观感分数 |
 
 历史 Reading D、合成剥离、定位专项和声音 A/B 都从[能力索引](PRODUCTION_CAPABILITY_INDEX.json)按适用范围借用；其局部认可不传给新的 B06 或整期。
+
+
+## Audience → Adaptive 最小适配增量（2026-10-18）
+
+以上 As-Is 描述保留 10 月 11 日证据范围。新增可选
+[`ae_production.audience_adapter`](../../ae_production/audience_adapter.py)
+重用全 Beat 场景投影及 `director_handoff()`，把选定场景的 Viewer Task、悬问、信息回报
+绑定现有来源对象、阅读窗口及候选事件。Adaptive `current()` 对启用配置的新 revision
+重建并验证交接，`preview()` 消费计划阅读/决策/确认取样点；增加无宿主
+`audience_preflight` 命令。旧请求不强制迁移。
+
+这修补了**可选事件交接/预览取样消费**，没有接通自动几何编排、完整新 Runtime 或
+B06 限定制作器的 PRODUCTION 接口。新增代码未执行 Adobe，真实 B06 私有资产不在本环境，
+G3 继续待看。接口、5–8 分钟目标下的题间递进及继承约束见
+[具体执行规格](../audience-adaptive-handoff.md)。原生写操作仍遵循本页既有宿主权限。
