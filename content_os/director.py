@@ -167,6 +167,8 @@ def build_draft(candidate, statuses, pattern_id='P02', duration_target=60):
         for c in [x for x in mine if x['kind'] == 'actual_action']:
             action = pointer(b, c['action_artifact_refs'][0]['pointer'])
             scene('COMPARE', c['text'], [c], c['evidence_refs'], action['output'], output_text(action['output']))
+            from .course_mapping import action_visual_intent
+            scenes[-1]['visual_intent'] = action_visual_intent(b, action)
         c = mapping['method_name']; scene('METHOD_REVEAL', c['text'], [c])
         for c in [x for x in mine if x['kind'] in ('stop_rule', 'action_stop', 'boundary', 'counterexample')]:
             scene('STOP_RULE', c['text'], [c])
@@ -245,3 +247,4 @@ def manifest(package, candidate, pattern_id=None):
             'final_copy_sha': package['copy_lock']['final_copy_sha']}
     validate('package-manifest', result)
     return result
+
