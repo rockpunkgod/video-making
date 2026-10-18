@@ -321,3 +321,20 @@ R01 当次 53 项相关回归通过，未跑全仓测试；37 份受保护父资
 从 Git 暂存区逐文件导出干净副本验证，排除本机未提交依赖：92 项本链回归及 38 项 Audience / Free Showcase / Voice Delivery 相邻回归均通过，共 **130 项**。32 个待提交 Python 文件语法检查及 AE Schema 生成检查通过；未运行全仓回归。缺少 Windows 子进程创建标志的平台按 0 处理，使新增宿主缺失回归可在 CI 的非 Windows 环境执行；原生 AE 的平台要求不变。
 
 额外检查发现 `build_video_schemas --check` 的既有基线差异：`schemas/frozen-asset-bundle.json`、`video/schemas/content-candidate.json`、`video/schemas/video-package.json`。生成器、三个输入及五个输出共 9 个文件已与提交前 HEAD 逐字核对一致，该失败并非本次制作改动引入。保留原始 Schema 和独立待办，不能把专项通过记作全仓 CI 通过。此次入库及本机指针的实际提交绑定另记于私有 `local-data/repository-alignment/2026-10-18`。
+
+
+## 2026-10-19 · 自主整期 v1 与四次实际媒体定向修订（R09）
+
+沿当前 `adaptive-episode/run.py → autonomous_episode → authored_episode.dispatch → AV_AUTHOR / AV_PLAN → authored_native → AE / Premiere / package-master` 完成内部整期，没有回退旧执行器。代码在本地只快进集成，原93项未提交/未跟踪文件SHA与原始status字节按实际集成收据保护；未推送远端，未代签PR合并。36历史能力项的入口、版本和边界保持，逐项实际消费由私有审计记录。
+
+完整媒体链为 R03 → R06 → R07 → R08 → R09，四次修订都绑定真实父片媒体SHA、实际问题、台账和canonical作者响应。R06采用用户最后明确已审的A逐字稿，真实生成21条完整声音、精确复用3条并重新对齐；时钟为294.5秒/7068帧。R07修三处实际标题/背景问题；系统实帧检查再发现六处，R08仅改六创意字段：清空SC02/SC10/SC11屏幕标题，对SC03/SC08/SC10加非选背景隔离。R08扩查又实见SC08晚入场回看标题和SC09L归位定位标题与题干相交，R09只清空这两场screen_title及manifest镜像。kind=replay/locate、携带query与定位路径、唯一回看、两个独立focus的38帧间隔以及其它全部决定保持。第4次修订仅由本次实际request显式max_directed_revisions=4授权，默认3和公开保护没有改变。
+
+最终实际原生182层/master215，3840×2160/24fps/7068帧，24完整take、90字幕、139全文意群、21必要读窗及145焦点。严格证明复用61段/5820帧，另13段/1248帧按受影响整场与1帧保护重新渲染。层数、主合成ID、复用和新渲数量来自本版真实收据，未借用R08或设计预估。原纸、选中源字透明提取、原生3D、相机、全部必要阅读和query carry保留。
+
+完整解码、原生视频payload与时戳保持、PR全部完整声音起点及样本范围核对通过；同版AE/PR最终保存工程与宿主恢复分别绑定。独立审阅在实际新编码像素中复查全部已知视觉问题，本版不留已发现未更改项；这不保证未观察范围。工具缺真实音频感知与直接原速视频感知，二者继续UNOBSERVED，不能以波形、ASR、相关性、接触表、字段或流程完成签通过。用户已审仅授权精确口播，整片、人类教学认证、平台与学生效果、公开发布不自动获得。
+
+制作、定向修订和实际产物交付完成，用户请求的完整感知审阅仍未完成。因此记录production_revision_and_artifact_delivery_complete=true、requested_perceptual_review_complete=false、workflow_complete=false；不把附带UNOBSERVED的完整产物偷换成全部请求已完成。
+
+最终相关控制日志实际为240项/92.254秒/PASS。此前全仓尝试存在生成物漂移失败，专项修复不代表重跑后的全仓全绿。审阅缓存幂等与双向事实库存保护以本版最终集成收据为准，不能重复追加旧台账充作新观察。StudentPOV0.3 literal仍HOLD；旧0.4/Cognitive/Choreography等runtime未调用的职责保持未调用。源方法同纪元映射不能借新版名字。
+
+成片4:54.5，比5分钟少5.5秒；无有效第三题，不填无效等待或重复讲解。音乐是rights未知的内部scratch，冻结诊断材料保持private边界，未公开发布。最终索引定位同版完整媒体、可编辑工程、全文、SRT、章节审阅页、36项消费审计及只读FREE预检；旧full_solution合法HOLD与缺外部人类发布凭证如实保留。

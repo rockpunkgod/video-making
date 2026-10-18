@@ -1,10 +1,10 @@
 {
   "index_version": "1.0",
   "kind": "documentation_capability_index",
-  "as_of": "2026-10-18",
+  "as_of": "2026-10-19",
   "repository_base": "34f64736b08d01ed8d802d9d765658585db510b3",
   "recommended_workflow": "docs/workflows/CURRENT_PRODUCTION_WORKFLOW.md",
-  "scope": "Autonomous FREE_SHOWCASE v1 uses the current authored dispatch. A complete 270.333333-second / 6488-frame native 4K24 R03 film, 24 intact takes, 139 full-passage groups and 21 reading windows / 145 focus instances were actually produced. The current final revision, directed repairs, editable projects, full script, actual media review and host restoration are bound by the local PRODUCTION_INDEX and that revision’s MODULE_CONSUMPTION_AUDIT. Historical capability scopes below retain their own version-specific evidence; they do not imply that every legacy runtime was invoked in v1. Human acceptance, listening and normal-speed video perception remain pending/unobserved; public_render_ready is false.",
+  "scope": "Current autonomous FREE_SHOWCASE uses the authored dispatch. Complete R03 followed by four actual-media-directed revisions R06/R07/R08/R09. Final R09:294.5s/7068frames/native4K24, 24 complete takes,139 full-passage groups,21 reading windows/145 focus instances. Known observed visual defects were repaired and rechecked in actual encoded media. Listening and direct normal-speed motion remain UNOBSERVED. Local PRODUCTION_INDEX binds the same-revision film, editable projects, exact transcript, review and36-capability audit. Historical36 entries retain their version-specific meanings. The five-minute target shortfall is5.5s; music remains internal scratch, film acceptance pending, public_render_ready=false.",
   "historical_archive_index": "G:/VideoMaking/_archive/2026-10-18/ARCHIVE_INDEX.json",
   "historical_path_rule": "Historical paths identify their original location. Entries with archived_evidence map those paths to verified ZIP members; inspect or restore through the archive instructions rather than treating a moved output as a missing production dependency.",
   "not_runtime_contract": true,
@@ -597,6 +597,107 @@
       ],
       "scope": "Complete first film and actual-media-directed revision on the current path; final receipts and all 36 capability entries are individually qualified in the private indexed delivery audit. Strict native reuse excludes both affected whole scenes and preserves original render provenance. Encoded frames and engineering checks do not certify audio or normal-speed motion.",
       "availability": "MIXED_LOCAL_CODE_AND_PRIVATE_EVIDENCE"
+    },
+    "E28": {
+      "paths": [
+        "local-data/free-showcase/autonomous-v1-r09-delivery/AV_AUTHOR.json",
+        "local-data/free-showcase/autonomous-v1-r09-delivery/AUTHORING_RECEIPT.json",
+        "local-data/free-showcase/autonomous-v1-r09-delivery/AV_PLAN.json",
+        "local-data/free-showcase/autonomous-v1-r09-delivery/COPY_SENT_IN_CHAT.json",
+        "local-data/free-showcase/autonomous-v1-r09-delivery/REVISION_REQUEST.json",
+        "local-data/free-showcase/autonomous-v1-r09-delivery/UNCHANGED_VOICE_ALIGNMENT_REUSE.json",
+        "local-data/free-showcase/autonomous-v1-r09-delivery/VOICE_STYLE_EXECUTION.json",
+        "local-data/free-showcase/autonomous-v1-r09-delivery/NATIVE_PARTS_REUSE.json",
+        "local-data/free-showcase/autonomous-v1-r09-delivery/MASTER_PICTURE_RECEIPT.json",
+        "local-data/free-showcase/autonomous-v1-r09-delivery/PR_TIMELINE.json",
+        "local-data/free-showcase/autonomous-v1-r09-delivery/PR_EXPORT_RECEIPT.json",
+        "local-data/free-showcase/autonomous-v1-r09-delivery/MASTER_DELIVERY_QA.json",
+        "local-data/free-showcase/autonomous-v1-r09-delivery/INTERNAL_MEDIA_REVIEW.json",
+        "local-data/free-showcase/autonomous-v1-r09-delivery/ACTUAL_MEDIA_SCENE_MAP.json",
+        "local-data/free-showcase/autonomous-v1-r09-delivery/RESTORED_HOSTS.json",
+        "local-data/free-showcase/autonomous-v1-r09-delivery/FINAL_CONTROL_REGRESSION.txt",
+        "local-data/free-showcase/autonomous-v1-r09-delivery/CODE_INTEGRATION_RECEIPT.json",
+        "local-data/free-showcase/autonomous-v1-r06-style-a/REVISION_REQUEST.json",
+        "local-data/free-showcase/autonomous-v1-r07-clean/REVISION_REQUEST.json",
+        "local-data/free-showcase/autonomous-v1-r08-final/REVISION_REQUEST.json"
+      ],
+      "scope": "Final autonomous-v1-r09-delivery full film after four actual directed revision rounds: R03 -> R06 -> R07 -> R08 -> R09. Native layers 182; master comp 215; strictly reused 61 parts / 5820 frames; newly rendered 13 affected parts / 1248 frames. R08 repaired six author fields for observed title/background issues. R09 only clears SC08 replay and SC09L locate fixed screen titles; replay/locate kinds, exact reviewed copy, all24 complete takes, actual alignment,294.5s clock, required reading, source attention38frame handoff, camera and query carry remain unchanged. Same-film finalQA, actual encoded-frame review, final saved projects and restored hosts are bound. No remaining known observed visual issue; listening and direct normal-speed video perception unavailable. 240 related tests passed in 92.254s; the earlier full-repository attempt was not wholly green and was not rerun. The fourth revision limit is explicitly bound only in the current request; default3/public protections remain.",
+      "availability": "MIXED_COMMITTED_CODE_AND_PRIVATE_SAME_REVISION_NATIVE_MEDIA",
+      "media_sha256": "dc84facd3a54655fc9233da7214535d516bc19990552c36c45e55706e2703abb",
+      "formal_4k_rendered": true,
+      "known_open_observed_visual_issues": 0,
+      "audio_observed": false,
+      "normal_speed_video_observed": false,
+      "human_approved": false,
+      "public_render_ready": false,
+      "workflow_complete": false,
+      "production_revision_and_artifact_delivery_complete": true,
+      "requested_perceptual_review_complete": false,
+      "actual_revision_chain": [
+        {
+          "parent": "autonomous-v1-r03",
+          "child": "autonomous-v1-r06-style-a",
+          "parent_media_sha256": "e2bb3fe208e2a462e4833e78900fe57847d9b39a2046b1d32e4a1b7943987f06",
+          "issue_ids": [
+            "R03-ISSUE-01",
+            "R03-ISSUE-02"
+          ],
+          "revision_request": "E:\\自媒体\\video-making-autonomous-v1\\local-data\\free-showcase\\autonomous-v1-r06-style-a\\REVISION_REQUEST.json",
+          "revision_request_sha256": "571c81bec58dbfb70453b0f1b98360520a6dd9b4d80033ae435eb7f8dd244401",
+          "author_response_sha": "d8622cae1eb1f0758c83e6df238299c57f37265ee675717be45d64b28e009cdd"
+        },
+        {
+          "parent": "autonomous-v1-r06-style-a",
+          "child": "autonomous-v1-r07-clean",
+          "parent_media_sha256": "6d24bc40c210021f73f98aabe89ee0ad8ade1493016c2301f2946d2681a3acf7",
+          "issue_ids": [
+            "R06-RESIDUAL-01",
+            "R06-RESIDUAL-02",
+            "R06-RESIDUAL-03"
+          ],
+          "revision_request": "E:\\自媒体\\video-making-autonomous-v1\\local-data\\free-showcase\\autonomous-v1-r07-clean\\REVISION_REQUEST.json",
+          "revision_request_sha256": "e9c1b62f8e7070e438946d11bd6a988e4136765dfeb7dc2723bdf237ac603533",
+          "author_response_sha": "faf400b1de1ebd0e1a67258454538974707c15dfe59fd1f38de9576f704bbbf4"
+        },
+        {
+          "parent": "autonomous-v1-r07-clean",
+          "child": "autonomous-v1-r08-final",
+          "parent_media_sha256": "0ddab1b12839a5c9ddfed742775ec932b4e986bf481b44254248e8a14c72e195",
+          "issue_ids": [
+            "R07-ISSUE-01",
+            "R07-ISSUE-02",
+            "R07-ISSUE-03",
+            "R07-ISSUE-04",
+            "R07-ISSUE-05",
+            "R07-ISSUE-06"
+          ],
+          "revision_request": "E:\\自媒体\\video-making-autonomous-v1\\local-data\\free-showcase\\autonomous-v1-r08-final\\REVISION_REQUEST.json",
+          "revision_request_sha256": "1300b34775c268a3c2ecd7ed364abd414e12535f2e6cafcacd4fe46802318dad",
+          "author_response_sha": "85b6f299e4aa365c4a8b3d893a59b07f8b7661defd0f139d2b9f314a5281e6b9"
+        },
+        {
+          "parent": "autonomous-v1-r08-final",
+          "child": "autonomous-v1-r09-delivery",
+          "parent_media_sha256": "ee9daa174987a8ae9f631528972bf27b125bf681c933dba8e55f6067275fe4ae",
+          "issue_ids": [
+            "R08-ISSUE-01",
+            "R08-ISSUE-02"
+          ],
+          "revision_request": "E:\\自媒体\\video-making-autonomous-v1\\local-data\\free-showcase\\autonomous-v1-r09-delivery\\REVISION_REQUEST.json",
+          "revision_request_sha256": "76ef7128c83a462a9fcdd90a913378606f487b539daaea360d22de2c42acd3c9",
+          "author_response_sha": "51ff80ff63b94dc8e166a075956f16635975e74c95379af30a2ce60e6531a8f1"
+        }
+      ],
+      "directed_revision_rounds": 4,
+      "explicit_request_max_directed_revisions": 4,
+      "default_max_directed_revisions_unchanged": 3,
+      "control_regression": {
+        "count": 240,
+        "seconds": 92.254,
+        "sha256": "a1fe882bd7d45453d694acb8e7f491cd7a07070965a56225b5ee4c80f5515e6e",
+        "path": "E:\\自媒体\\video-making-autonomous-v1\\local-data\\free-showcase\\autonomous-v1-r09-delivery\\FINAL_CONTROL_REGRESSION.txt",
+        "status": "PASS"
+      }
     }
   },
   "capabilities": [
@@ -2027,10 +2128,11 @@
     ],
     "production_index": "local-data/free-showcase/PRODUCTION_INDEX.json",
     "per_capability_actual_consumption": "Indexed revision / MODULE_CONSUMPTION_AUDIT.json and .md",
-    "recovery": "Bound stage receipts, final-saved project bindings and production-worktree review ledger; never replay unknown writes",
+    "recovery": "Bound stage receipts, same-author final-saved project hashes and production-worktree review ledger; unknown Adobe writes inspected without blind replay; current request alone extends revision limit to4",
     "independent_roles": "Creative/language author and actual-media reviewer; Adobe has one executor",
     "evidence_refs": [
-      "E27"
+      "E27",
+      "E28"
     ],
     "not_all_legacy_versions_executed": true,
     "human_approved": false,
