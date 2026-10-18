@@ -85,6 +85,31 @@ class AutonomousControls(unittest.TestCase):
                 consume.assert_called_once_with(new,response)
             self.assertEqual(read(new/'AUTONOMOUS_RUN.json')['revisions'],1)
 
+    def test_explicit_internal_repair_budget_preserves_default_and_observed_issue_binding(self):
+        with tempfile.TemporaryDirectory() as t:
+            f=Path(t)/'parent';f.mkdir();new=Path(t)/'child'
+            issue={'issue_id':'SYNTHETIC-ONE','responsible_module':'layout'}
+            write(f/'INTERNAL_MEDIA_REVIEW.json',{'media_sha256':'SYNTHETIC','issues':[issue]})
+            write(f/'AUTONOMOUS_RUN.json',{'revisions':3})
+            d=Path(t)/'decision.json'
+            request={'media_sha256':'SYNTHETIC','issue_ids':['SYNTHETIC-ONE']}
+            write(d,request)
+            with self.assertRaisesRegex(ValueError,'budget exhausted'):revise(f,new,d)
+            self.assertFalse(new.exists())
+            for limit in (True,0,-1,'4'):
+                write(d,{**request,'max_directed_revisions':limit})
+                with self.subTest(limit=limit),self.assertRaises(ValueError):revise(f,new,d)
+            response={'status':'NEEDS_HOST_AGENT'}
+            write(d,{**request,'max_directed_revisions':4,'issue_ids':['NOT_OBSERVED']})
+            with self.assertRaisesRegex(ValueError,'No observed issue'):revise(f,new,d)
+            self.assertFalse(new.exists())
+            write(d,{**request,'max_directed_revisions':4})
+            with patch('ae_production.autonomous_episode.job',return_value=response):
+                self.assertEqual(revise(f,new,d),response)
+            state=read(new/'AUTONOMOUS_RUN.json')
+            self.assertEqual(state['revisions'],4)
+            self.assertFalse(state['public_render_ready']);self.assertEqual(state['user_acceptance'],'PENDING')
+
 
 class InternalMediaLedger(unittest.TestCase):
     def fixtures(self,root):

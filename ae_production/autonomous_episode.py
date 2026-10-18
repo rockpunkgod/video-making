@@ -412,7 +412,9 @@ def revise(folder,new_folder,decision):
     review_data=read(folder/'INTERNAL_MEDIA_REVIEW.json');request=read(decision)
     if request['media_sha256']!=review_data['media_sha256']:raise ValueError('Revision is not bound to reviewed media')
     previous=read(folder/'AUTONOMOUS_RUN.json')
-    if previous.get('revisions',0)>=3:raise ValueError('Three directed revisions exhausted; preserve user aesthetic acceptance')
+    limit=request.get('max_directed_revisions',3)
+    if type(limit) is not int or limit<1:raise ValueError('A positive directed revision budget is required')
+    if previous.get('revisions',0)>=limit:raise ValueError('Directed revision budget exhausted; preserve user aesthetic acceptance')
     selected={i['issue_id']:i for i in review_data['issues']}
     if not request['issue_ids'] or any(i not in selected for i in request['issue_ids']):raise ValueError('No observed issue authorizes this revision')
     if new_folder.exists():

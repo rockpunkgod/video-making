@@ -81,10 +81,11 @@ class NativeBackgroundReuseTests(unittest.TestCase):
         plan['editorial_consumption']['rows'][2].update(decisions)
         self.save_author_plan(folder, author, plan)
 
-    def write_readbacks(self):
-        native = read(self.child / 'native-identity.json')
+    def write_readbacks(self, folder=None):
+        folder = folder or self.child
+        native = read(folder / 'native-identity.json')
         for cid in (native['comp_id'], native['master_comp_id']):
-            write(self.child / f'COMPARISON_BACKGROUND_NATIVE_{cid}.json', {
+            write(folder / f'COMPARISON_BACKGROUND_NATIVE_{cid}.json', {
                 'rows': [{'scene': 'COMPARE_Y', 'hidden': [{'layer': 'toy-source-other',
                     'before': 100, 'quiet': 0, 'settled': 0, 'restore_start': 0, 'restored': 100}],
                     'reading': [{'layer': 'toy-source-0', 'time': 3.875, 'opacity': 100}]}],
@@ -183,6 +184,20 @@ class NativeBackgroundReuseTests(unittest.TestCase):
             write(folder / 'native-identity.json', native)
             self.set_template_snapshot(folder, self.template.replace(reuse.BACKGROUND_OLD, reuse.BACKGROUND_NEW))
         self.bind_parent_parts()
+
+    def replay_title_only(self):
+        self.background_only_scene(kind='replay', policy='visible')
+        # The parent and child already share background isolation; the sole
+        # new decision removes the existing replay title, as in R08 -> R09.
+        self.display(self.parent, screen_title='Relation', comparison_background_policy='isolate_selected_passage')
+        audit = read(self.parent / 'native-audit.json')
+        audit['layers'].append({'id': max(l['id'] for l in audit['layers']) + 1,
+            'name': 'TASK_TITLE_COMPARE_Y', 'parent': None, 'threeD': False,
+            'text': 'Relation', 'font': 'MicrosoftYaHei', 'inPoint': 3, 'outPoint': 3.25})
+        write(self.parent / 'native-audit.json', audit)
+        native = read(self.parent / 'native-identity.json'); native['layers'] = len(audit['layers'])
+        write(self.parent / 'native-identity.json', native)
+        self.bind_parent_parts(); self.write_readbacks(self.parent)
 
     def test_exact_display_patch_reuses_only_disjoint_bytes_and_preserves_renderer(self):
         self.assertEqual(hashlib.sha256(self.template.replace(reuse.BACKGROUND_OLD, reuse.BACKGROUND_NEW)).hexdigest(),
@@ -370,6 +385,52 @@ class NativeBackgroundReuseTests(unittest.TestCase):
         write(self.child / 'native-identity.json', native)
         with self.assertRaisesRegex(ValueError, 'build layout'):
             reuse.reuse_unchanged_parts(self.parent, self.child)
+
+    def test_replay_title_only_repair_preserves_first_depart_lifetime_and_existing_isolation(self):
+        self.replay_title_only()
+        report = reuse.reuse_unchanged_parts(self.parent, self.child)
+        self.assertEqual(report['template_repairs'], [])
+        self.assertEqual(report['removed_native_layers'], ['TASK_TITLE_COMPARE_Y'])
+        self.assertEqual([r['field'] for r in report['display_repairs']], ['screen_title'])
+        self.assertEqual(report['affected_frame_ranges'], [{'scene': 'COMPARE_Y', 'start': 71, 'end': 121,
+            'repairs': ['hide_comparison_screen_title']}])
+        self.assertEqual(len(report['background_isolation_readbacks']['parent']), 2)
+        self.assertEqual(len(report['background_isolation_readbacks']['child']), 2)
+        self.assertEqual(read(self.child / 'AV_PLAN.json')['scenes'][2]['kind'], 'replay')
+        self.assertEqual(read(self.child / 'native-identity.json')['audit']['candidates'], [])
+        for path in (self.child / 'native-master-parts').glob('part-*.json'):
+            row = read(path); reuse.validate_reused_part(self.child, row, row['path'])
+
+    def test_replay_title_cannot_use_locate_full_scene_outpoint(self):
+        self.replay_title_only()
+        path = self.parent / 'native-audit.json'; audit = read(path)
+        next(l for l in audit['layers'] if l['name'] == 'TASK_TITLE_COMPARE_Y')['outPoint'] = 5
+        write(path, audit)
+        with self.assertRaisesRegex(ValueError, 'actual bounded authored native title'):
+            reuse.reuse_unchanged_parts(self.parent, self.child)
+
+    def test_replay_title_only_repair_rejects_kind_decision_cue_phase_and_clock_drift(self):
+        self.replay_title_only()
+        original = {p: p.read_bytes() for p in self.child.rglob('*') if p.is_file()}
+        def scene_fields(author, plan, **values):
+            for scene in (author['scenes'][2], plan['scenes'][2]):
+                scene.update(values)
+        edits = [lambda a, p: scene_fields(a, p, kind='compare'),
+                 lambda a, p: scene_fields(a, p, event='supported'),
+                 lambda a, p: scene_fields(a, p, replay_of='ANOTHER_COMPARISON'),
+                 lambda a, p: scene_fields(a, p, extract_start=4.3),
+                 lambda a, p: scene_fields(a, p, settled=4.6),
+                 lambda a, p: scene_fields(a, p, return_start=4.7),
+                 lambda a, p: scene_fields(a, p, end=5.125),
+                 lambda a, p: p['cues'][0].update(start=3.6),
+                 lambda a, p: p['segments'][0].update(voice_start=3.6)]
+        for edit in edits:
+            for path, content in original.items():
+                path.write_bytes(content)
+            author, plan = read(self.child / 'AV_AUTHOR.json'), read(self.child / 'AV_PLAN.json')
+            edit(author, plan); self.save_author_plan(self.child, author, plan); self.write_readbacks()
+            with self.subTest(edit=edit), self.assertRaises(ValueError):
+                reuse.reuse_unchanged_parts(self.parent, self.child)
 
     def test_background_repair_still_refuses_unknown_candidate_visibility_or_noncomparison(self):
         self.background_only_scene(policy='unknown_hidden_candidate')

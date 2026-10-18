@@ -502,7 +502,7 @@ def _display_difference(old, new):
                     raise ValueError('Display decision and editorial mirror disagree: ' + sid)
             if a == b:
                 continue
-            kinds = ('compare', 'locate') if key == 'screen_title' else ('compare', 'replay')
+            kinds = ('compare', 'replay', 'locate') if key == 'screen_title' else ('compare', 'replay')
             extracted = key != 'screen_title' or previous.get('kind') != 'locate'
             if (previous.get('kind') not in kinds or current.get('kind') not in kinds
                     or (extracted and previous.get('motion_treatment') != 'critical_comparison')):
