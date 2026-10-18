@@ -6,6 +6,7 @@ from core.registry import validate_schema
 from core.evidence import validate_graph
 from video_contracts import VERSION, now, read, seal, sha, semantic_payload, presentation_payload, validate, verify_bundle, review_semantics
 from video_contracts import declared_review_level
+from video_contracts.answer_projection import validate_answer_projection
 
 PHASES = ('blind', 'host_review', 'reveal', 'post_reveal')
 ROLES = {'locator', 'interpreter', 'reducer', 'decider', 'verifier', 'framework'}
@@ -88,6 +89,7 @@ class FrozenAssetExporter:
         validate_schema('question-input', q)
         validate_schema('question-analysis', a)
         validate_graph(a['evidence_graph'], q)
+        validate_answer_projection(a, q)
         if q['question_id'] != a['question_id'] or q['question_type'] != a['question_type']:
             raise ValueError('Question/analysis identity mismatch')
         phase = req['evaluation_phase']

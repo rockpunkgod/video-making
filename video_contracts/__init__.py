@@ -117,6 +117,8 @@ def verify_bundle(bundle):
     if sha(presentation_payload(bundle)) != bundle['presentation_sha']:
         raise ValueError('Presentation binding mismatch')
     q, a, fp = bundle['source_snapshot'], bundle['analysis'], bundle['binding_fingerprint']
+    from .answer_projection import validate_answer_projection
+    validate_answer_projection(a, q)
     expected = {'question_snapshot_sha': sha(q), 'analysis_sha': sha(a),
                 'method_versions': {m['method_id']: m['version'] for m in bundle['methods']},
                 'evidence_graph_sha': sha(a['evidence_graph']), 'execution_trace_sha': sha(a['execution_trace']),
