@@ -15,7 +15,7 @@ import sqlite3
 import subprocess
 from urllib.parse import urlparse
 
-from video_contracts import sha, now, validate, seal, verify_seal
+from video_contracts import sha, now, validate, seal, verify_seal, read
 from content_os.showcase import feedback_template, file_sha, inspect_media
 from creative_os.content_profiles import PROFILES, HARD_GATES
 from creative_os.episode import validate_episode
@@ -267,10 +267,49 @@ class AudienceLearning:
         if len(matches) != 1: raise ValueError('Missing record or wrong kind: ' + ident)
         return matches[0]['payload']
 
+    def internal_ai_review(self, media, plan, issue, *, qa, plan_path):
+        """Actual local media observations, separate from external human channels.
+
+        These records cannot stand in for EDITORIAL_SCREENING, publication,
+        platform performance, or a human media-beat mapping credential.
+        """
+        expected={'issue_id','media_sha256','scene','range','observed_fact','severity',
+                  'responsible_module','revision','recheck','observation_kind'}
+        if set(issue)!=expected:raise ValueError('A bound internal media issue requires exact fields')
+        from scripts.voice_delivery import sha256
+        scope=qa.get('source_frame_range',[0,plan.get('frames')])
+        fps=plan.get('format',{}).get('fps',plan.get('fps',24))
+        if (not isinstance(scope,list) or len(scope)!=2 or any(type(x) is not int for x in scope)
+                or not 0<=scope[0]<scope[1]<=plan.get('frames',0)
+                or qa.get('frames')!=scope[1]-scope[0]
+                or ('source_frame_range' in qa and qa.get('source_fps')!=fps)):
+            raise ValueError('Actual media observation frame scope is invalid')
+        if (sha256(plan_path)!=qa.get('plan_sha256') or read(plan_path)!=plan
+                or qa.get('same_revision')!=plan.get('revision')
+                or qa.get('sha256')!=sha256(media)
+                or Path(qa.get('media','')).resolve()!=Path(media).resolve()):
+            raise ValueError('Internal observation requires the same actual plan and media QA')
+        if sha256(media)!=issue['media_sha256']:raise ValueError('Observation media changed')
+        scenes={s['id']:s for s in plan['scenes']}
+        if issue['scene'] not in scenes:raise ValueError('Observation scene is absent from the actual plan')
+        s=scenes[issue['scene']];lo,hi=issue['range']
+        if not s['start']<=lo<hi<=s['end']:raise ValueError('Observation must bind actual scene seconds')
+        if not scope[0]/fps<=lo<hi<=scope[1]/fps:
+            raise ValueError('Observation is outside the actual bounded media')
+        if issue['severity'] not in ('critical','major','minor','aesthetic') or issue['observation_kind'] not in ('encoded_frames','moving_video','listened_audio','engineering_measurement'):
+            raise ValueError('State actual severity and observation capability')
+        if not all(isinstance(issue[k],str) and issue[k].strip() for k in ('issue_id','observed_fact','responsible_module','revision','recheck')):
+            raise ValueError('Observed facts, owner, revision and recheck are required')
+        payload={**deepcopy(issue),'channel':'internal_ai_review','media_path':str(Path(media).resolve()),
+                 'plan_sha256':qa['plan_sha256'],'production_revision':plan['revision'],
+                 'source_frame_range':scope,'source_fps':fps,'whole_film_media':scope==[0,plan['frames']],
+                 'human_confirmed':False,'platform_observation':False,'user_acceptance':'PENDING'}
+        return self._save('internal_ai_review',payload)
+
     def _save(self, kind, payload, check=None):
         payload = deepcopy(payload)
         payload.update(schema_version=VERSION, data_domain='CREATIVE_LEARNING',
-            data_label='SYNTHETIC TEST ONLY' if self.synthetic else 'OPERATOR_RECORDED',
+            data_label='SYNTHETIC TEST ONLY' if self.synthetic else 'INTERNAL_AI_OBSERVATION' if kind=='internal_ai_review' else 'OPERATOR_RECORDED',
             recorded_at=now(), public_render_ready=False)
         schema = {'prediction':'audience-experiment', 'performance':'audience-performance'}.get(kind)
         if schema: validate(schema, payload)

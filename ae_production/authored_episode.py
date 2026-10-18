@@ -22,25 +22,95 @@ CURRENT = ROOT / 'local-data/free-showcase/PRODUCTION_INDEX.json'
 AUTHOR = 'AV_AUTHOR.json'
 AUTHOR_KEYS = {'revision','product','format','media_role','public_render_ready','copy_review',
                'sources','input_files','voices','scenes','excerpts','producer','host',
-               'voice_delivery','voice_inputs','music','teaching_focus'}
+               'voice_delivery','voice_inputs','music','teaching_focus','editorial','layout','alignment_source',
+               'copy_review_evidence'}
 KINDS = {'task', 'locate', 'compare', 'answer', 'replay', 'recap'}
 SHOT_KEYS = {'id', 'kind', 'world', 'voice_ids', 'title', 'excerpt', 'candidate',
              'event', 'replay_of', 'source_refs', 'action_refs', 'terminal_refs',
              'recognition_seconds', 'travel_seconds', 'post_seconds', 'voice_pre',
              'candidate_anchor', 'event_anchor', 'attention', 'locator',
              'audience_intent', 'pre_excerpt', 'secondary_excerpt', 'secondary_anchor', 'recap_worlds',
-             'candidate_entry_seconds', 'choreography', 'reading_path', 'voice_placements', 'screen_title'}
+             'candidate_entry_seconds', 'choreography', 'reading_path', 'voice_placements', 'screen_title',
+             'candidate_reading_policy'}
 
 MOTION_KEYS = {'orient_seconds', 'candidate_read_seconds', 'candidate_travel_seconds',
                'source_read_seconds', 'extract_seconds', 'comparison_seconds',
                'decision_seconds', 'result_seconds', 'return_seconds'}
 
 
+def validate_copy_review(author):
+    """Verify the external exact-copy receipt and its actual per-scene source.
+
+    This reads bound evidence only; it never creates a review or upgrades film,
+    listening, student or publication authority. Legacy pending labels retain
+    their previous meaning, including historical inputs without a review label.
+    """
+    status=author.get('copy_review','PENDING')
+    if not isinstance(status,str):raise ValueError('Explicit copy review status required')
+    if status!='USER_REVIEWED_EXACT_COPY':
+        if 'PENDING' not in status.upper():raise ValueError('Unrecognized or unsupported copy review claim')
+        return {'copy_review':status,'user_reviewed':False,'scope':'exact_spoken_copy_only'}
+    evidence=author.get('copy_review_evidence')
+    if not isinstance(evidence,dict) or set(evidence)!={'path','sha256'}:
+        raise ValueError('User-reviewed copy requires a bound external copy-review receipt')
+
+    def bound(path,digest):
+        if not isinstance(path,str) or not Path(path).is_absolute():
+            raise ValueError('Copy-review evidence requires exact absolute paths')
+        resolved=Path(path).resolve()
+        matches=[d for p,d in author.get('input_files',{}).items() if Path(p).resolve()==resolved]
+        if len(matches)!=1 or matches[0]!=digest or sha256(resolved)!=digest:
+            raise ValueError('Copy-review source or receipt binding changed')
+        return resolved
+
+    receipt=read(bound(evidence['path'],evidence['sha256']))
+    required={'schema':'explicit-user-copy-review/v1',
+        'authority':'explicit_current_chat_user_copy_review','reviewer_kind':'external_human',
+        'scope':'exact_spoken_copy_only','user_reviewed':True,'film_accepted':False,
+        'listening_accepted':False,'public_render_ready':False}
+    if any(receipt.get(k)!=v or (type(v) is bool and type(receipt.get(k)) is not bool)
+           for k,v in required.items()):
+        raise ValueError('External user copy review must retain its exact-copy-only scope')
+    source=bound(receipt['source_markdown'],receipt['source_markdown_sha256'])
+    normalize=lambda text:re.sub(r'\s+','',text.strip())
+    source_rows=[];current=None;body=[]
+    for line in source.read_text('utf-8-sig').splitlines():
+        if re.match(r'^#{1,6}[ \t]+',line):
+            if current is not None:
+                source_rows.append({'scene':current,'text':normalize('\n'.join(body))})
+            current=None;body=[]
+            match=re.match(r'^###[ \t]+(SC[0-9]+[A-Za-z0-9_-]*)(?=[ \t·:：—|｜]|$)',line)
+            if match:current=match.group(1)
+        elif current is not None:
+            body.append(line)
+    if current is not None:source_rows.append({'scene':current,'text':normalize('\n'.join(body))})
+    voices={v['id']:v['text'] for v in author['voices']}
+    if len(voices)!=len(author['voices']):raise ValueError('Duplicate exact-copy voice identity')
+    rows=[];used=[]
+    for scene in author['scenes']:
+        ids=scene['voice_ids']
+        if any(vid not in voices or not isinstance(voices[vid],str) for vid in ids):
+            raise ValueError('Reviewed scene must retain its complete authored voices')
+        used.extend(ids)
+        rows.append({'scene':scene['id'],'text':normalize(''.join(voices[vid] for vid in ids))})
+    if (not source_rows or len({r['scene'] for r in source_rows})!=len(source_rows)
+            or any(not r['text'] for r in source_rows) or source_rows!=rows
+            or len(used)!=len(set(used)) or set(used)!=set(voices)):
+        raise ValueError('User-reviewed scene order or exact spoken copy differs from its external source')
+    digest=sha(rows)
+    if receipt.get('reviewed_copy_sha256')!=digest:
+        raise ValueError('User-reviewed complete copy digest differs from the actual source')
+    return {'copy_review':status,'user_reviewed':True,'scope':'exact_spoken_copy_only',
+            'reviewed_copy_sha256':digest,'film_accepted':False,'listening_accepted':False,
+            'public_render_ready':False}
+
+
 def script_text(author):
     """One exact copy view for the user and the existing voice producer."""
     voices = {v['id']: v['text'] for v in author['voices']}
+    review='用户已独立审阅（仅此逐字稿）' if author['copy_review']=='USER_REVIEWED_EXACT_COPY' else author['copy_review']
     lines = ['# 英语有画说 · ' + author['revision'] + ' 完整文案',
-             '文案状态：' + author['copy_review'],
+             '文案状态：' + review,
              '段落标签不读入旁白。文案审阅与画面、听感、整片认可分别记录。', '']
     for scene in author['scenes']:
         lines += ['## ' + scene['id'] + ' · ' + scene['title'], '']
@@ -64,11 +134,29 @@ def check_script(folder, author):
         raise ValueError('Full copy review export is missing or stale; run script and send the complete new copy to the user')
 
 
+def production_folder_allowed(folder):
+    """Keep private production in this repo, including its indexed worktree.
+
+    A local integration can retain its original absolute media bindings. Only
+    the exact current index destination in a Git-registered worktree may cross
+    ROOT; an arbitrary supplied path never gains that exception.
+    """
+    p=Path(folder).resolve()
+    if p.is_relative_to((ROOT/'local-data').resolve()):return True
+    if not CURRENT.exists() or p!=Path(read(CURRENT)['revision']).resolve():return False
+    try:
+        raw=subprocess.check_output(['git','-C',str(ROOT),'worktree','list','--porcelain','-z'])
+    except (FileNotFoundError,subprocess.CalledProcessError):return False
+    roots=[Path(row[len(b'worktree '):].decode('utf-8')).resolve()
+           for row in raw.split(b'\0') if row.startswith(b'worktree ')]
+    return any(p.is_relative_to((r/'local-data').resolve()) for r in roots)
+
+
 def current_folder():
     if not CURRENT.exists():
         raise FileNotFoundError('Current private production index unavailable; supply an actual revision')
     p = Path(read(CURRENT)['revision']).resolve()
-    if not p.is_relative_to((ROOT / 'local-data').resolve()) or not (p / AUTHOR).exists():
+    if not production_folder_allowed(p) or not (p / AUTHOR).exists():
         raise ValueError('Current revision must contain the actual private author input')
     return p
 
@@ -76,10 +164,14 @@ def current_folder():
 def checked_author(folder):
     a = read(folder / AUTHOR)
     if set(a)-AUTHOR_KEYS:raise ValueError('Unsupported production input: '+str(sorted(set(a)-AUTHOR_KEYS)))
+    validate_copy_review(a)
     if a['product'] != 'FREE_SHOWCASE' or a['public_render_ready'] is not False:
         raise ValueError('This consumer is an internal FREE_SHOWCASE rough-cut adapter')
     if a['media_role'] != 'EDITORIAL_PROXY' or a['format'] != {'width': 1920, 'height': 1080, 'fps': 24}:
         raise ValueError('Unsupported production profile; do not silently substitute a proxy')
+    if 'layout' in a:
+        if set(a['layout'])!={'passage_width','reading_distance','stage_distance'} or any(type(v) not in (int,float) or not math.isfinite(v) or v<=0 for v in a['layout'].values()):
+            raise ValueError('Explicit finite column and camera layout required')
     for p, digest in a['input_files'].items():
         if sha256(p) != digest:
             raise ValueError('Bound input changed: ' + p)
@@ -109,6 +201,8 @@ def checked_author(folder):
         ids.add(s['id']); used.extend(s['voice_ids'])
         if not s['audience_intent'].strip():
             raise ValueError('The author must specify the concrete viewing purpose')
+        if s.get('candidate_reading_policy','visible') not in ('visible','quiet_source_until_read'):
+            raise ValueError('Unsupported source/candidate reading policy')
         timing_names=('voice_pre',) if 'choreography' in s else ('recognition_seconds','travel_seconds','post_seconds','voice_pre')
         for name in timing_names:
             if type(s[name]) not in (int, float) or not math.isfinite(s[name]) or s[name] < 0:
@@ -192,6 +286,9 @@ def checked_author(folder):
         raise ValueError('Main film must close each question and contain the one authored focused replay')
     if 'teaching_focus' in a:
         validate_focus(a, bundles)
+    if 'editorial' in a:
+        from ae_production.authored_editorial import validate_editorial
+        validate_editorial(a,bundles)
     return a, bundles
 
 
@@ -270,6 +367,29 @@ def delivery_path(folder, author):
     result=(folder/author.get('voice_delivery','voice/delivery.json')).resolve()
     if not result.is_relative_to(folder.resolve()):raise ValueError('Selected voice delivery must belong to this revision')
     return result
+
+
+def reuse_alignment(folder,author):
+    """Reuse measured cues only for byte-identical complete takes and copy."""
+    source=Path(author['alignment_source']);old=read(source)
+    delivery_file=delivery_path(folder,author);delivery=validate_voice(delivery_file)
+    expected={v['id']:v['text'] for v in author['voices']}
+    prior={x['id']:x for x in old['clips']}
+    if set(prior)!=set(expected) or old['model']!=author['producer']['alignment_model']:
+        raise ValueError('Alignment source uses other voices or model')
+    for c in delivery['clips']:
+        row=prior[c['id']]
+        if (row['audio_sha256']!=c['audio_sha256'] or row['transcript']!=expected[c['id']]
+                or row['transcript_sha256']!=c['transcript_sha256']
+                or abs(row['duration_seconds']-c['duration_seconds'])>1/48000):
+            raise ValueError('Changed take or copy cannot reuse alignment: '+c['id'])
+    result=deepcopy(old);result['delivery_sha256']=sha256(delivery_file)
+    dest=folder/'VOICE_ALIGNMENT.json'
+    if dest.exists() and read(dest)!=result:raise ValueError('Preserve existing alignment; inspect a new revision')
+    write(dest,result);write(folder/'ALIGNMENT_REUSE_RECEIPT.json',{
+        'source':str(source),'source_sha256':sha256(source),'delivery_sha256':sha256(delivery_file),
+        'complete_identical_takes':len(prior),'copy_identical':True,'new_listening_review':False})
+    return {'alignment':str(dest),'reused_identical_complete_takes':len(prior)}
 
 
 def compile_clock(a, clips, aligned):
@@ -418,6 +538,7 @@ def prepare(folder):
                 alignment_sha256=sha256(aligned_path), public_render_ready=False,
                 human_creative_review='PENDING', listening_review='PENDING', student_count=0)
     plan['article_chunking'] = chunks
+    if 'layout' in a:plan['layout']=deepcopy(a['layout'])
     if all('choreography' in s for s in a['scenes']):
         plan['realization']='continuous_paper_scan'
     plan['copy_review']=a['copy_review']
@@ -429,6 +550,9 @@ def prepare(folder):
     plan['teaching_focus_sha']=sha(a['teaching_focus'])
     plan['teaching_resources']=resource_report(a,plan)
     plan['critical_engagement']=critical_focus_handoff(a,plan)
+    if 'editorial' in a:
+        from ae_production.authored_editorial import compile_editorial
+        plan['editorial_consumption']=compile_editorial(a,plan,bundles)
     write(folder/'TEACHING_FOCUS_REPORT.json', {
         'selection':rank_teaching_focus(a,bundles), 'resources':plan['teaching_resources'],
         'audience_handoff':plan['critical_engagement'], 'policy_sha':plan['teaching_focus_sha']})
@@ -465,6 +589,7 @@ def dispatch(operation, folder, **kwargs):
     if operation == 'voice': return voice(folder)
     if operation == 'align':
         a, _ = checked_author(folder)
+        if a.get('alignment_source'):return reuse_alignment(folder,a)
         current=folder/'VOICE_ALIGNMENT.json'
         if current.exists() and read(current)['delivery_sha256']!=sha256(delivery_path(folder,a)):
             if (folder/'native-identity.json').exists():raise ValueError('Changed voice requires a new production revision')

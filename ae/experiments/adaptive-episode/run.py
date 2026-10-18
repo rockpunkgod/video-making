@@ -251,14 +251,22 @@ def verify_rendered_frames(folder,receipt):
 
 
 def main():
-    p=argparse.ArgumentParser(description=__doc__);p.add_argument('operation',nargs='?',default='status',choices=('status','check','script','chunks','voice','align','prepare','build','audit','preview','render','premiere','package','restore'));p.add_argument('folder',nargs='?')
+    p=argparse.ArgumentParser(description=__doc__);p.add_argument('operation',nargs='?',default='status',choices=('status','check','script','chunks','voice','align','prepare','build','audit','preview','render','render-master','premiere','package','package-master','restore','autonomous','audience_preflight'));p.add_argument('folder',nargs='?')
     p.add_argument('--pid',type=int);p.add_argument('--hwnd',type=int);p.add_argument('--batch-size',type=int,default=96)
     p.add_argument('--historical-replay',action='store_true',help='Explicit historical executor use; does not change the current main film')
     p.add_argument('--proof',action='store_true',help='Render the current main film introduction before the full render')
+    p.add_argument('--brief',type=Path,help='Private episode brief with asset pool and style inputs')
+    p.add_argument('--through',default='restore',help='Last autonomous stage to execute')
     a=p.parse_args()
-    from ae_production.authored_episode import current_folder,dispatch,AUTHOR
+    from ae_production.authored_episode import current_folder,dispatch,AUTHOR,production_folder_allowed
     folder=Path(a.folder).resolve() if a.folder else current_folder()
-    if not folder.is_relative_to(ROOT/'local-data'):raise ValueError('Real assets belong in ignored local-data')
+    if not production_folder_allowed(folder):raise ValueError('Real assets belong in this repository\'s indexed ignored local-data')
+    if a.operation=='autonomous':
+        from ae_production.autonomous_episode import run
+        from ae_production.autonomous_episode import STAGES
+        if a.through not in STAGES:p.error('Unknown autonomous stage')
+        result=run(folder,a.brief,a.through,a.batch_size)
+        print(json.dumps(result,ensure_ascii=False));return
     if (folder/AUTHOR).exists():
         result=dispatch(a.operation,folder,proof=a.proof,batch_size=a.batch_size)
         print(json.dumps(result,ensure_ascii=False));return

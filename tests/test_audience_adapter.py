@@ -195,7 +195,7 @@ class AudienceAdapterTests(unittest.TestCase):
             request.update(episode_plan=str(folder/'episode.json'), statuses={}, public_render_ready=False)
             write(request['episode_plan'], self.episode)
             for asset, status in self.statuses.items():
-                path = folder/(asset+'.json'); write(path, status); request['statuses'][asset] = str(path)
+                path = folder/(sha(asset)+'.json'); write(path, status); request['statuses'][asset] = str(path)
             write(folder/'native-request.json', request)
             with patch.object(adaptive, 'client', side_effect=AssertionError('no Adobe')):
                 self.assertEqual(adaptive.audience_preflight(folder)['code_verification'], 'PASS')

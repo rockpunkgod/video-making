@@ -29,6 +29,16 @@ class CourseMappingTests(unittest.TestCase):
         self.row = next(r for r in self.catalog['methods'] if r['name'] == '连连看')
         self.method, self.action = fixture(self.row)
 
+    def test_new_reference_epoch_survives_generation_without_registry_migration(self):
+        from core.registry import Registry
+        from scripts.generate_assets import build
+        registry=Registry();before=deepcopy(registry.index)
+        assets=build(registry)
+        for row in self.catalog['methods']:
+            self.assertIn(row['definition'].rstrip(),assets[row['source']['path']])
+        self.assertEqual(registry.index,before)
+        self.assertNotEqual(registry.index['source_baseline']['commit'],self.catalog['upstream_commit'])
+
     def test_all_exact_identities_have_bounded_presentations_without_mutation(self):
         for row in self.catalog['methods']:
             with self.subTest(name=row['name'], task=row['question_type']):

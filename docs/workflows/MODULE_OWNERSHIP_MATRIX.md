@@ -1,5 +1,13 @@
 # 模块职责与实际消费者
 
+2026-10-18 自主整期 v1 的实际执行增加 `autonomous_episode` 和
+`authored_editorial` 两个薄适配，继续消费当前 AV_AUTHOR / AV_PLAN。
+作者与独立审阅职责由宿主 AI 调度，Adobe 只有一个受保护执行者。
+完整制作、实际媒体反馈与恢复操作见 [自主制作 v1](AUTONOMOUS_PRODUCTION_V1.md)。
+当期逐项真实消费、未执行旧版本和未观察范围保存在生产索引所指目录的
+`MODULE_CONSUMPTION_AUDIT`；该记录必须以实际最终收据更新，不能由调用次数代替作品效果。
+下面历史卡片保持各自证据范围，不将其旧的 G3 或局部批准停点用于本次整期内部制作。
+
 当前入口：[CURRENT_PRODUCTION_WORKFLOW](CURRENT_PRODUCTION_WORKFLOW.md)。原始审计基于 `d9fa2da`；本矩阵增补其后 B06 r3 的限定制作能力，研究/Cinema 的 LOCAL_UNMERGED 增量仍不属于已提交能力。E01–E20 对应原始审计报告，后续 E21 对应独立 B06 制作凭证；逐项六维状态、证据路径与可用性见[能力索引](PRODUCTION_CAPABILITY_INDEX.json)。下面每条卡片的“有权/禁止”界定职责，不授予额外操作权限。
 
 ## 当前主片的实际消费

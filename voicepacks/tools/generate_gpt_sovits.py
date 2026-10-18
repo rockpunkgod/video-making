@@ -110,8 +110,11 @@ def main():
     import torch
     from TTS_infer_pack.TTS import TTS, TTS_Config
     torch.set_num_threads(6)
+    # A CPU-only runtime is a supported producer, not a failed CUDA request.
+    # Preserve the voice/model controls; only select an available compute device.
+    use_cpu = args.cpu or not torch.cuda.is_available()
     config = TTS_Config({'custom': dict(
-        device='cpu' if args.cpu else 'cuda', is_half=not args.cpu, version='v2ProPlus',
+        device='cpu' if use_cpu else 'cuda', is_half=not use_cpu, version='v2ProPlus',
         t2s_weights_path=str(asset(pack, profile['gpt'])),
         vits_weights_path=str(asset(pack, profile['sovits'])),
         bert_base_path=str(runtime / 'GPT_SoVITS/pretrained_models/chinese-roberta-wwm-ext-large'),

@@ -8,6 +8,7 @@ import json
 from copy import deepcopy
 import hashlib
 import os
+import time
 from pathlib import Path
 from uuid import uuid4
 
@@ -111,7 +112,7 @@ class HostOwnership:
         if (not evidence.get('recoveryId') or last.get('ok') is not False
                 or last.get('disposition')!='failed' or type(last.get('errorLine')) is not int
                 or last['errorLine']<=0 or 'timeout' in last.get('error','').lower()
-                or Path(evidence['sourceProjectPath']).resolve()!=Path(previous['target']['project_path']).resolve()):
+                or Path(evidence['sourceProjectPath'] or '').resolve()!=Path(previous['target']['project_path']).resolve()):
             raise ValueError('A terminal script failure in this project is required; not a timeout')
         lease=cls(host,owner,revision,previous['target'],directory)
         lease.record=deepcopy(previous);lease.acquired=True
@@ -157,6 +158,59 @@ class HostOwnership:
         if not isinstance(actual, dict) or any(actual.get(k) != v for k, v in expected.items()):
             raise RuntimeError('Native host/project/target identity changed')
         return actual
+
+    def close_saved_host(self, reader, dispatch, process_absent, saved_files):
+        """Explicit normal shutdown of this clean saved host, with absence proof.
+
+        The unique owner remains recorded until its exact PID has exited and
+        every saved checkpoint is unchanged. This never kills a process, expires
+        a lease, or retries a disconnected shutdown request.
+        """
+        self._owned();observed=self._inspect(reader,self.record['target'])
+        if (observed.get('dirty') is not False or observed.get('rendering') is not False
+                or not saved_files or not observed.get('project_path')
+                or Path(observed['project_path']).resolve() not in {Path(p).resolve() for p in saved_files}):
+            raise RuntimeError('Only a clean saved idle host may close at this checkpoint')
+        for path,digest in saved_files.items():
+            if hashlib.sha256(Path(path).read_bytes()).hexdigest()!=digest:raise ValueError('Saved shutdown checkpoint changed')
+        intent={**deepcopy(self.record),'state':'SHUTTING_DOWN','saved_files':dict(saved_files),
+                'normal_shutdown':True,'force_termination':False}
+        self._owned()
+        write(self.path,intent);self.record=intent
+        transport=None
+        try:dispatch()
+        except BaseException as error:transport={'type':type(error).__name__,'message':str(error)}
+        for _ in range(120):
+            if process_absent():break
+            time.sleep(.25)
+        else:
+            if read(self.path)!=intent:raise RuntimeError('Ownership changed during shutdown; preserve foreign record')
+            self.record={**intent,'state':'UNCERTAIN','shutdown_transport':transport};write(self.path,self.record)
+            raise RuntimeError('The exact owned host has not exited; inspect without replaying shutdown')
+        for path,digest in saved_files.items():
+            if hashlib.sha256(Path(path).read_bytes()).hexdigest()!=digest:raise ValueError('Saved project changed during shutdown; inspect')
+        if read(self.path)!=intent:raise RuntimeError('Ownership changed during shutdown')
+        receipt={**intent,'state':'CLOSED_VERIFIED','exact_process_absent':True,'shutdown_transport':transport}
+        write(self.path.with_name(self.record['host']+'-closed-'+self.record['token']+'.json'),receipt)
+        self.path.unlink();self.acquired=False;self.record=receipt
+        return receipt
+
+    @classmethod
+    def reconcile_saved_shutdown(cls,host,owner,revision,token,process_absent,directory=None):
+        """Finish one recorded normal shutdown after conclusive exit evidence."""
+        root=Path(directory) if directory is not None else ROOT/'local-data/adobe-host-ownership'
+        path=root/(host+'.json');record=read(path)
+        if (record.get('state') not in ('SHUTTING_DOWN','UNCERTAIN') or record.get('normal_shutdown') is not True
+                or record.get('force_termination') is not False or not record.get('saved_files')
+                or any(record.get(k)!=v for k,v in {'host':host,'owner':owner,'revision':revision,'token':token}.items())):
+            raise RuntimeError('Exact saved normal-shutdown owner and token required')
+        if not process_absent(record['target']['process_id']):raise RuntimeError('The exact saved host is still present')
+        for p,digest in record['saved_files'].items():
+            if hashlib.sha256(Path(p).read_bytes()).hexdigest()!=digest:raise ValueError('Saved shutdown project changed')
+        if read(path)!=record:raise RuntimeError('Ownership changed during shutdown reconciliation')
+        receipt={**record,'state':'CLOSED_VERIFIED','exact_process_absent':True,'shutdown_replayed':False}
+        write(path.with_name(host+'-closed-'+token+'.json'),receipt);path.unlink()
+        return receipt
 
     def _uncertain(self, error):
         if not self.path.exists() or read(self.path) != self.record:

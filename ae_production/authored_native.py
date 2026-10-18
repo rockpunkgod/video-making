@@ -20,7 +20,7 @@ from ae_production.authored_episode import checked_author,delivery_path
 from ae_production.article_chunking import current_chunks
 from creative_os.teaching_focus import require_focus, resource_report
 from video_contracts import sha
-from premiere_production.mcp import PremiereMcpClient
+from premiere_production.mcp import PremiereMcpClient,PremiereMcpError
 from premiere_production.lossless_handoff import packet_binding
 
 TEMPLATE=ROOT/'ae/templates/authored-episode.jsx'
@@ -33,6 +33,25 @@ def template_source():
     if source.count('/* SHARED_READING_RIG */')!=1:
         raise ValueError('Production template must consume the shared reading rig exactly once')
     return source.replace('/* SHARED_READING_RIG */',READING_RIG.read_text('utf-8'))
+
+
+def preserve_native_sources(folder,native=None):
+    """Retain the exact code consumed by a saved native revision.
+
+    Source snapshots keep completed revisions inspectable when the repository
+    moves forward. They do not authorize a new build with a historical rig.
+    """
+    n=native or read(folder/'native-identity.json');directory=folder/'native-source';directory.mkdir(exist_ok=True)
+    binding={}
+    for key,source,digest in [('template',TEMPLATE,n['template_sha256']),('reading_rig',READING_RIG,n['reading_rig_sha256'])]:
+        target=directory/source.name
+        if not target.exists():
+            if sha256(source)!=digest:raise ValueError('Cannot invent a historical native source snapshot')
+            shutil.copyfile(source,target)
+        if sha256(target)!=digest:raise ValueError('Saved native source code changed')
+        binding[key]={'path':target.relative_to(folder).as_posix(),'sha256':digest}
+    write(folder/'NATIVE_SOURCES.json',binding)
+    return binding
 
 
 def media_directory(folder):
@@ -53,12 +72,26 @@ def value(r):
 
 def process(name):
     payload=subprocess.check_output(['powershell','-NoProfile','-Command',
-        "@(Get-Process -Name '"+name+"' -ErrorAction SilentlyContinue | Select-Object Id,MainWindowHandle) | ConvertTo-Json -Compress"],creationflags=getattr(subprocess,'CREATE_NO_WINDOW',0))
-    rows=json.loads(payload or '[]')
+        "[Console]::OutputEncoding=[System.Text.UTF8Encoding]::new($false);@(Get-Process -Name '"+name+"' -ErrorAction SilentlyContinue | Select-Object Id,MainWindowHandle,Path) | ConvertTo-Json -Compress"],creationflags=getattr(subprocess,'CREATE_NO_WINDOW',0))
+    rows=json.loads(payload.decode('utf-8-sig') if payload else '[]')
     if not rows:raise RuntimeError('Adobe host is not running: '+name+'; saved outputs remain available')
     if isinstance(rows,dict):rows=[rows]
     if len(rows)!=1:raise RuntimeError('Expected one unambiguous Adobe host: '+name)
     return rows[0]
+
+
+def activate_observed_host(pid,hwnd):
+    """Wake the observed interactive CEP host after a read-only timeout."""
+    import ctypes
+    from ctypes import wintypes
+    user=ctypes.windll.user32;kernel=ctypes.windll.kernel32
+    owner=wintypes.DWORD();user.GetWindowThreadProcessId(hwnd,ctypes.byref(owner))
+    if owner.value!=pid:raise RuntimeError('Observed native window identity changed')
+    foreground=user.GetForegroundWindow();thread=user.GetWindowThreadProcessId(foreground,None)
+    mine=kernel.GetCurrentThreadId();attached=user.AttachThreadInput(mine,thread,True)
+    try:user.ShowWindow(hwnd,9);user.BringWindowToTop(hwnd);user.SetForegroundWindow(hwnd)
+    finally:
+        if attached:user.AttachThreadInput(mine,thread,False)
 
 
 def plan(folder):
@@ -74,6 +107,10 @@ def plan(folder):
             raise ValueError('Teaching value allocation is stale or was bypassed')
     if 'article_chunking' in p and p['article_chunking'] != current_chunks(folder,bundles):
         raise ValueError('Article chunking has not propagated into the native plan')
+    if 'editorial' in a:
+        from ae_production.authored_editorial import compile_editorial
+        if p.get('editorial_consumption')!=compile_editorial(a,p,bundles):
+            raise ValueError('Editorial decisions changed or were bypassed')
     return a,p
 
 
@@ -86,6 +123,7 @@ class Host:
         if kind=='after_effects':self.c=JunkdogeClient(self.h['ae_endpoint'])
         else:self.c=PremiereMcpClient(self.h['premiere_endpoint'],Path(self.h['premiere_token_file']).read_text().strip())
         self.c.initialize()
+        if kind=='after_effects':self.c.call('ae_skillUse',{'name':'ae-execution-guide'})
 
     def js(self,code,label=None,timeout=600):
         args={'code':'(function(){return JSON.stringify((function(){'+code+'})());})();','timeout_sec':min(timeout,600)}
@@ -107,7 +145,12 @@ class Host:
                     if 'SOURCE_PROJECT_CHANGED' not in str(error) or attempt==4:raise
                     self.c.context_id=None;self.c.bound_project=None;time.sleep(.4)
         else:
-            data=self.c.call('get_project_info');active=data.get('activeSequence');r={'project_path':data['path'],'target_id':'sequence:'+active['id'] if active else 'none'}
+            try:data=self.c.call('get_project_info')
+            except PremiereMcpError as error:
+                if 'timed out' not in str(error):raise
+                activate_observed_host(self.pid,self.hwnd)
+                data=self.c.call('get_project_info') # Repeat only an identity read, never a native write.
+            active=data.get('activeSequence');r={'project_path':data['path'],'target_id':'sequence:'+active['id'] if active else 'none'}
         r['project_path']=str(Path(r['project_path']).resolve()) if r['project_path'] else ''
         return {**r,'process_id':pid}
 
@@ -154,12 +197,20 @@ def build(folder):
     r=h.mutation_js(code,'Build current authored main film',after=lambda r:{'process_id':h.pid,'project_path':str(h.project.resolve()),'target_id':'comp:'+str(r['comp_id'])})
     r.update(plan_sha256=sha256(folder/'AV_PLAN.json'),template_sha256=sha256(TEMPLATE),reading_rig_sha256=sha256(READING_RIG))
     write(folder/'native-identity.json',r)
+    preserve_native_sources(folder,r)
     return {k:r[k] for k in ('comp_id','master_comp_id','duration','frames','layers','media_role')}
 
 
 def current_native(folder):
     a,p=plan(folder);n=read(folder/'native-identity.json')
-    if n['plan_sha256']!=sha256(folder/'AV_PLAN.json') or n['template_sha256']!=sha256(TEMPLATE) or n.get('reading_rig_sha256')!=sha256(READING_RIG):
+    template_digest=sha256(TEMPLATE);rig_digest=sha256(READING_RIG)
+    if (folder/'NATIVE_SOURCES.json').exists():
+        source=read(folder/'NATIVE_SOURCES.json')
+        for row in source.values():
+            path=(folder/row['path']).resolve()
+            if not path.is_relative_to(folder.resolve()) or sha256(path)!=row['sha256']:raise ValueError('Native source snapshot changed')
+        template_digest=source['template']['sha256'];rig_digest=source['reading_rig']['sha256']
+    if n['plan_sha256']!=sha256(folder/'AV_PLAN.json') or n['template_sha256']!=template_digest or n.get('reading_rig_sha256')!=rig_digest:
         raise ValueError('Native picture is stale after author or realization changes')
     return a,p,n
 
@@ -339,41 +390,85 @@ def probe(path):
     return json.loads(subprocess.check_output(['ffprobe','-v','error','-count_frames','-show_streams','-show_format','-of','json',str(path)]))
 
 
-def render(folder,proof=False,batch_size=96):
+def render(folder,proof=False,batch_size=96,master=False):
     a,p,n=current_native(folder);audit(folder);h=Host(folder,'after_effects')
     if not 1<=batch_size<=480:raise ValueError('Native batches are limited to 20 seconds')
     total=round(p['scenes'][2]['end']*24) if proof else p['frames'];parts=[];cursor=0;cached={}
-    directory=folder/'native-parts';directory.mkdir(exist_ok=True)
+    if master and proof:raise ValueError('A master render covers the complete episode')
+    comp_id=n['master_comp_id'] if master else n['comp_id']
+    size=[3840,2160] if master else [1920,1080]
+    directory=folder/('native-master-parts' if master else 'native-parts');directory.mkdir(exist_ok=True)
     require_disk(directory,2*1024**3)
     require_disk(media_directory(folder),2*1024**3)
-    for receipt in sorted(directory.glob('part-*.json')):
-        r=read(receipt)
-        if r['plan_sha256']!=sha256(folder/'AV_PLAN.json') or r.get('native_identity_sha256')!=sha256(folder/'native-identity.json') or r['start']<cursor or not 0<=r['start']<r['end']<=p['frames'] or sha256(r['path'])!=r['sha256']:raise ValueError('Completed render part changed')
+    if any(not x.with_suffix('.json').exists() for x in directory.glob('part-*.mp4')):
+        raise ValueError('Unreceipted native media requires inspection before another render')
+    for receipt,r in sorted(((x,read(x)) for x in directory.glob('part-*.json')),key=lambda x:x[1]['start']):
+        if r.get('done') is not True or r['plan_sha256']!=sha256(folder/'AV_PLAN.json') or r.get('native_identity_sha256')!=sha256(folder/'native-identity.json') or r.get('comp_id',n['comp_id'])!=comp_id or r['start']<cursor or not 0<=r['start']<r['end']<=p['frames'] or sha256(r['path'])!=r['sha256']:raise ValueError('Completed render part changed')
+        if 'reuse' in r or r.get('new_native_render') is False:
+            from ae_production.native_parts_reuse import validate_reused_part
+            validate_reused_part(folder,r,r['path'])
+        elif not Path(r['path']).resolve().is_relative_to(directory.resolve()):
+            raise ValueError('A parent render path requires an explicit reuse proof')
         cursor=r['end'];cached[r['start']]=r
     if cursor>total and proof:raise ValueError('Full render already exists; retain the previous proof')
-    cursor=0
+    backend=a['host'].get('render_backend','interactive_checkpoint_restart')
+    decision_path=folder/'RUNTIME_RENDER_DECISION.json'
+    if decision_path.exists():
+        decision=read(decision_path)
+        if (decision['plan_sha256']!=sha256(folder/'AV_PLAN.json') or decision['human_approved'] is not False
+                or sha256(decision['observed_attempt'])!=decision['observed_attempt_sha256']
+                or read(decision['observed_attempt']).get('done') is not False):
+            raise ValueError('Runtime render correction is not bound to the actual failed attempt')
+        backend=decision['backend']
+    if backend not in ('interactive','interactive_checkpoint_restart'):raise ValueError('Unknown native render backend')
+    cursor=0;rendered_since_reload=0
     while cursor<total:
         if cursor in cached:
             r=cached[cursor];parts.append(r);cursor=r['end'];continue
-        if available_memory()<2*2**30:raise RuntimeError('Insufficient reserve for the next native batch')
+        if backend=='interactive_checkpoint_restart' and (rendered_since_reload>=768 or available_memory()<4*2**30):
+            from ae_production.native_host_restart import restart_saved_host
+            h=restart_saved_host(h,cursor);rendered_since_reload=0
+        # The native 3D renderer retains resources beyond purge(). Reload only
+        # at a verified completed-part boundary, keeping this saved project and
+        # target. This is not a retry of an interrupted/unknown dispatch.
+        if backend=='interactive' and (rendered_since_reload>=576 or available_memory()<3*2**30):
+            code='if(app.project.renderQueue.numItems||app.project.dirty)throw Error("Only a clean completed render checkpoint may reload");var path=app.project.file.fsName;app.purge(PurgeTarget.ALL_CACHES);app.project.close(CloseOptions.DO_NOT_SAVE_CHANGES);app.open(new File(path));var c=app.project.itemByID('+str(n['comp_id'])+');if(!(c instanceof CompItem))throw Error("Saved native target missing");for(var i=1;i<=app.project.numItems;i++)app.project.item(i).selected=false;c.selected=true;c.openInViewer();return {reloaded:true,project:app.project.file.fsName,comp_id:c.id};'
+            result=h.mutation_js(code,'Reload verified completed native render checkpoint')
+            write(folder/f'RENDER_CHECKPOINT_RELOAD_{cursor:05d}.json',{'result':result,
+                'completed_frame_cursor':cursor,'plan_sha256':sha256(folder/'AV_PLAN.json'),
+                'reason':'bounded native renderer memory; no pending render replayed'})
+            rendered_since_reload=0
+        if available_memory()<2*2**30:raise RuntimeError('Insufficient reserve after saved-project reload; inspect the host')
         next_cached=min((start for start in cached if start>cursor),default=total)
-        end=min(total,cursor+batch_size,next_cached);dest=directory/f'part-{len(parts):04}.mp4'
+        end=min(total,cursor+batch_size,next_cached);part_index=0
+        while any((directory/f'part-{part_index:04}{suffix}').exists() for suffix in ('.json','.mp4','.worker.log')):part_index+=1
+        dest=directory/f'part-{part_index:04}.mp4'
         if dest.exists():raise FileExistsError('Inspect an unreceipted native part; do not repeat it')
         code="var c=app.project.itemByID(CID);if(app.project.renderQueue.numItems||Math.round(c.duration*24)!==FRAMES)throw Error('Unexpected render queue/target');var q=app.project.renderQueue.items.add(c),o=q.outputModule(1),preset=null;for(var i=0;i<o.templates.length;i++)if(o.templates[i].indexOf('H.264')>=0&&o.templates[i].indexOf('15 Mbps')>=0){preset=o.templates[i];break;}if(!preset)throw Error('Native H264 preset unavailable');o.applyTemplate(preset);o.file=new File(DEST);app.beginSuppressDialogs();try{q.timeSpanDuration=(END-START)/24;q.timeSpanStart=START/24;q.skipFrames=0;app.setMultiFrameRenderingConfig(false,25);app.project.renderQueue.render();}finally{app.endSuppressDialogs(false);}var result={done:q.status===RQItemStatus.DONE,status:q.status,start:START,end:END,preset:preset};if(result.done)q.remove();app.purge(PurgeTarget.ALL_CACHES);app.project.save();return result;"
-        for key,v in {'CID':str(n['comp_id']),'FRAMES':str(p['frames']),'DEST':json.dumps(dest.as_posix()),'START':str(cursor),'END':str(end)}.items():code=code.replace(key,v)
+        for key,v in {'CID':str(comp_id),'FRAMES':str(p['frames']),'DEST':json.dumps(dest.as_posix()),'START':str(cursor),'END':str(end)}.items():code=code.replace(key,v)
         with monitor_existing_render(h.pid,h.hwnd,minimum_free_gib=1) as memory:r=h.mutation_js(code,'Render current main film frames '+str(cursor)+' to '+str(end))
-        r.update(path=str(dest),plan_sha256=sha256(folder/'AV_PLAN.json'),native_identity_sha256=sha256(folder/'native-identity.json'),memory=memory)
+        r.update(path=str(dest),comp_id=comp_id,plan_sha256=sha256(folder/'AV_PLAN.json'),native_identity_sha256=sha256(folder/'native-identity.json'),memory=memory)
         if not r['done']:
             write(directory/f'stopped-{cursor}.json',r);raise RuntimeError('Native render stopped; inspect this attempt before resuming')
         stream=next(s for s in probe(dest)['streams'] if s['codec_type']=='video')
-        if int(stream['nb_read_frames'])!=end-cursor:raise ValueError('Incomplete native frame range')
-        r['sha256']=sha256(dest);write(directory/f'part-{len(parts):04}.json',r);parts.append(r);cursor=end
+        if [stream['width'],stream['height'],stream['r_frame_rate'],int(stream['nb_read_frames'])]!=size+['24/1',end-cursor]:raise ValueError('Incomplete or wrong-resolution native frame range')
+        r.update(sha256=sha256(dest),backend=r.get('backend',backend))
+        write(dest.with_suffix('.json'),r);parts.append(r);rendered_since_reload+=end-cursor;cursor=end
         print(json.dumps({'native_frames':cursor,'target_frames':total,'minimum_free_bytes':memory['minimum_free_bytes']}),flush=True)
-    label='PROOF' if proof else 'MAIN_FILM';target=media_directory(folder)/(label+'_PICTURE_1080.mp4');listing=folder/(label+'_parts.txt')
+    label='MASTER' if master else 'PROOF' if proof else 'MAIN_FILM';target=media_directory(folder)/(label+('_PICTURE_4K24.mp4' if master else '_PICTURE_1080.mp4'));listing=folder/(label+'_parts.txt')
     listing.write_text(''.join("file '"+Path(r['path']).as_posix().replace("'","'\\''")+"'\n" for r in parts),'utf-8')
+    receipt_path=folder/('MASTER_PICTURE_RECEIPT.json' if master else 'PROOF_PICTURE_RECEIPT.json' if proof else 'PICTURE_RECEIPT.json')
+    if target.exists():
+        if not receipt_path.exists():raise ValueError('Unreceipted concatenated picture; inspect packet identity before explicit recovery')
+        previous=read(receipt_path)
+        if (previous.get('plan_sha256')!=sha256(folder/'AV_PLAN.json') or previous.get('comp_id',n['comp_id'])!=comp_id
+                or previous.get('frames')!=total or previous.get('parts')!=parts or sha256(target)!=previous.get('sha256')):
+            raise ValueError('Existing picture is not the same verified native parts and plan')
     if not target.exists():subprocess.run(['ffmpeg','-v','error','-n','-f','concat','-safe','0','-i',str(listing),'-map','0:v:0','-c','copy','-movflags','+faststart',str(target)],check=True)
-    r={'output':str(target),'sha256':sha256(target),'frames':total,'duration':total/24,'parts':parts,'plan_sha256':sha256(folder/'AV_PLAN.json'),'media_role':'EDITORIAL_PROXY','formal_4k_rendered':False}
-    write(folder/('PROOF_PICTURE_RECEIPT.json' if proof else 'PICTURE_RECEIPT.json'),r)
+    stream=next(s for s in probe(target)['streams'] if s['codec_type']=='video')
+    if [stream['width'],stream['height'],stream['r_frame_rate'],int(stream['nb_read_frames'])]!=size+['24/1',total]:raise ValueError('Concatenated native output differs from the requested comp')
+    r={'output':str(target),'sha256':sha256(target),'frames':total,'duration':total/24,'parts':parts,'comp_id':comp_id,'plan_sha256':sha256(folder/'AV_PLAN.json'),'media_role':'NATIVE_4K_MASTER' if master else 'EDITORIAL_PROXY','formal_4k_rendered':master}
+    write(receipt_path,r)
     if proof:
         # The proof is a bounded view of this same film and its complete takes.
         # It is an internal narration preview; full delivery still requires PR.
@@ -401,10 +496,10 @@ def flatten(rows):
     return result
 
 
-def validate_edit(p,timeline,picture):
+def validate_edit(p,timeline,picture,size=(1920,1080)):
     """Check the real native edit before export, including complete audio takes."""
     if timeline.get('pagination',{}).get('truncated'):raise ValueError('Read the complete native timeline before export')
-    if [timeline['frameSizeHorizontal'],timeline['frameSizeVertical']]!=[1920,1080]:raise ValueError('Native edit canvas changed')
+    if [timeline['frameSizeHorizontal'],timeline['frameSizeVertical']]!=list(size):raise ValueError('Native edit canvas changed')
     videos=[c for t in timeline['videoTracks'] for c in t['clips']]
     if len(videos)!=1 or videos[0]['name']!=Path(picture).name or abs(videos[0]['start'])>1e-5 or abs(videos[0]['duration']-p['duration'])>1e-5 or abs(videos[0].get('inPoint',0))>1e-5:
         raise ValueError('Native picture was cut, shifted or replaced')
@@ -423,25 +518,63 @@ def validate_edit(p,timeline,picture):
             raise ValueError('Native music placement changed')
 
 
-def premiere(folder):
-    a,p,n=current_native(folder);picture=read(folder/'PICTURE_RECEIPT.json')
+def partial_edit(p,timeline,picture,size):
+    """Prove placed complete takes before resuming an interrupted assembly."""
+    if timeline.get('pagination',{}).get('truncated'):raise ValueError('Complete partial timeline required')
+    if [timeline['frameSizeHorizontal'],timeline['frameSizeVertical']]!=list(size):raise ValueError('Partial edit canvas changed')
+    videos=[c for t in timeline['videoTracks'] for c in t['clips']]
+    if (len(videos)!=1 or videos[0]['name']!=Path(picture).name or abs(videos[0]['start'])>1e-5
+            or abs(videos[0]['duration']-p['duration'])>1e-5 or videos[0].get('inPoint',0)!=0):
+        raise ValueError('Partial native picture changed')
+    expected={Path(s['voice']['padded_path']).name:s for s in p['segments']};placed=set()
+    for track in timeline['audioTracks']:
+        for clip in track['clips']:
+            if clip['name'] not in expected:raise ValueError('Inspect music or foreign audio before resuming a partial voice edit')
+            s=expected[clip['name']]
+            with wave.open(s['voice']['padded_path']) as w:duration=w.getnframes()/w.getframerate()
+            if (track['index']!=0 or s['id'] in placed or abs(clip['start']-s['voice_start'])>1/48000
+                    or abs(clip['duration']-duration)>1/48000 or clip.get('inPoint',0)!=0):
+                raise ValueError('Partial complete take was changed or duplicated')
+            placed.add(s['id'])
+    return placed
+
+
+def premiere(folder,resume=False):
+    a,p,n=current_native(folder);master=(folder/'MASTER_PICTURE_RECEIPT.json').exists()
+    picture=read(folder/('MASTER_PICTURE_RECEIPT.json' if master else 'PICTURE_RECEIPT.json'))
     require_disk(media_directory(folder),2*1024**3)
     if sha256(picture['output'])!=picture['sha256'] or picture['frames']!=p['frames']:raise ValueError('Full current native picture required')
     h=Host(folder,'premiere')
-    if h.project.exists():raise FileExistsError('Inspect the existing native edit instead of repeating assembly')
-    before=h.identity();oldsha=sha256(before['project_path'])
-    write(folder/'PR_SESSION_BEFORE.json',{'identity':before,'sha256':oldsha})
-    h.pr('save_project_as',{'path':str(h.project)},after={**before,'project_path':str(h.project)})
-    if sha256(before['project_path'])!=oldsha:raise ValueError('Original Premiere project changed')
+    placed=set()
+    if resume:
+        identity=h.identity();seq=read(folder/'PR_SEQUENCE.json');old=read(folder/'PR_SESSION_BEFORE.json')
+        if (identity['project_path']!=str(h.project) or identity['target_id']!='sequence:'+seq['id']
+                or sha256(old['identity']['project_path'])!=old['sha256']):
+            raise ValueError('Partial Premiere project/sequence or prior session changed')
+        timeline=h.c.call('get_active_sequence',{'clip_limit':200})
+        placed=partial_edit(p,timeline,picture['output'],(3840,2160) if master else (1920,1080))
+        if (media_directory(folder)/'PR_NATIVE_EXPORT.mp4').exists():raise ValueError('Inspect existing export before attempting export again')
+        write(folder/'PR_RESUME_INSPECTION.json',{'identity':identity,'timeline':timeline,
+              'already_complete_takes':sorted(placed),'plan_sha256':sha256(folder/'AV_PLAN.json'),
+              'native_writes_replayed':False})
+    else:
+        if h.project.exists():raise FileExistsError('Inspect the existing native edit instead of repeating assembly')
+        before=h.identity();oldsha=sha256(before['project_path'])
+        write(folder/'PR_SESSION_BEFORE.json',{'identity':before,'sha256':oldsha})
+        h.pr('save_project_as',{'path':str(h.project)},after={**before,'project_path':str(h.project)})
+        if sha256(before['project_path'])!=oldsha:raise ValueError('Original Premiere project changed')
     paths=[picture['output']]+[s['voice']['padded_path'] for s in p['segments']]+[m['clip_path'] for m in p.get('music',[])]
-    h.pr('import_media',{'file_paths':paths,'suppress_ui':True});items=flatten(h.c.call('list_project_items'))
+    if not resume:h.pr('import_media',{'file_paths':paths,'suppress_ui':True})
+    items=flatten(h.c.call('list_project_items'))
     def item(path):
         matches=[r for r in items if r.get('name')==Path(path).name]
         if len(matches)!=1:raise ValueError('Ambiguous native media item: '+Path(path).name)
         return matches[0].get('nodeId',matches[0].get('id'))
-    seq=h.pr('create_sequence_from_clips',{'name':'MAIN_FILM_EDITORIAL_PROXY','item_ids':[item(picture['output'])]},after=lambda r:{'process_id':h.pid,'project_path':str(h.project),'target_id':'sequence:'+r['id']})
-    write(folder/'PR_SEQUENCE.json',seq)
+    if not resume:
+        seq=h.pr('create_sequence_from_clips',{'name':'MAIN_FILM_4K24' if master else 'MAIN_FILM_EDITORIAL_PROXY','item_ids':[item(picture['output'])]},after=lambda r:{'process_id':h.pid,'project_path':str(h.project),'target_id':'sequence:'+r['id']})
+        write(folder/'PR_SEQUENCE.json',seq)
     for s in p['segments']:
+        if s['id'] in placed:continue
         h.pr('overwrite_clip',{'item_id':item(s['voice']['padded_path']),'start_seconds':s['voice_start'],'track_index':0,'audio_track_index':0})
         print('Placed complete '+s['id'],flush=True)
     for music in p.get('music',[]):
@@ -459,11 +592,13 @@ def premiere(folder):
         write(folder/'MUSIC_NATIVE_AUTOMATION.json',result)
     h.pr('save_project');timeline=h.c.call('get_active_sequence',{'clip_limit':200})
     write(folder/'PR_TIMELINE.json',timeline);write(folder/'PR_SETTINGS.json',h.c.call('get_sequence_settings'))
-    validate_edit(p,timeline,picture['output'])
+    validate_edit(p,timeline,picture['output'],(3840,2160) if master else (1920,1080))
     dest=media_directory(folder)/'PR_NATIVE_EXPORT.mp4';preset=Path(a['host']['export_preset'])
     if not preset.exists():raise FileNotFoundError('Installed Premiere export preset unavailable')
     r=h.pr('export_sequence',{'output_path':str(dest),'preset_path':str(preset),'range':'entire','overwrite':False,'timeout_minutes':20},timeout=1260)
-    write(folder/'PR_EXPORT_RECEIPT.json',{'result':r,'output':str(dest),'preset_sha256':sha256(preset)})
+    if not dest.exists():raise FileNotFoundError('Premiere did not produce the requested native export')
+    write(folder/'PR_EXPORT_RECEIPT.json',{'result':r,'output':str(dest),'sha256':sha256(dest),
+        'project_sha256':sha256(h.project),'plan_sha256':sha256(folder/'AV_PLAN.json'),'preset_sha256':sha256(preset)})
     return {'project':str(h.project),'native_export':str(dest)}
 
 
@@ -492,8 +627,39 @@ def audio_packet_rows(path):
     return json.loads(subprocess.check_output(['ffprobe','-v','error','-select_streams','a:0','-show_packets','-show_data_hash','sha256','-show_entries','packet=pts,dts,duration,data_hash','-of','json',str(path)]))['packets']
 
 
-def package(folder):
-    a,p,n=current_native(folder);pic=read(folder/'PICTURE_RECEIPT.json');pr=media_directory(folder)/'PR_NATIVE_EXPORT.mp4'
+def verify_prior_production(folder,author):
+    """Verify real input and before-session bindings, never invent a baseline.
+
+    Older private executions may supply an additional protection collection.
+    New productions rely on the mandatory author inputs and actually captured
+    host sessions, rather than requiring an undocumented private filename.
+    """
+    protected=dict(author['input_files']);receipts=[]
+    for filename in ('SESSION_BEFORE.json','PR_SESSION_BEFORE.json'):
+        path=folder/filename
+        if not path.exists():raise FileNotFoundError('Actual before-session receipt required: '+filename)
+        row=read(path);previous=row['identity']['project_path']
+        if previous:
+            if not row.get('sha256'):raise ValueError('Prior saved project has no original byte binding')
+            if previous in protected and protected[previous]!=row['sha256']:raise ValueError('Contradictory prior project binding')
+            protected[previous]=row['sha256']
+        receipts.append({'path':str(path),'sha256':sha256(path),'original_project':previous})
+    legacy=folder/'BASELINE_PROTECTION.json'
+    if legacy.exists():
+        for path,digest in read(legacy)['protected'].items():
+            if path in protected and protected[path]!=digest:raise ValueError('Contradictory historical protection binding')
+            protected[path]=digest
+    for path,digest in protected.items():
+        if sha256(path)!=digest:raise ValueError('Protected prior production or bound input changed: '+path)
+    return {'scope':'actual_author_inputs_and_captured_prior_host_projects',
+            'protected':protected,'session_receipts':receipts,
+            'additional_historical_collection':'VERIFIED_EXISTING' if legacy.exists() else 'NOT_CAPTURED_NOT_INVENTED'}
+
+
+def package(folder,master=False):
+    a,p,n=current_native(folder);pic=read(folder/('MASTER_PICTURE_RECEIPT.json' if master else 'PICTURE_RECEIPT.json'));pr=media_directory(folder)/'PR_NATIVE_EXPORT.mp4'
+    if pic['plan_sha256']!=sha256(folder/'AV_PLAN.json') or pic['frames']!=p['frames']:raise ValueError('Picture belongs to another complete episode')
+    if master and (pic.get('comp_id')!=n['master_comp_id'] or not pic.get('formal_4k_rendered')):raise ValueError('Native 4K master receipt required')
     if sha256(pic['output'])!=pic['sha256'] or not pr.exists():raise ValueError('Current native picture and real Premiere export required')
     import numpy as np
     native_audio=next(s for s in probe(pr)['streams'] if s['codec_type']=='audio')
@@ -501,10 +667,11 @@ def package(folder):
     native_pcm=np.frombuffer(subprocess.check_output(['ffmpeg','-v','error','-i',str(pr),'-map','0:a:0','-ac','1','-ar','48000','-f','s16le','-']),dtype='<i2').astype(np.float64)
     delay,delay_rows=measured_audio_delay(p,native_pcm)
     write(folder/'NATIVE_AUDIO_DELAY.json',{'native_export_sha256':sha256(pr),'delay_samples':delay,'sample_rate':48000,'takes':delay_rows,'operation':'packet timestamp correction only; complete voices retained'})
-    dest=media_directory(folder)/'MAIN_FILM_EDITORIAL_PROXY.mp4'
+    dest=media_directory(folder)/('MAIN_FILM_4K24.mp4' if master else 'MAIN_FILM_EDITORIAL_PROXY.mp4')
     if not dest.exists():subprocess.run(['ffmpeg','-v','error','-n','-i',pic['output'],'-itsoffset',str(-delay/48000),'-i',str(pr),'-map','0:v:0','-map','1:a:0','-c','copy','-movflags','+faststart',str(dest)],check=True)
     streams=probe(dest);video=next(s for s in streams['streams'] if s['codec_type']=='video');audio=next(s for s in streams['streams'] if s['codec_type']=='audio')
-    if [video['width'],video['height'],video['r_frame_rate'],int(video['nb_read_frames'])]!=[1920,1080,'24/1',p['frames']]:raise ValueError('Encoded film frame coverage changed')
+    size=[3840,2160] if master else [1920,1080]
+    if [video['width'],video['height'],video['r_frame_rate'],int(video['nb_read_frames'])]!=size+['24/1',p['frames']]:raise ValueError('Encoded film frame coverage changed')
     packets={'video':packet_binding(pic['output'],'v:0'),'audio':packet_binding(pr,'a:0')}
     if packets['video']!=packet_binding(dest,'v:0'):raise ValueError('Native picture packets or timestamps changed during handoff')
     before_packets=audio_packet_rows(pr);after_packets=audio_packet_rows(dest)
@@ -518,14 +685,14 @@ def package(folder):
         start=round(s['voice_start']*48000);y=pcm[start:start+len(x)]
         if len(y)!=len(x):raise ValueError('Native export truncated a complete take')
         corr=float(np.corrcoef(x,y)[0,1]);rows.append({'id':s['id'],'correlation_at_actual_start':corr,'complete_samples':len(x)})
-        if corr<.99:raise ValueError('Native audio placement differs from actual clock: '+s['id'])
-    for path,digest in read(folder/'BASELINE_PROTECTION.json')['protected'].items():
-        if sha256(path)!=digest:raise ValueError('Protected prior production changed: '+path)
-    qa={'media':str(dest),'sha256':sha256(dest),'actual_seconds':p['frames']/24,'frames':p['frames'],'video':video,'audio':audio,'full_decode':'PASS','complete_takes':rows,'same_revision':a['revision'],'native_project':str(folder/'MAIN_FILM.aep'),'premiere_project':str(folder/'MAIN_FILM.prproj'),'media_role':'EDITORIAL_PROXY','formal_4k_rendered':False,'independent_new_copy_review':'PENDING','human_creative_review':'PENDING','human_listening_review':'PENDING','student_count':0,'public_render_ready':False}
+        if not np.isfinite(corr) or corr<.99:raise ValueError('Native audio placement differs from actual clock: '+s['id'])
+    protection=verify_prior_production(folder,a)
+    qa={'media':str(dest),'sha256':sha256(dest),'actual_seconds':p['frames']/24,'frames':p['frames'],'video':video,'audio':audio,'full_decode':'PASS','complete_takes':rows,'same_revision':a['revision'],'native_project':str(folder/'MAIN_FILM.aep'),'premiere_project':str(folder/'MAIN_FILM.prproj'),'media_role':'EDITORIAL_PROXY','formal_4k_rendered':False,'independent_new_copy_review':a['copy_review'],'human_creative_review':'PENDING','human_listening_review':'PENDING','student_count':0,'public_render_ready':False}
     qa['native_packet_identity']=packets
     qa['audio_timestamp_correction_samples']=-delay
     qa['video_payload_and_timestamps_unchanged']=True
     qa['audio_payload_unchanged']=True
+    qa['prior_production_protection']=protection
     qa['native_project']=str((media_directory(folder)/'MAIN_FILM.aep').resolve())
     qa['premiere_project']=str((media_directory(folder)/'MAIN_FILM.prproj').resolve())
     qa['native_project_sha256']=sha256(qa['native_project'])
@@ -535,12 +702,29 @@ def package(folder):
     qa['copy_review']=p['copy_review']
     qa['complete_copy_sha256']=p['complete_copy_sha256']
     qa['music']=[{k:m[k] for k in ('title','clip_sha','duration','timeline_start','status','public_use_allowed')} for m in p.get('music',[])]
-    write(folder/'DELIVERY_QA.json',qa);return {k:qa[k] for k in ('media','actual_seconds','frames','full_decode','media_role')}
+    qa.update(media_role='NATIVE_4K_MASTER' if master else 'EDITORIAL_PROXY',formal_4k_rendered=master)
+    write(folder/('MASTER_DELIVERY_QA.json' if master else 'DELIVERY_QA.json'),qa);return {k:qa[k] for k in ('media','actual_seconds','frames','full_decode','media_role')}
 
 
 def restore(folder):
     a,p,n=current_native(folder);results={}
     h=Host(folder,'after_effects');old=read(folder/'SESSION_BEFORE.json');target=old['identity']
+    if h.pid!=target['process_id']:
+        cursor=target['process_id'];chain=[]
+        for path in sorted(folder.glob('HOST_RESTART_*.json')):
+            r=read(path)
+            if r.get('state')!='RESTARTED_SAVED_TARGET_VERIFIED' or r.get('before',{}).get('process_id')!=cursor:continue
+            if (r.get('shutdown',{}).get('state')!='CLOSED_VERIFIED'
+                    or r['shutdown'].get('exact_process_absent') is not True
+                    or r.get('forced_termination') is not False
+                    or r['before']['project_path']!=str(h.project.resolve())
+                    or r.get('after',{}).get('project_path')!=str(h.project.resolve())
+                    or r['after'].get('target_id')!='comp:'+str(n['comp_id'])):
+                raise ValueError('Native host replacement lacks an exact saved normal-restart chain')
+            cursor=r['after']['process_id'];chain.append({'receipt':str(path),'sha256':sha256(path)})
+        if cursor!=h.pid:raise ValueError('Current host is not the verified normal-restart successor')
+        write(folder/'RESTORE_NATIVE_PROCESS_CHAIN.json',{'original_pid':target['process_id'],'restored_pid':h.pid,'normal_restarts':chain})
+        target={**target,'process_id':h.pid}
     if Path(h.identity()['project_path']).resolve()==h.project.resolve():
         if target['target_id']=='none':
             focus='app.project.showWindow(true);'
@@ -569,7 +753,10 @@ def restore(folder):
 
 
 def execute(operation,folder,**kwargs):
+    if operation=='premiere-resume':return premiere(folder,resume=True)
     if operation=='render':return render(folder,kwargs.get('proof',False),kwargs.get('batch_size',96))
+    if operation=='render-master':return render(folder,batch_size=kwargs.get('batch_size',96),master=True)
+    if operation=='package-master':return package(folder,master=True)
     operations={'build':build,'audit':audit,'preview':preview,'premiere':premiere,'package':package,'restore':restore}
     if operation not in operations:raise ValueError('Unsupported current production operation: '+operation)
     return operations[operation](folder)

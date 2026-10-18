@@ -148,7 +148,7 @@ def validate_answer_projection(analysis):
         if execution['state'] != 'produced' or output['kind'] != 'candidate_decision':
             continue
         index = output['relation_index']
-        if index >= len(rows):
+        if index < 0 or index >= len(rows):
             raise ValueError('Typed decision projection has no own relation')
         row = rows[index]
         relation = relations[index]

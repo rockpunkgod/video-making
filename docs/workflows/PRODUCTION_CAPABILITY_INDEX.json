@@ -2,9 +2,9 @@
   "index_version": "1.0",
   "kind": "documentation_capability_index",
   "as_of": "2026-10-18",
-  "repository_base": "aa7157bf2056bff51bb06577b8bc42ce465f1b64",
+  "repository_base": "34f64736b08d01ed8d802d9d765658585db510b3",
   "recommended_workflow": "docs/workflows/CURRENT_PRODUCTION_WORKFLOW.md",
-  "scope": "Current critical-focus-r02: 2 complete article language maps / 145 sense groups, consumed by all 13 native reading windows / 113 focus instances in the unchanged 251.125-second main film. Actual same-film 76.375-second, 1833-frame 4K24 proof covers all 8 camp reading windows with 5 complete takes. Native and encoded media checks passed; human language, visual and listening review remains pending. Full episode 4K24 is not rendered. User-opened blank AE restored. Historical media and archive keep their own scope.",
+  "scope": "Autonomous FREE_SHOWCASE v1 uses the current authored dispatch. A complete 270.333333-second / 6488-frame native 4K24 R03 film, 24 intact takes, 139 full-passage groups and 21 reading windows / 145 focus instances were actually produced. The current final revision, directed repairs, editable projects, full script, actual media review and host restoration are bound by the local PRODUCTION_INDEX and that revision’s MODULE_CONSUMPTION_AUDIT. Historical capability scopes below retain their own version-specific evidence; they do not imply that every legacy runtime was invoked in v1. Human acceptance, listening and normal-speed video perception remain pending/unobserved; public_render_ready is false.",
   "historical_archive_index": "G:/VideoMaking/_archive/2026-10-18/ARCHIVE_INDEX.json",
   "historical_path_rule": "Historical paths identify their original location. Entries with archived_evidence map those paths to verified ZIP members; inspect or restore through the archive instructions rather than treating a moved output as a missing production dependency.",
   "not_runtime_contract": true,
@@ -573,6 +573,29 @@
         "G:\\VideoMaking\\critical-focus-r02\\REVIEW.html"
       ],
       "scope": "2 complete articles / 145 authored sense groups; both native comps preserve complete groups in 13 windows / 113 focus instances. Actual 76.375-second 4K24 same-film proof covers all 8 camp windows, has continuous frame timestamps, full decode, unchanged native picture packets and 5 complete takes (minimum correlation 0.9999946). Human viewing/listening pending; full episode not rendered.",
+      "availability": "MIXED_LOCAL_CODE_AND_PRIVATE_EVIDENCE"
+    },
+    "E27": {
+      "paths": [
+        "ae_production/autonomous_episode.py",
+        "ae_production/authored_editorial.py",
+        "ae_production/authored_native.py",
+        "ae_production/native_parts_reuse.py",
+        "ae_production/native_host_restart.py",
+        "premiere_production/local_http.py",
+        "tests/test_autonomous_episode.py",
+        "tests/test_autonomous_cache_bindings.py",
+        "tests/test_native_attention_reuse.py",
+        "tests/test_native_parts_reuse.py",
+        "tests/test_authored_premiere_resume.py",
+        "tests/test_native_host_restart.py",
+        "local-data/free-showcase/PRODUCTION_INDEX.json",
+        "local-data/free-showcase/autonomous-v1-r03/MASTER_DELIVERY_QA.json",
+        "local-data/free-showcase/autonomous-v1-r03/INTERNAL_MEDIA_REVIEW.json",
+        "local-data/free-showcase/autonomous-v1-r03/RESTORED_HOSTS.json",
+        "local-data/free-showcase/autonomous-v1-r04/NATIVE_PARTS_REUSE.json"
+      ],
+      "scope": "Complete first film and actual-media-directed revision on the current path; final receipts and all 36 capability entries are individually qualified in the private indexed delivery audit. Strict native reuse excludes both affected whole scenes and preserves original render provenance. Encoded frames and engineering checks do not certify audio or normal-speed motion.",
       "availability": "MIXED_LOCAL_CODE_AND_PRIVATE_EVIDENCE"
     }
   },
@@ -1992,5 +2015,25 @@
       },
       "recommended_action": "Inspect exact phrase review and the current encoded proof; retain whole phrases in subsequent articles"
     }
-  ]
+  ],
+  "current_authored_runtime": {
+    "entry": "ae/experiments/adaptive-episode/run.py autonomous",
+    "chain": [
+      "ae_production.autonomous_episode",
+      "ae_production.authored_episode.dispatch",
+      "AV_AUTHOR / AV_PLAN",
+      "ae_production.authored_native",
+      "AE / Premiere / package-master"
+    ],
+    "production_index": "local-data/free-showcase/PRODUCTION_INDEX.json",
+    "per_capability_actual_consumption": "Indexed revision / MODULE_CONSUMPTION_AUDIT.json and .md",
+    "recovery": "Bound stage receipts, final-saved project bindings and production-worktree review ledger; never replay unknown writes",
+    "independent_roles": "Creative/language author and actual-media reviewer; Adobe has one executor",
+    "evidence_refs": [
+      "E27"
+    ],
+    "not_all_legacy_versions_executed": true,
+    "human_approved": false,
+    "public_render_ready": false
+  }
 }

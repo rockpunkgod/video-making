@@ -82,6 +82,24 @@ def build(registry=None):
         if d['path'].startswith('agents/'):
             assets[d['path']] = '<!-- Generated compatibility contract; installed Skill uses Registry. -->\n'+r.document(d['path'])
     assets['references/method-roles.md'] = '# 方法角色（自动生成）\n\n'+'\n'.join(f'- {m["method_id"]} {m["brand_name"]}：{m["method_type"]} / {m["primary_role"]} → {m["output_type"]}' for m in r.methods.values())+'\n'
+    # A newer, separately bound reference epoch must survive regeneration.
+    # These presentation definitions do not migrate Registry IDs or frozen
+    # teaching facts. Historical Registry snapshots retain their exact sources.
+    mapping_path=ROOT/'creative/method-choreography/course-method-mapping.json'
+    if not r.is_historical and mapping_path.exists():
+        catalog=json.loads(mapping_path.read_text(encoding='utf-8'))
+        supplements={}
+        for row in catalog['methods']:
+            source=row['source'];path=source['path']
+            if (source['commit']!=catalog['upstream_commit'] or path not in assets
+                    or row['definition'].splitlines()[0].lstrip('# ')!=source['heading']):
+                raise ValueError('Course reference supplement has an unbound source identity')
+            supplements.setdefault(path,[]).append(row['definition'].rstrip())
+        for path,definitions in supplements.items():
+            assets[path]+=('\n\n## 已核辅助职责参考（独立来源纪元）\n\n'
+                +'来源：ANSWER@'+catalog['upstream_commit']+'。以下定义来自制作映射的精确来源登记；'
+                +'不改变现有 Registry 的来源纪元、方法编号或冻结题目事实，不授予旧包新方法身份。\n\n'
+                +'\n\n'.join(definitions)+'\n')
     # The current structural report must advance with Registry projections,
     # while immutable historical acceptance reports remain untouched.
     from scripts.audit_student_entries import audit
