@@ -1,0 +1,388 @@
+{
+  "version": "0.1.0",
+  "authority": "presentation_mapping_only_not_teaching_truth",
+  "upstream_commit": "1c388a0596b13935ae7c6a1af00834915a8efa33",
+  "video_baseline": "3f30b668496ce8fe6d08906daab0305cecd0d889",
+  "activation": "only_exact_current_source_bound_reviewed_frozen_action",
+  "methods": [
+    {
+      "name": "题干永远对",
+      "question_type": "阅读理解",
+      "source": {
+        "repository": "rockpunkgod/ANSWER",
+        "commit": "1c388a0596b13935ae7c6a1af00834915a8efa33",
+        "path": "gaokao-english/references/reading-comprehension.md",
+        "heading": "题干永远对"
+      },
+      "definition": "## 题干永远对\n\n课程独立命名的辅助说明，有三项已核职责：由题干预判信息分布、形成主题或展开假设、检查候选与题干所给信息的矛盾。当前任务需要这些线索时，先读题干及实际相关候选，形成待验位置或内容预期，再回所问正文核对象、动作、范围和完整关系；正文与预期不符时修正预期。原课另明确正文转折、后文否定前说的例外，题干中的引述、设问或待判断内容不能一概当无条件事实。名称不是仅凭题干定案的许可，不改变题序或三化法入口。\n",
+      "role": "framework",
+      "visual_intent": "bounded_question_hypothesis",
+      "trigger": "需要题干帮助预判位置、主题或核候选矛盾。",
+      "stop_rule": "引述、设问、待判断内容不当事实；转折或后文否定须回文修正；假设不是定案。",
+      "related_existing_methods": [
+        "R09",
+        "R16"
+      ],
+      "relationship": "responsibility_overlap_only_not_alias_or_new_solver",
+      "presentation_priority": "support",
+      "independent_verdict": false,
+      "renderer_status": "semantic_intent_only_not_native_3d_implemented"
+    },
+    {
+      "name": "连连看",
+      "question_type": "阅读理解",
+      "source": {
+        "repository": "rockpunkgod/ANSWER",
+        "commit": "1c388a0596b13935ae7c6a1af00834915a8efa33",
+        "path": "gaokao-english/references/reading-comprehension.md",
+        "heading": "连连看"
+      },
+      "definition": "## 连连看\n\n课程原称，对应辅助。定位到相关正文后，将竞争候选的对象、完整动作或关系、修饰与范围逐一对回原文；对应不足时补读必要上下文。相同词语、对应词数量或表面句式不能单独定案，近义改写须按完整含义比较。本操作可承接同源替换等定位结果，不把两者合并为同一个方法名称。\n",
+      "role": "verifier",
+      "visual_intent": "bounded_correspondence_alignment",
+      "trigger": "已定位正文，竞争候选在对象、完整动作／关系、修饰或范围上有待核差异。",
+      "stop_rule": "同词、对应数量、表面句式不定案；近义按完整含义核；关系不足补必要上下文。",
+      "related_existing_methods": [
+        "R03",
+        "R17"
+      ],
+      "relationship": "responsibility_overlap_only_not_alias_or_new_solver",
+      "presentation_priority": "competition_focus",
+      "independent_verdict": false,
+      "renderer_status": "semantic_intent_only_not_native_3d_implemented"
+    },
+    {
+      "name": "一一对应",
+      "question_type": "阅读理解",
+      "source": {
+        "repository": "rockpunkgod/ANSWER",
+        "commit": "1c388a0596b13935ae7c6a1af00834915a8efa33",
+        "path": "gaokao-english/references/reading-comprehension.md",
+        "heading": "一一对应"
+      },
+      "definition": "## 一一对应\n\n讲义原称，核候选与正文对象、关系和范围的真实对应，按当前候选差异作检查；不能要求绝对逐字匹配。本名称与连连看的对应职责有关联，仍分别登记，不另造整题流程。\n",
+      "role": "verifier",
+      "visual_intent": "bounded_correspondence_alignment",
+      "trigger": "已定位正文，竞争候选在对象、完整动作／关系、修饰或范围上有待核差异。",
+      "stop_rule": "同词、对应数量、表面句式不定案；近义按完整含义核；关系不足补必要上下文。",
+      "related_existing_methods": [
+        "R03",
+        "R17"
+      ],
+      "relationship": "responsibility_overlap_only_not_alias_or_new_solver",
+      "presentation_priority": "competition_focus",
+      "independent_verdict": false,
+      "renderer_status": "semantic_intent_only_not_native_3d_implemented"
+    },
+    {
+      "name": "最短逻辑",
+      "question_type": "阅读理解",
+      "source": {
+        "repository": "rockpunkgod/ANSWER",
+        "commit": "1c388a0596b13935ae7c6a1af00834915a8efa33",
+        "path": "gaokao-english/references/reading-comprehension.md",
+        "heading": "最短逻辑"
+      },
+      "definition": "## 最短逻辑\n\n课程口头定义的逻辑辅助。当前候选需要从已述动作或关系得出判断时，核它是否直接接住正文、是否额外补了正文未述的前提或中间事件。无需额外假设的关系仍须回答题干并有正向支持，不按字数、物理词距或推理步数直接选排。\n",
+      "role": "interpreter",
+      "visual_intent": "bounded_premise_gap",
+      "trigger": "当前候选需要从已述动作或关系得到判断，需核新增前提。",
+      "stop_rule": "须有正向正文支持并回答所问；字数、词距、句位或推理步数不决定选排。",
+      "related_existing_methods": [
+        "R01",
+        "R17"
+      ],
+      "relationship": "responsibility_overlap_only_not_alias_or_new_solver",
+      "presentation_priority": "competition_focus",
+      "independent_verdict": false,
+      "renderer_status": "semantic_intent_only_not_native_3d_implemented"
+    },
+    {
+      "name": "逻辑最近",
+      "question_type": "阅读理解",
+      "source": {
+        "repository": "rockpunkgod/ANSWER",
+        "commit": "1c388a0596b13935ae7c6a1af00834915a8efa33",
+        "path": "gaokao-english/references/reading-comprehension.md",
+        "heading": "逻辑最近"
+      },
+      "definition": "## 逻辑最近\n\n课程口头称呼，指逻辑关系接得上，不是位置最近。只在当前完整关系和新增前提上核查；附近不足可扩看正文，与最短逻辑关联但名称单列，不设最近句必为证据的规则。\n",
+      "role": "interpreter",
+      "visual_intent": "bounded_premise_gap",
+      "trigger": "当前候选需要从已述动作或关系得到判断，需核新增前提。",
+      "stop_rule": "须有正向正文支持并回答所问；字数、词距、句位或推理步数不决定选排。",
+      "related_existing_methods": [
+        "R01",
+        "R17"
+      ],
+      "relationship": "responsibility_overlap_only_not_alias_or_new_solver",
+      "presentation_priority": "competition_focus",
+      "independent_verdict": false,
+      "renderer_status": "semantic_intent_only_not_native_3d_implemented"
+    },
+    {
+      "name": "图片定位法",
+      "question_type": "阅读理解",
+      "source": {
+        "repository": "rockpunkgod/ANSWER",
+        "commit": "1c388a0596b13935ae7c6a1af00834915a8efa33",
+        "path": "gaokao-english/references/reading-comprehension.md",
+        "heading": "图片定位法"
+      },
+      "definition": "## 图片定位法\n\n暑15原口述的定位辅助名称。候选核心物象有助记忆时，可用与这些词直接相关的画面组织待查线索，再回文找出处并核完整含义；无有效物象不强行联想。画面不是正文事实，不能补人物心理、情节或因果，也不由记住同词直接定案。\n",
+      "role": "locator",
+      "visual_intent": "bounded_object_recall",
+      "trigger": "候选核心物象有助记忆并带回正文查出处。",
+      "stop_rule": "无有效物象不强行联想；画面不补心理、情节或因果；同词命中不定案。",
+      "related_existing_methods": [
+        "R12"
+      ],
+      "relationship": "responsibility_overlap_only_not_alias_or_new_solver",
+      "presentation_priority": "support",
+      "independent_verdict": false,
+      "renderer_status": "semantic_intent_only_not_native_3d_implemented"
+    },
+    {
+      "name": "构图定位法",
+      "question_type": "阅读理解",
+      "source": {
+        "repository": "rockpunkgod/ANSWER",
+        "commit": "1c388a0596b13935ae7c6a1af00834915a8efa33",
+        "path": "gaokao-english/references/reading-comprehension.md",
+        "heading": "构图定位法"
+      },
+      "definition": "## 构图定位法\n\n暑15口述明确说图片定位法也叫构图定位法，两名分别保留。职责是用直接相关物象辅助找回信息，仍须以原文对象、动作、范围核竞争候选；不据该次别名关系合并图片记忆法所有版本。\n",
+      "role": "locator",
+      "visual_intent": "bounded_object_recall",
+      "trigger": "候选核心物象有助记忆并带回正文查出处。",
+      "stop_rule": "无有效物象不强行联想；画面不补心理、情节或因果；同词命中不定案。",
+      "related_existing_methods": [
+        "R12"
+      ],
+      "relationship": "responsibility_overlap_only_not_alias_or_new_solver",
+      "presentation_priority": "support",
+      "independent_verdict": false,
+      "renderer_status": "semantic_intent_only_not_native_3d_implemented"
+    },
+    {
+      "name": "词义题的两项原职责",
+      "question_type": "阅读理解",
+      "source": {
+        "repository": "rockpunkgod/ANSWER",
+        "commit": "1c388a0596b13935ae7c6a1af00834915a8efa33",
+        "path": "gaokao-english/references/reading-comprehension.md",
+        "heading": "词义题的两项原职责"
+      },
+      "definition": "## 词义题的两项原职责\n\n暑9原讲义独立列下面两步；这是词义题的原职责说明，不另造新方法名。\n\n1. 确定对标词（相同词性）：先核目标词的语法位置及可比较表达，寻找同词性或对应结构的实际内容，词性只缩小查找范围。\n2. 确定逻辑提示词（连词或介词）：核提示词连接的完整内容及真实关系，结合所指和必要前后文比较候选具体义；附近不足继续扩看。\n\n方向、同词性、孤立连接词或生活常识均不能独自定词义。与左顾右盼已验词义语境入口或其他已验阅读辅助联用时，各自说明实际作用；这两步不替代阅读题序或扩充有限指示解释分支的定义。\n",
+      "role": "interpreter",
+      "visual_intent": "bounded_word_relation",
+      "trigger": "词义题需找同词性对标表达并核连词／介词连接的真实内容。",
+      "stop_rule": "这是两项原职责而非新方法名；同词性、方向、孤立连接词不定词义。",
+      "related_existing_methods": [
+        "R10",
+        "R17"
+      ],
+      "relationship": "responsibility_overlap_only_not_alias_or_new_solver",
+      "presentation_priority": "competition_focus",
+      "independent_verdict": false,
+      "renderer_status": "semantic_intent_only_not_native_3d_implemented"
+    },
+    {
+      "name": "代词指代法",
+      "question_type": "七选五",
+      "source": {
+        "repository": "rockpunkgod/ANSWER",
+        "commit": "1c388a0596b13935ae7c6a1af00834915a8efa33",
+        "path": "gaokao-english/references/seven-five.md",
+        "heading": "代词指代法（原名与已验子动作）"
+      },
+      "definition": "## 代词指代法（原名与已验子动作）\n\n10.27讲义有独立名称和定义，不能说课程没有代词指代法。本次补名称入口，仍按对应词法及主语一致中已验的指代子动作运行，不新增第八套整题法或改变开头三一致。候选含代词、空后正文含代词是两个入口，分别还原所承接的实体、整件事或概括内容，并核数、语义角色和两侧关系；形式it先核真正被评价内容，不强找名词。\n",
+      "role": "interpreter",
+      "visual_intent": "bounded_referent_restore",
+      "trigger": "候选或空后正文有需还原的代词，核实体、事件、概括内容与两侧关系。",
+      "stop_rule": "不增第八套法；开头三一致与容易突破优先不变；形式it不强找名词。",
+      "related_existing_methods": [
+        "F06",
+        "F03"
+      ],
+      "relationship": "responsibility_overlap_only_not_alias_or_new_solver",
+      "presentation_priority": "competition_focus",
+      "independent_verdict": false,
+      "renderer_status": "semantic_intent_only_not_native_3d_implemented"
+    },
+    {
+      "name": "代词指代",
+      "question_type": "七选五",
+      "source": {
+        "repository": "rockpunkgod/ANSWER",
+        "commit": "1c388a0596b13935ae7c6a1af00834915a8efa33",
+        "path": "gaokao-english/references/seven-five.md",
+        "heading": "代词指代（七选五原称）"
+      },
+      "definition": "## 代词指代（七选五原称）\n\n保留本题型原称，按上节已验指代职责解释，不借阅读的同名方法。课程一般／尤其复数与一定含名词项的强口径差异保留，不硬规定候选一定有名词；独立名称存在不表示全部强版本验收。\n",
+      "role": "interpreter",
+      "visual_intent": "bounded_referent_restore",
+      "trigger": "候选或空后正文有需还原的代词，核实体、事件、概括内容与两侧关系。",
+      "stop_rule": "不增第八套法；开头三一致与容易突破优先不变；形式it不强找名词。",
+      "related_existing_methods": [
+        "F06",
+        "F03"
+      ],
+      "relationship": "responsibility_overlap_only_not_alias_or_new_solver",
+      "presentation_priority": "competition_focus",
+      "independent_verdict": false,
+      "renderer_status": "semantic_intent_only_not_native_3d_implemented"
+    },
+    {
+      "name": "反义复现",
+      "question_type": "完形填空",
+      "source": {
+        "repository": "rockpunkgod/ANSWER",
+        "commit": "1c388a0596b13935ae7c6a1af00834915a8efa33",
+        "path": "gaokao-english/references/cloze.md",
+        "heading": "已核课程分支与称呼"
+      },
+      "definition": "## 已核课程分支与称呼\n\n本节补名称与已有职责的对应，不改变本模块作答顺序或新增整题算法；同名阅读、七选五规则不借用。\n\n- 完形语篇的行文结构：内容框架名称，对应本模块首句粗框架、逐空核证据和整体核查，不自造行文结构法。\n- 原词复现：以同词回查当前空的对象、事件和句意，重复可能是干扰，不能直接选。\n- 复现原则：词汇呼应分支的原称，先找呼应，再核当前完整关系，名称单列。\n- 同义复现：以已知同义关系回查语境，仍核对象和具体义。\n- 近义复现：以可确认的近义表达查线索，近义不表示当前语境可任意替换。\n- 反义复现：先核真实对照维度和两侧完整内容，再比较候选；and也能连反向处境，不能强定方向。\n- 大词原则：保留此完整原名，受限动作见大词／大小原则小节；具体提示不足仍须核泛项正向依据。\n- 动作流：按真实行动及参与者核先后、因果和当前空关系，不能补出未述情节。\n- 结构对应：核实际平行结构与内容的对应，同句式或and不保证同词义或同褒贬。\n- 泛比较：本题型的程度／评价词义说明，比较当前对象的具体程度，不套阅读比较级规则或极端词优先。\n- 劫匪插葱：本题型结构口诀，识主干与修饰；不同讲次对是否需要使用有差异，按需识结构，不删除影响答案的否定、条件和范围。\n- 只看主语谓语：结构与主干的框架说法，不授权只剩主谓后作答，必要宾语、修饰及关系仍保留。\n- 首句完整定主题：首句粗框架的说法；课程总完整与通常不设空口径及首句设空例并存，有缺口时不补写首句，不预编情节。\n",
+      "role": "interpreter",
+      "visual_intent": "bounded_contrast_alignment",
+      "trigger": "当前空有真实对照维度和两侧可核内容。",
+      "stop_rule": "and可连反向处境，不强定方向；同词、反义或数量不定案；无固定空号或遍数。",
+      "related_existing_methods": [
+        "C01",
+        "C02"
+      ],
+      "relationship": "responsibility_overlap_only_not_alias_or_new_solver",
+      "presentation_priority": "competition_focus",
+      "independent_verdict": false,
+      "renderer_status": "semantic_intent_only_not_native_3d_implemented"
+    },
+    {
+      "name": "句子写作思路",
+      "question_type": "应用文",
+      "source": {
+        "repository": "rockpunkgod/ANSWER",
+        "commit": "1c388a0596b13935ae7c6a1af00834915a8efa33",
+        "path": "gaokao-writing/references/application-writing-and-correction.md",
+        "heading": "句子写作思路"
+      },
+      "definition": "### 句子写作思路\n\n原讲义五项句子组织提示：确认动词→谓语／非谓语（从句）→主动／被动→句型→描述成分。表达内容已明确而需组织或检查句子时，按这些依赖处理当前句；词义、施受及修饰必须符合当前语境。这不是另一套五定法，也不替换三种写作表达方法或强制每句升级复杂结构。\n",
+      "role": "framework",
+      "visual_intent": "bounded_writing_framework",
+      "trigger": "需要句子构思提示。",
+      "stop_rule": "构思框架不升级评分项或固定句式；按任务选内容；感谢信结构不套全部文体。",
+      "related_existing_methods": [],
+      "relationship": "responsibility_overlap_only_not_alias_or_new_solver",
+      "presentation_priority": "support",
+      "independent_verdict": false,
+      "renderer_status": "semantic_intent_only_not_native_3d_implemented"
+    },
+    {
+      "name": "个人--家庭--学校--社会",
+      "question_type": "应用文",
+      "source": {
+        "repository": "rockpunkgod/ANSWER",
+        "commit": "1c388a0596b13935ae7c6a1af00834915a8efa33",
+        "path": "gaokao-writing/references/application-writing-and-correction.md",
+        "heading": "个人--家庭--学校--社会"
+      },
+      "definition": "### 个人--家庭--学校--社会\n\n赠48原板书的开放要点构思提示。题目没有明确具体要点、需要想事件意义或自己能做什么时，可从这些实际相关层面寻找内容，再按题目目的筛选；题面具体要点优先。不是固定每题三点／四点，也不要求逐层各写一段；写三圈仅机器暂识、名称未核，不据此造方法。\n",
+      "role": "framework",
+      "visual_intent": "bounded_writing_framework",
+      "trigger": "开放要点需选择适用角度。",
+      "stop_rule": "构思框架不升级评分项或固定句式；按任务选内容；感谢信结构不套全部文体。",
+      "related_existing_methods": [],
+      "relationship": "responsibility_overlap_only_not_alias_or_new_solver",
+      "presentation_priority": "support",
+      "independent_verdict": false,
+      "renderer_status": "semantic_intent_only_not_native_3d_implemented"
+    },
+    {
+      "name": "总分总的呼应",
+      "question_type": "应用文",
+      "source": {
+        "repository": "rockpunkgod/ANSWER",
+        "commit": "1c388a0596b13935ae7c6a1af00834915a8efa33",
+        "path": "gaokao-writing/references/application-writing-and-correction.md",
+        "heading": "总分总的呼应"
+      },
+      "definition": "### 总分总的呼应\n\n赠45感谢信的课堂结构称呼，开头感谢、主体说明相关帮助与影响、末尾再次致谢，核首尾是否回应同一交际目的。按当前感谢任务使用，不作所有书信的统一骨架或新增评分项。\n",
+      "role": "framework",
+      "visual_intent": "bounded_writing_framework",
+      "trigger": "感谢信需要核结构呼应。",
+      "stop_rule": "构思框架不升级评分项或固定句式；按任务选内容；感谢信结构不套全部文体。",
+      "related_existing_methods": [],
+      "relationship": "responsibility_overlap_only_not_alias_or_new_solver",
+      "presentation_priority": "support",
+      "independent_verdict": false,
+      "renderer_status": "semantic_intent_only_not_native_3d_implemented"
+    },
+    {
+      "name": "三化法",
+      "question_type": "读后续写",
+      "source": {
+        "repository": "rockpunkgod/ANSWER",
+        "commit": "1c388a0596b13935ae7c6a1af00834915a8efa33",
+        "path": "gaokao-writing/references/continuation-writing-and-correction.md",
+        "heading": "补充原名与版本入口"
+      },
+      "definition": "## 补充原名与版本入口\n\n以下是已核名称或职责的遗漏补记，按来源分别解释。来源标签不是新增方法名；训练材料不自动变为陌生题固定步骤。\n\n- 三化法：10.4续写讲义的原名线索提示，观察首尾段、段首句、强逻辑句以提取故事线索；本模块跳读中已有相应动作。与客观题阅读三化分板块，不移入阅读的重复词三项或主旨题入口，不只读谓语而丢掉必要信息。\n- 先读两个首句，带着猜测去读文章：原操作表述，按两首句的人物、状态、时地形成待证问题，再回原文补过程；猜测不当事实。\n- gap：寒14构思黑话，指两首句状态之间需交代的过程信息，没有已核字母展开。\n- 文章gap：原讲义表述，指上述过程空缺，不把任何差异都称冲突。\n- 找到gap：原操作称呼，找过程空缺并联同主旨回文，不另增整题方法。\n- gap读法：旧整理简称，原操作有证，完整名称未核为课程原名。\n- 所有名词必须提：旧整理省略限定的说法，原句实际限两个首句中的名词；按必要联系与任务衔接理解，不能扩成全文所有名词都要写。\n- 人物都需要设计：口述语义表述，思考首句人物的行动与关联；原画面另写任务，均保留，不强制所有人物出场。\n- 十句行文法：旧高二PPT归档的句位提纲原名，用句位安排需求、波折、行动、衔接和结局；与十句五定有关联但未证严格命名等同，不借此改寒8／寒14编号或强制十句。当前原PPT未复定位，只复用已验旧渲染。\n- 十句行全文：旧PPT页内原字，保留材料标题身份，不静默改名为十句行文法或十句五定法。\n- 不定的句子：寒14原职责表述，在可展开位置写冲突、细节与适用素材，对应本模块肌肉句说明，不能另开无关支线。\n- 标准三段式：旧整理总称，指简化中文、简单句翻译、优化升级三动作；不是已核反向口诀定义。\n- 四步完成“精准续写”：寒14本材料分析安排的原表述，具体动作见四步精准续写小节；不覆盖寒8四步骤或五步成文法。\n- 四个步骤：寒8原讲义流程，通读六要素→研读首句／PTSD→回扣细节→润色誊写，对应本模块解题四步骤；来源与寒14四步分开。\n- 读后续写基本规律及解题要领：寒8原栏目，三项内容见三条基本规律，不新增独立判断算法。\n- 三原则：上述三条的计数简称，不与三要素锁定法混用。\n- 人与环境：暑16原主题分类表述，含自然灾害、意外事件、社会压力，原课允许主题混合；与寒14人与自然有关联但不是无差异的同一分类。\n- 人与自然三类：春11专项分类称呼，三项内容见人与自然三分型，不改成PTSD展开。\n- 因果逻辑链搭建：秋16训练原名，按真实因为A→所以B→最终C梳理，与本模块因果逻辑链内容有关，不凭公式造因果。\n- 进阶句式3选1：秋16原训练名称，内容见进阶句式三选一，不作所有题句型配额。\n- 五档次升级版本（从基础到高阶）：秋16原材料总标题，五档升级路径为整理便称；单句训练与整篇分档不拼成官方评分表。\n- 金句80个：素材积累安排，不是单篇句数要求。\n- 升华10句：结尾素材积累安排，不要求每篇十句升华。\n- 10句式+100高分词：素材安排，数字不成为作文使用配额。\n- 三大话题模板：模板分类／教学安排，按当前故事选择；不能只背模板或借此共用两作文流程。\n- 环境句位置：春11该组模板的位置建议，见环境万能句式，不扩大为所有环境描写的绝对禁令。\n\n寒第10次讲义“读后续写十大仿写句式”的十类素材逐名保留如下，属于素材类别，不激活十套算法；完整陌生题逐类适用边界仍未验，也不以类别标题保证所有原例语法正确或都在句首。\n\n- 仿写句式一：无灵主语开头。\n- 仿写句式二：倒装句、强调句开头。\n- 仿写句式三：对话或独白开头。\n- 仿写句式四：介词短语开头。\n- 仿写句式五：独立主格/with复合结构开头。\n- 仿写句式六：形容词/副词开头。\n- 仿写句式七：环境描写开头。\n- 仿写句式八：非谓语动词开头。\n- 仿写句式九：动作链。\n- 仿写句式十：主题升华。\n",
+      "role": "framework",
+      "visual_intent": "bounded_story_clues",
+      "trigger": "续写需要从首尾段、段首句和强逻辑句提取故事线索。",
+      "stop_rule": "不借阅读重复词三项或主旨入口；不丢必要信息；动作面定义仍待核，素材不升级算法。",
+      "related_existing_methods": [],
+      "relationship": "responsibility_overlap_only_not_alias_or_new_solver",
+      "presentation_priority": "support",
+      "independent_verdict": false,
+      "renderer_status": "semantic_intent_only_not_native_3d_implemented"
+    },
+    {
+      "name": "大词原则",
+      "question_type": "阅读理解",
+      "source": {
+        "repository": "rockpunkgod/ANSWER",
+        "commit": "1c388a0596b13935ae7c6a1af00834915a8efa33",
+        "path": "gaokao-english/references/reading-comprehension.md",
+        "heading": "大词原则"
+      },
+      "definition": "## 大词原则\n\n课程原名，已核验为语义范围比较的辅助方法。触发：当前竞争选项之间有可确认的语义包含关系。大词指概括范围较宽、能涵盖其他候选内容的表达，不指词长、生僻或抽象程度；比较的是候选的完整含义，不能只看某个名词。仅仅主题相关或用词看似更宽泛，还不能证明完整断言互相包含；未确认包含时不点名调用本法，按实际新增范围等差异回文核查。\n\n快判：先看哪些候选是具体方面，哪个较宽概括确实涵盖这些方面，优先关注该较宽候选，再回题干所问范围核正文实际展开。正文支持多个方面且较宽候选准确统领这些内容时，可据覆盖关系选定；正文只支持其中一个具体方面时，选对应的小项。较宽候选额外带出的对象、动作、范围、否定或条件同样须有正文支持，涵盖了一个正确细节不等于完整成立。\n\n边界：不只用于主旨题，细节题出现真实语义包含竞争时也可核正文支持哪一层范围；不是细节题包含项优先，也不是大项必选。题干只问局部时不拿全文其他方面撑大范围。没有真实包含关系时不用，证据仍不能区分时继续回文，不靠大小或剩余项定案。不借完形先查具体提示、再看主旨和泛项的顺序，不改变阅读题序或三化法入口；与并列删除分别保留各自触发条件。现场讲解点明大词原则，接当前选项的包含关系与原文覆盖证据，再给结论。\n",
+      "role": "interpreter",
+      "visual_intent": "bounded_semantic_coverage",
+      "trigger": "竞争选项的完整断言已有可确认的语义包含关系，需要核所问范围与正文覆盖。",
+      "stop_rule": "主题相关或概念宽泛不等于完整语义包含；不按大小、抽象程度或剩余项定案；局部问题不借全文撑范围。",
+      "related_existing_methods": [],
+      "relationship": "responsibility_overlap_only_not_alias_or_new_solver",
+      "presentation_priority": "competition_focus",
+      "independent_verdict": false,
+      "renderer_status": "semantic_intent_only_not_native_3d_implemented"
+    },
+    {
+      "name": "大小原则",
+      "question_type": "阅读理解",
+      "source": {
+        "repository": "rockpunkgod/ANSWER",
+        "commit": "1c388a0596b13935ae7c6a1af00834915a8efa33",
+        "path": "gaokao-english/references/reading-comprehension.md",
+        "heading": "大小原则"
+      },
+      "definition": "## 大小原则\n\n另保留此课程原名；已核验的职责同样是比较实际竞争项的语义范围，按上节的包含关系、所问范围及正文支持核查。名称单独登记，不另造一套步骤，也不因字面大小建立所有题先大或先小的固定偏好。\n",
+      "role": "interpreter",
+      "visual_intent": "bounded_semantic_coverage",
+      "trigger": "竞争选项的完整断言已有可确认的语义包含关系，需要核所问范围与正文覆盖。",
+      "stop_rule": "主题相关或概念宽泛不等于完整语义包含；不按大小、抽象程度或剩余项定案；局部问题不借全文撑范围。",
+      "related_existing_methods": [],
+      "relationship": "responsibility_overlap_only_not_alias_or_new_solver",
+      "presentation_priority": "competition_focus",
+      "independent_verdict": false,
+      "renderer_status": "semantic_intent_only_not_native_3d_implemented"
+    }
+  ],
+  "blocked_rules": [
+    "结构词做题法独立定案",
+    "七选五一定含名词项",
+    "完形无证选大词",
+    "配平",
+    "三贬一褒",
+    "续写动作面完整算法"
+  ]
+}
