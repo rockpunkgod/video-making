@@ -1,0 +1,82 @@
+{
+  "checked_on": "2026-10-18",
+  "baseline_commit": "3f30b668496ce8fe6d08906daab0305cecd0d889",
+  "scope": "Synthetic structural regression only; no English, identity, learner or release certification",
+  "status": "fixed_in_proposed_change_not_yet_merged",
+  "baseline_reproduction": {
+    "rebound_synthetic_credential": true,
+    "relation_graph_unchanged": true,
+    "export_accepted": true,
+    "portable_verify_accepted": true,
+    "effective_status": "ACTIVE",
+    "status_matches": true,
+    "renderer_rejections": [
+      "structured",
+      "content-export",
+      "student",
+      "legacy-wechat"
+    ]
+  },
+  "root_cause": "Exporter validated graph/execution separately without answer projection checks. Portable verification checked hashes, fingerprints and credentials without cross-checking candidate and terminal answer projections. Rebinding credentials and seals preserved the contradiction.",
+  "repair": [
+    "Move existing answer/candidate validator into video_contracts, with a core compatibility import.",
+    "Extract existing whole-question proof validation and pure terminal field aggregation into video_contracts; keep Registry source checks and delivery logic upstream.",
+    "Call the shared validator in export and verify_bundle; status and status_matches inherit rejection.",
+    "Bind source identity, material fingerprint and complete declared candidate scope, including optionless rivals."
+  ],
+  "verification": {
+    "distinct_targeted_tests_passed": 163,
+    "new_regression_test_methods": 6,
+    "suites": {
+      "test_frozen_answer_closure": 6,
+      "test_answer_projection_binding": 13,
+      "test_optionless_candidate_closure": 11,
+      "test_question_verification": 35,
+      "test_video_os": 53,
+      "test_execution": 32,
+      "test_evidence_binding": 7,
+      "test_review_provider_binding": 6
+    },
+    "execution_note": "Aggregate run completed 153 passing tests. Three epoch-status tests and one imported module had unchanged local fixture setup errors. Restored original source bytes and missing fixtures from GitHub; all 10 affected tests passed on retry. No test skips, weakened assertions or mocked gates.",
+    "aggregate_command": "python -m unittest tests.test_frozen_answer_closure tests.test_answer_projection_binding tests.test_optionless_candidate_closure tests.test_question_verification tests.test_video_os tests.test_execution tests.test_evidence_binding tests.test_review_provider_binding -q",
+    "retry_command": "python -m unittest tests.test_video_os.VideoOSTest.test_current_epoch_status_supersedes_without_rewriting_frozen_input tests.test_video_os.VideoOSTest.test_same_version_cannot_hide_changed_teaching_facts tests.test_video_os.VideoOSTest.test_same_version_student_task_or_visual_change_invalidates_current_export tests.test_evidence_binding -q",
+    "isolated_portable_verification": "PASS: valid accepted, resealed invalid rejected, teaching packages absent and imports blocked",
+    "baseline_valid_bundle_and_status_exact_equality": "PASS with fixed timestamp: fingerprints and seals unchanged",
+    "positive_controls": [
+      "typed closed",
+      "legacy relations",
+      "unresolved rival",
+      "helper without answer",
+      "whole-question closed/stopped/unresolved",
+      "optionless unresolved/closed/multiple-supported/elimination-only",
+      "writing without objective answer"
+    ],
+    "negative_controls": [
+      "rebound false closure with unchanged graph",
+      "hidden optionless rival",
+      "answer/rows/summary/coverage/confidence/eligibility drift",
+      "typed decision drift",
+      "dropped relation row",
+      "detached graph edges",
+      "changed terminal answer/effect",
+      "dropped terminal report",
+      "detached terminal proof"
+    ]
+  },
+  "protected_boundaries": {
+    "answer_teaching_source_unchanged": true,
+    "method_registry_unchanged": true,
+    "schemas_unchanged": true,
+    "review_credentials_and_authority_unchanged": true,
+    "release_and_rights_gates_unchanged": true,
+    "historical_r93_report_unchanged": true,
+    "audience_pr_3_files_unchanged": true
+  },
+  "limitations": [
+    "Targeted suites, not the full repository suite.",
+    "Synthetic credentials do not certify real teaching material or authenticate reviewers.",
+    "ACTIVE does not authorize public release.",
+    "No real learner, English correctness, first-use, transfer or publication credit.",
+    "Existing schema support is unchanged; no expansion of accepted teaching artifact types."
+  ]
+}
