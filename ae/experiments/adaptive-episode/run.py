@@ -38,7 +38,18 @@ def current(folder):
                 raise ValueError('Native source text changed')
     for voice in r['voices']:
         if file_sha(voice['path'])!=voice['sha256']:raise ValueError('Bound voice changed')
+    from ae_production.audience_adapter import consume_request
+    consume_request(r, episode, statuses)
     return r
+
+
+def audience_preflight(folder):
+    r = current(folder)
+    if 'audience_adapter' not in r:
+        raise ValueError('No opted-in Audience adapter for this revision')
+    result = read(r['audience_adapter']['compiled'])
+    write(folder/'AUDIENCE_ADAPTIVE_PREFLIGHT.json', result)
+    return result
 
 
 def client():
@@ -111,7 +122,8 @@ def audit(folder):
 
 def preview(folder):
     r=current(folder);identity=read(folder/'native-identity.json');c=client();out=folder/'previews';out.mkdir(exist_ok=True)
-    times=r['spec'].get('preview_times')
+    times=(read(r['audience_adapter']['compiled'])['preview_times']
+           if r.get('audience_adapter') else r['spec'].get('preview_times'))
     if times is None:
         direction=read(folder/'DIRECTION_REALIZED.json');scenes={v['scene_id']:v for v in direction['scenes']}
         points=[('a-entry',3),('a-options',2),('a-p1',4),('a-p3',5),('a-p4',5),('a-p5',5),
@@ -259,3 +271,4 @@ def main():
 
 
 if __name__=='__main__':main()
+
