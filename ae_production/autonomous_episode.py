@@ -200,10 +200,20 @@ def review(folder):
           'Keep unobserved video/audio scope explicit; do not fabricate observations.']})
     if observation.get('status')=='NEEDS_HOST_AGENT':return observation
     if observation['media_sha256']!=qa['sha256']:raise ValueError('Reviewer observed another cut')
+    if not {'issues','continuous_coverage','video_observed','audio_observed'}<=observation.keys():
+        raise ValueError('Independent observation is missing required facts')
+    # Reviewer commentary cannot grant acceptance. Compare the same protected
+    # host values that were persisted on the first consumption, so a descriptive
+    # user_acceptance field cannot make an unchanged observation non-resumable.
+    authority={'human_approved':False,'user_acceptance':'PENDING','public_render_ready':False}
+    accepted_observation={**observation,**authority}
     existing_path=folder/'INTERNAL_MEDIA_REVIEW.json'
     if existing_path.exists():
         previous=read(existing_path)
-        if all(previous.get(k)==v for k,v in observation.items()):
+        derived={'actual_media_mapping','continuous_video_review_completed',
+                 'complete_listening_review_completed','ledger_root','ledger_records',*authority}
+        if (previous.keys()-derived==observation.keys()-derived
+                and all(previous.get(k)==v for k,v in accepted_observation.items())):
             from content_os.engagement_learning import AudienceLearning
             ledger_root=production_ledger_root(folder,previous.get('ledger_root'))
             if not (ledger_root/'audience.sqlite3').is_file():raise ValueError('Cached review ledger is missing')
@@ -229,7 +239,7 @@ def review(folder):
         ids.append(learning.internal_ai_review(media,p,issue,qa=qa,plan_path=folder/'AV_PLAN.json'))
     result={**observation,'actual_media_mapping':mapping,'continuous_video_review_completed':complete and observation['video_observed'],
             'complete_listening_review_completed':complete and observation['audio_observed'],
-            'ledger_root':str(ledger_root),'ledger_records':ids,'human_approved':False,'user_acceptance':'PENDING','public_render_ready':False}
+            'ledger_root':str(ledger_root),'ledger_records':ids,**authority}
     write(folder/'INTERNAL_MEDIA_REVIEW.json',result)
     review_page(folder,qa,result)
     return result

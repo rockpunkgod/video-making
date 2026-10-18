@@ -149,6 +149,54 @@ class ProductionWorktreeLedger(unittest.TestCase):
         self.assertFalse((self.main/'local-data/audience-learning').exists())
         self.assertEqual(autonomous.review(self.folder),result)
 
+    def test_descriptive_acceptance_cannot_break_resume_or_duplicate_the_ledger(self):
+        from content_os.engagement_learning import AudienceLearning
+        self.observation['user_acceptance']={'copy':'REVIEWED','film':'PENDING'}
+        result=autonomous.review(self.folder)
+        self.assertEqual(result['user_acceptance'],'PENDING')
+        self.assertFalse(result['human_approved']);self.assertFalse(result['public_render_ready'])
+        original=(self.folder/'INTERNAL_MEDIA_REVIEW.json').read_bytes()
+        self.assertEqual(autonomous.review(self.folder),result)
+        self.assertEqual((self.folder/'INTERNAL_MEDIA_REVIEW.json').read_bytes(),original)
+        self.assertEqual(len(AudienceLearning(self.expected).records()),1)
+        self.assertEqual(self.observation['user_acceptance'],{'copy':'REVIEWED','film':'PENDING'})
+
+    def test_changed_actual_observation_still_requires_a_new_cut(self):
+        from content_os.engagement_learning import AudienceLearning
+        autonomous.review(self.folder)
+        original=deepcopy(self.observation)
+        cached=(self.folder/'INTERNAL_MEDIA_REVIEW.json').read_bytes()
+        for mutate in (lambda o:o['issues'][0].update(observed_fact='CHANGED actual observation'),
+                       lambda o:o['issues'][0].update(range=[0,.75]),
+                       lambda o:o.update(audio_observed=True),
+                       lambda o:o.update(continuous_coverage=[[0,1]])):
+            self.observation.clear();self.observation.update(deepcopy(original));mutate(self.observation)
+            with self.assertRaisesRegex(ValueError,'Preserve the existing independent observation'):
+                autonomous.review(self.folder)
+            self.assertEqual((self.folder/'INTERNAL_MEDIA_REVIEW.json').read_bytes(),cached)
+            self.assertEqual(len(AudienceLearning(self.expected).records()),1)
+
+    def test_cached_host_acceptance_and_publication_values_cannot_be_upgraded(self):
+        original=autonomous.review(self.folder)
+        for key,value in [('user_acceptance','APPROVED'),('human_approved',True),('public_render_ready',True)]:
+            changed=deepcopy(original);changed[key]=value
+            write(self.folder/'INTERNAL_MEDIA_REVIEW.json',changed)
+            with self.subTest(key=key),self.assertRaisesRegex(ValueError,'Preserve the existing independent observation'):
+                autonomous.review(self.folder)
+
+    def test_missing_required_or_additional_observed_fact_cannot_resume(self):
+        from content_os.engagement_learning import AudienceLearning
+        self.observation['perception_scope']='SYNTHETIC explicit additional fact'
+        autonomous.review(self.folder)
+        original=deepcopy(self.observation)
+        cached=(self.folder/'INTERNAL_MEDIA_REVIEW.json').read_bytes()
+        for key in ('issues','continuous_coverage','perception_scope'):
+            self.observation.clear();self.observation.update(deepcopy(original));self.observation.pop(key)
+            with self.subTest(key=key),self.assertRaises(ValueError):
+                autonomous.review(self.folder)
+            self.assertEqual((self.folder/'INTERNAL_MEDIA_REVIEW.json').read_bytes(),cached)
+            self.assertEqual(len(AudienceLearning(self.expected).records()),1)
+
     def test_legacy_review_without_ledger_path_resumes_in_its_original_worktree(self):
         legacy=autonomous.review(self.folder);legacy.pop('ledger_root')
         write(self.folder/'INTERNAL_MEDIA_REVIEW.json',legacy)
