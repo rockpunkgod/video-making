@@ -188,6 +188,7 @@ class Host:
 def build(folder):
     a,p=plan(folder);require_focus(a)
     if 'article_chunking' not in p:raise ValueError('Run chunks and prepare before a new native build')
+    background_isolation_rows(p)
     h=Host(folder,'after_effects');before=h.identity()
     require_disk(folder,64*1024**2)
     require_disk(h.project.parent,256*1024**2)
@@ -213,6 +214,37 @@ def current_native(folder):
     if n['plan_sha256']!=sha256(folder/'AV_PLAN.json') or n['template_sha256']!=template_digest or n.get('reading_rig_sha256')!=rig_digest:
         raise ValueError('Native picture is stale after author or realization changes')
     return a,p,n
+
+
+def background_isolation_rows(p):
+    """Bound isolation to nonselected text after all necessary reading."""
+    rows=[]
+    for s in p['scenes']:
+        if s.get('comparison_background_policy')!='isolate_selected_passage':continue
+        if (s['kind']!='compare' or s.get('motion_treatment')!='critical_comparison'
+                or s.get('candidate_reading_policy')!='quiet_source_until_read'
+                or not s.get('reading_events')):
+            raise ValueError('Background isolation requires a quiet comparison reading path')
+        ex=p['excerpts'][s['excerpt']];blocks=p['worlds'][ex['world']]['blocks']
+        refs=[r for r in s['source_refs'] if r['world']==ex['world'] and r['pointer']=='/passage']
+        selected={b['id'] for b in blocks if b['id'] in ex['block_ids']
+                  and any(r['start']<b['end'] and r['end']>b['start'] for r in refs)}
+        hidden=[b for b in blocks if b['visible'] and b['id'] not in selected]
+        last=s['reading_events'][-1]
+        if not selected or any(b['start']<last['end'] and b['end']>last['start'] for b in hidden):
+            raise ValueError('Background isolation would hide necessary reading')
+        quiet_at=last['end_time'];restore_at=max(s['return_start'],s['end']-.35)
+        if not s['start']<=s['candidate_arrive']<quiet_at<restore_at<s['end']-1/24:
+            raise ValueError('Background isolation must remain inside its comparison scene')
+        readings=[{'time':(e['arrival']+e['end_time'])/2,
+                   'layers':[b['id'] for b in blocks if b['visible']
+                             and b['start']<e['end'] and b['end']>e['start']]}
+                  for e in s['reading_events']]
+        rows.append({'scene':s['id'],'hidden':[b['id'] for b in hidden],
+                     'fade_start':max(s['candidate_arrive'],quiet_at-.3),
+                     'quiet_at':quiet_at,'settled':s['settled'],
+                     'restore_at':restore_at,'end':s['end'],'readings':readings})
+    return rows
 
 
 def audit(folder):
@@ -303,6 +335,18 @@ var out=[];for(var ci=0;ci<ids.length;ci++){var c=app.project.itemByID(ids[ci]);
         if row['text'].replace('\r','\n')!='\n'.join(c['display_lines']) or abs(row['inPoint']-c['start'])>1e-4 or abs(row['outPoint']-c['end'])>1e-4:
             raise ValueError('Caption text or audio clock changed')
     if len(n['audit']['replays'])!=1 or any(e['scene']==n['audit']['replays'][0]['scene'] for e in p['candidate_events']):raise ValueError('Replay repeated a candidate decision')
+    isolation=background_isolation_rows(p)
+    if isolation:
+        for cid in (n['comp_id'],n['master_comp_id']):
+            values=h.js('var c=app.project.itemByID('+str(cid)+'),shots='+json.dumps(isolation)+r''';var out=[];for(var i=0;i<shots.length;i++){var s=shots[i],row={scene:s.scene,hidden:[],reading:[]};for(var j=0;j<s.hidden.length;j++){var l=c.layer(s.hidden[j]),op=l.transform.opacity;row.hidden.push({layer:l.name,before:op.valueAtTime(s.fade_start,false),quiet:op.valueAtTime(s.quiet_at,false),settled:op.valueAtTime(s.settled,false),restore_start:op.valueAtTime(s.restore_at,false),restored:op.valueAtTime(s.end-.5/24,false)});}for(var j=0;j<s.readings.length;j++){var r=s.readings[j];for(var k=0;k<r.layers.length;k++)row.reading.push({layer:r.layers[k],time:r.time,opacity:c.layer(r.layers[k]).transform.opacity.valueAtTime(r.time,false)});}out.push(row);}return out;''')
+            for row in values:
+                if any(abs(v['before']-100)>.01 or abs(v['quiet'])>.01 or abs(v['settled'])>.01
+                       or abs(v['restore_start'])>.01 or abs(v['restored']-100)>.01 for v in row['hidden']):
+                    raise ValueError('Nonselected comparison background was not isolated and restored')
+                if any(abs(v['opacity']-100)>.01 for v in row['reading']):
+                    raise ValueError('Background isolation hid a necessary source reading')
+            write(folder/('COMPARISON_BACKGROUND_NATIVE_'+str(cid)+'.json'),{
+                'rows':values,'plan_sha256':sha256(folder/'AV_PLAN.json'),'human_visual_review':'PENDING'})
     if p.get('realization')=='continuous_paper_scan':
         # Read real native keys/focus, not just the authored camera receipt.
         camera=h.js('var c=app.project.itemByID('+str(n['comp_id'])+'),l=c.layer("READING_CAMERA"),o=l.property("ADBE Camera Options Group"),f=c.layer("READING_FOCUS"),rows=[];for(var k=1;k<=l.transform.position.numKeys;k++){var t=l.transform.position.keyTime(k);rows.push({time:t,position:l.transform.position.keyValue(k),look:l.transform.pointOfInterest.valueAtTime(t,false),focus:f.transform.position.valueAtTime(t,false),aperture:o.property("ADBE Camera Aperture").valueAtTime(t,false)});}return {dof:o.property("ADBE Camera Depth of Field").value,focus_expression:o.property("ADBE Camera Focus Distance").expression,keys:rows};')

@@ -27,6 +27,35 @@ SOURCE_ATTENTION_TEMPLATE_LF_SHA256 = 'dbaeb64316c635ab25e27e8656cce54a852e92794
 SOURCE_ATTENTION_TEMPLATE_SHA256_ALLOWLIST = frozenset({
     SOURCE_ATTENTION_TEMPLATE_SHA256, SOURCE_ATTENTION_TEMPLATE_LF_SHA256})
 ATTENTION_OPERATION = 'authored_attention_and_reading_visibility_repair'
+DISPLAY_OPERATION = 'authored_title_and_background_isolation_repair'
+# One independently reviewed single-line patch, with exact same-EOL pairs.
+# A checkout, a normalized digest, or an arbitrary additional template edit
+# cannot extend this list. Historical source-attention proofs stay unchanged.
+BACKGROUND_TEMPLATE_SHA256 = 'd3db205fbf96ae61e284ec85ecf0ec076ca175f1cf536b6fcbe154282c0b0937'
+BACKGROUND_TEMPLATE_LF_SHA256 = '12e07dc2cf419409928dd0e1662c3e07bead7b41e9f4ab4b813b283c87d522c4'
+BACKGROUND_TEMPLATE_PAIRS = {
+    SOURCE_ATTENTION_TEMPLATE_SHA256: BACKGROUND_TEMPLATE_SHA256,
+    SOURCE_ATTENTION_TEMPLATE_LF_SHA256: BACKGROUND_TEMPLATE_LF_SHA256}
+BACKGROUND_OLD = (b'  for(var j=0;j<w.blocks.length;j++){var row=w.blocks[j],selected=false;'
+    b'for(var k=0;k<ex.blocks.length;k++)if(row.id===ex.blocks[k].id)selected=true;'
+    b'if(!selected){ease(tr(row.layer,"ADBE Opacity"),s.extract_start,100);'
+    b'ease(tr(row.layer,"ADBE Opacity"),s.settled,6);'
+    b'ease(tr(row.layer,"ADBE Opacity"),s.return_start,6);'
+    b'ease(tr(row.layer,"ADBE Opacity"),b-1/24,100);}}')
+BACKGROUND_NEW = (b'  for(var j=0;j<w.blocks.length;j++){var row=w.blocks[j],selected=false;'
+    b'for(var k=0;k<ex.blocks.length;k++)if(row.id===ex.blocks[k].id)selected=true;'
+    b'if(!selected){if(s.comparison_background_policy==="isolate_selected_passage"){'
+    b'var lastRead=s.reading_events[s.reading_events.length-1];'
+    b'if(!lastRead||row.start<lastRead.end&&row.end>lastRead.start)'
+    b'throw Error("Background isolation would hide necessary reading");'
+    b'ease(tr(row.layer,"ADBE Opacity"),Math.max(s.candidate_arrive,lastRead.end_time-.3),100);'
+    b'ease(tr(row.layer,"ADBE Opacity"),lastRead.end_time,0);'
+    b'ease(tr(row.layer,"ADBE Opacity"),Math.max(s.return_start,b-.35),0);'
+    b'ease(tr(row.layer,"ADBE Opacity"),b-1/24,100);}else{'
+    b'ease(tr(row.layer,"ADBE Opacity"),s.extract_start,100);'
+    b'ease(tr(row.layer,"ADBE Opacity"),s.settled,6);'
+    b'ease(tr(row.layer,"ADBE Opacity"),s.return_start,6);'
+    b'ease(tr(row.layer,"ADBE Opacity"),b-1/24,100);}}}')
 MAX_REUSE_DEPTH = 16
 LIGHT_OLD = b'choice.motionBlur=false;'
 LIGHT_NEW = LIGHT_OLD + b'style(choice,s.oriented,ink,null,null);'
@@ -442,6 +471,299 @@ def _reading_visibility_layers(revision, scenes):
     return result
 
 
+def _display_requested(old, new):
+    def decisions(revision):
+        return [(s['id'], s.get('screen_title', s.get('title')),
+                 s.get('comparison_background_policy', 'visible')) for s in revision['plan']['scenes']]
+    return (decisions(old) != decisions(new)
+            or new['native']['template_sha256'] in BACKGROUND_TEMPLATE_PAIRS.values())
+
+
+def _display_difference(old, new):
+    """Remove only explicitly consumed title hides and background isolation."""
+    plans = [deepcopy(r['normalized']) for r in (old, new)]
+    scenes = [_unique(p['scenes'], 'id', 'plan scene') for p in plans]
+    authors = [_unique(r['author']['scenes'], 'id', 'author scene') for r in (old, new)]
+    mirrors = [_unique(p['editorial_consumption']['rows'], 'scene', 'editorial scene') for p in plans]
+    if any(set(rows) != set(scenes[0]) for rows in (*scenes[1:], *authors, *mirrors)):
+        raise ValueError('Complete author/plan/editorial scene inventories must agree')
+    changes = []
+    for sid, previous in scenes[0].items():
+        current = scenes[1][sid]
+        for key in ('screen_title', 'comparison_background_policy'):
+            def effective(scene):
+                return (scene.get(key, scene.get('title')) if key == 'screen_title'
+                        else scene.get(key, 'visible'))
+            a, b = effective(previous), effective(current)
+            for i, scene in enumerate((previous, current)):
+                if effective(scene) != effective(authors[i][sid]):
+                    raise ValueError('Authored display decision and plan disagree: ' + sid)
+                if key in mirrors[i][sid] and mirrors[i][sid][key] != effective(scene):
+                    raise ValueError('Display decision and editorial mirror disagree: ' + sid)
+            if a == b:
+                continue
+            if (previous.get('kind') != 'compare' or current.get('kind') != 'compare'
+                    or previous.get('motion_treatment') != 'critical_comparison'):
+                raise ValueError('Display repair is limited to extracted candidate comparisons')
+            if key == 'screen_title':
+                if (not isinstance(a, str) or not a or b != ''
+                        or current.get(key) != '' or authors[1][sid].get(key) != ''):
+                    raise ValueError('Only a nonempty-to-empty screen title repair is allowed')
+                reason = 'hide_comparison_screen_title'
+            else:
+                if (a != 'visible' or b != 'isolate_selected_passage'
+                        or not current.get('reading_events')
+                        or current.get('candidate_reading_policy') != 'quiet_source_until_read'):
+                    raise ValueError('Only visible-to-isolate comparison background repair is allowed')
+                reason = 'isolate_nonselected_comparison_background'
+            if key not in mirrors[1][sid] or mirrors[1][sid][key] != b:
+                raise ValueError('Repaired display decision needs an explicit editorial mirror: ' + sid)
+            changes.append({'scene': sid, 'field': key, 'from': a, 'to': b, 'repair': reason})
+            current.pop(key, None)
+            if key in previous:
+                current[key] = previous[key]
+            mirrors[1][sid].pop(key, None)
+            if key in mirrors[0][sid]:
+                mirrors[1][sid][key] = mirrors[0][sid][key]
+    if not changes or plans[0] != plans[1] or old['alignment'] != new['alignment']:
+        raise ValueError('Plans differ beyond bound title hiding and background isolation')
+    # The common helper binds all complete takes, source files and the actual
+    # manifest before removing any declared repair. It grants no human review.
+    values = [_author_for_attention(r, [], []) for r in (old, new)]
+    for change in changes:
+        sid, key = change['scene'], change['field']
+        for i, value in enumerate(values):
+            scene = _unique(value['scenes'], 'id', 'author scene')[sid]
+            decisions = value['editorial']['manifest_semantics']['scenes'][sid]['consumed_decisions']
+            if i == 1 and (key not in decisions or decisions[key] != change['to']):
+                raise ValueError('Editorial manifest must consume the repaired display decision: ' + sid)
+            scene.pop(key, None); decisions.pop(key, None)
+    if values[0] != values[1]:
+        raise ValueError('Author differs beyond bound title hiding and background isolation')
+    return changes, plans[0]
+
+
+def _background_scope(revision):
+    """Derive the exact patched consumer's original passage targets and times."""
+    rows = []
+    for scene in revision['plan']['scenes']:
+        if scene.get('comparison_background_policy') != 'isolate_selected_passage':
+            continue
+        if (scene['kind'] != 'compare' or scene.get('motion_treatment') != 'critical_comparison'
+                or scene.get('candidate_reading_policy') != 'quiet_source_until_read'
+                or not scene.get('reading_events')):
+            raise ValueError('Background isolation requires a quiet extracted comparison reading')
+        excerpt = revision['plan']['excerpts'][scene['excerpt']]
+        blocks = revision['plan']['worlds'][excerpt['world']]['blocks']
+        by_id = _unique(blocks, 'id', 'source block')
+        refs = [r for r in scene['source_refs'] if r['world'] == excerpt['world'] and r['pointer'] == '/passage']
+        selected = {bid for bid in excerpt['block_ids'] if any(
+            r['start'] < by_id[bid]['end'] and r['end'] > by_id[bid]['start'] for r in refs)}
+        hidden = [b for b in blocks if b['visible'] and b['id'] not in selected]
+        last = scene['reading_events'][-1]
+        if (not selected or not hidden or any(not by_id[bid]['visible'] for bid in selected)
+                or any(b['start'] < last['end'] and b['end'] > last['start'] for b in hidden)):
+            raise ValueError('Background isolation would hide necessary reading or lacks bound targets')
+        quiet_at = last['end_time']; restore_at = max(scene['return_start'], scene['end'] - .35)
+        times = [scene['start'], scene['candidate_arrive'], quiet_at, scene['settled'],
+                 restore_at, scene['end'], scene['extract_start']]
+        if (any(type(t) not in (int, float) or not math.isfinite(t) for t in times)
+                or not 0 <= scene['start'] <= scene['candidate_arrive'] < quiet_at
+                    <= scene['settled'] <= restore_at < scene['end'] - 1 / 24
+                    < scene['end'] <= revision['plan']['duration']
+                or not quiet_at < scene['extract_start'] <= scene['settled']):
+            raise ValueError('Background opacity repair escapes its comparison lifetime')
+        readings = []
+        for event in scene['reading_events']:
+            a, b = event['arrival'], event['end_time']
+            if (any(type(t) not in (int, float) or not math.isfinite(t) for t in (a, b))
+                    or not scene['start'] <= a < b <= quiet_at):
+                raise ValueError('Necessary reading does not precede background isolation')
+            layers = [block['id'] for block in blocks if block['visible']
+                      and block['start'] < event['end'] and block['end'] > event['start']]
+            if not layers:
+                raise ValueError('Necessary reading lacks its actual source layers')
+            if (b > max(scene['candidate_arrive'], quiet_at - .3)
+                    and any(name in {block['id'] for block in hidden} for name in layers)):
+                raise ValueError('Background fade would hide an unfinished necessary reading')
+            readings.append({'time': (a + b) / 2, 'layers': layers})
+        for block in [b for b in blocks if b['visible']]:
+            layer = revision['layers'].get(block['id'], {})
+            if (layer.get('parent') is not None or layer.get('threeD') is not True
+                    or layer.get('text', '').replace('\r', '\n') != block['text']
+                    or layer.get('inPoint', float('inf')) > scene['start']
+                    or layer.get('outPoint', -1) < scene['end']):
+                raise ValueError('Background isolation requires its actual original passage layers')
+        rows.append({'scene': scene['id'], 'hidden': [b['id'] for b in hidden],
+                     'fade_start': max(scene['candidate_arrive'], quiet_at - .3),
+                     'quiet_at': quiet_at, 'settled': scene['settled'],
+                     'restore_at': restore_at, 'end': scene['end'], 'readings': readings})
+    return rows
+
+
+def _background_readbacks(revision, scope):
+    results = []
+    if not scope:
+        return results
+    def close(value, expected):
+        return (type(value) in (int, float) and math.isfinite(value)
+                and abs(value - expected) <= .01)
+    for cid in (revision['native']['comp_id'], revision['native']['master_comp_id']):
+        path = _inside(revision['folder'], 'COMPARISON_BACKGROUND_NATIVE_' + str(cid) + '.json')
+        if not path.is_file():
+            raise ValueError('Required proxy/master background native readback is missing')
+        receipt = _record(path, revision['bindings'])
+        if (set(receipt) != {'rows', 'plan_sha256', 'human_visual_review'}
+                or receipt['plan_sha256'] != revision['native']['plan_sha256']
+                or receipt['human_visual_review'] != 'PENDING'
+                or [r['scene'] for r in receipt['rows']] != [s['scene'] for s in scope]):
+            raise ValueError('Background native readback must cover this exact plan and scene scope')
+        for expected, actual in zip(scope, receipt['rows']):
+            if (set(actual) != {'scene', 'hidden', 'reading'}
+                    or [r['layer'] for r in actual['hidden']] != expected['hidden']):
+                raise ValueError('Background native readback target inventory differs')
+            for row in actual['hidden']:
+                values = {'before': 100, 'quiet': 0, 'settled': 0, 'restore_start': 0, 'restored': 100}
+                if set(row) != {'layer', *values} or any(not close(row[k], v) for k, v in values.items()):
+                    raise ValueError('Actual background opacity was not isolated and restored')
+            readings = [(r['time'], layer) for r in expected['readings'] for layer in r['layers']]
+            if len(readings) != len(actual['reading']):
+                raise ValueError('Background native readback dropped a necessary reading')
+            for (time, layer), observed in zip(readings, actual['reading']):
+                if (set(observed) != {'layer', 'time', 'opacity'} or observed['layer'] != layer
+                        or type(observed['time']) not in (int, float)
+                        or not math.isfinite(observed['time']) or abs(observed['time'] - time) > 1e-8
+                        or not close(observed['opacity'], 100)):
+                    raise ValueError('Background native readback hid or changed a necessary reading')
+        results.append({'comp_id': cid, 'path': str(path), 'sha256': sha256(path),
+                        'scope_sha256': sha(scope), 'observations_sha256': sha(receipt['rows'])})
+    return results
+
+
+def _display_build_observations(revision):
+    identity = deepcopy(revision['native'])
+    count = identity.pop('layers', len(revision['layers']))
+    if count != len(revision['layers']):
+        raise ValueError('Native build layer count differs from actual readback')
+    build_audit = identity.pop('audit', {})
+    if 'captions' in build_audit:
+        # This template records the real layer ID under `captions[].id`, not
+        # under `layer_id`. Deleting one earlier title renumbers those IDs.
+        # Resolve only this known record, and only against the exact authored
+        # cue and its actually observed native text, comment and lifetime.
+        cues = revision['plan']['cues']
+        _unique(cues, 'id', 'aligned caption cue')
+        if len(build_audit['captions']) != len(cues):
+            raise ValueError('Native caption build audit dropped an exact aligned cue')
+        by_id = {row['id']: row for row in revision['audit']['layers']}
+        names = set()
+        for row, cue in zip(build_audit['captions'], cues):
+            name = 'CAPTION_' + cue['id']
+            layer = by_id.get(row.get('id'), {})
+            comment = {'kind': 'audio_aligned_exact_caption', 'segment': cue['segment'],
+                       'text': cue['text'], 'start': row.get('start'), 'end': row.get('end')}
+            if (set(row) != {'id', 'text', 'start', 'end'} or type(row['id']) is not int
+                    or layer.get('name') != name or name in names
+                    or layer.get('threeD') is not False or layer.get('parent') is not None
+                    or layer.get('text') != '\r'.join(cue['display_lines'])
+                    or json.loads(layer.get('comment', '{}')) != comment
+                    or row['text'] != cue['text']
+                    # AE's JSON serialization rounds binary floats to about
+                    # 15 digits. This only binds a readback to its plan cue;
+                    # parent/child readback times remain compared exactly.
+                    or any(type(row[k]) not in (int, float) or not math.isfinite(row[k])
+                           or abs(row[k] - cue[k]) > 1e-9 for k in ('start', 'end'))
+                    or any(type(t) not in (int, float) or not math.isfinite(t)
+                           for t in (cue['start'], cue['end'], layer.get('inPoint'), layer.get('outPoint')))
+                    or not 0 <= cue['start'] < cue['end'] <= revision['plan']['duration']
+                    or abs(layer['inPoint'] - cue['start']) > .0001
+                    or abs(layer['outPoint'] - cue['end']) > .0001):
+                raise ValueError('Caption ID must bind its exact aligned native caption layer')
+            names.add(name); row['id'] = name
+        actual = {l['name'] for l in revision['audit']['layers']
+                  if l['name'].startswith('CAPTION_') and isinstance(l.get('text'), str)}
+        if actual != names:
+            raise ValueError('Native caption layer inventory differs from exact aligned cues')
+    for key in ('project_path', 'comp_id', 'master_comp_id', 'plan_sha256', 'template_sha256'):
+        identity.pop(key)
+    shadow = {**revision, 'audit': {'project': str(revision['project']),
+        'layers': revision['audit']['layers'], 'unrendered_master': revision['audit']['unrendered_master'],
+        'build_audit': build_audit, 'native_identity': identity}}
+    return _native_observations(shadow)
+
+
+def _display_context(old, new):
+    before, after = old['sources']['template'], new['sources']['template']
+    old_sha, new_sha = old['native']['template_sha256'], new['native']['template_sha256']
+    same_known = (before == after and old_sha in (
+        *SOURCE_ATTENTION_TEMPLATE_SHA256_ALLOWLIST, *BACKGROUND_TEMPLATE_PAIRS.values()))
+    exact_patch = (BACKGROUND_TEMPLATE_PAIRS.get(old_sha) == new_sha
+                   and before.count(BACKGROUND_OLD) == 1 and BACKGROUND_NEW not in before
+                   and after == before.replace(BACKGROUND_OLD, BACKGROUND_NEW))
+    if not same_known and not exact_patch:
+        raise ValueError('Only the exact approved background template byte patch permits display repair')
+    if old['sources']['reading_rig'] != new['sources']['reading_rig']:
+        raise ValueError('Changed reading rig cannot reuse native frames')
+    changes, common = _display_difference(old, new)
+    background_changes = [c for c in changes if c['field'] == 'comparison_background_policy']
+    if background_changes and new_sha not in BACKGROUND_TEMPLATE_PAIRS.values():
+        raise ValueError('Background repair requires its exact approved native consumer')
+    titles = [c for c in changes if c['field'] == 'screen_title']
+    removed = {'TASK_TITLE_' + c['scene'] for c in titles}
+    if set(old['layers']) - removed != set(new['layers']) or not removed <= old['layers'].keys():
+        raise ValueError('Only the explicitly hidden native title layers may be removed')
+    for change in titles:
+        scene = next(s for s in old['plan']['scenes'] if s['id'] == change['scene'])
+        layer = old['layers']['TASK_TITLE_' + scene['id']]
+        end = (min(scene['end'], max(scene['start'] + .25, scene['reading_events'][0]['depart']))
+               if scene.get('reading_events') else scene['end'])
+        if (layer.get('text') != change['from'] or layer.get('parent') is not None
+                or abs(layer.get('inPoint', -1) - scene['start']) > 1e-6
+                or abs(layer.get('outPoint', -1) - end) > 1e-6):
+            raise ValueError('Hidden title must be the actual bounded authored native title')
+    for name in set(old['layers']) - removed:
+        if old['layers'][name] != new['layers'][name]:
+            raise ValueError('Actual native geometry, text, font or lifetime changed: ' + name)
+    observations = _native_observations(old)
+    if observations != _native_observations(new):
+        raise ValueError('Native camera, reading or other observed properties changed')
+    # The build's own full layout/reading audit also remains exact after IDs
+    # are mapped to the actual layer names. Only the removed title count varies.
+    build_observations = [_display_build_observations(r) for r in (old, new)]
+    if build_observations[0] != build_observations[1]:
+        raise ValueError('Native build layout, camera or reading observations changed')
+    old_scope, new_scope = _background_scope(old), _background_scope(new)
+    readbacks = {'parent': _background_readbacks(old, old_scope),
+                 'child': _background_readbacks(new, new_scope)}
+    ids = {c['scene'] for c in changes}
+    affected = []
+    for scene in old['plan']['scenes']:
+        if scene['id'] not in ids:
+            continue
+        lo, hi = scene['start'], scene['end']
+        if (any(type(t) not in (int, float) or not math.isfinite(t) for t in (lo, hi))
+                or not 0 <= lo < hi <= old['plan']['duration']):
+            raise ValueError('Finite comparison scene bounds are required')
+        affected.append({'scene': scene['id'], 'start': max(0, math.floor(lo * 24) - 1),
+                         'end': min(old['plan']['frames'], math.ceil(hi * 24) + 1),
+                         'repairs': [c['repair'] for c in changes if c['scene'] == scene['id']]})
+    bindings = {**old['bindings'], **new['bindings']}
+    _bound_file(old['project'], sha256(old['project']), bindings)
+    return old, new, {'schema': SCHEMA, 'operation': DISPLAY_OPERATION,
+        'parent': str(old['folder']), 'folder': str(new['folder']), 'input_files': bindings,
+        'plan_semantic_sha256': sha(common), 'alignment_semantic_sha256': sha(old['alignment']),
+        'unaffected_native_layers_sha256': sha({k: v for k, v in old['layers'].items() if k not in removed}),
+        'native_observations_sha256': sha(observations), 'native_build_observations_sha256': sha(build_observations[0]),
+        'template_repairs': ['opt_in_comparison_background_isolation'] if exact_patch else [],
+        'display_repairs': changes, 'background_isolation_scope': new_scope,
+        'background_isolation_readbacks': readbacks, 'removed_native_layers': sorted(removed),
+        'excluded_native_layers': sorted(removed | {n for s in new_scope if s['scene'] in ids for n in s['hidden']}),
+        'affected_frame_ranges': affected, 'scene_boundary_guard_frames': 1,
+        'opacity_readback': 'BOUND_PROXY_AND_MASTER_SAMPLES; ALL_KEYS_NOT_OBSERVED; EXACT_TEMPLATE_AND_PLAN_BOUND_WRITES',
+        'live_native_validation': 'CALLER_CURRENT_NATIVE_AND_AUDIT_REQUIRED_NO_ADOBE_IN_THIS_MODULE',
+        'new_native_render': False, 'human_approved': False, 'public_render_ready': False}
+
+
 def _affected(plan):
     result = []
     seen = set()
@@ -472,6 +794,8 @@ def _context(parent, folder):
     old, new = _revision(parent), _revision(folder)
     if old['folder'] == new['folder']:
         raise ValueError('A new native revision is required')
+    if _display_requested(old, new):
+        return _display_context(old, new)
     if old['sources']['template'] == new['sources']['template']:
         if old['native']['template_sha256'] not in SOURCE_ATTENTION_TEMPLATE_SHA256_ALLOWLIST:
             raise ValueError('Unknown native source-attention template requires independent proof review')
@@ -618,16 +942,17 @@ def reuse_unchanged_parts(parent, folder):
         if not media.with_suffix('.json').is_file():
             raise ValueError('Parent native media lacks a completed receipt')
     parts = [_parent_part(old, path, report['input_files']) for path in parent_parts.glob('part-*.json')]
-    cursor = 0 if report['operation'] == ATTENTION_OPERATION else -1
+    complete_parent = report['operation'] in (ATTENTION_OPERATION, DISPLAY_OPERATION)
+    cursor = 0 if complete_parent else -1
     for row, item in sorted(parts, key=lambda pair: pair[0]['start']):
         if row['start'] < cursor:
             raise ValueError('Parent native part ranges overlap or run backwards')
-        if report['operation'] == ATTENTION_OPERATION and row['start'] != cursor:
+        if complete_parent and row['start'] != cursor:
             raise ValueError('Source-anchor repair requires the complete gap-free parent native master')
         cursor = row['end']
         intersections = _overlaps(row, report['affected_frame_ranges'])
         (excluded if intersections else eligible).append({**item, 'affected_scenes': intersections})
-    if report['operation'] == ATTENTION_OPERATION and cursor != old['plan']['frames']:
+    if complete_parent and cursor != old['plan']['frames']:
         raise ValueError('Source-anchor repair requires the complete parent native master')
     if not eligible:
         raise ValueError('No verified parent part lies outside the changed scenes')

@@ -25,7 +25,10 @@ class AuthoredRepairReuseTests(unittest.TestCase):
         template = Path(__file__).resolve().parents[1] / 'ae/templates/authored-episode.jsx'
         # Historical AE snapshots used Windows line endings. Keep this exact
         # fixture stable even when Git checks the maintained source out with LF.
-        self.template = template.read_bytes().replace(b'\r\n', b'\n').replace(b'\n', b'\r\n')
+        historical = template.read_bytes()
+        if historical.count(reuse.BACKGROUND_NEW) == 1:
+            historical = historical.replace(reuse.BACKGROUND_NEW, reuse.BACKGROUND_OLD)
+        self.template = historical.replace(b'\r\n', b'\n').replace(b'\n', b'\r\n')
         self.assertEqual(hashlib.sha256(self.template).hexdigest(), reuse.SOURCE_ATTENTION_TEMPLATE_SHA256)
         self.make_revision(self.parent, 1, 'These')
         self.make_revision(self.child, 7, 'Name')

@@ -33,6 +33,9 @@ def validate_editorial(author,bundles):
             raise ValueError('A viewing task and explicit disclosure choice are required')
         if d['consumed_decisions']!={k:deepcopy(s[k]) for k in d['consumed_decisions']}:
             raise ValueError('An editorial decision was ignored: '+sid)
+        if ('comparison_background_policy' in s
+                and d['consumed_decisions'].get('comparison_background_policy')!=s['comparison_background_policy']):
+            raise ValueError('Comparison background policy needs its actual editorial decision: '+sid)
         if d['source_refs']!=s['source_refs']:raise ValueError('Viewer objects lost their source: '+sid)
     expected=list(dict.fromkeys(s['world'] for s in author['scenes']))
     if m['world_order']!=expected:raise ValueError('Selection/order was not consumed')
@@ -89,6 +92,11 @@ def compile_editorial(author,clock,bundles):
             'confirmation_range':[s['return_start'],s['end']],
             'choreography':s['choreography'],'attention':s.get('attention_events',[]),
             'candidate_reading_policy':s.get('candidate_reading_policy','visible')})
+        # Opt in through the actual author decision. Historical manifests keep
+        # their exact output so a new consumer cannot invalidate saved films.
+        for key in ('screen_title','comparison_background_policy'):
+            if key in d['consumed_decisions']:
+                rows[-1][key]=deepcopy(s[key])
     transitions=[]
     for prev,nxt in zip(m['world_order'],m['world_order'][1:]):
         t=next(t for t in m['transitions'] if t['from']==prev and t['to']==nxt)
