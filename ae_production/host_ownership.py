@@ -147,7 +147,7 @@ class HostOwnership:
         lease.record={**previous,'state':'OWNED','controller_pid':os.getpid(),'target':dict(expected),
             'reconciliation':{'resolution':'FAILED_DISPATCH_RECOVERED','recovery_id':evidence['recoveryId'],
                 'failure_evidence':str(evidence_path),'failure_evidence_sha':evidence_sha,
-                'partial_state_evidence':list(partial_state_evidence) if partial_state_evidence else None,
+                'partial_state_evidence':[str(partial_state_evidence[0]),partial_state_evidence[1]] if partial_state_evidence else None,
                 'previous_record':previous}}
         write(lease.path,lease.record)
         return lease,result

@@ -8,6 +8,31 @@ FEASIBILITY = ('PF1', 'PF2', 'PF3', 'PF4', 'PF5', 'PF6')
 RANKING_POLICY = {'version': '0.1.0', 'status': 'provisional', 'p0_content': 8, 'p0_feasibility': 7, 'p1_content': 6}
 
 
+def teaching_value_points(unit):
+    r=unit['ratings']
+    return 2*r['difficulty']+2*r['method_value']+r['visual_payoff']
+
+
+def rank_teaching_focus(author, bundles):
+    """Current main-film selection supplement; never changes truth/release gates.
+
+    Unlike the legacy short-format scores, these units identify where the
+    frozen method changes a judgement. The current authored entry consumes it.
+    """
+    from creative_os.teaching_focus import validate_focus, VERSION
+    checked=validate_focus(author,bundles);rows=[]
+    for world,q in checked.items():
+        points=[teaching_value_points(u) for u in q['units']]
+        rows.append({'world':world,'critical_units':[u['id'] for u in q['units']],
+                     'critical_option_pairs':q['critical_option_pairs'],
+                     'strongest_method_value':max(points,default=0),
+                     'selection_role':'METHOD_DEMONSTRATION' if points else 'QUICK_TRANSFER_ONLY',
+                     'student_difficulty':'UNMEASURED','basis':'EDITORIAL_HYPOTHESIS'})
+    rows.sort(key=lambda r:(-r['strongest_method_value'],r['world']))
+    return {'version':VERSION,'rows':rows,'automatic_question_reorder':False,
+            'gate_note':'Supplement to frozen admission and current status; no public or semantic approval'}
+
+
 def score(ratings, dimensions=DIMENSIONS):
     if set(ratings) != set(dimensions):
         raise ValueError('Every dimension must be explicit, including unknown')

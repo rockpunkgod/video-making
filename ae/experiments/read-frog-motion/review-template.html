@@ -1,0 +1,94 @@
+<!doctype html><html lang="zh-CN"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Motion Reference Breakdown 与原生 A/B 审片</title>
+<style>
+:root{--ink:#17252e;--muted:#5f6d72;--paper:#f5f3ec;--line:#d5dcd9;--blue:#245b7b;--orange:#a95525}*{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font:16px/1.8 "Segoe UI","Microsoft YaHei",sans-serif}main{max-width:1240px;margin:auto;padding:50px 32px 100px}header{border-bottom:1px solid var(--line);padding-bottom:30px}h1{font-size:42px;line-height:1.25;margin:12px 0 18px;font-weight:650;letter-spacing:-1px}h2{font-size:28px;margin:64px 0 16px}h3{font-size:20px;margin:30px 0 12px}p{max-width:1020px}a{color:var(--blue);text-underline-offset:4px}.eyebrow{font-size:12px;letter-spacing:2px;color:var(--muted);text-transform:uppercase}.summary{font-size:19px}.tag{display:inline-block;padding:4px 10px;background:#e3e9e6;border-radius:4px;margin:5px 8px 5px 0;font-size:13px}.note{color:var(--muted);font-size:14px}.pair{display:grid;grid-template-columns:1fr 1fr;gap:18px}video{display:block;width:100%;background:#e8e7df;border-radius:3px}.bar{display:flex;align-items:center;gap:12px;flex-wrap:wrap;padding:18px 0}button{font:inherit;background:white;border:1px solid #b6c2c3;padding:6px 14px;border-radius:4px;color:var(--ink);cursor:pointer}button:hover{background:#e3eaf0}input[type=range]{flex:1;min-width:200px;accent-color:var(--blue)}.metric{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin:30px 0}.metric div{border-top:2px solid var(--blue);padding:16px 0}.metric strong{display:block;font-size:28px}.metric span{color:var(--muted);font-size:14px}table{border-collapse:collapse;width:100%;font-size:14px;line-height:1.65;margin:20px 0}th,td{padding:14px 12px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}th{color:var(--blue);font-weight:650;background:#e9ede9}td:first-child{min-width:110px}figure{margin:26px 0}figure img{display:block;max-width:100%;height:auto;border:1px solid var(--line)}figcaption{color:var(--muted);font-size:13px;margin-top:8px}.copy{border-left:3px solid var(--orange);padding:12px 22px;background:#fffdf7;font-size:20px}.toc{display:flex;flex-wrap:wrap;gap:16px;font-size:14px;margin:26px 0}.pending{color:#835a2c}.ok{color:#285e51}code{font-size:13px;word-break:break-all}.box{padding:20px 24px;background:#e9ede8;margin:22px 0}.downloads{display:flex;flex-wrap:wrap;gap:20px}svg{width:100%;height:auto;background:white}details{margin:20px 0}summary{cursor:pointer;font-weight:600}footer{margin-top:64px;border-top:1px solid var(--line);padding-top:24px;color:var(--muted);font-size:13px}@media(max-width:750px){main{padding:25px 18px}.pair{grid-template-columns:1fr}h1{font-size:32px}.metric{grid-template-columns:1fr 1fr}table{display:block;overflow-x:auto}}
+</style><main>
+<header><div class="eyebrow">video-making · native motion study · 2026-10-17</div><h1>Motion Reference Breakdown<br>与原生 A/B 审片</h1><p class="summary">同一段价格比较，观察注意力如何接续、原词如何抽离，以及判断前是否稳稳落位。</p><span class="tag">12 秒 × 2</span><span class="tag">原生 4K · 24fps</span><span class="tag">词块焦点</span><span class="tag">人工审美与试听待审</span>
+<nav class="toc"><a href="#films">看 A/B</a><a href="#reference">参考片分析</a><a href="#audit">现状审计</a><a href="#design">曲线与参数</a><a href="#evaluation">逐项评价</a><a href="#integration">最小接入方案</a><a href="#files">交付文件</a></nav></header>
+<section id="films"><h2>先看相同的 12 秒</h2><p>A 从当前主片的原生 4K 合成截取；B 保留相同原词、文案、声音、判断时机、字体与输出规格，调整镜头、携带轨迹、词块焦点及背景权重。片段对应主片 <strong>35.083–47.083 秒</strong>。这里的结果是 <strong>A 暂留</strong>，并非整题答案确认。</p>
+<div class="pair"><div><h3>A · 当前原版</h3><video id="a" controls preload="metadata" poster="review/frames-A/0180.jpg" src="media/A_MOTION_AB_4K24.mp4"></video></div><div><h3>B · 运动修订</h3><video id="b" controls muted preload="metadata" poster="review/frames-B/0180.jpg" src="media/B_MOTION_AB_4K24.mp4"></video></div></div>
+<div class="bar"><button id="play">同时播放</button><button id="pause">暂停</button><button id="prev">−1 帧</button><input id="seek" type="range" min="0" max="287" value="0" step="1"><button id="next">+1 帧</button><output id="time">0.000 s · f0</output></div>
+<p class="note">同步播放只保留 A 的声音；两版实际声音相同。浏览器双路 4K 播放若不流畅，请单独打开视频或下方顺序对照版。逐帧滑杆用于画面核对，不替代原速观看。</p>
+<p class="downloads"><a href="media/AB_COMPARE_4K24.mp4">24 秒顺序对照：A → B</a><a href="media/READ_FROG_MOTION_AB.aep">可编辑 AE 工程</a><a href="review/A_ENCODED_CONTACT.jpg">A 编码后接触表</a><a href="review/B_ENCODED_CONTACT.jpg">B 编码后接触表</a></p>
+<h3>完整口播 · A/B 相同</h3><p class="copy">{{COPY}}</p><p class="note">使用同一个完整 take，位于样片 7.458–11.178 秒。方法名“换词不换义”沿用画面中的简短标签。本轮没有新增或改写口播。</p>
+<div class="metric"><div><strong>288 + 288</strong><span>实际解码帧数</span></div><div><strong>24 fps</strong><span>两版正式规格相同</span></div><div><strong>86 → 0 帧</strong><span>选项定位点越出阅读区域</span></div><div><strong>100–104%</strong><span>同一词块同步放大</span></div></div>
+<p class="note">“86 → 0”是原生相机投影后的选项锚点测量，不是观众理解率，也不是所有字形可读性的自动证明。可读性仍结合实际视频和接触表检查。</p></section>
+<section id="reference"><h2>Motion Reference Breakdown</h2>
+<p>取得的是 README 播放器指向的 <strong>read-frog-feature-tour.mp4</strong>：视频轨 80.600 秒、1920×1080、30fps、2418 帧；音轨为 48kHz 双声道 AAC，容器时长 80.625 秒。通过仓库引入宣传片的提交和 GitHub 页面中的实际视频地址交叉核对，未用仓库动画代码推测成片。</p>
+<p><a href="https://github.com/mengxi-ream/read-frog">Read Frog 仓库</a> · <a href="https://github.com/mengxi-ream/read-frog/commit/10eb6b0bed2e">引入 feature tour 的提交</a> · <a href="https://github.com/mengxi-ream/read-frog/pull/2275">原作者对 README 视频版本的说明</a></p>
+<video controls preload="metadata" src="../read-frog-motion-ab-r01/reference/read-frog-feature-tour.mp4" poster="../read-frog-motion-ab-r01/reference/frames-2s/0002.jpg"></video>
+<p class="note">参考片仅保存于本地分析目录，不随源码分发。原始制作工程未取得；焦距、真实三维层数、快门角度、缓动控制点、软件及分轨均不能从压缩 MP4 精确反推。</p>
+<figure><img src="../read-frog-motion-ab-r01/reference/KEYFRAME_CONTACT.jpg" alt="Read Frog 原始视频精确时码接触表"><figcaption>精确帧号取样；表内时码来自视频帧率。8 个主要运动区间另以原生 30fps 导出连续帧；41.0–41.5 秒重叠区不重复计数，共覆盖约 38.5 秒。</figcaption></figure>
+<table><thead><tr><th>时段</th><th>实际可见的运动关系</th><th>可迁移原则与界限</th></tr></thead><tbody>
+<tr><td>约 2.8–4.4 s</td><td>标题两侧文字退场，中央风景图继续存在，随后成为文章里的图片。对象先承担视线，再承担场景交接。</td><td>让同一目标把新场景带进来。是否复用了同一个工程图层未知；这里确认的是可见身份连续。</td></tr>
+<tr><td>约 4.5–7.5 s</td><td>文章放大、移动，焦点转向翻译入口，再回到正文；移动段文字模糊，任务落稳后变清楚。</td><td>快速过渡与清晰阅读分工。其大幅位移和短时空白不直接套用到考试原文。</td></tr>
+<tr><td>约 10.9–13.5 s</td><td>选中原句，工具条出现，分析面板展开；原句仍是新结构的定位依据，动作有先后而不逐项停顿。</td><td>下一对象先准备，实际解释对象在触发之后展开。界面选区样式不移植到本项目。</td></tr>
+<tr><td>约 17.5–26.8 s</td><td>评论输入、转换、回复与嵌入视频连续发生。嵌入的同一风景视频扩展为后续主体。</td><td>利用共享内容做场景接力，避免重新介绍完全无关的画面。</td></tr>
+<tr><td>约 35.27–36.3 s</td><td>字幕里的目标词被取出，词典面板随之建立。词、面板、解释的出现时间错开；字幕和视频仍在后方。</td><td>来源先可辨认，原词再进入工作空间。此处本项目采用透明提取，保留已有设计。</td></tr>
+<tr><td>38.433 → 38.467 s</td><td>相邻两帧从完整词典直接切到词条特写。接下来字形局部强调，其他文字虚化。</td><td><strong>这是剪切，不是可拟合的连续推镜。</strong>视线目标延续使变化容易接住。光流在此出现的巨大“速度”应作切点异常处理。</td></tr>
+<tr><td>41.1–41.47 s</td><td>词典面板边收缩边向上移动，目标词留存并成为小条目。可测白色外框从约 850×382px 收缩，接着条目沿弧形方向继续移动。</td><td>形变和位移有重叠，主要身份先保住。尺寸是压缩图像的阈值测量，边缘有约数像素误差，不是工程 Scale。</td></tr>
+<tr><td>约 42.4–46.0 s</td><td>视频缩成整体视图的一部分，文章与条目同时进入视野；不同对象在不同深度与速度上完成整理。</td><td>前一动作收束期间准备后一构图。具有层次与视差的视觉表现；无法据此断言底层一定是真实 3D 相机。</td></tr>
+<tr><td>49.43–50.4 s</td><td>表格里的目标词提前保留清晰度，背景逐渐模糊，复习卡从原词位置生长并移动；按钮晚于主体到位。</td><td>目标、承载容器、操作入口错峰到位。主视线始终有可追踪对象。</td></tr>
+<tr><td>约 51.9–52.5 s</td><td>卡片通过透视翻转交接到另一面，落稳后再展开后续按钮。</td><td>遮挡与透视参与信息交接；旋转角和曲线只可视觉估计。本片无需为价格比较添加翻卡动作。</td></tr>
+<tr><td>约 54–67.8 s</td><td>目标词延续到记忆曲线、全屏词条和复习完成界面；背景与目标的运动权重分明。</td><td>持续保留观众刚认出的对象。参考片的记忆教学内容不作为本项目 ANSWER 的依据。</td></tr>
+<tr><td>约 69.6–76.0 s</td><td>模型卡片错峰展开成弧形，个别卡片前移，最后收束为品牌结束页。</td><td>群组有整体方向，同时有局部延迟。只借鉴错峰与收束，不移植卡片、配色或装饰。</td></tr>
+</tbody></table>
+<div class="pair"><figure><img src="../read-frog-motion-ab-r01/reference/EVERY_FRAME_38.2-38.8.jpg"><figcaption>38.2–38.8 秒：连续每帧，明确区分匹配剪切。</figcaption></figure><figure><img src="../read-frog-motion-ab-r01/reference/EVERY_FRAME_41.1-41.9.jpg"><figcaption>41.1–41.9 秒：收缩、漂移与下一次移动之间的接力。</figcaption></figure></div>
+<h3>速度、空间与声音：测量边界</h3><p>原片全部 2418 帧已解码。以降采样图像的特征跟踪记录逐帧位移，换算为 1080p 屏幕像素，仅用于寻找快段、停段和切点；大缩放、遮挡及换景会使跟踪失配。原始数值保留，未把失配峰值当成真实相机速度。8 个区间的密集导出为：2.5–8、10–13、24–27、34.5–41.5、41–46、48.5–54、62–68、69–73 秒。</p>
+<p>景深、背景虚化、运动模糊和局部柔化在画面中可见，但压缩与缩放也会降低边缘清晰度。它们各自占多少、是否使用真实镜头景深、具体快门角，均不具备精确测量条件。</p>
+<p>声音已提取并按 10ms 窗口测量 RMS／峰值，转场附近的能量变化与画面时码对齐保存。若干运动节点附近存在能量峰值，但不足以判定是拟音、旁白还是音乐。<strong>本轮未形成独立的参考片试听结论</strong>，不虚构乐器、音效类型或逐拍同步规则；最终音色和拟音评价仍需实际试听。</p>
+<p class="note">测量：<a href="../read-frog-motion-ab-r01/reference/MEASUREMENTS.json">范围与光流说明</a> · <a href="../read-frog-motion-ab-r01/reference/CARD_TRACK_41S.json">面板外框逐帧记录</a> · <a href="../read-frog-motion-ab-r01/reference/AUDIO_ENVELOPE.json">声音能量包络</a> · <a href="../read-frog-motion-ab-r01/reference/SOURCE.json">原视频来源与指纹</a></p></section>
+<section id="audit"><h2>当前项目的动效审计</h2><p>已读取 README、当前制作入口、Motion Identity 三份文件、Method Choreography、AE 入口、当前原生执行器和真实验收记录。历史规范中的“方法名在动作后出现”以及持续钢琴底床，与最新免费版表达和当前实际音乐消费存在差异；本次继续以最新用户要求和当前作者时钟为准，未将旧默认值重新带入样片。</p>
+<table><thead><tr><th>能力</th><th>已实现／实际接入</th><th>已渲染／人工认可</th></tr></thead><tbody>
+<tr><td>Swiss Cognitive POV、Reality Layer 与 Cognitive Space</td><td>当前作者输入 → 原生 3D 题面、真实相机、原词透明提取。已在主片消费。</td><td>历史混合空间预演与 D 原位入场有特定范围的正向反馈。不能转授给本轮 B 或整片细节。</td></tr>
+<tr><td>3D 搜索、镜头焦点</td><td>当前模板已读取真实行、搜索区间与焦点；R04 已原生改为一次俯仰后向下移动。</td><td>R02/R03 有实际代理媒体；R03 的抖动被用户指出。R04 有原生预览，完整主片尚未渲染。当前 A/B 片段是比较镜头，不代签全段跳读。</td></tr>
+<tr><td>连续原词提取与完整选项</td><td>当前 lift、candidate 和原生父子层保留源位置及整项字母。</td><td>已用于已渲染主片与本轮 A。旧 D 入场受到认可，其他新镜头仍需逐次审看。</td></tr>
+<tr><td>原有缓动</td><td>多数位置、尺度、镜头轨道共用 0 速度、55% 影响度的 Ease；空间切线大多为零。</td><td>原生轨道回读确认。容易造成每个节点都刹停，再启动；设置了 Ease 并不等于编排完成。</td></tr>
+<tr><td>Motion Identity / Method Choreography</td><td>已有身份、签名、状态与来源契约。当前主片的详细镜头仍由作者输入承担；不是所有历史编译器自动输出原生参数。</td><td>文档或 Schema 的存在不计为镜头实现，六种 Signature 也不等于全部真实影片已获认可。</td></tr>
+<tr><td>本轮 Motion Rig</td><td>只在独立 A/B 工程消费；连续曲线、原生空间轨迹、词块焦点、画面内携带已实际执行。</td><td>本轮 4K24 A/B 有独立媒体及程序核验。人工审美与试听待审，尚未接入整片默认生产。</td></tr>
+</tbody></table>
+<h3>这 12 秒最具体的问题</h3><p>原版的相机与选项虽然都在移动，但它们分别服从相同形状的起停曲线，投影后的选项会越出阅读区。选项停住后，相机又启动去看原文，观众需要重新找对象。B 将选项作为持续携带的前景对象，镜头在中途交接时保留速度；原句辨认完成后，周围文字降权，再进行物理提取。</p>
+<p>原版相机最高逐帧差分速度约 <strong>2056</strong> 场景单位／秒；B 约 <strong>1717</strong>，降幅约 16.5%。这个数只描述场景轨迹，不能直接换算成视觉舒适度。原生实际值的速度图如下：</p>{{SPEED_SVG}}
+</section>
+<section id="design"><h2>本轮运动原则与参数</h2><p>保留方向性，让需要阅读的对象清楚停住。共享对象负责接力；先把视觉重心交出去，再让旧动作完全结束。短促、果断的提取与安静的判断使用不同速度形状。</p>
+<table><thead><tr><th>语义</th><th>B 中的实际实现／建议</th><th>验证范围</th></tr></thead><tbody>
+<tr><td>搜索</td><td>延续“一次小俯仰、沿纸面向下”的要求。后续整段应保留持续向下速度；只有目标识别处减速，避免逐行左右摆动和每行归零。</td><td>本轮没有覆盖完整定位镜头；保留已有 R04 方向，不宣称新的整段搜索已认可。</td></tr>
+<tr><td>接近与镜头交接</td><td>相机使用分段五次 Hermite 曲线，节点的位置、速度、加速度相接；中间交接点保留非零速度，真正阅读点归零。相机相对原词的俯仰与侧移独立编排。</td><td>原生表达式求值与 289 个时间点回读；不是统一 Ease 的替换标签。</td></tr>
+<tr><td>持续携带</td><td>同一个完整 A 选项由真实 3D 层继续承载。屏幕路径控制器采用原生 Temporal Ease：出发 22%、到达 72%，配非零 Spatial Bezier 切线，投影回当前相机空间。</td><td>实际轨道与参数回读；A 定位点越界 86 帧，B 为 0。字体、选项字母及结果不变。</td></tr>
+<tr><td>词块识别</td><td>“The Fitbit Air” → “is considerably cheaper” → “than those options”。块内使用同一时间函数，块与块错峰。峰值 104%，起 0.24 秒、落 0.32 秒，端点速度与加速度归零。</td><td>3 个原位阅读词块，另有比较时的 2 个词块。原字、排版、基线保持，不逐词跳动，不整段脉冲。</td></tr>
+<tr><td>物理提取</td><td>原词在原位停留至既有识别结束，5.250 秒开始抽离，7.458 秒到位。深度从 z=100 到 z=−340；约 1 秒达到深度路程的 78%，剩余阶段减速。小幅转向提前约 6 帧收束。</td><td>来源交接及选项判断时机不提前。原生 Z、方向、来源层身份与完整文本可编辑、可回读。</td></tr>
+<tr><td>动作重叠</td><td>镜头在提取前 0.25 秒开始准备，原词仍留在原位；目标确认后用 0.5 秒将无关段落降至 6% 权重。</td><td>动机是给即将提取的证据和持续携带的选项留阅读区域；原文仍在同一三维位置。</td></tr>
+<tr><td>比较与收束</td><td>7.458 秒后镜头、原词组与选项位置静止；词块提示随原有口播发生。A 暂留仍在 11.292 秒，随后保留静止余量。</td><td>位置／观察方向最大漂移约 10⁻¹² 场景单位；这不替代观众对停留是否充足的判断。</td></tr>
+<tr><td>运动模糊与景深</td><td>原版快门 90°；B 测试 144°／相位 −72°。阅读时光圈参数 10，比较落位后 36，真实焦点层继续驱动相机。只在现有 24fps 下调整。</td><td>{{BLUR_STATUS}} 快门与光圈是本片测试参数，不作为所有镜头的全局默认。</td></tr>
+<tr><td>排除</td><td>后续建议整项先脱离比较平面，再降低视觉权重，明确去向；仍由冻结判断触发。起步可试 12–18 帧的主撤离，再用 4–6 帧收束残余动作。</td><td>这是未验证的起步建议。本段只暂留 A，没有排除事件，不能据此宣称排除动效通过。</td></tr>
+</tbody></table>
+<details><summary>词块时间函数与实际时间窗</summary><p>令 S(u)=6u⁵−15u⁴+10u³，u 限制在 0–1。每个词块的缩放为 100+4×S((t−(c−0.24))/0.24)×S(((c+0.32)−t)/0.32)。中心时刻 c 错开；同一词块全部使用同一个 c。超出窗口回到 100%，没有弹性越界。</p>{{CHUNKS_TABLE}}<p class="note">这是视觉作者给出的精确字符区间，不解析教学角色，不自动生成新证据。跨排版行的词块仍只改变已有原字的尺度。</p></details>
+</section>
+<section id="evaluation"><h2>逐项对照与待判断的问题</h2><p><strong>程序检查和实际图像检查分开记录。</strong>本轮已检查原生轨道、实际 MP4 全部解码帧、连续时戳、关键帧接触表和运动段逐帧图。人工原速审美观看与完整试听尚未收到用户结论，不以程序 PASS 宣布“已经专业”或“已消除 PPT 感”。</p>
+<table><thead><tr><th>维度</th><th>已核对的事实／图像观察</th><th>仍待人工原速观看</th></tr></thead><tbody>
+<tr><td>1. 连续性</td><td>镜头交接保持非零速度；曲线连接连续，实际帧时戳每 1/24 秒递增。</td><td>连续转向是否自然，是否仍有感知上的刹停。</td></tr>
+<tr><td>2. 注意力引导</td><td>B 携带选项保持在阅读区域；词块按顺序放大，原文保持固定排版。</td><td>第一眼是否跟得上，4% 是否足够且不抢眼。</td></tr>
+<tr><td>3. 运动因果</td><td>原位识别先于抽离，原句和 A 对齐后才发生原有暂留判断。</td><td>是否无需补解释就能读懂这一接力。</td></tr>
+<tr><td>4. 原生空间</td><td>真实相机、Advanced 3D、原题／工作区深度、透明来源提取均保留。</td><td>空间感是否足够克制且有重量。</td></tr>
+<tr><td>5. 英文清晰度</td><td>完整原词未改；重要选项随镜头保持可见；阅读窗和静止落位保留。编码后画面另见接触表。</td><td>在正常屏幕尺寸与原速下，核心英文是否能认清。</td></tr>
+<tr><td>6. 稳定落位</td><td>比较期间位置与观察方向保持不动；结果时机相同。</td><td>静止时间是否够用，是否显得拖延。</td></tr>
+<tr><td>7. PPT 感</td><td>原对象从来源进入认知空间，未添加独立页面或装饰转场。</td><td>是否实际感到是一段连续视觉表演。</td></tr>
+<tr><td>8. Swiss 克制感</td><td>原颜色、字形、版式秩序保留；未加粒子、发光、弹跳。</td><td>背景降权、运动模糊和词块变化是否协调。</td></tr>
+<tr><td>9. 教学真实性</td><td>当前合法输入复核；原词、Action／terminal 引用、A 暂留时机与完整配音一致，无新增终答。</td><td>影片是否把“暂留”正确传达给观众；学生理解未测试。</td></tr>
+<tr><td>10. 整体精致度</td><td>可用的原生工程和两版实际 4K24 媒体已产出。</td><td>B 是否明显优于 A，是否值得推广到主片。</td></tr>
+</tbody></table>
+<figure><img src="review/B_ENCODED_CONTACT.jpg" alt="B 实际编码视频关键帧接触表"><figcaption>B 实际编码画面。以下连续帧可检查抽离前后的身份交接与重叠。</figcaption></figure><figure><img src="review/B_EVERY_FRAME_extraction.jpg" alt="B 5–6 秒每一帧"><figcaption>5.000–5.958 秒，每帧取自最终 MP4；接触表尺寸不适合代替 4K 正片的阅读判断。</figcaption></figure>
+<p class="note">音频 A/B 解码样本完全相同；完整 take 与最终片段的相关系数为 {{AUDIO_CORRELATION}}。这证明音频内容和位置的一致性，不是吐字、自然度或听感认可。</p>
+<p>实际图像检查保留两个具体问题：约 0.8 秒，退场题干存在明显的多重柔化边缘，前景 A 选项仍清楚；需要原速判断背景模糊是否过重。词块的 4% 放大较克制，需要检查首次观看能否察觉焦点接续。<a href="VISUAL_REVIEW.json">图像观察记录</a>与<a href="MOTION_BLUR_PIXEL_CHECK.json">模糊开关对照</a>分别保存，均未登记人工认可。</p>
+</section>
+<section id="integration"><h2>效果认可后：最小接入方案</h2><p>本轮停在可观看质量验证。原生产指针、AE 主片、PR 时间线和历史合格媒体未被实验覆盖；新 Motion Rig 未成为主片默认设置。</p>
+<ol><li>保留现有 adaptive-episode 入口及 AV_PLAN。认可后，只把实验中已验证的曲线助手接到当前 readPath、lift、candidate 消费点。</li><li>词块使用作者显式给出的字符区间与时间窗，复用原文和来源绑定；不新增自动断句求解器，不把它变成逐块讲解课程。</li><li>让相机和携带对象共享运动意图，保留各自原生身份；只替换相关轨道。阅读停留、判断事件、完整音频仍由现有时钟决定。</li><li>在同一版主片另存新修订，先验证一个定位段、一个提取比较段及一个已授权排除段；检查证据先后、字形清晰、角度、镜头速度与实际 4K24 帧。</li><li>只重新渲染依赖改变的片段，沿原 AE → PR → package 链路更新。整片观看、独立文案审阅和听审分别记录。</li></ol>
+<p class="note">采用哪一种运动、参数是否成为复用默认，要依据本轮观看反馈再决定。没有创建新的 Video OS、公共组件库或第二套默认生产链。</p></section>
+<section id="files"><h2>交付与可追溯记录</h2><div class="downloads"><a href="media/A_MOTION_AB_4K24.mp4">A 原版 4K24</a><a href="media/B_MOTION_AB_4K24.mp4">B 修订 4K24</a><a href="media/AB_COMPARE_4K24.mp4">A/B 顺序对照</a><a href="media/READ_FROG_MOTION_AB.aep">AE 工程</a><a href="NATIVE_QA.json">原生核验</a><a href="MEDIA_QA.json">实际媒体核验</a><a href="RESTORED.json">宿主恢复</a></div>
+<p>AE 工程内 A_CURRENT_12S_4K24 与 B_MOTION_12S_4K24 是可直接播放的 12 秒合成。其源合成保留原生相机、文字、父子层、曲线与来源注释。声音依赖保存在原本地完整 take 路径；工程和报告面向本地工作区，未作为跨机器打包发布。</p><p>本地修订：<code>{{REVISION}}</code><br>来源参考片 SHA-256：<code>{{REFERENCE_SHA}}</code><br>A 媒体 SHA-256：<code>{{A_SHA}}</code><br>B 媒体 SHA-256：<code>{{B_SHA}}</code></p></section>
+<footer>范围：内部 Motion Design 技术试片。程序核验、图像检查、用户审美、试听、学生效果及公开发布资格分别记录。当前学生测试人数 0；没有发布或上传素材。</footer>
+</main><script>
+const a=document.getElementById('a'),b=document.getElementById('b'),seek=document.getElementById('seek'),out=document.getElementById('time');
+function stop(){a.pause();b.pause();}function frame(n){stop();n=Math.max(0,Math.min(287,n));a.currentTime=n/24;b.currentTime=n/24;seek.value=n;out.textContent=(n/24).toFixed(3)+' s · f'+n;}
+document.getElementById('play').onclick=()=>{let t=Math.min(a.currentTime,11.95);a.currentTime=t;b.currentTime=t;b.muted=true;Promise.all([a.play(),b.play()]).catch(()=>{});};document.getElementById('pause').onclick=stop;document.getElementById('prev').onclick=()=>frame(Number(seek.value)-1);document.getElementById('next').onclick=()=>frame(Number(seek.value)+1);seek.oninput=()=>frame(Number(seek.value));a.ontimeupdate=()=>{if(!a.paused){let f=Math.min(287,Math.floor(a.currentTime*24));seek.value=f;out.textContent=a.currentTime.toFixed(3)+' s · f'+f;}};
+</script></html>

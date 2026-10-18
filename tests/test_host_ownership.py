@@ -77,7 +77,7 @@ class HostOwnershipTests(unittest.TestCase):
         partial=self.directory/'partial.json'
         write(partial,{'identity':dict(self.state),'state':'INSPECTED_PARTIAL_NOT_COMPLETED',
                       'recovery_id':'abcdef','compositions':[{'id':2}], 'plan_sha256':'bound-plan'})
-        evidence=(str(partial),hashlib.sha256(partial.read_bytes()).hexdigest())
+        evidence=(partial,hashlib.sha256(partial.read_bytes()).hexdigest())
         recovered,_=HostOwnership.recover_failed_dispatch('after_effects','synthetic-worker','synthetic-r1',
             self.lease.record['token'],lambda:self.state,lambda identifier:self.state.update(original),path,digest,
             target_after=lambda value:original,directory=self.directory,partial_state_evidence=evidence)

@@ -1,10 +1,12 @@
 {
   "index_version": "1.0",
   "kind": "documentation_capability_index",
-  "as_of": "2026-10-17T03:47:40+08:00",
-  "repository_base": "05afc5e2e46fd4317c5fd46baa3bb290de4e6464",
+  "as_of": "2026-10-18",
+  "repository_base": "aa7157bf2056bff51bb06577b8bc42ce465f1b64",
   "recommended_workflow": "docs/workflows/CURRENT_PRODUCTION_WORKFLOW.md",
-  "scope": "Historical audit, B06 and R01 evidence keeps its own scope. Current mainfilm-integration-r02 is the sole default authored production: an actual continuous 448.333333-second 1080p24 editorial AV proxy, complete AE/PR projects, 37 intact takes, captions and restrained opening music. Copy, human viewing/listening and formal 4K output remain pending. Private material is not distributed. This index is not a release credential.",
+  "scope": "Current critical-focus-r02: 2 complete article language maps / 145 sense groups, consumed by all 13 native reading windows / 113 focus instances in the unchanged 251.125-second main film. Actual same-film 76.375-second, 1833-frame 4K24 proof covers all 8 camp reading windows with 5 complete takes. Native and encoded media checks passed; human language, visual and listening review remains pending. Full episode 4K24 is not rendered. User-opened blank AE restored. Historical media and archive keep their own scope.",
+  "historical_archive_index": "G:/VideoMaking/_archive/2026-10-18/ARCHIVE_INDEX.json",
+  "historical_path_rule": "Historical paths identify their original location. Entries with archived_evidence map those paths to verified ZIP members; inspect or restore through the archive instructions rather than treating a moved output as a missing production dependency.",
   "not_runtime_contract": true,
   "not_release_authority": true,
   "production_roles": [
@@ -96,7 +98,39 @@
         "local-data/free-showcase/title-task-episode-r3/PICTURE_RECEIPT.json"
       ],
       "scope": "9051 frames, 4K24, silent picture at audited revision",
-      "availability": "PRIVATE_LOCAL"
+      "availability": "PRIVATE_LOCAL",
+      "archived_evidence": [
+        {
+          "original_path": "local-data/free-showcase/title-task-episode-r3/native-request.json",
+          "archive": "G:\\VideoMaking\\_archive\\2026-10-18\\local-title-task-episode-r3.zip",
+          "member": "local-title-task-episode-r3/native-request.json",
+          "manifest": "G:\\VideoMaking\\_archive\\2026-10-18\\local-title-task-episode-r3.manifest.json"
+        },
+        {
+          "original_path": "local-data/free-showcase/title-task-episode-r3/native-audit.json",
+          "archive": "G:\\VideoMaking\\_archive\\2026-10-18\\local-title-task-episode-r3.zip",
+          "member": "local-title-task-episode-r3/native-audit.json",
+          "manifest": "G:\\VideoMaking\\_archive\\2026-10-18\\local-title-task-episode-r3.manifest.json"
+        },
+        {
+          "original_path": "local-data/free-showcase/title-task-episode-r3/native-motion-audit.json",
+          "archive": "G:\\VideoMaking\\_archive\\2026-10-18\\local-title-task-episode-r3.zip",
+          "member": "local-title-task-episode-r3/native-motion-audit.json",
+          "manifest": "G:\\VideoMaking\\_archive\\2026-10-18\\local-title-task-episode-r3.manifest.json"
+        },
+        {
+          "original_path": "local-data/free-showcase/title-task-episode-r3/NATIVE_RENDER_RECEIPT.json",
+          "archive": "G:\\VideoMaking\\_archive\\2026-10-18\\local-title-task-episode-r3.zip",
+          "member": "local-title-task-episode-r3/NATIVE_RENDER_RECEIPT.json",
+          "manifest": "G:\\VideoMaking\\_archive\\2026-10-18\\local-title-task-episode-r3.manifest.json"
+        },
+        {
+          "original_path": "local-data/free-showcase/title-task-episode-r3/PICTURE_RECEIPT.json",
+          "archive": "G:\\VideoMaking\\_archive\\2026-10-18\\local-title-task-episode-r3.zip",
+          "member": "local-title-task-episode-r3/PICTURE_RECEIPT.json",
+          "manifest": "G:\\VideoMaking\\_archive\\2026-10-18\\local-title-task-episode-r3.manifest.json"
+        }
+      ]
     },
     "E09": {
       "paths": [
@@ -106,7 +140,33 @@
         "local-data/free-showcase/title-task-episode-r3/CAPTIONS.json"
       ],
       "scope": "19 exact takes and planned placements, not accepted complete AV",
-      "availability": "PRIVATE_LOCAL"
+      "availability": "PRIVATE_LOCAL",
+      "archived_evidence": [
+        {
+          "original_path": "local-data/free-showcase/title-task-episode-r1/voice-delivery/delivery.json",
+          "archive": "G:\\VideoMaking\\_archive\\2026-10-18\\local-title-task-episode-r1.zip",
+          "member": "local-title-task-episode-r1/voice-delivery/delivery.json",
+          "manifest": "G:\\VideoMaking\\_archive\\2026-10-18\\local-title-task-episode-r1.manifest.json"
+        },
+        {
+          "original_path": "local-data/free-showcase/title-task-episode-r1/editorial/AUDIO_EDITORIAL.json",
+          "archive": "G:\\VideoMaking\\_archive\\2026-10-18\\local-title-task-episode-r1.zip",
+          "member": "local-title-task-episode-r1/editorial/AUDIO_EDITORIAL.json",
+          "manifest": "G:\\VideoMaking\\_archive\\2026-10-18\\local-title-task-episode-r1.manifest.json"
+        },
+        {
+          "original_path": "local-data/free-showcase/title-task-episode-r3/VOICE_TIMING.json",
+          "archive": "G:\\VideoMaking\\_archive\\2026-10-18\\local-title-task-episode-r3.zip",
+          "member": "local-title-task-episode-r3/VOICE_TIMING.json",
+          "manifest": "G:\\VideoMaking\\_archive\\2026-10-18\\local-title-task-episode-r3.manifest.json"
+        },
+        {
+          "original_path": "local-data/free-showcase/title-task-episode-r3/CAPTIONS.json",
+          "archive": "G:\\VideoMaking\\_archive\\2026-10-18\\local-title-task-episode-r3.zip",
+          "member": "local-title-task-episode-r3/CAPTIONS.json",
+          "manifest": "G:\\VideoMaking\\_archive\\2026-10-18\\local-title-task-episode-r3.manifest.json"
+        }
+      ]
     },
     "E10": {
       "paths": [
@@ -157,7 +217,27 @@
         "local-data/free-showcase/b06-judgement-r3/G2_CONSUMPTION_RECEIPT.json"
       ],
       "scope": "Explicitly authorized separate AI host review and exact bounded consumer; original bundles and r2 request retained",
-      "availability": "MIXED_TRACKED_AND_LOCAL_PRIVATE"
+      "availability": "MIXED_TRACKED_AND_LOCAL_PRIVATE",
+      "archived_evidence": [
+        {
+          "original_path": "local-data/free-showcase/b06-judgement-r3/HOST_PHRASE_REVIEW.json",
+          "archive": "G:\\VideoMaking\\_archive\\2026-10-18\\local-b06-judgement-r3.zip",
+          "member": "local-b06-judgement-r3/HOST_PHRASE_REVIEW.json",
+          "manifest": "G:\\VideoMaking\\_archive\\2026-10-18\\local-b06-judgement-r3.manifest.json"
+        },
+        {
+          "original_path": "local-data/free-showcase/b06-judgement-r3/HOST_PHRASE_REVIEW_STATUS.json",
+          "archive": "G:\\VideoMaking\\_archive\\2026-10-18\\local-b06-judgement-r3.zip",
+          "member": "local-b06-judgement-r3/HOST_PHRASE_REVIEW_STATUS.json",
+          "manifest": "G:\\VideoMaking\\_archive\\2026-10-18\\local-b06-judgement-r3.manifest.json"
+        },
+        {
+          "original_path": "local-data/free-showcase/b06-judgement-r3/G2_CONSUMPTION_RECEIPT.json",
+          "archive": "G:\\VideoMaking\\_archive\\2026-10-18\\local-b06-judgement-r3.zip",
+          "member": "local-b06-judgement-r3/G2_CONSUMPTION_RECEIPT.json",
+          "manifest": "G:\\VideoMaking\\_archive\\2026-10-18\\local-b06-judgement-r3.manifest.json"
+        }
+      ]
     },
     "E15": {
       "paths": [
@@ -230,7 +310,51 @@
         "local-data/free-showcase/b06-judgement-r3/ACTUAL_EVENT_MAP.json"
       ],
       "scope": "B06 r3 four explicit AI phrase reviews, actual guarded AE/PR execution, six verified 4K24 deliveries and native frame/sample mappings; G3 viewing/listening pending, no whole-episode expansion",
-      "availability": "MIXED_TRACKED_AND_LOCAL_PRIVATE"
+      "availability": "MIXED_TRACKED_AND_LOCAL_PRIVATE",
+      "archived_evidence": [
+        {
+          "original_path": "local-data/free-showcase/b06-judgement-r3/NATIVE_AUDIT_SUMMARY.json",
+          "archive": "G:\\VideoMaking\\_archive\\2026-10-18\\local-b06-judgement-r3.zip",
+          "member": "local-b06-judgement-r3/NATIVE_AUDIT_SUMMARY.json",
+          "manifest": "G:\\VideoMaking\\_archive\\2026-10-18\\local-b06-judgement-r3.manifest.json"
+        },
+        {
+          "original_path": "local-data/free-showcase/b06-judgement-r3/DELIVERY_INDEX.json",
+          "archive": "G:\\VideoMaking\\_archive\\2026-10-18\\local-b06-judgement-r3.zip",
+          "member": "local-b06-judgement-r3/DELIVERY_INDEX.json",
+          "manifest": "G:\\VideoMaking\\_archive\\2026-10-18\\local-b06-judgement-r3.manifest.json"
+        },
+        {
+          "original_path": "local-data/free-showcase/b06-judgement-r3/G2_FINAL_TECHNICAL_RECEIPT.json",
+          "archive": "G:\\VideoMaking\\_archive\\2026-10-18\\local-b06-judgement-r3.zip",
+          "member": "local-b06-judgement-r3/G2_FINAL_TECHNICAL_RECEIPT.json",
+          "manifest": "G:\\VideoMaking\\_archive\\2026-10-18\\local-b06-judgement-r3.manifest.json"
+        },
+        {
+          "original_path": "local-data/free-showcase/b06-judgement-r3/FINAL_NATIVE_IDENTITIES.json",
+          "archive": "G:\\VideoMaking\\_archive\\2026-10-18\\local-b06-judgement-r3.zip",
+          "member": "local-b06-judgement-r3/FINAL_NATIVE_IDENTITIES.json",
+          "manifest": "G:\\VideoMaking\\_archive\\2026-10-18\\local-b06-judgement-r3.manifest.json"
+        },
+        {
+          "original_path": "local-data/free-showcase/b06-judgement-r3/PROTECTED_INPUTS_POST_G2.json",
+          "archive": "G:\\VideoMaking\\_archive\\2026-10-18\\local-b06-judgement-r3.zip",
+          "member": "local-b06-judgement-r3/PROTECTED_INPUTS_POST_G2.json",
+          "manifest": "G:\\VideoMaking\\_archive\\2026-10-18\\local-b06-judgement-r3.manifest.json"
+        },
+        {
+          "original_path": "local-data/free-showcase/b06-judgement-r3/FRAME_TIMECODE_MAP.md",
+          "archive": "G:\\VideoMaking\\_archive\\2026-10-18\\local-b06-judgement-r3.zip",
+          "member": "local-b06-judgement-r3/FRAME_TIMECODE_MAP.md",
+          "manifest": "G:\\VideoMaking\\_archive\\2026-10-18\\local-b06-judgement-r3.manifest.json"
+        },
+        {
+          "original_path": "local-data/free-showcase/b06-judgement-r3/ACTUAL_EVENT_MAP.json",
+          "archive": "G:\\VideoMaking\\_archive\\2026-10-18\\local-b06-judgement-r3.zip",
+          "member": "local-b06-judgement-r3/ACTUAL_EVENT_MAP.json",
+          "manifest": "G:\\VideoMaking\\_archive\\2026-10-18\\local-b06-judgement-r3.manifest.json"
+        }
+      ]
     },
     "E22": {
       "paths": [
@@ -265,7 +389,105 @@
         "local-data/free-showcase/mainfilm-integration-r01/MAIN_FILM_EDITORIAL_PROXY.mp4"
       ],
       "scope": "Actual 7043-frame continuous proxy; two closed frozen questions, one focused replay, 24 intact takes. Visual source/option/clock readback and encoded frame samples; complete audio at measured starts; 1024-sample uniform native export delay corrected by timestamps only, audio payload unchanged. Formal 4K, music mix, independent new-copy review, human creative/listening review and student outcomes are not established.",
-      "availability": "PRIVATE_LOCAL"
+      "availability": "PRIVATE_LOCAL",
+      "archived_evidence": [
+        {
+          "original_path": "local-data/free-showcase/mainfilm-integration-r01/AV_AUTHOR.json",
+          "archive": "G:\\VideoMaking\\_archive\\2026-10-18\\local-mainfilm-integration-r01.zip",
+          "member": "local-mainfilm-integration-r01/AV_AUTHOR.json",
+          "manifest": "G:\\VideoMaking\\_archive\\2026-10-18\\local-mainfilm-integration-r01.manifest.json"
+        },
+        {
+          "original_path": "local-data/free-showcase/mainfilm-integration-r01/AV_PLAN.json",
+          "archive": "G:\\VideoMaking\\_archive\\2026-10-18\\local-mainfilm-integration-r01.zip",
+          "member": "local-mainfilm-integration-r01/AV_PLAN.json",
+          "manifest": "G:\\VideoMaking\\_archive\\2026-10-18\\local-mainfilm-integration-r01.manifest.json"
+        },
+        {
+          "original_path": "local-data/free-showcase/mainfilm-integration-r01/voice-current/delivery.json",
+          "archive": "G:\\VideoMaking\\_archive\\2026-10-18\\local-mainfilm-integration-r01.zip",
+          "member": "local-mainfilm-integration-r01/voice-current/delivery.json",
+          "manifest": "G:\\VideoMaking\\_archive\\2026-10-18\\local-mainfilm-integration-r01.manifest.json"
+        },
+        {
+          "original_path": "local-data/free-showcase/mainfilm-integration-r01/VOICE_ALIGNMENT.json",
+          "archive": "G:\\VideoMaking\\_archive\\2026-10-18\\local-mainfilm-integration-r01.zip",
+          "member": "local-mainfilm-integration-r01/VOICE_ALIGNMENT.json",
+          "manifest": "G:\\VideoMaking\\_archive\\2026-10-18\\local-mainfilm-integration-r01.manifest.json"
+        },
+        {
+          "original_path": "local-data/free-showcase/mainfilm-integration-r01/native-audit.json",
+          "archive": "G:\\VideoMaking\\_archive\\2026-10-18\\local-mainfilm-integration-r01.zip",
+          "member": "local-mainfilm-integration-r01/native-audit.json",
+          "manifest": "G:\\VideoMaking\\_archive\\2026-10-18\\local-mainfilm-integration-r01.manifest.json"
+        },
+        {
+          "original_path": "local-data/free-showcase/mainfilm-integration-r01/D_ENTRY_NATIVE_REPAIR.json",
+          "archive": "G:\\VideoMaking\\_archive\\2026-10-18\\local-mainfilm-integration-r01.zip",
+          "member": "local-mainfilm-integration-r01/D_ENTRY_NATIVE_REPAIR.json",
+          "manifest": "G:\\VideoMaking\\_archive\\2026-10-18\\local-mainfilm-integration-r01.manifest.json"
+        },
+        {
+          "original_path": "local-data/free-showcase/mainfilm-integration-r01/SCOPED_RENDER_REUSE.json",
+          "archive": "G:\\VideoMaking\\_archive\\2026-10-18\\local-mainfilm-integration-r01.zip",
+          "member": "local-mainfilm-integration-r01/SCOPED_RENDER_REUSE.json",
+          "manifest": "G:\\VideoMaking\\_archive\\2026-10-18\\local-mainfilm-integration-r01.manifest.json"
+        },
+        {
+          "original_path": "local-data/free-showcase/mainfilm-integration-r01/D-entry-regression/FRAME_SOURCES.json",
+          "archive": "G:\\VideoMaking\\_archive\\2026-10-18\\local-mainfilm-integration-r01.zip",
+          "member": "local-mainfilm-integration-r01/D-entry-regression/FRAME_SOURCES.json",
+          "manifest": "G:\\VideoMaking\\_archive\\2026-10-18\\local-mainfilm-integration-r01.manifest.json"
+        },
+        {
+          "original_path": "local-data/free-showcase/mainfilm-integration-r01/PICTURE_RECEIPT.json",
+          "archive": "G:\\VideoMaking\\_archive\\2026-10-18\\local-mainfilm-integration-r01.zip",
+          "member": "local-mainfilm-integration-r01/PICTURE_RECEIPT.json",
+          "manifest": "G:\\VideoMaking\\_archive\\2026-10-18\\local-mainfilm-integration-r01.manifest.json"
+        },
+        {
+          "original_path": "local-data/free-showcase/mainfilm-integration-r01/PR_TIMELINE.json",
+          "archive": "G:\\VideoMaking\\_archive\\2026-10-18\\local-mainfilm-integration-r01.zip",
+          "member": "local-mainfilm-integration-r01/PR_TIMELINE.json",
+          "manifest": "G:\\VideoMaking\\_archive\\2026-10-18\\local-mainfilm-integration-r01.manifest.json"
+        },
+        {
+          "original_path": "local-data/free-showcase/mainfilm-integration-r01/PR_EXPORT_RECEIPT.json",
+          "archive": "G:\\VideoMaking\\_archive\\2026-10-18\\local-mainfilm-integration-r01.zip",
+          "member": "local-mainfilm-integration-r01/PR_EXPORT_RECEIPT.json",
+          "manifest": "G:\\VideoMaking\\_archive\\2026-10-18\\local-mainfilm-integration-r01.manifest.json"
+        },
+        {
+          "original_path": "local-data/free-showcase/mainfilm-integration-r01/NATIVE_AUDIO_DELAY.json",
+          "archive": "G:\\VideoMaking\\_archive\\2026-10-18\\local-mainfilm-integration-r01.zip",
+          "member": "local-mainfilm-integration-r01/NATIVE_AUDIO_DELAY.json",
+          "manifest": "G:\\VideoMaking\\_archive\\2026-10-18\\local-mainfilm-integration-r01.manifest.json"
+        },
+        {
+          "original_path": "local-data/free-showcase/mainfilm-integration-r01/DELIVERY_QA.json",
+          "archive": "G:\\VideoMaking\\_archive\\2026-10-18\\local-mainfilm-integration-r01.zip",
+          "member": "local-mainfilm-integration-r01/DELIVERY_QA.json",
+          "manifest": "G:\\VideoMaking\\_archive\\2026-10-18\\local-mainfilm-integration-r01.manifest.json"
+        },
+        {
+          "original_path": "local-data/free-showcase/mainfilm-integration-r01/MAIN_FILM.aep",
+          "archive": "G:\\VideoMaking\\_archive\\2026-10-18\\local-mainfilm-integration-r01.zip",
+          "member": "local-mainfilm-integration-r01/MAIN_FILM.aep",
+          "manifest": "G:\\VideoMaking\\_archive\\2026-10-18\\local-mainfilm-integration-r01.manifest.json"
+        },
+        {
+          "original_path": "local-data/free-showcase/mainfilm-integration-r01/MAIN_FILM.prproj",
+          "archive": "G:\\VideoMaking\\_archive\\2026-10-18\\local-mainfilm-integration-r01.zip",
+          "member": "local-mainfilm-integration-r01/MAIN_FILM.prproj",
+          "manifest": "G:\\VideoMaking\\_archive\\2026-10-18\\local-mainfilm-integration-r01.manifest.json"
+        },
+        {
+          "original_path": "local-data/free-showcase/mainfilm-integration-r01/MAIN_FILM_EDITORIAL_PROXY.mp4",
+          "archive": "G:\\VideoMaking\\_archive\\2026-10-18\\local-mainfilm-integration-r01.zip",
+          "member": "local-mainfilm-integration-r01/MAIN_FILM_EDITORIAL_PROXY.mp4",
+          "manifest": "G:\\VideoMaking\\_archive\\2026-10-18\\local-mainfilm-integration-r01.manifest.json"
+        }
+      ]
     },
     "E24": {
       "paths": [
@@ -296,7 +518,62 @@
         "local-data/free-showcase/mainfilm-integration-r02/media/MAIN_FILM_EDITORIAL_PROXY.mp4"
       ],
       "scope": "R02 complete 10760-frame 1080p24 same-film AE/PR delivery. Measured 3D reading paths, continuous whole-option entry, readable source comparison and one focused replay; 37 complete takes and native opening-music automation. Full decode and packet/take timing checks passed. Scoped tail repair reused 50 unaffected parts and rendered eight changed parts. Saved parent hosts restored; 43 protected assets unchanged. No human acceptance inherited; formal 4K not rendered.",
-      "availability": "PRIVATE_LOCAL"
+      "availability": "PRIVATE_LOCAL",
+      "archived_evidence": [
+        {
+          "original_path": "local-data/free-showcase/mainfilm-integration-r02/media/MAIN_FILM.aep",
+          "archive": "G:\\VideoMaking\\_archive\\2026-10-18\\mainfilm-integration-r02-media-remaining.zip",
+          "member": "mainfilm-integration-r02-media/MAIN_FILM.aep",
+          "manifest": "G:\\VideoMaking\\_archive\\2026-10-18\\mainfilm-integration-r02-media-remaining.manifest.json"
+        },
+        {
+          "original_path": "local-data/free-showcase/mainfilm-integration-r02/media/PROOF_AV_INTERNAL.mp4",
+          "archive": "G:\\VideoMaking\\_archive\\2026-10-18\\mainfilm-integration-r02-media-output.zip",
+          "member": "mainfilm-integration-r02-media/PROOF_AV_INTERNAL.mp4",
+          "manifest": "G:\\VideoMaking\\_archive\\2026-10-18\\mainfilm-integration-r02-media-output.manifest.json"
+        },
+        {
+          "original_path": "local-data/free-showcase/mainfilm-integration-r02/media/MAIN_FILM.prproj",
+          "archive": "G:\\VideoMaking\\_archive\\2026-10-18\\mainfilm-integration-r02-media-remaining.zip",
+          "member": "mainfilm-integration-r02-media/MAIN_FILM.prproj",
+          "manifest": "G:\\VideoMaking\\_archive\\2026-10-18\\mainfilm-integration-r02-media-remaining.manifest.json"
+        },
+        {
+          "original_path": "local-data/free-showcase/mainfilm-integration-r02/media/MAIN_FILM_EDITORIAL_PROXY.mp4",
+          "archive": "G:\\VideoMaking\\_archive\\2026-10-18\\mainfilm-integration-r02-media-output.zip",
+          "member": "mainfilm-integration-r02-media/MAIN_FILM_EDITORIAL_PROXY.mp4",
+          "manifest": "G:\\VideoMaking\\_archive\\2026-10-18\\mainfilm-integration-r02-media-output.manifest.json"
+        }
+      ]
+    },
+    "E25": {
+      "paths": [
+        "creative_os/teaching_focus.py",
+        "content_os/scoring.py",
+        "creative_os/audience_engagement.py",
+        "ae_production/authored_episode.py",
+        "ae/templates/authored-episode.jsx",
+        "tests/test_teaching_focus.py"
+      ],
+      "scope": "Current author/clock/native consumer plus actual scoped 4K24 export; human creative/listening review pending",
+      "availability": "TRACKED"
+    },
+    "E26": {
+      "paths": [
+        "ae_production/article_chunking.py",
+        "ae/rigs/reading-focus.jsx",
+        "tests/test_article_chunking.py",
+        "tests/test_reading_review.py",
+        "local-data/free-showcase/critical-focus-r02/READING_CHUNKS.json",
+        "local-data/free-showcase/critical-focus-r02/native-audit.json",
+        "local-data/free-showcase/critical-focus-r02/UNCHANGED_CONTENT_CLOCK_QA.json",
+        "local-data/free-showcase/critical-focus-r02/READING_MEDIA_QA.json",
+        "local-data/free-showcase/critical-focus-r02/POST_RENDER_NATIVE_QA.json",
+        "local-data/free-showcase/critical-focus-r02/ENCODED_FRAME_INSPECTION.json",
+        "G:\\VideoMaking\\critical-focus-r02\\REVIEW.html"
+      ],
+      "scope": "2 complete articles / 145 authored sense groups; both native comps preserve complete groups in 13 windows / 113 focus instances. Actual 76.375-second 4K24 same-film proof covers all 8 camp windows, has continuous frame timestamps, full decode, unchanged native picture packets and 5 complete takes (minimum correlation 0.9999946). Human viewing/listening pending; full episode not rendered.",
+      "availability": "MIXED_LOCAL_CODE_AND_PRIVATE_EVIDENCE"
     }
   },
   "capabilities": [
@@ -1630,6 +1907,90 @@
         "RELEASE_APPROVED": "NOT_ESTABLISHED"
       },
       "recommended_action": "保留边界与当前契约；按明确缺口推进"
+    },
+    {
+      "capability_id": "critical_judgement_resource_allocation",
+      "production_role": "CURRENT_PRODUCTION",
+      "entrypoint": "ae/experiments/adaptive-episode/run.py",
+      "version": "critical_judgement_v1",
+      "input_contracts": [
+        "AV_AUTHOR.teaching_focus",
+        "current frozen bundles and all candidate checks",
+        "complete voice delivery and alignment"
+      ],
+      "output_contracts": [
+        "AV_PLAN",
+        "TEACHING_FOCUS_REPORT",
+        "native resource audit"
+      ],
+      "known_consumers": [
+        "authored_episode.compile_clock",
+        "authored_native",
+        "authored-episode.jsx"
+      ],
+      "evidence_refs": [
+        "E25"
+      ],
+      "known_limits": [
+        "Editorial difficulty is not student measurement",
+        "Time shares are not viewing approval",
+        "Current two-question proof is shorter than 5–8 minute target"
+      ],
+      "human_approval_scope": "PENDING",
+      "availability": "TRACKED",
+      "scope": "Incremental default authored production; existing truth and publication gates remain",
+      "dimensions": {
+        "DESIGNED": "CONFIRMED",
+        "IMPLEMENTED": "CONFIRMED",
+        "INTEGRATED": "NATIVE_CONSUMER_VERIFIED",
+        "NATIVE_VERIFIED": "FULL_COMPOSITION_AUDIT_AND_SCOPED_4K_EXPORT",
+        "HUMAN_APPROVED": "PENDING",
+        "RELEASE_APPROVED": "NOT_ESTABLISHED"
+      },
+      "recommended_action": "Watch the actual proof and reduce repeated reading visits without dropping evidence"
+    },
+    {
+      "capability_id": "article_sense_group_authoring",
+      "production_role": "CURRENT_PRODUCTION",
+      "entrypoint": "adaptive-episode/run.py chunks -> prepare -> build -> audit",
+      "version": "article-chunks/v1",
+      "input_contracts": [
+        "source-exact ARTICLE_CHUNKS.json authored after reading the complete frozen passages",
+        "protected fixed phrases and compound names",
+        "same frozen bundles and current statuses"
+      ],
+      "output_contracts": [
+        "READING_CHUNKS.json with stable source spans and identities",
+        "ARTICLE_CHUNKS_REVIEW.html",
+        "AV_PLAN.worlds.blocks.reading_chunks"
+      ],
+      "known_consumers": [
+        "authored_episode.prepare",
+        "authored_native.plan/build/audit",
+        "reading-focus.jsx cmKeepChunks/cmMappedChunks",
+        "reading_review.validate_reading"
+      ],
+      "evidence_refs": [
+        "E26"
+      ],
+      "known_limits": [
+        "Language boundaries are authored, not inferred or certified by the deterministic compiler",
+        "No new teaching evidence or solver",
+        "An oversized phrase requires explicit layout or language revision; never auto-split",
+        "New media is not human approved"
+      ],
+      "human_approval_scope": "PENDING",
+      "availability": "LOCAL_UNCOMMITTED_CODE_AND_PRIVATE_NATIVE_OUTPUT",
+      "scope": "Current critical-focus-r02, unchanged 251.125-second main-film clock and complete takes; all article reading windows consume the new groups; encoded 76.375-second 4K24 proof verifies all eight camp windows and five complete takes, separately from human review",
+      "dimensions": {
+        "DESIGNED": "CONFIRMED",
+        "IMPLEMENTED": "CONFIRMED",
+        "INTEGRATED": "CONFIRMED_DEFAULT_PREPARE_BUILD_AUDIT",
+        "NATIVE_VERIFIED": "CONFIRMED_BOTH_PROXY_AND_4K_MASTER",
+        "HUMAN_APPROVED": "PENDING",
+        "RELEASE_APPROVED": "NOT_ESTABLISHED"
+      },
+      "recommended_action": "Inspect exact phrase review and the current encoded proof; retain whole phrases in subsequent articles"
     }
   ]
 }

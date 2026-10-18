@@ -4,6 +4,23 @@
 
 本模块消费 ANSWER Frozen Asset Bundle，不读取 Registry、课程 Markdown 或原始试卷来补教学判断。Python 3.10+，使用仓库现有 jsonschema 依赖；源码目录运行或 editable 安装。
 
+## 导演总原则
+
+> 不按选项数量分配讲解篇幅，按判断困难和方法价值分配篇幅。显而易见的快速通过，真正困难的充分展示；所有精细动效优先服务于方法改变判断结果的瞬间。
+
+这条原则适用于当前及后续制作，篇幅包括口播、阅读停留、镜头和动效。完整核对保留每项必要依据与最终判断；不要求每个选项拥有等长讲解或同等复杂的动作。当前 FREE_SHOWCASE 按“点名—执行—结果”呈现方法，在真正困难、方法带来判断变化的节点充分展示。
+
+当前生产以 `AV_AUTHOR.teaching_focus` 落实 **Teaching Value Density（教学价值密度）**：
+
+- `options` 必须覆盖全部原选项，每项保留完整 `candidate_checks` 的路径和 hash，并说明 `quick / brief / focus` 的编辑理由。
+- `units` 将具体判断困难、候选集合、决定性原文、有效方法的实际执行及判断变化连在一起。候选可以是一个、两个或多个；恰好两个时才形成可选的 **Critical Option Pair**。这不代表当前只剩两个选项。
+- `difficulty / method_value / visual_payoff` 使用暂定的 0–3 编辑量表，权重为 2:2:1。数值只用于资源优先级；未知学生难度明确为 `UNMEASURED`。暂不接受把直觉改签成学生实测。
+- 密度以编辑价值点 / 已编译的比较与回放秒数作诊断，不是学习效果指标。关键部分须获得主要比较资源；若不足，改选题、文案或镜头组织，不能压缩必要阅读或故意增加无意义停顿来过检查。
+
+实际入口仍是 `adaptive-episode/run.py`：`check` 先校验当前作者输入，再返回 `content_os.scoring.rank_teaching_focus` 的选题分析；同版 `script / chunks / voice / align` 后，`prepare` 经 `compile_clock → direct_scene` 编译时钟，并生成 `resource_report` 与 `critical_focus_handoff`。`chunks` 先编译文章编辑标注的原文意群，`prepare` 将相同词块身份传给原生排版和焦点动作；`build → audit → render` 消费原生模板和审计。普通项原地核对，关键项保留提取、对齐与裁决，声音和字幕仍使用同一真实时钟。后文旧短格式 Pipeline 保留兼容，不能代替这个当前多题入口。
+
+文案模板是“快速核对必要依据 → 真实的判断困难 → 点名并执行方法 → 决定性区别 → 结果与极短复盘”。这是编辑组织方向，不是每题必须照读的步骤清单。完整的 Evidence / Action / Stop Rule 留在后台；Paid Mastery 再展开条件、边界与迁移练习。
+
 ## 流水线与运行
 
 ```text

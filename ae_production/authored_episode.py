@@ -15,12 +15,14 @@ import wave
 
 from video_contracts import ROOT, read, write, sha, pointer, verify_bundle, status_matches
 from scripts.voice_delivery import validate as validate_voice, asset, sha256, pad_to_video_frame, describe_clip
+from creative_os.teaching_focus import require_focus, validate_focus, direct_scene, resource_report
+from ae_production.article_chunking import chunk_stage, current_chunks, bind_worlds
 
 CURRENT = ROOT / 'local-data/free-showcase/PRODUCTION_INDEX.json'
 AUTHOR = 'AV_AUTHOR.json'
 AUTHOR_KEYS = {'revision','product','format','media_role','public_render_ready','copy_review',
                'sources','input_files','voices','scenes','excerpts','producer','host',
-               'voice_delivery','voice_inputs','music'}
+               'voice_delivery','voice_inputs','music','teaching_focus'}
 KINDS = {'task', 'locate', 'compare', 'answer', 'replay', 'recap'}
 SHOT_KEYS = {'id', 'kind', 'world', 'voice_ids', 'title', 'excerpt', 'candidate',
              'event', 'replay_of', 'source_refs', 'action_refs', 'terminal_refs',
@@ -188,6 +190,8 @@ def checked_author(folder):
         raise ValueError('Every exact voice take must have one scene placement')
     if finals != set(bundles) or replay_count != 1:
         raise ValueError('Main film must close each question and contain the one authored focused replay')
+    if 'teaching_focus' in a:
+        validate_focus(a, bundles)
     return a, bundles
 
 
@@ -273,7 +277,7 @@ def compile_clock(a, clips, aligned):
     fps = a['format']['fps']; cursor = 0; scenes = []; segments = []; cues = []; events = []
     voice_by_id = {x['id']: x for x in a['voices']}
     for shot in a['scenes']:
-        s = deepcopy(shot); s['start'] = cursor
+        s = direct_scene(a, shot); s['start'] = cursor
         motion=s.get('choreography')
         if motion:
             orient=grid(cursor+motion['orient_seconds'],fps)
@@ -363,7 +367,9 @@ def compile_clock(a, clips, aligned):
 
 def prepare(folder):
     a, bundles = checked_author(folder)
+    require_focus(a)
     check_script(folder, a)
+    chunks = current_chunks(folder, bundles)
     delivery_file = delivery_path(folder,a); delivery = validate_voice(delivery_file)
     aligned_path = folder / 'VOICE_ALIGNMENT.json'
     if not aligned_path.exists(): raise FileNotFoundError('Run align for the actual new voice delivery first')
@@ -400,6 +406,7 @@ def prepare(folder):
         blocks = [{'id': name + '-source-' + str(lo), 'start': lo, 'end': hi,
                    'text': passage[lo:hi], 'visible': bool(passage[lo:hi].strip())} for lo, hi in zip(bs, bs[1:])]
         worlds[name] = {'question': q, 'blocks': blocks, 'source': a['sources'][name]}
+    bind_worlds(worlds, chunks)
     excerpts = deepcopy(a['excerpts'])
     for key, ex in excerpts.items():
         q = worlds[ex['world']]['question']
@@ -410,11 +417,21 @@ def prepare(folder):
                 author_sha256=sha256(folder / AUTHOR), voice_delivery_sha256=sha256(delivery_file),
                 alignment_sha256=sha256(aligned_path), public_render_ready=False,
                 human_creative_review='PENDING', listening_review='PENDING', student_count=0)
+    plan['article_chunking'] = chunks
     if all('choreography' in s for s in a['scenes']):
         plan['realization']='continuous_paper_scan'
     plan['copy_review']=a['copy_review']
     plan['complete_copy_sha256']=sha(script_text(a))
     plan['music']=deepcopy(a.get('music',[]))
+    from content_os.scoring import rank_teaching_focus
+    from creative_os.audience_engagement import critical_focus_handoff
+    plan['teaching_focus']=deepcopy(a['teaching_focus'])
+    plan['teaching_focus_sha']=sha(a['teaching_focus'])
+    plan['teaching_resources']=resource_report(a,plan)
+    plan['critical_engagement']=critical_focus_handoff(a,plan)
+    write(folder/'TEACHING_FOCUS_REPORT.json', {
+        'selection':rank_teaching_focus(a,bundles), 'resources':plan['teaching_resources'],
+        'audience_handoff':plan['critical_engagement'], 'policy_sha':plan['teaching_focus_sha']})
     dest = folder / 'AV_PLAN.json'
     if dest.exists() and read(dest) != plan:
         if (folder / 'native-identity.json').exists():
@@ -428,13 +445,23 @@ def prepare(folder):
 
 def check(folder):
     a, b = checked_author(folder)
+    from content_os.scoring import rank_teaching_focus
+    chunks = current_chunks(folder,b) if (folder/'READING_CHUNKS.json').exists() else None
     return {'revision': a['revision'], 'frozen_questions': len(b), 'scenes': len(a['scenes']),
+            'article_chunking': {'articles':len(chunks['articles']), 'input_sha256':chunks['input_sha256']} if chunks else 'REQUIRED_BEFORE_NEW_PREPARE_OR_BUILD',
+            'teaching_focus':validate_focus(a,b) if 'teaching_focus' in a else 'HISTORICAL_INPUT_NO_NEW_BUILD',
+            'selection':rank_teaching_focus(a,b) if 'teaching_focus' in a else 'HISTORICAL',
             'copy_status': a['copy_review'], 'media_role': a['media_role'], 'public_render_ready': False}
 
 
 def dispatch(operation, folder, **kwargs):
+    if operation in ('script','voice','align','prepare','build'):
+        a,_=checked_author(folder);require_focus(a)
     if operation == 'script': return script(folder)
     if operation == 'check': return check(folder)
+    if operation == 'chunks':
+        _, bundles = checked_author(folder)
+        return chunk_stage(folder, bundles)
     if operation == 'voice': return voice(folder)
     if operation == 'align':
         a, _ = checked_author(folder)

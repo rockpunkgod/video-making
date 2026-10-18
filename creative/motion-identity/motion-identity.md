@@ -9,8 +9,35 @@ The shared grammar is Magnetic Alignment, Evidence Develop, Focus Breathing,
 Semantic Carry, Micro Lock and Boundary Seal. Fog Blue `#7E96A8` develops literal
 evidence; Soft Brick is reserved for an explicitly bound discrepancy. No bounce,
 neon highlighter, red cross, forced beat sync, or whole-screen object reset.
-Carry the same logical object across a Logic Match Cut. Name the method after
-the spatial action settles, as small editorial metadata.
+Carry the same logical object across a Logic Match Cut. In the current
+FREE_SHOWCASE, name the valid method just before use, execute the continuous
+cognitive action, then show its supported result. This explicitly supersedes
+the earlier label-after-action rule; detailed teaching remains backstage.
+
+The current native reading consumer is `ae/rigs/reading-focus.jsx`, inserted
+by `ae_production.authored_native.template_source`. Every required reading
+window uses measured native lines and literal phrase chunks, in row order from
+left to right, with a shared smooth scale/color envelope. Keep the existing
+single pitch into downward reading and the real camera/3D space. The carried
+query returns while its margin fades; the full stem must not pop into view at
+an out-point. Current requirements and known-defect checks are maintained in
+`docs/workflows/CURRENT_PRODUCTION_WORKFLOW.md`. Numerical checks do not approve
+the appearance of new films.
+
+Phrase identity is now authored once for the complete article, before layout,
+through `adaptive-episode/run.py chunks`. Keep collocations, noun phrases and
+names intact. The shared native rig uses those source-bound identities and
+AE noBreak to wrap a whole group; native line length and word count must never
+decide linguistic boundaries. Oversized groups require an explicit layout or
+language edit. Repeated windows reuse the same map. Curve, 3D, single pitch,
+source-return and original-language constraints remain in force.
+
+Teaching Value Density determines where this visual vocabulary is spent. A
+`quick` or `brief` check keeps the real paper and uses a restrained option-state
+change; it does not instantiate a source lift or a flying option. A source-bound
+`focus` judgement keeps the existing 3D extraction/alignment grammar. Reading
+paths and phrase-focus timing remain intact in both treatments. Detailed motion
+must illuminate the decisive difference, never imply unchecked eliminations.
 
 | Method | Signature | Memory phrase | V9.1 scope |
 |---|---|---|---|

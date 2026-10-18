@@ -13,14 +13,26 @@ import wave
 
 from video_contracts import ROOT, read, write
 from scripts.voice_delivery import sha256
-from ae_production.bridge import JunkdogeClient
+from ae_production.bridge import JunkdogeClient, BridgeError
 from ae_production.host_ownership import HostOwnership
 from ae_production.memory_guard import available_memory, monitor_existing_render
 from ae_production.authored_episode import checked_author,delivery_path
+from ae_production.article_chunking import current_chunks
+from creative_os.teaching_focus import require_focus, resource_report
+from video_contracts import sha
 from premiere_production.mcp import PremiereMcpClient
 from premiere_production.lossless_handoff import packet_binding
 
 TEMPLATE=ROOT/'ae/templates/authored-episode.jsx'
+READING_RIG=ROOT/'ae/rigs/reading-focus.jsx'
+
+
+def template_source():
+    """The experiment and future builds consume this same native rig."""
+    source=TEMPLATE.read_text('utf-8')
+    if source.count('/* SHARED_READING_RIG */')!=1:
+        raise ValueError('Production template must consume the shared reading rig exactly once')
+    return source.replace('/* SHARED_READING_RIG */',READING_RIG.read_text('utf-8'))
 
 
 def media_directory(folder):
@@ -40,21 +52,28 @@ def value(r):
 
 
 def process(name):
-    rows=json.loads(subprocess.check_output(['powershell','-NoProfile','-Command',
-        "@(Get-Process -Name '"+name+"' | Select-Object Id,MainWindowHandle) | ConvertTo-Json -Compress"],creationflags=subprocess.CREATE_NO_WINDOW))
+    payload=subprocess.check_output(['powershell','-NoProfile','-Command',
+        "@(Get-Process -Name '"+name+"' -ErrorAction SilentlyContinue | Select-Object Id,MainWindowHandle) | ConvertTo-Json -Compress"],creationflags=getattr(subprocess,'CREATE_NO_WINDOW',0))
+    rows=json.loads(payload or '[]')
+    if not rows:raise RuntimeError('Adobe host is not running: '+name+'; saved outputs remain available')
     if isinstance(rows,dict):rows=[rows]
     if len(rows)!=1:raise RuntimeError('Expected one unambiguous Adobe host: '+name)
     return rows[0]
 
 
 def plan(folder):
-    a,_=checked_author(folder);p=read(folder/'AV_PLAN.json')
+    a,bundles=checked_author(folder);p=read(folder/'AV_PLAN.json')
     if p['author_sha256']!=sha256(folder/'AV_AUTHOR.json') or p['voice_delivery_sha256']!=sha256(delivery_path(folder,a)) or p['alignment_sha256']!=sha256(folder/'VOICE_ALIGNMENT.json'):
         raise ValueError('Copy/voice/director changes have not propagated through prepare')
     for s in p['segments']:
         v=s['voice']
         if sha256(v['path'])!=v['sha256'] or sha256(v['padded_path'])!=v['padded_sha256']:
             raise ValueError('Complete audio take changed')
+    if 'teaching_focus' in a:
+        if p.get('teaching_focus_sha')!=sha(a['teaching_focus']) or p.get('teaching_resources')!=resource_report(a,p):
+            raise ValueError('Teaching value allocation is stale or was bypassed')
+    if 'article_chunking' in p and p['article_chunking'] != current_chunks(folder,bundles):
+        raise ValueError('Article chunking has not propagated into the native plan')
     return a,p
 
 
@@ -76,7 +95,17 @@ class Host:
     def identity(self):
         pid=process(self.native_name)['Id']
         if self.kind=='after_effects':
-            r=self.js('var a=app.project.activeItem;if(!(a instanceof CompItem)&&app.project.selection.length===1)a=app.project.selection[0];return {project_path:app.project.file?app.project.file.fsName:"",target_id:a instanceof CompItem?"comp:"+a.id:"none",dirty:app.project.dirty,rendering:app.project.renderQueue.rendering};')
+            # v0.11's instance registry can briefly lag a save/open/new. Retry
+            # only this read-only identity inspection with a fresh binding.
+            # Never replay the mutation whose result is being inspected.
+            for attempt in range(5):
+                try:
+                    self.c.bind_current_project(pid,self.folder.resolve())
+                    r=self.js('var a=app.project.activeItem;if(!(a instanceof CompItem)&&app.project.selection.length===1)a=app.project.selection[0];return {project_path:app.project.file?app.project.file.fsName:"",target_id:a instanceof CompItem?"comp:"+a.id:"none",dirty:app.project.dirty,rendering:app.project.renderQueue.rendering};')
+                    break
+                except BridgeError as error:
+                    if 'SOURCE_PROJECT_CHANGED' not in str(error) or attempt==4:raise
+                    self.c.context_id=None;self.c.bound_project=None;time.sleep(.4)
         else:
             data=self.c.call('get_project_info');active=data.get('activeSequence');r={'project_path':data['path'],'target_id':'sequence:'+active['id'] if active else 'none'}
         r['project_path']=str(Path(r['project_path']).resolve()) if r['project_path'] else ''
@@ -105,28 +134,32 @@ class Host:
         return result
 
     def mutation_js(self,code,label,after=None):
-        return self.mutate(label,lambda:self.js(code,label),after)
+        # v0.11 rejects project transitions/rendering inside a tool undo group.
+        # The ownership/checkpoint label is independent of AE's undo stack.
+        return self.mutate(label,lambda:self.js(code),after)
 
     def pr(self,name,args=None,after=None,timeout=180):
         return self.mutate(name,lambda:self.c.call(name,args or {},timeout=timeout),after)
 
 
 def build(folder):
-    a,p=plan(folder);h=Host(folder,'after_effects');before=h.identity()
+    a,p=plan(folder);require_focus(a)
+    if 'article_chunking' not in p:raise ValueError('Run chunks and prepare before a new native build')
+    h=Host(folder,'after_effects');before=h.identity()
     require_disk(folder,64*1024**2)
     require_disk(h.project.parent,256*1024**2)
     if h.project.exists() or (folder/'native-identity.json').exists():raise FileExistsError('Inspect saved native output; no implicit rebuild')
-    code=TEMPLATE.read_text('utf-8').replace('PLAN_PATH',json.dumps((folder/'AV_PLAN.json').as_posix())).replace('PROJECT_PATH',json.dumps(h.project.as_posix())).replace('PLAN_SHA',json.dumps(sha256(folder/'AV_PLAN.json'))).replace('BUILD_RECEIPT_PATH',json.dumps((folder/'BUILD_BEFORE_SAVE.json').as_posix()))
-    write(folder/'SESSION_BEFORE.json',{'identity':before,'sha256':sha256(before['project_path'])})
+    code=template_source().replace('PLAN_PATH',json.dumps((folder/'AV_PLAN.json').as_posix())).replace('PROJECT_PATH',json.dumps(h.project.as_posix())).replace('PLAN_SHA',json.dumps(sha256(folder/'AV_PLAN.json'))).replace('BUILD_RECEIPT_PATH',json.dumps((folder/'BUILD_BEFORE_SAVE.json').as_posix()))
+    write(folder/'SESSION_BEFORE.json',{'identity':before,'sha256':sha256(before['project_path']) if before['project_path'] else None})
     r=h.mutation_js(code,'Build current authored main film',after=lambda r:{'process_id':h.pid,'project_path':str(h.project.resolve()),'target_id':'comp:'+str(r['comp_id'])})
-    r.update(plan_sha256=sha256(folder/'AV_PLAN.json'),template_sha256=sha256(TEMPLATE))
+    r.update(plan_sha256=sha256(folder/'AV_PLAN.json'),template_sha256=sha256(TEMPLATE),reading_rig_sha256=sha256(READING_RIG))
     write(folder/'native-identity.json',r)
     return {k:r[k] for k in ('comp_id','master_comp_id','duration','frames','layers','media_role')}
 
 
 def current_native(folder):
     a,p=plan(folder);n=read(folder/'native-identity.json')
-    if n['plan_sha256']!=sha256(folder/'AV_PLAN.json') or n['template_sha256']!=sha256(TEMPLATE):
+    if n['plan_sha256']!=sha256(folder/'AV_PLAN.json') or n['template_sha256']!=sha256(TEMPLATE) or n.get('reading_rig_sha256')!=sha256(READING_RIG):
         raise ValueError('Native picture is stale after author or realization changes')
     return a,p,n
 
@@ -178,9 +211,42 @@ def audit(folder):
 
     for ev in n['audit']['candidates']:
         if ev['kind']=='final':continue
+        if ev.get('treatment')=='in_place_check':
+            row=native['LIGHT_CANDIDATE_'+ev['scene']]
+            if row['text']!=ev['whole_option_text'] or 'SOURCE_LIFT_'+ev['scene'] in native or 'CANDIDATE_FLIGHT_'+ev['scene'] in native:
+                raise ValueError('Quick check gained an unplanned extraction or lost its whole option')
+            continue
         row=native['CANDIDATE_FLIGHT_'+ev['scene']]
         if row['text']!=ev['whole_option_text'] or not row['threeD']:raise ValueError('Candidate identity detached')
         if ev['kind']=='eliminate' and (row['position'][-1][1][2]!=420 or row['orientation'][-1][1]!=[0,72,0]):raise ValueError('Whole candidate withdrawal lost')
+    if 'teaching_focus' in a:
+        expected=[{'scene':s['id'],'treatment':s['teaching_treatment'],'motion':s['motion_treatment'],'critical_units':s['critical_units']} for s in p['scenes'] if 'teaching_treatment' in s]
+        if n['audit'].get('teaching_resources')!=expected:
+            raise ValueError('Teaching resource handoff did not reach the native director')
+        for s in p['scenes']:
+            if s.get('motion_treatment')=='critical_comparison' and 'SOURCE_LIFT_'+s['id'] not in native:
+                raise ValueError('Critical method execution was silently replaced by a light check')
+        light=[{'id':s['id'],'world':s['world'],'candidate':s['candidate'],'event_time':s['event_time'],
+                'decision_end':s['decision_end'],'end':s['end'],'effect':s['event']} for s in p['scenes'] if s.get('motion_treatment')=='in_place_check']
+        values=h.js('var c=app.project.itemByID('+str(n['comp_id'])+'),rows=[],items='+json.dumps(light)+';for(var i=0;i<items.length;i++){var s=items[i],l=c.layer("LIGHT_CANDIDATE_"+s.id),o=c.layer(s.world+"_OPTION_"+s.candidate),band=c.layer("LIGHT_READING_MARGIN_"+s.id);rows.push({scene:s.id,before:l.transform.opacity.valueAtTime(s.event_time,false),after:l.transform.opacity.valueAtTime(s.decision_end,false),original:o.transform.opacity.valueAtTime(s.decision_end,false),position_keys:l.transform.position.numKeys,scale_keys:l.transform.scale.numKeys,header_height:band.source.height,header_scale:band.transform.scale.value[1],header_read:band.transform.opacity.valueAtTime(s.event_time,false),header_exit:band.transform.opacity.valueAtTime(s.end-.5/24,false),label_above_header:l.index<band.index});}return rows;')
+        for s,v in zip(light,values):
+            target=38 if s['effect']=='eliminate' else 100
+            if abs(v['before']-100)>.01 or abs(v['after']-target)>.01 or abs(v['original']-target)>.01 or v['position_keys'] or v['scale_keys']:
+                raise ValueError('Native quick check did not consume its light state change')
+            if abs(v['header_read']-100)>.01 or v['header_exit']>.01 or not v['label_above_header'] or abs(v['header_height']*v['header_scale']/100-105*r['width']/1280)>.01:
+                raise ValueError('Light option overlaps source text or its header hard-pops at exit')
+        write(folder/'TEACHING_RESOURCE_NATIVE.json',{'rows':values,'policy_sha':p['teaching_focus_sha'],'human_review':'PENDING'})
+        accents=[{k:s[k] for k in ('id','world','source_arrive','end','attention_events')} for s in p['scenes'] if s.get('motion_treatment')=='in_place_check']
+        code='var ids='+json.dumps([n['comp_id'],n['master_comp_id']])+',shots='+json.dumps(accents)+';'+r'''
+var out=[];for(var ci=0;ci<ids.length;ci++){var c=app.project.itemByID(ids[ci]);for(var si=0;si<shots.length;si++){var s=shots[si];for(var ei=0;ei<s.attention_events.length;ei++){var e=s.attention_events[ei];if(e.target!=='source')continue;var matched=0;for(var li=1;li<=c.numLayers;li++){var l=c.layer(li);if(l.name.indexOf(s.world+'-source-')!==0)continue;var d=l.property('Source Text').valueAtTime(s.end-.5/24,false),at=d.text.indexOf(e.phrase);if(at<0)continue;matched++;var an=l.property('ADBE Text Properties').property('ADBE Text Animators').property('LIGHT_ACCENT_'+s.id+'_'+ei),amount=an.property('ADBE Text Selectors').property(1).property('ADBE Text Range Advanced').property('ADBE Text Selector Max Amount'),values=[];for(var f=Math.ceil((s.end-.5)*24);f<=Math.ceil(s.end*24);f++)values.push(amount.valueAtTime(f/24,false));out.push({comp:c.id,scene:s.id,phrase:e.phrase,before:amount.valueAtTime(Math.max(e.time,s.source_arrive)-1/24,false),peak:amount.valueAtTime(Math.max(e.time,s.source_arrive)+.25,false),after:amount.valueAtTime(s.end-.5/24,false),expression_error:amount.expressionError,ink:d.characterRange(at,at+e.phrase.length).fillColor,exit_values:values});}if(!matched)throw Error('Missing source accent');}}}return out;
+'''
+        accent_values=h.js(code)
+        for v in accent_values:
+            if (abs(v['before'])>.01 or v['peak']<99.9 or abs(v['after'])>.01 or v['expression_error']
+                    or not v['ink'] or any(abs(x-y)>.002 for x,y in zip(v['ink'],[.09,.13,.16]))
+                    or any(y>x+.01 or abs(x-y)>25 for x,y in zip(v['exit_values'],v['exit_values'][1:]))):
+                raise ValueError('Light source accent persists into the next judgement or snaps to ink')
+        write(folder/'LIGHT_ACCENT_CONTINUITY.json',{'rows':accent_values,'human_review':'PENDING'})
     for c in p['cues']:
         row=native['CAPTION_'+c['id']]
         if row['text'].replace('\r','\n')!='\n'.join(c['display_lines']) or abs(row['inPoint']-c['start'])>1e-4 or abs(row['outPoint']-c['end'])>1e-4:
@@ -213,9 +279,50 @@ def audit(folder):
             if not row['threeD'] or row['text']!=binding['exact_text']:raise ValueError('Search query lost its original identity')
         r['reading_camera_and_focus']=camera
         r['measured_reading_events']=n['audit']['reading']
+        if n['audit'].get('scan_motion'):
+            # Read the actual continuous curves, not only their end keys. A
+            # diagonal scan or a pitch reset between lines must not pass.
+            source_names={x['layer_id']:x['id'] for x in n['audit']['sources']}
+            spec={'comps':[n['comp_id'],n['master_comp_id']],
+                  'scans':n['audit']['scan_motion'],
+                  'words':[{**x,'layer_name':source_names[x['layer_id']]} for x in n['audit']['word_focus']]}
+            code='var S='+json.dumps(spec)+';'+'''var errors=[],scans=[],words=[];
+            for(var ci=0;ci<S.comps.length;ci++){
+              var cp=app.project.itemByID(S.comps[ci]),cam=cp.layer("READING_CAMERA");
+              for(var j=0;j<S.scans.length;j++){
+                var s=S.scans[j],last=-1e20,count=0,p0=cam.transform.position.valueAtTime(s.pitch_start,false),p1=cam.transform.position.valueAtTime(s.pitch_end,false);
+                for(var d=0;d<3;d++)if(Math.abs(p0[d]-p1[d])>.01)errors.push(s.scene+": pitch moved camera");
+                for(var frame=Math.ceil(s.start*24);frame<=Math.floor(s.end*24);frame++){
+                  var t=frame/24,p=cam.transform.position.valueAtTime(t,false),q=cam.transform.pointOfInterest.valueAtTime(t,false);
+                  if(Math.abs(q[0]-s.column_x)>.01||Math.abs(p[0]-q[0])>.01)errors.push(s.scene+": horizontal scan");
+                  if(Math.abs((p[1]-q[1])/(q[2]-p[2])+s.pitch_ratio)>.00001)errors.push(s.scene+": pitch reset");
+                  if(q[1]<last-.01)errors.push(s.scene+": backward reading motion");last=q[1];count++;
+                }
+                scans.push({comp_id:cp.id,scene:s.scene,checked_frames:count});
+              }
+              for(var j=0;j<S.words.length;j++){
+                var w=S.words[j],text=cp.layer(w.layer_name).property("ADBE Text Properties"),a=text.property("ADBE Text Animators").property(w.animator),scale=a.property("ADBE Text Animator Properties").property("ADBE Text Scale 3D"),sel=a.property("ADBE Text Selectors").property(1),adv=sel.property("ADBE Text Range Advanced"),values=[];
+                if(scale.expression!==w.expression||scale.expressionError||text.property("ADBE Text More Options").property("ADBE Text Anchor Point Option").value!==2||sel.property("ADBE Text Index Start").value!==w.start||sel.property("ADBE Text Index End").value!==w.end||adv.property("ADBE Text Selector Smoothness").value!==0)errors.push(w.animator+": unbound word function");
+                for(var k=-1;k<=21;k++){var t=w.time_start+(w.time_end-w.time_start)*k/20,v=scale.valueAtTime(t,false);if(v[0]<99.999||v[0]>104.001||Math.abs(v[0]-v[1])>.001||Math.abs(v[2]-100)>.001)errors.push(w.animator+": scale overshoot");values.push(v[0]);}
+                if(Math.abs(values[0]-100)>.001||Math.abs(values[1]-100)>.001||Math.abs(values[11]-104)>.001||Math.abs(values[21]-100)>.001||Math.abs(values[22]-100)>.001)errors.push(w.animator+": attack/rest/return");
+                words.push({comp_id:cp.id,animator:w.animator,values:values});
+              }
+            }return {errors:errors,scans:scans,words:words};'''
+            motion=h.js(code)
+            write(folder/'PITCH_WORD_NATIVE_AUDIT.json',motion)
+            if motion['errors']:raise ValueError('Native pitch/word-focus curve failed: '+str(motion['errors'][:3]))
+            r['pitch_word_time_functions']=motion
     master=h.js('var c=app.project.itemByID('+str(n['master_comp_id'])+');return {width:c.width,height:c.height,fps:c.frameRate,duration:c.duration,comment:c.comment};')
     if [master['width'],master['height'],master['fps'],round(master['duration']*24)]!=[3840,2160,24,p['frames']]:raise ValueError('Unrendered master format changed')
     r['unrendered_master']=master
+    from ae_production.reading_review import native_reading_script, validate_reading
+    regression=[]
+    for comp_id in (n['comp_id'],n['master_comp_id']):
+        observed=h.js(native_reading_script(comp_id,n['audit']))
+        write(folder/('READING_CONTINUITY_NATIVE_'+str(comp_id)+'.json'),observed)
+        regression.append({'comp_id':comp_id,**validate_reading(p['scenes'],n['audit'],observed,p.get('article_chunking'))})
+    r['reading_continuity_regression']=regression
+    r['reading_rig_sha256']=sha256(READING_RIG)
     write(folder/'native-audit.json',r)
     return {'source_text':'PASS','complete_candidate_identity_and_withdrawal':'PASS','replay_candidate_state':'PASS','caption_clock':'PASS','native_layers':len(native),'human_creative_review':'PENDING'}
 
@@ -435,9 +542,16 @@ def restore(folder):
     a,p,n=current_native(folder);results={}
     h=Host(folder,'after_effects');old=read(folder/'SESSION_BEFORE.json');target=old['identity']
     if Path(h.identity()['project_path']).resolve()==h.project.resolve():
-        cid=int(target['target_id'].split(':')[1]);code='app.project.close(CloseOptions.DO_NOT_SAVE_CHANGES);app.open(new File('+json.dumps(target['project_path'].replace('\\','/'))+'));for(var i=1;i<=app.project.numItems;i++)app.project.item(i).selected=false;var c=app.project.itemByID('+str(cid)+');c.selected=true;c.openInViewer();return {restored:true};'
+        if target['target_id']=='none':
+            focus='app.project.showWindow(true);'
+        elif target['target_id'].startswith('comp:'):
+            cid=int(target['target_id'].split(':')[1])
+            focus='var c=app.project.itemByID('+str(cid)+');c.selected=true;c.openInViewer();'
+        else:raise ValueError('Unsupported prior AE target: '+target['target_id'])
+        opening='app.open(new File('+json.dumps(target['project_path'].replace('\\','/'))+'));' if target['project_path'] else 'app.newProject();'
+        code='app.project.close(CloseOptions.DO_NOT_SAVE_CHANGES);'+opening+'for(var i=1;i<=app.project.numItems;i++)app.project.item(i).selected=false;'+focus+'return {restored:true};'
         results['after_effects']=h.mutation_js(code,'Restore saved prior AE project',{k:target[k] for k in ('process_id','project_path','target_id')})
-    if sha256(target['project_path'])!=old['sha256']:raise ValueError('Prior AE project changed')
+    if target['project_path'] and sha256(target['project_path'])!=old['sha256']:raise ValueError('Prior AE project changed')
     if (folder/'PR_SESSION_BEFORE.json').exists():
         h=Host(folder,'premiere');old=read(folder/'PR_SESSION_BEFORE.json');target=old['identity']
         # Saving the new edit is intentional; restoration is a distinct native action.

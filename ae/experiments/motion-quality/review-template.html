@@ -1,0 +1,59 @@
+<!doctype html><html lang="zh-CN"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Motion Quality · 原生 AE 对照</title>
+<style>
+:root{font-family:system-ui,"Microsoft YaHei",sans-serif;color:#1b282f;background:#f3f0e9;line-height:1.7}body{max-width:1180px;margin:48px auto;padding:0 24px 72px}h1{font-size:42px;line-height:1.2;letter-spacing:-1px}h2{margin-top:48px;border-top:1px solid #c7c7bd;padding-top:24px}h3{margin-top:24px}p{max-width:92ch}a{color:#9d3c12}video,img,svg{width:100%;display:block}video{background:#e7e3db;border-radius:6px}.tag{display:inline-block;padding:4px 12px;background:#e7ddcb;border-radius:20px;margin:0 8px 8px 0}.pair{display:grid;grid-template-columns:1fr 1fr;gap:16px}.panel{background:#faf8f3;padding:18px;border:1px solid #d4d1c7;border-radius:8px}table{border-collapse:collapse;width:100%;font-size:14px;margin:16px 0}td,th{border-bottom:1px solid #d7d5cc;padding:10px;text-align:left;vertical-align:top}th{font-weight:600}button,select{padding:9px 16px;background:#fffaf2;border:1px solid #9d9484;border-radius:5px;cursor:pointer}input[type=range]{width:100%;accent-color:#ae481e}.scroll{overflow:auto}.small{font-size:13px;color:#576268}code{overflow-wrap:anywhere}summary{cursor:pointer;font-weight:600}blockquote{border-left:3px solid #b6491a;padding:8px 20px;margin:20px 0}svg text{font-size:15px;fill:#425159}@media(max-width:760px){.pair{grid-template-columns:1fr}h1{font-size:32px}body{margin-top:24px}table{min-width:680px}}
+</style>
+<span class="tag">3840 × 2160 · 24fps</span><span class="tag">每版 33.417 秒 · 802 帧</span><span class="tag">人工审美 / 听感待审</span>
+<h1>搜索有方向，动作有交接，阅读有停顿。</h1>
+<p>本轮只改现有 SC09L 后段 → SC10 的运动表现：寻找 feedback workshops，携带 A，提取原文，比较 take part in / Chair，执行既有 A 排除，再把原文还回原位。三句完整原配音、原题、证据、判断与时刻均保留。片段比上一轮 12 秒长，是为了完整展示同一动作链与归位，不为它新增讲解。</p>
+<p><a href="media/MOTION_QUALITY_AB.aep">下载可编辑 AE 工程</a> · <a href="media/A_MOTION_QUALITY_4K24.mp4">A 原版</a> · <a href="media/B_MOTION_QUALITY_4K24.mp4">B 实验</a> · <a href="media/AB_MOTION_QUALITY_COMPARE_4K24.mp4">顺序对比片</a></p>
+<video controls preload="metadata" src="media/AB_MOTION_QUALITY_COMPARE_4K24.mp4"></video>
+<p class="small">前 33.417 秒为 A，后 33.417 秒为 B。顺序对比副本加了 A/B 角标；独立 A/B 的画面直接来自 AE 原生渲染。请先按原速观看，再使用下面的逐帧检查。程序和图像检查不代替人工原速观感。</p>
+<h2>同帧比较</h2>
+<div class="pair"><div><b>A · 当前原版</b><img id="frameA" src="review/frames-A/0000.jpg" alt="A 当前帧"></div><div><b>B · 运动实验</b><img id="frameB" src="review/frames-B/0000.jpg" alt="B 当前帧"></div></div>
+<input id="frame" type="range" min="0" max="801" value="0" step="1" aria-label="对比帧"><p><button id="prev">前一帧</button> <button id="next">后一帧</button> <select id="jump"><option value="0">搜索起点</option><option value="72">词块焦点</option><option value="179">命中</option><option value="425">连续交接</option><option value="504">提取开始</option><option value="617">参加 / 主持</option><option value="681">原判断</option><option value="778">归位</option></select> <output id="time">0 / 801 · 0.000s</output></p>
+<p class="small">所有缩略帧均由最终 MP4 解码得到，960×540，仅用于定位。判断英文清晰度请打开 4K 原片。静止阅读中的重复帧是有意停顿，不直接判作掉帧。</p>
+<h2>参考教程：实际取得的依据</h2>
+<p>核对了四个原始 YouTube 页面的标题、作者、视频信息与有时间戳的完整英文字幕；Mhd、Jake、School 为自动字幕，Ben 为英文人工字幕。没有取得这些教程的原始工程，也没有下载解码教程视频，因此不声称逐帧看过教程或测出了作者的精确曲线。下面是可追溯原则及本片的设计取舍，参数由本实验设计。</p>
+<div class="scroll"><table><tr><th>原教程</th><th>原则与时间段</th><th>本片实际采用 / 边界</th></tr>
+<tr><td><a href="https://www.youtube.com/watch?v=RY7MtvhnMyA&amp;t=70s">Mhd Labs · Smooth Motion / Premium Look</a></td><td>1:10–2:18：中间关键帧一律缓动会形成不必要的停顿；调整中间速度与路径连续性。5:55–6:25：Null 与父子关系服务连续移动。</td><td>搜索途经点保留非零速度；真实 Camera + Null。命中与阅读仍需停稳，不把“始终运动”当作教学镜头规则。</td></tr>
+<tr><td><a href="https://www.youtube.com/watch?v=7pOCtlrrE3Y&amp;t=641s">Jake In Motion · Graph Editor</a></td><td>10:41–11:50：Speed Graph 显示变化速率，曲线峰值与两端控制节奏。15:40–16:28：路径与速度分开考虑，Rove Across Time 可处理时间可浮动的中间点。</td><td>本片用原生可编辑速度 / influence 与空间切线；证据、命中、判断的时间不能浮动，因此没有对它们启用 roving。</td></tr>
+<tr><td><a href="https://www.youtube.com/watch?v=n24aTp1-jK4&amp;t=141s">Ben Marriott · Perfect Shape Morphs</a></td><td>2:21–4:41：顶点对应、数量与首顶点影响变形路径。16:58–17:58：中间形状与负空间决定动作观感，终点相同并不够。</td><td>采用“身份对应与检查中间状态”的原则；英文是阅读证据，保持字形与原词，不对字母做 shape morph，也没有引入插件。</td></tr>
+<tr><td><a href="https://www.youtube.com/watch?v=PlgntkCTr90&amp;t=485s">School of Motion · Follow-Through</a><br><a href="https://schoolofmotion.com/blog/animation-tricks-follow-through-after-effects">官方配套文章</a></td><td>0:35–0:44：各部分不必同时启停。8:05–8:54：错开旋转关键帧，用延迟和幅度调整跟随。</td><td>同一文字组位移先结束，微转角晚 4 帧收束。保持刚性与可读性，不套用角色软体形变或夸张弹性。</td></tr></table></div>
+<h2>原版问题与本次改动</h2>
+<p>A 保留当前原生源合成的全部原运动；B 在副本中改曲线、前景携带、背景显著度及块状焦点。原搜索已经具有 3D pitch 与向下路径；本轮处理途经点接近零速、选项途中出画、提取各部分同时停下、快速交接过急等具体问题。</p>
+<div class="scroll">{{METRIC_TABLE}}</div>
+<p>峰值速度下降部分来自“命中阅读结束后提前准备下一视角”，将原 1 秒相机移动延展为 3 秒；不能把全部改善归因于 Ease。所有读题、源句辨认、比较与原 A 排除时刻仍保留。已识别目标之外的背景在选项接近期间降权，避免深色段落与前景选项叠读；源句仍保留完整。</p>
+<h2>同一时间线上的动作接力</h2><div class="scroll">{{PHASE_TABLE}}</div>
+<h3>实际相机速度 · 全段</h3>{{FULL_SPEED}}
+<h3>实际相机速度 · 搜索段放大</h3>{{SEARCH_SPEED}}
+<p class="small">曲线来自 AE 每帧实际属性值的差分，不是宣称来自教程工程。该图显示世界空间相机速度；字形的屏幕位移、景深与可读性仍需看实际帧。24fps 差分不会证明亚帧数学连续性。</p>
+<details><summary>查看实际执行的关键帧参数</summary><div class="scroll">{{KEY_TABLE}}</div><p>Position 的空间切线与 Temporal Ease 分别设置。阅读和结束段的 0 速度有意保留；搜索过渡点的非零速度由原生 Speed Graph 实现。没有把所有对象统一套一条 Ease In-Out。表内是 AE 实际回读：首键不存在入段，其入速度可为 0；亚帧键的原生时间刻度存在约 16 微秒的量化差异。</p></details>
+<h2>词块焦点与 3D 空间</h2>
+<p>块内各词共用一个放大相位，块与块接续。幅度 4%，升起约 0.24s、落回约 0.32s。时间函数使用五次平滑曲线，端点速度和加速度为零；不使用弹跳、随机摇晃或每个词各跳一下。现有 12 个词块范围明确绑定原文字串，不推导新的教学事实。</p>
+<p>搜索保留约 6.8° 的单一 pitch 与向下方向；镜头通过 MQ_CAMERA_RIG / MQ_CAMERA_AIM / MQ_CAMERA_OFFSET 控制。原生 3D 原文与来源坐标保持，提取组 SOURCE_LIFT_SC10 保持透明原词。位移、微旋转与相机提前量错开，回到相同原位后交还源层。</p>
+<details><summary>查看完整词块与焦点峰值</summary><div class="scroll">{{CHUNK_TABLE}}</div></details>
+<h2>运动模糊、景深与阅读</h2>
+<p>A 保留 90° 快门；B 使用 120° / −60°，控制快速交接的采样跨度，避免大角度快门把英文拉成长拖影。原生景深保留，阅读时收小光圈；比较稳定段相机和文字组位置不漂移。以下配对截图只切换 B 的 Motion Blur 开关，其余条件相同，检查后已恢复作者设置。</p>
+<div class="scroll">{{BLUR_TABLE}}</div>
+<p>快速帧发生像素变化，静止阅读帧没有超过 1 色阶的显著差异。这证明快门在此渲染链中实际生效，并未明显污染所测静止帧；不能证明每个运动中的词都可读，也不能代替原速观看。</p>
+<h2>最终媒体逐帧检查</h2>
+<div class="pair"><a href="review/A_ENCODED_CONTACT.jpg"><img loading="lazy" src="review/A_ENCODED_CONTACT.jpg" alt="A 编码后关键帧"></a><a href="review/B_ENCODED_CONTACT.jpg"><img loading="lazy" src="review/B_ENCODED_CONTACT.jpg" alt="B 编码后关键帧"></a></div>
+<details><summary>密集逐帧：搜索、交接、提取、归位</summary><p>各窗口连续 24 帧；以下缩略表只便于追踪轨迹。完整英文阅读请看 4K 媒体。</p><div id="dense"></div></details>
+<p>两版分别完整解码 802 帧，检查 4K24、连续时间戳、黑帧与帧差；音轨合成前后的画面包一致。三个原始音频 take 均完整保留，A/B 解码音频一致。比较片另行编码用于顺序观看，不取代独立原生渲染文件。</p>
+<h2>本片完整口播 · 未改稿</h2><blockquote>每天的安排在这里。<br><br>再用换词不换义。<br><br>原文是参加工作坊，A 却成了主持。做的事变了，A 排除。</blockquote><div class="scroll">{{AUDIO_TABLE}}</div>
+<p>此段结果是排除 A，不是整题终答。方法名、适用证据和结果均沿用当前有效输入；不增加解释课，不把后台字段逐条搬到前台。完整原题其他选项仍属于原流程。</p>
+<h2>验证与待审事项分开记录</h2>
+<div class="scroll"><table><tr><th>维度</th><th>已取得的证据</th><th>仍待人工观看</th></tr>
+<tr><td>运动连续性</td><td>搜索单调向下、途经速度非零；实际曲线与逐帧表</td><td>是否自然，是否有主观上的拖沓或突兀</td></tr><tr><td>注意力 / 因果</td><td>命中、提取、比较、判断先后保持；前景选项持续存在</td><td>是否跟得上焦点交接，不需倒回理解</td></tr><tr><td>3D / Swiss 秩序</td><td>实际相机、Null、3D 图层与透明来源绑定</td><td>深度是否适度，是否真正减少 PPT 感</td></tr><tr><td>英文可读性</td><td>完整原词与字体不变；背景降权、阅读落稳、模糊配对帧</td><td>快速交接是否仍过快，4% 放大是否合适</td></tr><tr><td>落位 / 归还</td><td>原位数值及源层 100% 显著度恢复；比较段位置稳定</td><td>跟随收束是否有重量感，归位是否清楚</td></tr><tr><td>真实边界 / 声画</td><td>A 排除与时刻不变；同三条完整音频；无新讲解</td><td>原速听感、文案独立审阅、声音与动作是否相互支持</td></tr><tr><td>审美质量 / 生产接入</td><td>原生样片与可编辑工程已制作；程序检查独立记录</td><td><b>未批准。未接入主片默认制作链。</b></td></tr></table></div>
+<p>图像抽查关注了背景叠读、参加/主持强调色、提取与原位返回；这属于模型对实际图像的检查，不能署名为人类审美通过。程序检查也不代表学生理解、全片验收或发布批准。</p>
+<h2>现有能力状态与最小后续方案</h2>
+<p>既有 Motion Identity、Method Choreography 与当前生产入口继续有效。Reality Layer / Cognitive Space、Swiss Cognitive POV、原生 3D、透明提取、声音与题间递进均保留其原适用范围。主片 R04 的扫读修订已有原生预览，尚无完整 R04 主片渲染；此前 Read Frog 12 秒 A/B 有独立渲染，本次不借用其媒体或假定它已获人工认可。</p>
+<div class="scroll"><table><tr><th>能力</th><th>已实现</th><th>当前生产消费</th><th>实际渲染证据</th><th>人工认可范围</th></tr><tr><td>Swiss POV、原生 3D、透明来源与连续入场</td><td>既有原生模板</td><td>主片沿用</td><td>R03 完整代理与既有局部片；本次 A/B</td><td>既有方向与局部入场反馈保留；不转授本次新镜头</td></tr><tr><td>一次 pitch 后向下跳读</td><td>R04 原生修订</td><td>主片当前 R04 消费</td><td>R04 有预览，本次取其真实搜索后段；完整 R04 尚未渲染</td><td>本次连续性与可读性待审</td></tr><tr><td>词块同相位轻微放大</td><td>既有词块函数</td><td>仅独立 B 实验，尚未成为主片默认</td><td>Read Frog 12 秒 B 与本次 B</td><td>待审</td></tr><tr><td>分语义原生速度、连续携带、错峰收束</td><td>本次限定 Rig</td><td>仅本次 B 的实际对象消费</td><td>本次两版各 802 帧</td><td>待审，不计整链完成</td></tr><tr><td>当前文案和完整声音</td><td>现有作者时钟 / 声音接口</td><td>主片及本次三条原 take</td><td>R03 完整代理；本次同声 A/B</td><td>独立审稿、完整听感仍待审</td></tr></table></div>
+<p>本轮实际消费者仅为独立实验 B 的相机、携带、提取与文本焦点。若人工认可，再把已认可部分以可选参数接到现有 readPath、lift 和 candidate 消费点，继续使用同一作者时钟与声画计划；不新增编译层，不重写生产链，不自动替换所有镜头。主片默认值和历史合格 AEP / 媒体保持。</p>
+<details><summary>审计与工程信息</summary><p>工程包含 MQ_A_ORIGINAL_4K24 与 MQ_B_OPTIMIZED_4K24 两个输出合成，以及各自原生源合成。B 源合成中的 MQ_* Null 与 SOURCE_LIFT_SC10 可直接在 Graph Editor 修改；词块动画在文本 Animator 中。媒体用本机原配音文件，跨机器打开需要携带对应音频。</p><p><a href="NATIVE_QA.json">原生回读结论</a> · <a href="NATIVE_CURVE_QA.json">实际曲线核验</a> · <a href="NATIVE_READBACK.json">完整原生属性</a> · <a href="MEDIA_QA.json">实际媒体检查</a> · <a href="BLUR_PIXEL_QA.json">模糊配对检查</a> · <a href="IMAGE_REVIEW.json">实际帧图像检查</a> · <a href="PROTECTION_QA.json">原文件保护</a> · <a href="GENERATOR_ALIGNMENT.json">生成器与实测对齐</a> · <a href="RESTORED.json">宿主恢复</a> · <a href="HOST_SESSION_CLOSED.json">本次宿主关闭记录</a> · <a href="reference/TRANSCRIPT_API_STATUS.json">字幕取得记录</a></p><p class="small">原生身份 SHA：<code>{{NATIVE_SHA}}</code><br>工程 SHA：<code>{{AEP_SHA}}</code></p><p>最终核验保留实际渲染中的单轴 pitch 跟随：提取 1°、归位 0.8°。生成器已删去未实际发生的 Y 轴意图；工程只更新控制器说明，全部原生属性回读一致，视频字节保持。记录区分实测参数和原先意图。</p><p>启动期间曾遇 AE 原宿主退出与 CEP 加载问题，后续在正常新宿主完成；未重设偏好或更改权限。构建时发生的 Time Remap 局部失败已按服务器 recovery receipt 检查并继续，部分工程保留于 iterations。视觉修订的每次旧工程与原生预览亦保留，失败或待审状态未作为批准。</p></details>
+<script>
+const data={{FRAME_DATA}}, slider=document.querySelector('#frame');
+function show(n){n=Math.max(0,Math.min(data.total-1,Number(n)));slider.value=n;let file=String(n).padStart(4,'0')+'.jpg';document.querySelector('#frameA').src='review/frames-A/'+file;document.querySelector('#frameB').src='review/frames-B/'+file;document.querySelector('#time').textContent=n+' / '+(data.total-1)+' · '+(n/data.fps).toFixed(3)+'s';}
+slider.oninput=()=>show(slider.value);document.querySelector('#prev').onclick=()=>show(+slider.value-1);document.querySelector('#next').onclick=()=>show(+slider.value+1);document.querySelector('#jump').onchange=e=>show(e.target.value);
+for(const label of ['chunk-search','camera-handoff','extraction','settle','return','source-handoff']){let title=document.createElement('h3');title.textContent=label;document.querySelector('#dense').append(title);let pair=document.createElement('div');pair.className='pair';for(const v of ['A','B']){let a=document.createElement('a'),im=document.createElement('img');a.href=im.src='review/'+v+'_EVERY_FRAME_'+label+'.jpg';im.loading='lazy';im.alt=v+' '+label+' 连续 24 帧';a.append(im);pair.append(a);}document.querySelector('#dense').append(pair);}
+</script></html>

@@ -6,6 +6,44 @@ Policy: `free_showcase_v1`. Brand: **英语有画说**. Series: **学霸这题�
 
 Free Showcase presents supported actions on actual questions. Paid Mastery plans broader conditions, counterexamples, combinations and independent practice. Method Validation studies generalizability. These routes cannot change ANSWER facts or borrow one another's approval.
 
+## Method expression: name, execute, result
+
+FREE_SHOWCASE uses a valid, intuitive method name as a compressed operating cue.
+Say or show it immediately before use, execute one coherent first-person visual
+action, and reveal its supported result with the necessary key judgment. On a
+later question, call the name again without repeating its definition. Use only
+names and action scope supported by the supplied effective ANSWER material;
+an illustrative name in a creative request is not a new teaching method.
+
+A complete solution need not narrate every internal reasoning step. Retain full
+Evidence, Action, Stop Rule, applicability and final-answer support backstage;
+keep decisive evidence visible. Do not serially turn Pedagogy, Student POV or
+Cognitive Direction analysis fields into narration, subtitles or mini-lessons.
+Add a short explanation only for an actual comprehension obstacle. One selected
+action receives the episode's focused replay; the others keep a coherent solving
+pace. Compressing copy must also update takes, captions, camera and judgment
+timing, preserving readable holds and spatial motion rather than leaving equal
+length silence or globally speeding the film up.
+
+Free review asks whether viewers recognize the method, see its actual change,
+and experience an efficient solution. PAID_MASTERY expands conditions, operations,
+combinations, boundaries, mistakes and transfer practice. This expression change
+does not relax truth or closure and does not create a new release gate.
+
+## Critical judgements determine production resources
+
+Teaching Value Density allocates narration, detailed motion and local replay to
+the point where a supported method changes a difficult judgement. Obvious claims
+receive light checks; ordinary distractors receive a short judgement; important
+differences receive source alignment, scope comparison or extraction as needed.
+Critical Option Pair is optional: one or several distractors may matter, and an
+editorial focus set never pretends that unchecked options have been eliminated.
+Keep all original candidate reviews backstage and visible decisive evidence.
+Current production consumes this through `AV_AUTHOR.teaching_focus`; the exact
+consumer and regression checks are in the current workflow. Editorial difficulty,
+compiled resource shares and human/student results remain separate. Existing
+teaching, source, copy, motion, listening and publication reviews still apply.
+
 ## Highest-priority product correction: Experience First / Rigour First
 
 `content_profile=FREE_SHOWCASE` optimizes experience, cognitive payoff and propagation after common hard gates. Creative Director leads organization. Its ordered quality rubric is Hook, Engagement, Narrative, Cognitive Payoff, Visual Impact, Voice Performance, Memorability and Shareability.
@@ -54,7 +92,7 @@ First-use/Transfer is deliberately not an input. Approval claims no method matur
 
 The unit is **one core method → one episode → two or three independently bound real questions**. Method organizes the episode; question drives narrative; action drives motion. Establish/Variation/optional Amplification are editorial roles, not certified transfer. Each question has original task, observation, first action, necessary helpers, evidence, judgment, payoff and lawful closure. Helpers retain attribution; no question borrows another question's Review.
 
-Use shared Signature Motion with independent choreography. First-question replay may be fuller; later replay is optional. The user sets no duration requirement or upper limit. Earlier duration targets and ranges are obsolete as constraints; timings only describe the evolving cut. Derivatives require renewed scope/display/editorial/media review. If only one supported question exists, report the missing second source.
+Use shared Signature Motion with independent choreography. Focus the episode's one replay on the action with the clearest visual and cognitive payoff; do not replay each whole question. There is no hard duration requirement or upper limit; timings describe the evolving cut and must not be filled with redundant explanation or holds. Derivatives require renewed scope/display/editorial/media review. If only one supported question exists, report the missing second source.
 
 ## Lightweight interfaces
 

@@ -175,6 +175,26 @@ def validate_engagement(plan, episode, statuses, direction):
             'human_review':'PENDING','public_render_ready':False}
 
 
+def critical_focus_handoff(author, clock):
+    """Consume real candidate states; expectation comes from a bound difference."""
+    rows=[]
+    for world,q in author['teaching_focus']['questions'].items():
+        decisions={}
+        for s in clock['scenes']:
+            if s['world']!=world:continue
+            for ident in s.get('critical_units',[]):
+                unit=next(u for u in q['units'] if u['id']==ident)
+                rows.append({'scene':s['id'],'unit':ident,'challenge':unit['challenge'],
+                    'candidate_states_before':{c:decisions.get(c,'unchecked') for c in q['options']},
+                    'focus_candidates':unit['candidates'],'method_action_ref':unit['method_action_ref'],
+                    'decisive_source_refs':unit['decisive_source_refs'],'payoff':unit['judgement_change'],
+                    'difficulty_basis':unit['difficulty_basis'],'invented_suspense':False,
+                    'planned_range':[s['start'],s['end']]})
+            if s.get('event') in ('eliminate','supported'):decisions[s['candidate']]=s['event']
+    return {'kind':'critical_judgement_handoff','rows':rows,'actual_media_mapping':'PENDING',
+            'human_review':'PENDING','public_render_ready':False}
+
+
 def director_handoff(plan, episode, statuses, direction, native_direction, beat_scenes):
     """Bind suggestions to existing Adaptive scenes without executing motion.
 

@@ -8,6 +8,8 @@
 Shot Plan → Landscape Render Contract → AE 检查／预览／内部 MP4。
 最终公开教学、来源展示、编辑及 Human Taste 审核仍独立，当前全部 PENDING。
 
+镜头、文案篇幅与动效重点遵循 [Video OS 导演总原则](../docs/video-os.md#导演总原则)：按判断困难和方法价值分配，不按选项数量平均分配；精细动效优先服务于方法改变判断结果的瞬间。
+
 R02 现有 Frozen Copy 0.3 的口播 A/B 实验接入独立
 [Narration Performance v0.1](voice-performance/README.md)。它保存认知交付意图、
 真实后端能力和新 PR 时间绑定；不重新实现文案、解题或既有生产链。
