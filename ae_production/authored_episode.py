@@ -157,6 +157,8 @@ def script_text(author):
     review='用户已独立审阅（仅此逐字稿）' if author['copy_review']=='USER_REVIEWED_EXACT_COPY' else author['copy_review']
     if author['copy_review']=='PENDING_MERGED_COPY_REVIEW_BODY_ALREADY_USER_REVIEWED_HOOK_USER_SPECIFIED':
         review='正文已独立审阅；开场采用用户指定原文；合并稿待独立审阅'
+    if author['copy_review']=='PENDING_USER_REVIEW_AFTER_REQUESTED_REPLAY_REMOVAL':
+        review='保留口播沿用已审文字；删除慢看后的重组稿待独立审阅'
     lines = ['# 英语有画说 · ' + author['revision'] + ' 完整文案',
              '文案状态：' + review,
              '段落标签不读入旁白。文案审阅与画面、听感、整片认可分别记录。', '']
