@@ -404,6 +404,17 @@ def validate_visual_state_readback(p,n,rows):
             'normal_speed_review':'UNOBSERVED'}
 
 
+def validate_material_identity_scope(p,rows,comp_ids):
+    expected_start=p.get('audience_hook',{}).get('end',0)
+    expected_end=p['scenes'][0]['end']
+    if len(rows)!=len(comp_ids) or {r['comp_id'] for r in rows}!=set(comp_ids):
+        raise ValueError('Actual material identity scope requires every native composition')
+    if any(any(type(r[k]) not in (int,float) or not math.isfinite(r[k]) for k in ('inPoint','outPoint'))
+           or abs(r['inPoint']-expected_start)>.0001 or abs(r['outPoint']-expected_end)>.0001 for r in rows):
+        raise ValueError('Material identity overlaps source reading or misses its opening scope')
+    return {'status':'PASS_EXACT_OPENING_SCOPE','rows':rows}
+
+
 def audit(folder):
     a,p,n=current_native(folder);h=Host(folder,'after_effects')
     code="var c=app.project.itemByID(CID),rows=[];for(var i=1;i<=c.numLayers;i++){var l=c.layer(i),r={name:l.name,id:l.id,inPoint:l.inPoint,outPoint:l.outPoint,threeD:l.threeDLayer,parent:l.parent?l.parent.id:null,comment:l.comment};if(l instanceof TextLayer){r.text=l.property('Source Text').value.text;r.font=l.property('Source Text').value.font;if(l.name.indexOf('-source-')>=0&&l.name.indexOf('EXTRACT_')!==0){var initial=l.property('Source Text').valueAtTime(0,false);r.initial_color=initial.characterRange(0,initial.text.length).fillColor||null;r.text_height=l.sourceRectAtTime(0,false).height;}}if(l instanceof CameraLayer||l.name.indexOf('SOURCE_LIFT_')===0||l.name.indexOf('CANDIDATE_FLIGHT_')===0||l.name.indexOf('-source-')>=0){r.position=[];r.orientation=[];var pos=l.transform.position;r.position_value=pos.value;r.scale=[];var sp=l.transform.scale;if(sp)for(var sk=1;sk<=sp.numKeys;sk++)r.scale.push([sp.keyTime(sk),sp.keyValue(sk)]);for(var j=1;j<=pos.numKeys;j++)r.position.push([pos.keyTime(j),pos.keyValue(j)]);if(!(l instanceof CameraLayer)){var ori=l.transform.orientation;for(var j=1;j<=ori.numKeys;j++)r.orientation.push([ori.keyTime(j),ori.keyValue(j)]);}}rows.push(r);}return {project:app.project.file.fsName,width:c.width,height:c.height,duration:c.duration,fps:c.frameRate,layers:rows};".replace('CID',str(n['comp_id']))
@@ -590,6 +601,8 @@ var out=[];for(var ci=0;ci<ids.length;ci++){var c=app.project.itemByID(ids[ci]);
                 layer=native[prefix+scene['id']]
                 if layer['text']!=text or abs(layer['inPoint']-scene['start'])>.001 or abs(layer['outPoint']-scene['end'])>.001:
                     raise ValueError('Actual paper/article attribution text or placement is stale')
+    material=h.js('var ids='+json.dumps([n['comp_id'],n['master_comp_id']])+';var rows=[];for(var i=0;i<ids.length;i++){var l=app.project.itemByID(ids[i]).layer("MATERIAL_IDENTITY");rows.push({comp_id:ids[i],inPoint:l.inPoint,outPoint:l.outPoint});}return rows;')
+    write(folder/'MATERIAL_IDENTITY_NATIVE_READBACK.json',validate_material_identity_scope(p,material,[n['comp_id'],n['master_comp_id']]))
     write(folder/'native-audit.json',r)
     return {'source_text':'PASS','complete_candidate_identity_and_withdrawal':'PASS','replay_candidate_state':'PASS','caption_clock':'PASS','native_layers':len(native),'human_creative_review':'PENDING'}
 

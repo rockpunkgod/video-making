@@ -155,7 +155,7 @@ function buildAudienceOpening(H){
  var cover=C.layers.addSolid(P.visual_states?[23/255,24/255,26/255]:paper,"AUDIENCE_HOOK_SPACE",1280,720,1,P.duration);cover.inPoint=0;cover.outPoint=end;cover.moveAfter(C.layer("CAPTION_SAFE_AREA"));cover.comment=JSON.stringify({kind:"audience_opening_background",decision_sha:H.decision_sha,scene:H.scene_id});names.push(cover.name);
  ease(tr(cover,"ADBE Opacity"),0,100);ease(tr(cover,"ADBE Opacity"),release+.3,100);ease(tr(cover,"ADBE Opacity"),end-.1,0);
  for(var j=0;j<symbols.length;j++){var op=tr(symbols[j],"ADBE Opacity");ease(op,0,0);ease(op,.6,100);ease(op,release,100);ease(op,Math.min(end-.1,release+.3),0);}
- C.layer("MATERIAL_IDENTITY").inPoint=end;
+ C.layer("MATERIAL_IDENTITY").inPoint=end;C.layer("MATERIAL_IDENTITY").outPoint=P.scenes[0].end;
  camera(0,[650,318,0],1580,[-8,-4],10);camera(align1,[640,320,0],1540,[8,-3],12);camera(split1,[640,320,0],1560,[0,0],12);camera(end,[640,320,0],1550,[0,0],14);
  audit.audience_hook={scene:H.scene_id,decision_sha:H.decision_sha,range:[0,end],phases:ph,objects:names,anchor_refs:d.confusion_trigger.anchor_refs,source_texts:d.visual_conflict.visible_text,payoff_scene_id:d.payoff_scene_id,original_task_scene:P.scenes[0].id,original_task_start:P.scenes[0].start,spoiler_boundary:d.spoiler_boundary,normal_speed_review:"UNOBSERVED",listening_review:"UNOBSERVED"};
 }

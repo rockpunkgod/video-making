@@ -701,14 +701,14 @@
     },
     "E29": {
       "paths": [
-        "local-data/free-showcase/audience-hook-v1-r06/AV_AUTHOR.json",
-        "local-data/free-showcase/audience-hook-v1-r06/AV_PLAN.json",
-        "local-data/free-showcase/audience-hook-v1-r06/HOOK_NATIVE_READBACK.json",
-        "local-data/free-showcase/audience-hook-v1-r06/READING_THINKING_NATIVE_READBACK.json",
-        "local-data/free-showcase/audience-hook-v1-r06/SOURCE_ATTRIBUTION.json",
-        "local-data/free-showcase/audience-hook-v1-r06/STATE_PREVIEW_RECEIPT.json"
+        "local-data/free-showcase/audience-hook-v1-r07/AV_AUTHOR.json",
+        "local-data/free-showcase/audience-hook-v1-r07/AV_PLAN.json",
+        "local-data/free-showcase/audience-hook-v1-r07/HOOK_NATIVE_READBACK.json",
+        "local-data/free-showcase/audience-hook-v1-r07/READING_THINKING_NATIVE_READBACK.json",
+        "local-data/free-showcase/audience-hook-v1-r07/SOURCE_ATTRIBUTION.json",
+        "local-data/free-showcase/audience-hook-v1-r07/STATE_PREVIEW_RECEIPT.json"
       ],
-      "scope": "Audience Hook v1 consumed by current authored clock and both native compositions; exact source-bound paper/article labels and user-defined Reading/Thinking states. R01/R02/R03/R04 observed visibility, glyph-crossing, handoff ghosting and state-reveal defects directed actual R05 native revision. R05 corrected native reveal verified in actual encoded opening. User-approved R06 updates two spoken paper attributions, preserves24 takes and measures2 new complete takes; current7381-frame4K render IN_PROGRESS. Static native checks/previews are not full-film, normal-speed or listening approval.",
+      "scope": "Audience Hook v1 consumed by current authored clock and both native compositions; exact source-bound paper/article labels and user-defined Reading/Thinking states. R01/R02/R03/R04 observed visibility, glyph-crossing, handoff ghosting and state-reveal defects directed actual R05 native revision. R05 corrected native reveal verified in actual encoded opening. User-approved R06 updates two spoken paper attributions, preserves24 takes and measures2 new complete takes; R06 actual encoded review found programme identity overran its first-task range; R07 corrects that exact lifetime, re-renders affected whole parts and proves2112 unaffected parent frames through strict native reuse. Current7381-frame4K render IN_PROGRESS. Static native checks/previews are not full-film, normal-speed or listening approval.",
       "public_render_ready": false,
       "human_approved": false
     }

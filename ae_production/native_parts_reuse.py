@@ -28,6 +28,12 @@ SOURCE_ATTENTION_TEMPLATE_SHA256_ALLOWLIST = frozenset({
     SOURCE_ATTENTION_TEMPLATE_SHA256, SOURCE_ATTENTION_TEMPLATE_LF_SHA256})
 ATTENTION_OPERATION = 'authored_attention_and_reading_visibility_repair'
 DISPLAY_OPERATION = 'authored_title_and_background_isolation_repair'
+MATERIAL_OPERATION = 'authored_material_identity_scope_repair'
+MATERIAL_TEMPLATE_PAIR = (
+    'bfe4c531663b3df5e7c2ed07d70d1ed61b1f90e3a43a0bb3be779eb14cffe2ac',
+    'ca1a277929238dbd71471aa2f4970e1b92886d171edec9e8871b3aede643746c')
+MATERIAL_OLD = b' C.layer("MATERIAL_IDENTITY").inPoint=end;'
+MATERIAL_NEW = MATERIAL_OLD+b'C.layer("MATERIAL_IDENTITY").outPoint=P.scenes[0].end;'
 # One independently reviewed single-line patch, with exact same-EOL pairs.
 # A checkout, a normalized digest, or an arbitrary additional template edit
 # cannot extend this list. Historical source-attention proofs stay unchanged.
@@ -796,10 +802,66 @@ def _affected(plan):
     return result
 
 
+def _material_identity_context(old,new):
+    before,after=old['sources']['template'],new['sources']['template']
+    if ((old['native']['template_sha256'],new['native']['template_sha256'])!=MATERIAL_TEMPLATE_PAIR
+            or before.count(MATERIAL_OLD)!=1 or MATERIAL_NEW in before
+            or after!=before.replace(MATERIAL_OLD,MATERIAL_NEW)):
+        raise ValueError('Only the exact reviewed material identity range patch permits reuse')
+    if (old['sources']['reading_rig']!=new['sources']['reading_rig']
+            or old['normalized']!=new['normalized'] or old['alignment']!=new['alignment']):
+        raise ValueError('Material identity repair cannot change reading, voice or scene semantics')
+    if set(old['layers'])!=set(new['layers']):raise ValueError('Material repair changed native layer inventory')
+    hook=old['plan'].get('audience_hook',{})
+    start=hook.get('end');end=old['plan']['scenes'][0]['end']
+    if not isinstance(start,(int,float)) or not 0<start<end:
+        raise ValueError('Actual authored opening and first task range required')
+    for revision,expected_end in ((old,end+start),(new,end)):
+        layer=revision['layers']['MATERIAL_IDENTITY']
+        if (any(type(layer[k]) not in (int,float) or not math.isfinite(layer[k]) for k in ('inPoint','outPoint'))
+                or abs(layer['inPoint']-start)>.0001 or abs(layer['outPoint']-expected_end)>.0001
+                or layer['threeD'] is not False or layer.get('parent') is not None):
+            raise ValueError('Actual material identity layer has an unproved lifetime or space')
+    for name,layer in old['layers'].items():
+        candidate=deepcopy(new['layers'][name]);expected=deepcopy(layer)
+        if name=='MATERIAL_IDENTITY':candidate.pop('outPoint');expected.pop('outPoint')
+        if name=='READING_CAMERA':
+            # value is sampled at an unrecorded UI playhead; exact animation
+            # keys and all other native observations remain fully compared.
+            for value in (candidate,expected):
+                if not value.get('position') or value.get('position_value') not in [v for t,v in value['position']]:
+                    raise ValueError('Camera UI snapshot must equal an actual proved animation key')
+                value.pop('position_value')
+        if candidate!=expected:raise ValueError('Unaffected native material repair property changed: '+name)
+    observations=_native_observations(old)
+    if observations!=_native_observations(new):raise ValueError('Material repair changed native camera or state observations')
+    build=_display_build_observations(old)
+    if build!=_display_build_observations(new):raise ValueError('Material repair changed native build observations')
+    bindings={**old['bindings'],**new['bindings']}
+    material=_record(new['folder']/'MATERIAL_IDENTITY_NATIVE_READBACK.json',bindings)
+    from .authored_native import validate_material_identity_scope
+    validate_material_identity_scope(new['plan'],material['rows'],[new['native']['comp_id'],new['native']['master_comp_id']])
+    _bound_file(old['project'],sha256(old['project']),bindings)
+    return old,new,{'schema':SCHEMA,'operation':MATERIAL_OPERATION,'parent':str(old['folder']),
+        'folder':str(new['folder']),'input_files':bindings,'plan_semantic_sha256':sha(old['normalized']),
+        'alignment_semantic_sha256':sha(old['alignment']),
+        'native_observations_sha256':sha(observations),'native_build_observations_sha256':sha(build),
+        'template_repairs':['explicit_material_identity_outpoint_after_inpoint'],
+        'material_range_observation_scope':'PARENT_PROXY_LAYER_AND_EXACT_DUPLICATION_TEMPLATE; CHILD_ACTUAL_PROXY_AND_MASTER',
+        'camera_ui_snapshot_scope':'EXACT_ANIMATION_KEYS_AND_OBSERVATIONS_PRESERVED; CURRENT_UI_VALUE_MUST_BE_ONE_OF_THOSE_KEYS',
+        'excluded_native_layers':['MATERIAL_IDENTITY'],
+        'affected_frame_ranges':[{'scene':'SC01_TO_READING_BOUNDARY','start':max(0,math.floor(end*24)-1),
+            'end':min(old['plan']['frames'],math.ceil((end+start)*24)+1),
+            'repairs':['material_identity_must_end_with_first_task']}],
+        'scene_boundary_guard_frames':1,'new_native_render':False,'human_approved':False,'public_render_ready':False}
+
+
 def _context(parent, folder):
     old, new = _revision(parent), _revision(folder)
     if old['folder'] == new['folder']:
         raise ValueError('A new native revision is required')
+    if (old['native']['template_sha256'],new['native']['template_sha256'])==MATERIAL_TEMPLATE_PAIR:
+        return _material_identity_context(old,new)
     if _display_requested(old, new):
         return _display_context(old, new)
     if old['sources']['template'] == new['sources']['template']:
@@ -949,11 +1011,12 @@ def reuse_unchanged_parts(parent, folder):
             raise ValueError('Parent native media lacks a completed receipt')
     parts = [_parent_part(old, path, report['input_files']) for path in parent_parts.glob('part-*.json')]
     complete_parent = report['operation'] in (ATTENTION_OPERATION, DISPLAY_OPERATION)
-    cursor = 0 if complete_parent else -1
+    prefix_parent=report['operation']==MATERIAL_OPERATION
+    cursor = 0 if complete_parent or prefix_parent else -1
     for row, item in sorted(parts, key=lambda pair: pair[0]['start']):
         if row['start'] < cursor:
             raise ValueError('Parent native part ranges overlap or run backwards')
-        if complete_parent and row['start'] != cursor:
+        if (complete_parent or prefix_parent) and row['start'] != cursor:
             raise ValueError('Source-anchor repair requires the complete gap-free parent native master')
         cursor = row['end']
         intersections = _overlaps(row, report['affected_frame_ranges'])
