@@ -290,7 +290,8 @@ class AudienceLearning:
                 or Path(qa.get('media','')).resolve()!=Path(media).resolve()):
             raise ValueError('Internal observation requires the same actual plan and media QA')
         if sha256(media)!=issue['media_sha256']:raise ValueError('Observation media changed')
-        scenes={s['id']:s for s in plan['scenes']}
+        from creative_os.audience_engagement import timed_scene_rows
+        scenes={s['id']:s for s in timed_scene_rows(plan)}
         if issue['scene'] not in scenes:raise ValueError('Observation scene is absent from the actual plan')
         s=scenes[issue['scene']];lo,hi=issue['range']
         if not s['start']<=lo<hi<=s['end']:raise ValueError('Observation must bind actual scene seconds')

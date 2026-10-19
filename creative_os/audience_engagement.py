@@ -2,6 +2,12 @@
 from copy import deepcopy
 from video_contracts import sha, validate
 from creative_os.episode import validate_episode
+from pathlib import Path
+import math
+import re
+
+from video_contracts import pointer
+from scripts.voice_delivery import sha256
 
 VERSION = '0.1.0'
 V2 = '0.2.0'
@@ -23,6 +29,208 @@ VIEWER_FIELDS = {'current_problem', 'information_already_seen', 'current_attenti
 EDITORIAL_SIGNALS = {'hook_link_clear', 'payoff_leaked', 'reading_space', 'motion_without_gain',
                      'repeated_explanation', 'method_name_dominates', 'voice_over_hold',
                      'information_overload'}
+
+HOOK_VERSION = '1.0.0'
+HOOK_PHASES = ['enter', 'surface_align', 'relation_displace', 'unresolved_hold', 'match_into_task']
+
+
+def authored_body_binding(author):
+    """Bind an opening to the actual episode, not a similarly named old cut."""
+    hook_ids = set(author.get('audience_hook', {}).get('voice_ids', []))
+    return {'scene_order': [s['id'] for s in author['scenes']],
+            'scenes_sha': sha(author['scenes']),
+            'copy_sha': sha([v for v in author['voices'] if v['id'] not in hook_ids]),
+            'sources_sha': sha({w: {k: sha256(p) for k, p in paths.items()}
+                                for w, paths in author['sources'].items()})}
+
+
+def hook_migration_status(author):
+    if 'audience_hook' not in author:
+        return {'status': 'HISTORICAL_UNMIGRATED', 'contract_version': None,
+                'new_production_allowed': False, 'human_review': 'PENDING',
+                'public_render_ready': False}
+    return {'status': 'USER_DECISION_PRESENT_REQUIRES_VALIDATION',
+            'contract_version': author['audience_hook'].get('contract_version'),
+            'human_review': 'PENDING', 'public_render_ready': False}
+
+
+def timed_scene_rows(plan):
+    """A teaser is explicit media scope, never the first question's fact/answer."""
+    rows=list(plan['scenes'])
+    if 'audience_hook' in plan:
+        h=plan['audience_hook'];d=h['decision']
+        rows=[{'id':h['scene_id'],'kind':'audience_hook','start':h['start'],'end':h['end'],
+               'title':'开场：相同的词，为什么不能选？',
+               'source_refs':d['source_refs'],'audience_intent':d['pain_point']['description'],
+               'world':None,'voice_ids':h['voice_ids']}]+rows
+    return rows
+
+
+def require_hook_decision(author, folder=None, *, operation=None):
+    """Historical inspection/cached films survive; fresh production must migrate."""
+    if 'audience_hook' in author:
+        return
+    # A marker file is not provenance. Historical replay requires the unchanged
+    # saved author, measured plan and native project, and never permits a build.
+    if folder is not None and operation not in {'voice','align','prepare','build'}:
+        from video_contracts import read
+        folder=Path(folder)
+        try:
+            a=read(folder/'AV_AUTHOR.json');p=read(folder/'AV_PLAN.json');n=read(folder/'native-identity.json')
+            saved=Path(n['project_path'])
+            saved_binding=read(folder/'RESTORED_HOSTS.json')['saved_current_projects']['after_effects']
+            if (a==author and p['author_sha256']==sha256(folder/'AV_AUTHOR.json')
+                    and n['plan_sha256']==sha256(folder/'AV_PLAN.json') and saved.is_file()
+                    and Path(saved_binding['path']).resolve()==saved.resolve()
+                    and saved_binding['sha256']==sha256(saved)
+                    and p['alignment_sha256']==sha256(folder/'VOICE_ALIGNMENT.json')
+                    and p['voice_delivery_sha256']==sha256(folder/a['voice_delivery'])):
+                return
+        except (FileNotFoundError,KeyError,ValueError,TypeError):
+            pass
+    raise ValueError('CREATIVE_DECISION_REQUIRED: FREE_SHOWCASE needs the user-specified Audience Hook v1; no automatic creative fallback')
+
+
+def validate_authored_hook(author, bundles):
+    """Validate user decisions inside Audience, without inventing a new Hook.
+
+    Explicit source spans and frozen execution/terminal scopes are checked.
+    Their hashes cannot certify teaching semantics, human identity or taste.
+    The approval source is a bound external user instruction, never an agent's
+    self-authored approval flag. The whole film remains unapproved.
+    """
+    h = author.get('audience_hook')
+    if h is None:
+        return hook_migration_status(author)
+    from jsonschema import Draft202012Validator, ValidationError
+    from video_contracts import ROOT, read
+    schema = read(ROOT / 'video/schemas/audience-engagement-plan.json')
+    try:
+        Draft202012Validator({'$ref': '#/$defs/authored_hook_v1', '$defs': schema['$defs']}).validate(h)
+    except ValidationError as exc:
+        raise ValueError('CREATIVE_DECISION_REQUIRED: incomplete or unsupported Audience Hook v1: ' + exc.message) from exc
+    if h['contract_version'] != HOOK_VERSION or h['presentation'] != 'abstract_opening_teaser':
+        raise ValueError('Unsupported Audience Hook presentation/version')
+    scenes = {s['id']: s for s in author['scenes']}
+    if h['scene_id'] in scenes:
+        raise ValueError('Opening teaser must not replace or impersonate an original task')
+    if h['body_binding'] != authored_body_binding(author):
+        raise ValueError('Stale Hook: episode source, scene order or exact body copy changed')
+    if h['payoff_scene_id'] not in scenes:
+        raise ValueError('Hook payoff scene does not exist')
+    payoff = scenes[h['payoff_scene_id']]
+    if h['source_refs'] != payoff['source_refs']:
+        raise ValueError('Hook must bind the complete actual payoff source scope')
+
+    def source(ref):
+        text = pointer(bundles[ref['world']]['source_snapshot'], ref['pointer'])
+        if (type(ref['start']) is not int or type(ref['end']) is not int
+                or not 0 <= ref['start'] < ref['end'] <= len(text)
+                or text[ref['start']:ref['end']] != ref['quote']):
+            raise ValueError('Hook source span is absent or stale')
+        return text
+
+    for ref in h['source_refs']:
+        source(ref)
+    if not h['pain_point']['description'].strip() or not h['pain_point']['source_refs']:
+        raise ValueError('Specific source-supported student difficulty required')
+    if any(r not in h['source_refs'] for r in h['pain_point']['source_refs']):
+        raise ValueError('Student pain point has no evidence in its payoff')
+    anchors = h['confusion_trigger']['anchor_refs']
+    if len(anchors) != 2 or anchors[0] == anchors[1] or anchors[0]['quote'] != anchors[1]['quote']:
+        raise ValueError('Surface-overlap opening needs two distinct exact shared-term anchors')
+    for ref in anchors:
+        source(ref)
+        if not any(r['world'] == ref['world'] and r['pointer'] == ref['pointer']
+                   and r['start'] <= ref['start'] < ref['end'] <= r['end'] for r in h['source_refs']):
+            raise ValueError('Visual anchor is outside the bound payoff evidence')
+    if h['confusion_trigger']['source_scene_id'] != payoff['id']:
+        raise ValueError('Confusion and payoff must concern the same actual task')
+    mt = h['method_trigger']; ref = mt['action_ref']
+    if ref not in payoff['action_refs']:
+        raise ValueError('Hook method does not match the later actual action')
+    action = pointer(bundles[ref['world']]['analysis'], ref['pointer'])
+    if (sha(action) != ref['sha'] or action.get('state') != 'produced'
+            or action.get('review_status') != 'reviewed' or action.get('stop_applied') is not False
+            or not action.get('stop_rule_check')
+            or mt['method_id'] != action['method_id']
+            or mt['method_version'] != action['method_version']
+            or mt['claim_scope'] != action['output']['kind']
+            or mt['stop_rule_sha'] != sha(action['stop_rule_check'])):
+        raise ValueError('Hook method trigger exceeds the effective frozen execution/Stop scope')
+    for r in (r for r in h['source_refs'] if r['pointer'] == '/passage'):
+        if not any(e['field'] == 'passage' and e['start'] <= r['start']
+                   and r['end'] <= e['end'] for e in action['evidence']):
+            raise ValueError('Hook pain point falls outside the method application evidence')
+    promise = h['promised_payoff']
+    if (promise['scene_sha'] != sha(payoff) or promise['source_refs'] != payoff['source_refs']
+            or promise['action_refs'] != payoff['action_refs']
+            or promise['terminal_refs'] != payoff['terminal_refs']
+            or promise['stop_rule_sha'] != mt['stop_rule_sha']
+            or promise['candidate'] != payoff.get('candidate')
+            or promise['result'] != payoff.get('event')):
+        raise ValueError('Hook promise is not the actual bound judgment')
+    allowed = {'eliminate': 'candidate_elimination', 'supported': 'candidate_support', 'final': 'whole_question_answer'}
+    if promise['scope'] != allowed.get(payoff.get('event')):
+        raise ValueError('Hook overclaims an answer beyond its actual payoff')
+    terminal = bundles[payoff['world']]['analysis']['question_verification']['candidate_bindings']
+    if any(r not in terminal for r in promise['terminal_refs']):
+        raise ValueError('Hook result lacks frozen whole-question verification')
+    if payoff['event'] == 'final' and len(promise['terminal_refs']) != len(terminal):
+        raise ValueError('Answer promise needs complete independent terminal closure')
+    visual = h['visual_conflict']; spoiler = h['spoiler_boundary']
+    visible = [r['quote'] for r in anchors]
+    if (visual['preset'] != 'surface_overlap_relation_displacement'
+            or visual['phases'] != HOOK_PHASES or visual['anchor_refs'] != anchors
+            or visual['visible_text'] != visible or visual['relation_labels'] is not False
+            or spoiler != {'withhold_candidate': True, 'withhold_relation_labels': True,
+                           'withhold_verdict': True, 'opening_visible_text': visible,
+                           'scope': 'teaser_not_first_question_fact'}):
+        raise ValueError('Opening leaks its payoff or changes the user-specified visual conflict')
+    approval = h['approved_copy_binding']; path = Path(approval['path'])
+    if (not path.is_absolute() or author['input_files'].get(str(path)) != approval['sha256']
+            or sha256(path) != approval['sha256']):
+        raise ValueError('CREATIVE_DECISION_REQUIRED: explicit user instruction binding is missing/stale')
+    if (approval['authority'] != 'explicit_user_instruction' or approval['status'] != 'USER_SPECIFIED'
+            or approval['scope'] != 'hook_copy_and_specified_visual_only'):
+        raise ValueError('Unconfirmed creativity cannot be self-approved by an agent')
+    voices = {v['id']: v['text'] for v in author['voices']}
+    copy = [voices[vid] for vid in h['voice_ids']]
+    if mt['label'] not in ''.join(voices[vid] for vid in payoff['voice_ids']):
+        raise ValueError('Hook method name differs from its actual point-of-use payoff')
+    if (copy != approval['quotes'] or sha(copy) != approval['text_sha']
+            or any(t not in path.read_text('utf-8-sig') for t in copy)):
+        raise ValueError('Hook copy is not the exact externally specified wording')
+    forbidden = [x['phrase'] for x in payoff.get('attention', [])]
+    if any(token and token in ''.join(copy + visible) for token in forbidden):
+        raise ValueError('Opening prematurely discloses the decisive role relation')
+    if any(re.search(r'(?<![A-Za-z])[A-D](?![A-Za-z])', t) for t in copy + visible):
+        raise ValueError('Opening prematurely discloses candidate letters')
+    retention = h['retention']; order = [s['id'] for s in author['scenes']]
+    if any(retention[k] not in scenes for k in ('first_payoff_scene_id', 'progression_scene_id', 'final_recall_scene_id')):
+        raise ValueError('Audience progression scene does not exist')
+    early = scenes[retention['first_payoff_scene_id']]
+    first_check = next(s for s in author['scenes'] if s.get('event') in ('eliminate', 'supported'))
+    progression = scenes[retention['progression_scene_id']]
+    recall = scenes[retention['final_recall_scene_id']]
+    reverse = scenes.get(retention.get('reverse_contrast_scene_id'))
+    if (early != first_check or retention['first_payoff_scope'] != 'partial_candidate_check'
+            or retention['first_payoff_sha'] != sha(early)
+            or progression['kind'] != 'task' or progression['world'] != payoff['world']
+            or retention['progression_scene_sha'] != sha(progression)
+            or recall['kind'] != 'recap' or retention['final_recall_scene_sha'] != sha(recall)
+            or not order.index(early['id']) < order.index(progression['id'])
+                   < order.index(payoff['id']) < order.index(recall['id'])):
+        raise ValueError('Hook/first payoff/progression/final recall chain is absent or stale')
+    if reverse is not None and (reverse['world'] == payoff['world'] or not reverse.get('event')
+            or not order.index(early['id']) <= order.index(reverse['id']) < order.index(progression['id'])):
+        raise ValueError('Reverse contrast must be an earlier real judgment on the other question')
+    if any(type(v) not in (int, float) or not math.isfinite(v) or v <= 0 for v in h['timing'].values()):
+        raise ValueError('Opening requires finite positive production timing')
+    return {'status': 'BOUND_USER_SPECIFIED', 'contract_version': HOOK_VERSION,
+            'decision_sha': sha(h), 'approval_scope': approval['scope'],
+            'teaching_semantics': 'FROZEN_SCOPE_NOT_NEWLY_CERTIFIED',
+            'human_review': 'PENDING', 'public_render_ready': False}
 ENGAGEMENT = {'curiosity', 'orientation', 'anticipation', 'attention', 'recognition', 'release', 'recall'}
 PLAYBACK = {'continuous_fast', 'guided_inline', 'local_replay', 'read_hold', 'payoff_hold', 'settled'}
 ACTIONS = {'watch', 'read', 'predict', 'compare', 'recall'}
@@ -191,8 +399,11 @@ def critical_focus_handoff(author, clock):
                     'difficulty_basis':unit['difficulty_basis'],'invented_suspense':False,
                     'planned_range':[s['start'],s['end']]})
             if s.get('event') in ('eliminate','supported'):decisions[s['candidate']]=s['event']
-    return {'kind':'critical_judgement_handoff','rows':rows,'actual_media_mapping':'PENDING',
+    result = {'kind':'critical_judgement_handoff','rows':rows,'actual_media_mapping':'PENDING',
             'human_review':'PENDING','public_render_ready':False}
+    if 'audience_hook' in author:
+        result['hook']=deepcopy(clock['audience_hook'])
+    return result
 
 
 def director_handoff(plan, episode, statuses, direction, native_direction, beat_scenes):

@@ -2,6 +2,7 @@ import json
 import unittest
 from unittest.mock import patch, Mock
 from pathlib import Path
+from tempfile import TemporaryDirectory
 from ae_production.bridge import JunkdogeClient,BridgeError
 
 def envelope(*payloads,**extra):
@@ -74,11 +75,12 @@ class AeBridgeEnvelopeTests(unittest.TestCase):
         client=JunkdogeClient();client.server_version='0.11.0'
         def instance(project):return {'instances':[{'pid':123,'state':'running','endpoint':client.endpoint,'instanceId':'host','projectPath':project}]}
         responses=[instance(None),{'context_id':'blank'},instance(None),instance('G:/trial.aep'),{'context_id':'trial'}]
-        with patch.object(client,'call',side_effect=responses) as call:
-            for _ in range(3):client.bind_current_project(123,'G:/trial')
+        with TemporaryDirectory() as directory,patch.object(client,'call',side_effect=responses) as call:
+            for _ in range(3):client.bind_current_project(123,directory)
             operations=[c.args[0] for c in call.call_args_list]
             self.assertEqual(operations,['ae_instances','ae_workspace','ae_instances','ae_instances','ae_workspace'])
             self.assertEqual(call.call_args_list[-1].args[1]['project_path'],'G:/trial.aep')
+            self.assertEqual(json.loads((Path(directory)/'ae-workspace-bindings/trial.json').read_text('utf-8'))['context_id'],'trial')
         self.assertEqual(client.context_id,'trial')
 
     def test_ambiguous_running_host_cannot_bind(self):
@@ -92,5 +94,13 @@ class AeBridgeEnvelopeTests(unittest.TestCase):
         with patch.object(client,'rpc',return_value=envelope({'ok':True})) as rpc:
             client.call('ae_exec',{'code':'JSON.stringify({ok:true})'})
             self.assertEqual(rpc.call_args.args[1]['arguments']['context_id'],'project-context')
+
+    def test_read_observation_text_preserves_payload_and_source(self):
+        client=JunkdogeClient();source={'context_id':'writer-context'}
+        response=envelope({'items':[]},{'execution_source':source})
+        response['content'].append({'type':'text','text':'Observation for explicit reconciliation: obs_123'})
+        with patch.object(client,'rpc',return_value=response):
+            self.assertEqual(client.call('ae_read'),{'items':[]})
+        self.assertEqual(client.last_execution_source,source)
 
 if __name__=='__main__':unittest.main()

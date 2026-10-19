@@ -1,5 +1,28 @@
 # Audience Engagement Design v0.1
 
+## Authored Hook Contract v1
+
+The existing module now validates `AV_AUTHOR.audience_hook` against the added definition in
+`video/schemas/audience-engagement-plan.json`. Existing v0.1/v0.2 episode contracts remain intact.
+The authored route consumes the contract through the existing adaptive entry, authored dispatch,
+measured voice/alignment clock, native template, protected Adobe hosts and packaging route.
+There is no separate Hook engine, agent or director. An external user decision supplies the pain
+point, effective method application, specified visual conflict, bound payoff and exact opening copy.
+An author cannot turn a missing creative decision into its own approval.
+
+An abstract teaser has its own media range and cannot impersonate the first question. Complete
+body takes, source character spans and scene order survive its measured time offset. The native
+readback verifies source-derived glyphs, real alignment, relational displacement, an unresolved
+hold, disappearance and the continuous first-task camera handoff in both native compositions.
+The actual first partial payoff, later main payoff, progression and final recall remain separately
+bound; a local elimination cannot be promoted to whole-question closure. Changed source, body,
+copy, method, Stop, scene order, timing or approval bytes invalidate the corresponding dependencies.
+
+Historical saved films without this contract are explicitly unmigrated, not retroactively approved
+as Hook v1. Fresh production without the decision reports `CREATIVE_DECISION_REQUIRED`.
+Actual media comparisons, sensory review, audience retention, student transfer and publication
+remain separate evidence scopes. Engineering checks never manufacture those observations.
+
 > Current extension: v0.2, with the v0.1 reference retained below. The B06 planned scene handoff has been exercised; automatic execution of its suggestions by the Adaptive renderer has not. Start production from the [current workflow](workflows/CURRENT_PRODUCTION_WORKFLOW.md), and keep planned scene ranges separate from actual media anchors.
 
 ## v0.2 extension

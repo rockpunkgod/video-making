@@ -5,6 +5,7 @@ in the private author input. Receipts permit reuse of completed render parts;
 an uncertain or incomplete dispatch is never replayed automatically.
 """
 import json
+import math
 import shutil
 from pathlib import Path
 import subprocess
@@ -102,6 +103,18 @@ def plan(folder):
         v=s['voice']
         if sha256(v['path'])!=v['sha256'] or sha256(v['padded_path'])!=v['padded_sha256']:
             raise ValueError('Complete audio take changed')
+    if 'audience_hook' in a:
+        from ae_production.authored_episode import compile_clock
+        measured={r['id']:r for r in read(folder/'VOICE_ALIGNMENT.json')['clips']}
+        expected=compile_clock(a,{s['id']:s['voice'] for s in p['segments']},measured)
+        if any(p.get(k)!=v for k,v in expected.items()):
+            raise ValueError('Audience Hook/scene/voice/caption clock changed without current prepare')
+    if p.get('source_attribution')!=a.get('source_attribution'):
+        raise ValueError('Paper/article attribution was changed or bypassed')
+    if 'visual_states' in a:
+        from ae_production.authored_episode import compile_visual_states
+        if p.get('visual_states')!=compile_visual_states(a,p):
+            raise ValueError('Reading/Thinking State has not propagated through prepare')
     if 'teaching_focus' in a:
         if p.get('teaching_focus_sha')!=sha(a['teaching_focus']) or p.get('teaching_resources')!=resource_report(a,p):
             raise ValueError('Teaching value allocation is stale or was bypassed')
@@ -187,6 +200,8 @@ class Host:
 
 def build(folder):
     a,p=plan(folder);require_focus(a)
+    from creative_os.audience_engagement import require_hook_decision
+    require_hook_decision(a,folder,operation='build')
     if 'article_chunking' not in p:raise ValueError('Run chunks and prepare before a new native build')
     background_isolation_rows(p)
     h=Host(folder,'after_effects');before=h.identity()
@@ -247,6 +262,114 @@ def background_isolation_rows(p):
     return rows
 
 
+def validate_hook_readback(p, native, rows):
+    """Actual AE objects/poses, kept separate from moving-video or listening approval."""
+    h=p['audience_hook'];expected=native['audit'].get('audience_hook')
+    same_time=lambda a,b:abs(a-b)<1e-6
+    if (not expected or expected['decision_sha']!=h['decision_sha']
+            or len(expected['range'])!=2 or not all(same_time(a,b) for a,b in zip(expected['range'],[0,h['end']]))
+            or set(expected['phases'])!=set(h['phases'])
+            or any(len(expected['phases'][k])!=2 or not all(same_time(a,b) for a,b in zip(expected['phases'][k],v)) for k,v in h['phases'].items())
+            or not same_time(expected['original_task_start'],h['end'])):
+        raise ValueError('Native opening did not consume the actual Audience clock')
+    if {row['comp_id'] for row in rows}!={native['comp_id'],native['master_comp_id']}:
+        raise ValueError('Hook needs real proxy and 4K object readbacks')
+    def near(a,b,tolerance=.002):return len(a)==len(b) and all(abs(x-y)<=tolerance for x,y in zip(a,b))
+    for row in rows:
+        objects={x['name']:x for x in row['objects']}
+        if set(objects)!=set(expected['objects']):raise ValueError('Native Hook object inventory changed')
+        for k,ref in enumerate(h['decision']['confusion_trigger']['anchor_refs']):
+            anchor=objects['AUDIENCE_HOOK_ANCHOR_'+str(k)]
+            comment=anchor['comment']
+            if (anchor['text']!=ref['quote'] or not anchor['threeD'] or comment['source_ref']!=ref
+                    or not anchor['source_layer_exists'] or not anchor['source_contains_anchor']
+                    or comment['decision_sha']!=h['decision_sha']):
+                raise ValueError('Hook source-exact native text continuity lost')
+            if anchor['stack_index']>=objects['AUDIENCE_HOOK_SPACE']['stack_index']:
+                raise ValueError('Opening original-word layer is hidden below its background')
+            expected_name=(ref['world']+'_OPTION_'+ref['pointer'].split('/')[-1]
+                           if ref['pointer'].startswith('/options/') else
+                           ref['world']+'-source-'+str(anchor['source_comment']['start']))
+            if comment['source_layer_name']!=expected_name:
+                raise ValueError('Opening glyphs came from another native source object')
+        for obj in row['objects']:
+            if abs(obj['outPoint']-h['end'])>1e-4 or obj['final_opacity']>.01:
+                raise ValueError('Hook objects outlive their handoff or obstruct the original task')
+        a=objects['AUDIENCE_HOOK_ANCHOR_0'];b=objects['AUDIENCE_HOOK_ANCHOR_1']
+        if not near(a['aligned'],b['aligned']):raise ValueError('Hook has no actual surface alignment')
+        for k in (0,1):
+            a=objects['AUDIENCE_HOOK_ROLE_0_'+str(k)];b=objects['AUDIENCE_HOOK_ROLE_1_'+str(k)]
+            if not near(a['aligned'],b['aligned']) or near(a['displaced'],b['displaced'],40):
+                raise ValueError('Hook relation displacement did not happen in native objects')
+            if not near(b['displaced'],b['held']):raise ValueError('Unresolved visual hold is not settled')
+        a=objects['AUDIENCE_HOOK_RELATION_0'];b=objects['AUDIENCE_HOOK_RELATION_1']
+        if (a['path_aligned']!=b['path_aligned'] or a['path_displaced']==b['path_displaced']
+                or b['path_displaced']!=b['path_held']):
+            raise ValueError('Native relational paths do not align, displace and settle')
+        words=[objects['AUDIENCE_HOOK_ANCHOR_'+str(k)] for k in (0,1)]
+        for phase,key in enumerate(('path_enter','path_aligned','path_displaced','path_held')):
+            glyph_bottom=max(word['glyph_bottoms'][phase] for word in words)
+            if any(min(point[1] for point in edge[key])<glyph_bottom+24 for edge in (a,b)):
+                raise ValueError('Native relationship geometry crosses the original-word clear space')
+        if not near(row['camera_at_body'],[640,320,-1550]):
+            raise ValueError('Opening camera does not match the actual first-question pose')
+        expected_frames=list(range(math.ceil(h['phases']['match_into_task'][0]*24),
+                                   math.floor((h['end']-1/24)*24)+1))
+        samples=row.get('handoff_visibility',[])
+        if ([round(s['time']*24) for s in samples]!=expected_frames
+                or any(s['cover']<99.9 and s['foreground']>.01 for s in samples)):
+            raise ValueError('Opening foreground overlaps the first task during its handoff')
+    return {'status':'PASS_SCOPED_NATIVE_OBJECTS_NOT_PERCEPTUAL_APPROVAL','rows':rows,
+            'decision_sha':h['decision_sha'],'normal_speed_review':'UNOBSERVED','listening_review':'UNOBSERVED'}
+
+
+def hook_native_readback(h,p,n):
+    opening=p['audience_hook'];times=opening['phases']
+    script=r'''var rows=[],ids=__NATIVE_IDS__,H=__OPENING_PACKET__;for(var ci=0;ci<ids.length;ci++){var c=app.project.itemByID(ids[ci]),objects=[];for(var j=1;j<=c.numLayers;j++){var l=c.layer(j);if(l.name.indexOf('AUDIENCE_HOOK_')!==0)continue;var comment=JSON.parse(l.comment),r={name:l.name,id:l.id,stack_index:l.index,threeD:l.threeDLayer,inPoint:l.inPoint,outPoint:l.outPoint,comment:comment,aligned:l.transform.position.valueAtTime(H.phases.surface_align[1],false),displaced:l.transform.position.valueAtTime(H.phases.relation_displace[1],false),held:l.transform.position.valueAtTime(H.phases.unresolved_hold[1],false),final_opacity:l.transform.opacity.valueAtTime(H.end-1/24,false)};if(l instanceof TextLayer){r.text=l.property('Source Text').value.text;var src=c.layer(comment.source_layer_name);r.source_layer_exists=!!src;r.source_layer_id=src.id;r.source_comment=JSON.parse(src.comment);r.source_contains_anchor=src.property('Source Text').value.text.indexOf(r.text)>=0;r.glyph_bottoms=[];var ts=[Math.min(1,H.phases.surface_align[0]-.1),H.phases.surface_align[1],H.phases.relation_displace[1],H.phases.unresolved_hold[1]];for(var ti=0;ti<ts.length;ti++){var tt=ts[ti],rect=l.sourceRectAtTime(tt,false),pos=l.transform.position.valueAtTime(tt,false),ap=l.transform.anchorPoint.valueAtTime(tt,false),sc=l.transform.scale.valueAtTime(tt,false);r.glyph_bottoms.push(pos[1]+(rect.top+rect.height-ap[1])*sc[1]/100);}}if(l.name.indexOf('AUDIENCE_HOOK_RELATION_')===0){var p=l.property('ADBE Root Vectors Group').property('ADBE Vector Shape - Group').property('ADBE Vector Shape');r.path_enter=p.valueAtTime(Math.min(1,H.phases.surface_align[0]-.1),false).vertices;r.path_aligned=p.valueAtTime(H.phases.surface_align[1],false).vertices;r.path_displaced=p.valueAtTime(H.phases.relation_displace[1],false).vertices;r.path_held=p.valueAtTime(H.phases.unresolved_hold[1],false).vertices;}objects.push(r);}var hv=[],cover=c.layer('AUDIENCE_HOOK_SPACE');for(var frame=Math.ceil(H.phases.match_into_task[0]*24);frame<=Math.floor((H.end-1/24)*24);frame++){var tt=frame/24,maxOp=0;for(var oi=0;oi<objects.length;oi++)if(objects[oi].name!=='AUDIENCE_HOOK_SPACE')maxOp=Math.max(maxOp,c.layer(objects[oi].name).transform.opacity.valueAtTime(tt,false));hv.push({time:tt,cover:cover.transform.opacity.valueAtTime(tt,false),foreground:maxOp});}rows.push({comp_id:c.id,objects:objects,handoff_visibility:hv,camera_at_body:c.layer('READING_CAMERA').transform.position.valueAtTime(H.end,false)});}return rows;'''
+    script=script.replace('__NATIVE_IDS__',json.dumps([n['comp_id'],n['master_comp_id']])).replace('__OPENING_PACKET__',json.dumps(opening))
+    return validate_hook_readback(p,n,h.js(script))
+
+
+def visual_state_readback(h,p,n):
+    """Read actual native effects; this does not certify rendered contrast or taste."""
+    spec=n['audit'].get('visual_states')
+    if not spec or spec['definition']!=p['visual_states']['definition']:
+        raise ValueError('Native Reading/Thinking State definition was bypassed')
+    samples=[{'state':'reading','time':(e['arrival']+e['end_time'])/2,'scene':s['id']}
+             for s in p['scenes'] for e in s.get('reading_events',[])]
+    samples += [{'state':'thinking','time':(w['settled']+w['release'])/2,'scene':w['scene_id']}
+                for w in p['visual_states']['thinking_windows']]
+    code=r'''var ids=__IDS__,spec=__SPEC__,samples=__SAMPLES__,out=[];
+    for(var ci=0;ci<ids.length;ci++){var c=app.project.itemByID(ids[ci]),rows=[];
+      for(var si=0;si<samples.length;si++){var s=samples[si],r={state:s.state,time:s.time,scene:s.scene,reality:[],foreground:[],environment:c.layer(spec.environment).transform.opacity.valueAtTime(s.time,false)};
+        for(var j=0;j<spec.reality_layers.length;j++){var l=c.layer(spec.reality_layers[j]),fx=l.property('ADBE Effect Parade'),dim=fx.property('REALITY_DIM').property(3),blur=fx.property('REALITY_BLUR').property(1);r.reality.push({name:l.name,dim:dim.valueAtTime(s.time,false),blur:blur.valueAtTime(s.time,false),errors:[dim.expressionError,blur.expressionError]});}
+        for(var j=0;j<spec.foreground_layers.length;j++){var l=c.layer(spec.foreground_layers[j]);if(l.inPoint>s.time||l.outPoint<=s.time)continue;var an=l.property('ADBE Text Properties').property('ADBE Text Animators').property('THINKING_FOREGROUND_INK'),amount=an.property('ADBE Text Selectors').property(1).property('ADBE Text Range Advanced').property('ADBE Text Selector Max Amount');r.foreground.push({name:l.name,amount:amount.valueAtTime(s.time,false),error:amount.expressionError,blur_effect:l.property('ADBE Effect Parade').property('REALITY_BLUR')!==null});}
+        rows.push(r);
+      }
+      var paper=c.layer('__FIRST_WORLD___QUESTION_PAPER').source.mainSource.color;
+      out.push({comp_id:c.id,rows:rows,paper:paper,environment_color:c.layer(spec.environment).source.mainSource.color});
+    }return out;'''
+    code=code.replace('__IDS__',json.dumps([n['comp_id'],n['master_comp_id']])).replace('__SPEC__',json.dumps(spec)).replace('__SAMPLES__',json.dumps(samples)).replace('__FIRST_WORLD__',p['world_order'][0])
+    rows=h.js(code)
+    for comp in rows:
+        for actual,expected in ((comp['paper'],[242/255,240/255,234/255]),
+                                (comp['environment_color'],[23/255,24/255,26/255])):
+            if any(abs(x-y)>.002 for x,y in zip(actual,expected)):
+                raise ValueError('Actual native state palette differs from user definition')
+        for sample in comp['rows']:
+            thinking=sample['state']=='thinking';target=100 if thinking else 0
+            if abs(sample['environment']-target)>.01:raise ValueError('Native environment obscures reading or misses thinking')
+            for layer in sample['reality']:
+                if (any(layer['errors']) or abs(layer['dim']-target)>.01
+                        or abs(layer['blur']-(12 if thinking else 0))>.01):
+                    raise ValueError('Actual Reality Layer brightness/blur state failed: '+layer['name'])
+            for layer in sample['foreground']:
+                if layer['error'] or layer['blur_effect'] or abs(layer['amount']-target)>.01:
+                    raise ValueError('Native foreground inherited blur or lost its contrasting ink')
+    return {'status':'PASS_NATIVE_PARAMETERS_NOT_PERCEPTUAL_APPROVAL','readbacks':rows,
+            'normal_speed_review':'UNOBSERVED'}
+
+
 def audit(folder):
     a,p,n=current_native(folder);h=Host(folder,'after_effects')
     code="var c=app.project.itemByID(CID),rows=[];for(var i=1;i<=c.numLayers;i++){var l=c.layer(i),r={name:l.name,id:l.id,inPoint:l.inPoint,outPoint:l.outPoint,threeD:l.threeDLayer,parent:l.parent?l.parent.id:null,comment:l.comment};if(l instanceof TextLayer){r.text=l.property('Source Text').value.text;r.font=l.property('Source Text').value.font;if(l.name.indexOf('-source-')>=0&&l.name.indexOf('EXTRACT_')!==0){var initial=l.property('Source Text').valueAtTime(0,false);r.initial_color=initial.characterRange(0,initial.text.length).fillColor||null;r.text_height=l.sourceRectAtTime(0,false).height;}}if(l instanceof CameraLayer||l.name.indexOf('SOURCE_LIFT_')===0||l.name.indexOf('CANDIDATE_FLIGHT_')===0||l.name.indexOf('-source-')>=0){r.position=[];r.orientation=[];var pos=l.transform.position;r.position_value=pos.value;r.scale=[];var sp=l.transform.scale;if(sp)for(var sk=1;sk<=sp.numKeys;sk++)r.scale.push([sp.keyTime(sk),sp.keyValue(sk)]);for(var j=1;j<=pos.numKeys;j++)r.position.push([pos.keyTime(j),pos.keyValue(j)]);if(!(l instanceof CameraLayer)){var ori=l.transform.orientation;for(var j=1;j<=ori.numKeys;j++)r.orientation.push([ori.keyTime(j),ori.keyValue(j)]);}}rows.push(r);}return {project:app.project.file.fsName,width:c.width,height:c.height,duration:c.duration,fps:c.frameRate,layers:rows};".replace('CID',str(n['comp_id']))
@@ -262,7 +385,8 @@ def audit(folder):
             if b['visible'] and native[b['id']]['text'].replace('\r','\n')!=b['text']:raise ValueError('Frozen source text altered')
             if b['visible'] and p.get('realization')=='continuous_paper_scan':
                 color=native[b['id']].get('initial_color')
-                if not color or len(color)!=3 or any(abs(x-y)>.002 for x,y in zip(color,[.09,.13,.16])):
+                expected_ink=[32/255,33/255,31/255] if 'visual_states' in p else [.09,.13,.16]
+                if not color or len(color)!=3 or any(abs(x-y)>.002 for x,y in zip(color,expected_ink)):
                     raise ValueError('Search highlight appeared before its reading event')
         for cid,text in w['question']['options'].items():
             if native[world+'_OPTION_'+cid]['text']!=cid+'   '+text:raise ValueError('Candidate text altered')
@@ -326,7 +450,7 @@ var out=[];for(var ci=0;ci<ids.length;ci++){var c=app.project.itemByID(ids[ci]);
         accent_values=h.js(code)
         for v in accent_values:
             if (abs(v['before'])>.01 or v['peak']<99.9 or abs(v['after'])>.01 or v['expression_error']
-                    or not v['ink'] or any(abs(x-y)>.002 for x,y in zip(v['ink'],[.09,.13,.16]))
+                    or not v['ink'] or any(abs(x-y)>.002 for x,y in zip(v['ink'],expected_ink))
                     or any(y>x+.01 or abs(x-y)>25 for x,y in zip(v['exit_values'],v['exit_values'][1:]))):
                 raise ValueError('Light source accent persists into the next judgement or snaps to ink')
         write(folder/'LIGHT_ACCENT_CONTINUITY.json',{'rows':accent_values,'human_review':'PENDING'})
@@ -418,6 +542,20 @@ var out=[];for(var ci=0;ci<ids.length;ci++){var c=app.project.itemByID(ids[ci]);
         regression.append({'comp_id':comp_id,**validate_reading(p['scenes'],n['audit'],observed,p.get('article_chunking'))})
     r['reading_continuity_regression']=regression
     r['reading_rig_sha256']=sha256(READING_RIG)
+    if 'audience_hook' in p:
+        r['audience_hook']=hook_native_readback(h,p,n)
+        write(folder/'HOOK_NATIVE_READBACK.json',r['audience_hook'])
+    if 'visual_states' in p:
+        r['visual_states']=visual_state_readback(h,p,n)
+        write(folder/'READING_THINKING_NATIVE_READBACK.json',r['visual_states'])
+    if 'source_attribution' in p:
+        for world,credit in p['source_attribution'].items():
+            scene=next(s for s in p['scenes'] if s['id']==credit['scene_id'])
+            for prefix,text in [('SOURCE_PAPER_',credit['paper_display']),('SOURCE_ARTICLE_',
+                    '阅读 '+credit['reading_section']+' 篇 · 第'+str(credit['question_number'])+'题  |  '+credit['article_display'])]:
+                layer=native[prefix+scene['id']]
+                if layer['text']!=text or abs(layer['inPoint']-scene['start'])>.001 or abs(layer['outPoint']-scene['end'])>.001:
+                    raise ValueError('Actual paper/article attribution text or placement is stale')
     write(folder/'native-audit.json',r)
     return {'source_text':'PASS','complete_candidate_identity_and_withdrawal':'PASS','replay_candidate_state':'PASS','caption_clock':'PASS','native_layers':len(native),'human_creative_review':'PENDING'}
 

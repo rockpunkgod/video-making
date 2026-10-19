@@ -1,5 +1,6 @@
 """Thin client of JUNKDOGE's public MCP surface. This is not a second AE bridge."""
 import json
+from pathlib import Path
 from urllib.request import Request, build_opener, ProxyHandler
 
 
@@ -64,6 +65,13 @@ class JunkdogeClient:
         result=self.call('ae_workspace',args)
         context=result.get('context_id')
         if not context:raise BridgeError('AE workspace did not return a context binding: '+json.dumps(result))
+        # A transport failure can outlive this Python process. Retain the exact
+        # public binding so the same writer can later inspect and reconcile it.
+        evidence=Path(work_dir)/'ae-workspace-bindings'
+        evidence.mkdir(parents=True,exist_ok=True)
+        record=evidence/(context.rsplit(':',1)[-1]+'.json')
+        with record.open('x',encoding='utf-8') as stream:
+            json.dump(result,stream,ensure_ascii=False,indent=2)
         self.context_id=context;self.bound_project=key
 
     def call(self,name,args=None,timeout=60):
@@ -71,7 +79,15 @@ class JunkdogeClient:
         if self.context_id and name in ('ae_exec','ae_execRecover','ae_read','ae_previewFrame','ae_checkpoint','ae_revert','ae_validateExpressions','ae_nativeExec'):
             args.setdefault('context_id',self.context_id)
         result=self.rpc('tools/call',{'name':name,'arguments':args},timeout)
-        texts=[json.loads(c['text']) for c in result.get('content',[]) if c.get('type')=='text']
+        texts=[]
+        for block in result.get('content',[]):
+            if block.get('type')!='text':continue
+            value=block['text']
+            # v0.11 reads add a plain-text observation identifier beside the
+            # structured payload. It is not an execution failure or payload.
+            if name in ('ae_read','ae_previewFrame') and value.startswith('Observation for explicit reconciliation: obs_'):
+                continue
+            texts.append(json.loads(value))
         # v0.11 appends routing provenance as a separate content block. Keep
         # it available without changing the operation's return-value shape.
         sources=[x['execution_source'] for x in texts if isinstance(x,dict) and set(x)=={'execution_source'}]

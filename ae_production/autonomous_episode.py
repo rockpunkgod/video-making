@@ -17,6 +17,7 @@ import sys
 from video_contracts import ROOT,read,write,sha,verify_bundle,status_matches
 from scripts.voice_delivery import sha256
 from ae_production.authored_episode import dispatch,checked_author,script_text,production_folder_allowed,validate_copy_review
+from creative_os.audience_engagement import timed_scene_rows
 
 STAGES=('check','script','chunks','voice','align','prepare','build','audit','render-master',
         'premiere','package-master','review','restore')
@@ -46,7 +47,21 @@ def request_author(folder,brief):
     spec=read(brief)
     if spec.get('schema')!='autonomous-episode-brief/v1' or spec['product']!='FREE_SHOWCASE':
         raise ValueError('Explicit FREE_SHOWCASE brief required')
-    inputs={str(Path(brief).resolve()):sha256(brief)};pool=[]
+    if not spec.get('audience_hook_decision') and not (folder/'AV_AUTHOR.json').exists():
+        return {'status':'CREATIVE_DECISION_REQUIRED','module':'AUDIENCE_ENGAGEMENT',
+            'missing':['student_pain_point','effective_method_trigger','approved_visual_conflict',
+                       'bound_payoff','explicitly_specified_opening_copy'],
+            'automatic_hook_selection':False,'human_approved':False,'public_render_ready':False}
+    inputs={str(Path(brief).resolve()):sha256(brief)};pool=[];hook=None
+    if spec.get('audience_hook_decision'):
+        decision=spec['audience_hook_decision']
+        if not isinstance(decision,dict) or set(decision)!={'path','sha256'}:
+            raise ValueError('Audience Hook decision needs an exact external file binding')
+        path=Path(decision['path'])
+        if not path.is_absolute() or sha256(path)!=decision['sha256']:
+            raise ValueError('Audience Hook creative decision changed')
+        hook={'path':str(path),'sha256':decision['sha256'],'decision':read(path)}
+        inputs[str(path)]=decision['sha256']
     for item in spec['asset_pool']:
         b=read(item['bundle']);s=read(item['status']);verify_bundle(b)
         valid=status_matches(b,s)
@@ -58,7 +73,7 @@ def request_author(folder,brief):
     from creative_os.content_profiles import editorial_handoffs,STAGES as PROFILE_STAGES
     context=editorial_handoffs(spec['product'],{s:None for s in PROFILE_STAGES})
     return job(folder,'creative_author',{'brief':str(Path(brief).resolve()),'brief_sha':sha(spec),
-        'content_profile_context':context,
+        'content_profile_context':context,'audience_hook_decision':hook,
         'input_files':inputs,'asset_pool':pool,'required_output':
         ['author','article_chunks','editorial_manifest','authoring_notes'],
         'requirements':['Read the complete frozen articles, current workflow and source-bound projections.',
@@ -67,6 +82,7 @@ def request_author(folder,brief):
         'Point-of-use method name; quick/brief/focus; one useful local replay; complete candidate checks.',
         'Read the knowledge inputs and bind specific design choices; hypotheses are not learning results.',
         'Missing language decisions are a language-author job, never a user approval stop.',
+        'Consume the exact external Audience Hook decision; never invent a Hook or self-approve creative choices.',
         'Every new copy must be exported and sent in full by the host; keep user review pending.',
         'Keep voices intact; selected rejected takes are ineligible; current rights remain unchanged.']},
         spec.get('agent_command'))
@@ -74,7 +90,7 @@ def request_author(folder,brief):
 
 def author(folder,brief):
     result=request_author(folder,brief)
-    if result.get('status')=='NEEDS_HOST_AGENT':return result
+    if result.get('status') in ('NEEDS_HOST_AGENT','CREATIVE_DECISION_REQUIRED'):return result
     return consume_author_response(folder,result,brief)
 
 
@@ -144,7 +160,7 @@ def actual_scene_map(folder,plan,qa):
             'authority':'automatic_engineering_mapping_not_external_human_review',
             'scenes':[{'scene':s['id'],'source_refs':s['source_refs'],
                        'actual_frame_range':[round(s['start']*fps),round(s['end']*fps)],
-                       'actual_seconds':[s['start'],s['end']]} for s in plan['scenes']],
+                       'actual_seconds':[s['start'],s['end']]} for s in timed_scene_rows(plan)],
             'human_confirmed':False,'public_render_ready':False}
     write(folder/'ACTUAL_MEDIA_SCENE_MAP.json',result)
     return {'path':str(folder/'ACTUAL_MEDIA_SCENE_MAP.json'),'sha256':sha256(folder/'ACTUAL_MEDIA_SCENE_MAP.json')}
@@ -192,7 +208,7 @@ def review(folder):
         'media':media,'media_sha256':qa['sha256'],'duration':p['duration'],
         'plan':str(folder/'AV_PLAN.json'),'plan_sha256':sha256(folder/'AV_PLAN.json'),
         'script':str(folder/'EPISODE_SCRIPT.md'),'content_profile_context':context,'scenes':[
-            {'id':s['id'],'range':[s['start'],s['end']],'task':s['audience_intent']} for s in p['scenes']],
+            {'id':s['id'],'range':[s['start'],s['end']],'task':s['audience_intent']} for s in timed_scene_rows(p)],
         'requirements':['Review the whole continuous episode in order.',
           'See real moving transitions and listen to real audio before claiming those scopes.',
           'Bind each issue to media SHA, scene, seconds, observed fact, severity, responsible module and recheck.',
@@ -248,18 +264,20 @@ def review(folder):
 def review_page(folder,qa,observations=None):
     p=read(folder/'AV_PLAN.json');media=Path(qa['media']).as_uri()
     sections=''.join('<li><a href="#" onclick="v.currentTime='+str(s['start'])+';v.play();return false">'
-        +escape(s['id']+' · '+s['title'])+'</a> '+str(round(s['start'],3))+'s</li>' for s in p['scenes'])
+        +escape(s['id']+' · '+s['title'])+'</a> '+str(round(s['start'],3))+'s</li>' for s in timed_scene_rows(p))
     files=[(Path(qa['media']),'完整影片'),(folder/'media/MAIN_FILM.aep','AE 可编辑工程'),
            (folder/'media/MAIN_FILM.prproj','Premiere 可编辑工程'),
            (folder/'EPISODE_SCRIPT.md','完整逐字稿'),(folder/'EPISODE_SUBTITLES.srt','字幕'),
            (folder/'ARTICLE_CHUNKS_REVIEW.html','两篇文章的意群划分'),
            (folder/'MODULE_CONSUMPTION_AUDIT.md','模块实际消费与限制')]
     links=' '.join('<a class="file" href="'+path.resolve().as_uri()+'">'+escape(label)+'</a>' for path,label in files if path.exists())
-    html='<!doctype html><html lang="zh-CN"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>英语有画说 · 整片审阅</title><style>body{max-width:1120px;margin:36px auto;padding:0 22px;background:#f4f1e8;color:#18232a;font:17px/1.7 Arial}h1{font-size:28px}video{width:100%;background:#18232a;border-radius:8px}a{color:#205c7c}.file{display:inline-block;margin:8px 16px 8px 0}li{margin:5px}details{margin:26px 0}pre{white-space:pre-wrap;font-size:13px}</style>'
+    html='<!doctype html><html lang="zh-CN"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>英语有画说 · 整片审阅</title><style>body{max-width:1120px;margin:36px auto;padding:0 22px;background:#f2f0ea;color:#20211f;font:17px/1.7 Arial}h1{font-size:28px}video{width:100%;background:#17181a;border-radius:8px}a{color:#205c7c}.file{display:inline-block;margin:8px 16px 8px 0}li{margin:5px}details{margin:26px 0}pre{white-space:pre-wrap;font-size:13px}</style>'
     html+='<h1>英语有画说 · 学霸这题怎么做？</h1><p>'+escape(p['revision'])+' · '+str(round(p['duration'],3))+' 秒 · 原生 4K / 24 帧 · 冻结诊断材料</p>'
     html+='<video id="v" controls preload="metadata" src="'+media+'"></video><p>'+links+'</p>'
     if p.get('copy_review')=='USER_REVIEWED_EXACT_COPY':
         html+='<p>此逐字稿已由用户独立审阅；观感、听感和整片仍待你验收。内部 AI 观察不等于人类认证，也不授权公开发布。</p>'
+    elif p.get('copy_review')=='PENDING_MERGED_COPY_REVIEW_BODY_ALREADY_USER_REVIEWED_HOOK_USER_SPECIFIED':
+        html+='<p>正文沿用你已独立审阅的版本，开场采用你指定的原文；合并稿、观感和听感仍待整片验收。内部 AI 观察不等于人类认证，也不授权公开发布。</p>'
     else:
         html+='<p>整片由你验收，文案、观感和听感仍待确认。内部 AI 观察不等于人类认证，也不授权公开发布。</p>'
     if observations:
@@ -267,6 +285,22 @@ def review_page(folder,qa,observations=None):
             html+='<p>声音已完整编排；本次工具不支持音频感知，自审未声称完成试听。</p>'
         if not observations.get('video_observed'):
             html+='<p>自审检查了实际编码画面与连续帧；完整原速运动观感未获感知确认。</p>'
+    if p.get('source_attribution'):
+        html+='<h2>题目出处</h2>'
+        for world in p['world_order']:
+            credit=p['source_attribution'][world]
+            html+='<p>'+escape(credit['paper_display'])+'<br>'+escape('阅读 '+credit['reading_section']+' 篇 · 第'+str(credit['question_number'])+'题 · '+credit['article_display'])+'</p>'
+    ab_path=folder/'AB_OPENING_COMPARISON.json'
+    if ab_path.exists():
+        ab=read(ab_path)
+        if ab['after']['source_sha256']!=qa['sha256']:
+            raise ValueError('Opening comparison belongs to another final film')
+        html+='<h2>实际开场对比</h2><p>两段均截取自实际完整影片，保留声音；这是创作对比，未测量观众留存。</p>'
+        for key,label in [('before','旧版：直接进入第一题'),('after','新版：开场疑问进入第一题')]:
+            row=ab[key];clip=Path(row['path'])
+            if sha256(clip)!=row['sha256'] or sha256(row['source_path'])!=row['source_sha256']:
+                raise ValueError('Opening comparison media changed')
+            html+='<p>'+label+'</p><video controls preload="metadata" src="'+clip.resolve().as_uri()+'"></video>'
     html+='<h2>按章节回看</h2><ol>'+sections+'</ol>'
     html+='<details><summary>制作、审阅与未完成事项</summary><pre>'+escape(json.dumps(observations or {'状态':'等待内部观察'},ensure_ascii=False,indent=2))+'</pre></details></html>'
     (folder/'REVIEW.html').write_text(html,encoding='utf-8')
@@ -281,7 +315,7 @@ def run(folder,brief=None,through='restore',batch_size=96):
     if not (folder/'AV_AUTHOR.json').exists() or (brief and not (folder/'AUTHORING_RECEIPT.json').exists()):
         if not brief:raise ValueError('A new production starts with an actual brief and asset pool')
         result=author(folder,brief);index['authoring']=result;write(receipt_path,index)
-        if result.get('status')=='NEEDS_HOST_AGENT':return result
+        if result.get('status') in ('NEEDS_HOST_AGENT','CREATIVE_DECISION_REQUIRED'):return result
     author_sha=sha256(folder/'AV_AUTHOR.json')
     if any(x.get('author_sha256')!=author_sha for k,x in index['stages'].items() if k in ('build','premiere','restore')):
         raise ValueError('Completed native stage belongs to another author; use a new revision')

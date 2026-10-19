@@ -23,7 +23,7 @@ AUTHOR = 'AV_AUTHOR.json'
 AUTHOR_KEYS = {'revision','product','format','media_role','public_render_ready','copy_review',
                'sources','input_files','voices','scenes','excerpts','producer','host',
                'voice_delivery','voice_inputs','music','teaching_focus','editorial','layout','alignment_source',
-               'copy_review_evidence'}
+               'copy_review_evidence','audience_hook','source_attribution','visual_states'}
 KINDS = {'task', 'locate', 'compare', 'answer', 'replay', 'recap'}
 SHOT_KEYS = {'id', 'kind', 'world', 'voice_ids', 'title', 'excerpt', 'candidate',
              'event', 'replay_of', 'source_refs', 'action_refs', 'terminal_refs',
@@ -73,13 +73,16 @@ def validate_copy_review(author):
         raise ValueError('External user copy review must retain its exact-copy-only scope')
     source=bound(receipt['source_markdown'],receipt['source_markdown_sha256'])
     normalize=lambda text:re.sub(r'\s+','',text.strip())
+    hook=author.get('audience_hook')
+    heading_ids=r'(?:SC|HOOK)[0-9]+[A-Za-z0-9_-]*'
+    if hook:heading_ids+='|'+re.escape(hook['scene_id'])
     source_rows=[];current=None;body=[]
     for line in source.read_text('utf-8-sig').splitlines():
         if re.match(r'^#{1,6}[ \t]+',line):
             if current is not None:
                 source_rows.append({'scene':current,'text':normalize('\n'.join(body))})
             current=None;body=[]
-            match=re.match(r'^###[ \t]+(SC[0-9]+[A-Za-z0-9_-]*)(?=[ \t·:：—|｜]|$)',line)
+            match=re.match(r'^#{2,3}[ \t]+('+heading_ids+r')(?=[ \t·:：—|｜]|$)',line)
             if match:current=match.group(1)
         elif current is not None:
             body.append(line)
@@ -87,7 +90,8 @@ def validate_copy_review(author):
     voices={v['id']:v['text'] for v in author['voices']}
     if len(voices)!=len(author['voices']):raise ValueError('Duplicate exact-copy voice identity')
     rows=[];used=[]
-    for scene in author['scenes']:
+    reviewed_scenes=([{'id':hook['scene_id'],'voice_ids':hook['voice_ids']}] if hook else [])+author['scenes']
+    for scene in reviewed_scenes:
         ids=scene['voice_ids']
         if any(vid not in voices or not isinstance(voices[vid],str) for vid in ids):
             raise ValueError('Reviewed scene must retain its complete authored voices')
@@ -109,9 +113,15 @@ def script_text(author):
     """One exact copy view for the user and the existing voice producer."""
     voices = {v['id']: v['text'] for v in author['voices']}
     review='用户已独立审阅（仅此逐字稿）' if author['copy_review']=='USER_REVIEWED_EXACT_COPY' else author['copy_review']
+    if author['copy_review']=='PENDING_MERGED_COPY_REVIEW_BODY_ALREADY_USER_REVIEWED_HOOK_USER_SPECIFIED':
+        review='正文已独立审阅；开场采用用户指定原文；合并稿待独立审阅'
     lines = ['# 英语有画说 · ' + author['revision'] + ' 完整文案',
              '文案状态：' + review,
              '段落标签不读入旁白。文案审阅与画面、听感、整片认可分别记录。', '']
+    if 'audience_hook' in author:
+        lines += ['## ' + author['audience_hook']['scene_id'] + ' · 开场：相同的词，为什么不能选？', '']
+        for vid in author['audience_hook']['voice_ids']:
+            lines += [voices[vid], '']
     for scene in author['scenes']:
         lines += ['## ' + scene['id'] + ' · ' + scene['title'], '']
         for vid in scene['voice_ids']:
@@ -161,6 +171,58 @@ def current_folder():
     return p
 
 
+def validate_source_attribution(author, bundles):
+    """Bind screen credits to the supplied paper itself, not a diagnostic ID."""
+    import zipfile
+    import xml.etree.ElementTree as ET
+    rows=author['source_attribution']
+    if set(rows)!=set(bundles):raise ValueError('Every question needs its own paper attribution')
+    for world,row in rows.items():
+        path=Path(row['source_path'])
+        if (row['source_sha256']!=sha256(path)
+                or author['input_files'].get(str(path))!=row['source_sha256']):
+            raise ValueError('Paper attribution source changed: '+world)
+        if path.suffix.lower()!='.docx':raise ValueError('Unsupported attribution source format')
+        with zipfile.ZipFile(path) as archive:
+            root=ET.fromstring(archive.read('word/document.xml'))
+        ns={'w':'http://schemas.openxmlformats.org/wordprocessingml/2006/main'}
+        lines=[''.join(t.text or '' for t in p.findall('.//w:t',ns))
+               for p in root.findall('.//w:p',ns)]
+        headings=[line.strip() for line in lines if line.strip()]
+        if (not row['paper_heading_quotes'] or row['paper_heading_quotes'][0]!=headings[0]
+                or any(quote not in headings[:8] for quote in row['paper_heading_quotes'])):
+            raise ValueError('Paper name must come from the original paper heading')
+        original=' '.join(' '.join(lines).split())
+        q=bundles[world]['source_snapshot']
+        for quote in row['paper_heading_quotes']+[row['article_anchor'],q['stem']]+list(q['options'].values()):
+            if ' '.join(quote.split()) not in original:
+                raise ValueError('Attribution does not match the actual paper/question: '+world)
+        if row['article_anchor'] not in q['passage']:
+            raise ValueError('Article attribution differs from the frozen passage')
+        if row['article_anchor'] not in lines:
+            raise ValueError('Article credit must use a real heading or section line')
+        article_index=lines.index(row['article_anchor'])
+        sections=[line for line in lines[:article_index] if line in ('A','B','C','D')]
+        if not sections or sections[-1]!=row['reading_section']:
+            raise ValueError('Article credit points to another reading section')
+        scene=next(s for s in author['scenes'] if s['world']==world)
+        if row['scene_id']!=scene['id'] or scene['kind']!='task':
+            raise ValueError('Paper attribution must introduce its actual question')
+        # The frozen identity retains the original number even when Word uses
+        # automatic list numbering, which is absent from paragraph text.
+        number_matches=q['question_id'].endswith('-Q'+str(row['question_number']))
+        if (row['question_id']!=q['question_id'] or not number_matches
+                or row['reading_section'] not in lines):
+            raise ValueError('Attribution question identity changed')
+        article_names={row['article_anchor'],
+            '无总标题的文章（'+row['article_anchor']+' 小节）',
+            '无总标题的产品介绍文章（'+row['article_anchor']+' 小节）'}
+        if (row['paper_display']!=' · '.join(row['paper_heading_quotes'])
+                or row['article_display'] not in article_names):
+            raise ValueError('Screen paper name must retain the verified heading')
+    return {'status':'SOURCE_BOUND','worlds':list(rows),'official_source_certified':False}
+
+
 def checked_author(folder):
     a = read(folder / AUTHOR)
     if set(a)-AUTHOR_KEYS:raise ValueError('Unsupported production input: '+str(sorted(set(a)-AUTHOR_KEYS)))
@@ -187,12 +249,19 @@ def checked_author(folder):
         bundles[world] = b
     if len(bundles) < 2 or len({b['source_snapshot']['question_id'] for b in bundles.values()}) != len(bundles):
         raise ValueError('The main film requires distinct, source-bound questions')
+    if 'source_attribution' in a:
+        validate_source_attribution(a, bundles)
+    if 'visual_states' in a and a['visual_states']!={
+            'reading':{'paper':'#F2F0EA','ink':'#20211F','reality':'full_brightness'},
+            'thinking':{'environment':'#17181A','reality':'dimmed_and_blurred',
+                        'extracted_words':'sharp_foreground'}}:
+        raise ValueError('Reading/Thinking State differs from the explicit user definition')
     voices = {v['id']: v for v in a['voices']}
     if any('choreography' in s for s in a['scenes']) and not all('choreography' in s for s in a['scenes']):
         raise ValueError('Current film cannot silently mix explicit and historical motion timing')
     if len(voices) != len(a['voices']):
         raise ValueError('Duplicate voice identity')
-    used, decided, finals, ids, replay_count = [], {}, set(), set(), 0
+    used, decided, finals, ids, replay_count = list(a.get('audience_hook',{}).get('voice_ids',[])), {}, set(), set(), 0
     for s in a['scenes']:
         if set(s) - SHOT_KEYS:
             raise ValueError('Unsupported author decision: ' + str(sorted(set(s) - SHOT_KEYS)))
@@ -295,6 +364,9 @@ def checked_author(folder):
     if 'editorial' in a:
         from ae_production.authored_editorial import validate_editorial
         validate_editorial(a,bundles)
+    if 'audience_hook' in a:
+        from creative_os.audience_engagement import validate_authored_hook
+        validate_authored_hook(a,bundles)
     return a, bundles
 
 
@@ -381,21 +453,59 @@ def reuse_alignment(folder,author):
     delivery_file=delivery_path(folder,author);delivery=validate_voice(delivery_file)
     expected={v['id']:v['text'] for v in author['voices']}
     prior={x['id']:x for x in old['clips']}
-    if set(prior)!=set(expected) or old['model']!=author['producer']['alignment_model']:
+    missing=set(expected)-set(prior)
+    if (not set(prior)<=set(expected) or old['model']!=author['producer']['alignment_model']
+            or missing and missing!=set(author.get('audience_hook',{}).get('voice_ids',[]))):
         raise ValueError('Alignment source uses other voices or model')
+    changed=set()
     for c in delivery['clips']:
+        if c['id'] in missing:continue
         row=prior[c['id']]
         if (row['audio_sha256']!=c['audio_sha256'] or row['transcript']!=expected[c['id']]
                 or row['transcript_sha256']!=c['transcript_sha256']
                 or abs(row['duration_seconds']-c['duration_seconds'])>1/48000):
-            raise ValueError('Changed take or copy cannot reuse alignment: '+c['id'])
+            changed.add(c['id'])
+    missing |= changed
+    reused=set(expected)-missing
     result=deepcopy(old);result['delivery_sha256']=sha256(delivery_file)
+    measured=None
+    if missing:
+        directory=folder/'alignment-new-input';request=directory/'delivery.json'
+        selected=[c for c in delivery['clips'] if c['id'] in missing]
+        if not request.exists():
+            directory.mkdir(exist_ok=False);rows=[]
+            for c in selected:
+                wav=c['id']+'.wav';text=c['id']+'.txt'
+                shutil.copyfile(asset(delivery_file.parent,c['audio']),directory/wav)
+                shutil.copyfile(asset(delivery_file.parent,c['transcript']),directory/text)
+                rows.append(describe_clip(directory,c['id'],wav,text,c['listening_review']))
+            write(request,{'schema':'voice-delivery/v1','clips':rows,
+                'producer':'new or revised complete authored takes only'})
+        subset=validate_voice(request)
+        if {c['id']:c['audio_sha256'] for c in subset['clips']}!={c['id']:c['audio_sha256'] for c in selected}:
+            raise ValueError('New or revised alignment subset changed')
+        measured=folder/'NEW_VOICE_ALIGNMENT.json'
+        if not measured.exists():
+            subprocess.run([author['producer']['python'],'-X','utf8',str(ROOT/'voicepacks/tools/align_delivery.py'),
+                str(request),'--model',author['producer']['alignment_model'],'--output',str(measured)],check=True)
+        fresh=read(measured)
+        if (fresh['delivery_sha256']!=sha256(request) or fresh['model']!=old['model']
+                or {x['id'] for x in fresh['clips']}!=missing):
+            raise ValueError('Measurement is not the actual complete new delivery')
+        combined={**prior,**{x['id']:x for x in fresh['clips']}}
+        result['clips']=[combined[c['id']] for c in delivery['clips']]
+        result['human_listening_review']='PENDING'
+        result['alignment_provenance']={'reused_complete_takes':len(reused),'newly_measured_complete_takes':len(missing),
+            'new_measurement':str(measured),'new_measurement_sha256':sha256(measured),
+            'reused_source':str(source),'reused_source_sha256':sha256(source),'not_a_listening_review':True}
     dest=folder/'VOICE_ALIGNMENT.json'
     if dest.exists() and read(dest)!=result:raise ValueError('Preserve existing alignment; inspect a new revision')
     write(dest,result);write(folder/'ALIGNMENT_REUSE_RECEIPT.json',{
         'source':str(source),'source_sha256':sha256(source),'delivery_sha256':sha256(delivery_file),
-        'complete_identical_takes':len(prior),'copy_identical':True,'new_listening_review':False})
-    return {'alignment':str(dest),'reused_identical_complete_takes':len(prior)}
+        'complete_identical_takes':len(reused),'copy_identical':not changed,'new_listening_review':False,
+        **({'newly_measured_complete_takes':len(missing),'new_measurement_sha256':sha256(measured)} if missing else {})})
+    return {'alignment':str(dest),'reused_identical_complete_takes':len(reused),
+            **({'newly_measured_complete_takes':len(missing)} if missing else {})}
 
 
 def compile_clock(a, clips, aligned):
@@ -487,12 +597,94 @@ def compile_clock(a, clips, aligned):
                            'kind': s['event'], 'time': t, 'refs': s['terminal_refs'],
                            'credit': 'whole_question_terminal_not_brand_method'})
         scenes.append(s); cursor = s['end']
-    return {'scenes': scenes, 'segments': segments, 'cues': cues, 'candidate_events': events,
-            'duration': cursor, 'frames': round(cursor * fps)}
+    clock = {'scenes': scenes, 'segments': segments, 'cues': cues, 'candidate_events': events,
+             'duration': cursor, 'frames': round(cursor * fps)}
+    return opening_clock(a, clips, aligned, clock) if 'audience_hook' in a else clock
+
+
+SCENE_CLOCK_FIELDS = ('start','end','oriented','recognition_end','extract_start','settled',
+    'candidate_start','candidate_arrive','source_arrive','voice_start','voice_end',
+    'comparison_until','return_start','decision_end','event_time','secondary_at')
+
+
+def shift_body_clock(clock, offset, fps=24):
+    """Translate time, never source character offsets, clip length or reading duration."""
+    result=deepcopy(clock)
+    for scene in result['scenes']:
+        for key in SCENE_CLOCK_FIELDS:
+            if key in scene:scene[key]+=offset
+        for event in scene.get('reading_events',[]):
+            for key in ('depart','arrival','end_time'):event[key]+=offset
+        for event in scene.get('attention_events',[]):event['time']+=offset
+    for segment in result['segments']:
+        segment['voice_start']+=offset;segment['voice_end']+=offset
+    for cue in result['cues']:cue['start']+=offset;cue['end']+=offset
+    for event in result['candidate_events']:event['time']+=offset
+    result['duration']+=offset;result['frames']+=round(offset*fps)
+    return result
+
+
+def opening_clock(author, clips, aligned, body):
+    """Consume the approved opening on the same actual take/caption/media clock."""
+    h=author['audience_hook'];fps=author['format']['fps'];t=h['timing']
+    cursor=grid(t['voice_pre'],fps);segments=[];cues=[]
+    voices={v['id']:v for v in author['voices']}
+    for vid in h['voice_ids']:
+        v,c,align=voices[vid],clips[vid],aligned[vid]
+        if align['transcript']!=v['text'] or align['audio_sha256']!=c['audio_sha256']:
+            raise ValueError('Opening alignment belongs to another exact take')
+        start=cursor;end=start+c['duration_seconds']
+        segments.append({**v,'scene_id':h['scene_id'],'voice_start':start,'voice_end':end,
+                         'voice':deepcopy(c),'time_stretch':False,'truncated':False})
+        for i,cue in enumerate(align['cues']):
+            if (v['text'][cue['text_start']:cue['text_end']]!=cue['text']
+                    or not 0<=cue['start']<cue['end']<=c['duration_seconds']+.001):
+                raise ValueError('Opening subtitle must bind exact complete spoken characters')
+            cues.append({**cue,'id':vid+'_hook_'+str(i),'scene_id':h['scene_id'],
+                         'segment':vid,'start':start+cue['start'],'end':start+cue['end']})
+        cursor=grid(end+t['voice_gap'],fps)
+    if not segments:raise ValueError('Opening needs its complete newly bound voices')
+    # Only the given visible conflict is staged. No answer/role label is added.
+    # One short alignment, a distinct relation displacement, an unresolved hold,
+    # then the existing original task. No quota-driven duration padding.
+    align_start=grid(max(1.4,segments[-1]['voice_start']+.3),fps)
+    align_end=grid(align_start+.8,fps)
+    displace_end=grid(align_end+1.05,fps)
+    handoff_start=grid(max(segments[-1]['voice_end']+.15,displace_end+t['unresolved_min']),fps)
+    end=grid(handoff_start+t['handoff_seconds'],fps)
+    clock=shift_body_clock(body,end,fps)
+    clock['segments']=segments+clock['segments'];clock['cues']=cues+clock['cues']
+    actual={s['id']:s for s in clock['scenes']}
+    r=h['retention'];payoff=actual[h['payoff_scene_id']];early=actual[r['first_payoff_scene_id']]
+    clock['audience_hook']={'contract_version':h['contract_version'],'decision_sha':sha(h),
+        'decision':deepcopy(h),'scene_id':h['scene_id'],'start':0,'end':end,
+        'frames':round(end*fps),'body_offset_seconds':end,'body_offset_frames':round(end*fps),
+        'phases':{'enter':[0,align_start],'surface_align':[align_start,align_end],
+                  'relation_displace':[align_end,displace_end],
+                  'unresolved_hold':[displace_end,handoff_start],
+                  'match_into_task':[handoff_start,end]},
+        'voice_ids':list(h['voice_ids']),'first_payoff_at':early['event_time'],
+        'first_payoff_after_hook_seconds':early['event_time']-end,
+        'main_payoff_at':payoff['event_time'],
+        'progression_at':actual[r['progression_scene_id']]['start'],
+        'final_recall_range':[actual[r['final_recall_scene_id']]['start'],actual[r['final_recall_scene_id']]['end']],
+        'scope':'USER_SPECIFIED_INTENT_NOT_RETENTION_OR_HUMAN_APPROVAL',
+        'normal_speed_review':'UNOBSERVED','listening_review':'UNOBSERVED','public_render_ready':False}
+    return clock
+
+
+def compile_visual_states(author, clock):
+    return {'definition':deepcopy(author['visual_states']),
+        'thinking_windows':[{'scene_id':s['id'],'enter':s['extract_start'],
+            'settled':s['settled'],'release':s['return_start'],'end':s['end']-1/24}
+            for s in clock['scenes'] if s.get('motion_treatment')=='critical_comparison'],
+        'normal_speed_review':'UNOBSERVED'}
 
 
 def prepare(folder):
     a, bundles = checked_author(folder)
+    from creative_os.audience_engagement import require_hook_decision
+    require_hook_decision(a,folder,operation='prepare')
     require_focus(a)
     check_script(folder, a)
     chunks = current_chunks(folder, bundles)
@@ -544,12 +736,18 @@ def prepare(folder):
                 alignment_sha256=sha256(aligned_path), public_render_ready=False,
                 human_creative_review='PENDING', listening_review='PENDING', student_count=0)
     plan['article_chunking'] = chunks
+    if 'source_attribution' in a:plan['source_attribution']=deepcopy(a['source_attribution'])
+    if 'visual_states' in a:
+        plan['visual_states']=compile_visual_states(a,plan)
     if 'layout' in a:plan['layout']=deepcopy(a['layout'])
     if all('choreography' in s for s in a['scenes']):
         plan['realization']='continuous_paper_scan'
     plan['copy_review']=a['copy_review']
     plan['complete_copy_sha256']=sha(script_text(a))
     plan['music']=deepcopy(a.get('music',[]))
+    if 'audience_hook' in plan:
+        for music in plan['music']:
+            music['timeline_start']=music.get('timeline_start',0)+plan['audience_hook']['end']
     from content_os.scoring import rank_teaching_focus
     from creative_os.audience_engagement import critical_focus_handoff
     plan['teaching_focus']=deepcopy(a['teaching_focus'])
@@ -577,7 +775,9 @@ def check(folder):
     a, b = checked_author(folder)
     from content_os.scoring import rank_teaching_focus
     chunks = current_chunks(folder,b) if (folder/'READING_CHUNKS.json').exists() else None
+    from creative_os.audience_engagement import validate_authored_hook
     return {'revision': a['revision'], 'frozen_questions': len(b), 'scenes': len(a['scenes']),
+            'audience_hook':validate_authored_hook(a,b),
             'article_chunking': {'articles':len(chunks['articles']), 'input_sha256':chunks['input_sha256']} if chunks else 'REQUIRED_BEFORE_NEW_PREPARE_OR_BUILD',
             'teaching_focus':validate_focus(a,b) if 'teaching_focus' in a else 'HISTORICAL_INPUT_NO_NEW_BUILD',
             'selection':rank_teaching_focus(a,b) if 'teaching_focus' in a else 'HISTORICAL',
@@ -587,6 +787,8 @@ def check(folder):
 def dispatch(operation, folder, **kwargs):
     if operation in ('script','voice','align','prepare','build'):
         a,_=checked_author(folder);require_focus(a)
+        from creative_os.audience_engagement import require_hook_decision
+        require_hook_decision(a,folder,operation=operation)
     if operation == 'script': return script(folder)
     if operation == 'check': return check(folder)
     if operation == 'chunks':

@@ -57,6 +57,13 @@ def client():
 
 
 def build(folder):
+    # Historical output can still be inspected/replayed. A new film must pass
+    # the current authored Audience contract, including an external Hook decision.
+    raise ValueError('CREATIVE_DECISION_REQUIRED: migrate historical input to current AV_AUTHOR / Audience Hook v1 before a new build')
+
+
+def _historical_build_reference(folder):
+    """Retained implementation reference, deliberately not an executable entry."""
     r=current(folder);c=client();target=Path(r['project'])
     if target.exists() or (folder/'SESSION_START.aep').exists():raise FileExistsError('Preserve revisions; inspect prior attempt')
     before=json.loads(c.call('ae_exec',{'code':'JSON.stringify({path:app.project.file?app.project.file.fsName:null,dirty:app.project.dirty});'})['content'])

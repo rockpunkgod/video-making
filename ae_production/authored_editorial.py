@@ -44,6 +44,11 @@ def validate_editorial(author,bundles):
     if set(m['teaching_selection'])!=set(bundles):raise ValueError('Pedagogy must cover every selected question')
     if m['replay_scene']!=next(s['id'] for s in author['scenes'] if s['kind']=='replay'):
         raise ValueError('The one local replay choice was not consumed')
+    if 'audience_hook' in author:
+        if m.get('audience_hook')!={'decision_sha':sha(author['audience_hook']),
+                'consumer':'Audience Engagement -> compile_clock -> authored_native',
+                'creative_authority':'explicit_user_instruction_only'}:
+            raise ValueError('Audience opening decision needs its exact director handoff')
     return m
 
 
@@ -105,10 +110,16 @@ def compile_editorial(author,clock,bundles):
         if not any(s['world']==prev and s.get('event')=='final' for s in clock['scenes']):
             raise ValueError('Transition before the preceding question closes')
         transitions.append(deepcopy(t))
-    return {'schema':'authored-editorial-consumption/v1','manifest_sha256':author['editorial']['sha256'],
+    result = {'schema':'authored-editorial-consumption/v1','manifest_sha256':author['editorial']['sha256'],
         'pedagogy':pedagogy,'method_mapping':mapping,'motion_identity':identity,
         'choreography_adapter':'source-bound-authored-parameters/v1',
         'legacy_v04_runtime':'NOT_INVOKED_R03_UNIMPLEMENTED','execution_allowed':False,
         'execution_consumer':'authored_native.Host; one author and clock',
         'rows':rows,'transitions':transitions,'research_choices':m['research_choices'],
         'actual_media_mapping':'PENDING_FINAL_EXPORT','public_render_ready':False}
+    if 'audience_hook' in author:
+        from creative_os.audience_engagement import validate_authored_hook
+        result['audience_hook']={**validate_authored_hook(author,bundles),
+            'actual_consumer':'authored_native shared template',
+            'clock':deepcopy(clock['audience_hook'])}
+    return result

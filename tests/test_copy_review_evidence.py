@@ -51,6 +51,19 @@ class CopyReviewEvidence(unittest.TestCase):
         self.author.pop('copy_review_evidence')
         with self.assertRaisesRegex(ValueError,'bound external'):episode.validate_copy_review(self.author)
 
+    def test_merged_hook_copy_requires_the_opening_as_well_as_body(self):
+        self.author['audience_hook']={'scene_id':'HOOK01','voice_ids':['hook']}
+        self.author['voices'].insert(0,{'id':'hook','text':'为什么不能选？'})
+        text=self.source.read_text('utf-8').replace('### SC','## SC')
+        self.source.write_text('## HOOK01 · Opening\n\n为什么不能选？\n\n'+text,encoding='utf-8')
+        self.evidence['source_markdown_sha256']=sha256(self.source)
+        self.evidence['reviewed_copy_sha256']=sha([{'scene':'HOOK01','text':'为什么不能选？'}]+self.rows)
+        self.bind()
+        self.assertTrue(episode.validate_copy_review(self.author)['user_reviewed'])
+        self.author['voices'][0]['text']='Different opening.'
+        with self.assertRaisesRegex(ValueError,'exact spoken copy'):
+            episode.validate_copy_review(self.author)
+
     def test_source_and_receipt_both_need_author_input_bindings(self):
         original=deepcopy(self.author['input_files'])
         for path in original:

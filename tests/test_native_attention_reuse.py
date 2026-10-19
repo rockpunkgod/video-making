@@ -22,7 +22,7 @@ class AuthoredRepairReuseTests(unittest.TestCase):
         temporary = TemporaryDirectory(); self.addCleanup(temporary.cleanup)
         self.root = Path(temporary.name)
         self.parent, self.child = self.root / 'parent', self.root / 'child'
-        template = Path(__file__).resolve().parents[1] / 'ae/templates/authored-episode.jsx'
+        template = Path(__file__).resolve().parents[1] / 'tests/fixtures/authored-episode-background-v1.jsx'
         # Historical AE snapshots used Windows line endings. Keep this exact
         # fixture stable even when Git checks the maintained source out with LF.
         historical = template.read_bytes()

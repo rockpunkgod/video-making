@@ -10,6 +10,7 @@ app.project.close(CloseOptions.DO_NOT_SAVE_CHANGES);app.newProject();app.project
 var C=app.project.items.addComp("MAIN_FILM_EDITORIAL_PROXY",1280,720,1,P.duration,24);
 C.renderer="ADBE Advanced 3d";C.bgColor=[.91,.905,.88];C.motionBlur=true;C.shutterAngle=90;
 var ink=[.09,.13,.16],paper=[.955,.946,.92],muted=[.48,.51,.51],blue=[.10,.37,.57],orange=[.69,.27,.06];
+if(P.visual_states){paper=[242/255,240/255,234/255];ink=[32/255,33/255,31/255];C.bgColor=paper;}
 var column=P.layout?P.layout.passage_width:1080,readingDistance=P.layout?P.layout.reading_distance:1550,stageDistance=P.layout?P.layout.stage_distance:1600;
 var audit={sources:[],extractions:[],candidates:[],camera:[],locators:[],replays:[],scenes:[],captions:[],reading:[],query_carries:[],scan_motion:[],word_focus:[],reading_windows:[],query_handoffs:[],teaching_resources:[]};
 function tr(l,n){return l.property("ADBE Transform Group").property(n);}
@@ -27,7 +28,7 @@ var worlds={},blocks={},lastTarget=[640,320,0],lastDistance=1550,lastOffset=[0,0
 function question(w){return [w.base+640,320,0];}
 for(var wi=0;wi<P.world_order.length;wi++){
  var name=P.world_order[wi],data=P.worlds[name],q=data.question,base=wi*10000,w={base:base,blocks:[],options:{},question:q};worlds[name]=w;
- rect(name+"_QUESTION_PAPER",1320,790,base-20,-40,60,paper);
+ w.questionPaper=rect(name+"_QUESTION_PAPER",1320,790,base-20,-40,60,paper);
  w.stem=text(name+"_QUESTION",q.stem,base+80,95,0,50,1120,ink);style(w.stem,0,ink,null,null);
  for(var j=0;j<4;j++){var cid="ABCD".charAt(j),op=text(name+"_OPTION_"+cid,cid+"   "+q.options[cid],base+90,230+j*80,0,46,1120,ink);op.comment=JSON.stringify({kind:"original_option",question_id:q.question_id,candidate:cid,exact_text:q.options[cid]});hold(tr(op,"ADBE Opacity"),0,100);style(op,0,ink,null,null);w.options[cid]=op;}
  var y=40;
@@ -130,6 +131,85 @@ for(var j=0;j<P.scenes.length;j++){var ss=P.scenes[j];if(ss.kind==="locate"){var
 var band=C.layers.addSolid(paper,"CAPTION_SAFE_AREA",1280,105,1,P.duration);band.transform.position.setValue([640,667.5]);
 for(var j=0;j<P.cues.length;j++){var q=P.cues[j],l=overlay("CAPTION_"+q.id,q.display_lines.join("\r"),84,624,33,1110,ink,q.start,q.end);l.comment=JSON.stringify({kind:"audio_aligned_exact_caption",segment:q.segment,text:q.text,start:q.start,end:q.end});audit.captions.push({id:l.id,text:q.text,start:q.start,end:q.end});}
 for(var j=0;j<titles.length;j++)titles[j].moveToBeginning();overlay("MATERIAL_IDENTITY","英语有画说 · 学霸这题怎么做？  |  模拟诊断材料",76,570,20,1100,muted,0,P.scenes[0].end);
+/* AUDIENCE_HOOK_V1_BEGIN */
+// An explicitly source-bound teaser precedes the unchanged original tasks.
+// Anonymous relation geometry is a viewing question, not another English fact.
+function buildAudienceOpening(H){
+ var d=H.decision,ph=H.phases,names=[],symbols=[],align0=ph.surface_align[0],align1=ph.surface_align[1],split1=ph.relation_displace[1],release=ph.match_into_task[0],end=H.end;
+ function tag(l,role,source,sourceLayer){l.name="AUDIENCE_HOOK_"+role;l.inPoint=0;l.outPoint=end;l.motionBlur=true;l.comment=JSON.stringify({kind:"audience_opening_native_object",scene:H.scene_id,decision_sha:H.decision_sha,role:role,source_ref:source||null,source_layer_name:sourceLayer?sourceLayer.name:null,not_a_candidate_verdict:true});names.push(l.name);symbols.push(l);return l;}
+ function clearKeys(p){while(p.numKeys)p.removeKey(p.numKeys);}
+ function anchor(ref,start,col,k){var origin=null,w=worlds[ref.world];if(ref.pointer.indexOf("/options/")===0)origin=w.options[ref.pointer.slice(9)];else for(var i=0;i<w.blocks.length;i++){var row=w.blocks[i];if(row.start<=ref.start&&ref.end<=row.end){origin=row.layer;break;}}if(!origin)throw Error("Hook anchor lost its real native source");var l=origin.duplicate(),st=l.property("Source Text"),doc=st.value;clearKeys(st);doc.text=ref.quote;doc.fontSize=60;doc.leading=79.2;doc.fillColor=col;doc.applyFill=true;doc.applyStroke=false;st.setValue(doc);var anim=l.property("ADBE Text Properties").property("ADBE Text Animators");while(anim.numProperties)anim.property(anim.numProperties).remove();l.parent=null;var props=["ADBE Position","ADBE Scale","ADBE Orientation","ADBE Opacity"];for(var i=0;i<props.length;i++)clearKeys(tr(l,props[i]));tr(l,"ADBE Position").setValue(start);tr(l,"ADBE Scale").setValue([100,100,100]);tr(l,"ADBE Orientation").setValue([0,0,0]);tr(l,"ADBE Opacity").setValue(100);l.moveToBeginning();return tag(l,"ANCHOR_"+k,ref,origin);}
+ function node(name,pos,col){var l=C.layers.addShape();l.threeDLayer=true;var g=l.property("ADBE Root Vectors Group"),circle=g.addProperty("ADBE Vector Shape - Ellipse");circle.property("ADBE Vector Ellipse Size").setValue([18,18]);var stroke=g.addProperty("ADBE Vector Graphic - Stroke");stroke.property("ADBE Vector Stroke Color").setValue(col);stroke.property("ADBE Vector Stroke Width").setValue(2.1);tr(l,"ADBE Position").setValue(pos);return tag(l,name);}
+ function pathValue(vertices){var shape=new Shape();shape.vertices=vertices;shape.inTangents=[[0,0],[0,0],[0,0]];shape.outTangents=[[0,0],[0,0],[0,0]];shape.closed=false;return shape;}
+ function edge(name,points,col){var l=C.layers.addShape();l.threeDLayer=true;tr(l,"ADBE Position").setValue([0,0,0]);var g=l.property("ADBE Root Vectors Group"),p=g.addProperty("ADBE Vector Shape - Group").property("ADBE Vector Shape"),stroke=g.addProperty("ADBE Vector Graphic - Stroke");stroke.property("ADBE Vector Stroke Color").setValue(col);stroke.property("ADBE Vector Stroke Width").setValue(1.5);p=l.property("ADBE Root Vectors Group").property("ADBE Vector Shape - Group").property("ADBE Vector Shape");p.setValue(pathValue(points));tag(l,name);return {layer:l,path:p};}
+ function move(l,a,b,c){ease(tr(l,"ADBE Position"),0,[a[0]-12,a[1]+8,a[2]]);ease(tr(l,"ADBE Position"),Math.min(1.1,align0-.1),a);ease(tr(l,"ADBE Position"),align0,a);ease(tr(l,"ADBE Position"),align1,b);ease(tr(l,"ADBE Position"),split1,c);ease(tr(l,"ADBE Position"),release,c);}
+ var ends=[[[370,455,0],[785,455,0]],[[470,490,45],[880,490,45]]],same=[[425,455,0],[850,455,0]],different=[[[425,455,0],[850,455,0]],[[515,500,55],[755,420,55]]];
+ for(var k=0;k<2;k++){
+  var col=P.visual_states?(k?[.96,.66,.38]:[.47,.72,.9]):(k?orange:blue),start=k?[580,300,45]:[390,230,-25],word=anchor(d.confusion_trigger.anchor_refs[k],start,col,k);
+  move(word,start,[490,275,0],[490,275,0]);
+  for(var j=0;j<2;j++){var nd=node("ROLE_"+k+"_"+j,ends[k][j],col);move(nd,ends[k][j],same[j],different[k][j]);}
+  var p0=[[ends[k][0][0],ends[k][0][1]],[640,440],[ends[k][1][0],ends[k][1][1]]],p1=[[425,455],[640,420],[850,455]],p2=[[different[k][0][0],different[k][0][1]],[640,420],[different[k][1][0],different[k][1][1]]],ed=edge("RELATION_"+k,p0,col);
+  ease(ed.path,align0,pathValue(p0));ease(ed.path,align1,pathValue(p1));ease(ed.path,split1,pathValue(p2));ease(ed.path,release,pathValue(p2));ease(tr(ed.layer,"ADBE Position"),0,[0,0,k?45:0]);ease(tr(ed.layer,"ADBE Position"),align0,[0,0,k?45:0]);ease(tr(ed.layer,"ADBE Position"),align1,[0,0,0]);ease(tr(ed.layer,"ADBE Position"),split1,[0,0,k?55:0]);ease(tr(ed.layer,"ADBE Position"),release,[0,0,k?55:0]);
+ }
+ // The paper is revealed under the same settled camera; no black or source swap.
+ var cover=C.layers.addSolid(P.visual_states?[23/255,24/255,26/255]:paper,"AUDIENCE_HOOK_SPACE",1280,720,1,P.duration);cover.inPoint=0;cover.outPoint=end;cover.moveAfter(C.layer("CAPTION_SAFE_AREA"));cover.comment=JSON.stringify({kind:"audience_opening_background",decision_sha:H.decision_sha,scene:H.scene_id});names.push(cover.name);
+ ease(tr(cover,"ADBE Opacity"),0,100);ease(tr(cover,"ADBE Opacity"),release+.3,100);ease(tr(cover,"ADBE Opacity"),end-.1,0);
+ for(var j=0;j<symbols.length;j++){var op=tr(symbols[j],"ADBE Opacity");ease(op,0,0);ease(op,.6,100);ease(op,release,100);ease(op,Math.min(end-.1,release+.3),0);}
+ C.layer("MATERIAL_IDENTITY").inPoint=end;
+ camera(0,[650,318,0],1580,[-8,-4],10);camera(align1,[640,320,0],1540,[8,-3],12);camera(split1,[640,320,0],1560,[0,0],12);camera(end,[640,320,0],1550,[0,0],14);
+ audit.audience_hook={scene:H.scene_id,decision_sha:H.decision_sha,range:[0,end],phases:ph,objects:names,anchor_refs:d.confusion_trigger.anchor_refs,source_texts:d.visual_conflict.visible_text,payoff_scene_id:d.payoff_scene_id,original_task_scene:P.scenes[0].id,original_task_start:P.scenes[0].start,spoiler_boundary:d.spoiler_boundary,normal_speed_review:"UNOBSERVED",listening_review:"UNOBSERVED"};
+}
+if(P.audience_hook)buildAudienceOpening(P.audience_hook);
+/* AUDIENCE_HOOK_V1_END */
+/* SOURCE_ATTRIBUTION_V1_BEGIN */
+if(P.source_attribution){
+ audit.source_attribution=[];
+ for(var worldName in P.source_attribution){
+  var credit=P.source_attribution[worldName],scene=null;
+  for(var si=0;si<P.scenes.length;si++)if(P.scenes[si].id===credit.scene_id)scene=P.scenes[si];
+  if(!scene)throw Error("Paper attribution lost its question scene");
+  var backing=C.layers.addSolid(paper,"SOURCE_ATTRIBUTION_SPACE_"+scene.id,1280,88,1,P.duration);
+  backing.transform.position.setValue([640,99]);backing.inPoint=scene.start;backing.outPoint=scene.end;
+  var paperCredit=overlay("SOURCE_PAPER_"+scene.id,credit.paper_display,72,63,17,1120,muted,scene.start,scene.end);
+  var articleCredit=overlay("SOURCE_ARTICLE_"+scene.id,"阅读 "+credit.reading_section+" 篇 · 第"+credit.question_number+"题  |  "+credit.article_display,72,96,18,1120,ink,scene.start,scene.end);
+  paperCredit.comment=JSON.stringify(credit);articleCredit.comment=JSON.stringify(credit);
+  audit.source_attribution.push({world:worldName,scene:scene.id,start:scene.start,end:scene.end,paper:paperCredit.name,article:articleCredit.name,source_sha256:credit.source_sha256});
+ }
+}
+/* SOURCE_ATTRIBUTION_V1_END */
+/* READING_THINKING_STATE_V1_BEGIN */
+if(P.visual_states){
+ var windows=P.visual_states.thinking_windows,stateCode='function q(x){x=Math.max(0,Math.min(1,x));return x*x*x*(x*(6*x-15)+10);}var w=0;';
+ for(var i=0;i<windows.length;i++){var win=windows[i];stateCode+='w=Math.max(w,q((time-'+win.enter+')/'+(win.settled-win.enter)+')*(1-q((time-'+win.release+')/'+(win.end-win.release)+')));';}
+ var screenCode=stateCode;
+ if(P.audience_hook)screenCode+='if(time<'+P.audience_hook.end+')w=Math.max(w,thisComp.layer("AUDIENCE_HOOK_SPACE").transform.opacity/100);';
+ var env=C.layers.addSolid([23/255,24/255,26/255],"THINKING_ENVIRONMENT",1280,720,1,P.duration);env.moveToEnd();tr(env,"ADBE Opacity").expression=stateCode+'100*w;';
+ var reality=[];
+ for(var name in worlds){var w=worlds[name];reality.push(w.questionPaper,w.paper,w.stem);for(var j=0;j<4;j++)reality.push(w.options["ABCD".charAt(j)]);for(var j=0;j<w.blocks.length;j++)reality.push(w.blocks[j].layer);}
+ var stateAudit={definition:P.visual_states.definition,thinking_windows:windows,reality_layers:[],foreground_layers:[],environment:env.name,normal_speed_review:"UNOBSERVED"};
+ for(var i=0;i<reality.length;i++){
+  var l=reality[i],tint=l.property("ADBE Effect Parade").addProperty("ADBE Tint");tint.name="REALITY_DIM";tint.property(1).setValue([23/255,24/255,26/255]);tint.property(2).setValue([.125,.13,.14]);tint.property(3).expression=stateCode+'100*w;';
+  var blur=l.property("ADBE Effect Parade").addProperty("ADBE Gaussian Blur 2");blur.name="REALITY_BLUR";blur.property(1).expression=stateCode+'12*w;';blur.property(3).setValue(true);
+  stateAudit.reality_layers.push(l.name);
+ }
+ for(var i=1;i<=C.numLayers;i++){
+  var l=C.layer(i),st=l.property("Source Text");
+  if(!st||l.name.indexOf("AUDIENCE_HOOK_")===0)continue;
+  var original=false;for(var j=0;j<reality.length;j++)if(l.id===reality[j].id)original=true;if(original)continue;
+  var screen=l.name.indexOf("CAPTION_")===0||l.name.indexOf("TASK_TITLE_")===0;
+  var foreground=l.name.indexOf("EXTRACT_")===0||l.name.indexOf("CANDIDATE_FLIGHT_")===0||l.name.indexOf("REPLAY_")===0;
+  if(!screen&&!foreground)continue;
+  var code=screen?screenCode:stateCode,animators=l.property("ADBE Text Properties").property("ADBE Text Animators");
+  for(var j=1;j<=animators.numProperties;j++){var props=animators.property(j).property("ADBE Text Animator Properties"),fill=props.property("ADBE Text Fill Color");if(fill&&fill.canSetExpression){var bright=fill.value[0]>.5?[.96,.66,.38]:[.47,.72,.9];fill.expression=code+'linear(w,0,1,value,'+JSON.stringify(bright)+');';}}
+  var base=cmSelector(l,"THINKING_FOREGROUND_INK",0,st.value.text.length);base.property("ADBE Text Animator Properties").addProperty("ADBE Text Fill Color").setValue(paper);cmAmount(base).expression=code+'100*w;';base.moveTo(1);
+  stateAudit.foreground_layers.push(l.name);
+ }
+ // Captions belong to the viewing state, not the blurred Reality Layer.
+ if(P.audience_hook)tr(band,"ADBE Opacity").expression="time<"+P.audience_hook.end+"?0:100;";
+ var bandTint=band.property("ADBE Effect Parade").addProperty("ADBE Tint");bandTint.name="CAPTION_STATE_BACKGROUND";bandTint.property(1).setValue([23/255,24/255,26/255]);bandTint.property(2).setValue([23/255,24/255,26/255]);bandTint.property(3).expression=screenCode+'100*w;';
+ audit.visual_states=stateAudit;
+}
+/* READING_THINKING_STATE_V1_END */
 function resize(comp,width,height){var factor=width/comp.width;comp.width=width;comp.height=height;for(var j=1;j<=comp.numLayers;j++){var l=comp.layer(j);if(l instanceof CameraLayer){var p=l.property("ADBE Camera Options Group").property("ADBE Camera Zoom");p.setValue(p.value*factor);}else if(!l.threeDLayer){var pos=l.transform.position,scale=l.transform.scale;if(pos.numKeys||scale.numKeys)throw Error("Unexpected animated screen transform");var v=pos.value;pos.setValue([v[0]*factor,v[1]*factor]);v=scale.value;scale.setValue([v[0]*factor,v[1]*factor]);}}}
 resize(C,1920,1080);C.comment=JSON.stringify({revision:P.revision,author_sha256:P.author_sha256,role:"EDITORIAL_PROXY",plan_sha256:PLAN_SHA});var master=C.duplicate();master.name="MAIN_FILM_MASTER_4K24";resize(master,3840,2160);master.comment=JSON.stringify({revision:P.revision,author_sha256:P.author_sha256,role:"UNRENDERED_4K_MASTER",plan_sha256:PLAN_SHA});
 for(var j=1;j<=app.project.numItems;j++)app.project.item(j).selected=false;C.selected=true;C.openInViewer();C.time=0;

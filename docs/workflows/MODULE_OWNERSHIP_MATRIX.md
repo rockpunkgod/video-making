@@ -49,6 +49,7 @@ Pedagogy、Student POV、Choreography、Cognitive Direction 和 Audience 的独�
 
 ### Audience Engagement Design
 
+- **当前 authored Hook v1 扩展：** 用户决定痛点、有效方法使用场景、既定视觉冲突与开场原文；本模块 `validate_authored_hook/critical_focus_handoff` 验证来源、Stop、收益和兑现链，既有 authored clock 与原生模板实际消费。原生对象/参数检查、编码画面、原速观看、试听和观众结果分开记录。缺创意返回 `CREATIVE_DECISION_REQUIRED`，不得新增 Hook Agent 或自行创意审批。B06 旧接口的历史范围保留下列原记录，不据新扩展追认。
 - **Purpose / Contract：** Episode 之上的观看问题、递进、信息回报假设与 beat 风险；0.1/0.2 `design_engagement/validate_engagement/director_handoff`。
 - **Inputs / Producer：** 有效 Episode、当前 Status、宿主 authored Audience Direction；v0.2 另有七字段 viewer_state 和早于当前的 beat 引用。
 - **Outputs / Consumer：** 计划、结构风险、scene handoff。实际 B06 r2 已做 beat→native scene 对照；目前消费到限定导演交接，未执行新镜头。
