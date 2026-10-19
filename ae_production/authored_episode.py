@@ -251,11 +251,16 @@ def checked_author(folder):
         raise ValueError('The main film requires distinct, source-bound questions')
     if 'source_attribution' in a:
         validate_source_attribution(a, bundles)
-    if 'visual_states' in a and a['visual_states']!={
-            'reading':{'paper':'#F2F0EA','ink':'#20211F','reality':'full_brightness'},
-            'thinking':{'environment':'#17181A','reality':'dimmed_and_blurred',
-                        'extracted_words':'sharp_foreground'}}:
-        raise ValueError('Reading/Thinking State differs from the explicit user definition')
+    if 'visual_states' in a:
+        thinking={'environment':'#17181A','reality':'dimmed_and_blurred',
+                  'extracted_words':'sharp_foreground'}
+        historical={'paper':'#F2F0EA','ink':'#20211F','reality':'full_brightness'}
+        preserved={'mode':'preserve_existing','paper_rgb':[.955,.946,.92],
+                   'ink_rgb':[.09,.13,.16],'environment_rgb':[.91,.905,.88],
+                   'reality':'unchanged'}
+        if a['visual_states'] not in ({'reading':historical,'thinking':thinking},
+                                      {'reading':preserved,'thinking':thinking}):
+            raise ValueError('Reading/Thinking State differs from the explicit user definition')
     voices = {v['id']: v for v in a['voices']}
     if any('choreography' in s for s in a['scenes']) and not all('choreography' in s for s in a['scenes']):
         raise ValueError('Current film cannot silently mix explicit and historical motion timing')

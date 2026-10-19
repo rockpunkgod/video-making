@@ -48,3 +48,13 @@ class NativeVisualStates(unittest.TestCase):
         with self.assertRaisesRegex(ValueError,'palette'):validate_visual_state_readback(p,n,rows)
         p,n,rows=self.fixture();rows[0]['rows'][1]['foreground'][0]['amount']=0
         with self.assertRaisesRegex(ValueError,'foreground'):validate_visual_state_readback(p,n,rows)
+
+    def test_preserved_reading_mode_requires_original_background(self):
+        p,n,rows=self.fixture()
+        p['visual_states']['definition']={'reading':{'mode':'preserve_existing'}}
+        for row in rows:
+            row['paper']=[.955,.946,.92];row['background']=[.91,.905,.88]
+        self.assertEqual(validate_visual_state_readback(p,n,rows)['normal_speed_review'],'UNOBSERVED')
+        rows[1]['paper']=[242/255,240/255,234/255]
+        with self.assertRaisesRegex(ValueError,'palette'):
+            validate_visual_state_readback(p,n,rows)

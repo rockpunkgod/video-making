@@ -351,7 +351,7 @@ def visual_state_readback(h,p,n):
         rows.push(r);
       }
       var paper=c.layer('__FIRST_WORLD___QUESTION_PAPER').source.mainSource.color;
-      var inv=[];for(var j=0;j<spec.foreground_layers.length;j++){var fg=c.layer(spec.foreground_layers[j]);inv.push({name:fg.name,inPoint:fg.inPoint,outPoint:fg.outPoint});}out.push({comp_id:c.id,rows:rows,foreground_inventory:inv,paper:paper,environment_color:c.layer(spec.environment).source.mainSource.color});
+      var inv=[];for(var j=0;j<spec.foreground_layers.length;j++){var fg=c.layer(spec.foreground_layers[j]);inv.push({name:fg.name,inPoint:fg.inPoint,outPoint:fg.outPoint});}out.push({comp_id:c.id,rows:rows,foreground_inventory:inv,paper:paper,background:c.bgColor,environment_color:c.layer(spec.environment).source.mainSource.color});
     }return out;'''
     code=code.replace('__IDS__',json.dumps([n['comp_id'],n['master_comp_id']])).replace('__SPEC__',json.dumps(spec)).replace('__SAMPLES__',json.dumps(samples)).replace('__FIRST_WORLD__',p['world_order'][0])
     rows=h.js(code)
@@ -378,7 +378,15 @@ def validate_visual_state_readback(p,n,rows):
                 or not math.isfinite(a['time']) or abs(a['time']-b['time'])>.0001
                 for a,b in zip(comp['rows'],samples))):
             raise ValueError('Native state sample coverage is missing, duplicated or stale')
-        for actual,expected in ((comp['paper'],[242/255,240/255,234/255]),
+        reading=p['visual_states'].get('definition',{}).get('reading',{})
+        expected_paper=([.955,.946,.92] if reading.get('mode')=='preserve_existing'
+                             else [242/255,240/255,234/255])
+        if reading.get('mode')=='preserve_existing':
+            background=comp.get('background',[])
+            if len(background)!=3 or any(not math.isfinite(x) or abs(x-y)>.002
+                                       for x,y in zip(background,[.91,.905,.88])):
+                raise ValueError('Preserved reading background differs from original')
+        for actual,expected in ((comp['paper'],expected_paper),
                                 (comp['environment_color'],[23/255,24/255,26/255])):
             if len(actual)!=3 or any(not math.isfinite(x) or abs(x-y)>.002 for x,y in zip(actual,expected)):
                 raise ValueError('Actual native state palette differs from user definition')
@@ -415,6 +423,173 @@ def validate_material_identity_scope(p,rows,comp_ids):
     return {'status':'PASS_EXACT_OPENING_SCOPE','rows':rows}
 
 
+REPLAY_READING_VISIBILITY_POLICY = 'hide_replay_candidate_until_settled/v1'
+CANDIDATE_READING_VISIBILITY_POLICY = 'hide_candidate_until_settled/v1'
+
+
+def _candidate_reading_visibility_policy(n):
+    generic=n['audit'].get('candidate_reading_visibility_policy')
+    replay=n['audit'].get('replay_reading_visibility_policy')
+    if ((generic is not None and generic!=CANDIDATE_READING_VISIBILITY_POLICY)
+            or (replay is not None and replay!=REPLAY_READING_VISIBILITY_POLICY)
+            or generic is not None and replay is not None):
+        raise ValueError('Unknown native candidate reading visibility policy or ambiguous markers')
+    return generic if generic is not None else replay
+
+
+def replay_reading_visibility_rows(p,policy=REPLAY_READING_VISIBILITY_POLICY):
+    """Describe the executed candidate policy; retain the old replay-only scope."""
+    if policy not in (REPLAY_READING_VISIBILITY_POLICY,CANDIDATE_READING_VISIBILITY_POLICY):
+        raise ValueError('Unknown native candidate reading visibility policy')
+    def number(value):
+        return type(value) in (int,float) and math.isfinite(value)
+    if p['format']['fps']!=24 or not number(p['duration']):
+        raise ValueError('Replay visibility requires the actual finite 24 fps clock')
+    result=[]
+    for scene in p['scenes']:
+        events=scene.get('reading_events',[])
+        eligible=scene['kind']=='replay'
+        if policy==CANDIDATE_READING_VISIBILITY_POLICY and scene['kind']=='compare' and events:
+            treatment=scene.get('motion_treatment')
+            if treatment not in ('critical_comparison','in_place_check'):
+                raise ValueError('Unbound native candidate comparison treatment')
+            eligible=treatment=='critical_comparison'
+        if not eligible or not events:continue
+        times=[scene[k] for k in ('start','candidate_start','settled','end')]
+        times += [event[k] for event in events for k in ('depart','arrival','end_time')]
+        if not all(number(value) for value in times):
+            raise ValueError('Replay visibility has a nonfinite reading or scene clock')
+        start,candidate_start,settled,end=(scene[k] for k in ('start','candidate_start','settled','end'))
+        quiet=events[0]['depart'];fade=max(candidate_start,quiet-.3);restored=settled+.3
+        if not 0<=start<=candidate_start<=fade<quiet<settled<restored<end<=p['duration']:
+            raise ValueError('Replay quiet/fade/restore interval escapes its actual scene')
+        previous=quiet
+        for event in events:
+            if not previous<=event['depart']<event['arrival']<event['end_time']<=settled:
+                raise ValueError('Replay quiet interval does not cover every necessary reading')
+            previous=event['end_time']
+        if scene['kind']=='replay' and (scene.get('event') is not None
+                or any(event.get('scene',event.get('scene_id'))==scene['id'] for event in p.get('candidate_events',[]))):
+            raise ValueError('A replay visibility repair cannot introduce a candidate decision')
+        world=p['worlds'][scene['world']];candidate=scene['candidate']
+        if candidate not in world['question']['options']:
+            raise ValueError('Replay candidate lost its actual source option')
+        hidden_times=[quiet]+[frame/24 for frame in range(math.ceil(quiet*24),math.floor(settled*24)+1)
+                              if quiet<frame/24<settled]+[settled]
+        reading_samples=[{'reading':index,'time':time}
+                         for index,event in enumerate(events)
+                         for time in (event['arrival'],(event['arrival']+event['end_time'])/2,event['end_time'])]
+        prefix='REPLAY_CANDIDATE_' if scene['kind']=='replay' else 'CANDIDATE_FLIGHT_'
+        result.append({'scene':scene['id'],'layer':prefix+scene['id'],
+            'source_layer':scene['world']+'_OPTION_'+candidate,
+            'source_text':candidate+'   '+world['question']['options'][candidate],
+            'candidate':candidate,'terminal_refs':scene.get('terminal_refs',[]),
+            'inPoint':candidate_start,'outPoint':end,'fade_start':fade,'quiet_at':quiet,
+            'settled':settled,'restored_at':restored,
+            'required_keys':[[fade,100],[quiet,0],[settled,0],[restored,100]],
+            'hidden_times':hidden_times,'reading_samples':reading_samples})
+    if len({row['scene'] for row in result})!=len(result):
+        raise ValueError('Replay visibility requires unique scene identities')
+    return result
+
+
+def validate_replay_reading_visibility(p,n,rows):
+    """Check complete real opacity evidence; do not certify encoded perception."""
+    policy=_candidate_reading_visibility_policy(n)
+    if policy is None:
+        raise ValueError('Unknown or missing native replay visibility policy')
+    scope=replay_reading_visibility_rows(p,policy)
+    comp_ids=[n['comp_id'],n['master_comp_id']]
+    expected={(comp_id,row['scene']) for comp_id in comp_ids for row in scope}
+    if (any(type(comp_id) is not int or comp_id<=0 for comp_id in comp_ids)
+            or len(set(comp_ids))!=2 or len(rows)!=len(expected)
+            or {(row['comp_id'],row['scene']) for row in rows}!=expected):
+        raise ValueError('Replay visibility requires exact proxy/master scene coverage')
+    def number(value):
+        return type(value) in (int,float) and math.isfinite(value)
+    def close(actual,expected,tolerance=.0001):
+        return number(actual) and abs(actual-expected)<=tolerance
+    def samples(actual,expected,target,label):
+        if len(actual)!=len(expected):raise ValueError('Missing native replay '+label+' coverage')
+        for row,spec in zip(actual,expected):
+            if (not close(row.get('time'),spec['time'],1e-6)
+                    or 'reading' in spec and row.get('reading')!=spec['reading']
+                    or not close(row.get('opacity'),target,.01)):
+                raise ValueError('Native replay '+label+' opacity or sample clock changed')
+    by_scene={row['scene']:row for row in scope}
+    # Master is an exact native comp duplicate: comments retain the proxy source ID.
+    proxy_sources={row['scene']:row.get('source_id') for row in rows
+                   if row['comp_id']==n['comp_id']}
+    for row in rows:
+        spec=by_scene[row['scene']]
+        kind='recalled_candidate' if spec['layer'].startswith('REPLAY_CANDIDATE_') else 'whole_candidate_with_attached_identity'
+        comment={'kind':kind,'candidate':spec['candidate'],'scene':spec['scene'],
+                 'source_layer_id':proxy_sources[row['scene']],'terminal_refs':spec['terminal_refs']}
+        if (row.get('layer')!=spec['layer'] or row.get('threeD') is not True
+                or row.get('parent') is not None or row.get('enabled') is not True
+                or row.get('guide_layer') is not False or row.get('text')!=spec['source_text']
+                or row.get('source_layer')!=spec['source_layer'] or row.get('source_text')!=spec['source_text']
+                or type(row.get('source_id')) is not int or row['source_id']<=0 or row.get('comment')!=comment
+                or not close(row.get('inPoint'),spec['inPoint']) or not close(row.get('outPoint'),spec['outPoint'])):
+            raise ValueError('Replay visibility lost its source-derived native candidate identity or lifetime')
+        if row.get('opacity_expression')!='' or row.get('opacity_expression_error')!='':
+            raise ValueError('Replay opacity must use the actual bounded keys without an expression')
+        keys=row.get('opacity_keys',[])
+        if (not keys or any(not number(key.get('time')) or not number(key.get('value'))
+                           or not 0<=key['time']<=p['duration'] or not 0<=key['value']<=100 for key in keys)
+                or any(a['time']>=b['time'] for a,b in zip(keys,keys[1:]))):
+            raise ValueError('Finite unique native replay opacity keys required')
+        for time,value in spec['required_keys']:
+            matched=[key for key in keys if close(key['time'],time)]
+            if len(matched)!=1 or not close(matched[0]['value'],value,.01):
+                raise ValueError('Replay opacity did not consume its four exact fade/quiet/restore keys')
+            key=matched[0]
+            if (key.get('in_type')!='BEZIER' or key.get('out_type')!='BEZIER'
+                    or any(not isinstance(key.get(name),list) or len(key[name])!=2
+                           or not close(key[name][0],0) or not close(key[name][1],55)
+                           for name in ('in_ease','out_ease'))):
+                raise ValueError('Replay opacity fade lost its native zero-speed temporal easing')
+        if any(spec['quiet_at']-.0001<=key['time']<=spec['settled']+.0001
+               and not close(key['value'],0,.01) for key in keys):
+            raise ValueError('Replay candidate becomes visible again before extraction settles')
+        samples(row.get('hidden',[]),[{'time':time} for time in spec['hidden_times']],0,'quiet interval')
+        samples(row.get('readings',[]),spec['reading_samples'],0,'necessary reading')
+        samples([row.get('before',{})],[{'time':spec['fade_start']}],100,'pre-reading')
+        samples([row.get('restored',{})],[{'time':spec['restored_at']}],100,'restoration')
+    generic=policy==CANDIDATE_READING_VISIBILITY_POLICY
+    status=('PASS_CANDIDATE_QUIET_NATIVE_PARAMETERS' if generic else 'PASS_REPLAY_QUIET_NATIVE_PARAMETERS') if scope else (
+            'NOT_APPLICABLE_NO_CANDIDATE_READING' if generic else 'NOT_APPLICABLE_NO_REPLAY_READING')
+    return {'status':status,'policy':policy,'plan_sha256':n['plan_sha256'],
+        'scope_sha256':sha(scope),'rows':rows,'normal_speed_review':'UNOBSERVED',
+        'listening_review':'UNOBSERVED','human_review':'PENDING','public_render_ready':False}
+
+
+def replay_reading_visibility_readback(h,p,n):
+    """Inspect only the capability explicitly recorded by the executed template."""
+    policy=_candidate_reading_visibility_policy(n)
+    if policy is None:return None
+    scope=replay_reading_visibility_rows(p,policy)
+    if not scope:return validate_replay_reading_visibility(p,n,[])
+    code=r'''var ids=__IDS__,shots=__SHOTS__,out=[];
+    var interpolationBezier=String(KeyframeInterpolationType.BEZIER),interpolationHold=String(KeyframeInterpolationType.HOLD),interpolationLinear=String(KeyframeInterpolationType.LINEAR);
+    function interpolation(v){var value=String(v);if(value===interpolationBezier)return 'BEZIER';if(value===interpolationHold)return 'HOLD';if(value===interpolationLinear)return 'LINEAR';return 'UNKNOWN';}
+    function easing(a){return [a[0].speed,a[0].influence];}
+    for(var ci=0;ci<ids.length;ci++){var c=app.project.itemByID(ids[ci]);
+      for(var si=0;si<shots.length;si++){var s=shots[si],l=c.layer(s.layer),source=c.layer(s.source_layer),op=l.transform.opacity;
+        var row={comp_id:c.id,scene:s.scene,layer:l.name,threeD:l.threeDLayer,parent:l.parent?l.parent.name:null,enabled:l.enabled,guide_layer:l.guideLayer,
+          text:l.property('Source Text').value.text,source_layer:source.name,source_text:source.property('Source Text').value.text,source_id:source.id,comment:JSON.parse(l.comment),
+          inPoint:l.inPoint,outPoint:l.outPoint,opacity_expression:op.expression,opacity_expression_error:op.expressionError,opacity_keys:[],hidden:[],readings:[],
+          before:{time:s.fade_start,opacity:op.valueAtTime(s.fade_start,false)},restored:{time:s.restored_at,opacity:op.valueAtTime(s.restored_at,false)}};
+        for(var k=1;k<=op.numKeys;k++)row.opacity_keys.push({time:op.keyTime(k),value:op.keyValue(k),in_type:interpolation(op.keyInInterpolationType(k)),out_type:interpolation(op.keyOutInterpolationType(k)),in_ease:easing(op.keyInTemporalEase(k)),out_ease:easing(op.keyOutTemporalEase(k))});
+        for(var j=0;j<s.hidden_times.length;j++){var t=s.hidden_times[j];row.hidden.push({time:t,opacity:op.valueAtTime(t,false)});}
+        for(var j=0;j<s.reading_samples.length;j++){var r=s.reading_samples[j];row.readings.push({reading:r.reading,time:r.time,opacity:op.valueAtTime(r.time,false)});}
+        out.push(row);
+      }
+    }return out;'''
+    code=code.replace('__IDS__',json.dumps([n['comp_id'],n['master_comp_id']])).replace('__SHOTS__',json.dumps(scope))
+    return validate_replay_reading_visibility(p,n,h.js(code))
+
+
 def audit(folder):
     a,p,n=current_native(folder);h=Host(folder,'after_effects')
     code="var c=app.project.itemByID(CID),rows=[];for(var i=1;i<=c.numLayers;i++){var l=c.layer(i),r={name:l.name,id:l.id,inPoint:l.inPoint,outPoint:l.outPoint,threeD:l.threeDLayer,parent:l.parent?l.parent.id:null,comment:l.comment};if(l instanceof TextLayer){r.text=l.property('Source Text').value.text;r.font=l.property('Source Text').value.font;if(l.name.indexOf('-source-')>=0&&l.name.indexOf('EXTRACT_')!==0){var initial=l.property('Source Text').valueAtTime(0,false);r.initial_color=initial.characterRange(0,initial.text.length).fillColor||null;r.text_height=l.sourceRectAtTime(0,false).height;}}if(l instanceof CameraLayer||l.name.indexOf('SOURCE_LIFT_')===0||l.name.indexOf('CANDIDATE_FLIGHT_')===0||l.name.indexOf('-source-')>=0){r.position=[];r.orientation=[];var pos=l.transform.position;r.position_value=pos.value;r.scale=[];var sp=l.transform.scale;if(sp)for(var sk=1;sk<=sp.numKeys;sk++)r.scale.push([sp.keyTime(sk),sp.keyValue(sk)]);for(var j=1;j<=pos.numKeys;j++)r.position.push([pos.keyTime(j),pos.keyValue(j)]);if(!(l instanceof CameraLayer)){var ori=l.transform.orientation;for(var j=1;j<=ori.numKeys;j++)r.orientation.push([ori.keyTime(j),ori.keyValue(j)]);}}rows.push(r);}return {project:app.project.file.fsName,width:c.width,height:c.height,duration:c.duration,fps:c.frameRate,layers:rows};".replace('CID',str(n['comp_id']))
@@ -430,7 +605,9 @@ def audit(folder):
             if b['visible'] and native[b['id']]['text'].replace('\r','\n')!=b['text']:raise ValueError('Frozen source text altered')
             if b['visible'] and p.get('realization')=='continuous_paper_scan':
                 color=native[b['id']].get('initial_color')
-                expected_ink=[32/255,33/255,31/255] if 'visual_states' in p else [.09,.13,.16]
+                preserved=p.get('visual_states',{}).get('definition',{}).get('reading',{}).get('mode')=='preserve_existing'
+                expected_ink=([32/255,33/255,31/255] if 'visual_states' in p and not preserved
+                              else [.09,.13,.16])
                 if not color or len(color)!=3 or any(abs(x-y)>.002 for x,y in zip(color,expected_ink)):
                     raise ValueError('Search highlight appeared before its reading event')
         for cid,text in w['question']['options'].items():
@@ -603,6 +780,11 @@ var out=[];for(var ci=0;ci<ids.length;ci++){var c=app.project.itemByID(ids[ci]);
                     raise ValueError('Actual paper/article attribution text or placement is stale')
     material=h.js('var ids='+json.dumps([n['comp_id'],n['master_comp_id']])+';var rows=[];for(var i=0;i<ids.length;i++){var l=app.project.itemByID(ids[i]).layer("MATERIAL_IDENTITY");rows.push({comp_id:ids[i],inPoint:l.inPoint,outPoint:l.outPoint});}return rows;')
     write(folder/'MATERIAL_IDENTITY_NATIVE_READBACK.json',validate_material_identity_scope(p,material,[n['comp_id'],n['master_comp_id']]))
+    replay_visibility=replay_reading_visibility_readback(h,p,n)
+    if replay_visibility is not None:
+        visibility_name=('CANDIDATE_READING_VISIBILITY_NATIVE.json' if replay_visibility['policy']==CANDIDATE_READING_VISIBILITY_POLICY
+                         else 'REPLAY_READING_VISIBILITY_NATIVE.json')
+        write(folder/visibility_name,replay_visibility)
     write(folder/'native-audit.json',r)
     return {'source_text':'PASS','complete_candidate_identity_and_withdrawal':'PASS','replay_candidate_state':'PASS','caption_clock':'PASS','native_layers':len(native),'human_creative_review':'PENDING'}
 
