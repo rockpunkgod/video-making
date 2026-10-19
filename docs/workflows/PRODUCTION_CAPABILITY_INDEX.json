@@ -4,7 +4,7 @@
   "as_of": "2026-10-19",
   "repository_base": "9e75f795bfc650c6fe1f71abde97e9d9ad7edf3b",
   "recommended_workflow": "docs/workflows/CURRENT_PRODUCTION_WORKFLOW.md",
-  "scope": "Current autonomous FREE_SHOWCASE uses the authored dispatch. Complete R03 followed by four actual-media-directed revisions R06/R07/R08/R09. Final R09:294.5s/7068frames/native4K24, 24 complete takes,139 full-passage groups,21 reading windows/145 focus instances. Known observed visual defects were repaired and rechecked in actual encoded media. Listening and direct normal-speed motion remain UNOBSERVED. Local PRODUCTION_INDEX binds the same-revision film, editable projects, exact transcript, review and36-capability audit. Historical36 entries retain their version-specific meanings. The five-minute target shortfall is5.5s; music remains internal scratch, film acceptance pending, public_render_ready=false. Hook Contract v1 is now integrated on the authored path; R05 full native master is IN_PROGRESS. Canonical delivery remains the previous R09 until same-version new media, packaging, review and host restoration exist.",
+  "scope": "Current authored dispatch actually consumed AudienceHook, exact user-reviewed26 complete narration takes, source-bound exam/article credits,139 sense groups, teaching focus, native3D and transparent source extraction. Latest user instruction preserves the original Reading presentation and adds ThinkingState only. Current audience-hook-v1-r09 has a complete307.5416667s/7381-frame4K24 same-version film, native AE and Premiere edits, full decode/voice integrity checks,83 actual final encoded static samples independently reviewed and both hosts restored. Historical36 entries retain version-specific meanings. Normal-speed motion and actual listening remain UNOBSERVED; final human film acceptance pending, no public release.",
   "historical_archive_index": "G:/VideoMaking/_archive/2026-10-18/ARCHIVE_INDEX.json",
   "historical_path_rule": "Historical paths identify their original location. Entries with archived_evidence map those paths to verified ZIP members; inspect or restore through the archive instructions rather than treating a moved output as a missing production dependency.",
   "not_runtime_contract": true,
@@ -706,9 +706,16 @@
         "local-data/free-showcase/audience-hook-v1-r09/HOOK_NATIVE_READBACK.json",
         "local-data/free-showcase/audience-hook-v1-r09/READING_THINKING_NATIVE_READBACK.json",
         "local-data/free-showcase/audience-hook-v1-r09/SOURCE_ATTRIBUTION.json",
-        "local-data/free-showcase/audience-hook-v1-r09/STATE_PREVIEW_RECEIPT.json"
+        "local-data/free-showcase/audience-hook-v1-r09/STATE_PREVIEW_RECEIPT.json",
+        "local-data/free-showcase/audience-hook-v1-r09/CANDIDATE_READING_VISIBILITY_NATIVE.json",
+        "local-data/free-showcase/audience-hook-v1-r09/MASTER_DELIVERY_QA.json",
+        "local-data/free-showcase/audience-hook-v1-r09/PR_TIMELINE.json",
+        "local-data/free-showcase/audience-hook-v1-r09/PR_EXPORT_RECEIPT.json",
+        "local-data/free-showcase/audience-hook-v1-r09/INTERNAL_MEDIA_REVIEW.json",
+        "local-data/free-showcase/audience-hook-v1-r09/final-film-review/ENCODED_SAMPLE_BINDINGS.json",
+        "local-data/free-showcase/audience-hook-v1-r09/RESTORED_HOSTS.json"
       ],
-      "scope": "Audience Hook v1 consumed by current authored clock and both native compositions; exact source-bound paper/article labels and user-defined Reading/Thinking states. R01/R02/R03/R04 observed visibility, glyph-crossing, handoff ghosting and state-reveal defects directed actual R05 native revision. R05 corrected native reveal verified in actual encoded opening. User-approved R06 updates two spoken paper attributions, preserves24 takes and measures2 new complete takes; R06 actual encoded review found programme identity overran its first-task range; R07 corrects that exact lifetime, re-renders affected whole parts and proves2112 unaffected parent frames through strict native reuse. Current7381-frame4K render IN_PROGRESS. Static native checks/previews are not full-film, normal-speed or listening approval.",
+      "scope": "Actual current full film307.5416667s/7381frames/26 complete takes; SHA256 9fd1d43ef3989bbf920a63e170d9d6c8e89a8b1d6609ad15c7a75e1662cfb157. New4K native picture consumed Hook, source credits, preserved Reading presentation, added ThinkingState and dualcomp10-row candidate quiet coverage in5 critical reading/comparison/replay scenes. Native audits, full final decode, audio integrity measurements and independent83 encoded static sample checks passed within stated scopes; both hosts restored. No normal-speed observation, true listening or human approval implied.",
       "public_render_ready": false,
       "human_approved": false
     }
@@ -2168,10 +2175,16 @@
         "E29"
       ],
       "creative_authority": "explicit user instruction; not automatic agent creation",
-      "media_status": "NATIVE_MASTER_RENDER_IN_PROGRESS",
+      "media_status": "COMPLETE_SAME_VERSION_FILM_AND_EDITABLE_PROJECTS_SCOPED_PIXEL_REVIEW",
       "normal_speed_review": "UNOBSERVED",
       "listening_review": "UNOBSERVED",
-      "public_render_ready": false
+      "public_render_ready": false,
+      "media_sha256": "9fd1d43ef3989bbf920a63e170d9d6c8e89a8b1d6609ad15c7a75e1662cfb157",
+      "duration_seconds": 307.5416666666667,
+      "frames": 7381,
+      "reading_state": "PRESERVED_ORIGINAL",
+      "thinking_state": "ADDED_INCREMENTALLY",
+      "human_film_acceptance": "PENDING"
     }
   }
 }
