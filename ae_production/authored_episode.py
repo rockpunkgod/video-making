@@ -23,7 +23,7 @@ AUTHOR = 'AV_AUTHOR.json'
 AUTHOR_KEYS = {'revision','product','format','media_role','public_render_ready','copy_review',
                'sources','input_files','voices','scenes','excerpts','producer','host',
                'voice_delivery','voice_inputs','music','teaching_focus','editorial','layout','alignment_source',
-               'copy_review_evidence','audience_hook','source_attribution','visual_states'}
+               'copy_review_evidence','audience_hook','source_attribution','visual_states','replay_policy'}
 KINDS = {'task', 'locate', 'compare', 'answer', 'replay', 'recap'}
 SHOT_KEYS = {'id', 'kind', 'world', 'voice_ids', 'title', 'excerpt', 'candidate',
              'event', 'replay_of', 'source_refs', 'action_refs', 'terminal_refs',
@@ -31,7 +31,7 @@ SHOT_KEYS = {'id', 'kind', 'world', 'voice_ids', 'title', 'excerpt', 'candidate'
              'candidate_anchor', 'event_anchor', 'attention', 'locator',
              'audience_intent', 'pre_excerpt', 'secondary_excerpt', 'secondary_anchor', 'recap_worlds',
              'candidate_entry_seconds', 'choreography', 'reading_path', 'voice_placements', 'screen_title',
-             'candidate_reading_policy', 'comparison_background_policy'}
+             'candidate_reading_policy', 'comparison_background_policy', 'extraction_policy'}
 
 MOTION_KEYS = {'orient_seconds', 'candidate_read_seconds', 'candidate_travel_seconds',
                'source_read_seconds', 'extract_seconds', 'comparison_seconds',
@@ -107,6 +107,48 @@ def validate_copy_review(author):
     return {'copy_review':status,'user_reviewed':True,'scope':'exact_spoken_copy_only',
             'reviewed_copy_sha256':digest,'film_accepted':False,'listening_accepted':False,
             'public_render_ready':False}
+
+
+USER_REPLAY_OMISSION_QUOTE = '目前的节奏可以把慢放删掉'
+
+
+def validate_replay_policy(author,folder=None):
+    """Bind the explicit omission request; retain the historical one-replay rule.
+
+    The source is the host's external capture of this user instruction. A policy
+    label or an author-generated artifact cannot approve its own omission, and
+    this narrow permission grants no copy, sensory or publication approval.
+    """
+    count=sum(scene['kind']=='replay' for scene in author['scenes'])
+    if 'replay_policy' not in author:
+        if count!=1:
+            raise ValueError('Main film must contain the one authored focused replay unless explicitly omitted by the user')
+        return {'expected_replays':1,'mode':'legacy_one_focused_replay'}
+    policy=author['replay_policy']
+    if (not isinstance(policy,dict) or set(policy)!={'mode','source','quote'}
+            or policy['mode']!='omitted_by_user' or policy['quote']!=USER_REPLAY_OMISSION_QUOTE):
+        raise ValueError('Explicit bound user replay omission policy required')
+    evidence=policy['source']
+    if not isinstance(evidence,dict) or set(evidence)!={'path','sha256'}:
+        raise ValueError('Replay omission requires the exact external request source binding')
+    path=evidence['path']
+    if not isinstance(path,str) or not Path(path).is_absolute():
+        raise ValueError('Replay omission request requires an absolute external source path')
+    source=Path(path).resolve()
+    if (source.suffix.lower() not in ('.md','.txt')
+            or source.name.upper() in ('AV_AUTHOR.JSON','AV_PLAN.JSON','EPISODE_SCRIPT.MD')
+            or folder is not None and source.is_relative_to(Path(folder).resolve())):
+        raise ValueError('Replay omission cannot be authorized by its own production artifacts')
+    matches=[digest for name,digest in author.get('input_files',{}).items() if Path(name).resolve()==source]
+    if (len(matches)!=1 or matches[0]!=evidence['sha256'] or not source.is_file()
+            or sha256(source)!=evidence['sha256']):
+        raise ValueError('Replay omission request source binding changed or is missing')
+    if USER_REPLAY_OMISSION_QUOTE not in source.read_text('utf-8-sig'):
+        raise ValueError('Replay omission source does not contain the exact current user instruction')
+    if count!=0:
+        raise ValueError('The explicit user replay omission must produce zero replay scenes')
+    return {'expected_replays':0,'mode':'omitted_by_user','source_sha256':evidence['sha256'],
+            'scope':'replay_omission_only','human_approved':False,'public_render_ready':False}
 
 
 def script_text(author):
@@ -277,6 +319,11 @@ def checked_author(folder):
             raise ValueError('The author must specify the concrete viewing purpose')
         if s.get('candidate_reading_policy','visible') not in ('visible','quiet_source_until_read'):
             raise ValueError('Unsupported source/candidate reading policy')
+        extraction=s.get('extraction_policy')
+        if extraction is not None and (extraction!='highlight_then_extract'
+                or s['kind']!='compare' or not s.get('reading_path')
+                or not s.get('choreography') or not any(x['target']=='source' for x in s.get('attention',[]))):
+            raise ValueError('Direct extraction requires a comparison, source reading and exact source highlights')
         background=s.get('comparison_background_policy','visible')
         if background not in ('visible','isolate_selected_passage'):
             raise ValueError('Unsupported comparison background policy')
@@ -362,8 +409,9 @@ def checked_author(folder):
                 raise ValueError('Locator target outside the authorized block')
     if set(used) != set(voices) or len(used) != len(set(used)):
         raise ValueError('Every exact voice take must have one scene placement')
-    if finals != set(bundles) or replay_count != 1:
-        raise ValueError('Main film must close each question and contain the one authored focused replay')
+    if finals != set(bundles):
+        raise ValueError('Main film must close each question with its complete frozen candidate checks')
+    validate_replay_policy(a,folder)
     if 'teaching_focus' in a:
         validate_focus(a, bundles)
     if 'editorial' in a:
@@ -459,7 +507,7 @@ def reuse_alignment(folder,author):
     expected={v['id']:v['text'] for v in author['voices']}
     prior={x['id']:x for x in old['clips']}
     missing=set(expected)-set(prior)
-    if (not set(prior)<=set(expected) or old['model']!=author['producer']['alignment_model']
+    if (old['model']!=author['producer']['alignment_model']
             or missing and missing!=set(author.get('audience_hook',{}).get('voice_ids',[]))):
         raise ValueError('Alignment source uses other voices or model')
     changed=set()
@@ -473,6 +521,9 @@ def reuse_alignment(folder,author):
     missing |= changed
     reused=set(expected)-missing
     result=deepcopy(old);result['delivery_sha256']=sha256(delivery_file)
+    # A requested scene deletion reuses the surviving complete takes; removed
+    # takes and their cues must not leak into the new measured clock.
+    result['clips']=[deepcopy(prior[c['id']]) for c in delivery['clips'] if c['id'] in reused]
     measured=None
     if missing:
         directory=folder/'alignment-new-input';request=directory/'delivery.json'
@@ -534,8 +585,13 @@ def compile_clock(a, clips, aligned):
                 s['reading_events'].append({**step,'depart':visual,'arrival':arrival,'end_time':end})
                 visual=end
             if s['kind'] in ('compare','replay'):
-                s['source_arrive']=grid(visual+motion['orient_seconds'],fps)
-                s['extract_start']=grid(s['source_arrive']+motion['source_read_seconds'],fps)
+                if s.get('extraction_policy')=='highlight_then_extract':
+                    s['source_arrive']=s['extract_start']=visual
+                    s['extraction_highlight_at']=grid(visual-.25,fps)
+                    s['extraction_highlights']=[x['phrase'] for x in s['attention'] if x['target']=='source']
+                else:
+                    s['source_arrive']=grid(visual+motion['orient_seconds'],fps)
+                    s['extract_start']=grid(s['source_arrive']+motion['source_read_seconds'],fps)
                 s['settled']=grid(s['extract_start']+motion['extract_seconds'],fps)
                 s['travel_seconds']=motion['extract_seconds']
             else:s['extract_start']=s['settled']=visual
@@ -609,7 +665,7 @@ def compile_clock(a, clips, aligned):
 
 SCENE_CLOCK_FIELDS = ('start','end','oriented','recognition_end','extract_start','settled',
     'candidate_start','candidate_arrive','source_arrive','voice_start','voice_end',
-    'comparison_until','return_start','decision_end','event_time','secondary_at')
+    'comparison_until','return_start','decision_end','event_time','secondary_at','extraction_highlight_at')
 
 
 def shift_body_clock(clock, offset, fps=24):

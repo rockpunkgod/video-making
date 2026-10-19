@@ -42,8 +42,12 @@ def validate_editorial(author,bundles):
     if m['method_naming']!='point_of_use':raise ValueError('Keep the current point-of-use method naming')
     if m['contract_version'] not in ('0.3.0','0.4.0'):raise ValueError('Explicit Pedagogy contract required')
     if set(m['teaching_selection'])!=set(bundles):raise ValueError('Pedagogy must cover every selected question')
-    if m['replay_scene']!=next(s['id'] for s in author['scenes'] if s['kind']=='replay'):
-        raise ValueError('The one local replay choice was not consumed')
+    from ae_production.authored_episode import validate_replay_policy
+    validate_replay_policy(author)
+    replays=[s['id'] for s in author['scenes'] if s['kind']=='replay']
+    expected_replay=replays[0] if replays else None
+    if 'replay_scene' not in m or m['replay_scene']!=expected_replay:
+        raise ValueError('The actual local replay or explicit user omission was not consumed')
     if 'audience_hook' in author:
         if m.get('audience_hook')!={'decision_sha':sha(author['audience_hook']),
                 'consumer':'Audience Engagement -> compile_clock -> authored_native',
@@ -99,7 +103,7 @@ def compile_editorial(author,clock,bundles):
             'candidate_reading_policy':s.get('candidate_reading_policy','visible')})
         # Opt in through the actual author decision. Historical manifests keep
         # their exact output so a new consumer cannot invalidate saved films.
-        for key in ('screen_title','comparison_background_policy'):
+        for key in ('screen_title','comparison_background_policy','extraction_policy'):
             if key in d['consumed_decisions']:
                 rows[-1][key]=deepcopy(s[key])
     transitions=[]

@@ -117,9 +117,27 @@ for(var si=0;si<P.scenes.length;si++){
   for(var j=0;j<4;j++){var other=w.options["ABCD".charAt(j)];if("ABCD".charAt(j)===s.candidate)continue;var opacity=tr(other,"ADBE Opacity"),prior=opacity.valueAtTime(s.oriented,false);ease(opacity,s.candidate_start-.5,prior);ease(opacity,s.candidate_start,prior*.10);ease(opacity,s.candidate_arrive,prior*.10);ease(opacity,s.source_arrive,prior);}
   for(var j=0;j<w.blocks.length;j++){var opacity=tr(w.blocks[j].layer,"ADBE Opacity"),readAt=s.reading_events.length?s.reading_events[0].arrival:s.source_arrive;ease(opacity,s.candidate_start-.5,100);ease(opacity,s.candidate_start,14);ease(opacity,s.candidate_arrive,14);ease(opacity,readAt,100);}
   var ex=info(s.excerpt,s),st=stage(ex),visit=sourceTarget(ex),qt=question(w);camera(s.oriented,qt,1550);camera(s.candidate_start,qt,1550);camera(s.candidate_arrive,st,stageDistance,[-120,-65],22);
-  var read=readPath(s,w,st,stageDistance),visual=s.reading_events.length?s.reading_events[s.reading_events.length-1].end_time:s.candidate_arrive;camera(visual,read.target,read.distance,read.pitched?read.offset:[0,0],read.pitched?read.aperture:14);camera(s.source_arrive,visit,Math.max(readingDistance,ex.height*3.0),[-90,-45],12);camera(s.extract_start,visit,Math.max(readingDistance,ex.height*3.0),[-90,-45],12);camera(s.settled,st,stageDistance,[-120,-65],65);camera(s.return_start,st,stageDistance,[-120,-65],65);camera(b-1/24,visit,Math.max(readingDistance,ex.height*3.0),[-80,-30],12);lastTarget=visit;lastDistance=Math.max(readingDistance,ex.height*3.0);
+  var read=readPath(s,w,st,stageDistance),visual=s.reading_events.length?s.reading_events[s.reading_events.length-1].end_time:s.candidate_arrive;camera(visual,read.target,read.distance,read.pitched?read.offset:[0,0],read.pitched?read.aperture:14);if(s.extraction_policy!=="highlight_then_extract"){camera(s.source_arrive,visit,Math.max(readingDistance,ex.height*3.0),[-90,-45],12);camera(s.extract_start,visit,Math.max(readingDistance,ex.height*3.0),[-90,-45],12);}camera(s.settled,st,stageDistance,[-120,-65],65);camera(s.return_start,st,stageDistance,[-120,-65],65);camera(b-1/24,visit,Math.max(readingDistance,ex.height*3.0),[-80,-30],12);lastTarget=visit;lastDistance=Math.max(readingDistance,ex.height*3.0);
   for(var j=0;j<w.blocks.length;j++){var row=w.blocks[j],selected=false;for(var k=0;k<ex.blocks.length;k++)if(row.id===ex.blocks[k].id)selected=true;if(!selected){if(s.comparison_background_policy==="isolate_selected_passage"){var lastRead=s.reading_events[s.reading_events.length-1];if(!lastRead||row.start<lastRead.end&&row.end>lastRead.start)throw Error("Background isolation would hide necessary reading");ease(tr(row.layer,"ADBE Opacity"),Math.max(s.candidate_arrive,lastRead.end_time-.3),100);ease(tr(row.layer,"ADBE Opacity"),lastRead.end_time,0);ease(tr(row.layer,"ADBE Opacity"),Math.max(s.return_start,b-.35),0);ease(tr(row.layer,"ADBE Opacity"),b-1/24,100);}else{ease(tr(row.layer,"ADBE Opacity"),s.extract_start,100);ease(tr(row.layer,"ADBE Opacity"),s.settled,6);ease(tr(row.layer,"ADBE Opacity"),s.return_start,6);ease(tr(row.layer,"ADBE Opacity"),b-1/24,100);}}}
+  if(s.extraction_policy==="highlight_then_extract"){
+   var hits=[];
+   for(var hi=0;hi<s.extraction_highlights.length;hi++){
+    var phrase=s.extraction_highlights[hi],found=false;
+    for(var bi=0;bi<ex.blocks.length;bi++){
+     var src=ex.blocks[bi].layer,txt=src.property("Source Text").valueAtTime(0,false).text,at=txt.indexOf(phrase);if(at<0)continue;
+     var name="DIRECT_EXTRACTION_HIT_"+s.id+"_"+hi,an=cmSelector(src,name,at,at+phrase.length);
+     an.property("ADBE Text Animator Properties").addProperty("ADBE Text Fill Color").setValue(orange);
+     cmAmount(an).expression='function q(x){x=Math.max(0,Math.min(1,x));return x*x*(3-2*x);}100*q((time-'+s.extraction_highlight_at+')/'+(s.extract_start-s.extraction_highlight_at)+')*q(('+s.return_start+'-time)/.2);';
+     hits.push({phrase:phrase,name:name,source_layer_id:src.id,source_block_id:ex.blocks[bi].id});found=true;
+    }
+    if(!found)throw Error("Direct extraction highlight is not in selected original: "+phrase);
+   }
+  }
   var group=lift(s.excerpt,s,s.extract_start,b,s.kind==="replay"),choice=candidate(s,w,ex,s.kind==="replay");
+  if(s.extraction_policy==="highlight_then_extract"){
+   if(!audit.direct_extractions)audit.direct_extractions=[];
+   audit.direct_extractions.push({scene:s.id,highlight_at:s.extraction_highlight_at,extract_start:s.extract_start,reading_end:s.reading_events[s.reading_events.length-1].end_time,settled:s.settled,hits:hits,clone_ids:(function(){var ids=[];for(var ci=0;ci<group.clones.length;ci++)ids.push(group.clones[ci].id);return ids;})()});
+  }
   for(var j=0;j<s.attention_events.length;j++){var e=s.attention_events[j];if(e.target==="candidate")style(choice,Math.max(e.time,s.candidate_arrive),ink,e.phrase,orange);else for(var k=0;k<group.clones.length;k++)style(group.clones[k],Math.max(e.time,s.settled),ink,e.phrase,orange);}
   if(s.kind==="replay")audit.replays.push({scene:s.id,replay_of:s.replay_of,no_new_candidate_event:true});
  }else if(s.kind==="recap"){

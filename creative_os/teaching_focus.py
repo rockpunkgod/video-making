@@ -142,6 +142,15 @@ def direct_scene(author, shot):
 def resource_report(author, plan):
     """Measure the compiled clock. Density is a diagnostic, not a speed target."""
     from content_os.scoring import teaching_value_points
+    omission=None
+    if 'replay_policy' in author:
+        # Import only at consumption time: authored_episode already uses this
+        # module. A source-bound user omission may miss the share target; it
+        # cannot fabricate an improvement, shorten reading or add padding.
+        from ae_production.authored_episode import validate_replay_policy
+        omission=validate_replay_policy(author)
+        if omission['mode']!='omitted_by_user' or omission['expected_replays']!=0:
+            raise ValueError('Only the validated user replay omission can override the attention-share target')
     rows = []
     if not any(q['units'] for q in author['teaching_focus']['questions'].values()):
         raise ValueError('A method-led main film needs at least one real critical method judgement')
@@ -163,12 +172,22 @@ def resource_report(author, plan):
                             'motion': s['motion_treatment']})
         total = sum(seconds.values()); share = seconds['focus']/total if total else 0
         points = sum(teaching_value_points(u) for u in q['units'])
-        if q['units'] and share <= .5:
+        if q['units'] and share <= .5 and omission is None:
             raise ValueError('Critical judgements do not receive most comparison/replay time; revise copy or selection, never speed up evidence')
         rows.append({'world': world, 'options': options, 'seconds': seconds, 'critical_attention_share': share,
                      'teaching_value_density': points/total if total else None,
                      'density_basis': 'PROVISIONAL_EDITORIAL_POINTS_PER_COMPILED_SECOND_NOT_LEARNING_OUTCOME',
                      'verified_options': list(q['options'])})
-    return {'version': VERSION, 'questions': rows, 'target_episode_seconds': [300, 480],
+        if omission is not None:
+            rows[-1].update(target_met=share>.5,target_applies=bool(q['units']),
+                            user_authorized_replay_omission=True)
+    result={'version': VERSION, 'questions': rows, 'target_episode_seconds': [300, 480],
             'duration_note': 'WITHIN_TARGET' if 300 <= plan['duration'] <= 480 else 'OUTSIDE_TARGET_REVIEW_SELECTION_NO_PADDING',
             'actual_media_review': 'PENDING', 'student_results': 'UNMEASURED', 'public_render_ready': False}
+    if omission is not None:
+        result['user_authorized_replay_omission']={
+            'mode':omission['mode'],'source_sha256':omission['source_sha256'],
+            'scope':'REPLAY_OMITTED_ACTUAL_SHARE_REPORTED_TARGET_NOT_WAIVED_AS_MET',
+            'target_met':all(row['target_met'] for row in rows if row['target_applies']),
+            'timing_adjustment':'NONE_NO_PADDING_OR_REPLAY_ADDED'}
+    return result

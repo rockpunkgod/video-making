@@ -17,7 +17,7 @@ from scripts.voice_delivery import sha256
 from ae_production.bridge import JunkdogeClient, BridgeError
 from ae_production.host_ownership import HostOwnership
 from ae_production.memory_guard import available_memory, monitor_existing_render
-from ae_production.authored_episode import checked_author,delivery_path
+from ae_production.authored_episode import checked_author,delivery_path,validate_replay_policy
 from ae_production.article_chunking import current_chunks
 from creative_os.teaching_focus import require_focus, resource_report
 from video_contracts import sha
@@ -590,6 +590,38 @@ def replay_reading_visibility_readback(h,p,n):
     return validate_replay_reading_visibility(p,n,h.js(code))
 
 
+def validate_native_replay_inventory(author,p,build_audit,layers):
+    """Match actual replay objects to the validated zero-or-one author choice."""
+    policy=validate_replay_policy(author)
+    selected=[(s['id'],s['replay_of']) for s in author['scenes'] if s['kind']=='replay']
+    planned=[(s['id'],s['replay_of']) for s in p['scenes'] if s['kind']=='replay']
+    if selected!=planned or len(planned)!=policy['expected_replays']:
+        raise ValueError('Native replay plan differs from the validated author choice')
+    expected=[{'scene':sid,'replay_of':origin,'no_new_candidate_event':True} for sid,origin in planned]
+    actual=build_audit.get('replays')
+    if (not isinstance(actual,list) or actual!=expected
+            or any(row.get('no_new_candidate_event') is not True for row in actual)):
+        raise ValueError('Actual native replay inventory differs from its plan')
+    ids={sid for sid,_ in planned}
+    if any(event['scene'] in ids for event in p['candidate_events']):
+        raise ValueError('Replay repeated a candidate decision')
+    candidates=[row['name'] for row in layers if row['name'].startswith('REPLAY_CANDIDATE_')]
+    if len(candidates)!=len(ids) or set(candidates)!={'REPLAY_CANDIDATE_'+sid for sid in ids}:
+        raise ValueError('Actual native replay candidate layers differ from their plan')
+    groups=[]
+    for row in layers:
+        if not row['name'].startswith('SOURCE_LIFT_'):continue
+        comment=json.loads(row['comment'])
+        if comment.get('kind')=='replay_of_reviewed_comparison':groups.append(row['name'])
+    if len(groups)!=len(ids) or set(groups)!={'SOURCE_LIFT_'+sid for sid in ids}:
+        raise ValueError('Actual native replay source groups differ from their plan')
+    extractions=[row['scene'] for row in build_audit.get('extractions',[]) if row.get('replay') is True]
+    if len(extractions)!=len(ids) or set(extractions)!=ids:
+        raise ValueError('Native replay extraction inventory differs from its plan')
+    return {'status':'PASS_ACTUAL_REPLAY_SELECTION','replays':len(ids),'mode':policy['mode'],
+            'human_approved':False,'public_render_ready':False}
+
+
 def audit(folder):
     a,p,n=current_native(folder);h=Host(folder,'after_effects')
     code="var c=app.project.itemByID(CID),rows=[];for(var i=1;i<=c.numLayers;i++){var l=c.layer(i),r={name:l.name,id:l.id,inPoint:l.inPoint,outPoint:l.outPoint,threeD:l.threeDLayer,parent:l.parent?l.parent.id:null,comment:l.comment};if(l instanceof TextLayer){r.text=l.property('Source Text').value.text;r.font=l.property('Source Text').value.font;if(l.name.indexOf('-source-')>=0&&l.name.indexOf('EXTRACT_')!==0){var initial=l.property('Source Text').valueAtTime(0,false);r.initial_color=initial.characterRange(0,initial.text.length).fillColor||null;r.text_height=l.sourceRectAtTime(0,false).height;}}if(l instanceof CameraLayer||l.name.indexOf('SOURCE_LIFT_')===0||l.name.indexOf('CANDIDATE_FLIGHT_')===0||l.name.indexOf('-source-')>=0){r.position=[];r.orientation=[];var pos=l.transform.position;r.position_value=pos.value;r.scale=[];var sp=l.transform.scale;if(sp)for(var sk=1;sk<=sp.numKeys;sk++)r.scale.push([sp.keyTime(sk),sp.keyValue(sk)]);for(var j=1;j<=pos.numKeys;j++)r.position.push([pos.keyTime(j),pos.keyValue(j)]);if(!(l instanceof CameraLayer)){var ori=l.transform.orientation;for(var j=1;j<=ori.numKeys;j++)r.orientation.push([ori.keyTime(j),ori.keyValue(j)]);}}rows.push(r);}return {project:app.project.file.fsName,width:c.width,height:c.height,duration:c.duration,fps:c.frameRate,layers:rows};".replace('CID',str(n['comp_id']))
@@ -680,7 +712,7 @@ var out=[];for(var ci=0;ci<ids.length;ci++){var c=app.project.itemByID(ids[ci]);
         row=native['CAPTION_'+c['id']]
         if row['text'].replace('\r','\n')!='\n'.join(c['display_lines']) or abs(row['inPoint']-c['start'])>1e-4 or abs(row['outPoint']-c['end'])>1e-4:
             raise ValueError('Caption text or audio clock changed')
-    if len(n['audit']['replays'])!=1 or any(e['scene']==n['audit']['replays'][0]['scene'] for e in p['candidate_events']):raise ValueError('Replay repeated a candidate decision')
+    validate_native_replay_inventory(a,p,n['audit'],r['layers'])
     isolation=background_isolation_rows(p)
     if isolation:
         for cid in (n['comp_id'],n['master_comp_id']):
@@ -785,6 +817,11 @@ var out=[];for(var ci=0;ci<ids.length;ci++){var c=app.project.itemByID(ids[ci]);
         visibility_name=('CANDIDATE_READING_VISIBILITY_NATIVE.json' if replay_visibility['policy']==CANDIDATE_READING_VISIBILITY_POLICY
                          else 'REPLAY_READING_VISIBILITY_NATIVE.json')
         write(folder/visibility_name,replay_visibility)
+    from ae_production.direct_extraction import direct_extraction_readback
+    direct=direct_extraction_readback(h,p,n)
+    if direct is not None:
+        r['direct_extraction']=direct
+        write(folder/'DIRECT_EXTRACTION_NATIVE_READBACK.json',direct)
     write(folder/'native-audit.json',r)
     return {'source_text':'PASS','complete_candidate_identity_and_withdrawal':'PASS','replay_candidate_state':'PASS','caption_clock':'PASS','native_layers':len(native),'human_creative_review':'PENDING'}
 
