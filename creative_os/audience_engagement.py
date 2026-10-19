@@ -134,16 +134,27 @@ def validate_authored_hook(author, bundles):
         source(ref)
     if not h['pain_point']['description'].strip() or not h['pain_point']['source_refs']:
         raise ValueError('Specific source-supported student difficulty required')
+    # These are the three slogans explicitly excluded by the user contract.
+    # Rejecting them is a narrow rule, not automatic semantic review of prose.
+    slogan=re.sub(r'\s+','',h['pain_point']['description']).strip('。！？!?，,；;：:、\"“”\'‘’ ')
+    if slogan in {'英语阅读太难了','今天教你快速提分','学会这个方法轻松拿分'}:
+        raise ValueError('CREATIVE_DECISION_REQUIRED: generic slogan is not a specific source-supported difficulty')
     if any(r not in h['source_refs'] for r in h['pain_point']['source_refs']):
         raise ValueError('Student pain point has no evidence in its payoff')
     anchors = h['confusion_trigger']['anchor_refs']
     if len(anchors) != 2 or anchors[0] == anchors[1] or anchors[0]['quote'] != anchors[1]['quote']:
         raise ValueError('Surface-overlap opening needs two distinct exact shared-term anchors')
+    if ({r['pointer'] for r in anchors}!={'/passage','/options/'+payoff['candidate']}
+            or any(r['world']!=payoff['world'] for r in anchors)):
+        raise ValueError('Shared-term conflict requires the actual passage and payoff option')
     for ref in anchors:
         source(ref)
         if not any(r['world'] == ref['world'] and r['pointer'] == ref['pointer']
                    and r['start'] <= ref['start'] < ref['end'] <= r['end'] for r in h['source_refs']):
             raise ValueError('Visual anchor is outside the bound payoff evidence')
+        if not any(r['world']==ref['world'] and r['pointer']==ref['pointer']
+                   and r['start']<=ref['start']<ref['end']<=r['end'] for r in h['pain_point']['source_refs']):
+            raise ValueError('Student difficulty must cover both sides of the actual shared-term conflict')
     if h['confusion_trigger']['source_scene_id'] != payoff['id']:
         raise ValueError('Confusion and payoff must concern the same actual task')
     mt = h['method_trigger']; ref = mt['action_ref']

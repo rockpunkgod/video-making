@@ -272,12 +272,12 @@ def validate_hook_readback(p, native, rows):
             or any(len(expected['phases'][k])!=2 or not all(same_time(a,b) for a,b in zip(expected['phases'][k],v)) for k,v in h['phases'].items())
             or not same_time(expected['original_task_start'],h['end'])):
         raise ValueError('Native opening did not consume the actual Audience clock')
-    if {row['comp_id'] for row in rows}!={native['comp_id'],native['master_comp_id']}:
+    if len(rows)!=2 or {row['comp_id'] for row in rows}!={native['comp_id'],native['master_comp_id']}:
         raise ValueError('Hook needs real proxy and 4K object readbacks')
     def near(a,b,tolerance=.002):return len(a)==len(b) and all(abs(x-y)<=tolerance for x,y in zip(a,b))
     for row in rows:
         objects={x['name']:x for x in row['objects']}
-        if set(objects)!=set(expected['objects']):raise ValueError('Native Hook object inventory changed')
+        if len(row['objects'])!=len(expected['objects']) or set(objects)!=set(expected['objects']):raise ValueError('Native Hook object inventory changed')
         for k,ref in enumerate(h['decision']['confusion_trigger']['anchor_refs']):
             anchor=objects['AUDIENCE_HOOK_ANCHOR_'+str(k)]
             comment=anchor['comment']
@@ -295,6 +295,10 @@ def validate_hook_readback(p, native, rows):
         for obj in row['objects']:
             if abs(obj['outPoint']-h['end'])>1e-4 or obj['final_opacity']>.01:
                 raise ValueError('Hook objects outlive their handoff or obstruct the original task')
+            visible=obj.get('phase_opacity',{})
+            if (set(visible)!={'aligned','displaced','held'}
+                    or any(not math.isfinite(value) or value<99.9 for value in visible.values())):
+                raise ValueError('Native Hook objects are invisible during alignment, displacement or hold')
         a=objects['AUDIENCE_HOOK_ANCHOR_0'];b=objects['AUDIENCE_HOOK_ANCHOR_1']
         if not near(a['aligned'],b['aligned']):raise ValueError('Hook has no actual surface alignment')
         for k in (0,1):
@@ -325,7 +329,7 @@ def validate_hook_readback(p, native, rows):
 
 def hook_native_readback(h,p,n):
     opening=p['audience_hook'];times=opening['phases']
-    script=r'''var rows=[],ids=__NATIVE_IDS__,H=__OPENING_PACKET__;for(var ci=0;ci<ids.length;ci++){var c=app.project.itemByID(ids[ci]),objects=[];for(var j=1;j<=c.numLayers;j++){var l=c.layer(j);if(l.name.indexOf('AUDIENCE_HOOK_')!==0)continue;var comment=JSON.parse(l.comment),r={name:l.name,id:l.id,stack_index:l.index,threeD:l.threeDLayer,inPoint:l.inPoint,outPoint:l.outPoint,comment:comment,aligned:l.transform.position.valueAtTime(H.phases.surface_align[1],false),displaced:l.transform.position.valueAtTime(H.phases.relation_displace[1],false),held:l.transform.position.valueAtTime(H.phases.unresolved_hold[1],false),final_opacity:l.transform.opacity.valueAtTime(H.end-1/24,false)};if(l instanceof TextLayer){r.text=l.property('Source Text').value.text;var src=c.layer(comment.source_layer_name);r.source_layer_exists=!!src;r.source_layer_id=src.id;r.source_comment=JSON.parse(src.comment);r.source_contains_anchor=src.property('Source Text').value.text.indexOf(r.text)>=0;r.glyph_bottoms=[];var ts=[Math.min(1,H.phases.surface_align[0]-.1),H.phases.surface_align[1],H.phases.relation_displace[1],H.phases.unresolved_hold[1]];for(var ti=0;ti<ts.length;ti++){var tt=ts[ti],rect=l.sourceRectAtTime(tt,false),pos=l.transform.position.valueAtTime(tt,false),ap=l.transform.anchorPoint.valueAtTime(tt,false),sc=l.transform.scale.valueAtTime(tt,false);r.glyph_bottoms.push(pos[1]+(rect.top+rect.height-ap[1])*sc[1]/100);}}if(l.name.indexOf('AUDIENCE_HOOK_RELATION_')===0){var p=l.property('ADBE Root Vectors Group').property('ADBE Vector Shape - Group').property('ADBE Vector Shape');r.path_enter=p.valueAtTime(Math.min(1,H.phases.surface_align[0]-.1),false).vertices;r.path_aligned=p.valueAtTime(H.phases.surface_align[1],false).vertices;r.path_displaced=p.valueAtTime(H.phases.relation_displace[1],false).vertices;r.path_held=p.valueAtTime(H.phases.unresolved_hold[1],false).vertices;}objects.push(r);}var hv=[],cover=c.layer('AUDIENCE_HOOK_SPACE');for(var frame=Math.ceil(H.phases.match_into_task[0]*24);frame<=Math.floor((H.end-1/24)*24);frame++){var tt=frame/24,maxOp=0;for(var oi=0;oi<objects.length;oi++)if(objects[oi].name!=='AUDIENCE_HOOK_SPACE')maxOp=Math.max(maxOp,c.layer(objects[oi].name).transform.opacity.valueAtTime(tt,false));hv.push({time:tt,cover:cover.transform.opacity.valueAtTime(tt,false),foreground:maxOp});}rows.push({comp_id:c.id,objects:objects,handoff_visibility:hv,camera_at_body:c.layer('READING_CAMERA').transform.position.valueAtTime(H.end,false)});}return rows;'''
+    script=r'''var rows=[],ids=__NATIVE_IDS__,H=__OPENING_PACKET__;for(var ci=0;ci<ids.length;ci++){var c=app.project.itemByID(ids[ci]),objects=[];for(var j=1;j<=c.numLayers;j++){var l=c.layer(j);if(l.name.indexOf('AUDIENCE_HOOK_')!==0)continue;var comment=JSON.parse(l.comment),r={name:l.name,id:l.id,stack_index:l.index,threeD:l.threeDLayer,inPoint:l.inPoint,outPoint:l.outPoint,comment:comment,aligned:l.transform.position.valueAtTime(H.phases.surface_align[1],false),displaced:l.transform.position.valueAtTime(H.phases.relation_displace[1],false),held:l.transform.position.valueAtTime(H.phases.unresolved_hold[1],false),final_opacity:l.transform.opacity.valueAtTime(H.end-1/24,false),phase_opacity:{aligned:l.transform.opacity.valueAtTime(H.phases.surface_align[1],false),displaced:l.transform.opacity.valueAtTime(H.phases.relation_displace[1],false),held:l.transform.opacity.valueAtTime((H.phases.unresolved_hold[0]+H.phases.unresolved_hold[1])/2,false)}};if(l instanceof TextLayer){r.text=l.property('Source Text').value.text;var src=c.layer(comment.source_layer_name);r.source_layer_exists=!!src;r.source_layer_id=src.id;r.source_comment=JSON.parse(src.comment);r.source_contains_anchor=src.property('Source Text').value.text.indexOf(r.text)>=0;r.glyph_bottoms=[];var ts=[Math.min(1,H.phases.surface_align[0]-.1),H.phases.surface_align[1],H.phases.relation_displace[1],H.phases.unresolved_hold[1]];for(var ti=0;ti<ts.length;ti++){var tt=ts[ti],rect=l.sourceRectAtTime(tt,false),pos=l.transform.position.valueAtTime(tt,false),ap=l.transform.anchorPoint.valueAtTime(tt,false),sc=l.transform.scale.valueAtTime(tt,false);r.glyph_bottoms.push(pos[1]+(rect.top+rect.height-ap[1])*sc[1]/100);}}if(l.name.indexOf('AUDIENCE_HOOK_RELATION_')===0){var p=l.property('ADBE Root Vectors Group').property('ADBE Vector Shape - Group').property('ADBE Vector Shape');r.path_enter=p.valueAtTime(Math.min(1,H.phases.surface_align[0]-.1),false).vertices;r.path_aligned=p.valueAtTime(H.phases.surface_align[1],false).vertices;r.path_displaced=p.valueAtTime(H.phases.relation_displace[1],false).vertices;r.path_held=p.valueAtTime(H.phases.unresolved_hold[1],false).vertices;}objects.push(r);}var hv=[],cover=c.layer('AUDIENCE_HOOK_SPACE');for(var frame=Math.ceil(H.phases.match_into_task[0]*24);frame<=Math.floor((H.end-1/24)*24);frame++){var tt=frame/24,maxOp=0;for(var oi=0;oi<objects.length;oi++)if(objects[oi].name!=='AUDIENCE_HOOK_SPACE')maxOp=Math.max(maxOp,c.layer(objects[oi].name).transform.opacity.valueAtTime(tt,false));hv.push({time:tt,cover:cover.transform.opacity.valueAtTime(tt,false),foreground:maxOp});}rows.push({comp_id:c.id,objects:objects,handoff_visibility:hv,camera_at_body:c.layer('READING_CAMERA').transform.position.valueAtTime(H.end,false)});}return rows;'''
     script=script.replace('__NATIVE_IDS__',json.dumps([n['comp_id'],n['master_comp_id']])).replace('__OPENING_PACKET__',json.dumps(opening))
     return validate_hook_readback(p,n,h.js(script))
 
@@ -347,17 +351,47 @@ def visual_state_readback(h,p,n):
         rows.push(r);
       }
       var paper=c.layer('__FIRST_WORLD___QUESTION_PAPER').source.mainSource.color;
-      out.push({comp_id:c.id,rows:rows,paper:paper,environment_color:c.layer(spec.environment).source.mainSource.color});
+      var inv=[];for(var j=0;j<spec.foreground_layers.length;j++){var fg=c.layer(spec.foreground_layers[j]);inv.push({name:fg.name,inPoint:fg.inPoint,outPoint:fg.outPoint});}out.push({comp_id:c.id,rows:rows,foreground_inventory:inv,paper:paper,environment_color:c.layer(spec.environment).source.mainSource.color});
     }return out;'''
     code=code.replace('__IDS__',json.dumps([n['comp_id'],n['master_comp_id']])).replace('__SPEC__',json.dumps(spec)).replace('__SAMPLES__',json.dumps(samples)).replace('__FIRST_WORLD__',p['world_order'][0])
     rows=h.js(code)
+    return validate_visual_state_readback(p,n,rows)
+
+
+def validate_visual_state_readback(p,n,rows):
+    """Require complete real inventories and sample coverage before state PASS."""
+    spec=n['audit']['visual_states']
+    samples=[{'state':'reading','time':(e['arrival']+e['end_time'])/2,'scene':s['id']}
+             for s in p['scenes'] for e in s.get('reading_events',[])]
+    samples += [{'state':'thinking','time':(w['settled']+w['release'])/2,'scene':w['scene_id']}
+                for w in p['visual_states']['thinking_windows']]
+    if (len(rows)!=2 or {c['comp_id'] for c in rows}!={n['comp_id'],n['master_comp_id']}
+            or not samples or not spec['reality_layers'] or not spec['foreground_layers']):
+        raise ValueError('Complete proxy/master state readbacks and layer inventories required')
     for comp in rows:
+        inventory=comp.get('foreground_inventory',[])
+        if (len(inventory)!=len(spec['foreground_layers'])
+                or {l['name'] for l in inventory}!=set(spec['foreground_layers'])
+                or any(not 0<=l['inPoint']<l['outPoint']<=p['duration']+.001 for l in inventory)):
+            raise ValueError('Complete native foreground inventory and ranges required')
+        if (len(comp['rows'])!=len(samples) or any(a['state']!=b['state'] or a['scene']!=b['scene']
+                or not math.isfinite(a['time']) or abs(a['time']-b['time'])>.0001
+                for a,b in zip(comp['rows'],samples))):
+            raise ValueError('Native state sample coverage is missing, duplicated or stale')
         for actual,expected in ((comp['paper'],[242/255,240/255,234/255]),
                                 (comp['environment_color'],[23/255,24/255,26/255])):
-            if any(abs(x-y)>.002 for x,y in zip(actual,expected)):
+            if len(actual)!=3 or any(not math.isfinite(x) or abs(x-y)>.002 for x,y in zip(actual,expected)):
                 raise ValueError('Actual native state palette differs from user definition')
         for sample in comp['rows']:
             thinking=sample['state']=='thinking';target=100 if thinking else 0
+            if (len(sample['reality'])!=len(spec['reality_layers'])
+                    or {l['name'] for l in sample['reality']}!=set(spec['reality_layers'])):
+                raise ValueError('Complete native Reality Layer sample inventory required')
+            active={l['name'] for l in inventory if l['inPoint']<=sample['time']<l['outPoint']}
+            if len(sample['foreground'])!=len(active) or {l['name'] for l in sample['foreground']}!=active:
+                raise ValueError('Complete active native foreground sample inventory required')
+            if thinking and not any(name.startswith('EXTRACT_'+sample['scene']+'_') for name in active):
+                raise ValueError('Thinking State lost its actual source-extracted foreground')
             if abs(sample['environment']-target)>.01:raise ValueError('Native environment obscures reading or misses thinking')
             for layer in sample['reality']:
                 if (any(layer['errors']) or abs(layer['dim']-target)>.01

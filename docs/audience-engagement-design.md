@@ -23,6 +23,16 @@ as Hook v1. Fresh production without the decision reports `CREATIVE_DECISION_REQ
 Actual media comparisons, sensory review, audience retention, student transfer and publication
 remain separate evidence scopes. Engineering checks never manufacture those observations.
 
+The external approval binding covers the specified Hook copy and visual direction, not a
+verbatim human approval of every author-created field. `pain_point.description` is a
+source-bound author interpretation; the validator does not certify its prose semantics.
+It rejects the three generic slogans explicitly excluded by the user contract and requires
+the actual passage and payoff option as the two sides of the shared-term conflict. Those
+mechanical checks do not establish a new method, audience response or learning outcome.
+Native state audits require both compositions, every requested time sample and complete
+Reality/active-foreground inventories. Hook alignment, displacement and hold also require
+actual native opacity samples; valid geometry alone cannot certify visible execution.
+
 > Current extension: v0.2, with the v0.1 reference retained below. The B06 planned scene handoff has been exercised; automatic execution of its suggestions by the Adaptive renderer has not. Start production from the [current workflow](workflows/CURRENT_PRODUCTION_WORKFLOW.md), and keep planned scene ranges separate from actual media anchors.
 
 ## v0.2 extension

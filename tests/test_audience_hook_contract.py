@@ -173,7 +173,8 @@ class HookContractTests(unittest.TestCase):
                               'unresolved_hold':[4,7],'match_into_task':[7,8.25]}}
         objects=[]
         def obj(name):
-            row={'name':'AUDIENCE_HOOK_'+name,'outPoint':8.25,'final_opacity':0,'stack_index':len(objects)+1}
+            row={'name':'AUDIENCE_HOOK_'+name,'outPoint':8.25,'final_opacity':0,'stack_index':len(objects)+1,
+                 'phase_opacity':{'aligned':100,'displaced':100,'held':100}}
             objects.append(row);return row
         for k,ref in enumerate(h['decision']['confusion_trigger']['anchor_refs']):
             name='second-source-0' if k==0 else 'second_OPTION_A'
@@ -205,6 +206,30 @@ class HookContractTests(unittest.TestCase):
     def test_wrong_native_source_text_rejected(self):
         p,n,rows=self.native_fixture();rows[0]['objects'][0]['text']='answer'
         with self.assertRaisesRegex(ValueError,'source-exact'):validate_hook_readback(p,n,rows)
+
+    def test_native_invisible_phase_and_missing_visibility_are_rejected(self):
+        for phase in ('aligned','displaced','held'):
+            p,n,rows=self.native_fixture();rows[0]['objects'][0]['phase_opacity'][phase]=0
+            with self.subTest(phase=phase),self.assertRaisesRegex(ValueError,'invisible'):
+                validate_hook_readback(p,n,rows)
+        p,n,rows=self.native_fixture();rows[1]['objects'][0].pop('phase_opacity')
+        with self.assertRaisesRegex(ValueError,'invisible'):validate_hook_readback(p,n,rows)
+
+    def test_explicitly_forbidden_generic_slogans_need_creative_decision(self):
+        for phrase in ('英语阅读太难了','今天教你快速提分','学会这个方法轻松拿分'):
+            author=deepcopy(self.author);author['audience_hook']['pain_point']['description']=phrase+'！'
+            with self.subTest(phrase=phrase),self.assertRaisesRegex(ValueError,'generic slogan'):
+                validate_authored_hook(author,self.bundles)
+
+    def test_shared_term_requires_both_passage_and_actual_option(self):
+        author=deepcopy(self.author)
+        author['audience_hook']['confusion_trigger']['anchor_refs'][1]['pointer']='/passage'
+        with self.assertRaisesRegex(ValueError,'passage and payoff option'):
+            validate_authored_hook(author,self.bundles)
+        author=deepcopy(self.author)
+        author['audience_hook']['pain_point']['source_refs']=author['audience_hook']['pain_point']['source_refs'][:1]
+        with self.assertRaisesRegex(ValueError,'both sides'):
+            validate_authored_hook(author,self.bundles)
 
     def test_original_word_hidden_by_background_rejected(self):
         p,n,rows=self.native_fixture();rows[0]['objects'][0]['stack_index']=100
