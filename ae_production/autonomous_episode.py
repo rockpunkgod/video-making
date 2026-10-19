@@ -268,8 +268,7 @@ def review_page(folder,qa,observations=None):
     files=[(Path(qa['media']),'完整影片'),(folder/'media/MAIN_FILM.aep','AE 可编辑工程'),
            (folder/'media/MAIN_FILM.prproj','Premiere 可编辑工程'),
            (folder/'EPISODE_SCRIPT.md','完整逐字稿'),(folder/'EPISODE_SUBTITLES.srt','字幕'),
-           (folder/'ARTICLE_CHUNKS_REVIEW.html','两篇文章的意群划分'),
-           (folder/'MODULE_CONSUMPTION_AUDIT.md','模块实际消费与限制')]
+           (folder/'ARTICLE_CHUNKS_REVIEW.html','两篇文章的意群划分')]
     links=' '.join('<a class="file" href="'+path.resolve().as_uri()+'">'+escape(label)+'</a>' for path,label in files if path.exists())
     html='<!doctype html><html lang="zh-CN"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>英语有画说 · 整片审阅</title><style>body{max-width:1120px;margin:36px auto;padding:0 22px;background:#f2f0ea;color:#20211f;font:17px/1.7 Arial}h1{font-size:28px}video{width:100%;background:#17181a;border-radius:8px}a{color:#205c7c}.file{display:inline-block;margin:8px 16px 8px 0}li{margin:5px}details{margin:26px 0}pre{white-space:pre-wrap;font-size:13px}</style>'
     html+='<h1>英语有画说 · 学霸这题怎么做？</h1><p>'+escape(p['revision'])+' · '+str(round(p['duration'],3))+' 秒 · 原生 4K / 24 帧 · 冻结诊断材料</p>'
@@ -284,25 +283,14 @@ def review_page(folder,qa,observations=None):
         if not observations.get('audio_observed'):
             html+='<p>声音已完整编排；本次工具不支持音频感知，自审未声称完成试听。</p>'
         if not observations.get('video_observed'):
-            html+='<p>自审检查了实际编码画面与连续帧；完整原速运动观感未获感知确认。</p>'
+            html+='<p>自审检查了实际编码画面；完整原速运动观感未获感知确认。</p>'
     if p.get('source_attribution'):
         html+='<h2>题目出处</h2>'
         for world in p['world_order']:
             credit=p['source_attribution'][world]
             html+='<p>'+escape(credit['paper_display'])+'<br>'+escape('阅读 '+credit['reading_section']+' 篇 · 第'+str(credit['question_number'])+'题 · '+credit['article_display'])+'</p>'
-    ab_path=folder/'AB_OPENING_COMPARISON.json'
-    if ab_path.exists():
-        ab=read(ab_path)
-        if ab['after']['source_sha256']!=qa['sha256']:
-            raise ValueError('Opening comparison belongs to another final film')
-        html+='<h2>实际开场对比</h2><p>两段均截取自实际完整影片，保留声音；这是创作对比，未测量观众留存。</p>'
-        for key,label in [('before','旧版：直接进入第一题'),('after','新版：开场疑问进入第一题')]:
-            row=ab[key];clip=Path(row['path'])
-            if sha256(clip)!=row['sha256'] or sha256(row['source_path'])!=row['source_sha256']:
-                raise ValueError('Opening comparison media changed')
-            html+='<p>'+label+'</p><video controls preload="metadata" src="'+clip.resolve().as_uri()+'"></video>'
     html+='<h2>按章节回看</h2><ol>'+sections+'</ol>'
-    html+='<details><summary>制作、审阅与未完成事项</summary><pre>'+escape(json.dumps(observations or {'状态':'等待内部观察'},ensure_ascii=False,indent=2))+'</pre></details></html>'
+    html+='</html>'
     (folder/'REVIEW.html').write_text(html,encoding='utf-8')
 
 
