@@ -18,7 +18,7 @@
 |---|---|---|
 | 冻结资产、状态、完整候选结论 | `checked_author` → 场景与候选事件 → 原生状态 | 不解题、不补事实；每题四项检查后落答案 |
 | 完整稿和用户独立审阅 | `script` → 同一逐字稿 → `voice`；旧导出与新词不一致即停止 | 每次全文发聊天，文件导出和暂未反馈都不是认可 |
-| FREE_SHOWCASE 方法表达 | 冻结体系中的名称 → `voices / screen_title` 点名 → 同一镜头时钟执行 → 已审候选判断 | 点名—执行—结果；后台分析字段不逐项上屏，只重点回看一个动作。完整依据不等于完整讲授 |
+| FREE_SHOWCASE 方法表达 | 冻结体系中的名称 → `voices / screen_title` 点名 → 同一镜头时钟执行 → 已审候选判断 | 点名—执行—结果；后台分析字段不逐项上屏；回看按当前明确决定处理，本片取消 SC08，必要事实须在首次演示完整出现。完整依据不等于完整讲授 |
 | 作者的观看任务、阅读与动作安排 | `reading_path / choreography / voice_placements / attention` → 实测时钟 → AE 排版行/相机/焦点/完整候选 | 这些具体决定改变作品；`audience_intent` 理由字段不自动产生效果 |
 | 文章词块编辑 | 完整冻结文章 → `ARTICLE_CHUNKS.json` → 同入口 `chunks` → `prepare` → AE 原生 noBreak 与逐块焦点 | 作者负责语义边界；编译器负责原词覆盖与绑定，排版/动效禁止按字数重切。不能增加教学事实或宣称语言审美自动合格 |
 | 现有 Producer 交付与指定 retake | `select_takes` 按精确文本复用完整 take，只生成缺失台词 → 对齐/字幕/时钟 → PR | 旧/失败 take 保留；不以 ASR 或对齐替代听审 |
@@ -48,6 +48,8 @@ Pedagogy、Student POV、Choreography、Cognitive Direction 和 Audience 的独�
 ## 体验、导演与研究
 
 ### Audience Engagement Design
+
+- **FIRST_PERSON_CHALLENGE_V1 流程：** 作者将每题自主预测入口写入既有 `audience_challenges`，`validate_authored_challenges / compile_authored_challenges` 绑定完整冻结题面、72帧与真实 Hook/Payoff/Progression；`prepare → AV_PLAN → authored_native` 原生双栏及同题字形交接承接 Student POV / Cognitive Direction 的作者决定。不是新引擎，也不声称已运行所有独立历史编译器。本轮仅作者/计划及代码回归已执行，新增原生消费者、逐帧参数读回与实际影片审核均待执行。
 
 - **当前 authored Hook v1 扩展：** 用户决定痛点、有效方法使用场景、既定视觉冲突与开场原文；本模块 `validate_authored_hook/critical_focus_handoff` 验证来源、Stop、收益和兑现链，既有 authored clock 与原生模板实际消费。原生对象/参数检查、编码画面、原速观看、试听和观众结果分开记录。缺创意返回 `CREATIVE_DECISION_REQUIRED`，不得新增 Hook Agent 或自行创意审批。B06 旧接口的历史范围保留下列原记录，不据新扩展追认。
 - **Purpose / Contract：** Episode 之上的观看问题、递进、信息回报假设与 beat 风险；0.1/0.2 `design_engagement/validate_engagement/director_handoff`。

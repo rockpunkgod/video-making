@@ -49,3 +49,14 @@ the time-share metric, or trade readable evidence for a higher density number.
 Preserve historical inputs for inspection; they cannot authorize a new build
 without the current allocation. Tests and compiled time shares are not viewing
 approval, student results or publication permission.
+
+For FIRST_PERSON_CHALLENGE_V1 and subsequent same-format first-person lessons,
+author the two-column complete-source/question challenge in the existing Audience
+contract: exactly 72 frames at 24fps under continuing narration, neutral ABCD,
+screen-only pause prompt, followed by a continuous same-glyph task handoff.
+Use highlight_then_extract after necessary sense-group reading; do not restore
+mechanical independent slow replays. Replay omission still requires its bound
+user decision and complete first-pass evidence. Preserve legacy inputs and the
+shared reading/camera/source/host protections. Follow the current workflow for
+scope: the present request is implementation/documentation/push only, with no
+new Adobe execution or film delivery; actual-media review remains unverified.

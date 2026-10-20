@@ -1,10 +1,10 @@
 {
   "index_version": "1.0",
   "kind": "documentation_capability_index",
-  "as_of": "2026-10-19",
+  "as_of": "2026-10-20",
   "repository_base": "9e75f795bfc650c6fe1f71abde97e9d9ad7edf3b",
   "recommended_workflow": "docs/workflows/CURRENT_PRODUCTION_WORKFLOW.md",
-  "scope": "Current authored dispatch actually consumed AudienceHook, exact user-reviewed26 complete narration takes, source-bound exam/article credits,139 sense groups, teaching focus, native3D and transparent source extraction. Latest user instruction preserves the original Reading presentation and adds ThinkingState only. Current audience-hook-v1-r09 has a complete307.5416667s/7381-frame4K24 same-version film, native AE and Premiere edits, full decode/voice integrity checks,83 actual final encoded static samples independently reviewed and both hosts restored. Historical36 entries retain version-specific meanings. Normal-speed motion and actual listening remain UNOBSERVED; final human film acceptance pending, no public release.",
+  "scope": "Current authored dispatch actually consumed AudienceHook, exact user-reviewed26 complete narration takes, source-bound exam/article credits,139 sense groups, teaching focus, native3D and transparent source extraction. Latest user instruction preserves the original Reading presentation and adds ThinkingState only. Current audience-hook-v1-r09 has a complete307.5416667s/7381-frame4K24 same-version film, native AE and Premiere edits, full decode/voice integrity checks,83 actual final encoded static samples independently reviewed and both hosts restored. Historical36 entries retain version-specific meanings. Normal-speed motion and actual listening remain UNOBSERVED; final human film acceptance pending, no public release. FIRST_PERSON_CHALLENGE_V1 is now an authored workflow change: two exact72-frame neutral full-question pause entries, immediate source-glyph extraction, and explicitly authorized omission of SC08. Code and current author/plan were exercised; no new Adobe/native execution or film delivery in this scope.",
   "historical_archive_index": "G:/VideoMaking/_archive/2026-10-18/ARCHIVE_INDEX.json",
   "historical_path_rule": "Historical paths identify their original location. Entries with archived_evidence map those paths to verified ZIP members; inspect or restore through the archive instructions rather than treating a moved output as a missing production dependency.",
   "not_runtime_contract": true,
@@ -718,6 +718,18 @@
       "scope": "Actual current full film307.5416667s/7381frames/26 complete takes; SHA256 9fd1d43ef3989bbf920a63e170d9d6c8e89a8b1d6609ad15c7a75e1662cfb157. New4K native picture consumed Hook, source credits, preserved Reading presentation, added ThinkingState and dualcomp10-row candidate quiet coverage in5 critical reading/comparison/replay scenes. Native audits, full final decode, audio integrity measurements and independent83 encoded static sample checks passed within stated scopes; both hosts restored. No normal-speed observation, true listening or human approval implied.",
       "public_render_ready": false,
       "human_approved": false
+    },
+    "E30": {
+      "paths": [
+        "creative_os/audience_engagement.py",
+        "ae_production/authored_episode.py",
+        "ae_production/authored_native.py",
+        "ae/templates/authored-episode.jsx",
+        "tests/test_first_person_challenges.py",
+        "tests/test_challenge_native.py"
+      ],
+      "scope": "FIRST_PERSON_CHALLENGE_V1 contract, actual current author/plan compile, native consumer/readback implementation and negative controls; native execution and media perception NOT performed",
+      "availability": "TRACKED_CODE_PRIVATE_AUTHOR_PLAN"
     }
   },
   "capabilities": [
@@ -2147,6 +2159,48 @@
         "RELEASE_APPROVED": "NOT_ESTABLISHED"
       },
       "recommended_action": "Inspect exact phrase review and the current encoded proof; retain whole phrases in subsequent articles"
+    },
+    {
+      "capability_id": "first_person_challenge_workflow",
+      "production_role": "CURRENT_PRODUCTION",
+      "entrypoint": "ae/experiments/adaptive-episode/run.py",
+      "version": "FIRST_PERSON_CHALLENGE_V1",
+      "input_contracts": [
+        "AV_AUTHOR.audience_challenges",
+        "source-bound complete frozen question and ABCD",
+        "existing complete narration and current authored scene clock",
+        "explicit replay omission authority"
+      ],
+      "output_contracts": [
+        "AV_PLAN.audience_challenges",
+        "same-glyph native task handoff implementation",
+        "native72-frame parameter readback implementation"
+      ],
+      "known_consumers": [
+        "authored_episode.checked_author/prepare",
+        "authored_native.plan/audit",
+        "authored-episode.jsx"
+      ],
+      "evidence_refs": [
+        "E30"
+      ],
+      "known_limits": [
+        "Current scope is changes/documentation/push only; no Adobe execution or film output",
+        "72-frame actual pixel coverage, mobile readability, continuous motion and listening remain UNOBSERVED",
+        "Legacy authors remain compatible; no new independent Pause/Hook/director engine"
+      ],
+      "human_approval_scope": "Workflow change authorized; new film, perception and recombined copy not approved",
+      "availability": "TRACKED_CODE_PRIVATE_AUTHOR_PLAN",
+      "scope": "Existing Audience/Student POV/direction authoring responsibilities on the current authored route; not a claim that all standalone historical compilers ran",
+      "dimensions": {
+        "DESIGNED": "CONFIRMED",
+        "IMPLEMENTED": "CONFIRMED",
+        "INTEGRATED": "CURRENT_AUTHOR_AND_PLAN_COMPILED_NATIVE_CONSUMER_NOT_EXECUTED",
+        "NATIVE_VERIFIED": "NOT_EXECUTED",
+        "HUMAN_APPROVED": "WORKFLOW_DECISION_ONLY",
+        "RELEASE_APPROVED": "NOT_ESTABLISHED"
+      },
+      "recommended_action": "Retain latest changes-only scope; use actual same-version media before any perceptual acceptance claim"
     }
   ],
   "current_authored_runtime": {
@@ -2185,6 +2239,19 @@
       "reading_state": "PRESERVED_ORIGINAL",
       "thinking_state": "ADDED_INCREMENTALLY",
       "human_film_acceptance": "PENDING"
+    },
+    "first_person_challenge": {
+      "contract": "AV_AUTHOR.audience_challenges / FIRST_PERSON_CHALLENGE_V1",
+      "evidence_refs": [
+        "E30"
+      ],
+      "status": "CODE_AND_AUTHOR_PLAN_ONLY",
+      "current_scope": "CHANGES_DOCUMENTATION_AND_GIT_PUSH_NO_FILM",
+      "native_execution": "NOT_EXECUTED",
+      "normal_speed_review": "UNOBSERVED",
+      "mobile_legibility": "UNOBSERVED",
+      "listening_review": "UNOBSERVED",
+      "public_render_ready": false
     }
   }
 }
