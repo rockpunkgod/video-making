@@ -109,6 +109,9 @@ def plan(folder):
         expected=compile_clock(a,{s['id']:s['voice'] for s in p['segments']},measured)
         if any(p.get(k)!=v for k,v in expected.items()):
             raise ValueError('Audience Hook/scene/voice/caption clock changed without current prepare')
+    if 'audience_challenges' in a:
+        from creative_os.audience_engagement import validate_compiled_challenges
+        validate_compiled_challenges(p.get('audience_challenges'),a,bundles,p,p['worlds'],folder)
     if p.get('source_attribution')!=a.get('source_attribution'):
         raise ValueError('Paper/article attribution was changed or bypassed')
     if 'visual_states' in a:
@@ -410,6 +413,58 @@ def validate_visual_state_readback(p,n,rows):
                     raise ValueError('Native foreground inherited blur or lost its contrasting ink')
     return {'status':'PASS_NATIVE_PARAMETERS_NOT_PERCEPTUAL_APPROVAL','readbacks':rows,
             'normal_speed_review':'UNOBSERVED'}
+
+
+def validate_challenge_native(p,rows,comp_ids):
+    """Actual every-frame native readback; explicitly no perceptual certification."""
+    def visible(value):
+        return type(value) in (int,float) and math.isfinite(value) and abs(value-100)<1e-4
+    expected={(cid,ch['scene']):ch for cid in comp_ids for ch in p['audience_challenges']['rows']}
+    if len(rows)!=len(expected) or {(r['comp_id'],r['scene']) for r in rows}!=set(expected):
+        raise ValueError('Every challenge in both native compositions must be observed')
+    for r in rows:
+        ch=expected[(r['comp_id'],r['scene'])];q=p['worlds'][ch['world']]['question']
+        display=q['passage'].replace('\r\n','  ').replace('\r',' ').replace('\n',' ')
+        if (r['article_text']!=display or r['article_comment']['exact_text']!=q['passage']
+                or r['article_comment']['question_id']!=ch['question_id']
+                or r['article_comment']['source']!=p['worlds'][ch['world']]['source']
+                or r['badge_text']!='想先自己做？可暂停'
+                or abs(r['badge_in']-ch['start'])>1e-6 or abs(r['badge_out']-ch['end'])>1e-6
+                or r['badge_spoken'] is not False or not r['badge_enabled'] or r['badge_guide'] or not r['article_enabled'] or r['article_guide']
+                or abs(r['article_in']-ch['start'])>1e-6 or r['article_out']<ch['end']-1e-6 or not r['article_threeD']):
+            raise ValueError('Native challenge lost full original content, source identity or exact screen-only range')
+        samples=r['samples']
+        if [x['frame'] for x in samples]!=list(range(ch['start_frame'],ch['end_frame'])):
+            raise ValueError('Challenge must be inspected at all and only its 72 frame times')
+        if (type(r['article_height']) not in (int,float) or not math.isfinite(r['article_height'])
+                or not 0<r['article_height']<=448 or not 0<r['article_width']<=762):
+            raise ValueError('Complete article overflows the challenge reading area')
+        texts=[q['stem']]+[c+'   '+q['options'][c] for c in 'ABCD']
+        for sample in samples:
+            base=p['world_order'].index(ch['world'])*10000
+            if (not visible(sample['article_opacity']) or not visible(sample['badge_opacity']) or len(sample['glyphs'])!=5
+                    or sample['article_position']!=[base+40,132,0] or sample['article_scale']!=[100,100,100]
+                    or sample['camera_position']!=[base+640,320,-1550] or sample['camera_target']!=[base+640,320,0]
+                    or sample['aperture']!=0):
+                raise ValueError('Challenge must show the full source and pause entry continuously')
+            for i,(glyph,exact) in enumerate(zip(sample['glyphs'],texts)):
+                target=[p['world_order'].index(ch['world'])*10000+(830 if i else 820),300+(i-1)*58 if i else 192,0]
+                if (glyph['text']!=exact or not visible(glyph['opacity']) or glyph['position']!=target
+                        or glyph['scale']!=[38,38,38] or glyph['animators']!=0
+                        or not glyph['enabled'] or glyph['guide']
+                        or len(glyph['colors'])!=len(exact)
+                        or any(len(color)!=3 or any(type(a) not in (int,float) or not math.isfinite(a) or abs(a-b)>1e-5
+                            for a,b in zip(color,[.09,.13,.16])) for color in glyph['colors'])):
+                    raise ValueError('Challenge stem/options are incomplete, moved, hidden or judgment-emphasized')
+    return {'status':'PASS_NATIVE_72_FRAME_PARAMETERS','rows':rows,
+            'normal_speed_review':'UNOBSERVED','mobile_legibility':'UNOBSERVED','listening_review':'UNOBSERVED'}
+
+
+def challenge_native_readback(h,p,n):
+    ids=[n['comp_id'],n['master_comp_id']]
+    code=r"""var ids=__IDS__,challenges=__CH__,rows=[];for(var ci=0;ci<ids.length;ci++){var c=app.project.itemByID(ids[ci]);for(var hi=0;hi<challenges.length;hi++){var ch=challenges[hi],article=c.layer('CHALLENGE_PASSAGE_'+ch.scene),badge=c.layer('CHALLENGE_PAUSE_'+ch.scene),rect=article.sourceRectAtTime(ch.start,false),samples=[];for(var f=ch.start_frame;f<ch.end_frame;f++){var t=f/24,glyphs=[];for(var gi=0;gi<5;gi++){var l=c.layer(ch.world+(gi?'_OPTION_'+'ABCD'.charAt(gi-1):'_QUESTION')),doc=l.property('Source Text').valueAtTime(t,false),colors=[];for(var k=0;k<doc.text.length;k++)colors.push(doc.characterRange(k,k+1).fillColor);glyphs.push({text:doc.text,opacity:l.transform.opacity.valueAtTime(t,false),position:l.transform.position.valueAtTime(t,false),scale:l.transform.scale.valueAtTime(t,false),animators:l.property('ADBE Text Properties').property('ADBE Text Animators').numProperties,colors:colors,enabled:l.enabled,guide:l.guideLayer});}samples.push({frame:f,article_opacity:article.transform.opacity.valueAtTime(t,false),badge_opacity:badge.transform.opacity.valueAtTime(t,false),article_position:article.transform.position.valueAtTime(t,false),article_scale:article.transform.scale.valueAtTime(t,false),camera_position:c.layer('READING_CAMERA').transform.position.valueAtTime(t,false),camera_target:c.layer('READING_CAMERA').transform.pointOfInterest.valueAtTime(t,false),aperture:c.layer('READING_CAMERA').property('ADBE Camera Options Group').property('ADBE Camera Aperture').valueAtTime(t,false),glyphs:glyphs});}rows.push({comp_id:c.id,scene:ch.scene,article_text:article.property('Source Text').value.text,article_comment:JSON.parse(article.comment),article_enabled:article.enabled,article_guide:article.guideLayer,article_in:article.inPoint,article_out:article.outPoint,article_threeD:article.threeDLayer,article_height:rect.height,article_width:rect.width,badge_text:badge.property('Source Text').value.text,badge_in:badge.inPoint,badge_out:badge.outPoint,badge_spoken:JSON.parse(badge.comment).spoken,badge_enabled:badge.enabled,badge_guide:badge.guideLayer,samples:samples});}}return rows;"""
+    observed=h.js(code.replace('__IDS__',json.dumps(ids)).replace('__CH__',json.dumps(p['audience_challenges']['rows'],ensure_ascii=False)))
+    return validate_challenge_native(p,observed,ids)
 
 
 def validate_material_identity_scope(p,rows,comp_ids):
@@ -799,6 +854,9 @@ var out=[];for(var ci=0;ci<ids.length;ci++){var c=app.project.itemByID(ids[ci]);
     if 'audience_hook' in p:
         r['audience_hook']=hook_native_readback(h,p,n)
         write(folder/'HOOK_NATIVE_READBACK.json',r['audience_hook'])
+    if 'audience_challenges' in p:
+        r['audience_challenges']=challenge_native_readback(h,p,n)
+        write(folder/'CHALLENGE_NATIVE_READBACK.json',r['audience_challenges'])
     if 'visual_states' in p:
         r['visual_states']=visual_state_readback(h,p,n)
         write(folder/'READING_THINKING_NATIVE_READBACK.json',r['visual_states'])

@@ -23,7 +23,7 @@ AUTHOR = 'AV_AUTHOR.json'
 AUTHOR_KEYS = {'revision','product','format','media_role','public_render_ready','copy_review',
                'sources','input_files','voices','scenes','excerpts','producer','host',
                'voice_delivery','voice_inputs','music','teaching_focus','editorial','layout','alignment_source',
-               'copy_review_evidence','audience_hook','source_attribution','visual_states','replay_policy'}
+               'copy_review_evidence','audience_hook','source_attribution','visual_states','replay_policy','audience_challenges'}
 KINDS = {'task', 'locate', 'compare', 'answer', 'replay', 'recap'}
 SHOT_KEYS = {'id', 'kind', 'world', 'voice_ids', 'title', 'excerpt', 'candidate',
              'event', 'replay_of', 'source_refs', 'action_refs', 'terminal_refs',
@@ -422,6 +422,9 @@ def checked_author(folder):
     if 'audience_hook' in a:
         from creative_os.audience_engagement import validate_authored_hook
         validate_authored_hook(a,bundles)
+    if 'audience_challenges' in a:
+        from creative_os.audience_engagement import validate_authored_challenges
+        validate_authored_challenges(a,bundles,folder)
     return a, bundles
 
 
@@ -798,6 +801,9 @@ def prepare(folder):
                 author_sha256=sha256(folder / AUTHOR), voice_delivery_sha256=sha256(delivery_file),
                 alignment_sha256=sha256(aligned_path), public_render_ready=False,
                 human_creative_review='PENDING', listening_review='PENDING', student_count=0)
+    if 'audience_challenges' in a:
+        from creative_os.audience_engagement import compile_authored_challenges
+        plan['audience_challenges']=compile_authored_challenges(a,bundles,plan,worlds,folder)
     plan['article_chunking'] = chunks
     if 'source_attribution' in a:plan['source_attribution']=deepcopy(a['source_attribution'])
     if 'visual_states' in a:

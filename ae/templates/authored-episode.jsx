@@ -196,6 +196,46 @@ if(P.source_attribution){
  }
 }
 /* SOURCE_ATTRIBUTION_V1_END */
+/* FIRST_PERSON_CHALLENGE_V1_BEGIN */
+// Existing Audience task -> native choreography. No independent pause runtime.
+if(P.audience_challenges){
+ audit.audience_challenges=[];
+ for(var ci=0;ci<P.audience_challenges.rows.length;ci++){
+  var ch=P.audience_challenges.rows[ci],w=worlds[ch.world],a=ch.start,b=ch.end,land=ch.handoff_end;
+  if(Math.round((b-a)*24)!==72||Math.abs(land-b-.8)>1e-6)throw Error("Challenge must occupy exactly 72 frames");
+  // Reflow whitespace only. Character offsets and every printed word stay bound
+  // to the complete frozen passage, including material outside the answer block.
+  var exact=P.worlds[ch.world].question.passage,display=exact.replace(/\r\n/g,"  ").replace(/[\r\n]/g," ");
+  var article=text("CHALLENGE_PASSAGE_"+ch.scene,display,w.base+40,132,0,17,760,ink);
+  var td=article.property("Source Text").value;td.leading=20.4;article.property("Source Text").setValue(td);
+  var originalChunks=P.article_chunking.articles[ch.world].chunks,mappedChunks=[];for(var ck=0;ck<originalChunks.length;ck++){var c=originalChunks[ck];mappedChunks.push({id:c.id,start:c.start,end:c.end,text:display.slice(c.start,c.end)});}cmKeepChunks(article,{id:"CHALLENGE_"+ch.scene,start:0,reading_chunks:mappedChunks});
+  article.inPoint=a;article.outPoint=land;
+  article.comment=JSON.stringify({kind:"source_bound_challenge_passage",world:ch.world,question_id:w.question.question_id,source:P.worlds[ch.world].source,exact_text:exact,display_text:display,whitespace_reflow_only:true,start_frame:ch.start_frame,end_frame:ch.end_frame});
+  var box=article.sourceRectAtTime(a,false);if(box.height>448||box.width>762)throw Error("Full challenge passage does not fit; author must repair layout before rendering");
+  ease(tr(article,"ADBE Position"),b,[w.base+40,132,0]);ease(tr(article,"ADBE Position"),land,[w.base-800,132,0]);
+  ease(tr(article,"ADBE Opacity"),b,100);ease(tr(article,"ADBE Opacity"),land,0);
+  var originals=[w.stem];for(var oi=0;oi<4;oi++)originals.push(w.options["ABCD".charAt(oi)]);
+  var glyphs=[];
+  for(var oi=0;oi<originals.length;oi++){
+   var l=originals[oi],pos=tr(l,"ADBE Position"),scale=tr(l,"ADBE Scale"),origin=pos.valueAtTime(land,false),originalScale=scale.valueAtTime(land,false),small=[w.base+(oi?830:820),oi?300+(oi-1)*58:192,0];
+   hold(pos,a,small);ease(pos,b,small);ease(pos,land,origin);
+   hold(scale,a,[38,38,38]);ease(scale,b,[38,38,38]);ease(scale,land,originalScale);
+   glyphs.push({name:l.name,source_layer_id:l.id,exact_text:l.property("Source Text").valueAtTime(a,false).text,position:small,scale:[38,38,38]});
+  }
+  // Remove the old task orient keys only inside this new participation window.
+  // From frame 72 onward the same question glyphs continuously grow into the
+  // inherited first-person reading pose; all subsequent reading keys survive.
+  var cameraProps=[tr(cam,"ADBE Position"),tr(cam,"ADBE Anchor Point"),tr(focus,"ADBE Position"),opt.property("ADBE Camera Aperture")];
+  for(var pi=0;pi<cameraProps.length;pi++){var prop=cameraProps[pi];for(var ki=prop.numKeys;ki>=1;ki--)if(prop.keyTime(ki)>a&&prop.keyTime(ki)<land)prop.removeKey(ki);}
+  cutCamera(a,question(w),1550);camera(b,question(w),1550,[0,0],0);camera(land,question(w),1550,[0,0],14);
+  opt.property("ADBE Camera Aperture").setValueAtTime(a,0);
+  var badge=overlay("CHALLENGE_PAUSE_"+ch.scene,"想先自己做？可暂停",865,143,18,370,muted,a,b);
+  badge.comment=JSON.stringify({kind:"screen_only_pause_entry",question_id:w.question.question_id,start_frame:ch.start_frame,end_frame:ch.end_frame,spoken:false});
+  var material=C.layer("MATERIAL_IDENTITY");if(ci===0&&material){hold(tr(material,"ADBE Opacity"),a,0);hold(tr(material,"ADBE Opacity"),land,100);}
+  audit.audience_challenges.push({scene_id:ch.scene,world:ch.world,question_id:w.question.question_id,start:a,end:b,start_frame:ch.start_frame,end_frame:ch.end_frame,frames:72,article_layer:article.name,article_height:box.height,article_width:box.width,original_glyphs:glyphs,badge_layer:badge.name,handoff_end:land,voice_policy:"existing_complete_take_continues",normal_speed_review:"UNOBSERVED",mobile_legibility:"UNOBSERVED"});
+ }
+}
+/* FIRST_PERSON_CHALLENGE_V1_END */
 /* READING_THINKING_STATE_V1_BEGIN */
 if(P.visual_states){
  var windows=P.visual_states.thinking_windows,stateCode='function q(x){x=Math.max(0,Math.min(1,x));return x*x*x*(x*(6*x-15)+10);}var w=0;';

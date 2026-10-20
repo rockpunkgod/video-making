@@ -32,6 +32,226 @@ EDITORIAL_SIGNALS = {'hook_link_clear', 'payoff_leaked', 'reading_space', 'motio
 
 HOOK_VERSION = '1.0.0'
 HOOK_PHASES = ['enter', 'surface_align', 'relation_displace', 'unresolved_hold', 'match_into_task']
+CHALLENGE_VERSION = 'FIRST_PERSON_CHALLENGE_V1'
+CHALLENGE_FRAMES = 72
+CHALLENGE_PAUSE_TEXT = '想先自己做？可暂停'
+
+
+def validate_authored_challenges(author, bundles, folder=None):
+    """Opt in to complete, neutral question views inside existing task scenes.
+
+    The bound user capture authorizes this presentation only. It cannot approve
+    copy, native readability, perception, teaching outcomes or publication.
+    Missing input leaves every historical author and compiled plan unchanged.
+    """
+    if 'audience_challenges' not in author:return None
+    decision=author['audience_challenges']
+    keys={'contract_version','frames','presentation','request_source','pause_badge','questions'}
+    if (not isinstance(decision,dict) or set(decision)!=keys
+            or decision['contract_version']!=CHALLENGE_VERSION
+            or type(decision['frames']) is not int or decision['frames']!=CHALLENGE_FRAMES
+            or decision['presentation']!='full_source_question_split'):
+        raise ValueError('Unsupported or incomplete first-person challenge decision')
+    badge=decision['pause_badge']
+    if (not isinstance(badge,dict) or set(badge)!={'text','screen_only'}
+            or badge['text']!=CHALLENGE_PAUSE_TEXT or badge['screen_only'] is not True):
+        raise ValueError('Challenge pause badge must retain the exact screen-only user wording')
+    binding=decision['request_source']
+    if not isinstance(binding,dict) or set(binding)!={'path','sha256'}:
+        raise ValueError('Challenge requires the bound external user request')
+    path=binding['path']
+    if not isinstance(path,str) or not Path(path).is_absolute():
+        raise ValueError('Challenge user request requires an absolute external source path')
+    path=Path(path).resolve()
+    if (path.suffix.lower() not in {'.txt','.md'}
+            or folder is not None and path.is_relative_to(Path(folder).resolve())):
+        raise ValueError('Challenge cannot authorize itself from its production artifacts')
+    matches=[digest for name,digest in author.get('input_files',{}).items() if Path(name).resolve()==path]
+    if (len(matches)!=1 or matches[0]!=binding['sha256'] or not path.is_file()
+            or sha256(path)!=binding['sha256'] or CHALLENGE_PAUSE_TEXT not in path.read_text('utf-8-sig')):
+        raise ValueError('Challenge user request source binding is missing, changed or not the specified wording')
+    if any(CHALLENGE_PAUSE_TEXT in voice['text'] for voice in author['voices']):
+        raise ValueError('Screen-only challenge badge cannot become an authored voice take')
+    scenes=author['scenes'];ids=[s['id'] for s in scenes]
+    if len(set(ids))!=len(ids):raise ValueError('Challenge requires unique real scene identities')
+    questions=decision['questions']
+    if (not isinstance(questions,list) or len(questions)!=len(bundles)
+            or any(not isinstance(q,dict) or set(q)!={'world','scene_id'} for q in questions)
+            or {q['world'] for q in questions}!=set(bundles)
+            or set(author['sources'])!=set(bundles)):
+        raise ValueError('Challenges must cover every frozen question exactly once')
+    expected=[]
+    for scene in scenes:
+        world=scene['world']
+        if world not in bundles:raise ValueError('Challenge scene refers to another frozen world')
+        if any(q['world']==world for q in expected):continue
+        if (scene['kind']!='task' or scene.get('event') is not None
+                or scene.get('candidate') is not None or scene.get('terminal_refs')
+                or scene.get('attention') or scene.get('reading_path')):
+            raise ValueError('Challenge belongs at the unmarked first task of each question')
+        snapshot=bundles[world]['source_snapshot']
+        if (not isinstance(snapshot.get('passage'),str) or not snapshot['passage'].strip()
+                or not isinstance(snapshot.get('stem'),str) or not snapshot['stem'].strip()
+                or set(snapshot.get('options',{}))!=set('ABCD')
+                or any(not isinstance(v,str) or not v.strip() for v in snapshot['options'].values())):
+            raise ValueError('Complete frozen passage, question and all four options are required')
+        expected.append({'world':world,'scene_id':scene['id']})
+    if questions!=expected:
+        raise ValueError('Challenge world/scene/order differs from the actual first question tasks')
+    return {'status':'BOUND_USER_REQUEST','contract_version':CHALLENGE_VERSION,
+            'decision_sha':sha(decision),'request_source_sha256':binding['sha256'],
+            'question_scenes':deepcopy(expected),'human_review':'PENDING','public_render_ready':False}
+
+
+def _challenge_source_rows(author, bundles, worlds):
+    from video_contracts import read
+    if not isinstance(worlds,dict) or set(worlds)!=set(bundles):
+        raise ValueError('Challenge needs the complete prepared source worlds')
+    result={}
+    for world,bundle in bundles.items():
+        snapshot=bundle['source_snapshot'];data=worlds[world];source=author['sources'][world]
+        if data['question']!=snapshot or data['source']!=source:
+            raise ValueError('Challenge prepared question/source binding changed')
+        # Bind the source bytes as well as their world name and literal contents.
+        if read(source['bundle'])!=bundle:
+            raise ValueError('Challenge frozen bundle is not its actual bound source file')
+        files={key:{'path':str(Path(path).resolve()),'sha256':sha256(path)} for key,path in source.items()}
+        blocks=data['blocks'];cursor=0;seen=set();compiled=[]
+        for block in blocks:
+            lo=block['start'];hi=block['end'];ident=block['id']
+            if (type(lo) is not int or type(hi) is not int or lo!=cursor
+                    or not 0<=lo<hi<=len(snapshot['passage']) or not isinstance(ident,str)
+                    or not ident or ident in seen or block['text']!=snapshot['passage'][lo:hi]
+                    or type(block['visible']) is not bool or block['visible']!=bool(block['text'].strip())):
+                raise ValueError('Challenge must preserve complete, ordered, source-exact article blocks')
+            seen.add(ident);cursor=hi
+            compiled.append({k:deepcopy(block[k]) for k in ('id','start','end','text','visible')})
+        if not compiled or cursor!=len(snapshot['passage']):
+            raise ValueError('Challenge article blocks omit part of the full frozen passage')
+        result[world]={'blocks':compiled,'source_files':files,'source_snapshot_sha':sha(snapshot)}
+    return result
+
+
+def _challenge_chain(author,clock,rows):
+    """Only point to the existing Hook and actual subsequent candidate events."""
+    authored={s['id']:s for s in author['scenes']};scenes={s['id']:s for s in clock['scenes']}
+    events=clock['candidate_events'];expected=[s for s in author['scenes'] if s.get('event')]
+    if (len(events)!=len(expected) or [e['scene'] for e in events]!=[s['id'] for s in expected]):
+        raise ValueError('Challenge payoff inventory differs from the real authored judgments')
+    def event_binding(event):
+        s=authored[event['scene']];live=scenes[s['id']]
+        if (event['world']!=s['world'] or event['kind']!=s['event']
+                or event['candidate']!=s['candidate'] or event['time']!=live['event_time']
+                or event.get('refs')!=s['terminal_refs']
+                or not math.isfinite(event['time']) or not live['start']<=event['time']<live['end']):
+            raise ValueError('Challenge payoff must use the actual frozen-scope event and clock')
+        return {'scene':s['id'],'world':s['world'],'kind':event['kind'],
+                'candidate':event['candidate'],'time':event['time'],'scene_sha':sha(s),
+                'terminal_refs_sha':sha(s['terminal_refs'])}
+    actual=[event_binding(e) for e in events]
+    payoffs=[]
+    for row in rows:
+        question_events=[e for e in actual if e['world']==row['world']]
+        finals=[e for e in question_events if e['kind']=='final']
+        if (not question_events or len(finals)!=1
+                or any(e['time']<row['end'] for e in question_events)):
+            raise ValueError('Challenge leaks a judgment or lacks its actual later final payoff')
+        payoffs.append({'world':row['world'],'challenge_scene':row['scene'],
+                        'first_judgment':question_events[0],'final':finals[0]})
+    result={'question_payoffs':payoffs}
+    h=author.get('audience_hook')
+    if h is not None:
+        live=clock.get('audience_hook',{})
+        if (live.get('decision_sha')!=sha(h) or live.get('scene_id')!=h['scene_id']
+                or live.get('decision')!=h or live.get('end')!=rows[0]['start']):
+            raise ValueError('Challenge must retain its actual existing Hook handoff')
+        retention=h['retention'];progression=retention['progression_scene_id']
+        first=next((e for e in actual if e['scene']==retention['first_payoff_scene_id']),None)
+        payoff=next((e for e in actual if e['scene']==h['payoff_scene_id']),None)
+        recall=authored.get(retention['final_recall_scene_id'])
+        if (first is None or payoff is None or not any(r['scene']==progression for r in rows[1:])
+                or retention['first_payoff_sha']!=sha(authored[first['scene']])
+                or first!=next((e for e in actual if e['kind'] in {'eliminate','supported'}),None)
+                or not first['time']<scenes[progression]['start']<payoff['time']
+                or retention['progression_scene_sha']!=sha(authored[progression])
+                or recall is None or recall['kind']!='recap'
+                or retention['final_recall_scene_sha']!=sha(recall)):
+            raise ValueError('Challenge progression cannot invent or replace the existing Hook/payoff chain')
+        result.update(hook={'scene':h['scene_id'],'decision_sha':sha(h),'start':live['start'],'end':live['end']},
+                      first_payoff=first,hook_payoff=payoff,
+                      progression={'scene':progression,'world':scenes[progression]['world'],
+                                   'start':scenes[progression]['start'],'scene_sha':sha(authored[progression])},
+                      final_recall={'scene':recall['id'],'start':scenes[recall['id']]['start'],
+                                    'scene_sha':sha(recall)})
+    return result
+
+
+def compile_authored_challenges(author,bundles,clock,worlds=None,folder=None):
+    """Compile existing-clock ranges; do not insert time, voices or answer cues."""
+    checked=validate_authored_challenges(author,bundles,folder)
+    if checked is None:return None
+    fps=author['format']['fps']
+    if type(fps) not in (int,float) or not math.isfinite(fps) or fps<=0:
+        raise ValueError('Challenge requires the actual finite production frame rate')
+    if [s['id'] for s in clock['scenes']]!=[s['id'] for s in author['scenes']]:
+        raise ValueError('Challenge cannot add, reorder or replace authored timeline scenes')
+    sources=_challenge_source_rows(author,bundles,clock.get('worlds') if worlds is None else worlds)
+    voices={v['id']:v['text'] for v in author['voices']};rows=[]
+    for question in author['audience_challenges']['questions']:
+        scene=next(s for s in author['scenes'] if s['id']==question['scene_id'])
+        live=next(s for s in clock['scenes'] if s['id']==scene['id']);world=question['world']
+        if any(live.get(k)!=v for k,v in scene.items()):
+            raise ValueError('Challenge scene differs from its real authored scene')
+        start=live['start']
+        if type(start) not in (int,float) or not math.isfinite(start) or start<0:
+            raise ValueError('Challenge requires a finite existing task start')
+        end=start+CHALLENGE_FRAMES/fps
+        if (abs(start*fps-round(start*fps))>1e-6
+                or type(live['end']) not in (int,float) or not math.isfinite(live['end'])
+                or end+.8>live['end']+1e-8 or live.get('attention_events') or live.get('reading_events')):
+            raise ValueError('Challenge requires 72 neutral frames plus its 0.8s handoff inside the existing task')
+        segments=[s for s in clock['segments'] if s['scene_id']==scene['id']]
+        if (not segments or [s['id'] for s in segments]!=scene['voice_ids']
+                or any(s['text']!=voices[s['id']] or s.get('truncated') is not False
+                       or s.get('time_stretch') is not False for s in segments)):
+            raise ValueError('Challenge must preserve the existing complete narration takes')
+        expected_start=math.ceil((start+scene['voice_pre']-1e-8)*fps)/fps
+        # Hook translation adds the measured opening after body-grid rounding;
+        # equivalent frame times can differ by float64 addition order.
+        if (not math.isfinite(segments[0]['voice_start'])
+                or abs(segments[0]['voice_start']-expected_start)>1e-7
+                or not start<=expected_start<end
+                or any(s['voice_start']<start or s['voice_end']>live['end'] for s in segments)):
+            raise ValueError('Challenge cannot insert silence, move narration or extend the scene clock')
+        snapshot=bundles[world]['source_snapshot'];refs=[]
+        for field,text in [('passage',snapshot['passage']),('stem',snapshot['stem'])]+[
+                ('options/'+c,snapshot['options'][c]) for c in 'ABCD']:
+            refs.append({'world':world,'pointer':'/'+field,'start':0,'end':len(text),'quote':text})
+        rows.append({'scene':scene['id'],'world':world,'question_id':snapshot['question_id'],
+            'scene_sha':sha(scene),'start':start,'end':end,'handoff_end':end+.8,'frames':CHALLENGE_FRAMES,
+            'start_frame':round(start*fps),'end_frame':round(start*fps)+CHALLENGE_FRAMES,
+            'passage':snapshot['passage'],'stem':snapshot['stem'],
+            'options':{c:snapshot['options'][c] for c in 'ABCD'},'source_refs':refs,
+            **deepcopy(sources[world]),'pause_badge':deepcopy(author['audience_challenges']['pause_badge']),
+            'spoiler_boundary':{'visible':'FULL_PASSAGE_STEM_ALL_OPTIONS_AND_PAUSE_BADGE_ONLY',
+                'highlighted_ranges':[],'candidate_states':{c:'unchecked' for c in 'ABCD'},
+                'method_labels':[],'verdict':None},
+            'narration':'EXISTING_COMPLETE_TAKES_NO_INSERTED_SILENCE'})
+    return {'contract_version':CHALLENGE_VERSION,'owner':'AUDIENCE_ENGAGEMENT',
+            'decision_sha':checked['decision_sha'],
+            'request_source':deepcopy(author['audience_challenges']['request_source']),
+            'presentation':'full_source_question_split','fps':fps,'rows':rows,
+            'audience_chain':_challenge_chain(author,clock,rows),
+            'timing_basis':'EXISTING_SCENE_CLOCK_NO_INSERTED_TIME',
+            'actual_native_consumption':'UNVERIFIED','normal_speed_review':'UNOBSERVED',
+            'human_review':'PENDING','public_render_ready':False}
+
+
+def validate_compiled_challenges(compiled,author,bundles,clock,worlds=None,folder=None):
+    expected=compile_authored_challenges(author,bundles,clock,worlds,folder)
+    if compiled!=expected or sha(compiled)!=sha(expected):
+        raise ValueError('Stale, incomplete, leaking or self-approved compiled audience challenges')
+    return expected
 
 
 def authored_body_binding(author):
