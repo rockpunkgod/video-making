@@ -751,8 +751,8 @@
         "local-data/free-showcase/video-experience-upgrade-v1-r04/NATIVE_PREVIEW_RECEIPT.json",
         "local-data/free-showcase/video-experience-upgrade-v1-r04/NATIVE_FEEDBACK_LEDGER.json"
       ],
-      "scope": "VIDEO_EXPERIENCE_UPGRADE_V1: R04 actual dual-comp Recipe/challenge/source/3D/Thinking audits PASS, static pixel observations revised; full native master rendering, final encoding and perceptual scope not yet established",
-      "availability": "TRACKED_CODE_AND_PRIVATE_VERIFIED_NATIVE_IN_PROGRESS_MEDIA"
+      "scope": "R04 actual full 4K24 film and editable AE/Premiere projects generated; same-version engineering and portable evidence binding verified; normal-speed/listening remain UNOBSERVED, human acceptance pending",
+      "availability": "TRACKED_CODE_PRIVATE_COMPLETE_MEDIA_ENGINEERING_VERIFIED_PERCEPTION_PENDING"
     },
     "E32": {
       "title": "Automatic portable final-film review evidence increment",
@@ -760,8 +760,20 @@
       "implementation": "ae_production/review_evidence.py",
       "documentation": "docs/workflows/REVIEW_EVIDENCE_OUTPUT.md",
       "test_log": "local-data/free-showcase/video-experience-upgrade-v1-r04/REVIEW_EVIDENCE_REGRESSION.txt",
-      "test_result": "221 targeted tests PASS; real production export pending current native render",
-      "quality_or_release_authority": false
+      "test_result": "222 targeted tests PASS; actual normal 4K24 production export verified",
+      "quality_or_release_authority": false,
+      "actual_manifest": "G:\\VideoMaking\\video-experience-upgrade-v1-r04\\media\\review_evidence\\MAIN_FILM_4K24-bd32fcb3541d\\review_evidence_manifest.json",
+      "actual_manifest_sha256": "3bf4d459167f1911ee2a6d194cb68b9098c1614896deb267f157c8f3c6f85976",
+      "actual_video_sha256": "586a3db8825a2594aaa079f123a82eae7380d3792d3c40530107878b018d898b",
+      "actual_duration_ms": 275041.667,
+      "actual_frames": 6601,
+      "actual_scene_count": 16,
+      "actual_event_records": 142,
+      "actual_audio_events": 25,
+      "actual_frame_images": 1051,
+      "actual_image_files": 1052,
+      "verification_record": "E:\\自媒体\\video-making-hook-v1\\local-data\\free-showcase\\video-experience-upgrade-v1-r04\\REAL_REVIEW_EVIDENCE_VERIFICATION.json",
+      "verification_scope": "FFprobe; random 3 actual important frames independently decoded/pixel matched; native SOURCE_LIFT_SC03 keys/ease; real Premiere narration placement; paths/hashes/links"
     }
   },
   "capabilities": [
@@ -2265,8 +2277,7 @@
       "known_limits": [
         "No Review Agent, scoring, diagnosis, creative change or automatic rerender",
         "Scene boundaries are production frame mappings, not independent semantic detection",
-        "Missing native gain/render wall-clock/object tracking are null with reasons",
-        "Actual current full-film export verification still pending rendering"
+        "Missing native gain/render wall-clock/object tracking are null with reasons"
       ],
       "human_approval_scope": "Evidence export only; no film quality or publication approval",
       "availability": "AUTOMATIC_CURRENT_AUTHORED_OUTPUT_INCREMENT",
@@ -2275,7 +2286,7 @@
         "DESIGNED": "CONFIRMED",
         "IMPLEMENTED": "CONFIRMED",
         "INTEGRATED": "NORMAL_AUDIT_AND_PACKAGE_HOOKS",
-        "NATIVE_VERIFIED": "ACTUAL_DUAL_COMP_PARAMETERS_CAPTURED_FINAL_EXPORT_PENDING",
+        "NATIVE_VERIFIED": "ACTUAL_CURRENT_NORMAL_PRODUCTION_EVIDENCE_EXPORT_PASS",
         "HUMAN_APPROVED": "NOT_ESTABLISHED",
         "RELEASE_APPROVED": "NOT_ESTABLISHED"
       }
@@ -2324,9 +2335,9 @@
         "E30",
         "E31"
       ],
-      "status": "R04_DUAL_COMP_NATIVE_PARAMETER_PASS_FULL_MEDIA_RENDERING",
+      "status": "R04_ACTUAL_NATIVE_AND_ENCODED_72_FRAME_WINDOWS_VERIFIED",
       "current_scope": "NEW_FULL_PRODUCTION_AUTHORIZED_VIDEO_EXPERIENCE_UPGRADE_V1",
-      "native_execution": "R04_DUAL_COMP_PARAMETER_AUDIT_PASS",
+      "native_execution": "R04_DUAL_COMP_PARAMETER_AND_FINAL_PIXEL_FRAME_COVERAGE_PASS",
       "normal_speed_review": "UNOBSERVED",
       "mobile_legibility": "640PX_STATIC_SAMPLES_CHECKED_FULL_PASSAGE_REQUIRES_PAUSE_ZOOM",
       "listening_review": "UNOBSERVED",
@@ -2346,7 +2357,7 @@
       "evidence_refs": [
         "E31"
       ],
-      "status": "AUTHOR_PLAN_DUAL_COMP_NATIVE_PASS_FULL_MASTER_RENDERING",
+      "status": "AUTHOR_PLAN_NATIVE_ENCODED_MEDIA_TECHNICAL_BINDING_PASS",
       "native_revision": "video-experience-upgrade-v1-r04",
       "recipe_instances": [
         "anonymous Hook",
@@ -2357,13 +2368,24 @@
       ],
       "challenge_identity": "SAME_ORIGINAL_TEXTLAYERS_NO_RECREATION",
       "engine": "EXISTING_AUTHORED_NATIVE_PATH",
-      "final_media": "RENDERING_NOT_YET_ESTABLISHED",
+      "final_media": "586a3db8825a2594aaa079f123a82eae7380d3792d3c40530107878b018d898b",
       "normal_speed_review": "UNOBSERVED",
       "listening_review": "UNOBSERVED",
       "human_film_acceptance": "PENDING",
       "public_render_ready": false,
       "status_authority": "Actual indexed same-revision receipts; historical completed films do not authorize current completion",
       "static_review": "4K_AND_640PX_TARGETED_SAMPLES_CHECKED"
+    },
+    "review_evidence": {
+      "version": "video-review-evidence/v1",
+      "manifest": "G:\\VideoMaking\\video-experience-upgrade-v1-r04\\media\\review_evidence\\MAIN_FILM_4K24-bd32fcb3541d\\review_evidence_manifest.json",
+      "manifest_sha256": "3bf4d459167f1911ee2a6d194cb68b9098c1614896deb267f157c8f3c6f85976",
+      "video_sha256": "586a3db8825a2594aaa079f123a82eae7380d3792d3c40530107878b018d898b",
+      "technical_export_validation": "PASS",
+      "quality_review_performed": false,
+      "normal_speed_review": "UNOBSERVED",
+      "listening_review": "UNOBSERVED",
+      "public_render_ready": false
     }
   }
 }
