@@ -534,6 +534,7 @@ def export_review_evidence(folder,qa,probe_result=None):
     if snapshot and data_sha({k:v for k,v in snapshot.items() if k!='parameters_sha256'})!=snapshot['parameters_sha256']:
         raise ValueError('Native evidence parameter bytes changed')
     binding={'video':qa['sha256'],'plan':qa['plan_sha256'],'native':file_sha(folder/'native-identity.json'),
+        'exporter_source_sha256':file_sha(__file__),
         'motion':None if snapshot is None else snapshot['parameters_sha256'],
         'premiere_timeline':file_sha(folder/'PR_TIMELINE.json') if (folder/'PR_TIMELINE.json').exists() else None}
     out=media.parent/'review_evidence'/(media.stem+'-'+data_sha(binding)[:12])
@@ -596,6 +597,9 @@ def export_review_evidence(folder,qa,probe_result=None):
         tools[name]=subprocess.check_output([name,'-version'],text=True).splitlines()[0]
     result={'evidence_version':VERSION,'generated_at_utc':datetime.now(timezone.utc).isoformat(),
         'video':{'path':str(media),'sha256':qa['sha256']},'repository_commit':commit,
+        'repository_commit_scope':'HEAD at evidence generation; exact built native JSX bytes are captured separately',
+        'native_build_commit':None,
+        'native_build_commit_missing_reason':'Existing build receipt binds source bytes rather than a Git build commit; not reconstructed',
         'generation_binding':binding,'tools':tools,'python_version':sys.version.split()[0],
         'units':{'times':'ms; frame indices zero-based with exclusive end',
             'native_expressions':'Verbatim AE expression strings use original seconds, explicitly labelled; normalized event/key/sample times are ms',
