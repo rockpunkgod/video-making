@@ -611,6 +611,7 @@ def export_review_evidence(folder,qa,probe_result=None):
     sources.extend((name,folder/name) for name in ('AV_AUTHOR.json','AV_PLAN.json','native-identity.json',
         'EVIDENCE_NATIVE_MOTION.json','PR_TIMELINE.json','MUSIC_NATIVE_AUTOMATION.json',
         'CHALLENGE_NATIVE_READBACK.json','SYMBOL_NATIVE_READBACK.json',
+        'ANSWER_CONFIRMATION_NATIVE.json','COMPARISON_BACKGROUND_NATIVE_1.json','COMPARISON_BACKGROUND_NATIVE_703.json',
         'DIRECT_EXTRACTION_NATIVE_READBACK.json','READING_THINKING_NATIVE_READBACK.json',
         'READING_CONTINUITY_NATIVE_1.json','READING_CONTINUITY_NATIVE_703.json',
         'NATIVE_AUDIO_DELAY.json','EPISODE_SCRIPT.md','EPISODE_SUBTITLES.srt',
