@@ -475,7 +475,9 @@ def extract_frames(media,out,wanted,pts,metadata):
         draw.text(((i%columns)*tw+5,(i//columns)*th+181),f"frame {r['frame_number']} | {r['timestamp_ms']:.3f} ms",fill='white')
     sheet.save(directory/'scene-index.jpg',quality=90)
     return {'time_unit':'ms','frame_numbering':'zero-based decoded presentation order','frames':rows,
-        'thumbnail_index':{'file':'review_frames/scene-index.jpg','sha256':file_sha(directory/'scene-index.jpg')},
+        'thumbnail_index':{'file':'review_frames/scene-index.jpg','sha256':file_sha(directory/'scene-index.jpg'),
+            'width_px':sheet.width,'height_px':sheet.height,'source_video_sha256':metadata['sha256'],
+            'source_frame_numbers':[r['frame_number'] for r in scene_frames]},
         'coverage':'Every known scene and selected existing important events; no claim of automatic recognition of all visual motion',
         'frame_source_video_sha256':metadata['sha256']}
 
@@ -516,7 +518,8 @@ def validate_evidence(manifest_path):
     for f in docs['frame_index']['frames']:
         if not set(f['event_ids'])<=event_ids or not set(f['scene_ids'])<=scene_ids:raise ValueError('Frame links reference an unknown scene/event')
     return {'status':'PASS','scope':'JSON/path/hash/cross-reference structure only; no quality judgment',
-            'images':len(docs['frame_index']['frames']),'scenes':len(scene_ids),'events':len(event_ids)}
+            'images':len(docs['frame_index']['frames'])+1,'frame_images':len(docs['frame_index']['frames']),
+            'scenes':len(scene_ids),'events':len(event_ids)}
 
 
 def export_review_evidence(folder,qa,probe_result=None):
@@ -594,8 +597,10 @@ def export_review_evidence(folder,qa,probe_result=None):
             'native_expressions':'Verbatim AE expression strings use original seconds, explicitly labelled; normalized event/key/sample times are ms',
             'spatial':'Each motion event records its coordinate system, reference and property units'},
         'json_files':files,'source_snapshots':snapshots,'image_directory':'review_frames',
-        'image_count':len(index['frames']),'scene_count':len(tim['scenes']),
+        'image_count':len(index['frames'])+1,'frame_image_count':len(index['frames']),'scene_count':len(tim['scenes']),
+        'scene_count_basis':'Existing scene units with final decoded-frame correspondence; not automatic visual cut detection',
         'animation_event_count':len(mot['events']),'audio_event_count':len(aud['events']),
+        'animation_event_count_basis':'Unique event records for native animated layers, focus windows, challenges and recipes; overlapping representations are linked, not distinct-action claims',
         'parameter_completeness':{'final_video_parameters':'FFPROBE_MEASURED','motion':'NATIVE_ENGINE_READBACK' if comp else 'HISTORICAL_PARTIAL_READBACK',
             'scene_timing':'PLAN_FRAMES_MAPPED_TO_FINAL_MEASURED_PTS','audio_timing':'NATIVE_PREMIERE_CLIP_READBACK',
             'mixed_loudness':'FINAL_AUDIO_MEASURED','independent_scene_detection':None,'independent_object_tracking':None},
