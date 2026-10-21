@@ -200,6 +200,7 @@ def motion(plan,native,comp,folder,fps):
                 'start_frame':max(0,frame_floor(start*fps/1000)),'end_frame_exclusive':frame_ceil(end*fps/1000),
                 'properties':props,'property_units':units,'anchor_point':layer.get('anchor_point'),
                 'native_temporal_ease_speed_unit':'Corresponding AE property units per second; native speed is retained, key/sample times are ms',
+                'easing_definition_kind':'AE native KeyframeEase speed/influence plus spatial tangents; no CSS cubic-bezier control parameters are configured',
                 'coordinate_system':'AE_PARENT_LOCAL_3D' if layer.get('parent_id') else 'AE_WORLD_3D' if layer.get('three_d') else 'AE_COMPOSITION_2D',
                 'coordinate_reference':{'comp_id':comp['comp_id'],'composition_size_px':[comp['width_px'],comp['height_px']],
                     'parent_element_id':layer.get('parent_id')},
@@ -573,6 +574,8 @@ def export_review_evidence(folder,qa,probe_result=None):
     sources.extend((name,folder/name) for name in ('AV_AUTHOR.json','AV_PLAN.json','native-identity.json',
         'EVIDENCE_NATIVE_MOTION.json','PR_TIMELINE.json','MUSIC_NATIVE_AUTOMATION.json',
         'CHALLENGE_NATIVE_READBACK.json','SYMBOL_NATIVE_READBACK.json',
+        'DIRECT_EXTRACTION_NATIVE_READBACK.json','READING_THINKING_NATIVE_READBACK.json',
+        'READING_CONTINUITY_NATIVE_1.json','READING_CONTINUITY_NATIVE_703.json',
         'NATIVE_AUDIO_DELAY.json','EPISODE_SCRIPT.md','EPISODE_SUBTITLES.srt',
         'MASTER_DELIVERY_QA.json' if qa.get('formal_4k_rendered') else 'DELIVERY_QA.json',
         'MASTER_PICTURE_RECEIPT.json' if qa.get('formal_4k_rendered') else 'PICTURE_RECEIPT.json') if (folder/name).exists())
@@ -583,6 +586,7 @@ def export_review_evidence(folder,qa,probe_result=None):
             raise ValueError('Project changed since the same-version final package checks: '+role)
         shutil.copy2(source,target);snapshots.append({'role':role,'path':target.relative_to(out).as_posix(),
             'sha256':file_sha(target),'original_source_path':str(source),
+            'normalization':'Verbatim source artifact with original fields/units; normalized manifests above use ms',
             'scope':'Exact bytes at evidence capture; later application Save may change original project metadata'})
     root=Path(__file__).resolve().parents[1]
     try:commit=subprocess.check_output(['git','rev-parse','HEAD'],cwd=root,text=True).strip()
