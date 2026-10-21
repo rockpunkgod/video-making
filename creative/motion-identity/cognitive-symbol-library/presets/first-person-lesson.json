@@ -1,0 +1,15 @@
+{
+  "contract_version": "COGNITIVE_SYMBOL_LIBRARY_V1",
+  "coordinate_space": "LOCAL_RIG_PIXELS_FROM_SPACE_ORIGIN",
+  "parameters": {
+    "duration_seconds": 5,
+    "space": {"origin": [0, 0, 0], "depth": -80},
+    "font": {"family": "ArialMT", "size": 32, "advance_factor": 0.56, "line_height": 1.32},
+    "layout": {"width": 1080, "height": 360, "min_gap": 24},
+    "curve": "smoothstep",
+    "mask": "source_glyphs_only"
+  },
+  "timing_note": "Replace duration_seconds with the actual compiled scene range. This preset does not insert or stretch narration.",
+  "font_note": "This layout/font was exercised in both current native compositions and actual 640px static previews. Advance estimates remain a conservative preflight only; replacement text must pass actual sourceRect/font/glyph continuity before rendering. Static checks do not grant motion or listening acceptance.",
+  "source_note": "Replace every source binding with current frozen refs. This file does not authorize any teaching relation."
+}

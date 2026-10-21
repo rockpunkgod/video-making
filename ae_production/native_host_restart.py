@@ -30,6 +30,40 @@ def process_absent(pid):
     finally:kernel.CloseHandle(handle)
 
 
+def activate_observed_panel(observed, executable):
+    """Open the installed panel in this new host, without opening a project.
+
+    Adobe's dynamic extension command IDs need real menu input; sending a
+    WM_COMMAND can appear successful while leaving the panel closed.
+    """
+    from pywinauto import Desktop
+    if (not observed.get('MainWindowHandle') or Path(observed['Path']).resolve()!=executable.resolve()):
+        raise RuntimeError('Panel activation requires the exact observed restarted executable/window')
+    desktop=Desktop(backend='win32');window=desktop.window(handle=observed['MainWindowHandle'])
+    if window.process_id()!=observed['Id']:raise RuntimeError('Restarted panel window process changed')
+    if any(w.process_id()==observed['Id'] and w.class_name()=='#32770' and w.is_visible()
+           for w in desktop.windows()):
+        raise RuntimeError('Restarted host has a modal dialog; preserve it without accepting or cancelling')
+    menu=window.menu()
+    if menu is None:return {'action':'WAITING_FOR_NATIVE_MENU','project_write':False}
+    menus=menu.items()
+    main=next((m for m in menus if m.text().startswith('窗口') or m.text().startswith('Window')),None)
+    if main is None:return {'action':'WAITING_FOR_NATIVE_MENU','project_write':False}
+    extension=next((m for m in main.sub_menu().items()
+                    if m.text().startswith('扩展') or m.text().startswith('Extensions')),None)
+    if extension is None:return {'action':'WAITING_FOR_NATIVE_MENU','project_write':False}
+    window.set_focus();main.click_input()
+    extension.click_input()
+    panel=next((m for m in extension.sub_menu().items() if m.text().strip()=='ae-mcp'),None)
+    if panel is None:raise RuntimeError('Installed ae-mcp panel is unavailable')
+    opened=bool(panel.state() & 8)
+    if not opened:panel.click_input()
+    if window.process_id()!=observed['Id']:raise RuntimeError('Panel activation process changed')
+    return {'process_id':observed['Id'],'window_handle':observed['MainWindowHandle'],
+            'executable':str(executable),'action':'ALREADY_OPEN_NOT_TOGGLED' if opened else 'OPEN_EXISTING_INSTALLED_PANEL',
+            'project_write':False,'new_application_launch':False}
+
+
 def restart_saved_host(h,cursor):
     from ae_production.authored_native import Host,process,current_native
     before=h.identity()
@@ -62,7 +96,7 @@ def restart_saved_host(h,cursor):
                    creationflags=getattr(subprocess,'CREATE_NO_WINDOW',0))
     record.update(state='NORMAL_DESKTOP_LAUNCH_REQUESTED',launch='Windows Explorer executable open',
                   executable=str(executable),working_directory=str(executable.parent));write(path,record)
-    last=None
+    last=None;panel_attempted=False
     for _ in range(150):
         try:
             fresh=Host(h.folder,'after_effects');actual=fresh.identity()
@@ -93,6 +127,17 @@ def restart_saved_host(h,cursor):
             # its result needs explicit inspection, never another loop attempt.
             if (Path(h.h['ownership_directory'])/'after_effects.json').exists():raise
             if isinstance(error,(ValueError,FileExistsError)) or 'another project' in str(error) or 'target differs' in str(error):raise
+            if not panel_attempted:
+                try:started=process('AfterFX')
+                except RuntimeError:started=None
+                if started and started['Id']!=h.pid and started.get('MainWindowHandle'):
+                    if Path(started['Path']).resolve()!=executable.resolve():
+                        raise RuntimeError('Restarted executable changed; preserve the observed host')
+                    record.update(panel_activation_requested={'process_id':started['Id'],
+                        'window_handle':started['MainWindowHandle']});write(path,record)
+                    activation=activate_observed_panel(started,executable)
+                    if activation.get('action')!='WAITING_FOR_NATIVE_MENU':
+                        panel_attempted=True;record['panel_activation']=activation;write(path,record)
         time.sleep(1)
     record.update(state='STARTUP_UNAVAILABLE',last_error=str(last));write(path,record)
     raise RuntimeError('Saved native restart retained; startup did not become available: '+str(last))

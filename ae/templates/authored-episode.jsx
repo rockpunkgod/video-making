@@ -1,6 +1,8 @@
 // Current author -> native paper, measured reading lines and continuous 3D objects.
 // Facts, exact copy and event authority come only from the checked AV plan.
 /* SHARED_READING_RIG */
+/* SHARED_CHALLENGE_RIG */
+/* SHARED_COGNITIVE_SYMBOL_RIG */
 var f=new File(PLAN_PATH);f.encoding="UTF-8";if(!f.open("r"))throw Error("Missing AV plan");var P=JSON.parse(f.read());f.close();
 if(!P.article_chunking)throw Error("Article sense groups must be compiled before native layout");
 if(P.realization!=="continuous_paper_scan")throw Error("Explicit reading/motion decisions required; replay historical films with their bound execution version");
@@ -154,20 +156,22 @@ for(var j=0;j<titles.length;j++)titles[j].moveToBeginning();overlay("MATERIAL_ID
 // An explicitly source-bound teaser precedes the unchanged original tasks.
 // Anonymous relation geometry is a viewing question, not another English fact.
 function buildAudienceOpening(H){
+ var hookSymbol=null;if(P.symbol_recipes)for(var ri=0;ri<P.symbol_recipes.rows.length;ri++)if(P.symbol_recipes.rows[ri].variant==="hook")hookSymbol=P.symbol_recipes.rows[ri];
  var d=H.decision,ph=H.phases,names=[],symbols=[],align0=ph.surface_align[0],align1=ph.surface_align[1],split1=ph.relation_displace[1],release=ph.match_into_task[0],end=H.end;
  function tag(l,role,source,sourceLayer){l.name="AUDIENCE_HOOK_"+role;l.inPoint=0;l.outPoint=end;l.motionBlur=true;l.comment=JSON.stringify({kind:"audience_opening_native_object",scene:H.scene_id,decision_sha:H.decision_sha,role:role,source_ref:source||null,source_layer_name:sourceLayer?sourceLayer.name:null,not_a_candidate_verdict:true});names.push(l.name);symbols.push(l);return l;}
  function clearKeys(p){while(p.numKeys)p.removeKey(p.numKeys);}
- function anchor(ref,start,col,k){var origin=null,w=worlds[ref.world];if(ref.pointer.indexOf("/options/")===0)origin=w.options[ref.pointer.slice(9)];else for(var i=0;i<w.blocks.length;i++){var row=w.blocks[i];if(row.start<=ref.start&&ref.end<=row.end){origin=row.layer;break;}}if(!origin)throw Error("Hook anchor lost its real native source");var l=origin.duplicate(),st=l.property("Source Text"),doc=st.value;clearKeys(st);doc.text=ref.quote;doc.fontSize=60;doc.leading=79.2;doc.fillColor=col;doc.applyFill=true;doc.applyStroke=false;st.setValue(doc);var anim=l.property("ADBE Text Properties").property("ADBE Text Animators");while(anim.numProperties)anim.property(anim.numProperties).remove();l.parent=null;var props=["ADBE Position","ADBE Scale","ADBE Orientation","ADBE Opacity"];for(var i=0;i<props.length;i++)clearKeys(tr(l,props[i]));tr(l,"ADBE Position").setValue(start);tr(l,"ADBE Scale").setValue([100,100,100]);tr(l,"ADBE Orientation").setValue([0,0,0]);tr(l,"ADBE Opacity").setValue(100);l.moveToBeginning();return tag(l,"ANCHOR_"+k,ref,origin);}
+ function anchor(ref,start,col,k){var origin=null,w=worlds[ref.world];if(ref.pointer.indexOf("/options/")===0)origin=w.options[ref.pointer.slice(9)];else for(var i=0;i<w.blocks.length;i++){var row=w.blocks[i];if(row.start<=ref.start&&ref.end<=row.end){origin=row.layer;break;}}if(!origin)throw Error("Hook anchor lost its real native source");var l=origin.duplicate(),st=l.property("Source Text"),doc=st.value;clearKeys(st);doc.text=ref.quote;doc.fontSize=hookSymbol?hookSymbol.parameters.font.size:60;doc.leading=doc.fontSize*1.32;doc.fillColor=col;doc.applyFill=true;doc.applyStroke=false;st.setValue(doc);var anim=l.property("ADBE Text Properties").property("ADBE Text Animators");while(anim.numProperties)anim.property(anim.numProperties).remove();l.parent=null;var props=["ADBE Position","ADBE Scale","ADBE Orientation","ADBE Opacity"];for(var i=0;i<props.length;i++)clearKeys(tr(l,props[i]));tr(l,"ADBE Position").setValue(start);tr(l,"ADBE Scale").setValue([100,100,100]);tr(l,"ADBE Orientation").setValue([0,0,0]);tr(l,"ADBE Opacity").setValue(100);l.moveToBeginning();return tag(l,"ANCHOR_"+k,ref,origin);}
  function node(name,pos,col){var l=C.layers.addShape();l.threeDLayer=true;var g=l.property("ADBE Root Vectors Group"),circle=g.addProperty("ADBE Vector Shape - Ellipse");circle.property("ADBE Vector Ellipse Size").setValue([18,18]);var stroke=g.addProperty("ADBE Vector Graphic - Stroke");stroke.property("ADBE Vector Stroke Color").setValue(col);stroke.property("ADBE Vector Stroke Width").setValue(2.1);tr(l,"ADBE Position").setValue(pos);return tag(l,name);}
  function pathValue(vertices){var shape=new Shape();shape.vertices=vertices;shape.inTangents=[[0,0],[0,0],[0,0]];shape.outTangents=[[0,0],[0,0],[0,0]];shape.closed=false;return shape;}
  function edge(name,points,col){var l=C.layers.addShape();l.threeDLayer=true;tr(l,"ADBE Position").setValue([0,0,0]);var g=l.property("ADBE Root Vectors Group"),p=g.addProperty("ADBE Vector Shape - Group").property("ADBE Vector Shape"),stroke=g.addProperty("ADBE Vector Graphic - Stroke");stroke.property("ADBE Vector Stroke Color").setValue(col);stroke.property("ADBE Vector Stroke Width").setValue(1.5);p=l.property("ADBE Root Vectors Group").property("ADBE Vector Shape - Group").property("ADBE Vector Shape");p.setValue(pathValue(points));tag(l,name);return {layer:l,path:p};}
  function move(l,a,b,c){ease(tr(l,"ADBE Position"),0,[a[0]-12,a[1]+8,a[2]]);ease(tr(l,"ADBE Position"),Math.min(1.1,align0-.1),a);ease(tr(l,"ADBE Position"),align0,a);ease(tr(l,"ADBE Position"),align1,b);ease(tr(l,"ADBE Position"),split1,c);ease(tr(l,"ADBE Position"),release,c);}
  var ends=[[[370,455,0],[785,455,0]],[[470,490,45],[880,490,45]]],same=[[425,455,0],[850,455,0]],different=[[[425,455,0],[850,455,0]],[[515,500,55],[755,420,55]]];
+ if(hookSymbol){for(var hk=0;hk<2;hk++){same[hk]=cmHookSymbolPose(hookSymbol,same[hk]);for(var hj=0;hj<2;hj++){ends[hk][hj]=cmHookSymbolPose(hookSymbol,ends[hk][hj]);different[hk][hj]=cmHookSymbolPose(hookSymbol,different[hk][hj]);}}}
  for(var k=0;k<2;k++){
-  var col=P.visual_states?(k?[.96,.66,.38]:[.47,.72,.9]):(k?orange:blue),start=k?[580,300,45]:[390,230,-25],word=anchor(d.confusion_trigger.anchor_refs[k],start,col,k);
-  move(word,start,[490,275,0],[490,275,0]);
+  var col=hookSymbol?(k?[163/255,111/255,100/255]:[126/255,150/255,168/255]):P.visual_states?(k?[.96,.66,.38]:[.47,.72,.9]):(k?orange:blue),start=cmHookSymbolPose(hookSymbol,k?[580,300,45]:[390,230,-25]),word=anchor(d.confusion_trigger.anchor_refs[k],start,col,k);
+  move(word,start,cmHookSymbolPose(hookSymbol,[490,275,0]),cmHookSymbolPose(hookSymbol,[490,275,0]));
   for(var j=0;j<2;j++){var nd=node("ROLE_"+k+"_"+j,ends[k][j],col);move(nd,ends[k][j],same[j],different[k][j]);}
-  var p0=[[ends[k][0][0],ends[k][0][1]],[640,440],[ends[k][1][0],ends[k][1][1]]],p1=[[425,455],[640,420],[850,455]],p2=[[different[k][0][0],different[k][0][1]],[640,420],[different[k][1][0],different[k][1][1]]],ed=edge("RELATION_"+k,p0,col);
+  var mid0=cmHookSymbolPose(hookSymbol,[640,440]),mid1=cmHookSymbolPose(hookSymbol,[640,420]),p0=[[ends[k][0][0],ends[k][0][1]],[mid0[0],mid0[1]],[ends[k][1][0],ends[k][1][1]]],p1=[[same[0][0],same[0][1]],[mid1[0],mid1[1]],[same[1][0],same[1][1]]],p2=[[different[k][0][0],different[k][0][1]],[mid1[0],mid1[1]],[different[k][1][0],different[k][1][1]]],ed=edge("RELATION_"+k,p0,col);
   ease(ed.path,align0,pathValue(p0));ease(ed.path,align1,pathValue(p1));ease(ed.path,split1,pathValue(p2));ease(ed.path,release,pathValue(p2));ease(tr(ed.layer,"ADBE Position"),0,[0,0,k?45:0]);ease(tr(ed.layer,"ADBE Position"),align0,[0,0,k?45:0]);ease(tr(ed.layer,"ADBE Position"),align1,[0,0,0]);ease(tr(ed.layer,"ADBE Position"),split1,[0,0,k?55:0]);ease(tr(ed.layer,"ADBE Position"),release,[0,0,k?55:0]);
  }
  // The paper is revealed under the same settled camera; no black or source swap.
@@ -203,17 +207,7 @@ if(P.audience_challenges){
  for(var ci=0;ci<P.audience_challenges.rows.length;ci++){
   var ch=P.audience_challenges.rows[ci],w=worlds[ch.world],a=ch.start,b=ch.end,land=ch.handoff_end;
   if(Math.round((b-a)*24)!==72||Math.abs(land-b-.8)>1e-6)throw Error("Challenge must occupy exactly 72 frames");
-  // Reflow whitespace only. Character offsets and every printed word stay bound
-  // to the complete frozen passage, including material outside the answer block.
-  var exact=P.worlds[ch.world].question.passage,display=exact.replace(/\r\n/g,"  ").replace(/[\r\n]/g," ");
-  var article=text("CHALLENGE_PASSAGE_"+ch.scene,display,w.base+40,132,0,17,760,ink);
-  var td=article.property("Source Text").value;td.leading=20.4;article.property("Source Text").setValue(td);
-  var originalChunks=P.article_chunking.articles[ch.world].chunks,mappedChunks=[];for(var ck=0;ck<originalChunks.length;ck++){var c=originalChunks[ck];mappedChunks.push({id:c.id,start:c.start,end:c.end,text:display.slice(c.start,c.end)});}cmKeepChunks(article,{id:"CHALLENGE_"+ch.scene,start:0,reading_chunks:mappedChunks});
-  article.inPoint=a;article.outPoint=land;
-  article.comment=JSON.stringify({kind:"source_bound_challenge_passage",world:ch.world,question_id:w.question.question_id,source:P.worlds[ch.world].source,exact_text:exact,display_text:display,whitespace_reflow_only:true,start_frame:ch.start_frame,end_frame:ch.end_frame});
-  var box=article.sourceRectAtTime(a,false);if(box.height>448||box.width>762)throw Error("Full challenge passage does not fit; author must repair layout before rendering");
-  ease(tr(article,"ADBE Position"),b,[w.base+40,132,0]);ease(tr(article,"ADBE Position"),land,[w.base-800,132,0]);
-  ease(tr(article,"ADBE Opacity"),b,100);ease(tr(article,"ADBE Opacity"),land,0);
+  var folded=cmChallengeArticle(w,ch);
   var originals=[w.stem];for(var oi=0;oi<4;oi++)originals.push(w.options["ABCD".charAt(oi)]);
   var glyphs=[];
   for(var oi=0;oi<originals.length;oi++){
@@ -232,10 +226,13 @@ if(P.audience_challenges){
   var badge=overlay("CHALLENGE_PAUSE_"+ch.scene,"想先自己做？可暂停",865,143,18,370,muted,a,b);
   badge.comment=JSON.stringify({kind:"screen_only_pause_entry",question_id:w.question.question_id,start_frame:ch.start_frame,end_frame:ch.end_frame,spoken:false});
   var material=C.layer("MATERIAL_IDENTITY");if(ci===0&&material){hold(tr(material,"ADBE Opacity"),a,0);hold(tr(material,"ADBE Opacity"),land,100);}
-  audit.audience_challenges.push({scene_id:ch.scene,world:ch.world,question_id:w.question.question_id,start:a,end:b,start_frame:ch.start_frame,end_frame:ch.end_frame,frames:72,article_layer:article.name,article_height:box.height,article_width:box.width,original_glyphs:glyphs,badge_layer:badge.name,handoff_end:land,voice_policy:"existing_complete_take_continues",normal_speed_review:"UNOBSERVED",mobile_legibility:"UNOBSERVED"});
+  audit.audience_challenges.push({scene_id:ch.scene,world:ch.world,question_id:w.question.question_id,start:a,end:b,start_frame:ch.start_frame,end_frame:ch.end_frame,frames:72,article_layers:folded.article_layers,article_chunks:folded.chunks,article_height:folded.height,article_width:folded.width,source_identity:folded.source_identity,original_glyphs:glyphs,badge_layer:badge.name,handoff_end:land,voice_policy:"existing_complete_take_continues",normal_speed_review:"UNOBSERVED",mobile_legibility:"UNOBSERVED"});
  }
 }
 /* FIRST_PERSON_CHALLENGE_V1_END */
+/* COGNITIVE_SYMBOL_LIBRARY_V1_BEGIN */
+if(P.symbol_recipes){audit.symbol_recipes=[];for(var ri=0;ri<P.symbol_recipes.rows.length;ri++)audit.symbol_recipes.push(cmBuildSymbolRecipe(P.symbol_recipes.rows[ri]));}
+/* COGNITIVE_SYMBOL_LIBRARY_V1_END */
 /* READING_THINKING_STATE_V1_BEGIN */
 if(P.visual_states){
  var windows=P.visual_states.thinking_windows,stateCode='function q(x){x=Math.max(0,Math.min(1,x));return x*x*x*(x*(6*x-15)+10);}var w=0;';
@@ -256,7 +253,7 @@ if(P.visual_states){
   if(!st||l.name.indexOf("AUDIENCE_HOOK_")===0)continue;
   var original=false;for(var j=0;j<reality.length;j++)if(l.id===reality[j].id)original=true;if(original)continue;
   var screen=l.name.indexOf("CAPTION_")===0||l.name.indexOf("TASK_TITLE_")===0;
-  var foreground=l.name.indexOf("EXTRACT_")===0||l.name.indexOf("CANDIDATE_FLIGHT_")===0||l.name.indexOf("REPLAY_")===0;
+  var foreground=l.name.indexOf("EXTRACT_")===0||l.name.indexOf("CANDIDATE_FLIGHT_")===0||l.name.indexOf("REPLAY_")===0||l.name.indexOf("SYMBOL_GLYPH_")===0;
   if(!screen&&!foreground)continue;
   var code=screen?screenCode:stateCode,animators=l.property("ADBE Text Properties").property("ADBE Text Animators");
   for(var j=1;j<=animators.numProperties;j++){var props=animators.property(j).property("ADBE Text Animator Properties"),fill=props.property("ADBE Text Fill Color");if(fill&&fill.canSetExpression){var bright=fill.value[0]>.5?[.96,.66,.38]:[.47,.72,.9];fill.expression=code+'linear(w,0,1,value,'+JSON.stringify(bright)+');';}}

@@ -58,5 +58,7 @@ Use highlight_then_extract after necessary sense-group reading; do not restore
 mechanical independent slow replays. Replay omission still requires its bound
 user decision and complete first-pass evidence. Preserve legacy inputs and the
 shared reading/camera/source/host protections. Follow the current workflow for
-scope: the present request is implementation/documentation/push only, with no
-new Adobe execution or film delivery; actual-media review remains unverified.
+scope: the 2026-10-20 request was implementation/documentation/push only.
+The new 2026-10-21 VIDEO_EXPERIENCE_UPGRADE_V1 explicitly authorizes a new
+same-version native film, Recipe previews and Bilibili packaging candidates.
+Creative packaging choices, actual sensory review and release remain separate.

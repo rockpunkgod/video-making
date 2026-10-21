@@ -1,0 +1,18 @@
+{
+  "recipe_id": "semantic_isomorphism",
+  "symbol_id": "cognitive.semantic_isomorphism.v1",
+  "authority": "visual_metaphor_only",
+  "consumer": "ae/rigs/cognitive-symbols.jsx",
+  "relation_types": ["same_price_relation"],
+  "lesson_roles": ["subject", "referent", "source_relation", "candidate_relation"],
+  "phases": ["carry_relations", "structural_align", "precise_lock", "hold"],
+  "semantic_scope": "Display an upstream-verified comparison with the same subject, comparator and price dimension. Geometry never establishes synonymy.",
+  "object_rule": "Source-exact glyph ranges retain original native source IDs throughout continuous carry; option identity and complete source context remain bound.",
+  "curve": "smoothstep",
+  "timing": {"minimum_seconds": 3, "maximum_travel_seconds": 1.35, "settle_frames": 6, "minimum_still_reading_seconds": 1},
+  "structure_color": {"aligned_relation": "#7E96A8", "contrast_relation": "#A36F64"},
+  "forbidden": ["invented_semantic_relation", "comparator_substitution", "opaque_text_card", "glyph_respawn", "bounce", "overshoot", "neon", "red_cross", "green_tick", "font_shrink_on_overflow"],
+  "native_metric_check": "REQUIRED_BEFORE_RENDER",
+  "dynamic_preview": "REQUIRES_ACTUAL_NATIVE_PRODUCTION_RECEIPT",
+  "artistic_review": "PENDING"
+}

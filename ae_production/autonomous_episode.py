@@ -79,7 +79,7 @@ def request_author(folder,brief):
         'requirements':['Read the complete frozen articles, current workflow and source-bound projections.',
         'Actually compare eligible candidates; never solve or relabel an old frozen package.',
         'Produce AV_AUTHOR decisions consumed by the current dispatch; use one scene order and clock.',
-        'Point-of-use method name; quick/brief/focus; one useful local replay; complete candidate checks.',
+        'Point-of-use method name; quick/brief/focus; complete candidate checks; replay follows the explicit current user policy. FIRST_PERSON_CHALLENGE uses the complete first pass without an independent slow replay.',
         'Read the knowledge inputs and bind specific design choices; hypotheses are not learning results.',
         'Missing language decisions are a language-author job, never a user approval stop.',
         'Consume the exact external Audience Hook decision; never invent a Hook or self-approve creative choices.',

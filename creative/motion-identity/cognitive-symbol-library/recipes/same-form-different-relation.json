@@ -1,0 +1,20 @@
+{
+  "recipe_id": "same_form_different_relation",
+  "symbol_id": "cognitive.same_form_different_relation.v1",
+  "authority": "visual_metaphor_only",
+  "consumer": "ae/rigs/cognitive-symbols.jsx",
+  "relation_types": ["different_action_role", "anonymous_relation_conflict"],
+  "lesson_roles": ["source_noun", "candidate_noun", "source_action", "candidate_action"],
+  "hook_roles": ["source_noun", "candidate_noun"],
+  "phases": ["surface_align", "relation_displace", "precise_lock", "hold"],
+  "hook_phases": ["surface_align", "relation_displace", "unresolved_hold", "match_into_task"],
+  "semantic_scope": "Keep the identical source-bound noun stable while exposing actual upstream-verified action/role differences. Hook uses anonymous structure only and cannot expose real actions or a verdict.",
+  "object_rule": "Both noun identities persist at a shared exact anchor; source/action glyphs retain their own original source IDs. Masks never convert the text into opaque cards.",
+  "curve": "smoothstep",
+  "timing": {"minimum_seconds": 3, "maximum_travel_seconds": 1.35, "settle_frames": 6, "minimum_still_reading_seconds": 1},
+  "structure_color": {"aligned_relation": "#7E96A8", "contrast_relation": "#A36F64"},
+  "forbidden": ["hook_answer_leak", "hook_action_role_labels", "arbitrary_font_difference", "decorative_relation_difference", "opaque_text_card", "glyph_respawn", "bounce", "overshoot", "neon", "red_cross", "green_tick", "font_shrink_on_overflow"],
+  "native_metric_check": "REQUIRED_BEFORE_RENDER",
+  "dynamic_preview": "REQUIRES_ACTUAL_NATIVE_PRODUCTION_RECEIPT",
+  "artistic_review": "PENDING"
+}

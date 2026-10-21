@@ -1,10 +1,10 @@
 {
   "index_version": "1.0",
   "kind": "documentation_capability_index",
-  "as_of": "2026-10-20",
-  "repository_base": "9e75f795bfc650c6fe1f71abde97e9d9ad7edf3b",
+  "as_of": "2026-10-21",
+  "repository_base": "b0e3118c45f1836bd1cb9bcee97e27d2a0a5f262",
   "recommended_workflow": "docs/workflows/CURRENT_PRODUCTION_WORKFLOW.md",
-  "scope": "Current authored dispatch actually consumed AudienceHook, exact user-reviewed26 complete narration takes, source-bound exam/article credits,139 sense groups, teaching focus, native3D and transparent source extraction. Latest user instruction preserves the original Reading presentation and adds ThinkingState only. Current audience-hook-v1-r09 has a complete307.5416667s/7381-frame4K24 same-version film, native AE and Premiere edits, full decode/voice integrity checks,83 actual final encoded static samples independently reviewed and both hosts restored. Historical36 entries retain version-specific meanings. Normal-speed motion and actual listening remain UNOBSERVED; final human film acceptance pending, no public release. FIRST_PERSON_CHALLENGE_V1 is now an authored workflow change: two exact72-frame neutral full-question pause entries, immediate source-glyph extraction, and explicitly authorized omission of SC08. Code and current author/plan were exercised; no new Adobe/native execution or film delivery in this scope.",
+  "scope": "Current authored dispatch actually consumed AudienceHook, exact user-reviewed26 complete narration takes, source-bound exam/article credits,139 sense groups, teaching focus, native3D and transparent source extraction. Latest user instruction preserves the original Reading presentation and adds ThinkingState only. Current audience-hook-v1-r09 has a complete307.5416667s/7381-frame4K24 same-version film, native AE and Premiere edits, full decode/voice integrity checks,83 actual final encoded static samples independently reviewed and both hosts restored. Historical36 entries retain version-specific meanings. Normal-speed motion and actual listening remain UNOBSERVED; final human film acceptance pending, no public release. FIRST_PERSON_CHALLENGE_V1 is now an authored workflow change: two exact72-frame neutral full-question pause entries, immediate source-glyph extraction, and explicitly authorized omission of SC08. Code and current author/plan were exercised; no new Adobe/native execution or film delivery in this scope. VIDEO_EXPERIENCE_UPGRADE_V1 now explicitly authorizes new full production. Current checkpoint: R04 author/plan and both actual AE compositions contain five source-bound Recipe instances and two original-layer72-frame challenges; strict native parameter/source/continuity/Thinking/direct-extraction audits and expression checks passed. Actual4K/640px static samples reviewed, known static defects revised. Full6601-frame native master is rendering, so current full-media binding and perceptual acceptance remain unestablished. Earlier changes-only and completed-film statements retain their historical revision scopes.",
   "historical_archive_index": "G:/VideoMaking/_archive/2026-10-18/ARCHIVE_INDEX.json",
   "historical_path_rule": "Historical paths identify their original location. Entries with archived_evidence map those paths to verified ZIP members; inspect or restore through the archive instructions rather than treating a moved output as a missing production dependency.",
   "not_runtime_contract": true,
@@ -730,6 +730,29 @@
       ],
       "scope": "FIRST_PERSON_CHALLENGE_V1 contract, actual current author/plan compile, native consumer/readback implementation and negative controls; native execution and media perception NOT performed",
       "availability": "TRACKED_CODE_PRIVATE_AUTHOR_PLAN"
+    },
+    "E31": {
+      "paths": [
+        "creative_os/motion_identity.py",
+        "ae/rigs/cognitive-symbols.jsx",
+        "ae/rigs/first-person-challenge.jsx",
+        "ae_production/cognitive_symbol_review.py",
+        "ae_production/challenge_original.py",
+        "local-data/free-showcase/video-experience-upgrade-v1-r01/AV_AUTHOR.json",
+        "local-data/free-showcase/video-experience-upgrade-v1-r01/AV_PLAN.json",
+        "local-data/free-showcase/video-experience-upgrade-v1-r01/BUILD_RECOVERY_RECEIPT.json",
+        "local-data/free-showcase/video-experience-upgrade-v1-r01/ORIGINAL_CHALLENGE_NATIVE_RAW.json",
+        "local-data/free-showcase/video-experience-upgrade-v1-r01/NATIVE_PREVIEW_RECEIPT.json",
+        "local-data/free-showcase/video-experience-upgrade-v1-r04/AV_AUTHOR.json",
+        "local-data/free-showcase/video-experience-upgrade-v1-r04/AV_PLAN.json",
+        "local-data/free-showcase/video-experience-upgrade-v1-r04/SYMBOL_NATIVE_READBACK.json",
+        "local-data/free-showcase/video-experience-upgrade-v1-r04/CHALLENGE_NATIVE_READBACK.json",
+        "local-data/free-showcase/video-experience-upgrade-v1-r04/DIRECT_EXTRACTION_NATIVE_READBACK.json",
+        "local-data/free-showcase/video-experience-upgrade-v1-r04/NATIVE_PREVIEW_RECEIPT.json",
+        "local-data/free-showcase/video-experience-upgrade-v1-r04/NATIVE_FEEDBACK_LEDGER.json"
+      ],
+      "scope": "VIDEO_EXPERIENCE_UPGRADE_V1: R04 actual dual-comp Recipe/challenge/source/3D/Thinking audits PASS, static pixel observations revised; full native master rendering, final encoding and perceptual scope not yet established",
+      "availability": "TRACKED_CODE_AND_PRIVATE_VERIFIED_NATIVE_IN_PROGRESS_MEDIA"
     }
   },
   "capabilities": [
@@ -2185,11 +2208,11 @@
         "E30"
       ],
       "known_limits": [
-        "Current scope is changes/documentation/push only; no Adobe execution or film output",
+        "Historical 2026-10-20 checkpoint was changes/documentation/push only, with no Adobe execution. The later VIDEO_EXPERIENCE_UPGRADE_V1 request authorizes full production; see E31 for in-progress native execution and failed spatial QA.",
         "72-frame actual pixel coverage, mobile readability, continuous motion and listening remain UNOBSERVED",
         "Legacy authors remain compatible; no new independent Pause/Hook/director engine"
       ],
-      "human_approval_scope": "Workflow change authorized; new film, perception and recombined copy not approved",
+      "human_approval_scope": "Workflow and later full production authorized; final film, perception and recombined copy remain separately reviewed",
       "availability": "TRACKED_CODE_PRIVATE_AUTHOR_PLAN",
       "scope": "Existing Audience/Student POV/direction authoring responsibilities on the current authored route; not a claim that all standalone historical compilers ran",
       "dimensions": {
@@ -2200,7 +2223,7 @@
         "HUMAN_APPROVED": "WORKFLOW_DECISION_ONLY",
         "RELEASE_APPROVED": "NOT_ESTABLISHED"
       },
-      "recommended_action": "Retain latest changes-only scope; use actual same-version media before any perceptual acceptance claim"
+      "recommended_action": "Use E31 and current indexed receipts for the upgrade; retain the E30 dimensions as their historical implementation checkpoint, never as completed current media verification"
     }
   ],
   "current_authored_runtime": {
@@ -2243,15 +2266,49 @@
     "first_person_challenge": {
       "contract": "AV_AUTHOR.audience_challenges / FIRST_PERSON_CHALLENGE_V1",
       "evidence_refs": [
-        "E30"
+        "E30",
+        "E31"
       ],
-      "status": "CODE_AND_AUTHOR_PLAN_ONLY",
-      "current_scope": "CHANGES_DOCUMENTATION_AND_GIT_PUSH_NO_FILM",
-      "native_execution": "NOT_EXECUTED",
+      "status": "R04_DUAL_COMP_NATIVE_PARAMETER_PASS_FULL_MEDIA_RENDERING",
+      "current_scope": "NEW_FULL_PRODUCTION_AUTHORIZED_VIDEO_EXPERIENCE_UPGRADE_V1",
+      "native_execution": "R04_DUAL_COMP_PARAMETER_AUDIT_PASS",
       "normal_speed_review": "UNOBSERVED",
-      "mobile_legibility": "UNOBSERVED",
+      "mobile_legibility": "640PX_STATIC_SAMPLES_CHECKED_FULL_PASSAGE_REQUIRES_PAUSE_ZOOM",
       "listening_review": "UNOBSERVED",
-      "public_render_ready": false
+      "public_render_ready": false,
+      "historical_implementation_checkpoint": {
+        "date": "2026-10-20",
+        "status": "CODE_AND_AUTHOR_PLAN_ONLY",
+        "scope": "CHANGES_DOCUMENTATION_AND_GIT_PUSH_NO_FILM",
+        "native_execution": "NOT_EXECUTED",
+        "evidence_refs": [
+          "E30"
+        ]
+      }
+    },
+    "video_experience_upgrade": {
+      "version": "VIDEO_EXPERIENCE_UPGRADE_V1",
+      "evidence_refs": [
+        "E31"
+      ],
+      "status": "AUTHOR_PLAN_DUAL_COMP_NATIVE_PASS_FULL_MASTER_RENDERING",
+      "native_revision": "video-experience-upgrade-v1-r04",
+      "recipe_instances": [
+        "anonymous Hook",
+        "SC03 price isomorphism",
+        "SC10 role displacement",
+        "SC15 price recall",
+        "SC15 role recall"
+      ],
+      "challenge_identity": "SAME_ORIGINAL_TEXTLAYERS_NO_RECREATION",
+      "engine": "EXISTING_AUTHORED_NATIVE_PATH",
+      "final_media": "RENDERING_NOT_YET_ESTABLISHED",
+      "normal_speed_review": "UNOBSERVED",
+      "listening_review": "UNOBSERVED",
+      "human_film_acceptance": "PENDING",
+      "public_render_ready": false,
+      "status_authority": "Actual indexed same-revision receipts; historical completed films do not authorize current completion",
+      "static_review": "4K_AND_640PX_TARGETED_SAMPLES_CHECKED"
     }
   }
 }

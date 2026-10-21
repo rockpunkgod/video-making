@@ -58,3 +58,20 @@ class NativeVisualStates(unittest.TestCase):
         rows[1]['paper']=[242/255,240/255,234/255]
         with self.assertRaisesRegex(ValueError,'palette'):
             validate_visual_state_readback(p,n,rows)
+
+    def test_recap_requires_all_actual_same_scene_recipe_glyphs(self):
+        p,n,rows=self.fixture();name='SYMBOL_GLYPH_recall_price_subject'
+        p['symbol_recipes']={'rows':[{'symbol_id':'recall_price','scene_id':'SC01','start':2,'end':4}]}
+        n['audit']['symbol_recipes']=[{'symbol_id':'recall_price','glyphs':[{'name':name}]}]
+        n['audit']['visual_states']['foreground_layers']=[name]
+        for comp in rows:
+            comp['foreground_inventory'][0]['name']=name
+            for sample in comp['rows']:sample['foreground'][0]['name']=name
+        self.assertEqual(validate_visual_state_readback(p,n,rows)['normal_speed_review'],'UNOBSERVED')
+        for bad in ('wrong_scene','inactive_recipe','missing_actual_glyph'):
+            altered=deepcopy(p);native=deepcopy(n)
+            if bad=='wrong_scene':altered['symbol_recipes']['rows'][0]['scene_id']='SC02'
+            if bad=='inactive_recipe':altered['symbol_recipes']['rows'][0]['end']=2.5
+            if bad=='missing_actual_glyph':native['audit']['symbol_recipes'][0]['glyphs'].append({'name':'SYMBOL_GLYPH_missing'})
+            with self.subTest(bad=bad),self.assertRaisesRegex(ValueError,'foreground'):
+                validate_visual_state_readback(altered,native,rows)

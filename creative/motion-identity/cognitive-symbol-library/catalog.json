@@ -1,0 +1,14 @@
+{
+  "contract_version": "COGNITIVE_SYMBOL_LIBRARY_V1",
+  "authority": "visual_metaphor_only",
+  "owner": "MOTION_IDENTITY",
+  "recipes": {
+    "semantic_isomorphism": "recipes/semantic-isomorphism.json",
+    "same_form_different_relation": "recipes/same-form-different-relation.json"
+  },
+  "consumer": "ae/rigs/cognitive-symbols.jsx",
+  "preview_policy": "Only actual native rendered media can populate a production preview receipt; repository diagrams are not dynamic previews.",
+  "human_artistic_review": "PENDING",
+  "learning_effect": "UNMEASURED",
+  "public_render_ready": false
+}

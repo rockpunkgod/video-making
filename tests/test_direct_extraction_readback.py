@@ -10,6 +10,17 @@ from tests import test_direct_extraction as fixtures
 
 
 class DirectExtractionReadback(unittest.TestCase):
+    def test_actual_native_opaque_rgba_and_legacy_rgb_remain_strict(self):
+        p,n,rows=self.fixture()
+        for row in rows:
+            for hit in row['hits']:
+                for prefix in ('source','clone'):hit[prefix+'_fill'].append(1)
+        self.assertEqual(validate_direct_extraction(p,n,rows)['status'],'PASS')
+        for alpha in (0,.5,float('nan'),True):
+            altered=deepcopy(rows);altered[0]['hits'][0]['source_fill'][3]=alpha
+            with self.subTest(alpha=alpha),self.assertRaises(ValueError):
+                validate_direct_extraction(p,n,altered)
+
     def fixture(self, two_blocks=False):
         p,n,rows=fixtures.DirectExtractionTests().fixture()
         if two_blocks:

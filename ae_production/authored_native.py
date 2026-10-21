@@ -26,6 +26,8 @@ from premiere_production.lossless_handoff import packet_binding
 
 TEMPLATE=ROOT/'ae/templates/authored-episode.jsx'
 READING_RIG=ROOT/'ae/rigs/reading-focus.jsx'
+CHALLENGE_RIG=ROOT/'ae/rigs/first-person-challenge.jsx'
+SYMBOL_RIG=ROOT/'ae/rigs/cognitive-symbols.jsx'
 
 
 def template_source():
@@ -33,7 +35,11 @@ def template_source():
     source=TEMPLATE.read_text('utf-8')
     if source.count('/* SHARED_READING_RIG */')!=1:
         raise ValueError('Production template must consume the shared reading rig exactly once')
-    return source.replace('/* SHARED_READING_RIG */',READING_RIG.read_text('utf-8'))
+    source=source.replace('/* SHARED_READING_RIG */',READING_RIG.read_text('utf-8'))
+    for marker,path in [('/* SHARED_CHALLENGE_RIG */',CHALLENGE_RIG),('/* SHARED_COGNITIVE_SYMBOL_RIG */',SYMBOL_RIG)]:
+        if source.count(marker)!=1:raise ValueError('Shared native rig must have one consumer: '+str(path))
+        source=source.replace(marker,path.read_text('utf-8'))
+    return source
 
 
 def preserve_native_sources(folder,native=None):
@@ -44,7 +50,10 @@ def preserve_native_sources(folder,native=None):
     """
     n=native or read(folder/'native-identity.json');directory=folder/'native-source';directory.mkdir(exist_ok=True)
     binding={}
-    for key,source,digest in [('template',TEMPLATE,n['template_sha256']),('reading_rig',READING_RIG,n['reading_rig_sha256'])]:
+    sources=[('template',TEMPLATE,n['template_sha256']),('reading_rig',READING_RIG,n['reading_rig_sha256'])]
+    for key,path in [('challenge_rig',CHALLENGE_RIG),('symbol_rig',SYMBOL_RIG)]:
+        if key+'_sha256' in n:sources.append((key,path,n[key+'_sha256']))
+    for key,source,digest in sources:
         target=directory/source.name
         if not target.exists():
             if sha256(source)!=digest:raise ValueError('Cannot invent a historical native source snapshot')
@@ -112,6 +121,9 @@ def plan(folder):
     if 'audience_challenges' in a:
         from creative_os.audience_engagement import validate_compiled_challenges
         validate_compiled_challenges(p.get('audience_challenges'),a,bundles,p,p['worlds'],folder)
+    if 'cognitive_symbols' in a:
+        from creative_os.motion_identity import validate_compiled_symbols
+        validate_compiled_symbols(p.get('symbol_recipes'),a,bundles,p,p['worlds'],folder)
     if p.get('source_attribution')!=a.get('source_attribution'):
         raise ValueError('Paper/article attribution was changed or bypassed')
     if 'visual_states' in a:
@@ -214,7 +226,7 @@ def build(folder):
     code=template_source().replace('PLAN_PATH',json.dumps((folder/'AV_PLAN.json').as_posix())).replace('PROJECT_PATH',json.dumps(h.project.as_posix())).replace('PLAN_SHA',json.dumps(sha256(folder/'AV_PLAN.json'))).replace('BUILD_RECEIPT_PATH',json.dumps((folder/'BUILD_BEFORE_SAVE.json').as_posix()))
     write(folder/'SESSION_BEFORE.json',{'identity':before,'sha256':sha256(before['project_path']) if before['project_path'] else None})
     r=h.mutation_js(code,'Build current authored main film',after=lambda r:{'process_id':h.pid,'project_path':str(h.project.resolve()),'target_id':'comp:'+str(r['comp_id'])})
-    r.update(plan_sha256=sha256(folder/'AV_PLAN.json'),template_sha256=sha256(TEMPLATE),reading_rig_sha256=sha256(READING_RIG))
+    r.update(plan_sha256=sha256(folder/'AV_PLAN.json'),template_sha256=sha256(TEMPLATE),reading_rig_sha256=sha256(READING_RIG),challenge_rig_sha256=sha256(CHALLENGE_RIG),symbol_rig_sha256=sha256(SYMBOL_RIG))
     write(folder/'native-identity.json',r)
     preserve_native_sources(folder,r)
     return {k:r[k] for k in ('comp_id','master_comp_id','duration','frames','layers','media_role')}
@@ -222,14 +234,25 @@ def build(folder):
 
 def current_native(folder):
     a,p=plan(folder);n=read(folder/'native-identity.json')
-    template_digest=sha256(TEMPLATE);rig_digest=sha256(READING_RIG)
+    consumers={'template':TEMPLATE,'reading_rig':READING_RIG}
+    optional={'challenge_rig':CHALLENGE_RIG,'symbol_rig':SYMBOL_RIG}
+    consumers.update({key:path for key,path in optional.items() if key+'_sha256' in n})
     if (folder/'NATIVE_SOURCES.json').exists():
         source=read(folder/'NATIVE_SOURCES.json')
+        if not isinstance(source,dict) or any(key not in source for key in consumers):
+            raise ValueError('Recorded native consumer is missing its source snapshot')
+        if any(key in source and key+'_sha256' not in n for key in optional):
+            raise ValueError('Native consumer snapshot has no matching saved identity')
         for row in source.values():
+            if not isinstance(row,dict) or not isinstance(row.get('path'),str) or not isinstance(row.get('sha256'),str):
+                raise ValueError('Native source snapshot binding is incomplete')
             path=(folder/row['path']).resolve()
-            if not path.is_relative_to(folder.resolve()) or sha256(path)!=row['sha256']:raise ValueError('Native source snapshot changed')
-        template_digest=source['template']['sha256'];rig_digest=source['reading_rig']['sha256']
-    if n['plan_sha256']!=sha256(folder/'AV_PLAN.json') or n['template_sha256']!=template_digest or n.get('reading_rig_sha256')!=rig_digest:
+            if not path.is_relative_to(folder.resolve()) or not path.is_file() or sha256(path)!=row['sha256']:
+                raise ValueError('Native source snapshot changed')
+        digests={key:source[key]['sha256'] for key in consumers}
+    else:
+        digests={key:sha256(path) for key,path in consumers.items()}
+    if n['plan_sha256']!=sha256(folder/'AV_PLAN.json') or any(n.get(key+'_sha256')!=digest for key,digest in digests.items()):
         raise ValueError('Native picture is stale after author or realization changes')
     return a,p,n
 
@@ -402,7 +425,14 @@ def validate_visual_state_readback(p,n,rows):
             if len(sample['foreground'])!=len(active) or {l['name'] for l in sample['foreground']}!=active:
                 raise ValueError('Complete active native foreground sample inventory required')
             if thinking and not any(name.startswith('EXTRACT_'+sample['scene']+'_') for name in active):
-                raise ValueError('Thinking State lost its actual source-extracted foreground')
+                # Recap consumes the same verified original glyph ranges via
+                # the Recipe rig; it has no independent EXTRACT scene group.
+                recipe_ids={s['symbol_id'] for s in p.get('symbol_recipes',{}).get('rows',[])
+                            if s['scene_id']==sample['scene'] and s['start']<=sample['time']<s['end']}
+                carried={g['name'] for s in n['audit'].get('symbol_recipes',[])
+                         if s['symbol_id'] in recipe_ids for g in s.get('glyphs',[])}
+                if not carried or not carried<=active:
+                    raise ValueError('Thinking State lost its actual source-extracted foreground')
             if abs(sample['environment']-target)>.01:raise ValueError('Native environment obscures reading or misses thinking')
             for layer in sample['reality']:
                 if (any(layer['errors']) or abs(layer['dim']-target)>.01
@@ -461,6 +491,9 @@ def validate_challenge_native(p,rows,comp_ids):
 
 
 def challenge_native_readback(h,p,n):
+    if any(r.get('source_identity')=='SAME_ORIGINAL_TEXTLAYERS_NO_RECREATION' for r in n['audit'].get('audience_challenges',[])):
+        from ae_production.challenge_original import original_challenge_readback
+        return original_challenge_readback(h,p,n)
     ids=[n['comp_id'],n['master_comp_id']]
     code=r"""var ids=__IDS__,challenges=__CH__,rows=[];for(var ci=0;ci<ids.length;ci++){var c=app.project.itemByID(ids[ci]);for(var hi=0;hi<challenges.length;hi++){var ch=challenges[hi],article=c.layer('CHALLENGE_PASSAGE_'+ch.scene),badge=c.layer('CHALLENGE_PAUSE_'+ch.scene),rect=article.sourceRectAtTime(ch.start,false),samples=[];for(var f=ch.start_frame;f<ch.end_frame;f++){var t=f/24,glyphs=[];for(var gi=0;gi<5;gi++){var l=c.layer(ch.world+(gi?'_OPTION_'+'ABCD'.charAt(gi-1):'_QUESTION')),doc=l.property('Source Text').valueAtTime(t,false),colors=[];for(var k=0;k<doc.text.length;k++)colors.push(doc.characterRange(k,k+1).fillColor);glyphs.push({text:doc.text,opacity:l.transform.opacity.valueAtTime(t,false),position:l.transform.position.valueAtTime(t,false),scale:l.transform.scale.valueAtTime(t,false),animators:l.property('ADBE Text Properties').property('ADBE Text Animators').numProperties,colors:colors,enabled:l.enabled,guide:l.guideLayer});}samples.push({frame:f,article_opacity:article.transform.opacity.valueAtTime(t,false),badge_opacity:badge.transform.opacity.valueAtTime(t,false),article_position:article.transform.position.valueAtTime(t,false),article_scale:article.transform.scale.valueAtTime(t,false),camera_position:c.layer('READING_CAMERA').transform.position.valueAtTime(t,false),camera_target:c.layer('READING_CAMERA').transform.pointOfInterest.valueAtTime(t,false),aperture:c.layer('READING_CAMERA').property('ADBE Camera Options Group').property('ADBE Camera Aperture').valueAtTime(t,false),glyphs:glyphs});}rows.push({comp_id:c.id,scene:ch.scene,article_text:article.property('Source Text').value.text,article_comment:JSON.parse(article.comment),article_enabled:article.enabled,article_guide:article.guideLayer,article_in:article.inPoint,article_out:article.outPoint,article_threeD:article.threeDLayer,article_height:rect.height,article_width:rect.width,badge_text:badge.property('Source Text').value.text,badge_in:badge.inPoint,badge_out:badge.outPoint,badge_spoken:JSON.parse(badge.comment).spoken,badge_enabled:badge.enabled,badge_guide:badge.guideLayer,samples:samples});}}return rows;"""
     observed=h.js(code.replace('__IDS__',json.dumps(ids)).replace('__CH__',json.dumps(p['audience_challenges']['rows'],ensure_ascii=False)))
@@ -677,6 +710,21 @@ def validate_native_replay_inventory(author,p,build_audit,layers):
             'human_approved':False,'public_render_ready':False}
 
 
+def expected_camera_events(build_audit):
+    """Challenge folding replaces only the interior task-camera keys it owns.
+
+    The builder retains its initial direction history, then removes those keys
+    before writing the challenge's fixed camera and continuous handoff. Mirror
+    that precise removal here; every surviving native key must still match.
+    """
+    windows=build_audit.get('audience_challenges',[])
+    return {round(x['time'],6):x for x in build_audit['camera']
+            if not any(w['start']<x['time']<w['handoff_end']
+                       and not (abs(x['time']-w['end'])<1e-6
+                                and x.get('aperture')==0)
+                       for w in windows)}
+
+
 def audit(folder):
     a,p,n=current_native(folder);h=Host(folder,'after_effects')
     code="var c=app.project.itemByID(CID),rows=[];for(var i=1;i<=c.numLayers;i++){var l=c.layer(i),r={name:l.name,id:l.id,inPoint:l.inPoint,outPoint:l.outPoint,threeD:l.threeDLayer,parent:l.parent?l.parent.id:null,comment:l.comment};if(l instanceof TextLayer){r.text=l.property('Source Text').value.text;r.font=l.property('Source Text').value.font;if(l.name.indexOf('-source-')>=0&&l.name.indexOf('EXTRACT_')!==0){var initial=l.property('Source Text').valueAtTime(0,false);r.initial_color=initial.characterRange(0,initial.text.length).fillColor||null;r.text_height=l.sourceRectAtTime(0,false).height;}}if(l instanceof CameraLayer||l.name.indexOf('SOURCE_LIFT_')===0||l.name.indexOf('CANDIDATE_FLIGHT_')===0||l.name.indexOf('-source-')>=0){r.position=[];r.orientation=[];var pos=l.transform.position;r.position_value=pos.value;r.scale=[];var sp=l.transform.scale;if(sp)for(var sk=1;sk<=sp.numKeys;sk++)r.scale.push([sp.keyTime(sk),sp.keyValue(sk)]);for(var j=1;j<=pos.numKeys;j++)r.position.push([pos.keyTime(j),pos.keyValue(j)]);if(!(l instanceof CameraLayer)){var ori=l.transform.orientation;for(var j=1;j<=ori.numKeys;j++)r.orientation.push([ori.keyTime(j),ori.keyValue(j)]);}}rows.push(r);}return {project:app.project.file.fsName,width:c.width,height:c.height,duration:c.duration,fps:c.frameRate,layers:rows};".replace('CID',str(n['comp_id']))
@@ -783,7 +831,7 @@ var out=[];for(var ci=0;ci<ids.length;ci++){var c=app.project.itemByID(ids[ci]);
     if p.get('realization')=='continuous_paper_scan':
         # Read real native keys/focus, not just the authored camera receipt.
         camera=h.js('var c=app.project.itemByID('+str(n['comp_id'])+'),l=c.layer("READING_CAMERA"),o=l.property("ADBE Camera Options Group"),f=c.layer("READING_FOCUS"),rows=[];for(var k=1;k<=l.transform.position.numKeys;k++){var t=l.transform.position.keyTime(k);rows.push({time:t,position:l.transform.position.keyValue(k),look:l.transform.pointOfInterest.valueAtTime(t,false),focus:f.transform.position.valueAtTime(t,false),aperture:o.property("ADBE Camera Aperture").valueAtTime(t,false)});}return {dof:o.property("ADBE Camera Depth of Field").value,focus_expression:o.property("ADBE Camera Focus Distance").expression,keys:rows};')
-        expected={round(x['time'],6):x for x in n['audit']['camera']}
+        expected=expected_camera_events(n['audit'])
         close=lambda a,b:len(a)==len(b) and all(abs(x-y)<.002 for x,y in zip(a,b))
         if not camera['dof'] or 'READING_FOCUS' not in camera['focus_expression']:raise ValueError('Source reading lost its native focus consumer')
         for row in camera['keys']:
@@ -857,6 +905,10 @@ var out=[];for(var ci=0;ci<ids.length;ci++){var c=app.project.itemByID(ids[ci]);
     if 'audience_challenges' in p:
         r['audience_challenges']=challenge_native_readback(h,p,n)
         write(folder/'CHALLENGE_NATIVE_READBACK.json',r['audience_challenges'])
+    if 'symbol_recipes' in p:
+        from ae_production.cognitive_symbol_review import symbol_native_readback
+        r['symbol_recipes']=symbol_native_readback(h,p,n)
+        write(folder/'SYMBOL_NATIVE_READBACK.json',r['symbol_recipes'])
     if 'visual_states' in p:
         r['visual_states']=visual_state_readback(h,p,n)
         write(folder/'READING_THINKING_NATIVE_READBACK.json',r['visual_states'])

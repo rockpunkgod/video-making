@@ -20,6 +20,14 @@ def _identity(value):
     return isinstance(value,int) and not isinstance(value,bool) and value>0
 
 
+def _color(actual, expected):
+    # Native AE COLOR properties include an opaque fourth channel; old saved
+    # readbacks contain RGB. Retain strict RGB and opacity requirements.
+    return (isinstance(actual,list) and len(actual) in (3,4)
+            and _vector(actual[:3],expected,.002)
+            and (len(actual)==3 or _close(actual[3],1,1e-6)))
+
+
 def _scope(plan, native):
     scenes=[s for s in plan['scenes'] if s.get('extraction_policy')=='highlight_then_extract'
             and s.get('motion_treatment')!='in_place_check']
@@ -146,7 +154,7 @@ def validate_direct_extraction(plan, native, rows):
                         or not _close(hit[prefix+'_peak'],100,.01)
                         or not _vector(hit[prefix+'_samples'],[0,50,100,100],.01)
                         or hit[prefix+'_expression_error'] or hit[prefix+'_fill_error']
-                        or not _vector(hit[prefix+'_fill'],ORANGE,.002)
+                        or not _color(hit[prefix+'_fill'],ORANGE)
                         or not _close(hit[prefix+'_opacity'],0 if prefix=='source' else 100,.01)):
                     raise ValueError('Native keyword range, highlight color or visible handoff changed')
     return {'status':'PASS','policy':'highlight_then_extract','readbacks':rows,
@@ -182,4 +190,8 @@ for(var ci=0;ci<ids.length;ci++){var c=app.project.itemByID(ids[ci]);
   out.push({comp_id:c.id,scene:s.scene,group_id:g.id,in_point:g.inPoint,out_point:g.outPoint,enabled:g.enabled,guide:g.guideLayer,three_d:g.threeDLayer,position:transform(g,"ADBE Position").valueAtTime(s.time,false),expected_origin:s.origin,source_opacity:inventory[inventory.length-1].source_opacity,clone_opacity:inventory[inventory.length-1].clone_opacity,blocks:inventory,clone_names:orderedNames,hits:hits});
  }
 }return out;'''
-    return validate_direct_extraction(plan,native,host.js(code))
+    observed=host.js(code)
+    if hasattr(host,'folder'):
+        from video_contracts import write
+        write(host.folder/'DIRECT_EXTRACTION_NATIVE_RAW.json',{'status':'RAW_NOT_VALIDATED','rows':observed})
+    return validate_direct_extraction(plan,native,observed)

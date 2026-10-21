@@ -150,6 +150,30 @@ class NativeHostRestartTests(unittest.TestCase):
         self.assertEqual(len(count), 3); self.assertEqual(launch.call_count, 1)
         self.assertEqual(len(self.open_calls), 1); self.assertEqual(len(self.shutdown_calls), 1)
 
+    def test_missing_panel_gets_one_activation_on_exact_new_host_then_verified_open(self):
+        calls=[]
+        def factory(*args):
+            calls.append(1)
+            if len(calls)==1:raise RuntimeError('Expected one running AE instance for the observed host PID')
+            return self.fresh
+        constructor,launch,_,process=self.environment(factory=factory)
+        process.side_effect=[{'Id':123,'Path':str(self.executable)},
+                             {'Id':456,'Path':str(self.executable),'MainWindowHandle':457}]
+        with patch.object(restart,'activate_observed_panel',return_value={'project_write':False}) as panel:
+            self.assertIs(restart.restart_saved_host(self.old,0),self.fresh)
+        panel.assert_called_once_with({'Id':456,'Path':str(self.executable),'MainWindowHandle':457},self.executable)
+        self.assertEqual(launch.call_count,1);self.assertEqual(len(self.open_calls),1)
+        self.assertEqual(constructor.call_count,2)
+        self.assertFalse(read(next(self.folder.glob('HOST_RESTART_*.json')))['panel_activation']['project_write'])
+
+    def test_panel_failure_never_relaunches_or_repeats_project_open(self):
+        _,launch,_,process=self.environment(factory=lambda *args:(_ for _ in ()).throw(RuntimeError('Bridge unavailable')))
+        process.side_effect=[{'Id':123,'Path':str(self.executable)},
+                             {'Id':456,'Path':str(self.executable),'MainWindowHandle':457}]
+        with patch.object(restart,'activate_observed_panel',side_effect=RuntimeError('modal dialog')) as panel:
+            with self.assertRaisesRegex(RuntimeError,'modal dialog'):restart.restart_saved_host(self.old,0)
+        self.assertEqual(panel.call_count,1);self.assertEqual(launch.call_count,1);self.assertEqual(self.open_calls,[])
+
     def test_save_checkpoint_change_aborts_before_new_project_open(self):
         def changed_during_shutdown(code, label=None, timeout=600):
             self.shutdown_calls.append(code); self.project.write_bytes(b'CHANGED saved checkpoint')

@@ -10,6 +10,19 @@
 
 当前入口：[CURRENT_PRODUCTION_WORKFLOW](CURRENT_PRODUCTION_WORKFLOW.md)。原始审计基于 `d9fa2da`；本矩阵增补其后 B06 r3 的限定制作能力，研究/Cinema 的 LOCAL_UNMERGED 增量仍不属于已提交能力。E01–E20 对应原始审计报告，后续 E21 对应独立 B06 制作凭证；逐项六维状态、证据路径与可用性见[能力索引](PRODUCTION_CAPABILITY_INDEX.json)。下面每条卡片的“有权/禁止”界定职责，不授予额外操作权限。
 
+## VIDEO_EXPERIENCE_UPGRADE_V1 · 2026-10-21 实施范围
+
+本轮已授权制作新整期；10 月 20 日“只改动、别交影片”仍是那一轮的历史边界，不限制本轮已明确授权的制作。当前 R04 的作者、计划及两个实际原生合成已通过来源、参数、连续性与表达式检查；针对4K与640像素静帧发现的问题已修订。6601帧整片仍在原生渲染，未完成新媒体或感知审阅。最终状态须由生产索引及本版实际收据更新，不能继承旧片的完成或认可。
+
+| 现有职责 | 当前消费者 | 本轮证据与限制 |
+|---|---|---|
+| Audience / Student POV 的完整题挑战 | `AV_AUTHOR.audience_challenges → prepare → cmChallengeArticle → original_challenge_readback` | 使用同批原文 TextLayer、意群范围、题干和 ABCD 原字连续归入 Reading Rig；72 帧参数读回与实际可读性分别记录 |
+| Cognitive Symbol Library 的 Recipe / Hero 作者决定 | `AV_AUTHOR.cognitive_symbols → AV_PLAN.symbol_recipes → cmBuildSymbolRecipe → symbol_native_readback` | 五个真实实例：一个匿名 Hook、SC03 价格同构、SC10 动作异构、SC15 两次回收；实例接线不等于实际视觉验收 |
+| 冻结教学事实、原词和候选终判 | 既有 ANSWER 绑定、原词范围交接、候选完整核验 | 图形只呈现已绑定关系，不新增教学规则；Hook 不得提前显示动作标签或答案 |
+| 原生执行与修订 | 既有 `authored_native`、Reading Rig、AE / Premiere / package | Adobe 保持唯一执行者；R01 真实失败保留，修订后重新核验，不用参数、图集或调用数冒充整片效果 |
+
+没有新建引擎、第二导演或新事实裁判。Bilibili 包装候选、用户创意选择、人类整片验收与公开发布仍是独立范围。详见能力索引 E31。
+
 ## 当前主片的实际消费
 
 唯一当前 revision 与有效要求只由 [当前入口](CURRENT_PRODUCTION_WORKFLOW.md)维护。历史 R06/B06 卡片下的“当前”只指其记录范围。

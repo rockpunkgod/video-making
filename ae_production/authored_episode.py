@@ -23,7 +23,7 @@ AUTHOR = 'AV_AUTHOR.json'
 AUTHOR_KEYS = {'revision','product','format','media_role','public_render_ready','copy_review',
                'sources','input_files','voices','scenes','excerpts','producer','host',
                'voice_delivery','voice_inputs','music','teaching_focus','editorial','layout','alignment_source',
-               'copy_review_evidence','audience_hook','source_attribution','visual_states','replay_policy','audience_challenges'}
+               'copy_review_evidence','audience_hook','source_attribution','visual_states','replay_policy','audience_challenges','cognitive_symbols'}
 KINDS = {'task', 'locate', 'compare', 'answer', 'replay', 'recap'}
 SHOT_KEYS = {'id', 'kind', 'world', 'voice_ids', 'title', 'excerpt', 'candidate',
              'event', 'replay_of', 'source_refs', 'action_refs', 'terminal_refs',
@@ -425,6 +425,9 @@ def checked_author(folder):
     if 'audience_challenges' in a:
         from creative_os.audience_engagement import validate_authored_challenges
         validate_authored_challenges(a,bundles,folder)
+    if 'cognitive_symbols' in a:
+        from creative_os.motion_identity import validate_authored_symbols
+        validate_authored_symbols(a,bundles,folder)
     return a, bundles
 
 
@@ -740,11 +743,18 @@ def opening_clock(author, clips, aligned, body):
 
 
 def compile_visual_states(author, clock):
-    return {'definition':deepcopy(author['visual_states']),
+    result = {'definition':deepcopy(author['visual_states']),
         'thinking_windows':[{'scene_id':s['id'],'enter':s['extract_start'],
             'settled':s['settled'],'release':s['return_start'],'end':s['end']-1/24}
             for s in clock['scenes'] if s.get('motion_treatment')=='critical_comparison'],
         'normal_speed_review':'UNOBSERVED'}
+    if 'cognitive_symbols' in author:
+        ids={i['scene_id'] for i in author['cognitive_symbols']['instances'] if i['variant']=='recall'}
+        for scene in clock['scenes']:
+            if scene['id'] in ids:
+                result['thinking_windows'].append({'scene_id':scene['id'],'enter':scene['start'],
+                    'settled':scene['start']+.6,'release':scene['end']-.5,'end':scene['end']-1/24})
+    return result
 
 
 def prepare(folder):
@@ -804,6 +814,9 @@ def prepare(folder):
     if 'audience_challenges' in a:
         from creative_os.audience_engagement import compile_authored_challenges
         plan['audience_challenges']=compile_authored_challenges(a,bundles,plan,worlds,folder)
+    if 'cognitive_symbols' in a:
+        from creative_os.motion_identity import compile_symbols
+        plan['symbol_recipes']=compile_symbols(a,bundles,plan,worlds,folder)
     plan['article_chunking'] = chunks
     if 'source_attribution' in a:plan['source_attribution']=deepcopy(a['source_attribution'])
     if 'visual_states' in a:

@@ -1,5 +1,13 @@
 # Audience Engagement Design v0.1
 
+## VIDEO_EXPERIENCE_UPGRADE_V1 implementation checkpoint · 2026-10-21
+
+The existing Audience author/plan route now consumes five source-bound Cognitive Symbol Recipe instances: an anonymous Hook, SC03 price isomorphism, SC10 role displacement and two SC15 recalls. Hero geometry represents frozen, verified relations; it adds no teaching authority, second director or engine. Hook remains anonymous and withholds action labels and verdicts.
+
+The full-question challenge carries the original article TextLayers and sense-group spans into its split layout and continuously returns those same glyphs to the Reading Rig. Native identity/range/geometry readbacks and actual perceptual review remain different claims.
+
+Current checkpoint: author/plan/code wired; R01 native construction executed but spatial QA failed; R02 revision underway. There is no completed final film or sensory acceptance for this upgrade at this checkpoint. Production-index receipts must update that status after actual execution. The earlier changes-only request remains historical; this new request authorizes full production. Human film acceptance, listening, packaging choices and publication remain separate.
+
 ## Authored Hook Contract v1
 
 The existing module now validates `AV_AUTHOR.audience_hook` against the added definition in
