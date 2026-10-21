@@ -134,5 +134,11 @@ class ActualEncodedFixture(unittest.TestCase):
         p,qa,manifest=self.export();manifest.rename(manifest.with_suffix('.retained'))
         with self.assertRaises(FileExistsError):e.export_review_evidence(p,qa)
 
+    def test_thousand_sparse_frame_expression_parses_in_real_ffmpeg(self):
+        expression=e.select_expression(range(0,2400,2))
+        subprocess.run(['ffmpeg','-v','error','-i',str(self.media),'-an',
+            '-vf','select='+expression,'-f','null','-'],capture_output=True,check=True)
+        self.assertEqual(e.select_expression([0,1,2,8]),'(between(n\\,0\\,2)+eq(n\\,8))')
+
 
 if __name__=='__main__':unittest.main()

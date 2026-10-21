@@ -452,11 +452,25 @@ def choose_frames(scenes,events,count,fps):
     return {f:{k:sorted(v) for k,v in r.items()} for f,r in sorted(wanted.items())}
 
 
+def select_expression(frames):
+    """Bound parser depth even for thousands of frames; coalesce adjacent runs."""
+    runs=[]
+    for n in sorted(set(frames)):
+        if runs and n==runs[-1][1]+1:runs[-1][1]=n
+        else:runs.append([n,n])
+    terms=[f'eq(n\\,{a})' if a==b else f'between(n\\,{a}\\,{b})' for a,b in runs]
+    if not terms:raise ValueError('At least one actual frame must be selected')
+    while len(terms)>1:
+        terms=['('+terms[i]+'+'+terms[i+1]+')' if i+1<len(terms) else terms[i]
+               for i in range(0,len(terms),2)]
+    return terms[0]
+
+
 def extract_frames(media,out,wanted,pts,metadata):
     from PIL import Image,ImageDraw
     directory=out/'review_frames';directory.mkdir()
     frames=list(wanted)
-    select='+'.join('eq(n\\,'+str(n)+')' for n in frames)
+    select=select_expression(frames)
     subprocess.run(['ffmpeg','-v','error','-n','-threads','2','-i',str(media),'-an',
         '-vf','select='+select+',scale=1280:-2','-fps_mode','passthrough','-start_number','0',
         str(directory/'frame-%06d.png')],check=True)
