@@ -35,9 +35,14 @@ function cmSymbolGlyph(S,input,origin){
  if(actualWidth>(S.parameters.layout.width-S.parameters.layout.min_gap)/2-2*S.parameters.layout.min_gap)throw Error("Actual native font exceeds Recipe slot: "+input.object_id);
  // Preserve each original glyph while a wrapped source phrase reflows into its
  // compact comparison slot. The inverse motion restores the complete source.
+ var staged=S.recipe_id==="same_form_different_relation"&&S.parameters.phase_seconds,action=input.role==="source_action"||input.role==="candidate_action",depart=staged&&action?S.phases[0].end:S.start,arrive=staged&&!action?S.phases[0].end:S.phases[1].end;
  var rx=/\S+/g,m,advance=0,wordRows=[],priorEnd=0,reflowRow=0;
- while((m=rx.exec(input.source_ref.quote))!==null){var newlines=input.source_ref.quote.slice(priorEnd,m.index).match(/\n/g);if(newlines){reflowRow+=newlines.length;advance=0;}var a=lo+m.index,z=a+m[0].length,word=cmSymbolLine(source,a),delta=[line.x+advance-word.x,line.y+reflowRow*doc.fontSize*S.parameters.font.line_height-word.y,0],an=cmSelector(l,"SYMBOL_REFLOW_"+wordRows.length,a,z);an.property("ADBE Text Animator Properties").addProperty("ADBE Text Position 3D").setValue(delta);var amt=cmAmount(an);ease(amt,S.start,0);ease(amt,S.phases[1].end,100);ease(amt,returnAt,100);ease(amt,S.end-1/240,0);wordRows.push({start:a,end:z,delta:delta});advance+=cmChallengeMeasure(m[0]+" ",doc);priorEnd=m.index+m[0].length;}
- ease(tr(l,"ADBE Position"),S.start,pose.position);ease(tr(l,"ADBE Scale"),S.start,[pose.scale,pose.scale,pose.scale]);ease(tr(l,"ADBE Position"),S.phases[1].end,dest);ease(tr(l,"ADBE Scale"),S.phases[1].end,[finalScale,finalScale,finalScale]);ease(tr(l,"ADBE Position"),returnAt,dest);ease(tr(l,"ADBE Scale"),returnAt,[finalScale,finalScale,finalScale]);
+ while((m=rx.exec(input.source_ref.quote))!==null){var newlines=input.source_ref.quote.slice(priorEnd,m.index).match(/\n/g);if(newlines){reflowRow+=newlines.length;advance=0;}var a=lo+m.index,z=a+m[0].length,word=cmSymbolLine(source,a),delta=[line.x+advance-word.x,line.y+reflowRow*doc.fontSize*S.parameters.font.line_height-word.y,0],an=cmSelector(l,"SYMBOL_REFLOW_"+wordRows.length,a,z);an.property("ADBE Text Animator Properties").addProperty("ADBE Text Position 3D").setValue(delta);var amt=cmAmount(an);ease(amt,S.start,0);ease(amt,depart,0);ease(amt,arrive,100);ease(amt,returnAt,100);ease(amt,S.end-1/240,0);wordRows.push({start:a,end:z,delta:delta});advance+=cmChallengeMeasure(m[0]+" ",doc);priorEnd=m.index+m[0].length;}
+ ease(tr(l,"ADBE Position"),S.start,pose.position);ease(tr(l,"ADBE Scale"),S.start,[pose.scale,pose.scale,pose.scale]);ease(tr(l,"ADBE Position"),depart,pose.position);ease(tr(l,"ADBE Scale"),depart,[pose.scale,pose.scale,pose.scale]);ease(tr(l,"ADBE Position"),arrive,dest);ease(tr(l,"ADBE Scale"),arrive,[finalScale,finalScale,finalScale]);ease(tr(l,"ADBE Position"),returnAt,dest);ease(tr(l,"ADBE Scale"),returnAt,[finalScale,finalScale,finalScale]);
+ if(staged&&action){ease(tr(l,"ADBE Opacity"),S.start,100);ease(tr(l,"ADBE Opacity"),S.start+.25,18);ease(tr(l,"ADBE Opacity"),depart,18);ease(tr(l,"ADBE Opacity"),arrive,100);}
+ // A recap is already a completed judgement. Fade its carried glyphs during
+ // source return, so the ending cannot freeze on an isolated rejected option.
+ if(S.variant==="recall"){ease(tr(l,"ADBE Opacity"),returnAt,100);ease(tr(l,"ADBE Opacity"),S.end-1/24,0);}
  var back=cmSymbolWorld(source,S.end,[line.x,line.y]);ease(tr(l,"ADBE Position"),S.end-1/240,back.position);ease(tr(l,"ADBE Scale"),S.end-1/240,[back.scale,back.scale,back.scale]);
  var hidden=cmSelector(source,"SYMBOL_SOURCE_HANDOFF_"+S.symbol_id+"_"+input.object_id,lo,hi);hidden.property("ADBE Text Animator Properties").addProperty("ADBE Text Opacity").setValue(0);hold(cmAmount(hidden),0,0);hold(cmAmount(hidden),S.start,100);hold(cmAmount(hidden),S.end,0);
  l.comment=JSON.stringify({kind:"continuous_original_glyph_range",symbol_id:S.symbol_id,recipe_id:S.recipe_id,role:input.role,source_layer_name:source.name,source_layer_id:source.id,source_object_id:input.source_object_id,source_ref:input.source_ref,range:[lo,hi],original_text:doc.text,new_text_created:false,word_reflow:wordRows});
@@ -59,7 +64,15 @@ function cmBuildSymbolRecipe(S){
  var scene=null;for(var i=0;i<P.scenes.length;i++)if(P.scenes[i].id===S.scene_id)scene=P.scenes[i];if(!scene)throw Error("Recipe lost current scene");
  var center=S.variant==="lesson"?stage(info(scene.excerpt,scene)):question(worlds[S.inputs[0].source_ref.world]),o=S.parameters.space.origin,origin=[center[0]+o[0],center[1]+o[1],center[2]+o[2]],glyphs=[],roles={};
  for(var i=0;i<S.inputs.length;i++){var g=cmSymbolGlyph(S,S.inputs[i],origin);glyphs.push(g);roles[g.role]=g;}
- if(S.variant==="lesson"){var dimmed={};for(var gi=0;gi<glyphs.length;gi++){var name=glyphs[gi].source_name;if(dimmed[name])continue;dimmed[name]=true;var op=tr(C.layer(name),"ADBE Opacity");ease(op,S.start,100);ease(op,S.start+.3,12);ease(op,S.end-.45,12);ease(op,S.end,100);}}
+ if(S.variant==="recall"){
+  // Recalled glyph ranges carry the evidence; the full old question is not a
+  // second readable layer behind them. Restore only after this ending scene.
+  var w=worlds[S.inputs[0].source_ref.world],background=[w.stem];
+  for(var ci=0;ci<4;ci++)background.push(w.options["ABCD".charAt(ci)]);
+  for(var bi=0;bi<w.blocks.length;bi++)background.push(w.blocks[bi].layer);
+  for(var bi=0;bi<background.length;bi++){var op=tr(background[bi],"ADBE Opacity"),prior=op.valueAtTime(S.start,false);ease(op,S.start,prior);ease(op,S.start+.3,0);ease(op,scene.end-1/24,0);hold(op,scene.end,prior);}
+ }
+ if(S.variant==="lesson"){var dimmed={};for(var gi=0;gi<glyphs.length;gi++){var name=glyphs[gi].source_name;if(dimmed[name])continue;dimmed[name]=true;var op=tr(C.layer(name),"ADBE Opacity");ease(op,S.start,100);ease(op,S.start+.3,0);ease(op,S.end-.45,0);ease(op,S.end,100);}}
  var blueSymbol=[126/255,150/255,168/255],brick=[163/255,111/255,100/255],paths=[],z=origin[2];
  function point(role){var g=roles[role];return [g.destination[0]+g.width/2,g.destination[1]+28];}
  if(S.recipe_id==="semantic_isomorphism"){

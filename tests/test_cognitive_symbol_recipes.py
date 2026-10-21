@@ -90,6 +90,15 @@ class CognitiveSymbolRecipes(unittest.TestCase):
     def compile(self): return compile_symbols(self.a, self.b, self.clock, self.worlds, self.folder)
     def validate(self): return validate_authored_symbols(self.a, self.b, self.folder)
 
+    def test_authored_phases_leave_stable_relation_recognition(self):
+        self.a['cognitive_symbols']['instances'][1]['parameters']['phase_seconds']=[.8,1,.25]
+        row=self.compile()['rows'][1]
+        self.assertAlmostEqual(row['phases'][0]['end']-row['start'],19/24)
+        self.assertAlmostEqual(row['phases'][1]['end']-row['phases'][0]['end'],1)
+        self.assertGreater(row['end']-.45-row['phases'][2]['end'],.5)
+        self.a['cognitive_symbols']['instances'][1]['parameters']['phase_seconds']=[2,2,1]
+        with self.assertRaisesRegex(ValueError,'recognition'):self.compile()
+
     def add_hook(self):
         inputs = deepcopy(self.a['cognitive_symbols']['instances'][1]['inputs'][:2])
         anchors = [deepcopy(i['source_ref']) for i in inputs]

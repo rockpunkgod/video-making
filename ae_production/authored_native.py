@@ -271,7 +271,7 @@ def background_isolation_rows(p):
     rows=[]
     for s in p['scenes']:
         if s.get('comparison_background_policy')!='isolate_selected_passage':continue
-        if (s['kind'] not in ('compare','replay') or s.get('motion_treatment')!='critical_comparison'
+        if (s['kind'] not in ('compare','replay') or s.get('motion_treatment') not in ('critical_comparison','in_place_check')
                 or s.get('candidate_reading_policy','visible') not in ('visible','quiet_source_until_read')
                 or not s.get('reading_events')):
             raise ValueError('Background isolation requires an explicit comparison reading path')
@@ -284,6 +284,11 @@ def background_isolation_rows(p):
         if not selected or any(b['start']<last['end'] and b['end']>last['start'] for b in hidden):
             raise ValueError('Background isolation would hide necessary reading')
         quiet_at=last['end_time'];restore_at=max(s['return_start'],s['end']-.35)
+        light=s.get('motion_treatment')=='in_place_check'
+        if light:
+            if any(b['start']<e['end'] and b['end']>e['start'] for b in hidden for e in s['reading_events']):
+                raise ValueError('Light background isolation would hide a required reading block')
+            quiet_at=s['reading_events'][0]['arrival'];restore_at=s['return_start']
         if not s['start']<=s['candidate_arrive']<quiet_at<restore_at<s['end']-1/24:
             raise ValueError('Background isolation must remain inside its comparison scene')
         readings=[{'time':(e['arrival']+e['end_time'])/2,
@@ -291,7 +296,7 @@ def background_isolation_rows(p):
                              and b['start']<e['end'] and b['end']>e['start']]}
                   for e in s['reading_events']]
         rows.append({'scene':s['id'],'hidden':[b['id'] for b in hidden],
-                     'fade_start':max(s['candidate_arrive'],quiet_at-.3),
+                     'fade_start':s['reading_events'][0]['depart'] if light else max(s['candidate_arrive'],quiet_at-.3),
                      'quiet_at':quiet_at,'settled':s['settled'],
                      'restore_at':restore_at,'end':s['end'],'readings':readings})
     return rows
@@ -792,6 +797,24 @@ def audit(folder):
         row=native['CANDIDATE_FLIGHT_'+ev['scene']]
         if row['text']!=ev['whole_option_text'] or not row['threeD']:raise ValueError('Candidate identity detached')
         if ev['kind']=='eliminate' and (row['position'][-1][1][2]!=420 or row['orientation'][-1][1]!=[0,72,0]):raise ValueError('Whole candidate withdrawal lost')
+    confirmations=n['audit'].get('answer_confirmations',[])
+    expected=[s for s in p['scenes'] if s.get('answer_confirmation')]
+    if {s['id'] for s in expected}!={r['scene'] for r in confirmations}:
+        raise ValueError('Authored answer confirmation did not reach the native scene')
+    if confirmations:
+        values=h.js('var ids='+json.dumps([n['comp_id'],n['master_comp_id']])+',items='+json.dumps(confirmations)+r''';
+var out=[];for(var ci=0;ci<ids.length;ci++){var c=app.project.itemByID(ids[ci]);for(var i=0;i<items.length;i++){var r=items[i],l=c.layer(r.name),times=[r.start,r.settled,r.end-1/24,r.end],states=[];for(var j=0;j<times.length;j++){var t=times[j];states.push({time:t,position:l.transform.position.valueAtTime(t,false),scale:l.transform.scale.valueAtTime(t,false),opacity:l.transform.opacity.valueAtTime(t,false)});}out.push({comp_id:c.id,scene:r.scene,layer_id:l.id,states:states,position_keys:l.transform.position.numKeys,scale_keys:l.transform.scale.numKeys});}}return out;
+''')
+        for row in values:
+            spec=next(r for r in confirmations if r['scene']==row['scene'])
+            states=row['states']
+            if (row['position_keys']<4 or row['scale_keys']<4
+                    or any(v['opacity']<99.9 for v in states[:3])
+                    or any(abs(a-b)>.002 for v in states[1:3] for a,b in zip(v['position'],spec['to']))
+                    or any(abs(x-spec['scale_percent'])>.002 for v in states[1:3] for x in v['scale'])
+                    or any(abs(a-b)>.002 for a,b in zip(states[3]['position'],spec['from']))):
+                raise ValueError('Answer confirmation lost its visible retained option, movement or source return')
+        write(folder/'ANSWER_CONFIRMATION_NATIVE.json',{'rows':values,'units':{'time':'seconds','position':'native 3D world pixels','scale':'percent','opacity':'percent'},'normal_speed_observation':'UNOBSERVED'})
     if 'teaching_focus' in a:
         expected=[{'scene':s['id'],'treatment':s['teaching_treatment'],'motion':s['motion_treatment'],'critical_units':s['critical_units']} for s in p['scenes'] if 'teaching_treatment' in s]
         if n['audit'].get('teaching_resources')!=expected:
@@ -806,7 +829,7 @@ def audit(folder):
             target=38 if s['effect']=='eliminate' else 100
             if abs(v['before']-100)>.01 or abs(v['after']-target)>.01 or abs(v['original']-target)>.01 or v['position_keys'] or v['scale_keys']:
                 raise ValueError('Native quick check did not consume its light state change')
-            if abs(v['header_read']-100)>.01 or v['header_exit']>.01 or not v['label_above_header'] or abs(v['header_height']*v['header_scale']/100-105*r['width']/1280)>.01:
+            if abs(v['header_read']-100)>.01 or v['header_exit']>.01 or not v['label_above_header'] or abs(v['header_height']*v['header_scale']/100-n['audit'].get('light_reading_margin_height',105)*r['width']/1280)>.01:
                 raise ValueError('Light option overlaps source text or its header hard-pops at exit')
         write(folder/'TEACHING_RESOURCE_NATIVE.json',{'rows':values,'policy_sha':p['teaching_focus_sha'],'human_review':'PENDING'})
         accents=[{k:s[k] for k in ('id','world','source_arrive','end','attention_events')} for s in p['scenes'] if s.get('motion_treatment')=='in_place_check']

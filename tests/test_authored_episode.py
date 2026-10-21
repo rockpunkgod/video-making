@@ -52,6 +52,15 @@ class ClockConsumption(unittest.TestCase):
         self.assertEqual(after['scenes'][0]['source_refs'],before['scenes'][0]['source_refs'])
         self.assertEqual(after['scenes'][0]['candidate_arrive'],before['scenes'][0]['candidate_arrive'])
 
+    def test_authored_relation_recognition_delays_intact_take_and_caption(self):
+        a,c,l=self.motion_input();before=compile_clock(a,c,l)
+        a['scenes'][0]['voice_placement_offsets']={'one':3.25}
+        after=compile_clock(a,c,l)
+        self.assertAlmostEqual(after['segments'][0]['voice_start']-before['segments'][0]['voice_start'],3.25)
+        self.assertAlmostEqual(after['cues'][0]['start']-before['cues'][0]['start'],3.25)
+        self.assertEqual(after['segments'][0]['voice'],before['segments'][0]['voice'])
+        self.assertEqual(after['scenes'][0]['settled'],before['scenes'][0]['settled'])
+
     def test_candidate_read_and_movement_are_distinct_consumed_intervals(self):
         a,c,l=self.motion_input();before=compile_clock(a,c,l)
         a['scenes'][0]['choreography']['candidate_read_seconds']+=2

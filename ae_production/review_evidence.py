@@ -430,10 +430,10 @@ def audio(plan,qa,folder,out,media):
 
 
 def choose_frames(scenes,events,count,fps):
-    wanted=defaultdict(lambda:{'scene_ids':set(),'event_ids':set(),'purposes':set()})
+    wanted=defaultdict(lambda:{'scene_ids':set(),'event_ids':set(),'event_context_scene_ids':set(),'purposes':set()})
     def add(f,sid,eid,purpose):
         f=max(0,min(count-1,int(f)));r=wanted[f]
-        if sid:r['scene_ids'].add(sid)
+        if sid and eid:r['event_context_scene_ids'].add(sid)
         if eid:r['event_ids'].add(eid)
         r['purposes'].add(purpose)
     for s in scenes:
@@ -452,6 +452,11 @@ def choose_frames(scenes,events,count,fps):
             centers=sorted(set(centers+[round((p['start_ms']+p['end_ms'])*fps/2000) for p in e['phases']]))
         for center in centers:
             for f in range(center-4,center+5):add(f,e['scene_id'],e['event_id'],'consecutive_9_frame_sequence')
+    # Event lifespans and before/after samples can cross scene boundaries.
+    # Only the actual source frame interval owns a screenshot's scene label.
+    for frame,row in wanted.items():
+        row['scene_ids']={s['scene_id'] for s in scenes
+                          if s['start_frame']<=frame<s['end_frame_exclusive']}
     return {f:{k:sorted(v) for k,v in r.items()} for f,r in sorted(wanted.items())}
 
 
@@ -480,10 +485,11 @@ def extract_frames(media,out,wanted,pts,metadata):
     actual=sorted(directory.glob('frame-*.png'))
     if len(actual)!=len(frames):raise ValueError('Final MP4 extraction did not produce every selected frame')
     rows=[]
-    for path,frame in zip(actual,frames):
+    for sample_index,(path,frame) in enumerate(zip(actual,frames)):
         with Image.open(path) as im:width,height=im.size
         rows.append({'file':path.relative_to(out).as_posix(),'sha256':file_sha(path),
-            'frame_number':frame,'timestamp_ms':pts[frame]['timestamp_ms'],'source_pts':pts[frame]['source_pts'],
+            'sample_index':sample_index,'frame_number':frame,'source_frame_number':frame,
+            'timestamp_ms':pts[frame]['timestamp_ms'],'source_pts':pts[frame]['source_pts'],
             'width_px':width,'height_px':height,'source_video_sha256':metadata['sha256'],
             'source':'DECODED_FINAL_MP4_FRAME_RESIZED_FOR_REVIEW',**wanted[frame]})
     scene_frames=[r for r in rows if 'scene_key_frame' in r['purposes']]
@@ -493,6 +499,11 @@ def extract_frames(media,out,wanted,pts,metadata):
         draw.text(((i%columns)*tw+5,(i//columns)*th+181),f"frame {r['frame_number']} | {r['timestamp_ms']:.3f} ms",fill='white')
     sheet.save(directory/'scene-index.jpg',quality=90)
     return {'time_unit':'ms','frame_numbering':'zero-based decoded presentation order','frames':rows,
+        'sample_numbering':'zero-based extraction sequence; filename number is not a source frame',
+        'scene_assignment_basis':'Source frame in [start_frame,end_frame_exclusive); mapped to measured final PTS',
+        'event_association_basis':'Sampling context only; neither event lifespan nor scene label proves pixel visibility',
+        'interval_end_exclusive':True,'source_video_start_ms':metadata['video']['start_ms'],
+        'source_video_start_pts':metadata['video']['start_pts'],'source_video_time_base':metadata['video']['time_base'],
         'thumbnail_index':{'file':'review_frames/scene-index.jpg','sha256':file_sha(directory/'scene-index.jpg'),
             'width_px':sheet.width,'height_px':sheet.height,'source_video_sha256':metadata['sha256'],
             'source_frame_numbers':[r['frame_number'] for r in scene_frames]},
@@ -535,6 +546,14 @@ def validate_evidence(manifest_path):
             raise ValueError('Motion links reference unknown events')
     for f in docs['frame_index']['frames']:
         if not set(f['event_ids'])<=event_ids or not set(f['scene_ids'])<=scene_ids:raise ValueError('Frame links reference an unknown scene/event')
+        if 'source_frame_number' in f:
+            owning=[s for s in docs['timeline_manifest']['scenes'] if s['start_frame']<=f['source_frame_number']<s['end_frame_exclusive']]
+            if f['frame_number']!=f['source_frame_number'] or set(f['scene_ids'])!={s['scene_id'] for s in owning}:
+                raise ValueError('Frame scene assignment disagrees with source frame interval')
+            for s in owning:
+                begin,end=s['mapped_video_frame_range_ms']
+                if begin is not None and f['timestamp_ms']<begin-.001 or end is not None and f['timestamp_ms']>=end:
+                    raise ValueError('Frame PTS disagrees with its mapped scene interval')
     return {'status':'PASS','scope':'JSON/path/hash/cross-reference structure only; no quality judgment',
             'images':len(docs['frame_index']['frames'])+1,'frame_images':len(docs['frame_index']['frames']),
             'scenes':len(scene_ids),'events':len(event_ids)}

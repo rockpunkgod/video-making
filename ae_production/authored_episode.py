@@ -31,7 +31,7 @@ SHOT_KEYS = {'id', 'kind', 'world', 'voice_ids', 'title', 'excerpt', 'candidate'
              'candidate_anchor', 'event_anchor', 'attention', 'locator',
              'audience_intent', 'pre_excerpt', 'secondary_excerpt', 'secondary_anchor', 'recap_worlds',
              'candidate_entry_seconds', 'choreography', 'reading_path', 'voice_placements', 'screen_title',
-             'candidate_reading_policy', 'comparison_background_policy', 'extraction_policy'}
+             'candidate_reading_policy', 'comparison_background_policy', 'extraction_policy', 'voice_placement_offsets', 'answer_confirmation'}
 
 MOTION_KEYS = {'orient_seconds', 'candidate_read_seconds', 'candidate_travel_seconds',
                'source_read_seconds', 'extract_seconds', 'comparison_seconds',
@@ -340,6 +340,14 @@ def checked_author(folder):
             motion=s['choreography']
             if set(motion)!=MOTION_KEYS or any(type(v) not in (int,float) or not math.isfinite(v) or v<=0 for v in motion.values()):
                 raise ValueError('Unsupported or incomplete choreography')
+            if 'answer_confirmation' in s:
+                confirmation=s['answer_confirmation']
+                if (s['kind']!='answer' or s.get('event')!='final'
+                        or set(confirmation)!={'scale_percent','viewer_task'}
+                        or type(confirmation['scale_percent']) not in (int,float)
+                        or not 100<confirmation['scale_percent']<=140
+                        or not isinstance(confirmation['viewer_task'],str) or not confirmation['viewer_task'].strip()):
+                    raise ValueError('Answer confirmation needs a final answer, bounded scale and actual viewer task')
             if any(k in s for k in ('recognition_seconds','travel_seconds','post_seconds','candidate_entry_seconds','candidate_anchor','pre_excerpt','secondary_excerpt')):
                 raise ValueError('Replace historical timing overrides with the current reading path and voice placements')
             if s['kind']=='locate' and not s.get('reading_path'):
@@ -355,6 +363,10 @@ def checked_author(folder):
                     raise ValueError('Invalid reading event')
             placements=s.get('voice_placements',{})
             if set(placements)-set(s['voice_ids']):raise ValueError('Voice placement has no complete take')
+            offsets=s.get('voice_placement_offsets',{})
+            if (not isinstance(offsets,dict) or set(offsets)-set(s['voice_ids'])
+                    or any(type(v) not in (int,float) or not math.isfinite(v) or not 0<=v<=10 for v in offsets.values())):
+                raise ValueError('Voice placement offset must bind a complete take within ten seconds')
             for phase in placements.values():
                 if phase not in ('candidate','comparison','start') and not (phase.startswith('reading:') and phase[8:].isdigit() and int(phase[8:])<len(s.get('reading_path',[]))):
                     raise ValueError('Unsupported spoken scene phase')
@@ -593,7 +605,11 @@ def compile_clock(a, clips, aligned):
                 s['reading_events'].append({**step,'depart':visual,'arrival':arrival,'end_time':end})
                 visual=end
             if s['kind'] in ('compare','replay'):
-                if s.get('extraction_policy')=='highlight_then_extract':
+                if s.get('motion_treatment')=='in_place_check':
+                    # The camera is already at the final reading target. No
+                    # second orient/source hold is needed for an in-place check.
+                    s['source_arrive']=s['extract_start']=visual
+                elif s.get('extraction_policy')=='highlight_then_extract':
                     s['source_arrive']=s['extract_start']=visual
                     s['extraction_highlight_at']=grid(visual-.25,fps)
                     s['extraction_highlights']=[x['phrase'] for x in s['attention'] if x['target']=='source']
@@ -618,7 +634,7 @@ def compile_clock(a, clips, aligned):
                 phase=s.get('voice_placements',{}).get(vid,'comparison')
                 cue=(cursor+s['voice_pre'] if phase=='start' else s['oriented'] if phase=='candidate' else
                      s['reading_events'][int(phase[8:])]['arrival'] if phase.startswith('reading:') else s['settled'])
-                clock=max(clock,grid(cue,fps))
+                clock=max(clock,grid(cue+s.get('voice_placement_offsets',{}).get(vid,0),fps))
             start = clock; end = start + c['duration_seconds']
             segments.append({**v, 'scene_id': s['id'], 'voice_start': start, 'voice_end': end,
                              'voice': deepcopy(c), 'time_stretch': False, 'truncated': False})
@@ -829,7 +845,9 @@ def prepare(folder):
     plan['music']=deepcopy(a.get('music',[]))
     if 'audience_hook' in plan:
         for music in plan['music']:
-            music['timeline_start']=music.get('timeline_start',0)+plan['audience_hook']['end']
+            basis=music.get('timeline_basis','body')
+            if basis not in ('body','episode'):raise ValueError('Unknown music timeline basis')
+            music['timeline_start']=music.get('timeline_start',0)+(plan['audience_hook']['end'] if basis=='body' else 0)
     from content_os.scoring import rank_teaching_focus
     from creative_os.audience_engagement import critical_focus_handoff
     plan['teaching_focus']=deepcopy(a['teaching_focus'])

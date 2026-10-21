@@ -47,6 +47,10 @@ px/percent/degrees 等单位，禁止把世界坐标当作投影后的 4K 屏幕
 `SOURCE_DEFINED_INTERVAL_WITH_NATIVE_RUNTIME_SAMPLES` 和
 `FINAL_MP4_FFPROBE_MEASUREMENT` 是不同证据来源。
 计划帧号映射最终 PTS，只证明制作帧对应，不是独立的语义切点检测。
+截图文件编号与 `sample_index` 是从零起的采样序号；`source_frame_number`（兼容字段
+`frame_number`）才是最终视频的源帧号。场景归属严格按源帧落入的半开区间确定，
+跨场事件只登记为 `event_context_scene_ids`，不能改变截图所属场景或证明事件可见。
+索引同时记录视频流起点、原始 PTS 和 time base；校验检查帧、PTS 与场景边界一致。
 程序不追踪最终像素的对象轨迹，不做源分离来猜独立口播起点。
 没有记录的口播原生增益、声画校准偏移、可靠渲染墙钟起止时间等为 null 并附原因。
 历史工程没有新的采集收据时保留旧键值，缓动缺失为 null，不强制迁移或编造。

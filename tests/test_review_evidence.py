@@ -62,6 +62,17 @@ class EvidenceContracts(unittest.TestCase):
             self.assertIsNone(row['independently_measured_scene_boundaries_ms'])
             self.assertIsNone(row['plan_vs_independently_measured_scene_delta_ms'])
 
+    def test_cross_scene_event_context_cannot_relabel_source_frame(self):
+        scenes=[{'scene_id':'SC10','start_frame':0,'end_frame_exclusive':48},
+                {'scene_id':'SC11','start_frame':48,'end_frame_exclusive':96}]
+        event={'event_id':'persistent','scene_id':'SC10','start_frame':40,
+               'end_frame_exclusive':80,'important_for_frames':True}
+        rows=e.choose_frames(scenes,[event],96,24)
+        self.assertEqual(rows[60]['scene_ids'],['SC11'])
+        self.assertEqual(rows[60]['event_context_scene_ids'],['SC10'])
+        self.assertEqual(rows[48]['scene_ids'],['SC11'])
+        self.assertEqual(rows[40]['scene_ids'],['SC10'])
+
 
 @unittest.skipUnless(shutil.which('ffmpeg') and shutil.which('ffprobe'),'Requires existing ffmpeg/ffprobe')
 class ActualEncodedFixture(unittest.TestCase):

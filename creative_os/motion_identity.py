@@ -163,9 +163,16 @@ def _in_evidence(ref, evidence):
 
 def _symbol_parameters(parameters):
     keys = {'duration_seconds', 'space', 'font', 'layout', 'curve', 'mask'}
-    if not isinstance(parameters, dict) or set(parameters) != keys:
+    if not isinstance(parameters, dict) or set(parameters)-{'phase_seconds'} != keys:
         raise ValueError('Complete parameterized cognitive symbol geometry is required')
     _finite(parameters['duration_seconds'], 'duration', 3, 30)
+    if 'phase_seconds' in parameters:
+        phases=parameters['phase_seconds']
+        if not isinstance(phases,list) or len(phases)!=3:
+            raise ValueError('Recipe phase_seconds requires three authored movement/settle durations')
+        for seconds in phases:_finite(seconds,'phase seconds',1/24,10)
+        if sum(phases)+.95>parameters['duration_seconds']:
+            raise ValueError('Recipe must retain recognition and continuous return time')
     space = parameters['space']; font = parameters['font']; layout = parameters['layout']
     if (not isinstance(space, dict) or set(space) != {'origin', 'depth'}
             or not isinstance(space['origin'], list) or len(space['origin']) != 3):
@@ -404,6 +411,12 @@ def compile_symbols(author, bundles, clock, worlds=None, folder=None):
                 index = recalls.index(instance); count = len(recalls)
                 if count != 2: raise ValueError('This ending recalls both demonstrated relations exactly once')
                 split = round((live['start'] + (live['end'] - live['start']) / 2) * fps) / fps
+                first_voice=next((v for v in clock.get('segments',[]) if v['scene_id']==scene_id),None)
+                if first_voice:
+                    mid=(first_voice['voice_start']+first_voice['voice_end'])/2
+                    candidates=[c for c in clock.get('cues',[]) if c.get('segment')==first_voice['id']
+                                and live['oriented']+.5<c['start']<first_voice['voice_end']-.5]
+                    if candidates:split=math.ceil((min(candidates,key=lambda c:abs(c['start']-mid))['start']-1e-8)*fps)/fps
                 start, end = (live['start'], split) if index == 0 else (split, live['end'])
         duration = end - start
         if (not math.isfinite(start) or not math.isfinite(end) or start < 0 or duration < 3
@@ -427,6 +440,11 @@ def compile_symbols(author, bundles, clock, worlds=None, folder=None):
         phase_names = (['surface_align', 'relation_displace', 'precise_lock', 'hold'] if instance['recipe_id'] == 'same_form_different_relation'
                        else ['carry_relations', 'structural_align', 'precise_lock', 'hold'])
         endpoints = [start, start + travel * .5, start + travel, start + travel + settle, end]
+        if 'phase_seconds' in instance['parameters']:
+            endpoints=[start]
+            for seconds in instance['parameters']['phase_seconds']:
+                endpoints.append(round((endpoints[-1]+seconds)*fps)/fps)
+            endpoints.append(end)
         phases = [{'phase': name, 'start': endpoints[n], 'end': endpoints[n + 1]} for n, name in enumerate(phase_names)]
         if variant == 'hook':
             names = ['surface_align', 'relation_displace', 'unresolved_hold', 'match_into_task']

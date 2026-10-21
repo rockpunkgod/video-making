@@ -16,6 +16,7 @@ if(P.visual_states&&P.visual_states.definition.reading.mode!=="preserve_existing
 var column=P.layout?P.layout.passage_width:1080,readingDistance=P.layout?P.layout.reading_distance:1550,stageDistance=P.layout?P.layout.stage_distance:1600;
 var audit={sources:[],extractions:[],candidates:[],camera:[],locators:[],replays:[],scenes:[],captions:[],reading:[],query_carries:[],scan_motion:[],word_focus:[],reading_windows:[],query_handoffs:[],teaching_resources:[]};
 audit.candidate_reading_visibility_policy="hide_candidate_until_settled/v1";
+audit.light_reading_margin_height=126;
 function tr(l,n){return l.property("ADBE Transform Group").property(n);}
 function ease(p,t,v){p.setValueAtTime(t,v);var n=p.nearestKeyIndex(t),a=[],b=[],dims=v instanceof Array?v.length:1;var spatial=p.propertyValueType===PropertyValueType.ThreeD_SPATIAL||p.propertyValueType===PropertyValueType.TwoD_SPATIAL;if(spatial||p.propertyValueType===PropertyValueType.COLOR)dims=1;for(var i=0;i<dims;i++){a.push(new KeyframeEase(0,55));b.push(new KeyframeEase(0,55));}p.setTemporalEaseAtKey(n,a,b);p.setInterpolationTypeAtKey(n,KeyframeInterpolationType.BEZIER,KeyframeInterpolationType.BEZIER);if(spatial&&p.matchName!=="ADBE Orientation"){var z=v.length===3?[0,0,0]:[0,0];p.setSpatialTangentsAtKey(n,z,z);}}
 function hold(p,t,v){p.setValueAtTime(t,v);var k=p.nearestKeyIndex(t);p.setInterpolationTypeAtKey(k,KeyframeInterpolationType.HOLD,KeyframeInterpolationType.HOLD);}
@@ -87,11 +88,23 @@ function candidate(s,w,ex,replay){var origin=w.options[s.candidate],r=tr(origin,
  if(s.event!=="eliminate"){ease(tr(l,"ADBE Position"),s.return_start,dest);ease(tr(l,"ADBE Position"),s.end-1/24,r);ease(tr(l,"ADBE Scale"),s.return_start,[104,104,104]);ease(tr(l,"ADBE Scale"),s.end-1/24,[100,100,100]);}
  l.comment=JSON.stringify({kind:replay?"recalled_candidate":"whole_candidate_with_attached_identity",candidate:s.candidate,scene:s.id,source_layer_id:origin.id,terminal_refs:s.terminal_refs});return l;}
 function lightAccent(layer,e,s,index){var d=layer.property("Source Text").valueAtTime(0,false),at=d.text.indexOf(e.phrase);if(at<0)return;var start=Math.max(e.time,s.source_arrive),end=s.end-1/24,an=cmSelector(layer,"LIGHT_ACCENT_"+s.id+"_"+index,at,at+e.phrase.length);an.property("ADBE Text Animator Properties").addProperty("ADBE Text Fill Color").setValue(orange);cmAmount(an).expression='function q(x){x=Math.max(0,Math.min(1,x));return x*x*x*(x*(6*x-15)+10);}100*q((time-'+start+')/.2)*q(('+end+'-time)/.4);';}
+function confirmAnswer(s,w){
+ var l=w.options[s.candidate],p=tr(l,"ADBE Position"),sc=tr(l,"ADBE Scale"),before=p.valueAtTime(s.event_time,false),oldScale=sc.valueAtTime(s.event_time,false),r=l.sourceRectAtTime(s.event_time,false),an=tr(l,"ADBE Anchor Point").value,k=s.answer_confirmation.scale_percent/100;
+ if(r.width*k>1120||r.height*k>240)throw Error("Answer confirmation exceeds the readable question area");
+ var dest=[w.base+640-(r.left-an[0]+r.width/2)*k,330-(r.top-an[1]+r.height/2)*k,before[2]];
+ ease(p,s.event_time,before);ease(p,s.decision_end,dest);ease(p,s.end-1/24,dest);hold(p,s.end,before);
+ ease(sc,s.event_time,oldScale);ease(sc,s.decision_end,[k*100,k*100,k*100]);ease(sc,s.end-1/24,[k*100,k*100,k*100]);hold(sc,s.end,oldScale);
+ // The other three verdicts already exist. Retire them together, without a
+ // second elimination performance or extinguishing the retained answer.
+ for(var j=0;j<4;j++){var cid="ABCD".charAt(j);if(cid===s.candidate)continue;var op=tr(w.options[cid],"ADBE Opacity");ease(op,s.event_time-.25,38);ease(op,s.event_time,0);ease(op,s.end-1/24,0);hold(op,s.end,38);}
+ if(!audit.answer_confirmations)audit.answer_confirmations=[];
+ audit.answer_confirmations.push({scene:s.id,layer_id:l.id,name:l.name,candidate:s.candidate,start:s.event_time,settled:s.decision_end,end:s.end,from:before,to:dest,scale_percent:k*100,viewer_task:s.answer_confirmation.viewer_task,source_refs:s.source_refs});
+}
 for(var si=0;si<P.scenes.length;si++){
  var s=P.scenes[si],w=worlds[s.world],a=s.start,b=s.end,m=s.choreography,heading=s.screen_title===undefined?s.title:s.screen_title;if(heading){var title=overlay("TASK_TITLE_"+s.id,heading,72,24,28,1120,muted,a,b);if((s.kind==="compare"||s.kind==="replay")&&s.motion_treatment!=="in_place_check"&&s.reading_events.length){var titleEnd=Math.max(a+.25,s.reading_events[0].depart);title.outPoint=Math.min(b,titleEnd);ease(tr(title,"ADBE Opacity"),Math.max(a,titleEnd-.2),100);ease(tr(title,"ADBE Opacity"),titleEnd,0);}titles.push(title);}camera(a,lastTarget,lastDistance,lastOffset,lastAperture);lastOffset=[0,0];lastAperture=14;
  if(s.kind==="task"||s.kind==="answer"){
   var qt=question(w);if(si&&P.scenes[si-1].world!==s.world)camera(a,qt,1650);camera(s.oriented,qt,1550);camera(b-1/24,qt,1550);lastTarget=qt;lastDistance=1550;
-  if(s.kind==="answer"){for(var j=0;j<4;j++){var cid="ABCD".charAt(j);style(w.options[cid],s.event_time,cid===s.candidate?blue:muted,null,null);}var answer=text("FINAL_"+s.world,"答案 "+s.candidate,w.base+100,610,-30,34,600,blue,"MicrosoftYaHei");answer.inPoint=s.event_time;answer.outPoint=P.duration;audit.candidates.push({scene:s.id,kind:"final",candidate:s.candidate,time:s.event_time,refs:s.terminal_refs});}
+  if(s.kind==="answer"){for(var j=0;j<4;j++){var cid="ABCD".charAt(j);hold(tr(w.options[cid],"ADBE Opacity"),a,cid===s.candidate?100:38);style(w.options[cid],s.event_time,cid===s.candidate?blue:muted,null,null);}if(s.answer_confirmation)confirmAnswer(s,w);var answer=text("FINAL_"+s.world,"答案 "+s.candidate,w.base+100,550,-30,34,600,blue,"MicrosoftYaHei");answer.inPoint=s.event_time;answer.outPoint=s.answer_confirmation?s.end:P.duration;audit.candidates.push({scene:s.id,kind:"final",candidate:s.candidate,time:s.event_time,refs:s.terminal_refs});}
  }else if(s.kind==="locate"){
   var qt=question(w);camera(s.oriented,qt,1550);var read=readPath(s,w,qt,1550);camera(s.return_start,read.target,read.distance,read.offset,read.aperture);camera(b-1/24,qt,1550,[0,0],14);lastTarget=qt;lastDistance=1550;lastOffset=[0,0];lastAperture=14;queryCarry(s,w);
   var hit=s.reading_events[0],scope=s.reading_events[s.reading_events.length-1];for(var j=0;j<s.reading_events.length;j++)if(s.reading_events[j].mode==="hit")hit=s.reading_events[j];audit.locators.push({scene:s.id,question_span:s.locator.stem_span,passage_span:s.locator.passage_span,block_span:s.locator.block_span,opening_at:s.reading_events[0].arrival,match_at:hit.arrival,scope_at:scope.arrival,scope_until:b});
@@ -102,8 +115,10 @@ for(var si=0;si<P.scenes.length;si++){
   var read=readPath(s,w,visit,distance);
   camera(s.source_arrive,visit,distance,[0,0],12);camera(b-1/24,visit,distance,[0,0],12);
   lastTarget=visit;lastDistance=distance;lastAperture=12;
-  var header=C.layers.addSolid(paper,"LIGHT_READING_MARGIN_"+s.id,1280,105,1,P.duration);header.transform.position.setValue([640,52.5]);header.inPoint=a;header.outPoint=b;
-  ease(tr(header,"ADBE Opacity"),a,0);ease(tr(header,"ADBE Opacity"),s.oriented,100);ease(tr(header,"ADBE Opacity"),s.return_start,100);ease(tr(header,"ADBE Opacity"),b-1/24,0);
+  var header=C.layers.addSolid(paper,"LIGHT_READING_MARGIN_"+s.id,1280,126,1,P.duration);header.transform.position.setValue([640,63]);header.inPoint=a;header.outPoint=b;
+  // Keep the reading lane opaque until the candidate has completely left.
+  hold(tr(header,"ADBE Opacity"),a,100);ease(tr(header,"ADBE Opacity"),b-.2,100);ease(tr(header,"ADBE Opacity"),b-1/24,0);
+  if(s.comparison_background_policy==="isolate_selected_passage")for(var bi=0;bi<w.blocks.length;bi++){var row=w.blocks[bi],selected=false;for(var ei=0;ei<ex.blocks.length;ei++)if(row.id===ex.blocks[ei].id)selected=true;if(!selected){var op=tr(row.layer,"ADBE Opacity"),first=s.reading_events[0];ease(op,first.depart,100);ease(op,first.arrival,0);ease(op,s.return_start,0);ease(op,b-1/24,100);}}
   var origin=w.options[s.candidate],choice=overlay("LIGHT_CANDIDATE_"+s.id,origin.property("Source Text").value.text,84,65,30,1110,ink,s.oriented,b);
   choice.motionBlur=false;style(choice,s.oriented,ink,null,null);
   ease(tr(choice,"ADBE Opacity"),s.oriented,0);ease(tr(choice,"ADBE Opacity"),s.oriented+.25,100);
@@ -111,7 +126,7 @@ for(var si=0;si<P.scenes.length;si++){
   ease(tr(choice,"ADBE Opacity"),s.event_time,100);ease(tr(choice,"ADBE Opacity"),s.decision_end,s.event==="eliminate"?38:100);
   if(s.event==="supported")style(choice,s.event_time,blue,null,null);
   hold(tr(origin,"ADBE Opacity"),s.decision_end,s.event==="eliminate"?38:100);
-  ease(tr(choice,"ADBE Opacity"),s.return_start,s.event==="eliminate"?38:100);ease(tr(choice,"ADBE Opacity"),b-1/24,0);
+  ease(tr(choice,"ADBE Opacity"),s.return_start,s.event==="eliminate"?38:100);ease(tr(choice,"ADBE Opacity"),b-.2,0);
   choice.comment=JSON.stringify({kind:"in_place_candidate_check",scene:s.id,source_layer_id:origin.id,terminal_refs:s.terminal_refs});
   audit.candidates.push({scene:s.id,kind:s.event,candidate:s.candidate,time:s.event_time,layer_id:choice.id,whole_option_text:choice.property("Source Text").value.text,refs:s.terminal_refs,treatment:"in_place_check"});
  }else if(s.kind==="compare"||s.kind==="replay"){
@@ -223,7 +238,7 @@ if(P.audience_challenges){
   for(var pi=0;pi<cameraProps.length;pi++){var prop=cameraProps[pi];for(var ki=prop.numKeys;ki>=1;ki--)if(prop.keyTime(ki)>a&&prop.keyTime(ki)<land)prop.removeKey(ki);}
   cutCamera(a,question(w),1550);camera(b,question(w),1550,[0,0],0);camera(land,question(w),1550,[0,0],14);
   opt.property("ADBE Camera Aperture").setValueAtTime(a,0);
-  var badge=overlay("CHALLENGE_PAUSE_"+ch.scene,"想先自己做？可暂停",865,143,18,370,muted,a,b);
+  var badge=overlay("CHALLENGE_PAUSE_"+ch.scene,"想先自己做？可暂停",825,143,24,410,ink,a,b);
   badge.comment=JSON.stringify({kind:"screen_only_pause_entry",question_id:w.question.question_id,start_frame:ch.start_frame,end_frame:ch.end_frame,spoken:false});
   var material=C.layer("MATERIAL_IDENTITY");if(ci===0&&material){hold(tr(material,"ADBE Opacity"),a,0);hold(tr(material,"ADBE Opacity"),land,100);}
   audit.audience_challenges.push({scene_id:ch.scene,world:ch.world,question_id:w.question.question_id,start:a,end:b,start_frame:ch.start_frame,end_frame:ch.end_frame,frames:72,article_layers:folded.article_layers,article_chunks:folded.chunks,article_height:folded.height,article_width:folded.width,source_identity:folded.source_identity,original_glyphs:glyphs,badge_layer:badge.name,handoff_end:land,voice_policy:"existing_complete_take_continues",normal_speed_review:"UNOBSERVED",mobile_legibility:"UNOBSERVED"});

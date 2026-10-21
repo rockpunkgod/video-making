@@ -42,12 +42,20 @@ class ComparisonBackground(unittest.TestCase):
 
     def test_no_legacy_or_unknown_scene_is_silently_isolated(self):
         for key,value in [('kind','locate'),('candidate_reading_policy','unknown'),
-                          ('motion_treatment','in_place_check')]:
+                          ('motion_treatment','unknown')]:
             p=specimen();p['scenes'][0][key]=value
             with self.assertRaisesRegex(ValueError,'explicit comparison reading path'):
                 background_isolation_rows(p)
         p=specimen();p['scenes'][0].pop('comparison_background_policy')
         self.assertEqual(background_isolation_rows(p),[])
+
+    def test_light_isolation_preserves_every_required_reading_block(self):
+        p=specimen();s=p['scenes'][0];s['motion_treatment']='in_place_check'
+        with self.assertRaisesRegex(ValueError,'required reading block'):
+            background_isolation_rows(p)
+        s['reading_events']=[{'start':45,'end':85,'depart':2,'arrival':4,'end_time':5}]
+        row=background_isolation_rows(p)[0]
+        self.assertEqual((row['fade_start'],row['quiet_at'],row['restore_at']),(2,4,10))
 
     def test_explicit_replay_isolation_preserves_candidate_policy_and_adds_no_decision(self):
         p=specimen();p['scenes'][0].update(kind='replay',candidate_reading_policy='visible')
