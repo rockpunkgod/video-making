@@ -128,5 +128,50 @@ class NativeConsumerBindings(unittest.TestCase):
         self.snapshots(); write(self.folder/'AV_PLAN.json', {'revision': 'another input'})
         with self.assertRaisesRegex(ValueError, 'Native picture is stale'): self.current()
 
+    def active_feature(self, key):
+        if key == 'symbol_rig':
+            self.p['symbol_recipes'] = {'rows': [{'symbol_id': 'actual-planned-feature'}]}
+        else:
+            self.p['audience_challenges'] = {'rows': [{'scene': 'SC01'}]}
+            self.n['audit'] = {'audience_challenges': [
+                {'scene_id': 'SC01', 'source_identity': 'SAME_ORIGINAL_TEXTLAYERS_NO_RECREATION'}]}
+        write(self.folder/'AV_PLAN.json', self.p)
+        self.n['plan_sha256'] = sha256(self.folder/'AV_PLAN.json'); self.save_identity()
+
+    def test_active_features_keep_their_exact_saved_snapshot_bindings(self):
+        for key in ('symbol_rig', 'challenge_rig'):
+            with self.subTest(feature=key):
+                self.active_feature(key); self.snapshots()
+                self.assertEqual(self.current()[2], self.n)
+
+    def test_active_features_cannot_downgrade_by_removing_identity_and_snapshot_together(self):
+        for key in ('symbol_rig', 'challenge_rig'):
+            with self.subTest(feature=key):
+                # Retain the real active plan/build marker. Removing both
+                # optional metadata entries cannot impersonate an old build.
+                self.active_feature(key); manifest = self.snapshots()
+                digest = self.n.pop(key+'_sha256'); manifest.pop(key)
+                self.save_identity(); write(self.folder/'NATIVE_SOURCES.json', manifest)
+                with self.assertRaisesRegex(ValueError, 'missing its saved consumer identity'): self.current()
+                self.n[key+'_sha256'] = digest; self.save_identity()
+
+    def test_active_features_require_saved_sources_instead_of_falling_back_to_live_code(self):
+        for key in ('symbol_rig', 'challenge_rig'):
+            with self.subTest(feature=key):
+                self.active_feature(key)
+                with self.assertRaisesRegex(ValueError, 'requires saved consumer source snapshots'): self.current()
+
+    def test_old_inline_challenge_remains_readable_without_a_new_rig_identity(self):
+        # The former challenge lived inside its already byte-bound template;
+        # it did not consume the later same-original-layer challenge rig.
+        self.p['audience_challenges'] = {'rows': [{'scene': 'SC01'}]}
+        self.n['audit'] = {'audience_challenges': [{'scene_id': 'SC01'}]}
+        self.n.pop('challenge_rig_sha256'); self.n.pop('symbol_rig_sha256')
+        write(self.folder/'AV_PLAN.json', self.p)
+        self.n['plan_sha256'] = sha256(self.folder/'AV_PLAN.json'); self.save_identity()
+        self.snapshots(['template', 'reading_rig'])
+        self.paths['challenge_rig'].unlink(); self.paths['symbol_rig'].unlink()
+        self.assertEqual(self.current()[2], self.n)
+
 
 if __name__ == '__main__': unittest.main()

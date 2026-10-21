@@ -167,6 +167,47 @@ class BilibiliPackagingTest(unittest.TestCase):
             mutate(value)
             self.assertEqual(packaging.selection_status(value), 'INVALIDATED_BY_CHANGED_INPUTS')
 
+    def test_save_recomputes_changed_title_selection_in_a_copy(self):
+        value = self.approved_control()
+        value['selection_status'] = 'EXTERNAL_CREATIVE_SELECTION_RECORDED'
+        value['candidates'][0]['title'] = 'SYNTHETIC changed title after external choice'
+        before = deepcopy(value)
+        packaging.save_package(self.output, value)
+        saved = json.loads((self.output / 'BILIBILI_PACKAGE.json').read_text(encoding='utf-8'))
+        self.assertEqual(saved['selection_status'], 'INVALIDATED_BY_CHANGED_INPUTS')
+        self.assertEqual(saved['selection'], before['selection'])
+        self.assertEqual(value, before)
+        self.assertEqual(saved['schema'], packaging.VERSION)
+        self.assertFalse(saved['public_render_ready'])
+
+    def test_save_recomputes_current_external_selection_without_mutating_input(self):
+        value = self.approved_control()
+        value['selection_status'] = 'PENDING_USER_AND_CHATGPT_SELECTION'
+        before = deepcopy(value)
+        packaging.save_package(self.output, value)
+        saved = json.loads((self.output / 'BILIBILI_PACKAGE.json').read_text(encoding='utf-8'))
+        self.assertEqual(saved['selection_status'], 'EXTERNAL_CREATIVE_SELECTION_RECORDED')
+        self.assertEqual(value, before)
+
+    def test_save_does_not_trust_an_approved_cache_without_external_selection(self):
+        value = deepcopy(self.package)
+        value['selection_status'] = 'EXTERNAL_CREATIVE_SELECTION_RECORDED'
+        packaging.save_package(self.output, value)
+        saved = json.loads((self.output / 'BILIBILI_PACKAGE.json').read_text(encoding='utf-8'))
+        self.assertEqual(saved['selection_status'], 'PENDING_USER_AND_CHATGPT_SELECTION')
+        self.assertIsNone(saved['selection'])
+
+    def test_save_accepts_existing_v1_without_optional_selection_cache(self):
+        value = deepcopy(self.package)
+        del value['selection_status']
+        del value['selection']
+        before = deepcopy(value)
+        packaging.save_package(self.output, value)
+        saved = json.loads((self.output / 'BILIBILI_PACKAGE.json').read_text(encoding='utf-8'))
+        self.assertEqual(saved['schema'], packaging.VERSION)
+        self.assertEqual(saved['selection_status'], 'PENDING_USER_AND_CHATGPT_SELECTION')
+        self.assertEqual(value, before)
+
     def test_missing_external_evidence_not_approval(self):
         value = self.approved_control()
         value['selection']['evidence'] = None

@@ -391,6 +391,8 @@ def write_review_page(folder, package):
 
 
 def save_package(folder, package):
-    validate_assets(package)
-    _write(Path(folder) / 'BILIBILI_PACKAGE.json', package)
-    write_review_page(folder, package)
+    saved = deepcopy(package)
+    validate_assets(saved)
+    saved['selection_status'] = selection_status(saved)
+    _write(Path(folder) / 'BILIBILI_PACKAGE.json', saved)
+    write_review_page(folder, saved)

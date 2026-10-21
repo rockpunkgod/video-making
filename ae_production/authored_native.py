@@ -236,6 +236,15 @@ def current_native(folder):
     a,p=plan(folder);n=read(folder/'native-identity.json')
     consumers={'template':TEMPLATE,'reading_rig':READING_RIG}
     optional={'challenge_rig':CHALLENGE_RIG,'symbol_rig':SYMBOL_RIG}
+    required=set()
+    if 'symbol_recipes' in p:required.add('symbol_rig')
+    if any(row.get('source_identity')=='SAME_ORIGINAL_TEXTLAYERS_NO_RECREATION'
+           for row in n.get('audit',{}).get('audience_challenges',[])):
+        required.add('challenge_rig')
+    if any(key+'_sha256' not in n for key in required):
+        raise ValueError('Active native feature is missing its saved consumer identity')
+    if required and not (folder/'NATIVE_SOURCES.json').is_file():
+        raise ValueError('Active native feature requires saved consumer source snapshots')
     consumers.update({key:path for key,path in optional.items() if key+'_sha256' in n})
     if (folder/'NATIVE_SOURCES.json').exists():
         source=read(folder/'NATIVE_SOURCES.json')

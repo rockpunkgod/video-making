@@ -217,6 +217,7 @@ def validate_original_challenges(plan, native, rows):
         for actual, wanted in zip(chunks, s['chunks']):
             source = next(a for a in article if a['name'] == wanted['source_layer'])
             if (actual['name'] != wanted['animator'] or actual['source_id'] != source['id']
+                    or actual.get('enabled') is not True
                     or actual['range'] != wanted['range'] or actual['units'] != 2 or actual['smoothness'] != 0
                     or not _vec(actual['delta'], wanted['delta']) or actual['expression_error']
                     or actual['selector_count'] != 1 or actual['property_names'] != ['ADBE Text Position 3D']):
@@ -224,6 +225,7 @@ def validate_original_challenges(plan, native, rows):
                     'name': [actual['name'], wanted['animator']], 'source_id': [actual['source_id'], source['id']],
                     'range': [actual['range'], wanted['range']], 'units': actual['units'],
                     'smoothness': actual['smoothness'], 'delta': [actual['delta'], wanted['delta']],
+                    'enabled': actual.get('enabled'),
                     'selector_count': actual['selector_count'], 'property_names': actual['property_names'],
                     'expression_error': actual['expression_error']}
                 raise ValueError('Original challenge sense-group selector, glyph range or fold delta changed: '+json.dumps(detail))
@@ -327,7 +329,7 @@ for(var ci=0;ci<ids.length;ci++){var c=app.project.itemByID(ids[ci]);
  for(var si=0;si<scope.length;si++){var s=scope[si],layers=[],chunkProps=[],article=[],chunks=[],glyphLayers=[],glyphs=[],samples=[],handoff=[],extras=[];currentFoldPrefix='CHALLENGE_FOLD_'+s.scene+'_';
   for(var li=1;li<=c.numLayers;li++)if(c.layer(li).name.indexOf('CHALLENGE_PASSAGE_')===0)extras.push(c.layer(li).name);
   for(var li=0;li<s.sources.length;li++){var l=unique(c,s.sources[li].name),st=staticLayer(l,s.start,s.handoff_end);st.comment=JSON.parse(l.comment);st.font_size=l.property('Source Text').valueAtTime(s.start,false).fontSize;st.original_font_size=l.property('Source Text').valueAtTime(0,false).fontSize;st.fold_names=[];var aa=l.property('ADBE Text Properties').property('ADBE Text Animators');for(var ai=1;ai<=aa.numProperties;ai++)if(aa.property(ai).name.indexOf(currentFoldPrefix)===0)st.fold_names.push(aa.property(ai).name);layers.push(l);article.push(st);}
-  for(var ki=0;ki<s.chunks.length;ki++){var wanted=s.chunks[ki],l=unique(c,wanted.source_layer),an=l.property('ADBE Text Properties').property('ADBE Text Animators').property(wanted.animator);if(!an)throw Error('Missing fold animator '+wanted.animator);var sels=an.property('ADBE Text Selectors'),sel=sels.property(1),ad=sel.property('ADBE Text Range Advanced'),props=an.property('ADBE Text Animator Properties'),names=[];for(var pi=1;pi<=props.numProperties;pi++){var property=props.property(pi);if(property.isModified||property.matchName==='ADBE Text Position 3D')names.push(property.matchName);}chunkProps.push(an);chunks.push({name:an.name,source_id:l.id,range:[sel.property('ADBE Text Index Start').valueAtTime(s.start,false),sel.property('ADBE Text Index End').valueAtTime(s.start,false)],units:ad.property('ADBE Text Range Units').value,smoothness:ad.property('ADBE Text Selector Smoothness').value,delta:props.property('ADBE Text Position 3D').valueAtTime(s.start,false),selector_count:sels.numProperties,property_names:names,expression_error:ad.property('ADBE Text Selector Max Amount').expressionError});}
+  for(var ki=0;ki<s.chunks.length;ki++){var wanted=s.chunks[ki],l=unique(c,wanted.source_layer),an=l.property('ADBE Text Properties').property('ADBE Text Animators').property(wanted.animator);if(!an)throw Error('Missing fold animator '+wanted.animator);var sels=an.property('ADBE Text Selectors'),sel=sels.property(1),ad=sel.property('ADBE Text Range Advanced'),props=an.property('ADBE Text Animator Properties'),names=[];for(var pi=1;pi<=props.numProperties;pi++){var property=props.property(pi);if(property.isModified||property.matchName==='ADBE Text Position 3D')names.push(property.matchName);}chunkProps.push(an);chunks.push({name:an.name,source_id:l.id,enabled:an.enabled,range:[sel.property('ADBE Text Index Start').valueAtTime(s.start,false),sel.property('ADBE Text Index End').valueAtTime(s.start,false)],units:ad.property('ADBE Text Range Units').value,smoothness:ad.property('ADBE Text Selector Smoothness').value,delta:props.property('ADBE Text Position 3D').valueAtTime(s.start,false),selector_count:sels.numProperties,property_names:names,expression_error:ad.property('ADBE Text Selector Max Amount').expressionError});}
   for(var gi=0;gi<s.glyph_names.length;gi++){var l=unique(c,s.glyph_names[gi]);glyphLayers.push(l);glyphs.push(staticLayer(l,s.start,s.handoff_end));}
   var badge=unique(c,'CHALLENGE_PAUSE_'+s.scene),bs=staticLayer(badge,s.start,s.end);bs.spoken=JSON.parse(badge.comment).spoken;
   var cam=unique(c,'READING_CAMERA');

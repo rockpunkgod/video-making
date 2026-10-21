@@ -73,7 +73,7 @@ class OriginalChallengeNative(unittest.TestCase):
                 for chunk in s['chunks']:
                     source = next(a for a in article if a['name'] == chunk['source_layer'])
                     chunks.append({'name': chunk['animator'], 'source_id': source['id'], 'range': chunk['range'],
-                        'units': 2, 'smoothness': 0, 'delta': chunk['delta'], 'expression_error': '',
+                        'enabled': True, 'units': 2, 'smoothness': 0, 'delta': chunk['delta'], 'expression_error': '',
                         'selector_count': 1, 'property_names': ['ADBE Text Position 3D']})
                 for gi, name in enumerate(s['glyph_names']):
                     glyphs.append({'name': name, 'id': 200+cid*100+s['base']+gi, 'text': s['glyph_texts'][gi],
@@ -119,6 +119,19 @@ class OriginalChallengeNative(unittest.TestCase):
     def test_all_72_frames_required_not_boundary_only(self):
         self.rows[0]['samples'].pop(35)
         with self.assertRaisesRegex(ValueError, '72 frame times'): self.validate()
+
+    def test_disabled_original_fold_cannot_pass_by_reporting_amount_100(self):
+        self.assertTrue(all(sample['chunks'][0] == 100 for sample in self.rows[0]['samples']))
+        self.rows[0]['chunks'][0]['enabled'] = False
+        with self.assertRaisesRegex(ValueError, 'sense-group selector'): self.validate()
+
+    def test_missing_fold_enabled_state_does_not_reuse_a_legacy_pass(self):
+        self.rows[0]['chunks'][0].pop('enabled')
+        with self.assertRaisesRegex(ValueError, 'sense-group selector'): self.validate()
+
+    def test_native_reader_samples_the_real_fold_animator_enabled_flag(self):
+        code = original_challenge_readback_code(self.p, self.n)
+        self.assertIn('enabled:an.enabled', code)
 
     def test_missing_middle_chunk_cannot_hide_in_self_declared_build_manifest(self):
         self.n['audit']['audience_challenges'][0]['article_chunks'].pop(1)
