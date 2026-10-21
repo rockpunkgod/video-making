@@ -146,3 +146,8 @@ Pedagogy、Student POV、Choreography、Cognitive Direction 和 Audience 的独�
 | Audience Learning | 实际cut inspection、human media-beat mapping、真实publication/observations → retrospective/rule review → 下期编辑 | `EXPERIMENTAL`实现与合成测试，当前R06无真实平台结果；不能把计划时间、研究、AI或synthetic称观众认可。E12 |
 
 教学事实由 ANSWER 提供；Episode/Audience 组织观看；Student POV 组织跟做语言；导演兑现动作和注意力；AE/PR 执行并回读；工程、真实人类、来源权利与发布分别验收。未接通的边不会因为此矩阵列齐而自动成立。
+
+2026-10-21 增量：成片证据输出属于既有 `authored_native.audit / package`，
+由 `ae_production/review_evidence.py` 导出现有数据及最终 MP4 的测量/截图，
+不拥有创意修改、审阅、评分或重渲权限。Luna low 等待者只有只读进度权限，
+主 agent 同时整理证据，Adobe 写操作仍为唯一执行者。

@@ -753,6 +753,15 @@
       ],
       "scope": "VIDEO_EXPERIENCE_UPGRADE_V1: R04 actual dual-comp Recipe/challenge/source/3D/Thinking audits PASS, static pixel observations revised; full native master rendering, final encoding and perceptual scope not yet established",
       "availability": "TRACKED_CODE_AND_PRIVATE_VERIFIED_NATIVE_IN_PROGRESS_MEDIA"
+    },
+    "E32": {
+      "title": "Automatic portable final-film review evidence increment",
+      "entrypoint": "authored_native.audit / package / package-master",
+      "implementation": "ae_production/review_evidence.py",
+      "documentation": "docs/workflows/REVIEW_EVIDENCE_OUTPUT.md",
+      "test_log": "local-data/free-showcase/video-experience-upgrade-v1-r04/REVIEW_EVIDENCE_REGRESSION.txt",
+      "test_result": "221 targeted tests PASS; real production export pending current native render",
+      "quality_or_release_authority": false
     }
   },
   "capabilities": [
@@ -2224,6 +2233,52 @@
         "RELEASE_APPROVED": "NOT_ESTABLISHED"
       },
       "recommended_action": "Use E31 and current indexed receipts for the upgrade; retain the E30 dimensions as their historical implementation checkpoint, never as completed current media verification"
+    },
+    {
+      "capability_id": "portable_final_film_review_evidence",
+      "production_role": "CURRENT_PRODUCTION",
+      "entrypoint": "ae_production/authored_native.py",
+      "version": "video-review-evidence/v1",
+      "input_contracts": [
+        "current final MP4 and same-version QA",
+        "existing AV_PLAN/native readbacks/Premiere timeline/audio",
+        "read-only native property capture in current audit"
+      ],
+      "output_contracts": [
+        "review_evidence_manifest.json",
+        "video_metadata.json",
+        "timeline_manifest.json",
+        "motion_manifest.json",
+        "audio_manifest.json",
+        "frame_index.json",
+        "actual final MP4 frames and mixed WAV",
+        "byte-bound project/config snapshots"
+      ],
+      "known_consumers": [
+        "normal authored package",
+        "normal authored package-master",
+        "independent reviewer via generic files only"
+      ],
+      "evidence_refs": [
+        "E32"
+      ],
+      "known_limits": [
+        "No Review Agent, scoring, diagnosis, creative change or automatic rerender",
+        "Scene boundaries are production frame mappings, not independent semantic detection",
+        "Missing native gain/render wall-clock/object tracking are null with reasons",
+        "Actual current full-film export verification still pending rendering"
+      ],
+      "human_approval_scope": "Evidence export only; no film quality or publication approval",
+      "availability": "AUTOMATIC_CURRENT_AUTHORED_OUTPUT_INCREMENT",
+      "scope": "Existing output directory and protected native entry only",
+      "dimensions": {
+        "DESIGNED": "CONFIRMED",
+        "IMPLEMENTED": "CONFIRMED",
+        "INTEGRATED": "NORMAL_AUDIT_AND_PACKAGE_HOOKS",
+        "NATIVE_VERIFIED": "ACTUAL_DUAL_COMP_PARAMETERS_CAPTURED_FINAL_EXPORT_PENDING",
+        "HUMAN_APPROVED": "NOT_ESTABLISHED",
+        "RELEASE_APPROVED": "NOT_ESTABLISHED"
+      }
     }
   ],
   "current_authored_runtime": {

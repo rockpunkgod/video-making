@@ -62,3 +62,14 @@ scope: the 2026-10-20 request was implementation/documentation/push only.
 The new 2026-10-21 VIDEO_EXPERIENCE_UPGRADE_V1 explicitly authorizes a new
 same-version native film, Recipe previews and Bilibili packaging candidates.
 Creative packaging choices, actual sensory review and release remain separate.
+
+During every render, the main agent assigns a read-only waiting sub-agent with
+`model: gpt-6-luna`, `reasoning_effort: low`, `fork_turns: none`. Give it the exact
+production folder and completion/error receipt paths; it reports useful stage
+changes or failure, never writes Adobe, retries or evaluates the video. The main
+agent prepares the review evidence in parallel. Adobe retains one writer.
+Normal authored `package` / `package-master` automatically exports portable JSON,
+final-MP4 frames and audio under the existing media/review_evidence directory.
+Keep plan/configuration/native observations separate from encoded measurements;
+unavailable parameters are null with reasons. This output is evidence, not a
+review agent, quality verdict or publication permission.

@@ -941,6 +941,8 @@ var out=[];for(var ci=0;ci<ids.length;ci++){var c=app.project.itemByID(ids[ci]);
     if direct is not None:
         r['direct_extraction']=direct
         write(folder/'DIRECT_EXTRACTION_NATIVE_READBACK.json',direct)
+    from ae_production.review_evidence import capture_native_motion
+    capture_native_motion(h,folder,p,n)
     write(folder/'native-audit.json',r)
     return {'source_text':'PASS','complete_candidate_identity_and_withdrawal':'PASS','replay_candidate_state':'PASS','caption_clock':'PASS','native_layers':len(native),'human_creative_review':'PENDING'}
 
@@ -1270,7 +1272,11 @@ def package(folder,master=False):
     qa['complete_copy_sha256']=p['complete_copy_sha256']
     qa['music']=[{k:m[k] for k in ('title','clip_sha','duration','timeline_start','status','public_use_allowed')} for m in p.get('music',[])]
     qa.update(media_role='NATIVE_4K_MASTER' if master else 'EDITORIAL_PROXY',formal_4k_rendered=master)
-    write(folder/('MASTER_DELIVERY_QA.json' if master else 'DELIVERY_QA.json'),qa);return {k:qa[k] for k in ('media','actual_seconds','frames','full_decode','media_role')}
+    write(folder/('MASTER_DELIVERY_QA.json' if master else 'DELIVERY_QA.json'),qa)
+    from ae_production.review_evidence import export_review_evidence
+    evidence=export_review_evidence(folder,qa,probe_result=streams)
+    return {**{k:qa[k] for k in ('media','actual_seconds','frames','full_decode','media_role')},
+            'review_evidence_manifest':evidence}
 
 
 def restore(folder):

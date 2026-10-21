@@ -2,6 +2,14 @@
 
 本页是唯一当前制作导航。[职责矩阵](MODULE_OWNERSHIP_MATRIX.md)、[能力索引](PRODUCTION_CAPABILITY_INDEX.json)和[审计记录](WORKFLOW_AUDIT.md)分别说明模块职责、能力范围和历史证据。
 
+## 自动成片证据：2026-10-21 增量
+
+沿用当前制作入口和媒体目录，`audit` 只读补采现有原生数值；正常 `package` /
+`package-master` 完成实际声画核验后自动输出 JSON、最终成片连续帧、混音和源工程快照。
+具体路径和证据边界见[成片审阅证据输出](REVIEW_EVIDENCE_OUTPUT.md)。不改创意、
+镜头或声音，不建立审阅 Agent、评分、诊断或自动改片。渲染时由 Luna low 只读等待，
+主 agent 整理证据；Adobe 始终一位写执行者。真实影片验证与工程测试分别记录。
+
 ## VIDEO_EXPERIENCE_UPGRADE_V1：2026-10-21 当前实施
 
 用户新任务覆盖上一轮“只改动，不交影片”的制作范围，授权B站包装候选、两题参与式解题、
