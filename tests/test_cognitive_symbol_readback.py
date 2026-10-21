@@ -53,6 +53,9 @@ def fixture():
                 'source_font': 'ArialMT', 'source_font_size': 64, 'apply_fill': True,
                 'source_handoff': [0, 100, 0],
                 'opacity': 100, 'outside_masks': [100, 100],
+                'outside_mask_states': [
+                    {'name': 'SYMBOL_OUTSIDE_BEFORE', 'present': False},
+                    {'name': 'SYMBOL_OUTSIDE_AFTER', 'present': False}],
                 'travel_samples': [[a + (b-a) * k/16 for a, b in zip(source, destination)] for k in range(17)],
                 'foreground': {'name': 'THINKING_FOREGROUND_INK', 'enabled': True, 'stack_index': 1,
                     'units': 2, 'smoothness': 0, 'ranges': [[0, len(quote)], [0, len(quote)]],
@@ -74,6 +77,8 @@ def fixture():
             color = SOFT_BRICK if index == 1 and pi == 1 else FOG_BLUE
             paths.append({'name': f'SYNTHETIC PATH {index}-{pi}', 'id': 31 + 100 * index + pi, 'threeD': True,
                 'enabled': True, 'guide': False, 'stroke_width': 1.5,
+                'in_point': start, 'out_point': end, 'visibility_times': [start+1, end-.46],
+                'opacity': [100, 100], 'stroke_opacity': [100, 100], 'opacity_errors': ['', ''],
                 'stroke_color': list(color), 'held_stroke_color': list(color),
                 'comment': {'relation': deepcopy(relation), 'authority': deepcopy(authority),
                             'source_refs': [deepcopy(i['source_ref']) for i in inputs]},
@@ -325,6 +330,17 @@ process.stdin.on('data', x=>input+=x);process.stdin.on('end',()=>{
                 glyph['comment'].update(range=[lo, hi], source_ref=deepcopy(spec['inputs'][index]['source_ref']),
                                         source_layer_name=build[0]['source_name'])
                 glyph['foreground']['ranges'] = [[0, len(full)], [0, len(full)]]
+                glyph['outside_mask_states'] = []
+                for name, start, end in [('SYMBOL_OUTSIDE_BEFORE', 0, lo),
+                                         ('SYMBOL_OUTSIDE_AFTER', hi, len(full))]:
+                    state = {'name': name, 'present': end > start}
+                    if end > start:
+                        state.update(enabled=True, selector_count=1,
+                            property_names=['ADBE Text Opacity'], units=2, smoothness=0,
+                            ranges=[[start, end], [start, end]],
+                            times=[spec['phases'][2]['end'], spec['end']-.46],
+                            amounts=[100, 100], opacity=[0, 0], errors=['', ''])
+                    glyph['outside_mask_states'].append(state)
             for path in row['paths']:
                 path['comment']['source_refs'] = [deepcopy(item['source_ref']) for item in spec['inputs']]
         validate_symbol_readback(plan, native, rows)
@@ -415,6 +431,69 @@ process.stdin.on('data', x=>input+=x);process.stdin.on('end',()=>{
                 path['stroke_color'].append(1)
                 path['held_stroke_color'].append(1)
         validate_symbol_readback(self.plan, self.native, rows)
+
+    def test_relation_visibility_reads_both_actual_layer_and_stroke_opacity(self):
+        for key, value in (
+                ('opacity', [0, 0]), ('opacity', [100, 0]),
+                ('stroke_opacity', [0, 0]), ('stroke_opacity', [100, float('nan')]),
+                ('in_point', 2), ('out_point', 3), ('visibility_times', [2, 4]),
+                ('opacity_errors', ['', 'Invalid opacity expression'])):
+            with self.subTest(key=key, value=value):
+                self.reject(lambda r: r[0]['paths'][0].update({key: value}))
+
+    def partial_mask_fixture(self):
+        plan, native, rows = fixture()
+        spec = plan['symbol_recipes']['rows'][0]; item = spec['inputs'][0]
+        quote = item['source_ref']['quote']; text = 'pre '+quote+' suffix'
+        lo, hi = 4, 4+len(quote)
+        item.update(source_character_start=lo, source_character_end=hi)
+        for row in rows:
+            if row['symbol_id'] != spec['symbol_id']: continue
+            glyph = row['glyphs'][0]
+            glyph.update(text=text, source_text=text)
+            glyph['comment']['range'] = [lo, hi]
+            glyph['foreground']['ranges'] = [[0, len(text)], [0, len(text)]]
+            glyph['outside_mask_states'] = [
+                {'name': name, 'present': True, 'enabled': True, 'selector_count': 1,
+                 'property_names': ['ADBE Text Opacity'], 'units': 2, 'smoothness': 0,
+                 'ranges': [[start, end], [start, end]],
+                 'times': [spec['phases'][2]['end'], spec['end']-.46],
+                 'amounts': [100, 100], 'opacity': [0, 0], 'errors': ['', '']}
+                for name, start, end in [('SYMBOL_OUTSIDE_BEFORE', 0, lo),
+                                         ('SYMBOL_OUTSIDE_AFTER', hi, len(text))]]
+        return plan, native, rows
+
+    def test_partial_original_glyph_masks_have_actual_ranges_effect_and_held_visibility(self):
+        plan, native, rows = self.partial_mask_fixture()
+        self.assertEqual(validate_symbol_readback(plan, native, rows)['status'],
+                         'PASS_SCOPED_NATIVE_RECIPE_PARAMETERS')
+        for row in rows:
+            for glyph in row.get('glyphs', []):
+                for state in glyph['outside_mask_states']:
+                    if state['present']: state['amounts'] = [[100], [100, 100, 100]]
+        validate_symbol_readback(plan, native, rows)
+
+    def test_amount_100_cannot_conceal_a_disabled_wrong_range_or_ineffective_glyph_mask(self):
+        for key, value in (
+                ('enabled', False), ('selector_count', 2), ('units', 1),
+                ('ranges', [[0, 3], [0, 4]]), ('ranges', [[0, 4], [0, 3]]),
+                ('opacity', [100, 100]), ('opacity', [0, 100]), ('amounts', [100, 0]),
+                ('property_names', ['ADBE Text Opacity', 'ADBE Text Position 3D']),
+                ('errors', ['Invalid selector', ''])):
+            with self.subTest(key=key, value=value):
+                plan, native, rows = self.partial_mask_fixture()
+                rows[1]['glyphs'][0]['outside_mask_states'][0][key] = value
+                with self.assertRaisesRegex(ValueError, 'outside glyph mask'):
+                    validate_symbol_readback(plan, native, rows)
+
+    def test_unnecessary_or_missing_mask_state_cannot_inherit_a_pass(self):
+        self.reject(lambda r: r[0]['glyphs'][0].pop('outside_mask_states'))
+        self.reject(lambda r: r[0]['glyphs'][0]['outside_mask_states'][0].update(present=True))
+        plan, native, rows = self.partial_mask_fixture()
+        rows[0]['glyphs'][0]['outside_mask_states'][0] = {
+            'name': 'SYMBOL_OUTSIDE_BEFORE', 'present': False}
+        with self.assertRaisesRegex(ValueError, 'outside glyph mask'):
+            validate_symbol_readback(plan, native, rows)
 
     def test_path_geometry_cannot_be_replaced_with_arbitrary_matching_shapes(self):
         rows = deepcopy(self.rows)

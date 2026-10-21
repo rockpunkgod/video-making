@@ -111,6 +111,31 @@ def _vertices(actual, expected):
                     for a, b in zip(actual, expected)))
 
 
+def _outside_masks(glyph, lo, hi, locked, held):
+    """Amount alone does not prove that the original outside glyphs are hidden."""
+    states = glyph.get('outside_mask_states')
+    names = ('SYMBOL_OUTSIDE_BEFORE', 'SYMBOL_OUTSIDE_AFTER')
+    ranges = ((0, lo), (hi, len(glyph['text'])))
+    if not isinstance(states, list) or len(states) != 2:
+        raise ValueError('Recipe outside glyph masks need their actual native selector/effect states')
+    for state, name, (start, end) in zip(states, names, ranges):
+        if end <= start:
+            if state != {'name': name, 'present': False}:
+                raise ValueError('Recipe gained an unbound outside glyph mask')
+            continue
+        if (not isinstance(state, dict) or state.get('name') != name or state.get('present') is not True
+                or state.get('enabled') is not True or state.get('selector_count') != 1
+                or state.get('property_names') != ['ADBE Text Opacity']
+                or state.get('units') != 2 or not _close(state.get('smoothness'), 0)
+                or state.get('ranges') != [[start, end], [start, end]]
+                or not _vector(state.get('times'), [locked, held], 1e-6)
+                or not isinstance(state.get('amounts'), list) or len(state['amounts']) != 2
+                or any(not _amount(value, 100) for value in state['amounts'])
+                or not _vector(state.get('opacity'), [0, 0], .01)
+                or state.get('errors') != ['', '']):
+            raise ValueError('Recipe outside glyph mask is disabled, misranged or ineffective')
+
+
 def validate_symbol_readback(p, n, rows):
     planned, build, comps = _scope(p, n)
     expected_rows = {(comp, symbol) for comp in comps for symbol in planned}
@@ -204,6 +229,7 @@ def validate_symbol_readback(p, n, rows):
             if not _number(width) or not 0 < width <= slot:
                 raise ValueError('Actual native Recipe font is not readable in its slot')
             _foreground(p, s, g)
+            _outside_masks(g, lo, hi, s['phases'][2]['end'], s['end'] - .46)
         expected_paths = _unique(spec['paths'], 'name', 'Recipe build path')
         actual_paths = _unique(row['paths'], 'name', 'Recipe actual path')
         if set(expected_paths) != set(actual_paths) or len(expected_paths) != 2:
@@ -214,6 +240,12 @@ def validate_symbol_readback(p, n, rows):
             own(path.get('id'), comp, path['name'], unique=True)
             color = SOFT_BRICK if s['recipe_id'] == 'same_form_different_relation' and pi == 1 else FOG_BLUE
             if (path['threeD'] is not True or path['enabled'] is not True or path['guide'] is not False
+                    or not _close(path.get('in_point'), s['start'], 1e-6)
+                    or not _close(path.get('out_point'), s['end'], 1e-6)
+                    or not _vector(path.get('visibility_times'), [s['phases'][2]['end'], s['end'] - .46], 1e-6)
+                    or not _vector(path.get('opacity'), [100, 100], .01)
+                    or not _vector(path.get('stroke_opacity'), [100, 100], .01)
+                    or path.get('opacity_errors') != ['', '']
                     or not _close(path['stroke_width'], 1.5, 1e-6)
                     or not _color(path.get('stroke_color'), color) or not _color(path.get('held_stroke_color'), color)
                     or path['comment']['relation'] != s['relation'] or path['comment']['authority'] != s['authority']
@@ -241,6 +273,15 @@ function tx(l,n){return l.property('ADBE Transform Group').property(n);}
 function namedAnimator(l,name){var group=l.property('ADBE Text Properties').property('ADBE Text Animators');for(var i=1;i<=group.numProperties;i++){var an=group.property(i);if(an.name===name)return an;}return null;}
 function amount(l,name){var an=namedAnimator(l,name);if(!an)throw Error('Required original glyph animator missing: '+name);return an.property('ADBE Text Selectors').property(1).property('ADBE Text Range Advanced').property('ADBE Text Selector Max Amount');}
 function mask(l,name,empty,t){var a=namedAnimator(l,name);if(!a){if(empty)return 100;throw Error('Required original glyph mask missing');}return amount(l,name).valueAtTime(t,false);}
+function maskState(l,name,locked,held){
+ var an=namedAnimator(l,name);if(!an)return {name:name,present:false};
+ var selectors=an.property('ADBE Text Selectors'),sel=selectors.property(1),adv=sel.property('ADBE Text Range Advanced'),amt=amount(l,name),props=an.property('ADBE Text Animator Properties'),opacity=props.property('ADBE Text Opacity'),names=[];
+ for(var i=1;i<=props.numProperties;i++)if(props.property(i).isModified)names.push(props.property(i).matchName);
+ if(!opacity)throw Error('Outside glyph mask has no actual opacity effect');
+ return {name:an.name,present:true,enabled:an.enabled,selector_count:selectors.numProperties,property_names:names,units:adv.property('ADBE Text Range Units').value,smoothness:adv.property('ADBE Text Selector Smoothness').value,
+  ranges:[[sel.property('ADBE Text Index Start').valueAtTime(locked,false),sel.property('ADBE Text Index End').valueAtTime(locked,false)],[sel.property('ADBE Text Index Start').valueAtTime(held,false),sel.property('ADBE Text Index End').valueAtTime(held,false)]],times:[locked,held],
+  amounts:[amt.valueAtTime(locked,false),amt.valueAtTime(held,false)],opacity:[opacity.valueAtTime(locked,false),opacity.valueAtTime(held,false)],errors:[amt.expressionError,opacity.expressionError]};
+}
 function world(source,t,ap){var p=tx(source,'ADBE Position').valueAtTime(t,false),a=tx(source,'ADBE Anchor Point').valueAtTime(t,false),sc=tx(source,'ADBE Scale').valueAtTime(t,false),v=[p[0]+(ap[0]-a[0])*sc[0]/100,p[1]+(ap[1]-a[1])*sc[1]/100,p[2]];if(source.parent){var par=source.parent,pp=tx(par,'ADBE Position').valueAtTime(t,false),ps=tx(par,'ADBE Scale').valueAtTime(t,false);v=[pp[0]+v[0]*ps[0]/100,pp[1]+v[1]*ps[1]/100,pp[2]+v[2]*ps[2]/100];}return v;}
 for(var ci=0;ci<ids.length;ci++){
  var c=app.project.itemByID(ids[ci]);
@@ -266,14 +307,16 @@ for(var ci=0;ci<ids.length;ci++){
     'return':tx(l,'ADBE Position').valueAtTime(S.end-1/240,false),source_world_start:world(source,S.start,ap),source_world_end:world(source,S.end,ap),
     locked_scale:tx(l,'ADBE Scale').valueAtTime(locked,false),font:doc.font,source_font:original.font,font_size:doc.fontSize,source_font_size:original.fontSize,apply_fill:doc.applyFill,
     opacity:tx(l,'ADBE Opacity').valueAtTime(locked,false),outside_masks:[mask(l,'SYMBOL_OUTSIDE_BEFORE',comment.range[0]===0,locked),mask(l,'SYMBOL_OUTSIDE_AFTER',comment.range[1]===doc.text.length,locked)],
+     outside_mask_states:[maskState(l,'SYMBOL_OUTSIDE_BEFORE',locked,held),maskState(l,'SYMBOL_OUTSIDE_AFTER',locked,held)],
     source_handoff:[hidden.valueAtTime(Math.max(0,S.start-1/24),false),hidden.valueAtTime(S.start,false),hidden.valueAtTime(S.end,false)],travel_samples:samples,
     foreground:{name:foreground.name,enabled:foreground.enabled,stack_index:foreground.propertyIndex,times:[locked,held],units:fgAdvanced.property('ADBE Text Range Units').value,smoothness:fgAdvanced.property('ADBE Text Selector Smoothness').value,
      ranges:[[fgSelector.property('ADBE Text Index Start').valueAtTime(locked,false),fgSelector.property('ADBE Text Index End').valueAtTime(locked,false)],[fgSelector.property('ADBE Text Index Start').valueAtTime(held,false),fgSelector.property('ADBE Text Index End').valueAtTime(held,false)]],
      amounts:[fgAmount.valueAtTime(locked,false),fgAmount.valueAtTime(held,false)],colors:[fgColor.valueAtTime(locked,false),fgColor.valueAtTime(held,false)],errors:[fgAmount.expressionError,fgColor.expressionError]}});
   }
   for(var pi=0;pi<B.paths.length;pi++){
-   var l=c.layer(B.paths[pi].name),root=l.property('ADBE Root Vectors Group'),path=root.property('ADBE Vector Shape - Group').property('ADBE Vector Shape'),stroke=root.property('ADBE Vector Graphic - Stroke'),color=stroke.property('ADBE Vector Stroke Color');
+    var l=c.layer(B.paths[pi].name),root=l.property('ADBE Root Vectors Group'),path=root.property('ADBE Vector Shape - Group').property('ADBE Vector Shape'),stroke=root.property('ADBE Vector Graphic - Stroke'),color=stroke.property('ADBE Vector Stroke Color'),op=tx(l,'ADBE Opacity'),strokeOpacity=stroke.property('ADBE Vector Stroke Opacity'),locked=S.phases[2].end,held=S.end-.46;
    row.paths.push({name:l.name,id:l.id,threeD:l.threeDLayer,enabled:l.enabled,guide:l.guideLayer,comment:JSON.parse(l.comment),
+     in_point:l.inPoint,out_point:l.outPoint,visibility_times:[locked,held],opacity:[op.valueAtTime(locked,false),op.valueAtTime(held,false)],stroke_opacity:[strokeOpacity.valueAtTime(locked,false),strokeOpacity.valueAtTime(held,false)],opacity_errors:[op.expressionError,strokeOpacity.expressionError],
     stroke_width:stroke.property('ADBE Vector Stroke Width').value,stroke_color:color.valueAtTime(S.phases[2].end,false),held_stroke_color:color.valueAtTime(S.end-.46,false),
     start:path.valueAtTime(S.start,false).vertices,locked:path.valueAtTime(S.phases[2].end,false).vertices,held:path.valueAtTime(S.end-.46,false).vertices});
   }
