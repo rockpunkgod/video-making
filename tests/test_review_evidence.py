@@ -18,6 +18,8 @@ class EvidenceContracts(unittest.TestCase):
         self.assertEqual(e._rate('24000/1001'),{'numerator':24000,'denominator':1001,'fps':24000/1001})
         self.assertIsNone(e._rate('0/0'))
         self.assertIsNone(e.ms(None))
+        self.assertEqual(e.frame_ceil(2692.000000000001),2692)
+        self.assertEqual(e.frame_floor(2391.999999999999),2392)
 
     def test_native_collector_reads_without_writing_and_keeps_real_ease(self):
         script=e.native_motion_script([1,703],[])

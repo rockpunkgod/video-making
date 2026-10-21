@@ -91,6 +91,7 @@ return result;
 def capture_native_motion(host,folder,plan,native):
     rows=host.js(native_motion_script([native['comp_id'],native['master_comp_id']],native['audit'].get('word_focus',[])))
     result={'provenance':'NATIVE_ENGINE_READBACK_NOT_PIXEL_MOTION_MEASUREMENT',
+        'captured_at_utc':datetime.now(timezone.utc).isoformat(),
         'plan_sha256':file_sha(folder/'AV_PLAN.json'),'native_identity_sha256':file_sha(folder/'native-identity.json'),
         'project_path':str(host.project),'compositions':rows}
     result['parameters_sha256']=data_sha(result)
@@ -130,7 +131,7 @@ def _timebase(value):
 def metadata(media,probe,frames,folder,qa):
     video=next(s for s in probe['streams'] if s['codec_type']=='video')
     audio=next((s for s in probe['streams'] if s['codec_type']=='audio'),None)
-    logs=[str(p.resolve()) for pattern in ('*RENDER_LOG.txt','*EXPORT*LOG.txt') for p in folder.glob(pattern)]
+    logs=[str(p.resolve()) for pattern in ('*RENDER*LOG.txt','*EXPORT*LOG.txt') for p in folder.glob(pattern)]
     vs=ms(video.get('start_time'));ass=ms(audio.get('start_time')) if audio else None
     return {'provenance':'FINAL_MP4_FFPROBE_MEASUREMENT','path':str(media),'file_size_bytes':media.stat().st_size,
         'sha256':file_sha(media),'container_duration_ms':ms(probe.get('format',{}).get('duration')),
@@ -198,6 +199,7 @@ def motion(plan,native,comp,folder,fps):
                 'start_ms':start,'end_ms':end,'duration_ms':end-start,
                 'start_frame':max(0,frame_floor(start*fps/1000)),'end_frame_exclusive':frame_ceil(end*fps/1000),
                 'properties':props,'property_units':units,'anchor_point':layer.get('anchor_point'),
+                'native_temporal_ease_speed_unit':'Corresponding AE property units per second; native speed is retained, key/sample times are ms',
                 'coordinate_system':'AE_PARENT_LOCAL_3D' if layer.get('parent_id') else 'AE_WORLD_3D' if layer.get('three_d') else 'AE_COMPOSITION_2D',
                 'coordinate_reference':{'comp_id':comp['comp_id'],'composition_size_px':[comp['width_px'],comp['height_px']],
                     'parent_element_id':layer.get('parent_id')},
@@ -213,7 +215,7 @@ def motion(plan,native,comp,folder,fps):
             events.append({'event_id':'focus:'+window,'scene_id':sid,'element_id':chunks[0]['element_id'],
                 'element_name':chunks[0]['element_name'],'related_element_ids':sorted({x['element_id'] for x in chunks}),
                 'type':'AE_SENSE_GROUP_FOCUS','start_ms':start,'end_ms':end,'duration_ms':end-start,
-                'start_frame':math.floor(start*fps/1000),'end_frame_exclusive':math.ceil(end*fps/1000),
+                'start_frame':frame_floor(start*fps/1000),'end_frame_exclusive':frame_ceil(end*fps/1000),
                 'provenance':'SOURCE_DEFINED_INTERVAL_WITH_NATIVE_RUNTIME_SAMPLES',
                 'properties':{'scale':{'unit':'percent','chunks':chunks}},'coordinate_system':'ORIGINAL_SOURCE_TEXT_CHARACTER_RANGE',
                 'source_definition':{'path':str((folder/'native-source/reading-focus.jsx').resolve())},
@@ -232,7 +234,7 @@ def motion(plan,native,comp,folder,fps):
                 events.append({'event_id':'legacy-native:'+str(layer['id']),'scene_id':sid,'element_id':layer['id'],
                     'element_name':layer['name'],'type':'SAVED_NATIVE_KEY_READBACK','provenance':'NATIVE_ENGINE_READBACK_HISTORICAL',
                     'start_ms':ms(min(times)),'end_ms':ms(max(times)),'duration_ms':ms(max(times)-min(times)),
-                    'start_frame':math.floor(min(times)*fps),'end_frame_exclusive':math.ceil(max(times)*fps),
+                    'start_frame':frame_floor(min(times)*fps),'end_frame_exclusive':frame_ceil(max(times)*fps),
                     'properties':{k:{'keys':[{'time_ms':ms(t),'source_frame_position':t*fps,'value':v} for t,v in values],
                         'easing':None,'easing_missing_reason':'Historical native readback did not capture interpolation/ease'} for k,values in props.items()},
                     'coordinate_system':'AE_PARENT_LOCAL_3D' if layer.get('parent') else 'AE_WORLD_3D',
@@ -242,7 +244,7 @@ def motion(plan,native,comp,folder,fps):
         events.append({'event_id':'challenge:'+r['scene'],'scene_id':r['scene'],'element_id':'CHALLENGE_PAUSE_'+r['scene'],
             'type':'CHALLENGE_AND_CONTINUOUS_HANDOFF','provenance':'PLAN_CONFIGURATION',
             'start_ms':ms(r['start']),'end_ms':ms(r['handoff_end']),'duration_ms':ms(r['handoff_end']-r['start']),
-            'start_frame':r['start_frame'],'end_frame_exclusive':math.ceil(r['handoff_end']*fps),
+            'start_frame':r['start_frame'],'end_frame_exclusive':frame_ceil(r['handoff_end']*fps),
             'configured_pause_end_ms':ms(r['end']),'configured_pause_frames':r['frames'],
             'properties':{},'important_for_frames':True,'source_definition':{'path':str(folder/'AV_PLAN.json'),'pointer':'/audience_challenges/rows'}})
     for r in plan.get('symbol_recipes',{}).get('rows',[]):
@@ -442,6 +444,8 @@ def choose_frames(scenes,events,count,fps):
             for left,right in zip(prop.get('keys',[]),prop.get('keys',[])[1:]):
                 if left['value']!=right['value']:moving.append(round((left['time_ms']+right['time_ms'])*fps/2000))
         centers=sorted(set(moving))[:3] or [(a+b)//2]
+        if e.get('phases'):
+            centers=sorted(set(centers+[round((p['start_ms']+p['end_ms'])*fps/2000) for p in e['phases']]))
         for center in centers:
             for f in range(center-4,center+5):add(f,e['scene_id'],e['event_id'],'consecutive_9_frame_sequence')
     return {f:{k:sorted(v) for k,v in r.items()} for f,r in sorted(wanted.items())}
@@ -538,6 +542,10 @@ def export_review_evidence(folder,qa,probe_result=None):
         raise ValueError('Current authored output requires a complete actual decoded frame-PTS inventory')
     meta=metadata(media,probe,pts,folder,qa);fps=meta['video']['frame_rate']['fps']
     picture=read(folder/('MASTER_PICTURE_RECEIPT.json' if qa.get('formal_4k_rendered') else 'PICTURE_RECEIPT.json'))
+    meta['render'].update(picture_receipted_frames=picture.get('frames'),
+        picture_completion_state=('ALL_NATIVE_PARTS_RECEIPTED_DONE' if all(r.get('done') is True for r in picture['parts']) else None)
+            if picture.get('parts') else None,
+        picture_completion_missing_reason=None if picture.get('parts') else 'Historical picture receipt has no individual part states')
     comp=next((c for c in snapshot['compositions'] if c['comp_id']==picture['comp_id']),None) if snapshot else None
     mot=motion(plan,native,comp,folder,fps);tim=timeline(plan,qa,pts,mot['events'],native,folder,fps)
     aud=audio(plan,qa,folder,out,media)
@@ -562,10 +570,14 @@ def export_review_evidence(folder,qa,probe_result=None):
     sources.extend((name,folder/name) for name in ('AV_AUTHOR.json','AV_PLAN.json','native-identity.json',
         'EVIDENCE_NATIVE_MOTION.json','PR_TIMELINE.json','MUSIC_NATIVE_AUTOMATION.json',
         'CHALLENGE_NATIVE_READBACK.json','SYMBOL_NATIVE_READBACK.json',
+        'NATIVE_AUDIO_DELAY.json','EPISODE_SCRIPT.md','EPISODE_SUBTITLES.srt',
+        'MASTER_DELIVERY_QA.json' if qa.get('formal_4k_rendered') else 'DELIVERY_QA.json',
         'MASTER_PICTURE_RECEIPT.json' if qa.get('formal_4k_rendered') else 'PICTURE_RECEIPT.json') if (folder/name).exists())
     sources.extend(('native_source',p) for p in sorted((folder/'native-source').glob('*.jsx')))
     for role,source in sources:
         target=out/'source_snapshots'/source.name;target.parent.mkdir(exist_ok=True)
+        if qa.get(role+'_sha256') and file_sha(source)!=qa[role+'_sha256']:
+            raise ValueError('Project changed since the same-version final package checks: '+role)
         shutil.copy2(source,target);snapshots.append({'role':role,'path':target.relative_to(out).as_posix(),
             'sha256':file_sha(target),'original_source_path':str(source),
             'scope':'Exact bytes at evidence capture; later application Save may change original project metadata'})
