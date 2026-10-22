@@ -1,5 +1,61 @@
 # 当前 FREE_SHOWCASE 生产入口
 
+## 2026-10-22 视觉记忆与独立字幕增量（制作中）
+
+本轮文案可以改写，配音素材保持不变。`recording_copy` 只生成待独立审阅的
+`NEXT_RECORDING_SCRIPT.md`；当前 `voices`、完整 take、实听逐字稿和 SRT 仍绑定原声，
+不把新文案冒充已经录制。当前挑战显式选择 120 帧；历史 72 帧继续兼容，144 帧须经
+实际手机检查后另作作者决定。缩小截图不能代签手机阅读。
+
+`audit <folder> --check-subtitle-mode` 是当前入口的只读字幕检查。历史默认为
+`burned_in`；新建原生工程必须显式 `subtitle_mode=premiere_sidecar`，AE 不创建字幕层，原字幕安全区
+仅作不参与渲染的参考层。Premiere 导入同版 SRT 创建字幕轨，保留导入与读回结果，
+不把 accepted 冒充内容已核验。最终 `package` 仍复用 AE 无字幕画面包，独立交付 SRT。
+将来自录只重对齐 cue 和剪辑声音时，不需要为字幕文字重新渲染 AE；改动镜头仍需重渲。
+
+现有 Recipe 增量支持词对词等价构图和共同名词向右分叉，来源字形及冻结关系继续绑定。
+角色展开前保留 18 帧表面匹配；价格比较的对象保留到指代口播完成，随后退出主比较。
+两个方向线采用同色，细箭头只表达同名词对应不同动作，不充当答案或情绪符号。
+直接提取可显式选择原位 8 帧、100→108% 的出发提示；提示与原有阅读尾部重叠，
+不再插入新等待。明场和原生三维 Reading Rig 保留。
+
+方法名使用 **4K 合成字号 72px**、橙色、中心 `[1920,720]`；对应判断动作完成后
+出现，完整保持 48 帧，再独立淡出。片尾明亮纸面：居中 120px 方法名、下方 60px
+墨色“看到同词→对上关系→判断”，完整保持 48 帧后淡出，没有其他浮动元素。
+答案确认保留原选项对象，尺度统一 135%，关闭重复答案标签。SC05 选项 80%，
+`judge_hold_frames=24` 控制判断完成到 handoff，不能替代或缩短意群阅读。
+实查上一交付的判断后停留约 10 帧，不把工单中的 48 帧写成实测基线。
+SC04、SC06 本轮保持已有 brief 参数；轻核验旧 evidence_hold_frames 仍可读取。
+语言意群最低可辨认时长仍由原生构建检查，不能为快速搜索强行压过该边界。
+
+上述状态是代码和作者输入改造。只有同版原生读回、实际媒体与声画包完成，才可更新
+生产索引；实际观看、试听、手机阅读及学生理解分别记录，仍不自动公开发布。
+
+字幕必须作为独立 Caption 轨道输出（SRT 格式），禁止烧录进画面合成。
+自录口播后只重新对齐字幕 cue，画面不重渲。
+
+### package-master 的真人三问门槛
+
+按根目录 AGENTS.md 的三问，先提供本轮完整原生画面及 Premiere 实际声画导出供
+高中生整片观看、作者仅听音频、手机实际尝试暂停。只有三项测试实际完成并有真实
+回答后才能进入 `package-master`，PENDING 不得封装。代理片、原生渲染及审阅准备
+可以继续；不得将这些候选标记成最终验收或公开发布。
+
+在同一生产目录保存 `PRE_PACKAGE_QUESTIONS.json`：schema 为
+`pre-package-questions/v1`，status 为 `ANSWERED`，绑定 `plan_sha256`、
+`picture_sha256`（MASTER_PICTURE_RECEIPT 的实际文件）及 `premiere_export_sha256`。
+questions 包含 `student_full_view`、`author_audio_only`、`phone_pause`；每项记录
+respondent（可用化名）、respondent_role（依次 high_school_student / author /
+phone_viewer）、human=true、performed_required_test=true、recorded_at、原话 answer，
+以及原始回答 evidence.path / evidence.sha256。只登记实际收到的真人反馈，不能由
+Agent 生成替代答案。任何输入或媒体变化都使旧回答失效；三问答毕也不等于同意发布。
+
+为先完成这三项真人测试，在完整 `render-master → premiere` 后运行 `review-copy`。
+它复用原封装与证据导出函数，输出 `REVIEW_COPY_4K24.mp4`、独立 SRT 和证据包，
+只写 `REVIEW_CANDIDATE_QA.json`；不写 `MASTER_DELIVERY_QA.json`，不更新生产指针，
+不授予发布或最终验收。回答绑定上述相同的实际画面、PR 声画及 AV_PLAN 后，
+`package-master` 才可执行。不能用审阅候选名称冒充正式交付。
+
 本页是唯一当前制作导航。[职责矩阵](MODULE_OWNERSHIP_MATRIX.md)、[能力索引](PRODUCTION_CAPABILITY_INDEX.json)和[审计记录](WORKFLOW_AUDIT.md)分别说明模块职责、能力范围和历史证据。
 
 ## 自动成片证据：2026-10-21 增量

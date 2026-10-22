@@ -296,6 +296,8 @@ def motion(plan,native,comp,folder,fps):
                     'sample_time_basis':'Existing cognitive_symbol_review collector: start+(phase[1].end-start)*k/16',
                     'runtime_position_samples':[{'time_ms':ms(definition['start']+(definition['phases'][1]['end']-definition['start'])*k/16),
                         'value':v} for k,v in enumerate(g['travel_samples'])],
+                    'apparent_identity_samples':[{'time_ms':ms(v['time']),'position':v['position'],
+                        'scale_percent':v['scale'],'opacity_percent':v['opacity']} for v in g.get('surface_states',[])],
                     'font':g['font'],'font_size_ae_px':g['font_size'],'scale_percent':g['locked_scale']}
                     for g in r.get('glyphs',[])]
     return {'time_unit':'ms','frame_numbering':'zero-based; end_frame_exclusive','events':events,
@@ -388,8 +390,9 @@ def audio(plan,qa,folder,out,media):
     for i,m in enumerate(plan.get('music',[])):
         path=Path(m['clip_path']);matches=[c for c in clips if c['name']==path.name];clip=matches[0] if len(matches)==1 else None
         actual=[]
-        if automation and len(plan.get('music',[]))==1:
-            for k in automation['native_readback'].get('keyframes',[]):
+        bound=automation if automation and len(plan.get('music',[]))==1 else next((r['automation'] for r in (automation or {}).get('clips',[]) if Path(r['clip_path'])==path and abs(r['timeline_start']-m['timeline_start'])<1/48000),None)
+        if bound:
+            for k in bound['native_readback'].get('keyframes',[]):
                 actual.append({'clip_relative_ms':ms(k['time']),'stored_media_time_ms':ms(k.get('mediaSeconds')),
                     'native_stored_value':k['value'],'native_unit':'Premiere Internal Volume scalar',
                     'derived_level_db':20*math.log10(k['value'])+15 if k['value']>0 else None})
@@ -599,7 +602,9 @@ def export_review_evidence(folder,qa,probe_result=None):
         layer=layers.get('CAPTION_'+caption['caption_id'])
         caption['native_range_ms']=None if layer is None else [layer['in_ms'],layer['out_ms']]
         caption['native_element_id']=None if layer is None else layer['id']
-        caption['native_missing_reason']=None if layer else 'No matching native layer readback for this output composition'
+        caption['native_missing_reason']=None if layer else ('Intentionally external Premiere subtitle track; no AE text is burned into the picture' if plan.get('subtitle_mode')=='premiere_sidecar' else 'No matching native layer readback for this output composition')
+        caption['delivery_mode']=plan.get('subtitle_mode','burned_in')
+        caption['premiere_receipt']=str(folder/'PR_CAPTIONS.json') if (folder/'PR_CAPTIONS.json').exists() else None
     wanted=choose_frames(tim['scenes'],mot['events'],len(pts),fps)
     index=extract_frames(media,out,wanted,pts,meta)
     docs={'video_metadata':meta,'timeline_manifest':tim,'motion_manifest':mot,'audio_manifest':aud,'frame_index':index}
@@ -615,7 +620,8 @@ def export_review_evidence(folder,qa,probe_result=None):
         'DIRECT_EXTRACTION_NATIVE_READBACK.json','READING_THINKING_NATIVE_READBACK.json',
         'READING_CONTINUITY_NATIVE_1.json','READING_CONTINUITY_NATIVE_703.json',
         'NATIVE_AUDIO_DELAY.json','EPISODE_SCRIPT.md','EPISODE_SUBTITLES.srt',
-        'MASTER_DELIVERY_QA.json' if qa.get('formal_4k_rendered') else 'DELIVERY_QA.json',
+        'SUBTITLE_NATIVE_AUDIT.json','PR_CAPTIONS.json','SUBTITLE_DELIVERY.json','VISUAL_MEMORY_NATIVE_READBACK.json',
+        'REVIEW_CANDIDATE_QA.json' if qa.get('formal_delivery') is False else 'MASTER_DELIVERY_QA.json' if qa.get('formal_4k_rendered') else 'DELIVERY_QA.json',
         'MASTER_PICTURE_RECEIPT.json' if qa.get('formal_4k_rendered') else 'PICTURE_RECEIPT.json') if (folder/name).exists())
     sources.extend(('native_source',p) for p in sorted((folder/'native-source').glob('*.jsx')))
     for role,source in sources:
@@ -633,7 +639,10 @@ def export_review_evidence(folder,qa,probe_result=None):
     for name in ('ffmpeg','ffprobe'):
         tools[name]=subprocess.check_output([name,'-version'],text=True).splitlines()[0]
     result={'evidence_version':VERSION,'generated_at_utc':datetime.now(timezone.utc).isoformat(),
+        'media_role':qa.get('media_role'),'formal_delivery':qa.get('formal_delivery'),
         'video':{'path':str(media),'sha256':qa['sha256']},'repository_commit':commit,
+        'subtitle_mode':plan.get('subtitle_mode','burned_in'),
+        'subtitle_delivery':qa.get('subtitle_delivery'),
         'repository_commit_scope':'HEAD at evidence generation; exact built native JSX bytes are captured separately',
         'native_build_commit':None,
         'native_build_commit_missing_reason':'Existing build receipt binds source bytes rather than a Git build commit; not reconstructed',

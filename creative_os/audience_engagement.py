@@ -34,6 +34,7 @@ HOOK_VERSION = '1.0.0'
 HOOK_PHASES = ['enter', 'surface_align', 'relation_displace', 'unresolved_hold', 'match_into_task']
 CHALLENGE_VERSION = 'FIRST_PERSON_CHALLENGE_V1'
 CHALLENGE_FRAMES = 72
+CHALLENGE_FRAME_CHOICES = (72, 120, 144)
 CHALLENGE_PAUSE_TEXT = '想先自己做？可暂停'
 
 
@@ -49,7 +50,7 @@ def validate_authored_challenges(author, bundles, folder=None):
     keys={'contract_version','frames','presentation','request_source','pause_badge','questions'}
     if (not isinstance(decision,dict) or set(decision)!=keys
             or decision['contract_version']!=CHALLENGE_VERSION
-            or type(decision['frames']) is not int or decision['frames']!=CHALLENGE_FRAMES
+            or type(decision['frames']) is not int or decision['frames'] not in CHALLENGE_FRAME_CHOICES
             or decision['presentation']!='full_source_question_split'):
         raise ValueError('Unsupported or incomplete first-person challenge decision')
     badge=decision['pause_badge']
@@ -205,11 +206,12 @@ def compile_authored_challenges(author,bundles,clock,worlds=None,folder=None):
         start=live['start']
         if type(start) not in (int,float) or not math.isfinite(start) or start<0:
             raise ValueError('Challenge requires a finite existing task start')
-        end=start+CHALLENGE_FRAMES/fps
+        frames=author['audience_challenges']['frames']
+        end=start+frames/fps
         if (abs(start*fps-round(start*fps))>1e-6
                 or type(live['end']) not in (int,float) or not math.isfinite(live['end'])
                 or end+.8>live['end']+1e-8 or live.get('attention_events') or live.get('reading_events')):
-            raise ValueError('Challenge requires 72 neutral frames plus its 0.8s handoff inside the existing task')
+            raise ValueError('Challenge requires its authored neutral frames plus its 0.8s handoff inside the existing task')
         segments=[s for s in clock['segments'] if s['scene_id']==scene['id']]
         if (not segments or [s['id'] for s in segments]!=scene['voice_ids']
                 or any(s['text']!=voices[s['id']] or s.get('truncated') is not False
@@ -228,8 +230,8 @@ def compile_authored_challenges(author,bundles,clock,worlds=None,folder=None):
                 ('options/'+c,snapshot['options'][c]) for c in 'ABCD']:
             refs.append({'world':world,'pointer':'/'+field,'start':0,'end':len(text),'quote':text})
         rows.append({'scene':scene['id'],'world':world,'question_id':snapshot['question_id'],
-            'scene_sha':sha(scene),'start':start,'end':end,'handoff_end':end+.8,'frames':CHALLENGE_FRAMES,
-            'start_frame':round(start*fps),'end_frame':round(start*fps)+CHALLENGE_FRAMES,
+            'scene_sha':sha(scene),'start':start,'end':end,'handoff_end':end+.8,'frames':frames,
+            'start_frame':round(start*fps),'end_frame':round(start*fps)+frames,
             'passage':snapshot['passage'],'stem':snapshot['stem'],
             'options':{c:snapshot['options'][c] for c in 'ABCD'},'source_refs':refs,
             **deepcopy(sources[world]),'pause_badge':deepcopy(author['audience_challenges']['pause_badge']),

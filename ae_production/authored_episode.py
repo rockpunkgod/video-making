@@ -23,7 +23,7 @@ AUTHOR = 'AV_AUTHOR.json'
 AUTHOR_KEYS = {'revision','product','format','media_role','public_render_ready','copy_review',
                'sources','input_files','voices','scenes','excerpts','producer','host',
                'voice_delivery','voice_inputs','music','teaching_focus','editorial','layout','alignment_source',
-               'copy_review_evidence','audience_hook','source_attribution','visual_states','replay_policy','audience_challenges','cognitive_symbols'}
+               'copy_review_evidence','audience_hook','source_attribution','visual_states','replay_policy','audience_challenges','cognitive_symbols','subtitle_mode','recording_copy'}
 KINDS = {'task', 'locate', 'compare', 'answer', 'replay', 'recap'}
 SHOT_KEYS = {'id', 'kind', 'world', 'voice_ids', 'title', 'excerpt', 'candidate',
              'event', 'replay_of', 'source_refs', 'action_refs', 'terminal_refs',
@@ -31,7 +31,8 @@ SHOT_KEYS = {'id', 'kind', 'world', 'voice_ids', 'title', 'excerpt', 'candidate'
              'candidate_anchor', 'event_anchor', 'attention', 'locator',
              'audience_intent', 'pre_excerpt', 'secondary_excerpt', 'secondary_anchor', 'recap_worlds',
              'candidate_entry_seconds', 'choreography', 'reading_path', 'voice_placements', 'screen_title',
-             'candidate_reading_policy', 'comparison_background_policy', 'extraction_policy', 'voice_placement_offsets', 'answer_confirmation'}
+             'candidate_reading_policy', 'comparison_background_policy', 'extraction_policy', 'voice_placement_offsets', 'answer_confirmation',
+             'extraction_signal', 'light_presentation', 'method_signal', 'closing_memory', 'search_motion', 'judge_hold_frames'}
 
 MOTION_KEYS = {'orient_seconds', 'candidate_read_seconds', 'candidate_travel_seconds',
                'source_read_seconds', 'extract_seconds', 'comparison_seconds',
@@ -177,6 +178,11 @@ def script(folder):
     author, _ = checked_author(folder)
     output = folder / 'EPISODE_SCRIPT.md'
     output.write_text(script_text(author), encoding='utf-8')
+    if 'recording_copy' in author:
+        revised=deepcopy(author)
+        for voice in revised['voices']:voice['text']=author['recording_copy'].get(voice['id'],voice['text'])
+        revised['copy_review']='PENDING_USER_REVIEW_NEW_RECORDING_NOT_PRODUCED'
+        (folder/'NEXT_RECORDING_SCRIPT.md').write_text(script_text(revised),encoding='utf-8')
     return {'revision': author['revision'], 'script': str(output),
             'complete_copy': script_text(author), 'copy_review': author['copy_review'],
             'handoff': 'Paste the complete copy in chat on every copy revision; exporting is not user approval.'}
@@ -271,6 +277,13 @@ def checked_author(folder):
     a = read(folder / AUTHOR)
     if set(a)-AUTHOR_KEYS:raise ValueError('Unsupported production input: '+str(sorted(set(a)-AUTHOR_KEYS)))
     validate_copy_review(a)
+    if a.get('subtitle_mode','burned_in') not in ('burned_in','premiere_sidecar'):
+        raise ValueError('Subtitle mode must be burned_in or premiere_sidecar')
+    if 'recording_copy' in a:
+        copy=a['recording_copy']
+        if (not isinstance(copy,dict) or set(copy)-{v['id'] for v in a['voices']}
+                or any(not isinstance(v,str) or not v.strip() for v in copy.values())):
+            raise ValueError('Future recording copy must reference existing takes; it cannot relabel their spoken text')
     if a['product'] != 'FREE_SHOWCASE' or a['public_render_ready'] is not False:
         raise ValueError('This consumer is an internal FREE_SHOWCASE rough-cut adapter')
     if a['media_role'] != 'EDITORIAL_PROXY' or a['format'] != {'width': 1920, 'height': 1080, 'fps': 24}:
@@ -319,6 +332,37 @@ def checked_author(folder):
         ids.add(s['id']); used.extend(s['voice_ids'])
         if not s['audience_intent'].strip():
             raise ValueError('The author must specify the concrete viewing purpose')
+        if 'search_motion' in s and (s['kind']!='locate' or s['search_motion']!={'scan_opacity':45,'lock_frames':8,'camera_push_percent':4}):
+            raise ValueError('Search lock must retain the explicit scan/locate distinction')
+        if 'extraction_signal' in s:
+            if s.get('extraction_policy')!='highlight_then_extract' or s['extraction_signal']!={'frames':8,'scale_percent':108}:
+                raise ValueError('Departure signal requires eight frames and 108 percent on source glyphs')
+        if 'light_presentation' in s:
+            v=s['light_presentation']
+            if (s['kind']!='compare' or set(v)-{'evidence_hold_frames'}!={'option_scale_percent'}
+                    or v['option_scale_percent'] not in (80,100) or ('evidence_hold_frames' in v and v['evidence_hold_frames'] not in (24,36))):
+                raise ValueError('Light presentation needs explicit option size and evidence hold')
+        if 'judge_hold_frames' in s:
+            if (s['kind']!='compare' or type(s['judge_hold_frames']) is not int or s['judge_hold_frames']!=24
+                    or a['teaching_focus']['questions'][s['world']]['options'][s['candidate']]['treatment']!='quick'):
+                raise ValueError('Explicit 24-frame judgement hold belongs to a quick comparison')
+        if 'method_signal' in s:
+            v=s['method_signal']
+            if (set(v)!={'text','position_px','font_size_px','hold_frames','fade_frames'}
+                    or v['text']!='换词不换义' or v['position_px']!=[1920,720]
+                    or v['font_size_px']!=72 or type(v['hold_frames']) is not int or v['hold_frames']<48
+                    or type(v['fade_frames']) is not int or not 1<=v['fade_frames']<=24
+                    or not s['action_refs']):
+                raise ValueError('Method trigger must bind a real method action and the shared 4K specification')
+        if 'closing_memory' in s:
+            v=s['closing_memory']
+            if (s['kind']!='recap' or set(v)!={'action','method','font_size_px','action_font_size_px','hold_frames','fade_frames'}
+                    or v['action']!='看到同词→对上关系→判断' or v['method']!='换词不换义'
+                    or type(v['font_size_px']) not in (int,float) or not 120<=v['font_size_px']<=480
+                    or v['action_font_size_px']!=60
+                    or type(v['hold_frames']) is not int or v['hold_frames']<48
+                    or type(v['fade_frames']) is not int or not 1<=v['fade_frames']<=24):
+                raise ValueError('Closing memory must keep the demonstrated action and method with a two-second hold')
         if s.get('candidate_reading_policy','visible') not in ('visible','quiet_source_until_read'):
             raise ValueError('Unsupported source/candidate reading policy')
         extraction=s.get('extraction_policy')
@@ -343,7 +387,8 @@ def checked_author(folder):
             if 'answer_confirmation' in s:
                 confirmation=s['answer_confirmation']
                 if (s['kind']!='answer' or s.get('event')!='final'
-                        or set(confirmation)!={'scale_percent','viewer_task'}
+                        or set(confirmation)-{'show_label'}!={'scale_percent','viewer_task'}
+                        or ('show_label' in confirmation and type(confirmation['show_label']) is not bool)
                         or type(confirmation['scale_percent']) not in (int,float)
                         or not 100<confirmation['scale_percent']<=140
                         or not isinstance(confirmation['viewer_task'],str) or not confirmation['viewer_task'].strip()):
@@ -611,7 +656,7 @@ def compile_clock(a, clips, aligned):
                     s['source_arrive']=s['extract_start']=visual
                 elif s.get('extraction_policy')=='highlight_then_extract':
                     s['source_arrive']=s['extract_start']=visual
-                    s['extraction_highlight_at']=grid(visual-.25,fps)
+                    s['extraction_highlight_at']=grid(visual-s.get('extraction_signal',{}).get('frames',6)/fps,fps)
                     s['extraction_highlights']=[x['phrase'] for x in s['attention'] if x['target']=='source']
                 else:
                     s['source_arrive']=grid(visual+motion['orient_seconds'],fps)
@@ -672,6 +717,12 @@ def compile_clock(a, clips, aligned):
                 t=max(t,s['comparison_until'])
                 s['decision_end']=grid(t+motion['decision_seconds'],fps)
                 s['return_start']=grid(max(s['return_start'],s['decision_end']+motion['result_seconds']),fps)
+                if 'judge_hold_frames' in s:
+                    # Hold the completed judgement, not an English reading cue.
+                    # A complete voice take must still fit before the handoff.
+                    s['return_start']=s['decision_end']+s['judge_hold_frames']/fps
+                    if s['voice_end']>s['return_start']+1e-7:
+                        raise ValueError('24-frame judge hold would cut a complete voice take')
                 s['end']=grid(s['return_start']+motion['return_seconds'],fps)
             if t < s['settled'] or t >= s['end'] - .5:
                 raise ValueError('Decision requires visible comparison and time for its complete movement')
@@ -681,6 +732,13 @@ def compile_clock(a, clips, aligned):
             events.append({'scene': s['id'], 'world': s['world'], 'candidate': s['candidate'],
                            'kind': s['event'], 'time': t, 'refs': s['terminal_refs'],
                            'credit': 'whole_question_terminal_not_brand_method'})
+        if s.get('method_signal'):
+            if 'decision_end' not in s:raise ValueError('Method signal requires a completed bound judgement')
+            spec=s['method_signal'];s['method_signal_start']=s['decision_end']
+            s['method_signal_release']=s['method_signal_start']+spec['hold_frames']/fps
+            s['method_signal_end']=s['method_signal_release']+spec['fade_frames']/fps
+            s['return_start']=grid(max(s['return_start'],s['method_signal_end']),fps)
+            s['end']=grid(s['return_start']+motion['return_seconds'],fps)
         scenes.append(s); cursor = s['end']
     clock = {'scenes': scenes, 'segments': segments, 'cues': cues, 'candidate_events': events,
              'duration': cursor, 'frames': round(cursor * fps)}
@@ -689,7 +747,8 @@ def compile_clock(a, clips, aligned):
 
 SCENE_CLOCK_FIELDS = ('start','end','oriented','recognition_end','extract_start','settled',
     'candidate_start','candidate_arrive','source_arrive','voice_start','voice_end',
-    'comparison_until','return_start','decision_end','event_time','secondary_at','extraction_highlight_at')
+    'comparison_until','return_start','decision_end','event_time','secondary_at','extraction_highlight_at',
+    'method_signal_start','method_signal_release','method_signal_end')
 
 
 def shift_body_clock(clock, offset, fps=24):
@@ -834,6 +893,7 @@ def prepare(folder):
         from creative_os.motion_identity import compile_symbols
         plan['symbol_recipes']=compile_symbols(a,bundles,plan,worlds,folder)
     plan['article_chunking'] = chunks
+    if 'subtitle_mode' in a:plan['subtitle_mode']=a['subtitle_mode']
     if 'source_attribution' in a:plan['source_attribution']=deepcopy(a['source_attribution'])
     if 'visual_states' in a:
         plan['visual_states']=compile_visual_states(a,plan)

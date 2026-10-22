@@ -126,6 +126,8 @@ def plan(folder):
         validate_compiled_symbols(p.get('symbol_recipes'),a,bundles,p,p['worlds'],folder)
     if p.get('source_attribution')!=a.get('source_attribution'):
         raise ValueError('Paper/article attribution was changed or bypassed')
+    if p.get('subtitle_mode','burned_in')!=a.get('subtitle_mode','burned_in'):
+        raise ValueError('Subtitle mode changed without a new prepared native revision')
     if 'visual_states' in a:
         from ae_production.authored_episode import compile_visual_states
         if p.get('visual_states')!=compile_visual_states(a,p):
@@ -215,6 +217,8 @@ class Host:
 
 def build(folder):
     a,p=plan(folder);require_focus(a)
+    if a.get('subtitle_mode')!='premiere_sidecar':
+        raise ValueError('New production requires independent Premiere captions and SRT; historical burned-in projects remain inspectable')
     from creative_os.audience_engagement import require_hook_decision
     require_hook_decision(a,folder,operation='build')
     if 'article_chunking' not in p:raise ValueError('Run chunks and prepare before a new native build')
@@ -479,7 +483,7 @@ def validate_challenge_native(p,rows,comp_ids):
             raise ValueError('Native challenge lost full original content, source identity or exact screen-only range')
         samples=r['samples']
         if [x['frame'] for x in samples]!=list(range(ch['start_frame'],ch['end_frame'])):
-            raise ValueError('Challenge must be inspected at all and only its 72 frame times')
+            raise ValueError('Challenge must be inspected at all and only its authored frame times')
         if (type(r['article_height']) not in (int,float) or not math.isfinite(r['article_height'])
                 or not 0<r['article_height']<=448 or not 0<r['article_width']<=762):
             raise ValueError('Complete article overflows the challenge reading area')
@@ -500,7 +504,7 @@ def validate_challenge_native(p,rows,comp_ids):
                         or any(len(color)!=3 or any(type(a) not in (int,float) or not math.isfinite(a) or abs(a-b)>1e-5
                             for a,b in zip(color,[.09,.13,.16])) for color in glyph['colors'])):
                     raise ValueError('Challenge stem/options are incomplete, moved, hidden or judgment-emphasized')
-    return {'status':'PASS_NATIVE_72_FRAME_PARAMETERS','rows':rows,
+    return {'status':'PASS_NATIVE_72_FRAME_PARAMETERS' if all(s['end_frame']-s['start_frame']==72 for s in p['audience_challenges']['rows']) else 'PASS_NATIVE_AUTHORED_FRAME_PARAMETERS','rows':rows,
             'normal_speed_review':'UNOBSERVED','mobile_legibility':'UNOBSERVED','listening_review':'UNOBSERVED'}
 
 
@@ -843,10 +847,13 @@ var out=[];for(var ci=0;ci<ids.length;ci++){var c=app.project.itemByID(ids[ci]);
                     or any(y>x+.01 or abs(x-y)>25 for x,y in zip(v['exit_values'],v['exit_values'][1:]))):
                 raise ValueError('Light source accent persists into the next judgement or snaps to ink')
         write(folder/'LIGHT_ACCENT_CONTINUITY.json',{'rows':accent_values,'human_review':'PENDING'})
-    for c in p['cues']:
-        row=native['CAPTION_'+c['id']]
-        if row['text'].replace('\r','\n')!='\n'.join(c['display_lines']) or abs(row['inPoint']-c['start'])>1e-4 or abs(row['outPoint']-c['end'])>1e-4:
-            raise ValueError('Caption text or audio clock changed')
+    from ae_production.subtitles import validate_native_captions
+    subtitle_audit=validate_native_captions(p,r['layers'])
+    if p.get('subtitle_mode')=='premiere_sidecar':
+        for cid in (n['comp_id'],n['master_comp_id']):
+            guide=h.js('var c=app.project.itemByID('+str(cid)+');return {guide:c.layer("CAPTION_SAFE_AREA").guideLayer};')
+            if guide.get('guide') is not True:raise ValueError('Subtitle guide would still burn a solid lane into the picture')
+    write(folder/'SUBTITLE_NATIVE_AUDIT.json',subtitle_audit)
     validate_native_replay_inventory(a,p,n['audit'],r['layers'])
     isolation=background_isolation_rows(p)
     if isolation:
@@ -964,10 +971,71 @@ var out=[];for(var ci=0;ci<ids.length;ci++){var c=app.project.itemByID(ids[ci]);
     if direct is not None:
         r['direct_extraction']=direct
         write(folder/'DIRECT_EXTRACTION_NATIVE_READBACK.json',direct)
+    if any(s.get('method_signal') or s.get('light_presentation') or s.get('extraction_signal') for s in p['scenes']):
+        visual_revision_readback(h,p,n,folder)
     from ae_production.review_evidence import capture_native_motion
     capture_native_motion(h,folder,p,n)
     write(folder/'native-audit.json',r)
     return {'source_text':'PASS','complete_candidate_identity_and_withdrawal':'PASS','replay_candidate_state':'PASS','caption_clock':'PASS','native_layers':len(native),'human_creative_review':'PENDING'}
+
+
+def visual_revision_readback(h,p,n,folder):
+    """Read the exact opt-in presentation states in both real AE compositions."""
+    code=r'''var ids=IDS,shots=SHOTS,excerpts=EXCERPTS,out=[];
+function amount(an,t){var v=an.property('ADBE Text Selectors').property(1).property('ADBE Text Range Advanced').property('ADBE Text Selector Max Amount').valueAtTime(t,false);return v instanceof Array?v[0]:v;}
+for(var ci=0;ci<ids.length;ci++){var c=app.project.itemByID(ids[ci]),factor=c.width/1280;
+ for(var si=0;si<shots.length;si++){var s=shots[si],r={comp_id:c.id,scene:s.id};
+  if(s.method_signal){var l=c.layer('METHOD_SIGNAL_'+s.id),doc=l.property('Source Text').value,pos=l.transform.position.value;r.method={text:doc.text,font_size_4k_px:doc.fontSize*l.transform.scale.value[0]/100*3840/c.width,color:doc.fillColor,position_4k_px:[pos[0]*3840/c.width,pos[1]*3840/c.width],in_ms:l.inPoint*1000,out_ms:l.outPoint*1000,opacities:[l.transform.opacity.valueAtTime(s.method_signal_start,false),l.transform.opacity.valueAtTime(s.method_signal_release,false),l.transform.opacity.valueAtTime(s.method_signal_end,false)]};}
+  if(s.method_signal){r.method.retired_evidence=[];for(var li=1;li<=c.numLayers;li++){var el=c.layer(li);if(el.name.indexOf('EXTRACT_'+s.id+'_')===0||el.name==='CANDIDATE_FLIGHT_'+s.id)r.method.retired_evidence.push({name:el.name,opacity:el.transform.opacity.valueAtTime(s.method_signal_start,false)});}}
+  if(s.light_presentation){var l=c.layer('LIGHT_CANDIDATE_'+s.id),e=s.reading_events[s.reading_events.length-1];r.light={font_size_4k_px:l.property('Source Text').value.fontSize*l.transform.scale.value[0]/100*3840/c.width,hold_frames:Math.round((e.end_time-e.arrival)*24),evidence:[]};var bs=excerpts[s.excerpt].block_ids;for(var bi=0;bi<bs.length;bi++){var op=c.layer(bs[bi]).transform.opacity;r.light.evidence.push({name:bs[bi],during:op.valueAtTime((e.arrival+e.end_time)/2,false),after:op.valueAtTime(e.end_time+.2,false)});}}
+  if(s.extraction_signal){r.signals=[];for(var hi=0;hi<s.extraction_highlights.length;hi++){var bs=excerpts[s.excerpt].block_ids;for(var bi=0;bi<bs.length;bi++){var source=c.layer(bs[bi]),text=source.property('Source Text').value.text;if(text.indexOf(s.extraction_highlights[hi])<0)continue;for(var li=0;li<2;li++){var l=li?c.layer('EXTRACT_'+s.id+'_'+bs[bi]):source,an=l.property('ADBE Text Properties').property('ADBE Text Animators').property('DIRECT_DEPARTURE_SCALE_'+s.id+'_'+hi),scale=an.property('ADBE Text Animator Properties').property('ADBE Text Scale 3D');r.signals.push({name:l.name,scale:scale.value,lead_frames:(s.extract_start-s.extraction_highlight_at)*24,amounts:[amount(an,s.extraction_highlight_at),amount(an,s.extract_start),amount(an,s.extract_start+.25)]});}}}}
+  if(s.answer_confirmation&&s.answer_confirmation.show_label===false){r.redundant_labels=0;for(var li=1;li<=c.numLayers;li++)if(c.layer(li).name==='FINAL_'+s.world)r.redundant_labels++;}
+  if(s.judge_hold_frames){var op=c.layer('LIGHT_CANDIDATE_'+s.id).transform.opacity;r.judge={keys:[]};for(var ki=1;ki<=op.numKeys;ki++)r.judge.keys.push({time:op.keyTime(ki),value:op.keyValue(ki)});}
+  if(s.closing_memory){var l=c.layer('CLOSING_METHOD'),spec=s.closing_memory,lock=s.end-(spec.hold_frames+spec.fade_frames)/24,release=lock+spec.hold_frames/24,doc=l.property('Source Text').value,action=c.layer('CLOSING_ACTION'),ad=action.property('Source Text').value,bg=c.layer('CLOSING_MEMORY_SPACE');r.closing={text:doc.text,font_size_4k_px:doc.fontSize*l.transform.scale.value[0]/100*3840/c.width,position_4k_px:[l.transform.position.value[0]*3840/c.width,l.transform.position.value[1]*3840/c.width],action:ad.text,action_font_size_4k_px:ad.fontSize*action.transform.scale.value[0]/100*3840/c.width,background_color:bg.source.mainSource.color,hold_frames:(release-lock)*24,opacities:[l.transform.opacity.valueAtTime(lock,false),l.transform.opacity.valueAtTime(release,false),l.transform.opacity.valueAtTime(s.end,false)]};}
+  if(r.method||r.light||r.signals||r.closing||r.redundant_labels!==undefined)out.push(r);
+ }
+}return out;'''
+    rows=h.js(code.replace('IDS',json.dumps([n['comp_id'],n['master_comp_id']])).replace('SHOTS',json.dumps(p['scenes'],ensure_ascii=False)).replace('EXCERPTS',json.dumps(p['excerpts'],ensure_ascii=False)))
+    scenes={s['id']:s for s in p['scenes']}
+    for r in rows:
+        s=scenes[r['scene']]
+        if 'method' in r:
+            v=r['method'];wanted=s['method_signal']
+            if (v['text']!=wanted['text'] or abs(v['font_size_4k_px']-wanted['font_size_px'])>.01
+                    or any(abs(a-b)>.01 for a,b in zip(v['position_4k_px'],wanted['position_px']))
+                    or any(abs(a-b)>.001 for a,b in zip(v['color'],[.69,.27,.06]))
+                    or abs(v['in_ms']-s['decision_end']*1000)>.01
+                    or not v['retired_evidence'] or any(abs(e['opacity'])>.01 for e in v['retired_evidence'])
+                    or any(abs(a-b)>.01 for a,b in zip(v['opacities'],[100,100,0]))):
+                raise ValueError('Method signal actual text, scale or visible state changed')
+        if 'light' in r:
+            v=r['light'];wanted=s['light_presentation']
+            expected_hold=wanted.get('evidence_hold_frames',round((s['reading_events'][-1]['end_time']-s['reading_events'][-1]['arrival'])*24))
+            if (abs(v['font_size_4k_px']-90*wanted['option_scale_percent']/100)>.01 or v['hold_frames']!=expected_hold
+                    or not v['evidence'] or any(abs(e['during']-100)>.01 or abs(e['after']-25)>.01 for e in v['evidence'])):
+                raise ValueError('Light treatment did not execute its font, hold and evidence retirement')
+        if 'signals' in r:
+            if not r['signals'] or any(abs(v['lead_frames']-8)>.001 or v['scale']!=[108,108,100] or any(abs(a-b)>.01 for a,b in zip(v['amounts'],[0,100,0])) for v in r['signals']):
+                raise ValueError('Eight-frame original glyph departure signal failed')
+        if r.get('redundant_labels',0):raise ValueError('Redundant final answer label remains')
+        if 'judge' in r:
+            keys=r['judge']['keys']
+            for t in (s['decision_end'],s['return_start']):
+                if not any(abs(k['time']-t)<1e-6 and abs(k['value']-38)<.01 for k in keys):
+                    raise ValueError('Quick judgement hold lacks actual native boundary keys')
+            if abs((s['return_start']-s['decision_end'])*24-s['judge_hold_frames'])>.001:
+                raise ValueError('Quick judgement hold differs from authored frames')
+        if 'closing' in r:
+            v=r['closing'];wanted=s['closing_memory']
+            if v['text']!=wanted['method'] or abs(v['font_size_4k_px']-wanted['font_size_px'])>.01 or abs(v['hold_frames']-wanted['hold_frames'])>.01 or any(abs(a-b)>.01 for a,b in zip(v['opacities'],[100,100,0])):
+                raise ValueError('Closing method did not execute its authored size and full hold before fade')
+            paper=p['visual_states']['definition']['reading']['paper_rgb']
+            if (v['position_4k_px']!=[1920,1080] or v['action']!=wanted['action']
+                    or abs(v['action_font_size_4k_px']-60)>.01
+                    or any(abs(a-b)>.001 for a,b in zip(v['background_color'],paper))):
+                raise ValueError('Closing bright paper, central method or action line changed')
+    write(folder/'VISUAL_MEMORY_NATIVE_READBACK.json',{'rows':rows,'scope':'native parameters, not pixel or sensory acceptance'})
+    return rows
 
 
 def preview(folder):
@@ -1156,6 +1224,7 @@ def premiere(folder,resume=False):
         h.pr('save_project_as',{'path':str(h.project)},after={**before,'project_path':str(h.project)})
         if sha256(before['project_path'])!=oldsha:raise ValueError('Original Premiere project changed')
     paths=[picture['output']]+[s['voice']['padded_path'] for s in p['segments']]+[m['clip_path'] for m in p.get('music',[])]
+    if p.get('subtitle_mode')=='premiere_sidecar':paths.append(str(folder/'EPISODE_SUBTITLES.srt'))
     if not resume:h.pr('import_media',{'file_paths':paths,'suppress_ui':True})
     items=flatten(h.c.call('list_project_items'))
     def item(path):
@@ -1169,6 +1238,7 @@ def premiere(folder,resume=False):
         if s['id'] in placed:continue
         h.pr('overwrite_clip',{'item_id':item(s['voice']['padded_path']),'start_seconds':s['voice_start'],'track_index':0,'audio_track_index':0})
         print('Placed complete '+s['id'],flush=True)
+    music_automation=[]
     for music in p.get('music',[]):
         from premiere_production.music import apply_music
         h.pr('overwrite_clip',{'item_id':item(music['clip_path']),'start_seconds':music['timeline_start'],'track_index':0,'audio_track_index':music['audio_track_index']})
@@ -1181,7 +1251,21 @@ def premiere(folder,resume=False):
         class OwnedMusic:
             def execute(self,name,args,sequence_id=None):return h.pr(name,args)
         result=apply_music(OwnedMusic(),seq['id'],clip['nodeId'],effect['matchName'],level,music['gain_keys'])
-        write(folder/'MUSIC_NATIVE_AUTOMATION.json',result)
+        music_automation.append({'clip_path':music['clip_path'],'timeline_start':music['timeline_start'],'automation':result})
+        write(folder/'MUSIC_NATIVE_AUTOMATION.json',result if len(p['music'])==1 else {'clips':music_automation})
+    if p.get('subtitle_mode')=='premiere_sidecar':
+        receipt=folder/'PR_CAPTIONS.json'
+        if resume and receipt.exists():
+            prior=read(receipt)
+            if prior['srt_sha256']!=sha256(folder/'EPISODE_SUBTITLES.srt') or prior['sequence_id']!=seq['id']:
+                raise ValueError('Existing caption import belongs to another clock or sequence')
+        else:
+            if resume:raise ValueError('Inspect uncertain caption import before resuming; do not duplicate the track')
+            imported=h.pr('create_caption_track',{'item_id':item(folder/'EPISODE_SUBTITLES.srt'),'caption_format':'subtitle','start_seconds':0})
+            observed=h.c.call('read_sequence_captions',{'sequence_id':seq['id']})
+            write(receipt,{'sequence_id':seq['id'],'srt_sha256':sha256(folder/'EPISODE_SUBTITLES.srt'),
+                'import_result':imported,'readback':observed,
+                'verification_scope':'Host results retained verbatim; an accepted import is not cue-content verification'})
     h.pr('save_project');timeline=h.c.call('get_active_sequence',{'clip_limit':200})
     write(folder/'PR_TIMELINE.json',timeline);write(folder/'PR_SETTINGS.json',h.c.call('get_sequence_settings'))
     validate_edit(p,timeline,picture['output'],(3840,2160) if master else (1920,1080))
@@ -1248,7 +1332,42 @@ def verify_prior_production(folder,author):
             'additional_historical_collection':'VERIFIED_EXISTING' if legacy.exists() else 'NOT_CAPTURED_NOT_INVENTED'}
 
 
-def package(folder,master=False):
+def require_pre_package_answers(folder):
+    """Require recorded human responses on this exact edit, never AI approval."""
+    folder=Path(folder);path=folder/'PRE_PACKAGE_QUESTIONS.json'
+    if not path.is_file():
+        raise ValueError('package-master HOLD: three real pre-publication answers are required in PRE_PACKAGE_QUESTIONS.json')
+    r=read(path)
+    if r.get('schema')!='pre-package-questions/v1' or r.get('status')!='ANSWERED':
+        raise ValueError('package-master HOLD: PENDING or missing human answers cannot be packaged')
+    picture=read(folder/'MASTER_PICTURE_RECEIPT.json')
+    expected={'plan_sha256':sha256(folder/'AV_PLAN.json'),
+              'picture_sha256':sha256(picture['output']),
+              'premiere_export_sha256':sha256(media_directory(folder)/'PR_NATIVE_EXPORT.mp4')}
+    if picture['sha256']!=expected['picture_sha256'] or any(r.get(k)!=v for k,v in expected.items()):
+        raise ValueError('package-master HOLD: answers refer to another edit or media revision')
+    questions=r.get('questions',{})
+    roles={'student_full_view':'high_school_student','author_audio_only':'author','phone_pause':'phone_viewer'}
+    if set(questions)!=set(roles):raise ValueError('package-master HOLD: all three questions need separate real answers')
+    for key,role in roles.items():
+        q=questions[key];answer=q.get('answer')
+        if (q.get('respondent_role')!=role or q.get('human') is not True
+                or q.get('performed_required_test') is not True or not q.get('respondent')
+                or not q.get('recorded_at') or not isinstance(answer,str) or not answer.strip()
+                or answer.strip().upper() in ('PENDING','UNOBSERVED','TODO','NULL','待审','待回答','未观察')):
+            raise ValueError('package-master HOLD: unperformed human question: '+key)
+        evidence=q.get('evidence',{});source=Path(evidence.get('path',''))
+        if not source.is_file() or sha256(source)!=evidence.get('sha256'):
+            raise ValueError('package-master HOLD: original human response evidence missing or changed: '+key)
+    return {'status':'ANSWERED','receipt':str(path),'sha256':sha256(path),**expected,
+            'scope':'Human responses recorded; not creative approval or permission to publish'}
+
+
+def package(folder,master=False,review_only=False):
+    # Reviewers need the actual full film before they can answer the gate.
+    # This explicitly named candidate never writes master delivery receipts.
+    if review_only and not master:raise ValueError('Review copy uses the actual 4K native picture')
+    human_answers=require_pre_package_answers(folder) if master and not review_only else None
     a,p,n=current_native(folder);pic=read(folder/('MASTER_PICTURE_RECEIPT.json' if master else 'PICTURE_RECEIPT.json'));pr=media_directory(folder)/'PR_NATIVE_EXPORT.mp4'
     if pic['plan_sha256']!=sha256(folder/'AV_PLAN.json') or pic['frames']!=p['frames']:raise ValueError('Picture belongs to another complete episode')
     if master and (pic.get('comp_id')!=n['master_comp_id'] or not pic.get('formal_4k_rendered')):raise ValueError('Native 4K master receipt required')
@@ -1259,7 +1378,7 @@ def package(folder,master=False):
     native_pcm=np.frombuffer(subprocess.check_output(['ffmpeg','-v','error','-i',str(pr),'-map','0:a:0','-ac','1','-ar','48000','-f','s16le','-']),dtype='<i2').astype(np.float64)
     delay,delay_rows=measured_audio_delay(p,native_pcm)
     write(folder/'NATIVE_AUDIO_DELAY.json',{'native_export_sha256':sha256(pr),'delay_samples':delay,'sample_rate':48000,'takes':delay_rows,'operation':'packet timestamp correction only; complete voices retained'})
-    dest=media_directory(folder)/('MAIN_FILM_4K24.mp4' if master else 'MAIN_FILM_EDITORIAL_PROXY.mp4')
+    dest=media_directory(folder)/('REVIEW_COPY_4K24.mp4' if review_only else 'MAIN_FILM_4K24.mp4' if master else 'MAIN_FILM_EDITORIAL_PROXY.mp4')
     if not dest.exists():subprocess.run(['ffmpeg','-v','error','-n','-i',pic['output'],'-itsoffset',str(-delay/48000),'-i',str(pr),'-map','0:v:0','-map','1:a:0','-c','copy','-movflags','+faststart',str(dest)],check=True)
     streams=probe(dest);video=next(s for s in streams['streams'] if s['codec_type']=='video');audio=next(s for s in streams['streams'] if s['codec_type']=='audio')
     size=[3840,2160] if master else [1920,1080]
@@ -1281,9 +1400,12 @@ def package(folder,master=False):
     protection=verify_prior_production(folder,a)
     qa={'media':str(dest),'sha256':sha256(dest),'actual_seconds':p['frames']/24,'frames':p['frames'],'video':video,'audio':audio,'full_decode':'PASS','complete_takes':rows,'same_revision':a['revision'],'native_project':str(folder/'MAIN_FILM.aep'),'premiere_project':str(folder/'MAIN_FILM.prproj'),'media_role':'EDITORIAL_PROXY','formal_4k_rendered':False,'independent_new_copy_review':a['copy_review'],'human_creative_review':'PENDING','human_listening_review':'PENDING','student_count':0,'public_render_ready':False}
     qa['native_packet_identity']=packets
+    qa['pre_package_questions']=human_answers
     qa['audio_timestamp_correction_samples']=-delay
     qa['video_payload_and_timestamps_unchanged']=True
     qa['audio_payload_unchanged']=True
+    from ae_production.subtitles import deliver_sidecar
+    qa['subtitle_delivery']=deliver_sidecar(folder,dest)
     qa['prior_production_protection']=protection
     qa['native_project']=str((media_directory(folder)/'MAIN_FILM.aep').resolve())
     qa['premiere_project']=str((media_directory(folder)/'MAIN_FILM.prproj').resolve())
@@ -1295,7 +1417,8 @@ def package(folder,master=False):
     qa['complete_copy_sha256']=p['complete_copy_sha256']
     qa['music']=[{k:m[k] for k in ('title','clip_sha','duration','timeline_start','status','public_use_allowed')} for m in p.get('music',[])]
     qa.update(media_role='NATIVE_4K_MASTER' if master else 'EDITORIAL_PROXY',formal_4k_rendered=master)
-    write(folder/('MASTER_DELIVERY_QA.json' if master else 'DELIVERY_QA.json'),qa)
+    if review_only:qa.update(media_role='REVIEW_CANDIDATE_AWAITING_THREE_HUMAN_ANSWERS',formal_delivery=False)
+    write(folder/('REVIEW_CANDIDATE_QA.json' if review_only else 'MASTER_DELIVERY_QA.json' if master else 'DELIVERY_QA.json'),qa)
     from ae_production.review_evidence import export_review_evidence
     evidence=export_review_evidence(folder,qa,probe_result=streams)
     return {**{k:qa[k] for k in ('media','actual_seconds','frames','full_decode','media_role')},
@@ -1353,6 +1476,7 @@ def execute(operation,folder,**kwargs):
     if operation=='render':return render(folder,kwargs.get('proof',False),kwargs.get('batch_size',96))
     if operation=='render-master':return render(folder,batch_size=kwargs.get('batch_size',96),master=True)
     if operation=='package-master':return package(folder,master=True)
+    if operation=='review-copy':return package(folder,master=True,review_only=True)
     operations={'build':build,'audit':audit,'preview':preview,'premiere':premiere,'package':package,'restore':restore}
     if operation not in operations:raise ValueError('Unsupported current production operation: '+operation)
     return operations[operation](folder)

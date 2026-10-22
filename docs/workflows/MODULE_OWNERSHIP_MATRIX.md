@@ -1,5 +1,11 @@
 # 模块职责与实际消费者
 
+2026-10-22 增量继续归属既有消费者：Audience 管挑战时长；Motion Identity 的两个
+Recipe 管词对齐与角色分叉；Teaching Focus 管轻核验的字号及阅读后退场；AE 模板
+管方法触发、提取出发信号与片尾。`ae_production/subtitles.py` 只检查字幕产物模式、
+校验原生字幕库存并交付独立 SRT；Premiere 原生字幕轨仍由 `authored_native.premiere`
+唯一写入。待自录文案与已经录制的实际逐字稿分别保存，不修改音频或给新稿代签。
+
 2026-10-18 自主整期 v1 的实际执行增加 `autonomous_episode` 和
 `authored_editorial` 两个薄适配，继续消费当前 AV_AUTHOR / AV_PLAN。
 作者与独立审阅职责由宿主 AI 调度，Adobe 只有一个受保护执行者。

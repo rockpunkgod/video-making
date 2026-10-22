@@ -130,6 +130,9 @@ def direct_scene(author, shot):
                  candidate_travel_seconds=0, extract_seconds=0,
                  comparison_seconds=.65 if treatment == 'quick' else 1.0,
                  decision_seconds=.4, result_seconds=.4, return_seconds=.6)
+        if 'evidence_hold_frames' in s.get('light_presentation',{}):
+            if not s.get('reading_path'):raise ValueError('Light evidence hold needs an actual source reading window')
+            s['reading_path'][-1]['read_seconds']=s['light_presentation']['evidence_hold_frames']/author['format']['fps']
     else:
         s['motion_treatment'] = 'critical_comparison'
         from content_os.scoring import teaching_value_points

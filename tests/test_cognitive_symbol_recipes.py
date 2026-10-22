@@ -99,6 +99,28 @@ class CognitiveSymbolRecipes(unittest.TestCase):
         self.a['cognitive_symbols']['instances'][1]['parameters']['phase_seconds']=[2,2,1]
         with self.assertRaisesRegex(ValueError,'recognition'):self.compile()
 
+    def test_noun_divergence_retains_shared_origin_and_eighteen_frame_hold(self):
+        r=self.a['cognitive_symbols']['instances'][1]
+        r['parameters'].update(composition='noun_divergence',surface_hold_frames=18,phase_seconds=[.25,.8,.25])
+        self.clock['segments']=[{'scene_id':'SC10','voice_start':15.25,'voice_end':16.25}]
+        row=self.compile()['rows'][1];positions=row['layout']['positions']
+        inputs={i['role']:i['object_id'] for i in row['inputs']}
+        self.assertEqual(positions[inputs['source_noun']],positions[inputs['candidate_noun']])
+        self.assertLess(positions[inputs['source_noun']][0],positions[inputs['source_action']][0])
+        self.assertNotEqual(positions[inputs['source_action']][1],positions[inputs['candidate_action']][1])
+        self.assertAlmostEqual(row['phases'][1]['end']-row['phases'][0]['end'],19/24+18/24)
+        self.assertEqual(row['states'][0]['state'],'apparent_identity_hold')
+        self.assertEqual(row['states'][0]['frames'],18)
+        self.clock['segments'][0]['voice_start']-=.1
+        with self.assertRaisesRegex(ValueError,'875ms'):self.compile()
+
+    def test_keyword_alignment_cannot_invent_a_source_term(self):
+        r=self.a['cognitive_symbols']['instances'][0]
+        r['parameters'].update(composition='keyword_equivalence',keyword_pair={'source_relation':'cheaper','candidate_relation':'affordable'},context_hold_seconds=2)
+        self.compile()
+        r['parameters']['keyword_pair']['source_relation']='free'
+        with self.assertRaisesRegex(ValueError,'exact span'):self.compile()
+
     def add_hook(self):
         inputs = deepcopy(self.a['cognitive_symbols']['instances'][1]['inputs'][:2])
         anchors = [deepcopy(i['source_ref']) for i in inputs]

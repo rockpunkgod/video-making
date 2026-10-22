@@ -7,6 +7,13 @@ AV_AUTHOR / AV_PLAN → authored_native → AE / Premiere → package[-master]`�
 `package` / `package-master` 在现有成片逐包、完整 take、完整解码检查通过后，
 自动从最终 MP4 和同版制作数据导出证据。没有第二套渲染器，不改变声画内容。
 
+新增真人三问门槛后的 `review-copy` 复用同一导出函数，提供完整实际渲染的审阅候选。
+总索引以 `media_role=REVIEW_CANDIDATE_AWAITING_THREE_HUMAN_ANSWERS`、
+`formal_delivery=false` 标明其状态，收录 REVIEW_CANDIDATE_QA，不能冒充正式交付。
+独立字幕模式同时提供 SRT、AE 字幕缺席读回及 Premiere 导入/读回原始收据；不能把
+成功导入当作字幕内容已核验。18 帧表面匹配的实际位置、缩放和透明度采样也随 Recipe
+事件导出，保持与计划参数及最终截图各自独立的来源分类。
+
 渲染期间由 `gpt-6-luna`、low、独立上下文的只读 agent 等待，主 agent 整理证据。
 等待者只报告有用进展、完成或错误，不写 Adobe、不恢复任务、不评价作品。
 Adobe 继续保持唯一写执行者。

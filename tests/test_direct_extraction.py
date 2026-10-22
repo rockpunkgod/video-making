@@ -7,6 +7,16 @@ from tests import test_authored_episode as fixtures
 
 
 class DirectExtractionTests(unittest.TestCase):
+    def test_eight_frame_source_signal_does_not_insert_wait_or_retime_a_take(self):
+        a,c,l=fixtures.ClockConsumption().motion_input()
+        shot=a['scenes'][0];shot['extraction_policy']='highlight_then_extract'
+        shot['attention']=[{'anchor':'Inspect','phrase':'Source','target':'source'}]
+        before=compile_clock(a,c,l)
+        shot['extraction_signal']={'frames':8,'scale_percent':108}
+        after=compile_clock(a,c,l);s=after['scenes'][0]
+        self.assertAlmostEqual((s['extract_start']-s['extraction_highlight_at'])*24,8)
+        self.assertEqual(s['extract_start'],s['reading_events'][-1]['end_time'])
+        self.assertEqual(before['segments'],after['segments'])
     def test_reading_boundary_replaces_hold_and_shifts_complete_voice(self):
         a,c,l=fixtures.ClockConsumption().motion_input()
         before=compile_clock(a,c,l)

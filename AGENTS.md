@@ -52,7 +52,7 @@ approval, student results or publication permission.
 
 For FIRST_PERSON_CHALLENGE_V1 and subsequent same-format first-person lessons,
 author the two-column complete-source/question challenge in the existing Audience
-contract: exactly 72 frames at 24fps under continuing narration, neutral ABCD,
+contract: an explicitly authored frame count at 24fps under continuing narration, neutral ABCD,
 screen-only pause prompt, followed by a continuous same-glyph task handoff.
 Use highlight_then_extract after necessary sense-group reading; do not restore
 mechanical independent slow replays. Replay omission still requires its bound
@@ -62,6 +62,16 @@ scope: the 2026-10-20 request was implementation/documentation/push only.
 The new 2026-10-21 VIDEO_EXPERIENCE_UPGRADE_V1 explicitly authorizes a new
 same-version native film, Recipe previews and Bilibili packaging candidates.
 Creative packaging choices, actual sensory review and release remain separate.
+
+The 2026-10-22 visual-memory revision explicitly uses 120-frame challenges.
+Historical 72-frame inputs remain readable; 144 frames requires a subsequent
+author decision after actual phone testing. Preserve the existing complete voice
+takes: revised copy is a separate pending recording script, never a relabelled
+transcript or a newly generated take. `subtitle_mode=premiere_sidecar` removes AE
+caption layers, imports the actual clock's SRT into Premiere, and delivers SRT
+separately from the unchanged native picture packets. Inspect the current mode
+with `python ae/experiments/adaptive-episode/run.py audit <folder> --check-subtitle-mode`.
+An accepted caption import is not proof of cue-content readback.
 
 During every render, the main agent assigns a read-only waiting sub-agent with
 `model: gpt-6-luna`, `reasoning_effort: low`, `fork_turns: none`. Give it the exact
@@ -73,3 +83,17 @@ final-MP4 frames and audio under the existing media/review_evidence directory.
 Keep plan/configuration/native observations separate from encoded measurements;
 unavailable parameters are null with reasons. This output is evidence, not a
 review agent, quality verdict or publication permission.
+
+字幕必须作为独立 Caption 轨道输出（SRT 格式），禁止烧录进画面合成。
+自录口播后只重新对齐字幕 cue，画面不重渲。
+
+## 发布前必答三问（三问有真实答案后方可进入 package-master，PENDING 不得封装）
+
+1. 找一名高中生完整看片，回答：
+   "你觉得自己刚才是做了一道题，还是上了一节课？"
+
+2. 作者不看画面，只听音频，回答：
+   "口播听起来像在讲课，还是在想事情？"
+
+3. 手机上测试挑战窗口，在口播继续播放的情况下回答：
+   "能否及时发现角标并完成暂停？"

@@ -38,10 +38,11 @@ def _scope(plan, native):
     scope=[]
     for s in scenes:
         end=s['reading_events'][-1]['end_time']
+        lead=s.get('extraction_signal',{}).get('frames',6)/24
         if (not _close(s['extract_start'],end,1e-6) or not _close(s['source_arrive'],end,1e-6)
-                or not _close(s['extraction_highlight_at'],end-.25,1/24+1e-6)):
+                or not _close(s['extraction_highlight_at'],end-lead,1/24+1e-6)):
             raise ValueError('Direct extraction has an extra hold after reading')
-        if not 0<end-s['extraction_highlight_at']<=.3:
+        if not 0<end-s['extraction_highlight_at']<=max(.3,lead)+1e-6:
             raise ValueError('Highlight must lead immediately into extraction')
         m=next(x for x in manifest if x['scene']==s['id'])
         if any(not _close(m[k],v,1e-6) for k,v in (

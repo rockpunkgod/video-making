@@ -1,4 +1,4 @@
-"""Read the actual original-layer 72-frame challenge, never certify perception.
+"""Read the actual authored original-layer challenge, never certify perception.
 
 The expected chunk inventory is derived from AV_PLAN, not a build's claimed
 challenge inventory.  Adobe is read only here; the protected Host owns execution.
@@ -40,11 +40,13 @@ def original_challenge_scope(plan, native):
     for challenge, built in zip(contract['rows'], manifest):
         world = challenge['world']; data = plan['worlds'][world]; q = data['question']
         base = plan['world_order'].index(world) * 10000
+        frames=challenge.get('frames',challenge['end_frame']-challenge['start_frame'])
         if (built.get('source_identity') != POLICY or built.get('world') != world
                 or built.get('question_id') != q['question_id'] or q['question_id'] != challenge['question_id']
-                or built.get('frames') != 72 or challenge['end_frame']-challenge['start_frame'] != 72
+                or type(frames) is not int or frames not in (72, 120, 144)
+                or built.get('frames') != frames or challenge['end_frame']-challenge['start_frame'] != frames
                 or any(not _close(built.get(k), challenge[k], 1e-6) for k in ('start', 'end', 'handoff_end'))
-                or not _close(challenge['end']-challenge['start'], 3, 1e-6)
+                or not _close(challenge['end']-challenge['start'], frames/24, 1e-6)
                 or not _close(challenge['handoff_end']-challenge['end'], .8, 1e-6)
                 or not _close(challenge['start_frame']/24, challenge['start'], 1e-6)
                 or not _close(challenge['end_frame']/24, challenge['end'], 1e-6)):
@@ -248,10 +250,10 @@ def validate_original_challenges(plan, native, rows):
         if (badge['text'] != '想先自己做？可暂停' or badge['spoken'] is not False
                 or badge['enabled'] is not True or badge['guide'] is not False
                 or not _close(badge['in_point'], s['start'], 1e-6) or not _close(badge['out_point'], s['end'], 1e-6)):
-            raise ValueError('Challenge pause entry must retain its exact screen-only 72-frame lifetime')
+            raise ValueError('Challenge pause entry must retain its exact authored screen-only lifetime')
         samples = row['samples']
         if [sample['frame'] for sample in samples] != list(range(s['start_frame'], s['end_frame'])):
-            raise ValueError('Original challenge must inspect all and only its 72 frame times')
+            raise ValueError('Original challenge must inspect all and only its '+str(s['end_frame']-s['start_frame'])+' frame times')
         for sample in samples:
             if (len(sample['article']) != len(article) or len(sample['chunks']) != len(chunks)
                     or len(sample['glyphs']) != 5 or not _close(sample['badge_opacity'], 100)
@@ -260,7 +262,7 @@ def validate_original_challenges(plan, native, rows):
             for actual, source in zip(sample['article'], article):
                 _state(actual, [base+40, 132, 0], [1700/source['original_font_size']]*3, 'article')
             if any(not _close(a, 100) for a in sample['chunks']):
-                raise ValueError('Original challenge must continuously fold every sense group through all 72 frames')
+                raise ValueError('Original challenge must continuously fold every sense group through all authored frames')
             for index, actual in enumerate(sample['glyphs']):
                 pos = [base+(830 if index else 820), 300+(index-1)*58 if index else 192, 0]
                 _state(actual, pos, [38]*3, 'stem/options')
@@ -304,7 +306,9 @@ def validate_original_challenges(plan, native, rows):
         for index, actual in enumerate(handoff[-1]['glyphs']):
             origin = [base+(90 if index else 80), 230+(index-1)*80 if index else 95, 0]
             _state(actual, origin, [100]*3, 'returned stem/options')
-    return {'status': 'PASS_NATIVE_ORIGINAL_LAYERS_72_FRAME_PARAMETERS', 'source_identity': POLICY,
+    frames={r.get('frames',r['end_frame']-r['start_frame']) for r in plan['audience_challenges']['rows']}
+    status='PASS_NATIVE_ORIGINAL_LAYERS_72_FRAME_PARAMETERS' if frames=={72} else 'PASS_NATIVE_ORIGINAL_LAYERS_AUTHORED_FRAME_PARAMETERS'
+    return {'status': status, 'authored_frame_counts': sorted(frames), 'source_identity': POLICY,
             'rows': rows, 'normal_speed_review': 'UNOBSERVED', 'mobile_legibility': 'UNOBSERVED',
             'listening_review': 'UNOBSERVED'}
 

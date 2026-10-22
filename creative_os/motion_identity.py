@@ -163,15 +163,29 @@ def _in_evidence(ref, evidence):
 
 def _symbol_parameters(parameters):
     keys = {'duration_seconds', 'space', 'font', 'layout', 'curve', 'mask'}
-    if not isinstance(parameters, dict) or set(parameters)-{'phase_seconds'} != keys:
+    if not isinstance(parameters, dict) or set(parameters)-{'phase_seconds','composition','surface_hold_frames','keyword_pair','context_hold_seconds'} != keys:
         raise ValueError('Complete parameterized cognitive symbol geometry is required')
+    if parameters.get('composition') not in (None,'keyword_equivalence','noun_divergence'):
+        raise ValueError('Unknown authored relation composition')
+    if 'surface_hold_frames' in parameters and (type(parameters['surface_hold_frames']) is not int
+            or parameters['surface_hold_frames']!=18 or parameters.get('composition')!='noun_divergence'):
+        raise ValueError('Surface match requires the authored eighteen-frame hold')
+    if 'keyword_pair' in parameters:
+        pair=parameters['keyword_pair']
+        if (parameters.get('composition')!='keyword_equivalence' or not isinstance(pair,dict)
+                or set(pair)!={'source_relation','candidate_relation'}
+                or any(not isinstance(v,str) or not v.strip() for v in pair.values())):
+            raise ValueError('Keyword alignment requires two actual source-bound terms')
+    if 'context_hold_seconds' in parameters:
+        if parameters.get('composition')!='keyword_equivalence':raise ValueError('Comparison context belongs to price equivalence')
+        _finite(parameters['context_hold_seconds'],'context recognition',.25,parameters['duration_seconds']-.75)
     _finite(parameters['duration_seconds'], 'duration', 3, 30)
     if 'phase_seconds' in parameters:
         phases=parameters['phase_seconds']
         if not isinstance(phases,list) or len(phases)!=3:
             raise ValueError('Recipe phase_seconds requires three authored movement/settle durations')
         for seconds in phases:_finite(seconds,'phase seconds',1/24,10)
-        if sum(phases)+.95>parameters['duration_seconds']:
+        if sum(phases)+parameters.get('surface_hold_frames',0)/24+.95>parameters['duration_seconds']:
             raise ValueError('Recipe must retain recognition and continuous return time')
     space = parameters['space']; font = parameters['font']; layout = parameters['layout']
     if (not isinstance(space, dict) or set(space) != {'origin', 'depth'}
@@ -290,6 +304,13 @@ def validate_authored_symbols(author, bundles, folder=None):
             raise ValueError('Recipe needs distinct, persistent objects for all semantic slots')
         for item in inputs: _source_ref(item['source_ref'], bundles)
         by_role = {i['role']: i for i in inputs}; relation = instance['relation']
+        composition=instance['parameters'].get('composition')
+        if composition:
+            if variant=='hook' or composition!=('keyword_equivalence' if recipe_id=='semantic_isomorphism' else 'noun_divergence'):
+                raise ValueError('Relation composition cannot change the source-bound recipe or expose Hook evidence')
+            for role,word in instance['parameters'].get('keyword_pair',{}).items():
+                if by_role[role]['source_ref']['quote'].count(word)!=1:
+                    raise ValueError('Keyword must identify one exact span in its real relation text')
         if variant == 'hook':
             hook = author.get('audience_hook', {})
             if (recipe_id != 'same_form_different_relation' or instance['scene_id'] != hook.get('scene_id')
@@ -357,6 +378,18 @@ def _symbol_layout(instance):
             x = -measured_w / 2
             source_lines=next(i['source_ref']['quote'] for i in instance['inputs'] if i['role']=='source_relation').replace('\r\n','\n').split('\n')
             y = -10 if role == 'source_relation' else -10+len(source_lines)*font['size']*font['line_height']+gap
+        if p.get('composition')=='noun_divergence':
+            if role in {'source_noun','candidate_noun'}:x=-width/2+gap;y=-measured_h/2
+            else:x=gap*3;y=-height/3 if role=='source_action' else height/3-measured_h
+        elif p.get('composition')=='keyword_equivalence':
+            if role in {'subject','referent'}:
+                x=-measured_w/2;y=-height/2+(0 if role=='subject' else font['size']*font['line_height']+8)
+            else:
+                word=p.get('keyword_pair',{}).get(role)
+                if not word:raise ValueError('Equivalence composition requires explicit keyword spans')
+                quote=item['source_ref']['quote'];prefix=quote[:quote.index(word)]
+                x=-(len(prefix)+len(word)/2)*font['size']*font['advance_factor']
+                y=-8 if role=='source_relation' else font['size']*font['line_height']+gap*2
         if x < -width/2 or x+measured_w > width/2 or y < -height/2 or y+measured_h > height/2:
             raise ValueError('Cognitive symbol text exceeds its comparison boundary')
         positions[item['object_id']] = [x, y, p['space']['depth']]
@@ -417,7 +450,9 @@ def compile_symbols(author, bundles, clock, worlds=None, folder=None):
                     candidates=[c for c in clock.get('cues',[]) if c.get('segment')==first_voice['id']
                                 and live['oriented']+.5<c['start']<first_voice['voice_end']-.5]
                     if candidates:split=math.ceil((min(candidates,key=lambda c:abs(c['start']-mid))['start']-1e-8)*fps)/fps
-                start, end = (live['start'], split) if index == 0 else (split, live['end'])
+                closing=authored.get('closing_memory')
+                recall_end=live['end']-(closing['hold_frames']+closing['fade_frames'])/fps-.25 if closing else live['end']
+                start, end = (live['start'], split) if index == 0 else (split, recall_end)
         duration = end - start
         if (not math.isfinite(start) or not math.isfinite(end) or start < 0 or duration < 3
                 or abs(duration - instance['parameters']['duration_seconds']) > 1 / fps + 1e-7):
@@ -445,7 +480,22 @@ def compile_symbols(author, bundles, clock, worlds=None, folder=None):
             for seconds in instance['parameters']['phase_seconds']:
                 endpoints.append(round((endpoints[-1]+seconds)*fps)/fps)
             endpoints.append(end)
+        # Keep the original three movement phase indices stable for native audit.
+        # The surface hold is an explicit subrange before phase 1 displacement.
+        surface_hold=instance['parameters'].get('surface_hold_frames',0)/fps
+        if surface_hold:
+            endpoints[2]+=surface_hold;endpoints[3]+=surface_hold
         phases = [{'phase': name, 'start': endpoints[n], 'end': endpoints[n + 1]} for n, name in enumerate(phase_names)]
+        states=[]
+        if surface_hold:
+            states=[{'state':'apparent_identity_hold','start':endpoints[1],
+                     'end':endpoints[1]+surface_hold,'frames':round(surface_hold*fps)}]
+            if variant=='lesson':
+                explanation=[v for v in clock['segments'] if v['scene_id']==scene_id and v['voice_start']>=endpoints[1]]
+                if not explanation or abs(min(v['voice_start'] for v in explanation)-endpoints[3]-.875)>1e-6:
+                    raise ValueError('Role recognition requires 875ms after landing before the unchanged explanation take')
+                if any(v['voice_start']<endpoints[3]+.875-1e-6 and v['voice_end']>endpoints[1]+1e-6 for v in clock['segments']):
+                    raise ValueError('Apparent identity and relation recognition require a silent visual comparison')
         if variant == 'hook':
             names = ['surface_align', 'relation_displace', 'unresolved_hold', 'match_into_task']
             existing = live.get('phases', {})
@@ -466,7 +516,7 @@ def compile_symbols(author, bundles, clock, worlds=None, folder=None):
         authority = next(i['authority'] for i in checked['instances'] if i['symbol_id'] == ident)
         rows.append({'symbol_id': ident, 'recipe_id': instance['recipe_id'], 'scene_id': scene_id,
                      'variant': variant, 'start': start, 'end': end, 'start_frame': round(start * fps), 'end_frame': round(end * fps),
-                     'phases': phases, 'inputs': native_inputs, 'relation': deepcopy(instance['relation']),
+                     'phases': phases, **({'states':states} if states else {}), 'inputs': native_inputs, 'relation': deepcopy(instance['relation']),
                      'parameters': deepcopy(instance['parameters']), 'layout': _symbol_layout(instance),
                      'authority': deepcopy(authority), 'instance_sha': sha(instance),
                      'glyph_continuity': 'ORIGINAL_SOURCE_RANGE_CONTINUOUS_CARRIED_OBJECT',

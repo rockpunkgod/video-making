@@ -41,3 +41,15 @@ Lesson 使用既有 `settled + 0.3s` 至真实判断时刻，最短 3 秒；移�
 `presets/first-person-lesson.json` 对齐该版实际32号关系文字和1080×360局部布局。
 这不使编译计划中的预期状态自动成为媒体或艺术审核；最终动态预览仍须从同版真实编码
 影片逐帧截取，并绑定 `MASTER_DELIVERY_QA.json`、Recipe实例及输出哈希。
+
+## 2026-10-22 当前构图增量
+
+已绑定的 `composition=keyword_equivalence` 使用上下两行原字、关键词度量对齐、
+短横线与端点；指代核验结束后主体/比较对象退出，不扩展成 V 形节点。
+`composition=noun_divergence` 先让共同名词居中、两侧动作小号灰字保持
+18 帧 `apparent_identity_hold`，然后同一对象连续移成左侧共同名词、右侧动作
+有向分叉。SC10 落稳到原解释 take 保留 875ms。参数化 `phase_seconds` 显式
+覆盖历史默认运动时长；不会改变完整配音。历史无这些字段的输入按原版本读取。
+
+方法名像素、出现顺序和亮纸片尾以相邻 `motion-identity.md` 的最新标准为准。
+当前原生检查与实际媒体证据各有状态；不能用测试或读回代签观感。

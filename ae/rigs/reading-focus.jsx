@@ -55,7 +55,7 @@ function cmReadingSequence(rows,event,scene,audit,ink,blue,orange,preferred){
  }
  if(!units.length)throw Error('No exact reading chunks: '+scene);
  var span=event.end_time-event.arrival,slot=span/units.length;
- if(slot<4/24-1e-6)throw Error('Reading window too short for visible phrase handoffs: '+scene+'; increase authored read_seconds');
+ if(slot<4/24-1e-6)throw Error('Reading window too short for visible phrase handoffs: '+scene+' span '+event.start+'-'+event.end+'; '+units.length+' native groups in '+span+' seconds; minimum '+(units.length*4/24)+' seconds');
  var half=slot*.55,windowId=scene+'_'+audit.reading_windows.length,records=[];
  for(var id in layers){
   var l=layers[id],neutral=cmSelector(l,'CM_BASE_'+windowId,0,l.property('Source Text').value.text.length);

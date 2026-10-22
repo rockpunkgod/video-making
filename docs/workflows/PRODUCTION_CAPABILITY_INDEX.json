@@ -1,7 +1,7 @@
 {
   "index_version": "1.0",
   "kind": "documentation_capability_index",
-  "as_of": "2026-10-21",
+  "as_of": "2026-10-22",
   "repository_base": "b0e3118c45f1836bd1cb9bcee97e27d2a0a5f262",
   "recommended_workflow": "docs/workflows/CURRENT_PRODUCTION_WORKFLOW.md",
   "scope": "Current authored dispatch actually consumed AudienceHook, exact user-reviewed26 complete narration takes, source-bound exam/article credits,139 sense groups, teaching focus, native3D and transparent source extraction. Latest user instruction preserves the original Reading presentation and adds ThinkingState only. Current audience-hook-v1-r09 has a complete307.5416667s/7381-frame4K24 same-version film, native AE and Premiere edits, full decode/voice integrity checks,83 actual final encoded static samples independently reviewed and both hosts restored. Historical36 entries retain version-specific meanings. Normal-speed motion and actual listening remain UNOBSERVED; final human film acceptance pending, no public release. FIRST_PERSON_CHALLENGE_V1 is now an authored workflow change: two exact72-frame neutral full-question pause entries, immediate source-glyph extraction, and explicitly authorized omission of SC08. Code and current author/plan were exercised; no new Adobe/native execution or film delivery in this scope. VIDEO_EXPERIENCE_UPGRADE_V1 now explicitly authorizes new full production. Current checkpoint: R04 author/plan and both actual AE compositions contain five source-bound Recipe instances and two original-layer72-frame challenges; strict native parameter/source/continuity/Thinking/direct-extraction audits and expression checks passed. Actual4K/640px static samples reviewed, known static defects revised. Full6601-frame native master is rendering, so current full-media binding and perceptual acceptance remain unestablished. Earlier changes-only and completed-film statements retain their historical revision scopes.",
@@ -2387,5 +2387,23 @@
       "listening_review": "UNOBSERVED",
       "public_render_ready": false
     }
+  },
+  "current_increment": {
+    "name": "visual-memory-v1-r03",
+    "repository_base": "4bc30e6950509d51b7bb56aec653118b8da0c218",
+    "remote_main": "f04820a012105c46b19d4e98097a2d9513464845",
+    "code": "IMPLEMENTED",
+    "author_and_plan": "PREPARED_6078_FRAMES",
+    "ae_native": "BOTH_COMPOSITIONS_AUDIT_PASS_TARGETED_4K_STATIC_PREVIEWS_CHECKED",
+    "encoded_media": "RENDER_MASTER_IN_PROGRESS_NO_FULL_MEDIA_YET",
+    "full_speed_viewing": "UNOBSERVED",
+    "actual_listening": "UNOBSERVED",
+    "phone_pause": "UNOBSERVED",
+    "student_full_view": "UNOBSERVED",
+    "package_master": "HOLD_UNTIL_THREE_REAL_RESPONSES",
+    "baseline_unchanged": "directed-repair-v1-r02",
+    "subtitle_mode": "premiere_sidecar",
+    "complete_unchanged_voice_takes": 24,
+    "scope": "10 current user changes; new copy separate from actual unchanged speech; no publication"
   }
 }

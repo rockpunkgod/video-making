@@ -11,6 +11,15 @@ from video_contracts import sha, write
 
 
 class FirstPersonChallenges(unittest.TestCase):
+    def test_authored_five_and_six_second_windows_preserve_voice_clock(self):
+        for frames in (120,144):
+            with self.subTest(frames=frames):
+                self.a['audience_challenges']['frames']=frames
+                before=deepcopy(self.clock['segments'])
+                result=self.compile()
+                self.assertEqual([r['end_frame']-r['start_frame'] for r in result['rows']],[frames,frames])
+                self.assertEqual(self.clock['segments'],before)
+
     def setUp(self):
         self.temp=tempfile.TemporaryDirectory();self.addCleanup(self.temp.cleanup)
         base=Path(self.temp.name);self.folder=base/'production';self.folder.mkdir()

@@ -211,7 +211,7 @@ def validate_symbol_readback(p, n, rows):
                     or not _vector(g['locked'], declared['destination'])
                     or not isinstance(g['source_handoff'], list) or len(g['source_handoff']) != 3
                     or any(not _amount(value, target) for value, target in zip(g['source_handoff'], (0, 100, 0)))
-                    or not _close(g['opacity'], 100)
+                    or not _close(g['opacity'], 0 if s['parameters'].get('composition')=='keyword_equivalence' and item['role'] in ('subject','referent') and s['phases'][2]['end']>=max(s['phases'][0]['end'],s['start']+s['parameters'].get('context_hold_seconds',0))+.25 else 100)
                     or not isinstance(g['outside_masks'], list) or len(g['outside_masks']) != 2
                     or any(not _amount(value, 100) for value in g['outside_masks'])):
                 raise ValueError('Recipe glyph handoff, mask or precise landing failed')
@@ -220,9 +220,23 @@ def validate_symbol_readback(p, n, rows):
                     or any(not _finite_vector(value, 3) for value in samples)
                     or not _vector(samples[0], g['start']) or not _vector(samples[-1], g['locked'])):
                 raise ValueError('Recipe requires all 17 finite three-dimensional movement samples')
-            for value in samples:
+            surface=declared.get('surface_position') if s['parameters'].get('surface_hold_frames') else None
+            if surface:
+                states=g.get('surface_states')
+                expected_opacity=45 if item['role'] in ('source_action','candidate_action') else 100
+                expected_scale=g['locked_scale'][0]*(.78 if expected_opacity==45 else 1)
+                if (not isinstance(states,list) or len(states)!=19
+                        or any(not _vector(state['position'],surface) or not _close(state['opacity'],expected_opacity)
+                               or not _vector(state['scale'],[expected_scale]*3) for state in states)):
+                    raise ValueError('18-frame apparent identity state is not a stable native hold')
+            for index,value in enumerate(samples):
+                left,right=g['start'],g['locked']
+                if surface:
+                    t=s['start']+(s['phases'][1]['end']-s['start'])*index/(TRAVEL_SAMPLES-1)
+                    hold_start=s['phases'][0]['end'];hold_end=hold_start+s['parameters']['surface_hold_frames']/24
+                    left,right=(g['start'],surface) if t<hold_start else (surface,surface) if t<=hold_end else (surface,g['locked'])
                 if any(v < min(a, b) - .002 or v > max(a, b) + .002
-                       for v, a, b in zip(value, g['start'], g['locked'])):
+                       for v, a, b in zip(value, left, right)):
                     raise ValueError('Recipe original object overshoots its semantic destination')
             width = declared['width']
             slot = (s['parameters']['layout']['width'] - s['parameters']['layout']['min_gap']) / 2 - 2 * s['parameters']['layout']['min_gap']
@@ -238,7 +252,7 @@ def validate_symbol_readback(p, n, rows):
         for pi, path in enumerate((a, b)):
             declared_path = expected_paths[path['name']]
             own(path.get('id'), comp, path['name'], unique=True)
-            color = SOFT_BRICK if s['recipe_id'] == 'same_form_different_relation' and pi == 1 else FOG_BLUE
+            color = SOFT_BRICK if s['recipe_id'] == 'same_form_different_relation' and pi == 1 and not s['parameters'].get('composition') else FOG_BLUE
             if (path['threeD'] is not True or path['enabled'] is not True or path['guide'] is not False
                     or not _close(path.get('in_point'), s['start'], 1e-6)
                     or not _close(path.get('out_point'), s['end'], 1e-6)
@@ -256,7 +270,12 @@ def validate_symbol_readback(p, n, rows):
                 raise ValueError('Recipe structure is decorative, unbound, invisible, recolored or unsettled')
             if comp == comps[0] and path['id'] != declared_path['id']:
                 raise ValueError('Recipe native path build identity changed')
-        if s['recipe_id'] == 'semantic_isomorphism' and (a['locked'] != b['locked'] or a['start'] == b['start']):
+        if s['parameters'].get('composition')=='keyword_equivalence':
+            left,right=a['locked'],b['locked']
+            if (not _vector(left[-1],right[0]) or left[0][0]>=right[-1][0]
+                    or any(abs(v[1]-left[0][1])>.001 for v in left+right)):
+                raise ValueError('Keyword equivalence requires one short horizontal relation with a common midpoint')
+        elif s['recipe_id'] == 'semantic_isomorphism' and (a['locked'] != b['locked'] or a['start'] == b['start']):
             raise ValueError('Different source relations did not align into the same verified structure')
         if s['recipe_id'] == 'same_form_different_relation' and (a['start'] != b['start'] or a['locked'] == b['locked']):
             raise ValueError('Shared noun structure did not expose the actual different actions')
@@ -296,6 +315,7 @@ for(var ci=0;ci<ids.length;ci++){
   for(var gi=0;gi<B.glyphs.length;gi++){
    var G=B.glyphs[gi],l=c.layer(G.name),source=c.layer(G.source_name),comment=JSON.parse(l.comment),ap=tx(l,'ADBE Anchor Point').value,locked=S.phases[2].end,held=S.end-.46,samples=[];
    for(var k=0;k<17;k++)samples.push(tx(l,'ADBE Position').valueAtTime(S.start+(S.phases[1].end-S.start)*k/16,false));
+   var surfaceStates=[];if(S.parameters.surface_hold_frames)for(var hf=0;hf<=S.parameters.surface_hold_frames;hf++){var ht=S.phases[0].end+hf/24;surfaceStates.push({time:ht,position:tx(l,'ADBE Position').valueAtTime(ht,false),scale:tx(l,'ADBE Scale').valueAtTime(ht,false),opacity:tx(l,'ADBE Opacity').valueAtTime(ht,false)});}
    var hidden=amount(source,'SYMBOL_SOURCE_HANDOFF_'+S.symbol_id+'_'+G.object_id);
    var doc=l.property('Source Text').valueAtTime(locked,false),original=source.property('Source Text').valueAtTime(S.start,false);
    var foreground=namedAnimator(l,'THINKING_FOREGROUND_INK');
@@ -308,7 +328,7 @@ for(var ci=0;ci<ids.length;ci++){
     locked_scale:tx(l,'ADBE Scale').valueAtTime(locked,false),font:doc.font,source_font:original.font,font_size:doc.fontSize,source_font_size:original.fontSize,apply_fill:doc.applyFill,
     opacity:tx(l,'ADBE Opacity').valueAtTime(locked,false),outside_masks:[mask(l,'SYMBOL_OUTSIDE_BEFORE',comment.range[0]===0,locked),mask(l,'SYMBOL_OUTSIDE_AFTER',comment.range[1]===doc.text.length,locked)],
      outside_mask_states:[maskState(l,'SYMBOL_OUTSIDE_BEFORE',locked,held),maskState(l,'SYMBOL_OUTSIDE_AFTER',locked,held)],
-    source_handoff:[hidden.valueAtTime(Math.max(0,S.start-1/24),false),hidden.valueAtTime(S.start,false),hidden.valueAtTime(S.end,false)],travel_samples:samples,
+    source_handoff:[hidden.valueAtTime(Math.max(0,S.start-1/24),false),hidden.valueAtTime(S.start,false),hidden.valueAtTime(S.end,false)],travel_samples:samples,surface_states:surfaceStates,
     foreground:{name:foreground.name,enabled:foreground.enabled,stack_index:foreground.propertyIndex,times:[locked,held],units:fgAdvanced.property('ADBE Text Range Units').value,smoothness:fgAdvanced.property('ADBE Text Selector Smoothness').value,
      ranges:[[fgSelector.property('ADBE Text Index Start').valueAtTime(locked,false),fgSelector.property('ADBE Text Index End').valueAtTime(locked,false)],[fgSelector.property('ADBE Text Index Start').valueAtTime(held,false),fgSelector.property('ADBE Text Index End').valueAtTime(held,false)]],
      amounts:[fgAmount.valueAtTime(locked,false),fgAmount.valueAtTime(held,false)],colors:[fgColor.valueAtTime(locked,false),fgColor.valueAtTime(held,false)],errors:[fgAmount.expressionError,fgColor.expressionError]}});
