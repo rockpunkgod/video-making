@@ -61,6 +61,7 @@ class NativeHostRestartTests(unittest.TestCase):
         launch = stack.enter_context(patch.object(restart.subprocess, 'run', return_value=None))
         absent = stack.enter_context(patch.object(restart, 'process_absent', return_value=True))
         stack.enter_context(patch.object(restart.time, 'sleep'))
+        stack.enter_context(patch.object(restart, 'reconcile_observed_panel', return_value=None))
         return constructor, launch, absent, process
 
     def test_reconstructs_new_pid_and_new_ownership_target_after_one_normal_restart(self):
@@ -231,6 +232,39 @@ class NativeHostRestartTests(unittest.TestCase):
         with self.assertRaises(ValueError): restart.restart_saved_host(self.old, 768)
         self.assertEqual(self.open_calls, [])
         self.assertEqual(constructor.call_count, 1)
+
+
+class PanelAncestryTests(unittest.TestCase):
+    def setUp(self):
+        self.observed={'Id':30,'Path':str(Path('synthetic/AfterFX.exe').resolve())}
+        self.row={'instanceId':'synthetic','role':'primary','state':'running','pid':None,
+                  'cepPid':10,'endpoint':'http://127.0.0.1:11488/mcp'}
+        self.processes=[{'ProcessId':10,'ParentProcessId':20,'Name':'CEPHtmlEngine.exe'},
+                        {'ProcessId':20,'ParentProcessId':30,'Name':'CEPHtmlEngine.exe'},
+                        {'ProcessId':30,'ParentProcessId':40,'Name':'AfterFX.exe',
+                         'ExecutablePath':self.observed['Path']}]
+
+    def test_only_live_parent_chain_resolves_missing_pid(self):
+        result=restart.observed_panel_binding([self.row],self.processes,self.observed)
+        self.assertEqual([p['ProcessId'] for p in result['observed_ancestry']],[10,20,30])
+        self.assertEqual(result['pid'],30)
+        self.assertIsNone(self.row['pid']) # observation never mutates input
+
+    def test_unrelated_dead_unknown_and_existing_pid_records_are_not_repaired(self):
+        for change in ({'cepPid':99},{'state':'unknown'},{'pid':99},{'role':'worker'},
+                       {'endpoint':'http://127.0.0.1:9999/mcp'}):
+            with self.subTest(change=change):
+                self.assertIsNone(restart.observed_panel_binding([{**self.row,**change}],self.processes,self.observed))
+        processes=deepcopy(self.processes);processes[1]['ParentProcessId']=10
+        self.assertIsNone(restart.observed_panel_binding([self.row],processes,self.observed))
+
+    def test_ambiguous_hosts_panels_and_changed_executable_are_refused(self):
+        with self.assertRaises(RuntimeError):
+            restart.observed_panel_binding([self.row],self.processes+[dict(self.processes[-1],ProcessId=31)],self.observed)
+        with self.assertRaises(RuntimeError):
+            restart.observed_panel_binding([self.row,dict(self.row,instanceId='second')],self.processes,self.observed)
+        with self.assertRaises(RuntimeError):
+            restart.observed_panel_binding([self.row],self.processes,dict(self.observed,Path='other/AfterFX.exe'))
 
 
 class NativeCacheWiringTests(unittest.TestCase):

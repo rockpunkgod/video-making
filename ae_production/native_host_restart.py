@@ -7,6 +7,7 @@ implicitly taken over or treated as permission to repeat a prior write.
 import ctypes
 from ctypes import wintypes
 import json
+import os
 from pathlib import Path
 import subprocess
 import time
@@ -36,7 +37,11 @@ def activate_observed_panel(observed, executable):
     Adobe's dynamic extension command IDs need real menu input; sending a
     WM_COMMAND can appear successful while leaving the panel closed.
     """
+    # AE may move between monitors with different Windows display scaling.
+    # Make menu coordinates local to this automation thread's actual monitor.
+    ctypes.windll.user32.SetThreadDpiAwarenessContext(ctypes.c_void_p(-4))
     from pywinauto import Desktop
+    import win32gui,win32process
     if (not observed.get('MainWindowHandle') or Path(observed['Path']).resolve()!=executable.resolve()):
         raise RuntimeError('Panel activation requires the exact observed restarted executable/window')
     desktop=Desktop(backend='win32');window=desktop.window(handle=observed['MainWindowHandle'])
@@ -52,16 +57,78 @@ def activate_observed_panel(observed, executable):
     extension=next((m for m in main.sub_menu().items()
                     if m.text().startswith('扩展') or m.text().startswith('Extensions')),None)
     if extension is None:return {'action':'WAITING_FOR_NATIVE_MENU','project_write':False}
-    window.set_focus();main.click_input()
-    extension.click_input()
+    def focused():
+        if win32process.GetWindowThreadProcessId(win32gui.GetForegroundWindow())[1]!=observed['Id']:
+            raise RuntimeError('Observed AE lost foreground; no menu input sent to another application')
+    window.set_focus();focused();main.click_input()
+    focused();extension.click_input()
     panel=next((m for m in extension.sub_menu().items() if m.text().strip()=='ae-mcp'),None)
     if panel is None:raise RuntimeError('Installed ae-mcp panel is unavailable')
     opened=bool(panel.state() & 8)
-    if not opened:panel.click_input()
+    # The menu toggles the panel; never close one that is already present.
+    if not opened:
+        focused();panel.click_input()
     if window.process_id()!=observed['Id']:raise RuntimeError('Panel activation process changed')
     return {'process_id':observed['Id'],'window_handle':observed['MainWindowHandle'],
             'executable':str(executable),'action':'ALREADY_OPEN_NOT_TOGGLED' if opened else 'OPEN_EXISTING_INSTALLED_PANEL',
             'project_write':False,'new_application_launch':False}
+
+
+def observed_panel_binding(rows, processes, observed):
+    """Resolve a missing connector PID only through live OS parent identities."""
+    hosts=[p for p in processes if p['Name'].lower()=='afterfx.exe']
+    if (len(hosts)!=1 or hosts[0]['ProcessId']!=observed['Id']
+            or Path(hosts[0]['ExecutablePath']).resolve()!=Path(observed['Path']).resolve()):
+        raise RuntimeError('Panel reconciliation requires the exact single observed AE host')
+    candidates=[]
+    by_pid={p['ProcessId']:p for p in processes}
+    for row in rows:
+        if (row.get('role')!='primary' or row.get('state')!='running' or row.get('pid') is not None
+                or row.get('endpoint')!='http://127.0.0.1:11488/mcp'):continue
+        chain=[];pid=row.get('cepPid')
+        for _ in range(8):
+            p=by_pid.get(pid)
+            if not p or pid in [x['ProcessId'] for x in chain]:break
+            chain.append(p)
+            if pid==observed['Id']:break
+            if p['Name'].lower()!='cephtmlengine.exe':break
+            pid=p['ParentProcessId']
+        if len(chain)>=2 and chain[-1]['ProcessId']==observed['Id']:
+            candidates.append({'before':row,'observed_ancestry':chain,'pid':observed['Id']})
+    if len(candidates)>1:raise RuntimeError('Multiple connector panels match the same AE; preserve them')
+    return candidates[0] if candidates else None
+
+
+def reconcile_observed_panel(folder, observed):
+    """Repair startup PID discovery metadata, not ownership or project state."""
+    registry=Path.home()/'.ae-mcp/instances/registry.json'
+    module=Path(os.environ.get('APPDATA',''))/'Adobe/CEP/extensions/com.aemcp.panel/host/instance-registry.js'
+    if not registry.exists() or not module.exists():return None
+    script='[Console]::OutputEncoding=[System.Text.UTF8Encoding]::new($false);ConvertTo-Json -InputObject @(Get-CimInstance Win32_Process -Filter "Name=\'AfterFX.exe\' OR Name=\'CEPHtmlEngine.exe\'" | Select-Object ProcessId,ParentProcessId,Name,ExecutablePath) -Compress'
+    result=subprocess.check_output(['powershell','-NoProfile','-Command',script],
+                                   creationflags=getattr(subprocess,'CREATE_NO_WINDOW',0))
+    binding=observed_panel_binding(json.loads(registry.read_text('utf-8'))['instances'],
+                                  json.loads(result.decode('utf-8-sig')),observed)
+    if not binding:return None
+    if process_absent(binding['pid']) or any(process_absent(p['ProcessId']) for p in binding['observed_ancestry']):
+        raise RuntimeError('Observed panel ancestry exited before reconciliation')
+    # Use the installed registry's locked update. Preserve workspace, state,
+    # resource limits and all uncertain dispatches; Host.identity still follows.
+    code="""const fs=require('fs');const b=JSON.parse(fs.readFileSync(0,'utf8'));
+const {InstanceRegistry}=require(b.module);(async()=>{const r=new InstanceRegistry();
+const before=await r.get(b.before.instanceId);
+for(const k of ['pid','cepPid','state','projectPath','workspaceId','endpoint'])
+ if(before[k]!==b.before[k])throw Error('Observed registry changed before PID repair');
+for(const p of b.observed_ancestry)process.kill(p.ProcessId,0);
+const after=await r.update(before.instanceId,{pid:b.pid});
+console.log(JSON.stringify(after));})().catch(e=>{console.error(e);process.exitCode=1});"""
+    result=subprocess.run(['node','-e',code],input=json.dumps({**binding,'module':str(module)}),
+                          capture_output=True,text=True,encoding='utf-8',check=True,
+                          creationflags=getattr(subprocess,'CREATE_NO_WINDOW',0))
+    receipt={**binding,'after':json.loads(result.stdout),'project_mutation':False,
+             'ownership_state_changed':False,'budget_changed':False}
+    write(folder/('OBSERVED_PANEL_PID_'+str(time.time_ns())+'.json'),receipt)
+    return receipt
 
 
 def open_verified_checkpoint(fresh, record):
@@ -161,6 +228,8 @@ def restart_saved_host(h,cursor):
                 if started and started['Id']!=h.pid and started.get('MainWindowHandle'):
                     if Path(started['Path']).resolve()!=executable.resolve():
                         raise RuntimeError('Restarted executable changed; preserve the observed host')
+                    if reconcile_observed_panel(h.folder,started):
+                        continue # Repeat only fresh identity reads, not an AE write.
                     record.update(panel_activation_requested={'process_id':started['Id'],
                         'window_handle':started['MainWindowHandle']});write(path,record)
                     activation=activate_observed_panel(started,executable)
