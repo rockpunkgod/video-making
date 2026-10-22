@@ -52,7 +52,8 @@ def request_author(folder,brief):
             'missing':['student_pain_point','effective_method_trigger','approved_visual_conflict',
                        'bound_payoff','explicitly_specified_opening_copy'],
             'automatic_hook_selection':False,'human_approved':False,'public_render_ready':False}
-    inputs={str(Path(brief).resolve()):sha256(brief)};pool=[];hook=None
+    policy=ROOT/'FREE_SHOWCASE_POLICY.md'
+    inputs={str(Path(brief).resolve()):sha256(brief),str(policy):sha256(policy)};pool=[];hook=None
     if spec.get('audience_hook_decision'):
         decision=spec['audience_hook_decision']
         if not isinstance(decision,dict) or set(decision)!={'path','sha256'}:
@@ -80,6 +81,9 @@ def request_author(folder,brief):
         'Actually compare eligible candidates; never solve or relabel an old frozen package.',
         'Produce AV_AUTHOR decisions consumed by the current dispatch; use one scene order and clock.',
         'Point-of-use method name; quick/brief/focus; complete candidate checks; replay follows the explicit current user policy. FIRST_PERSON_CHALLENGE uses the complete first pass without an independent slow replay.',
+        'Apply the bound FREE_SHOWCASE_POLICY creative compression v2 through teaching_focus.editorial_policy=creative_compression_v2 and the existing option editorial notes. Choose full, compressed or verified result presentation from the actual viewer task; no common shot, time-share or duration quota.',
+        'Keep complete frozen checks, conditions, Stop and final-answer authorization backstage. Preserve required initial letter grouping and content support for gap-fill; never invent a speed advantage by hiding necessary work.',
+        'Record omitted explanation, accurate foreground scope, viewer payoff, understanding risk and observation plan. Prepare exports the existing AudienceLearning freeze request; keep propagation benefit hypothetical and real feedback pending.',
         'Read the knowledge inputs and bind specific design choices; hypotheses are not learning results.',
         'Missing language decisions are a language-author job, never a user approval stop.',
         'Consume the exact external Audience Hook decision; never invent a Hook or self-approve creative choices.',

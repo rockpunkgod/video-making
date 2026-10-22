@@ -7,11 +7,31 @@ from unittest.mock import patch
 
 from video_contracts import read,write,sha
 from scripts.voice_delivery import sha256
-from ae_production.autonomous_episode import (job,consume_author_response,run,revise,complete_chunks)
+from ae_production.autonomous_episode import (job,consume_author_response,run,revise,complete_chunks,request_author)
 from content_os.engagement_learning import AudienceLearning
 
 
 class AutonomousControls(unittest.TestCase):
+    def test_new_author_receives_bound_policy_and_changed_policy_invalidates_old_job(self):
+        with tempfile.TemporaryDirectory() as t:
+            f=Path(t);policy=f/'FREE_SHOWCASE_POLICY.md'
+            policy.write_text('SYNTHETIC policy version one',encoding='utf-8')
+            hook=f/'hook.json';write(hook,{'synthetic':True})
+            brief=f/'brief.json';write(brief,{'schema':'autonomous-episode-brief/v1',
+                'product':'FREE_SHOWCASE','asset_pool':[],'style_inputs':[],
+                'audience_hook_decision':{'path':str(hook),'sha256':sha256(hook)}})
+            with patch('ae_production.autonomous_episode.ROOT',f):
+                first=request_author(f,brief)
+                packet=read(first['request'])['packet']
+                self.assertEqual(packet['input_files'][str(policy)],sha256(policy))
+                self.assertIn('creative_compression_v2',' '.join(packet['requirements']))
+                write(first['response'],{'request_sha':first['request_sha'],'human_approved':False})
+                policy.write_text('SYNTHETIC policy version two',encoding='utf-8')
+                second=request_author(f,brief)
+            self.assertNotEqual(first['request_sha'],second['request_sha'])
+            self.assertEqual(second['status'],'NEEDS_HOST_AGENT')
+            self.assertFalse((f/'AV_AUTHOR.json').exists())
+
     def test_missing_host_agent_is_not_user_approval_or_fake_authorship(self):
         with tempfile.TemporaryDirectory() as t:
             f=Path(t)
