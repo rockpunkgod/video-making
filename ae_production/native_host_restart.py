@@ -64,6 +64,36 @@ def activate_observed_panel(observed, executable):
             'project_write':False,'new_application_launch':False}
 
 
+def open_verified_checkpoint(fresh, record):
+    """Admit only the empty replacement host proved by this normal restart."""
+    from ae_production.authored_native import current_native
+    _,_,native=current_native(fresh.folder)
+    actual=fresh.identity();before=record['before'];project_sha=record['saved_project_sha256']
+    if (record['state'] not in ('NORMAL_DESKTOP_LAUNCH_REQUESTED','STARTUP_UNAVAILABLE')
+            or record.get('forced_termination') is not False
+            or not process_absent(before['process_id']) or fresh.pid==before['process_id']
+            or actual!={'process_id':fresh.pid,'project_path':'','target_id':'none','dirty':False,'rendering':False}
+            or Path(record['saved_project']).resolve()!=fresh.project.resolve()
+            or sha256(fresh.project)!=project_sha
+            or before['target_id']!='comp:'+str(native['comp_id'])):
+        raise ValueError('Saved restart does not prove this empty replacement host and exact checkpoint')
+    target={k:actual[k] for k in ('process_id','project_path','target_id')}
+    after={**target,'project_path':str(fresh.project.resolve()),'target_id':before['target_id']}
+    lease=HostOwnership('after_effects','/root',fresh.folder.name,target,Path(fresh.h['ownership_directory']))
+    lease.acquire();receipt=fresh.folder/'dispatch'/str(time.time_ns());receipt.parent.mkdir(exist_ok=True)
+    write(receipt.with_suffix('.pending.json'),{'label':'Open verified empty restart checkpoint','before':actual,'token':lease.record['token'],'saved_project_sha256':project_sha})
+    code='if(app.project.numItems||app.project.dirty)throw Error("New host is not empty");app.open(new File('+json.dumps(fresh.project.as_posix())+'));var c=app.project.itemByID('+str(native['comp_id'])+');for(var i=1;i<=app.project.numItems;i++)app.project.item(i).selected=false;c.selected=true;c.openInViewer();return {project:app.project.file.fsName,comp_id:c.id};'
+    def operation():
+        try:r=fresh.js(code)
+        except BaseException as error:write(receipt.with_suffix('.error.json'),{'error':str(error)});raise
+        write(receipt.with_suffix('.transport.json'),r);return r
+    result=lease.mutate(fresh.identity,operation,target_after=after)
+    if sha256(fresh.project)!=project_sha:raise ValueError('Saved checkpoint changed during open; retain ownership for inspection')
+    observed=fresh.identity();lease.release(fresh.identity)
+    write(receipt.with_suffix('.complete.json'),{'result':result,'identity':observed,'token':lease.record['token']})
+    return result
+
+
 def restart_saved_host(h,cursor):
     from ae_production.authored_native import Host,process,current_native
     before=h.identity()
@@ -108,9 +138,7 @@ def restart_saved_host(h,cursor):
                 raise RuntimeError('New host opened another project; preserve it')
             if sha256(h.project)!=project_sha:raise ValueError('Saved checkpoint changed before opening')
             if actual['project_path']=='':
-                code='if(app.project.numItems||app.project.dirty)throw Error("New host is not empty");app.open(new File('+json.dumps(h.project.as_posix())+'));var c=app.project.itemByID('+before['target_id'].split(':')[1]+');for(var i=1;i<=app.project.numItems;i++)app.project.item(i).selected=false;c.selected=true;c.openInViewer();return {project:app.project.file.fsName,comp_id:c.id};'
-                fresh.mutation_js(code,'Open exact saved native restart checkpoint',
-                    {'process_id':fresh.pid,'project_path':str(h.project.resolve()),'target_id':before['target_id']})
+                open_verified_checkpoint(fresh,record)
             elif actual['target_id']!=before['target_id']:
                 raise RuntimeError('Restarted native target differs; inspect without replay')
             if sha256(h.project)!=project_sha:raise ValueError('Saved checkpoint changed during normal restart')

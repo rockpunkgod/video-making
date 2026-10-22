@@ -94,6 +94,13 @@ class NativeHostRestartTests(unittest.TestCase):
         self.assertIs(restart.restart_saved_host(self.old, 768), self.fresh)
         self.assertEqual(self.open_calls, []); self.assertEqual(launch.call_count, 1)
 
+    def test_revision_started_from_another_saved_project_can_reopen_its_verified_checkpoint(self):
+        self.fresh.h['ae_expected_project']=str(self.folder/'prior-revision.aep')
+        self.environment()
+        self.assertIs(restart.restart_saved_host(self.old,0),self.fresh)
+        self.assertEqual(len(self.open_calls),1)
+        self.assertFalse((self.ownership/'after_effects.json').exists())
+
     def test_other_current_project_dirty_host_or_changed_process_is_preserved(self):
         self.environment()
         original = dict(self.old.state)
