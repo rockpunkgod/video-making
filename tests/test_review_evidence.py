@@ -87,7 +87,7 @@ class ActualEncodedFixture(unittest.TestCase):
     @classmethod
     def tearDownClass(cls):cls.temp.cleanup()
 
-    def export(self):
+    def export(self,extra_readbacks=None):
         p=Path(tempfile.mkdtemp(dir=self.root));media=p/'media';media.mkdir()
         movie=media/'fixture.mp4';shutil.copy2(self.media,movie)
         voice=p/'VOICE.wav'
@@ -101,6 +101,7 @@ class ActualEncodedFixture(unittest.TestCase):
         e.write(p/'AV_PLAN.json',plan);e.write(p/'native-identity.json',{'comp_id':1})
         e.write(p/'PICTURE_RECEIPT.json',{'comp_id':1})
         e.write(p/'PR_TIMELINE.json',{'audioTracks':[{'clips':[{'name':voice.name,'start':0,'end':1,'nodeId':'n1'}]}]})
+        for name,value in (extra_readbacks or {}).items():e.write(p/name,value)
         qa={'media':str(movie),'sha256':e.file_sha(movie),'plan_sha256':e.file_sha(p/'AV_PLAN.json'),
             'frames':24,'native_project':str(project),'premiere_project':str(pr),'full_decode':'PASS'}
         return p,qa,Path(e.export_review_evidence(p,qa))
@@ -136,6 +137,16 @@ class ActualEncodedFixture(unittest.TestCase):
             with self.subTest(target=target),self.assertRaises((ValueError,json.JSONDecodeError)):
                 e.validate_evidence(manifest)
             target.write_bytes(original)
+
+    def test_current_composition_readbacks_are_captured_without_historical_id_assumptions(self):
+        names=['COMPARISON_BACKGROUND_NATIVE_624.json','READING_CONTINUITY_NATIVE_624.json']
+        p,qa,manifest=self.export({name:{'fixture_only':True,'comp_id':624} for name in names})
+        snapshots={r['role']:r for r in e.read(manifest)['source_snapshots']}
+        for name in names:
+            row=snapshots[name]
+            self.assertEqual(row['sha256'],e.file_sha(p/name))
+            self.assertEqual(e.read(manifest.parent/row['path'])['comp_id'],624)
+        self.assertEqual(e.validate_evidence(manifest)['status'],'PASS')
 
     def test_stale_final_video_binding_is_rejected_before_output(self):
         p,qa,manifest=self.export();changed=copy.deepcopy(qa);changed['sha256']='0'*64

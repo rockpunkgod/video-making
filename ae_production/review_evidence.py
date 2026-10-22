@@ -616,13 +616,14 @@ def export_review_evidence(folder,qa,probe_result=None):
     sources.extend((name,folder/name) for name in ('AV_AUTHOR.json','AV_PLAN.json','native-identity.json',
         'EVIDENCE_NATIVE_MOTION.json','PR_TIMELINE.json','MUSIC_NATIVE_AUTOMATION.json',
         'CHALLENGE_NATIVE_READBACK.json','SYMBOL_NATIVE_READBACK.json',
-        'ANSWER_CONFIRMATION_NATIVE.json','COMPARISON_BACKGROUND_NATIVE_1.json','COMPARISON_BACKGROUND_NATIVE_703.json',
+        'ANSWER_CONFIRMATION_NATIVE.json',
         'DIRECT_EXTRACTION_NATIVE_READBACK.json','READING_THINKING_NATIVE_READBACK.json',
-        'READING_CONTINUITY_NATIVE_1.json','READING_CONTINUITY_NATIVE_703.json',
         'NATIVE_AUDIO_DELAY.json','EPISODE_SCRIPT.md','EPISODE_SUBTITLES.srt',
         'SUBTITLE_NATIVE_AUDIT.json','PR_CAPTIONS.json','SUBTITLE_DELIVERY.json','VISUAL_MEMORY_NATIVE_READBACK.json',
         'REVIEW_CANDIDATE_QA.json' if qa.get('formal_delivery') is False else 'MASTER_DELIVERY_QA.json' if qa.get('formal_4k_rendered') else 'DELIVERY_QA.json',
         'MASTER_PICTURE_RECEIPT.json' if qa.get('formal_4k_rendered') else 'PICTURE_RECEIPT.json') if (folder/name).exists())
+    for pattern in ('COMPARISON_BACKGROUND_NATIVE_*.json','READING_CONTINUITY_NATIVE_*.json'):
+        sources.extend((p.name,p) for p in sorted(folder.glob(pattern)))
     sources.extend(('native_source',p) for p in sorted((folder/'native-source').glob('*.jsx')))
     for role,source in sources:
         target=out/'source_snapshots'/source.name;target.parent.mkdir(exist_ok=True)
