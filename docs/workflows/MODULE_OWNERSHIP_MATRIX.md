@@ -1,5 +1,11 @@
 # 模块职责与实际消费者
 
+FREE_SHOWCASE v2 不增加模块：`creative_os.teaching_focus` 校验并消费每项编辑备注，
+从原阅读步骤中选择前台展示；`authored_native` 在原原位核验镜头读回结果状态。
+完整来源/Stop/选项核验继续属于原冻结校验，不转移给剪辑。AudienceLearning 使用
+同一冻结/观察/复盘账本，作者上下文只绑定实际 AV_AUTHOR / AV_PLAN 和场景。
+没有新评分器或流量预测器。当前 72px 橙色事后方法名与统一答案缩放提案已撤回。
+
 2026-10-22 增量继续归属既有消费者：Audience 管挑战时长；Motion Identity 的两个
 Recipe 管词对齐与角色分叉；Teaching Focus 管轻核验的字号及阅读后退场；AE 模板
 管方法触发、提取出发信号与片尾。`ae_production/subtitles.py` 只检查字幕产物模式、

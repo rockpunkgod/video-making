@@ -3,7 +3,7 @@ from copy import deepcopy
 import unittest
 
 from video_contracts import sha
-from creative_os.teaching_focus import VERSION, validate_focus, direct_scene, resource_report, require_focus
+from creative_os.teaching_focus import VERSION, COMPRESSION_POLICY, validate_focus, direct_scene, resource_report, require_focus
 from content_os.scoring import rank_teaching_focus
 from creative_os.audience_engagement import critical_focus_handoff
 from ae_production.authored_episode import compile_clock
@@ -118,6 +118,66 @@ class TeachingFocus(unittest.TestCase):
 
     def test_new_production_cannot_omit_focus(self):
         with self.assertRaisesRegex(ValueError,'requires teaching_focus'):require_focus({})
+
+
+class CreativeCompression(unittest.TestCase):
+    def input(self):
+        a,b,c,l=fixture();a['product']='FREE_SHOWCASE'
+        a['teaching_focus']['editorial_policy']=COMPRESSION_POLICY
+        for candidate,opt in a['teaching_focus']['questions']['w']['options'].items():
+            opt['editorial']={'presentation':'full' if opt['treatment']=='focus' else 'result',
+                'viewer_difficulty':'Fixture difficulty','valuable_judgement':'Bound relation',
+                'omitted_explanation':'No theory lecture','front_conclusion':'Only this checked option',
+                'front_state':'supported' if candidate=='D' else 'eliminate',
+                'accuracy_basis':'Exact frozen candidate check, not a method-only answer',
+                'viewer_payoff':'See the decisive action','understanding_risk':'Could miss scope',
+                'observe':'Ask actual viewers to explain the relation', 'retained_reading_indices':[]}
+        return a,b,c,l
+
+    def test_result_changes_actual_clock_without_altering_take_or_verdict(self):
+        a,b,c,l=self.input();s=a['scenes'][0]
+        s['reading_path']=[{'move_seconds':1,'read_seconds':4,'quote':'Participants join workshops',
+                           'start':0,'end':27,'mode':'scope','phrase':'workshops'}]
+        old=deepcopy(a);old['teaching_focus'].pop('editorial_policy')
+        for o in old['teaching_focus']['questions']['w']['options'].values():o.pop('editorial')
+        validate_focus(a,b);p=compile_clock(a,c,l);prior=compile_clock(old,c,l)
+        self.assertEqual(p['scenes'][0]['reading_events'],[])
+        self.assertLess(p['duration'],prior['duration'])
+        self.assertEqual([v['voice'] for v in p['segments']],[v['voice'] for v in prior['segments']])
+        self.assertEqual([e['refs'] for e in p['candidate_events']],[e['refs'] for e in prior['candidate_events']])
+        self.assertEqual(p['scenes'][0]['editorial_compression']['front_state'],'eliminate')
+
+    def test_compressed_selects_original_steps_without_speeding_them(self):
+        a,b,c,l=self.input();s=a['scenes'][0]
+        step={'move_seconds':1,'read_seconds':4,'quote':'Participants join workshops',
+              'start':0,'end':27,'mode':'scope','phrase':'workshops'}
+        s['reading_path']=[step,deepcopy(step)]
+        note=a['teaching_focus']['questions']['w']['options']['B']['editorial']
+        note.update(presentation='compressed',retained_reading_indices=[1])
+        self.assertEqual(direct_scene(a,s)['reading_path'],[step])
+
+    def test_risk_scope_backstage_and_critical_evidence_are_not_optional(self):
+        for defect in ('scope','risk','frozen','critical'):
+            a,b,_,_=self.input();options=a['teaching_focus']['questions']['w']['options']
+            if defect=='scope':options['B']['editorial']['front_state']='final'
+            if defect=='risk':options['B']['editorial']['understanding_risk']=''
+            if defect=='frozen':b['w']['analysis']['question_verification']['review']['candidate_checks'][1]['evidence']=[]
+            if defect=='critical':options['A']['editorial']['presentation']='result'
+            with self.assertRaises(ValueError):validate_focus(a,b)
+
+    def test_no_quota_or_duration_padding_but_real_allocation_still_checked(self):
+        a,b,c,l=self.input();p=compile_clock(a,c,l)
+        p['scenes'][0]['end']=p['scenes'][0]['start']+1000
+        report=resource_report(a,p)
+        self.assertIsNone(report['target_episode_seconds'])
+        self.assertIsNone(report['critical_share_target'])
+        self.assertEqual(report['propagation_effect'],'UNVERIFIED_CREATIVE_HYPOTHESIS')
+        p['scenes'][0]['editorial_compression']['presentation']='full'
+        with self.assertRaisesRegex(ValueError,'bypassed'):resource_report(a,p)
+
+    def test_paid_profile_does_not_inherit_free_compression(self):
+        a,b,_,_=self.input();a['product']='PAID_MASTERY'
+        with self.assertRaises(ValueError):validate_focus(a,b)
 
 
 if __name__=='__main__':unittest.main()

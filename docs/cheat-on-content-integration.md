@@ -23,4 +23,12 @@ Read: root SKILL, cheat-score, cheat-predict, cheat-score-blind, cheat-retro, ch
 
 The implementation is original project-specific code. No upstream source, starter rubric prose, hook or Skill is copied into the repository; therefore no copied MIT source requiring a license header is distributed. Attribution and inspected revision are retained here. If later source code is copied, include the upstream MIT license and copyright notice for that source.
 
+FREE_SHOWCASE creative-compression v2 uses this same AudienceLearning 0.2.0
+ledger, rubric, freeze and retrospective discipline. The authored producer now
+exports a bound input and editable freeze request draft; it does not install the
+upstream system, create a second predictor, or infer observed platform outcomes.
+The eight experience dimensions remain unchanged. Bilibili coins joins the
+existing optional metrics; real launch and feedback validation still require
+actual data. Pre-production hypotheses are not completed final-cut predictions.
+
 Independent model review can identify reasoning mistakes; it cannot establish statistical validity or authenticate a human. A cold-start review is a low-confidence editorial judgement, with no total reach prediction.

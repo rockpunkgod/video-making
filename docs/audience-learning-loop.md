@@ -18,6 +18,29 @@ python -m scripts.audience_learning handoff REQUEST.json --output NEW-DIRECTOR-S
 
 Outputs refuse overwrite. `--synthetic` uses a separate database; synthetic observations must declare `is_real_observation=false`. Never register invented results in the real database. The CLI's `publish` command only records an operator's actual publication, not a platform operation.
 
+### Current authored FREE_SHOWCASE input
+
+The existing freeze/inspect commands also accept `authored-learning-context/v1`.
+`prepare` emits this small folder/author-SHA/plan-SHA binding for v2 edits, along
+with actual/pending-recording copy and `AUDIENCE_FREEZE_REQUEST_DRAFT.json`.
+The adapter revalidates the real AV_AUTHOR, AV_PLAN and frozen source statuses;
+question identities and beat IDs come from actual source questions and scenes.
+It does not fabricate a legacy method-episode plan or add another ledger.
+
+Fill the draft's episode ID, author, release-version labels and actual
+`post_data_seen=false` declaration before calling the unchanged `freeze` command.
+Null means unanswered. A draft title/cover version is allowed only as a clearly
+labelled pre-production hypothesis, never final creative approval. Re-freeze a
+new version with actual final media, independent SRT, voices, native receipts and
+Premiere readback before publication; never overwrite the planning record.
+
+Record compression choices, expected advantage, comprehension risk and what to
+observe. Keep the eight existing dimensions, no reach forecast or new scoring
+formula. Bilibili `coins` is an optional count metric in the existing CSV/manual
+interface; absent metrics remain null. EP01 reading / EP02 C-D reading / EP03
+gap-fill are an initial observation plan, not three proven independent causal
+experiments. Viewer and listening tests remain PENDING until actually performed.
+
 All input documents are JSON. `template` needs `episode_id`; `rubric`, `records` and `handoff` accept `{}`. `design` takes paths `episode`, `direction` and a `{asset_id: status_path}` mapping `statuses`. `inspect` takes paths `episode`, `copy`, `timeline`, statuses, actual `media`, and asset lists `subtitles`, `voice`, `music_sfx`, `native_receipts`, each `{path, sha256}`. `timeline` is an actual native readback envelope `{sequence, settings, voices}`, not the authored Native Spec; it must pass existing cinema timeline checks against the actual encoded video frame count and contain picture clips with available source files. Native source hashes are retained and rechecked. An explicit `music_sfx: [{silence: true}]` is permitted only when the final cut actually has no music/SFX.
 
 `freeze` uses the same episode/status/copy/timeline paths, optional `inspection` path, and a `spec`: experiment/episode/platform/cut/rubric IDs, author, `post_data_seen=false`, title/cover/description versions, and hypotheses. Each hypothesis specifies ID, claim, affected question/beat, expected advantage, possible failure and evidence-to-collect list. Optional `creative_rule_refs` binds reviewed pattern activations to the next experiment. Freeze stores original copy/timeline snapshots and hashes; rechecks actual files and the complete inspection for final-cut predictions. Without complete media inspection the record is only `PRE_PRODUCTION_HYPOTHESIS`, which cannot be registered as a final prediction.

@@ -2405,5 +2405,18 @@
     "subtitle_mode": "premiere_sidecar",
     "complete_unchanged_voice_takes": 24,
     "scope": "10 current user changes; new copy separate from actual unchanged speech; no publication"
+  },
+  "current_editorial_increment": {
+    "policy": "FREE_SHOWCASE creative_compression_v2",
+    "consumer": "teaching_focus -> AV_PLAN -> authored_native -> existing AE template",
+    "learning": "Existing AudienceLearning 0.2.0 freeze/inspect and immutable ledger via actual authored context; eight dimensions unchanged; optional Bilibili coins",
+    "current_revision": "free-showcase-v2-r01",
+    "plan_frames": 5925,
+    "plan_duration_ms": 246875,
+    "actual_media": "PENDING",
+    "perceptual_review": "PENDING",
+    "withdrawn": "Post-action orange method standard and uniform answer scale; r03 stopped at 3648 frames without full master",
+    "legacy_inputs": "Readable without automatic migration",
+    "propagation_effect": "UNVERIFIED_CREATIVE_HYPOTHESIS"
   }
 }

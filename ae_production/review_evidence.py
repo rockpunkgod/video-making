@@ -620,6 +620,7 @@ def export_review_evidence(folder,qa,probe_result=None):
         'DIRECT_EXTRACTION_NATIVE_READBACK.json','READING_THINKING_NATIVE_READBACK.json',
         'NATIVE_AUDIO_DELAY.json','EPISODE_SCRIPT.md','EPISODE_SUBTITLES.srt',
         'SUBTITLE_NATIVE_AUDIT.json','PR_CAPTIONS.json','SUBTITLE_DELIVERY.json','VISUAL_MEMORY_NATIVE_READBACK.json',
+        'AUDIENCE_LEARNING_CONTEXT.json','AUDIENCE_FROZEN_HYPOTHESIS.json','AUDIENCE_FROZEN_HYPOTHESIS_SNAPSHOT.json',
         'REVIEW_CANDIDATE_QA.json' if qa.get('formal_delivery') is False else 'MASTER_DELIVERY_QA.json' if qa.get('formal_4k_rendered') else 'DELIVERY_QA.json',
         'MASTER_PICTURE_RECEIPT.json' if qa.get('formal_4k_rendered') else 'PICTURE_RECEIPT.json') if (folder/name).exists())
     for pattern in ('COMPARISON_BACKGROUND_NATIVE_*.json','READING_CONTINUITY_NATIVE_*.json'):

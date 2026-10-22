@@ -10,9 +10,10 @@ Semantic Carry, Micro Lock and Boundary Seal. Fog Blue `#7E96A8` develops litera
 evidence; Soft Brick is reserved for an explicitly bound discrepancy. No bounce,
 neon highlighter, red cross, forced beat sync, or whole-screen object reset.
 Carry the same logical object across a Logic Match Cut. In the current
-FREE_SHOWCASE, execute the continuous cognitive action, then display its valid
-method name using the standard below. The 2026-10-22 user decision supersedes
-the earlier label-before-action rule; existing recorded voice stays unchanged.
+FREE_SHOWCASE, name the valid method immediately before use, execute the
+continuous cognitive action, then show its supported result. This replaces the
+historical action-before-naming rule. The proposed 2026-10-22 post-action orange
+method standard was withdrawn by the user; existing recorded voice stays unchanged.
 
 The current native reading consumer is `ae/rigs/reading-focus.jsx`, inserted
 by `ae_production.authored_native.template_source`. Every required reading
@@ -91,20 +92,17 @@ Full G01, F01, R02 and V10 remain blocked until a named human provides
 copy and visual hashes). Approval of direction does not grant teaching,
 source, editorial or music release.
 
-## Method Name Display Standard
+## Method naming and current native consumers
 
-方法名每次出现使用同一套规格，不因背景色或场景不同而调整：
+方法在使用前点名，SC10“再用换词不换义”符合该规则。暂停执行统一 72px、橙色及
+动作后出现的提案；橙色继续表示线索与命中。片尾仍作为单独的收束镜头，保留已授权的
+明亮纸面、居中大字与动作回扣，颜色沿用墨色，不把它推广成新的通用方法信号。
 
-- 位置：屏幕水平居中，垂直方向上三分之一处
-- 字号：72px（在 3840×2160 合成中）
-- 颜色：橙色（与题干线索高亮一致），不使用灰色或墨色
-- 停留：出现后至少保持 48 帧（2 秒）再淡出
-- 顺序：始终在对应动作执行完成之后出现，不在动作开始之前出现
-
-片尾回收（SC15 最后收束）：方法名是该帧的主体元素，字号不低于 120px，
-居中，停留 48 帧后淡出，不以小字置于角落。
-本期末帧使用明亮纸面，只保留 120px 方法名和下方 60px 墨色动作说明
-“看到同词→对上关系→判断”，不保留其他浮动元素。
+此文档是规范，不直接改变影片。关系图实际消费
+`AV_AUTHOR.cognitive_symbols → AV_PLAN.symbol_recipes → ae/rigs/cognitive-symbols.jsx`；
+阅读由 `ae/rigs/reading-focus.jsx` 执行，原字提取由当前 `authored-episode.jsx` 的
+同字形选择器与 lift 执行。SC10 的 18 帧状态必须在作者 recipe 参数中出现，
+`method-choreographies.json` 的 arc 本身不是当前原生执行入口。
 
 ### semantic_isomorphism（换词同义）
 

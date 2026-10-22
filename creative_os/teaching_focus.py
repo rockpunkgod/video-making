@@ -10,6 +10,35 @@ from video_contracts import pointer, sha
 
 VERSION = 'critical_judgement_v1'
 TREATMENTS = {'quick', 'brief', 'focus'}
+COMPRESSION_POLICY = 'creative_compression_v2'
+
+
+def compression_decision(author, world, candidate):
+    """Small editorial note on the existing allocation, not a truth verdict."""
+    focus = author['teaching_focus']
+    if focus.get('editorial_policy') != COMPRESSION_POLICY:
+        return None
+    opt = focus['questions'][world]['options'][candidate]
+    note = opt.get('editorial')
+    fields = {'presentation', 'viewer_difficulty', 'valuable_judgement',
+              'omitted_explanation', 'front_conclusion', 'front_state', 'accuracy_basis',
+              'viewer_payoff', 'understanding_risk', 'observe', 'retained_reading_indices'}
+    if not isinstance(note, dict) or set(note) != fields:
+        raise ValueError('Compression needs an explicit task, omission, scope, risk and observation note')
+    for key in fields - {'retained_reading_indices'}:
+        if not isinstance(note[key], str) or not note[key].strip():
+            raise ValueError('Compression editorial fields cannot be empty: '+key)
+    if note['presentation'] not in ('full', 'compressed', 'result'):
+        raise ValueError('Unknown foreground presentation')
+    if opt['treatment'] == 'focus' and note['presentation'] != 'full':
+        raise ValueError('A declared critical breakthrough must remain fully demonstrated')
+    if note['presentation'] == 'result' and opt['treatment'] != 'quick':
+        raise ValueError('Result-only presentation requires an explicitly obvious quick judgement')
+    indices = note['retained_reading_indices']
+    if (not isinstance(indices, list) or any(type(i) is not int or i < 0 for i in indices)
+            or indices != sorted(set(indices))):
+        raise ValueError('Retained reading indices must preserve the authored order')
+    return note
 
 
 def require_focus(author):
@@ -20,7 +49,10 @@ def require_focus(author):
 def validate_focus(author, bundles):
     require_focus(author)
     focus = author['teaching_focus']
-    if set(focus) != {'version', 'questions'} or focus['version'] != VERSION or set(focus['questions']) != set(bundles):
+    if (set(focus)-{'editorial_policy'} != {'version', 'questions'} or focus['version'] != VERSION
+            or set(focus['questions']) != set(bundles)
+            or ('editorial_policy' in focus and (focus['editorial_policy'] != COMPRESSION_POLICY
+                                                or author.get('product') != 'FREE_SHOWCASE'))):
         raise ValueError('Teaching focus must cover every frozen question')
     scenes = author['scenes']
     result = {}
@@ -78,7 +110,9 @@ def validate_focus(author, bundles):
                            and d['start'] <= r['start'] < r['end'] <= d['end'] for d in displayed):
                     raise ValueError('A critical difference is hidden from the visible comparison')
         for candidate, opt in q['options'].items():
-            if set(opt) != {'treatment', 'rationale', 'verification_ref'} or opt['treatment'] not in TREATMENTS or not opt['rationale'].strip():
+            allowed = {'treatment', 'rationale', 'verification_ref'}
+            if focus.get('editorial_policy') == COMPRESSION_POLICY:allowed.add('editorial')
+            if set(opt) != allowed or opt['treatment'] not in TREATMENTS or not opt['rationale'].strip():
                 raise ValueError('Each option needs an explicit justified treatment')
             ref = opt['verification_ref']
             if set(ref) != {'pointer', 'sha'} or not ref['pointer'].startswith('/question_verification/review/candidate_checks/'):
@@ -93,13 +127,29 @@ def validate_focus(author, bundles):
             if len(selected) != 1:
                 raise ValueError('Every verified option needs exactly one visible decision')
             s = selected[0]
+            note = compression_decision(author, world, candidate)
+            if note:
+                if note['front_state']!=s.get('event'):
+                    raise ValueError('Compression cannot promote an option result into another conclusion')
+                path = s.get('reading_path', [])
+                kept = note['retained_reading_indices']
+                if any(i >= len(path) for i in kept):raise ValueError('Compression names a missing original reading step')
+                if note['presentation'] == 'full' and kept != list(range(len(path))):
+                    raise ValueError('Full demonstration cannot silently remove necessary reading')
+                if note['presentation'] == 'compressed' and not kept:
+                    raise ValueError('Compressed comparison must retain a concrete reading object')
+                if note['presentation'] == 'result' and kept:
+                    raise ValueError('Result presentation has no separate reading walkthrough')
+                if any(v.startswith('reading:') and int(v[8:]) not in kept
+                       for v in s.get('voice_placements', {}).values()):
+                    raise ValueError('Compression would remove an actual voice placement anchor')
             if opt['treatment'] == 'focus':
                 related = [u for u in units.values() if candidate in u['candidates']]
                 if not any(u['method_action_ref'] in s['action_refs'] for u in related):
                     raise ValueError('Critical scene did not consume its frozen method action')
-            # The visible evidence cannot be removed merely to save time. The
-            # full backstage check stays bound even when only a key span is shown.
-            if not any(r['world'] == world and r['pointer'] == '/passage' for r in s['source_refs']):
+            # Result-only display may omit a walkthrough. The frozen complete
+            # check above still authorizes only this option's actual state.
+            if (not note or note['presentation'] != 'result') and not any(r['world'] == world and r['pointer'] == '/passage' for r in s['source_refs']):
                 raise ValueError('A fast verdict still needs visible passage evidence')
         for s in scenes:
             if s['world'] == world and s['kind'] == 'replay' and s.get('candidate') not in membership:
@@ -120,6 +170,19 @@ def direct_scene(author, shot):
     if s['kind'] not in ('compare', 'replay'):
         return s
     treatment = q['options'][s['candidate']]['treatment']
+    note = compression_decision(author, s['world'], s['candidate'])
+    if note:
+        s['editorial_compression'] = deepcopy(note)
+        original = s.get('reading_path', [])
+        indices = note['retained_reading_indices']
+        s['reading_path'] = [deepcopy(original[i]) for i in indices]
+        for vid, phase in s.get('voice_placements', {}).items():
+            if phase.startswith('reading:'):
+                s['voice_placements'][vid] = 'reading:'+str(indices.index(int(phase[8:])))
+        if note['presentation'] == 'result':
+            # Reuse the in-place option state and real source camera. No new
+            # extraction, skipped-reading performance, or synthetic shortcut.
+            s['attention'] = [e for e in s.get('attention', []) if e['target'] == 'candidate']
     s['teaching_treatment'] = treatment
     s['critical_units'] = [u['id'] for u in q['units'] if s['candidate'] in u['candidates']]
     if treatment != 'focus':
@@ -130,7 +193,7 @@ def direct_scene(author, shot):
                  candidate_travel_seconds=0, extract_seconds=0,
                  comparison_seconds=.65 if treatment == 'quick' else 1.0,
                  decision_seconds=.4, result_seconds=.4, return_seconds=.6)
-        if 'evidence_hold_frames' in s.get('light_presentation',{}):
+        if 'evidence_hold_frames' in s.get('light_presentation',{}) and not (note and note['presentation']=='result'):
             if not s.get('reading_path'):raise ValueError('Light evidence hold needs an actual source reading window')
             s['reading_path'][-1]['read_seconds']=s['light_presentation']['evidence_hold_frames']/author['format']['fps']
     else:
@@ -163,7 +226,9 @@ def resource_report(author, plan):
             if s['world'] != world or s['kind'] not in ('compare', 'replay'):
                 continue
             expected = direct_scene(author, next(x for x in author['scenes'] if x['id'] == s['id']))
-            for k in ('motion_treatment', 'teaching_treatment', 'critical_units', 'choreography'):
+            keys = ['motion_treatment', 'teaching_treatment', 'critical_units', 'choreography']
+            if 'editorial_compression' in expected:keys += ['editorial_compression', 'reading_path', 'voice_placements']
+            for k in keys:
                 if s.get(k) != expected[k]:
                     raise ValueError('Teaching allocation was bypassed in the compiled scene: '+s['id'])
             duration = s['end'] - s['start']
@@ -173,9 +238,11 @@ def resource_report(author, plan):
             options.append({'scene': s['id'], 'candidate': s['candidate'], 'kind': s['kind'],
                             'treatment': s['teaching_treatment'], 'seconds': round(duration, 4),
                             'motion': s['motion_treatment']})
+            if 'editorial_compression' in s:options[-1]['editorial']=deepcopy(s['editorial_compression'])
         total = sum(seconds.values()); share = seconds['focus']/total if total else 0
         points = sum(teaching_value_points(u) for u in q['units'])
-        if q['units'] and share <= .5 and omission is None:
+        flexible = author['teaching_focus'].get('editorial_policy') == COMPRESSION_POLICY
+        if q['units'] and share <= .5 and omission is None and not flexible:
             raise ValueError('Critical judgements do not receive most comparison/replay time; revise copy or selection, never speed up evidence')
         rows.append({'world': world, 'options': options, 'seconds': seconds, 'critical_attention_share': share,
                      'teaching_value_density': points/total if total else None,
@@ -187,6 +254,11 @@ def resource_report(author, plan):
     result={'version': VERSION, 'questions': rows, 'target_episode_seconds': [300, 480],
             'duration_note': 'WITHIN_TARGET' if 300 <= plan['duration'] <= 480 else 'OUTSIDE_TARGET_REVIEW_SELECTION_NO_PADDING',
             'actual_media_review': 'PENDING', 'student_results': 'UNMEASURED', 'public_render_ready': False}
+    if author['teaching_focus'].get('editorial_policy') == COMPRESSION_POLICY:
+        result.update(editorial_policy=COMPRESSION_POLICY, target_episode_seconds=None,
+                      duration_note='TASK_DRIVEN_NO_DURATION_OR_COMPRESSION_QUOTA',
+                      critical_share_target=None, front_accuracy_review='PENDING',
+                      propagation_effect='UNVERIFIED_CREATIVE_HYPOTHESIS')
     if omission is not None:
         result['user_authorized_replay_omission']={
             'mode':omission['mode'],'source_sha256':omission['source_sha256'],

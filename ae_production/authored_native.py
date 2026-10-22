@@ -275,15 +275,25 @@ def background_isolation_rows(p):
     rows=[]
     for s in p['scenes']:
         if s.get('comparison_background_policy')!='isolate_selected_passage':continue
+        result_only=(s.get('editorial_compression',{}).get('presentation')=='result'
+                     and s.get('teaching_treatment')=='quick' and not s.get('reading_events'))
         if (s['kind'] not in ('compare','replay') or s.get('motion_treatment') not in ('critical_comparison','in_place_check')
                 or s.get('candidate_reading_policy','visible') not in ('visible','quiet_source_until_read')
-                or not s.get('reading_events')):
+                or (not s.get('reading_events') and not result_only)):
             raise ValueError('Background isolation requires an explicit comparison reading path')
         ex=p['excerpts'][s['excerpt']];blocks=p['worlds'][ex['world']]['blocks']
         refs=[r for r in s['source_refs'] if r['world']==ex['world'] and r['pointer']=='/passage']
         selected={b['id'] for b in blocks if b['id'] in ex['block_ids']
                   and any(r['start']<b['end'] and r['end']>b['start'] for r in refs)}
         hidden=[b for b in blocks if b['visible'] and b['id'] not in selected]
+        if result_only:
+            if not selected:raise ValueError('Bound result reference is absent from its real source')
+            rows.append({'scene':s['id'],'hidden':[b['id'] for b in hidden],
+                         'fade_start':s['start'],'quiet_at':s['oriented'],'settled':s['settled'],
+                         'restore_at':s['return_start'],'end':s['end'],
+                         'readings':[{'time':s['settled'],'layers':sorted(selected)}],
+                         'presentation':'result','source_sample_scope':'visible source reference, not a reading walkthrough'})
+            continue
         last=s['reading_events'][-1]
         if not selected or any(b['start']<last['end'] and b['end']>last['start'] for b in hidden):
             raise ValueError('Background isolation would hide necessary reading')
@@ -987,12 +997,13 @@ for(var ci=0;ci<ids.length;ci++){var c=app.project.itemByID(ids[ci]),factor=c.wi
  for(var si=0;si<shots.length;si++){var s=shots[si],r={comp_id:c.id,scene:s.id};
   if(s.method_signal){var l=c.layer('METHOD_SIGNAL_'+s.id),doc=l.property('Source Text').value,pos=l.transform.position.value;r.method={text:doc.text,font_size_4k_px:doc.fontSize*l.transform.scale.value[0]/100*3840/c.width,color:doc.fillColor,position_4k_px:[pos[0]*3840/c.width,pos[1]*3840/c.width],in_ms:l.inPoint*1000,out_ms:l.outPoint*1000,opacities:[l.transform.opacity.valueAtTime(s.method_signal_start,false),l.transform.opacity.valueAtTime(s.method_signal_release,false),l.transform.opacity.valueAtTime(s.method_signal_end,false)]};}
   if(s.method_signal){r.method.retired_evidence=[];for(var li=1;li<=c.numLayers;li++){var el=c.layer(li);if(el.name.indexOf('EXTRACT_'+s.id+'_')===0||el.name==='CANDIDATE_FLIGHT_'+s.id)r.method.retired_evidence.push({name:el.name,opacity:el.transform.opacity.valueAtTime(s.method_signal_start,false)});}}
-  if(s.light_presentation){var l=c.layer('LIGHT_CANDIDATE_'+s.id),e=s.reading_events[s.reading_events.length-1];r.light={font_size_4k_px:l.property('Source Text').value.fontSize*l.transform.scale.value[0]/100*3840/c.width,hold_frames:Math.round((e.end_time-e.arrival)*24),evidence:[]};var bs=excerpts[s.excerpt].block_ids;for(var bi=0;bi<bs.length;bi++){var op=c.layer(bs[bi]).transform.opacity;r.light.evidence.push({name:bs[bi],during:op.valueAtTime((e.arrival+e.end_time)/2,false),after:op.valueAtTime(e.end_time+.2,false)});}}
+  if(s.light_presentation&&s.reading_events.length){var l=c.layer('LIGHT_CANDIDATE_'+s.id),e=s.reading_events[s.reading_events.length-1];r.light={font_size_4k_px:l.property('Source Text').value.fontSize*l.transform.scale.value[0]/100*3840/c.width,hold_frames:Math.round((e.end_time-e.arrival)*24),evidence:[]};var bs=excerpts[s.excerpt].block_ids;for(var bi=0;bi<bs.length;bi++){var op=c.layer(bs[bi]).transform.opacity;r.light.evidence.push({name:bs[bi],during:op.valueAtTime((e.arrival+e.end_time)/2,false),after:op.valueAtTime(e.end_time+.2,false)});}}
   if(s.extraction_signal){r.signals=[];for(var hi=0;hi<s.extraction_highlights.length;hi++){var bs=excerpts[s.excerpt].block_ids;for(var bi=0;bi<bs.length;bi++){var source=c.layer(bs[bi]),text=source.property('Source Text').value.text;if(text.indexOf(s.extraction_highlights[hi])<0)continue;for(var li=0;li<2;li++){var l=li?c.layer('EXTRACT_'+s.id+'_'+bs[bi]):source,an=l.property('ADBE Text Properties').property('ADBE Text Animators').property('DIRECT_DEPARTURE_SCALE_'+s.id+'_'+hi),scale=an.property('ADBE Text Animator Properties').property('ADBE Text Scale 3D');r.signals.push({name:l.name,scale:scale.value,lead_frames:(s.extract_start-s.extraction_highlight_at)*24,amounts:[amount(an,s.extraction_highlight_at),amount(an,s.extract_start),amount(an,s.extract_start+.25)]});}}}}
   if(s.answer_confirmation&&s.answer_confirmation.show_label===false){r.redundant_labels=0;for(var li=1;li<=c.numLayers;li++)if(c.layer(li).name==='FINAL_'+s.world)r.redundant_labels++;}
+  if(s.editorial_compression&&s.editorial_compression.presentation==='result'){var option=c.layer('LIGHT_CANDIDATE_'+s.id);r.compression={presentation:'result',layer_id:option.id,text:option.property('Source Text').value.text,font_size_4k_px:option.property('Source Text').value.fontSize*option.transform.scale.value[0]/100*3840/c.width,opacities:[option.transform.opacity.valueAtTime(s.event_time,false),option.transform.opacity.valueAtTime(s.decision_end,false)],extraction_layers:0};for(var li=1;li<=c.numLayers;li++)if(c.layer(li).name.indexOf('EXTRACT_'+s.id+'_')===0)r.compression.extraction_layers++;}
   if(s.judge_hold_frames){var op=c.layer('LIGHT_CANDIDATE_'+s.id).transform.opacity;r.judge={keys:[]};for(var ki=1;ki<=op.numKeys;ki++)r.judge.keys.push({time:op.keyTime(ki),value:op.keyValue(ki)});}
-  if(s.closing_memory){var l=c.layer('CLOSING_METHOD'),spec=s.closing_memory,lock=s.end-(spec.hold_frames+spec.fade_frames)/24,release=lock+spec.hold_frames/24,doc=l.property('Source Text').value,action=c.layer('CLOSING_ACTION'),ad=action.property('Source Text').value,bg=c.layer('CLOSING_MEMORY_SPACE');r.closing={text:doc.text,font_size_4k_px:doc.fontSize*l.transform.scale.value[0]/100*3840/c.width,position_4k_px:[l.transform.position.value[0]*3840/c.width,l.transform.position.value[1]*3840/c.width],action:ad.text,action_font_size_4k_px:ad.fontSize*action.transform.scale.value[0]/100*3840/c.width,background_color:bg.source.mainSource.color,hold_frames:(release-lock)*24,opacities:[l.transform.opacity.valueAtTime(lock,false),l.transform.opacity.valueAtTime(release,false),l.transform.opacity.valueAtTime(s.end,false)]};}
-  if(r.method||r.light||r.signals||r.closing||r.redundant_labels!==undefined)out.push(r);
+  if(s.closing_memory){var l=c.layer('CLOSING_METHOD'),spec=s.closing_memory,lock=s.end-(spec.hold_frames+spec.fade_frames)/24,release=lock+spec.hold_frames/24,doc=l.property('Source Text').value,action=c.layer('CLOSING_ACTION'),ad=action.property('Source Text').value,bg=c.layer('CLOSING_MEMORY_SPACE');r.closing={text:doc.text,method_color:doc.fillColor,font_size_4k_px:doc.fontSize*l.transform.scale.value[0]/100*3840/c.width,position_4k_px:[l.transform.position.value[0]*3840/c.width,l.transform.position.value[1]*3840/c.width],action:ad.text,action_font_size_4k_px:ad.fontSize*action.transform.scale.value[0]/100*3840/c.width,background_color:bg.source.mainSource.color,hold_frames:(release-lock)*24,opacities:[l.transform.opacity.valueAtTime(lock,false),l.transform.opacity.valueAtTime(release,false),l.transform.opacity.valueAtTime(s.end,false)]};}
+  if(r.method||r.light||r.signals||r.closing||r.judge||r.compression||r.redundant_labels!==undefined)out.push(r);
  }
 }return out;'''
     rows=h.js(code.replace('IDS',json.dumps([n['comp_id'],n['master_comp_id']])).replace('SHOTS',json.dumps(p['scenes'],ensure_ascii=False)).replace('EXCERPTS',json.dumps(p['excerpts'],ensure_ascii=False)))
@@ -1018,6 +1029,13 @@ for(var ci=0;ci<ids.length;ci++){var c=app.project.itemByID(ids[ci]),factor=c.wi
             if not r['signals'] or any(abs(v['lead_frames']-8)>.001 or v['scale']!=[108,108,100] or any(abs(a-b)>.01 for a,b in zip(v['amounts'],[0,100,0])) for v in r['signals']):
                 raise ValueError('Eight-frame original glyph departure signal failed')
         if r.get('redundant_labels',0):raise ValueError('Redundant final answer label remains')
+        if 'compression' in r:
+            v=r['compression'];expected=s['candidate']+'   '+p['worlds'][s['world']]['question']['options'][s['candidate']]
+            if (s.get('reading_events') or v['text']!=expected or v['extraction_layers']!=0
+                    or abs(v['font_size_4k_px']-90*s.get('light_presentation',{}).get('option_scale_percent',100)/100)>.01
+                    or any(abs(a-b)>.01 for a,b in zip(v['opacities'],[100,38 if s['event']=='eliminate' else 100]))):
+                raise ValueError('Result presentation must show the bound whole option and real judgement without a reading/extraction demonstration')
+
         if 'judge' in r:
             keys=r['judge']['keys']
             for t in (s['decision_end'],s['return_start']):
@@ -1030,6 +1048,8 @@ for(var ci=0;ci<ids.length;ci++){var c=app.project.itemByID(ids[ci]),factor=c.wi
             if v['text']!=wanted['method'] or abs(v['font_size_4k_px']-wanted['font_size_px'])>.01 or abs(v['hold_frames']-wanted['hold_frames'])>.01 or any(abs(a-b)>.01 for a,b in zip(v['opacities'],[100,100,0])):
                 raise ValueError('Closing method did not execute its authored size and full hold before fade')
             paper=p['visual_states']['definition']['reading']['paper_rgb']
+            if wanted.get('method_color')=='inherited_ink' and any(abs(a-b)>.001 for a,b in zip(v['method_color'],[.09,.13,.16])):
+                raise ValueError('Closing method must retain the inherited ink rather than the withdrawn orange signal')
             if (v['position_4k_px']!=[1920,1080] or v['action']!=wanted['action']
                     or abs(v['action_font_size_4k_px']-60)>.01
                     or any(abs(a-b)>.001 for a,b in zip(v['background_color'],paper))):

@@ -87,6 +87,23 @@ review agent, quality verdict or publication permission.
 字幕必须作为独立 Caption 轨道输出（SRT 格式），禁止烧录进画面合成。
 自录口播后只重新对齐字幕 cue，画面不重渲。
 
+For new FREE_SHOWCASE edits, apply FREE_SHOWCASE_POLICY.md's creative logical
+compression v2 in the existing teaching_focus allocation. Preserve full frozen
+checks backstage; explicitly choose full demonstration, compressed demonstration
+or a verified quick result on screen. Record the viewer difficulty, valuable
+judgement, omitted explanation, accurate conclusion scope, payoff, comprehension
+risk and observation plan. Do not impose a common shot, compression ratio or
+duration. Necessary grouping and content support remain mandatory for gap-fill
+questions. Methods are named immediately before use; the withdrawn post-action
+orange label and uniform answer scale must not be restored.
+
+Prepare exports the existing AudienceLearning freeze request draft for v2 edits.
+Fill only actual author declarations, freeze hypotheses before outcome data, and
+use the existing eight dimensions and immutable ledger. A pre-production record
+is not a final-cut prediction. Actual publication and platform performance must
+be registered later with their real sources. Three initial episodes, AI review,
+or technical PASS cannot establish causal benefit or human understanding.
+
 ## 发布前必答三问（三问有真实答案后方可进入 package-master，PENDING 不得封装）
 
 1. 找一名高中生完整看片，回答：

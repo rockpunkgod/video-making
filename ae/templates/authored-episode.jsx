@@ -122,7 +122,7 @@ for(var si=0;si<P.scenes.length;si++){
   var header=C.layers.addSolid(paper,"LIGHT_READING_MARGIN_"+s.id,1280,126,1,P.duration);header.transform.position.setValue([640,63]);header.inPoint=a;header.outPoint=b;
   // Keep the reading lane opaque until the candidate has completely left.
   hold(tr(header,"ADBE Opacity"),a,100);ease(tr(header,"ADBE Opacity"),b-.2,100);ease(tr(header,"ADBE Opacity"),b-1/24,0);
-  if(s.comparison_background_policy==="isolate_selected_passage")for(var bi=0;bi<w.blocks.length;bi++){var row=w.blocks[bi],selected=false;for(var ei=0;ei<ex.blocks.length;ei++)if(row.id===ex.blocks[ei].id)selected=true;if(!selected){var op=tr(row.layer,"ADBE Opacity"),first=s.reading_events[0];ease(op,first.depart,100);ease(op,first.arrival,0);ease(op,s.return_start,0);ease(op,b-1/24,100);}}
+  if(s.comparison_background_policy==="isolate_selected_passage")for(var bi=0;bi<w.blocks.length;bi++){var row=w.blocks[bi],selected=false;for(var ei=0;ei<ex.blocks.length;ei++)if(row.id===ex.blocks[ei].id)selected=true;if(!selected){var op=tr(row.layer,"ADBE Opacity"),first=s.reading_events.length?s.reading_events[0]:{depart:s.start,arrival:s.oriented};ease(op,first.depart,100);ease(op,first.arrival,0);ease(op,s.return_start,0);ease(op,b-1/24,100);}}
   var origin=w.options[s.candidate],choice=overlay("LIGHT_CANDIDATE_"+s.id,origin.property("Source Text").value.text,84,65,30*(s.light_presentation?s.light_presentation.option_scale_percent/100:1),1110,ink,s.oriented,b);
   choice.motionBlur=false;style(choice,s.oriented,ink,null,null);
   ease(tr(choice,"ADBE Opacity"),s.oriented,0);ease(tr(choice,"ADBE Opacity"),s.oriented+.25,100);
@@ -132,7 +132,7 @@ for(var si=0;si<P.scenes.length;si++){
   hold(tr(origin,"ADBE Opacity"),s.decision_end,s.event==="eliminate"?38:100);
   ease(tr(choice,"ADBE Opacity"),s.return_start,s.event==="eliminate"?38:100);ease(tr(choice,"ADBE Opacity"),b-.2,0);
   choice.comment=JSON.stringify({kind:"in_place_candidate_check",scene:s.id,source_layer_id:origin.id,terminal_refs:s.terminal_refs});
-  if(s.light_presentation){var readEnd=s.reading_events[s.reading_events.length-1].end_time;for(var ei=0;ei<ex.blocks.length;ei++){var op=tr(ex.blocks[ei].layer,"ADBE Opacity");ease(op,s.reading_events[s.reading_events.length-1].arrival,100);ease(op,readEnd,100);ease(op,readEnd+.15,25);ease(op,Math.max(readEnd+.15,b-.35),25);ease(op,b-1/24,100);}}
+  if(s.light_presentation&&s.reading_events.length){var readEnd=s.reading_events[s.reading_events.length-1].end_time;for(var ei=0;ei<ex.blocks.length;ei++){var op=tr(ex.blocks[ei].layer,"ADBE Opacity");ease(op,s.reading_events[s.reading_events.length-1].arrival,100);ease(op,readEnd,100);ease(op,readEnd+.15,25);ease(op,Math.max(readEnd+.15,b-.35),25);ease(op,b-1/24,100);}}
   audit.candidates.push({scene:s.id,kind:s.event,candidate:s.candidate,time:s.event_time,layer_id:choice.id,whole_option_text:choice.property("Source Text").value.text,refs:s.terminal_refs,treatment:"in_place_check"});
  }else if(s.kind==="compare"||s.kind==="replay"){
   // Keep the moving whole option legible while the original world stays present.
@@ -182,7 +182,7 @@ for(var mi=0;mi<P.scenes.length;mi++){var ms=P.scenes[mi];if(ms.method_signal){v
 // A bright final memory frame: one method and one already-demonstrated action.
 for(var mi=0;mi<P.scenes.length;mi++){var ms=P.scenes[mi];if(!ms.closing_memory)continue;var cm=ms.closing_memory,fade=cm.fade_frames/24,begin=ms.end-(cm.hold_frames+cm.fade_frames)/24-.25,locked=begin+.25,release=locked+cm.hold_frames/24;
  var bg=C.layers.addSolid(paper,"CLOSING_MEMORY_SPACE",1280,720,1,P.duration);bg.inPoint=begin;bg.outPoint=ms.end;bg.transform.position.setValue([640,360]);ease(tr(bg,"ADBE Opacity"),begin,0);ease(tr(bg,"ADBE Opacity"),locked,100);
- var method=centeredOverlay("CLOSING_METHOD",cm.method,360,cm.font_size_px/3,orange,begin,ms.end),action=centeredOverlay("CLOSING_ACTION",cm.action,420,cm.action_font_size_px/3,ink,begin,ms.end),items=[method,action];
+ var method=centeredOverlay("CLOSING_METHOD",cm.method,360,cm.font_size_px/3,cm.method_color==="inherited_ink"?ink:orange,begin,ms.end),action=centeredOverlay("CLOSING_ACTION",cm.action,420,cm.action_font_size_px/3,ink,begin,ms.end),items=[method,action];
  for(var ci=0;ci<items.length;ci++){ease(tr(items[ci],"ADBE Opacity"),begin,0);ease(tr(items[ci],"ADBE Opacity"),locked,100);ease(tr(items[ci],"ADBE Opacity"),release,100);ease(tr(items[ci],"ADBE Opacity"),ms.end,0);}
  audit.closing_memory={scene:ms.id,start:begin,locked:locked,release:release,end:ms.end,hold_frames:cm.hold_frames,method_font_size_4k_px:cm.font_size_px,method_name:method.name,action_name:action.name};
 }

@@ -12,7 +12,7 @@ from unittest.mock import patch
 from tests import test_audience_engagement as fixtures
 from creative_os.audience_engagement import design_engagement, validate_engagement, EDITORIAL_SIGNALS, FUNCTION_TASKS
 from content_os.engagement_learning import (AudienceLearning, initial_rubric, inspect_final_cut,
-    learning_template, bind_media_beats, validate_mapping)
+    learning_template, bind_media_beats, validate_mapping, authored_learning_context, learning_questions)
 from content_os.showcase import file_sha
 from video_contracts import sha, validate, seal
 
@@ -67,6 +67,54 @@ class LearningTests(unittest.TestCase):
     def freeze(self, final=True):
         return self.loop.freeze(self.spec,self.episode,self.statuses,self.copy,self.timeline,
             inspection=self.inspection if final else None)
+
+    def authored_fixture(self):
+        from ae_production.authored_episode import script_text
+        from video_contracts import write
+        folder=self.root/'authored';folder.mkdir()
+        bundles={str(i):q['package']['source_items'][0] for i,q in enumerate(self.episode['questions'])}
+        sources={}
+        for world,b in bundles.items():
+            path=folder/(world+'-status.json');write(path,self.statuses[b['asset_id']])
+            sources[world]={'status':str(path)}
+        author={'product':'FREE_SHOWCASE','revision':'synthetic-authored','sources':sources,
+                'copy_review':'PENDING','voices':[{'id':'voice','text':'SYNTHETIC TEST ONLY'}],
+                'scenes':[{'id':'SC'+w,'title':'Synthetic','world':w,'voice_ids':['voice']} for w in sources]}
+        write(folder/'AV_AUTHOR.json',author)
+        plan={'revision':author['revision'],'author_sha256':file_sha(folder/'AV_AUTHOR.json'),'scenes':author['scenes']}
+        write(folder/'AV_PLAN.json',plan)
+        mock=patch('ae_production.authored_episode.checked_author',return_value=(author,bundles));mock.start()
+        context=authored_learning_context(folder)
+        statuses={b['asset_id']:self.statuses[b['asset_id']] for b in bundles.values()}
+        return folder,context,statuses,{'actual_transcript':script_text(author),'recording_copy':None},plan
+
+    def test_authored_prediction_uses_same_immutable_ledger_and_actual_scene_ids(self):
+        folder,context,statuses,copy,plan=self.authored_fixture()
+        questions=learning_questions(context,statuses)
+        self.spec['hypotheses'][0].update(affected_question=questions[0]['question_id'],affected_beat='SC0')
+        ident=self.loop.freeze(self.spec,context,statuses,copy,plan)
+        frozen=self.loop.get(ident,'prediction')
+        self.assertEqual(frozen['prediction_status'],'PRE_PRODUCTION_HYPOTHESIS')
+        self.assertIsNone(frozen['final_media_sha'])
+        with self.assertRaisesRegex(ValueError,'immutable'):self.loop.freeze(self.spec,context,statuses,copy,plan)
+        with self.assertRaisesRegex(ValueError,'Planning'):self.publish(ident)
+        changed=deepcopy(context);changed['author_sha256']='0'*64
+        with self.assertRaisesRegex(ValueError,'stale'):learning_questions(changed,statuses)
+
+    def test_authored_copy_and_blindness_cannot_be_inferred(self):
+        _,context,statuses,copy,plan=self.authored_fixture()
+        self.spec['post_data_seen']=None
+        with self.assertRaisesRegex(ValueError,'blind'):self.loop.freeze(self.spec,context,statuses,copy,plan)
+        self.spec['post_data_seen']=False;copy['actual_transcript']='Changed copy'
+        with self.assertRaisesRegex(ValueError,'copy'):self.loop.freeze(self.spec,context,statuses,copy,plan)
+
+    def test_bilibili_coins_reuse_metric_validation_and_remain_missing_when_absent(self):
+        pred=self.freeze();pub=self.publish(pred);observation=self.observation(pub)
+        observation['metrics']['coins']={'value':3,'numerator':3,'denominator':None,'unit':'count'}
+        stored=self.loop.get(self.loop.performance(pub,observation),'performance')
+        self.assertEqual(stored['metrics']['coins']['value'],3)
+        self.assertIn('coins',learning_template('example')['metrics'])
+        self.assertIsNone(learning_template('example')['metrics']['coins'])
 
     def publish(self, ident):
         _Clock.current+=timedelta(seconds=1)

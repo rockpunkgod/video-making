@@ -6,6 +6,41 @@ Policy: `free_showcase_v1`. Brand: **英语有画说**. Series: **学霸这题�
 
 Free Showcase presents supported actions on actual questions. Paid Mastery plans broader conditions, counterexamples, combinations and independent practice. Method Validation studies generalizability. These routes cannot change ANSWER facts or borrow one another's approval.
 
+## General editorial policy v2: creative logical compression
+
+后台保护正确性，前台追求观看价值。FREE_SHOWCASE 允许省略、压缩或重新组织
+表达，后台完整的逻辑不要求在画面或旁白中逐项重演。展示目标是方法实际改变判断的
+关键瞬间，不能把后台 Evidence / Action / Stop 字段变成一份逐条朗读的证明。
+
+- **完整展示**：关键认知突破，保留关键证据、核心差异和判断变化。
+- **压缩展示**：必要但非核心的推理，用一次对照、短旁白或候选变化完成。
+- **结果呈现**：已经完整核验的明显项，可简短呈现真实状态，不伪装成方法直接定案。
+- **教学后置**：长篇定义、系统条件、反例和迁移交给 PAID_MASTERY；不自动迁移免费版策略到付费教学。
+
+冻结来源、适用条件、各项真实状态、Stop、结论范围与最终答案授权继续完整绑定。
+省略若造成明显错误因果理解，应补最小证据或缩小前台结论。不能把缩小候选范围拍成
+锁定答案，不能把省略的必要阅读包装成不存在的速度优势。
+
+普通阅读突出定位和困难关系；C/D 篇突出真实的信息简化；七选五保留当前 ANSWER
+要求的开头三一致分组到具体字母，可以简洁集中展示，后续重点呈现有区分度的检查。
+排剩一项不是缺少内容依据时的定案授权。
+
+沿用 `AV_AUTHOR.teaching_focus → AV_PLAN → authored_native → AE → Premiere`。
+quick / brief / focus 继续分配资源；`editorial_policy=creative_compression_v2` 在原选项
+配置中记录 `editorial`：当前困难、有价值判断、省略说明、前台结论与状态、准确性依据、
+具体回报、理解风险、观察方式，以及保留的原阅读步骤索引。编译器实际选择步骤，
+不修改其阅读速度，不裁短配音，也不要求固定镜头、压缩比例、重点占比或片长。
+理论后置记录在省略说明中；不是把必要条件删除。历史无 v2 字段的输入不自动迁移。
+
+压缩是否改善体验和传播属于待验证创意假设。复用 AudienceLearning 的八个维度、
+发布前冻结、真实发布登记、实绩与复盘、独立审核和后续建议；不安装第二套系统，
+不增加流量公式或声称存在已校准的播放量预测器。AI 审阅不能代签高中生、试听和手机测试。
+
+首发观察安排：EP01 现有阅读片，观察第一视角和关键关系回报；EP02 C/D 篇，观察
+复杂信息简化；EP03 七选五，观察候选收缩与逻辑判断。具体题目决定压缩程度。
+记录 B 站播放、收藏、分享、投币及可获得的观看时间和真实反馈，缺失为 null。
+三期差异只是初步观察，不能直接推断因果、题型优劣或稳定传播规律。
+
 ## Method expression: name, execute, result
 
 FREE_SHOWCASE uses a valid, intuitive method name as a compressed operating cue.
@@ -19,8 +54,8 @@ A complete solution need not narrate every internal reasoning step. Retain full
 Evidence, Action, Stop Rule, applicability and final-answer support backstage;
 keep decisive evidence visible. Do not serially turn Pedagogy, Student POV or
 Cognitive Direction analysis fields into narration, subtitles or mini-lessons.
-Add a short explanation only for an actual comprehension obstacle. One selected
-action receives the episode's focused replay; the others keep a coherent solving
+Add a short explanation only for an actual comprehension obstacle. A focused
+replay is optional when the viewer task warrants it; other actions keep a coherent solving
 pace. Compressing copy must also update takes, captions, camera and judgment
 timing, preserving readable holds and spatial motion rather than leaving equal
 length silence or globally speeding the film up.
@@ -92,7 +127,7 @@ First-use/Transfer is deliberately not an input. Approval claims no method matur
 
 The unit is **one core method → one episode → two or three independently bound real questions**. Method organizes the episode; question drives narrative; action drives motion. Establish/Variation/optional Amplification are editorial roles, not certified transfer. Each question has original task, observation, first action, necessary helpers, evidence, judgment, payoff and lawful closure. Helpers retain attribution; no question borrows another question's Review.
 
-Use shared Signature Motion with independent choreography. Focus the episode's one replay on the action with the clearest visual and cognitive payoff; do not replay each whole question. There is no hard duration requirement or upper limit; timings describe the evolving cut and must not be filled with redundant explanation or holds. Derivatives require renewed scope/display/editorial/media review. If only one supported question exists, report the missing second source.
+Use shared Signature Motion with independent choreography. Any authored replay must serve an actual unresolved task; no replay quota applies. There is no hard duration requirement or upper limit; timings describe the evolving cut and must not be filled with redundant explanation or holds. Derivatives require renewed scope/display/editorial/media review. If only one supported question exists, report the missing second source.
 
 ## Lightweight interfaces
 

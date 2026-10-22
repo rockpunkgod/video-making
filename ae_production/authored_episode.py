@@ -174,15 +174,20 @@ def script_text(author):
     return '\n'.join(lines)
 
 
+def recording_script_text(author):
+    if 'recording_copy' not in author:return None
+    revised=deepcopy(author)
+    for voice in revised['voices']:voice['text']=author['recording_copy'].get(voice['id'],voice['text'])
+    revised['copy_review']='PENDING_USER_REVIEW_NEW_RECORDING_NOT_PRODUCED'
+    return script_text(revised)
+
+
 def script(folder):
     author, _ = checked_author(folder)
     output = folder / 'EPISODE_SCRIPT.md'
     output.write_text(script_text(author), encoding='utf-8')
     if 'recording_copy' in author:
-        revised=deepcopy(author)
-        for voice in revised['voices']:voice['text']=author['recording_copy'].get(voice['id'],voice['text'])
-        revised['copy_review']='PENDING_USER_REVIEW_NEW_RECORDING_NOT_PRODUCED'
-        (folder/'NEXT_RECORDING_SCRIPT.md').write_text(script_text(revised),encoding='utf-8')
+        (folder/'NEXT_RECORDING_SCRIPT.md').write_text(recording_script_text(author),encoding='utf-8')
     return {'revision': author['revision'], 'script': str(output),
             'complete_copy': script_text(author), 'copy_review': author['copy_review'],
             'handoff': 'Paste the complete copy in chat on every copy revision; exporting is not user approval.'}
@@ -356,7 +361,8 @@ def checked_author(folder):
                 raise ValueError('Method trigger must bind a real method action and the shared 4K specification')
         if 'closing_memory' in s:
             v=s['closing_memory']
-            if (s['kind']!='recap' or set(v)!={'action','method','font_size_px','action_font_size_px','hold_frames','fade_frames'}
+            if (s['kind']!='recap' or set(v)-{'method_color'}!={'action','method','font_size_px','action_font_size_px','hold_frames','fade_frames'}
+                    or ('method_color' in v and v['method_color']!='inherited_ink')
                     or v['action']!='看到同词→对上关系→判断' or v['method']!='换词不换义'
                     or type(v['font_size_px']) not in (int,float) or not 120<=v['font_size_px']<=480
                     or v['action_font_size_px']!=60
@@ -834,6 +840,8 @@ def compile_visual_states(author, clock):
 
 def prepare(folder):
     a, bundles = checked_author(folder)
+    if a['product']=='FREE_SHOWCASE' and any(s.get('method_signal') for s in a['scenes']):
+        raise ValueError('Post-action orange method standard was withdrawn; keep point-of-use naming before execution')
     from creative_os.audience_engagement import require_hook_decision
     require_hook_decision(a,folder,operation='prepare')
     require_focus(a)
@@ -925,6 +933,11 @@ def prepare(folder):
         if (folder / 'native-identity.json').exists():
             raise ValueError('Changed author/take requires a new production revision; existing native output is stale')
     write(dest, plan)
+    if a['teaching_focus'].get('editorial_policy')=='creative_compression_v2':
+        from content_os.engagement_learning import authored_learning_context, authored_freeze_request
+        write(folder/'AUDIENCE_LEARNING_CONTEXT.json',authored_learning_context(folder))
+        write(folder/'AUDIENCE_LEARNING_COPY.json',{'actual_transcript':script_text(a),'recording_copy':recording_script_text(a)})
+        write(folder/'AUDIENCE_FREEZE_REQUEST_DRAFT.json',authored_freeze_request(folder))
     def stamp(t):
         n=round(t*1000);return f'{n//3600000:02}:{n//60000%60:02}:{n//1000%60:02},{n%1000:03}'
     (folder/'EPISODE_SUBTITLES.srt').write_text('\n\n'.join(f"{i+1}\n{stamp(c['start'])} --> {stamp(c['end'])}\n"+'\n'.join(c['display_lines']) for i,c in enumerate(plan['cues']))+'\n',encoding='utf-8')

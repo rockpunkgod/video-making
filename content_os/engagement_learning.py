@@ -32,7 +32,7 @@ DIMENSIONS = {
     'Memorability / Share Motivation': ('Memorability', '是否留下可辨识、值得记住或分享的动作'),
 }
 METRICS = {'views', 'average_watch_time', 'completion_rate', 'likes', 'saves',
-           'shares', 'comments', 'follows'}
+           'shares', 'comments', 'follows', 'coins'}
 RELEASE_KEYS = {'title_version', 'cover_version', 'description_version'}
 
 
@@ -78,6 +78,62 @@ def learning_template(episode_id):
         'human_taste': 'PENDING', 'teaching_effectiveness': 'NOT_ASSESSED'}
 
 
+def authored_learning_context(folder):
+    """Bind the current producer to the existing ledger, without a new episode engine."""
+    folder=Path(folder).resolve()
+    from ae_production.authored_episode import checked_author
+    author,_=checked_author(folder);plan=read(folder/'AV_PLAN.json')
+    if (author['product']!='FREE_SHOWCASE' or plan['author_sha256']!=file_sha(folder/'AV_AUTHOR.json')
+            or plan['revision']!=author['revision']):
+        raise ValueError('Audience learning requires the current FREE_SHOWCASE author and plan')
+    return {'kind':'authored-learning-context/v1','production_folder':str(folder),
+            'author_sha256':file_sha(folder/'AV_AUTHOR.json'),'plan_sha256':file_sha(folder/'AV_PLAN.json')}
+
+
+def learning_questions(episode, statuses):
+    """Resolve real producer scenes or validate the existing method-episode input."""
+    if episode.get('kind')!='authored-learning-context/v1':
+        if validate_episode(episode,statuses)['engineering_status']!='PASS':
+            raise ValueError('Current episode required')
+        return episode['questions']
+    folder=Path(episode['production_folder'])
+    if episode!=authored_learning_context(folder):raise ValueError('Authored learning context is stale')
+    from ae_production.authored_episode import checked_author
+    author,bundles=checked_author(folder);plan=read(folder/'AV_PLAN.json')
+    actual_statuses={b['asset_id']:read(author['sources'][w]['status']) for w,b in bundles.items()}
+    if statuses!=actual_statuses:raise ValueError('Learning must use the actual current frozen-source statuses')
+    return [{'question_id':b['source_snapshot']['question_id'],
+             'package':{'source_items':[b]},
+             'narrative_beats':[{'beat_id':s['id']} for s in plan['scenes'] if s['world']==world]}
+            for world,b in bundles.items()]
+
+
+def authored_freeze_request(folder):
+    """Draft the existing freeze CLI request; never infer blind-data declarations."""
+    folder=Path(folder).resolve();context=authored_learning_context(folder)
+    author=read(folder/'AV_AUTHOR.json');plan=read(folder/'AV_PLAN.json');hypotheses=[]
+    from creative_os.teaching_focus import compression_decision
+    for world,q in author['teaching_focus']['questions'].items():
+        bundle=read(author['sources'][world]['bundle'])
+        for candidate,opt in q['options'].items():
+            note=compression_decision(author,world,candidate)
+            if not note:continue
+            scene=next(s for s in plan['scenes'] if s['world']==world and s.get('candidate')==candidate
+                       and s.get('event') in ('eliminate','supported'))
+            hypotheses.append({'hypothesis_id':world+'-'+candidate+'-presentation',
+                'claim':note['presentation']+'：'+note['omitted_explanation'],
+                'affected_question':bundle['source_snapshot']['question_id'],'affected_beat':scene['id'],
+                'expected_advantage':note['viewer_payoff'],'possible_failure':note['understanding_risk'],
+                'evidence_to_collect':[note['observe']]})
+    return {'episode':str(folder/'AUDIENCE_LEARNING_CONTEXT.json'),
+            'statuses':{read(v['bundle'])['asset_id']:v['status'] for v in author['sources'].values()},
+            'copy':str(folder/'AUDIENCE_LEARNING_COPY.json'),'timeline':str(folder/'AV_PLAN.json'),
+            'spec':{'experiment_id':'creative-compression-v2','episode_id':None,'platform':'bilibili',
+                    'cut_version':author['revision'],'rubric_version':initial_rubric()['rubric_version'],
+                    'author':None,'post_data_seen':None,'title_version':None,'cover_version':None,
+                    'description_version':None,'hypotheses':hypotheses}}
+
+
 def verify_files(assets):
     if not assets: raise ValueError('Actual asset bindings required')
     for asset in assets:
@@ -119,8 +175,19 @@ def inspect_final_cut(episode, statuses, copy, timeline, assets, media):
     assets requires subtitles, voice, music_sfx (explicit silence declaration is
     allowed), and native_receipts. Paths are read-only. No teaching writer exists.
     """
-    audit = validate_episode(episode, statuses)
-    if audit['engineering_status'] != 'PASS': raise ValueError('Current episode required')
+    learning_questions(episode, statuses)
+    if episode.get('kind')=='authored-learning-context/v1':
+        folder=Path(episode['production_folder']);plan=read(folder/'AV_PLAN.json')
+        from ae_production.authored_native import validate_edit
+        picture=read(folder/'MASTER_PICTURE_RECEIPT.json')
+        if (timeline.get('sequence')!=read(folder/'PR_TIMELINE.json')
+                or timeline.get('settings')!=read(folder/'PR_SETTINGS.json')):
+            raise ValueError('Authored final inspection needs the actual saved Premiere readback')
+        validate_edit(plan,timeline['sequence'],picture['output'],(3840,2160))
+        receipts=[read(p) for p in (folder/'MASTER_DELIVERY_QA.json',folder/'REVIEW_CANDIDATE_QA.json') if p.exists()]
+        if not any(q.get('plan_sha256')==episode['plan_sha256'] and q.get('sha256')==file_sha(media)
+                   and Path(q['media']).resolve()==Path(media).resolve() and q.get('full_decode')=='PASS' for q in receipts):
+            raise ValueError('Authored final hypothesis lacks same-version actual media QA')
     bindings = cut_bindings(episode, copy, timeline, assets, media)
     missing = [k for k in ('subtitles', 'voice', 'music_sfx', 'native_receipts') if not assets.get(k)]
     if set(timeline) != {'sequence','settings','voices'}:
@@ -329,8 +396,14 @@ class AudienceLearning:
     def freeze(self, spec, episode, statuses, copy, timeline, *, inspection=None):
         text_fields(spec, ('experiment_id', 'episode_id', 'platform', 'cut_version', 'rubric_version', 'author'))
         text_fields(spec, RELEASE_KEYS)
-        if validate_episode(episode, statuses)['engineering_status'] != 'PASS':
-            raise ValueError('Current episode required')
+        questions=learning_questions(episode,statuses)
+        if episode.get('kind')=='authored-learning-context/v1':
+            folder=Path(episode['production_folder']);author=read(folder/'AV_AUTHOR.json')
+            from ae_production.authored_episode import script_text, recording_script_text
+            expected_copy={'actual_transcript':script_text(author),'recording_copy':recording_script_text(author)}
+            if copy!=expected_copy:raise ValueError('Learning copy differs from the actual transcript and pending recording script')
+            if inspection is None and timeline!=read(folder/'AV_PLAN.json'):
+                raise ValueError('Pre-production hypothesis must retain the actual authored plan')
         if spec.get('post_data_seen') is not False:
             raise ValueError('Known post-publication data cannot be a blind prediction')
         hypotheses = spec.get('hypotheses', [])
@@ -340,7 +413,7 @@ class AudienceLearning:
             text_fields(h, ('hypothesis_id', 'claim', 'affected_question', 'affected_beat', 'expected_advantage', 'possible_failure'))
             if h['hypothesis_id'] in seen: raise ValueError('Duplicate hypothesis')
             seen.add(h['hypothesis_id'])
-            q = next((q for q in episode['questions'] if q['question_id'] == h['affected_question']), None)
+            q = next((q for q in questions if q['question_id'] == h['affected_question']), None)
             if not q or h['affected_beat'] not in {b['beat_id'] for b in q['narrative_beats']}:
                 raise ValueError('Hypothesis refers to missing/cross-question beat')
             if not isinstance(h.get('evidence_to_collect'), list) or not h['evidence_to_collect'] or any(not isinstance(x, str) or not x.strip() for x in h['evidence_to_collect']):
@@ -362,14 +435,14 @@ class AudienceLearning:
             if any(inspection['bindings'][k] != bindings[k] for k in bindings if k != 'final_media_sha'):
                 raise ValueError('Final-cut inspection binds another version')
             bindings = deepcopy(inspection['bindings'])
-        payload = {**deepcopy(spec), **bindings, 'episode_identity_sha': episode_identity(episode),
+        payload = {**deepcopy(spec), **bindings, 'episode_identity_sha': episode_identity({'questions':questions}),
             'prediction_status': 'FROZEN_FINAL_CUT' if final else 'PRE_PRODUCTION_HYPOTHESIS',
             'prediction_created_at': now(), 'publication_status': 'NOT_REGISTERED_AT_FREEZE',
             'confidence': 'LOW_EDITORIAL_JUDGEMENT',
             'inspection_sha': sha(inspection) if final else None,
             'inspection': deepcopy(inspection) if final else None,
             'frozen_copy': deepcopy(copy), 'frozen_timeline': deepcopy(timeline),
-            'questions': {q['question_id']: [b['beat_id'] for b in q['narrative_beats']] for q in episode['questions']}}
+            'questions': {q['question_id']: [b['beat_id'] for b in q['narrative_beats']] for q in questions}}
         def check(con, records):
             rubric = initial_rubric()['rubric_version']
             active = [r['payload']['rubric']['rubric_version'] for r in records if r['kind'] == 'activation' and r['payload']['rule_kind'] == 'EVALUATION_RULE']

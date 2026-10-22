@@ -4,7 +4,7 @@ import unittest
 from unittest.mock import patch
 
 from ae_production.authored_native import require_pre_package_answers, package
-from ae_production.authored_episode import compile_clock, shift_body_clock
+from ae_production.authored_episode import compile_clock, shift_body_clock, prepare
 from scripts.voice_delivery import sha256
 from video_contracts import write, read
 import test_authored_episode as clock_fixtures
@@ -51,7 +51,7 @@ class PrePackageQuestions(unittest.TestCase):
 
 
 class VisualTiming(unittest.TestCase):
-    def test_method_starts_after_action_and_holds_before_fade_without_editing_takes(self):
+    def test_historical_post_action_clock_remains_readable_but_new_prepare_refuses_it(self):
         a,c,l=clock_fixtures.ClockConsumption().motion_input();before=compile_clock(a,c,l)
         a['scenes'][0]['method_signal']={'text':'换词不换义','position_px':[1920,720],
             'font_size_px':72,'hold_frames':48,'fade_frames':12}
@@ -62,6 +62,9 @@ class VisualTiming(unittest.TestCase):
         self.assertEqual(before['segments'][0],p['segments'][0])
         shifted=shift_body_clock(p,7)
         self.assertEqual(shifted['scenes'][0]['method_signal_start'],s['method_signal_start']+7)
+        a['product']='FREE_SHOWCASE'
+        with patch('ae_production.authored_episode.checked_author',return_value=(a,{})):
+            with self.assertRaisesRegex(ValueError,'withdrawn'):prepare(Path('not-a-real-production'))
 
     def test_judge_hold_does_not_shorten_reading_or_takes(self):
         a,c,l=clock_fixtures.ClockConsumption().motion_input();before=compile_clock(a,c,l)
