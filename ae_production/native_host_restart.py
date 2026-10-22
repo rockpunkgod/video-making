@@ -104,10 +104,12 @@ def reconcile_observed_panel(folder, observed):
     registry=Path.home()/'.ae-mcp/instances/registry.json'
     module=Path(os.environ.get('APPDATA',''))/'Adobe/CEP/extensions/com.aemcp.panel/host/instance-registry.js'
     if not registry.exists() or not module.exists():return None
+    rows=json.loads(registry.read_text('utf-8'))['instances']
+    if not any(r.get('state')=='running' and r.get('pid') is None for r in rows):return None
     script='[Console]::OutputEncoding=[System.Text.UTF8Encoding]::new($false);ConvertTo-Json -InputObject @(Get-CimInstance Win32_Process -Filter "Name=\'AfterFX.exe\' OR Name=\'CEPHtmlEngine.exe\'" | Select-Object ProcessId,ParentProcessId,Name,ExecutablePath) -Compress'
     result=subprocess.check_output(['powershell','-NoProfile','-Command',script],
                                    creationflags=getattr(subprocess,'CREATE_NO_WINDOW',0))
-    binding=observed_panel_binding(json.loads(registry.read_text('utf-8'))['instances'],
+    binding=observed_panel_binding(rows,
                                   json.loads(result.decode('utf-8-sig')),observed)
     if not binding:return None
     if process_absent(binding['pid']) or any(process_absent(p['ProcessId']) for p in binding['observed_ancestry']):
@@ -222,14 +224,16 @@ def restart_saved_host(h,cursor):
             # its result needs explicit inspection, never another loop attempt.
             if (Path(h.h['ownership_directory'])/'after_effects.json').exists():raise
             if isinstance(error,(ValueError,FileExistsError)) or 'another project' in str(error) or 'target differs' in str(error):raise
-            if not panel_attempted:
-                try:started=process('AfterFX')
-                except RuntimeError:started=None
-                if started and started['Id']!=h.pid and started.get('MainWindowHandle'):
-                    if Path(started['Path']).resolve()!=executable.resolve():
-                        raise RuntimeError('Restarted executable changed; preserve the observed host')
-                    if reconcile_observed_panel(h.folder,started):
-                        continue # Repeat only fresh identity reads, not an AE write.
+            try:started=process('AfterFX')
+            except RuntimeError:started=None
+            if started and started['Id']!=h.pid and started.get('MainWindowHandle'):
+                if Path(started['Path']).resolve()!=executable.resolve():
+                    raise RuntimeError('Restarted executable changed; preserve the observed host')
+                # The panel may register after its first visible menu state.
+                # PID observation remains independent of the one UI activation.
+                if reconcile_observed_panel(h.folder,started):
+                    continue # Repeat only fresh identity reads, not an AE write.
+                if not panel_attempted:
                     record.update(panel_activation_requested={'process_id':started['Id'],
                         'window_handle':started['MainWindowHandle']});write(path,record)
                     activation=activate_observed_panel(started,executable)

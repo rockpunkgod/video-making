@@ -182,6 +182,22 @@ class NativeHostRestartTests(unittest.TestCase):
             with self.assertRaisesRegex(RuntimeError,'modal dialog'):restart.restart_saved_host(self.old,0)
         self.assertEqual(panel.call_count,1);self.assertEqual(launch.call_count,1);self.assertEqual(self.open_calls,[])
 
+    def test_late_missing_pid_is_checked_after_panel_activation_without_toggling_again(self):
+        calls=[]
+        def factory(*args):
+            calls.append(1)
+            if len(calls)<3:raise RuntimeError('Expected one running AE instance for the observed host PID')
+            return self.fresh
+        _,_,_,process=self.environment(factory=factory)
+        process.side_effect=[{'Id':123,'Path':str(self.executable)},
+                             {'Id':456,'Path':str(self.executable),'MainWindowHandle':457},
+                             {'Id':456,'Path':str(self.executable),'MainWindowHandle':457}]
+        with patch.object(restart,'reconcile_observed_panel',side_effect=[None,{'pid':456}]) as repair, \
+             patch.object(restart,'activate_observed_panel',return_value={'action':'ALREADY_OPEN_NOT_TOGGLED'}) as panel:
+            self.assertIs(restart.restart_saved_host(self.old,0),self.fresh)
+        self.assertEqual(repair.call_count,2);self.assertEqual(panel.call_count,1)
+        self.assertEqual(len(self.open_calls),1)
+
     def test_save_checkpoint_change_aborts_before_new_project_open(self):
         def changed_during_shutdown(code, label=None, timeout=600):
             self.shutdown_calls.append(code); self.project.write_bytes(b'CHANGED saved checkpoint')
