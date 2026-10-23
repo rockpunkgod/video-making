@@ -230,6 +230,7 @@ class Captions(unittest.TestCase):
             before=delivery('first',[('keep','Exact first words.',10),('retake','Exact second words.',20)])
             replacement=delivery('second',[('retake','Exact second words.',30)])
             author={'voice_delivery':'selected/delivery.json','voice_inputs':[str(before),str(replacement)],
+                    'producer':{'source':'legacy_internal_tts'},
                     'voices':[{'id':'keep','text':'Exact first words.'},{'id':'retake','text':'Exact second words.'}]}
             result=select_takes(root,author);validate_voice(result['delivery'])
             self.assertEqual(sha256(root/'selected/keep.wav'),sha256(root/'first/keep.wav'))

@@ -161,6 +161,13 @@ class HookContractTests(unittest.TestCase):
         b={'trial':{'source_snapshot':{'question_id':'synthetic-trial-Q21','passage':lines[2]+'\n'+lines[3],
             'stem':'What happens?','options':{'A':lines[5]}}}}
         self.assertEqual(validate_source_attribution(a,b)['status'],'SOURCE_BOUND')
+        a['source_attribution']['trial']['question_id']='synthetic-trial-q21'
+        b['trial']['source_snapshot']['question_id']='synthetic-trial-q21'
+        a['source_attribution']['trial']['article_display']='A篇（原文首段）'
+        self.assertEqual(validate_source_attribution(a,b)['status'],'SOURCE_BOUND')
+        a['source_attribution']['trial']['question_number']=22
+        with self.assertRaises(ValueError):validate_source_attribution(a,b)
+        a['source_attribution']['trial']['question_number']=21
         a['source_attribution']['trial']['article_display']='Invented article'
         with self.assertRaises(ValueError):validate_source_attribution(a,b)
         a['source_attribution']['trial']['article_display']=lines[2]

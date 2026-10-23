@@ -29,6 +29,69 @@ def _vec(a, b, tol=1e-3):
 def _id(value): return type(value) is int and value > 0
 
 
+def _structured_regions(challenge,built,chunks,base):
+    """Check original paragraph separation and cell containment before readback."""
+    layout=challenge['source_layout'];observed=built.get('source_layout')
+    if not isinstance(observed,dict) or observed.get('binding')!=challenge['source_layout_binding']:
+        raise ValueError('Original challenge layout binding missing from native build')
+    expected=[];prior_bottom=0
+    for block_index,block in enumerate(layout['blocks']):
+        if block['kind']=='table':
+            widths=block['column_widths_twips'];total=sum(widths)
+            for ri,row in enumerate(block['rows']):
+                left=0
+                for ci,cell in enumerate(row):
+                    width=760*widths[ci]/total
+                    if cell['start'] is not None:expected.append((cell,'table',block_index,ri,ci,left+4,width-8))
+                    left+=width
+        else:expected.append((block,block['kind'],block_index,None,None,0,760))
+    regions=observed.get('regions',[])
+    if len(regions)!=len(expected):raise ValueError('Original challenge paragraph/table region inventory changed')
+    previous=None
+    for region,(cell,kind,block_index,row,col,left,width) in zip(regions,expected):
+        if (any(region.get(k)!=v for k,v in {'start':cell['start'],'end':cell['end'],'kind':kind,'block_index':block_index,'row':row,'column':col,'alignment':cell.get('alignment')}.items())
+                or not _close(region.get('left'),left) or not _close(region.get('width'),width)):
+            raise ValueError('Original challenge table/paragraph geometry changed')
+        selected=[c for c in chunks if c['start']<cell['end'] and c['end']>cell['start']]
+        if not selected or any(c['start']<cell['start'] or c['end']>cell['end'] for c in selected):
+            raise ValueError('Challenge sense group crosses original source region')
+        top=min(c['baseline'][1]-132 for c in selected);bottom=max(c['baseline'][1]-132+4 for c in selected)
+        if not _close(region.get('top'),top) or not _close(region.get('bottom'),bottom):
+            raise ValueError('Challenge source region disagrees with glyph baselines')
+        if any(c['baseline'][0]<base+40+left-.01 or c['baseline'][0]+c['width']>base+40+left+width+.01 for c in selected):
+            raise ValueError('Challenge text overflows its original cell/paragraph')
+        same_row=previous is not None and kind=='table' and previous['kind']=='table' and block_index==previous['block_index'] and row==previous['row'] and col>previous['column']
+        if same_row:
+            if not _close(top,previous['top']):raise ValueError('Original table cell row alignment changed')
+        else:
+            if previous is not None and top<prior_bottom+13-.01:
+                raise ValueError('Original source paragraphs or table rows collapsed together')
+            prior_bottom=0
+        prior_bottom=max(prior_bottom,bottom);previous=region
+        lines=[]
+        for chunk in selected:
+            if not lines or not _close(chunk['baseline'][1],lines[-1][0]['baseline'][1]):lines.append([])
+            lines[-1].append(chunk)
+        for li,line in enumerate(lines):
+            actual_left=line[0]['baseline'][0]-(base+40);actual_right=line[-1]['baseline'][0]-(base+40)+line[-1]['width']
+            alignment=cell.get('alignment');indent=0
+            if (kind!='table' and li==0 and type(cell.get('first_line_indent_twips')) in (int,float)
+                    and type(cell.get('font_size_half_points')) in (int,float) and cell['font_size_half_points']>0):
+                indent=cell['first_line_indent_twips']/(cell['font_size_half_points']*10)*17
+            if alignment=='center':valid=_close((actual_left+actual_right)/2,left+width/2,.01)
+            elif alignment=='right':valid=_close(actual_right,left+width,.01)
+            else:
+                valid=_close(actual_left,left+indent,.01)
+                if alignment=='both' and li<len(lines)-1 and len(line)>1:valid=valid and _close(actual_right,left+width,.01)
+            if not valid:raise ValueError('Original source alignment or first-line indent changed')
+        for before,after in zip(selected,selected[1:]):
+            dy=after['baseline'][1]-before['baseline'][1]
+            if abs(dy)<.01:
+                if after['baseline'][0]<before['baseline'][0]+before['width']+2-.01:
+                    raise ValueError('Original layout loses space between source groups')
+            elif dy<17:raise ValueError('Original layout reading rows overlap')
+
+
 def original_challenge_scope(plan, native):
     contract = plan.get('audience_challenges')
     if contract is None: return []
@@ -111,7 +174,8 @@ def original_challenge_scope(plan, native):
                     or not 132 <= claimed['baseline'][1] <= 604 or claimed['baseline'][2] != 0
                     or claimed['baseline'][0]+claimed['width'] > base+800+.01):
                 raise ValueError('Original challenge folded source identity, glyph range or layout changed')
-        for previous, current in zip(actual, actual[1:]):
+        if challenge.get('source_layout'):_structured_regions(challenge,built,actual,base)
+        for previous, current in ([] if challenge.get('source_layout') else zip(actual, actual[1:])):
             source_gap = q['passage'][previous['end']:current['start']]
             if abs(current['baseline'][1]-previous['baseline'][1]) < .01:
                 space = current['baseline'][0]-previous['baseline'][0]-previous['width']

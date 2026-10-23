@@ -175,6 +175,8 @@ class CopyReviewEvidence(unittest.TestCase):
         # Engineering media routines are mocked: this tests only authority field
         # propagation and explicitly makes no synthetic decode/listening claim.
         with patch.object(native,'current_native',return_value=(self.author,plan,{'master_comp_id':2})), \
+                patch.object(native,'require_pre_package_answers',return_value={'scope':'SYNTHETIC metadata-only fixture; no human approval'}), \
+                patch('ae_production.review_evidence.export_review_evidence',return_value='SYNTHETIC metadata-only evidence stub'), \
                 patch.object(native,'probe',return_value=streams), \
                 patch.object(native,'measured_audio_delay',return_value=(0,[])), \
                 patch.object(native,'packet_binding',return_value='SYNTHETIC packets'), \

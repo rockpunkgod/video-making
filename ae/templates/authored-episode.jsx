@@ -260,7 +260,7 @@ if(P.audience_challenges){
   var badge=overlay("CHALLENGE_PAUSE_"+ch.scene,"想先自己做？可暂停",825,143,24,410,ink,a,b);
   badge.comment=JSON.stringify({kind:"screen_only_pause_entry",question_id:w.question.question_id,start_frame:ch.start_frame,end_frame:ch.end_frame,spoken:false});
   var material=C.layer("MATERIAL_IDENTITY");if(ci===0&&material){hold(tr(material,"ADBE Opacity"),a,0);hold(tr(material,"ADBE Opacity"),land,100);}
-  audit.audience_challenges.push({scene_id:ch.scene,world:ch.world,question_id:w.question.question_id,start:a,end:b,start_frame:ch.start_frame,end_frame:ch.end_frame,frames:ch.frames,article_layers:folded.article_layers,article_chunks:folded.chunks,article_height:folded.height,article_width:folded.width,source_identity:folded.source_identity,original_glyphs:glyphs,badge_layer:badge.name,handoff_end:land,voice_policy:"existing_complete_take_continues",normal_speed_review:"UNOBSERVED",mobile_legibility:"UNOBSERVED"});
+  audit.audience_challenges.push({scene_id:ch.scene,world:ch.world,question_id:w.question.question_id,start:a,end:b,start_frame:ch.start_frame,end_frame:ch.end_frame,frames:ch.frames,article_layers:folded.article_layers,article_chunks:folded.chunks,article_height:folded.height,article_width:folded.width,source_identity:folded.source_identity,source_layout:folded.source_layout,original_glyphs:glyphs,badge_layer:badge.name,handoff_end:land,voice_policy:"existing_complete_take_continues",normal_speed_review:"UNOBSERVED",mobile_legibility:"UNOBSERVED"});
  }
 }
 /* FIRST_PERSON_CHALLENGE_V1_END */

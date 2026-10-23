@@ -1,5 +1,16 @@
 # Video production handoff
 
+Current 2026-10-23 B+ production uses the user's own recordings. Export exact
+copy plus separate per-take recording guidance; absence of recordings is
+PENDING_HUMAN_VO, never permission to synthesize a replacement. Preserve original
+recordings and full takes. AV_AUTHOR owns ordinary creative decisions; independent
+review first excludes author self-evaluation, then cross-checks its rationale.
+Record actual reviewer identity and same-provider limitations. Real risk samples
+and a reviewed 1080p human-voice rough cut precede final 4K; silent samples are
+not audiovisual rough cuts. Keep rough/master project and evidence files distinct.
+This stage prepares EP01 and isolated EP02/EP03 inputs; old diagnostic material
+is internal technical evidence, not an authorized public gaokao release.
+
 For video production or module changes, start with
 [the current production entry](docs/workflows/CURRENT_PRODUCTION_WORKFLOW.md).
 It is the single maintained source of current creative requirements and their
@@ -54,6 +65,13 @@ For FIRST_PERSON_CHALLENGE_V1 and subsequent same-format first-person lessons,
 author the two-column complete-source/question challenge in the existing Audience
 contract: an explicitly authored frame count at 24fps under continuing narration, neutral ABCD,
 screen-only pause prompt, followed by a continuous same-glyph task handoff.
+Challenge articles must preserve the original exam's headings, paragraph breaks,
+indentation/alignment and table row/column structure. Never concatenate the
+article into one paragraph. Bind original document bytes and exact frozen spans
+through audience_challenges.source_layout; sense groups are reading units, not
+replacement paragraph boundaries. Verify native layout and phone legibility
+before claiming this requirement complete; overflow must not silently flatten,
+truncate or shrink unreadably.
 Use highlight_then_extract after necessary sense-group reading; do not restore
 mechanical independent slow replays. Replay omission still requires its bound
 user decision and complete first-pass evidence. Preserve legacy inputs and the

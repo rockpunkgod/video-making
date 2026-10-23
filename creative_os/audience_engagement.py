@@ -5,6 +5,7 @@ from creative_os.episode import validate_episode
 from pathlib import Path
 import math
 import re
+import hashlib
 
 from video_contracts import pointer
 from scripts.voice_delivery import sha256
@@ -38,6 +39,49 @@ CHALLENGE_FRAME_CHOICES = (72, 120, 144)
 CHALLENGE_PAUSE_TEXT = '想先自己做？可暂停'
 
 
+def challenge_source_layout(author, bundles):
+    """Read source-bound paragraph/table structure, never infer it from chunks."""
+    binding=author.get('audience_challenges',{}).get('source_layout')
+    if binding is None:return None  # Historical productions remain readable.
+    from video_contracts import read
+    def bound(item):
+        if not isinstance(item,dict) or set(item)!={'path','sha256'}:
+            raise ValueError('Challenge source layout requires path/SHA binding')
+        p=Path(item['path'])
+        if (not p.is_absolute() or not p.is_file() or sha256(p)!=item['sha256']
+                or author.get('input_files',{}).get(str(p))!=item['sha256']):
+            raise ValueError('Challenge original layout file is missing, changed or unbound')
+        return p
+    data=read(bound(binding))
+    if data.get('schema')!='challenge-source-layout/v1' or set(data.get('worlds',{}))!=set(bundles):
+        raise ValueError('Challenge original layout must cover every source world')
+    for world,bundle in bundles.items():
+        layout=data['worlds'][world];bound(layout['source_document'])
+        passage=bundle['source_snapshot']['passage'];cursor=0
+        if layout.get('passage_sha256')!=hashlib.sha256(passage.encode('utf-8')).hexdigest():
+            raise ValueError('Challenge original layout belongs to another frozen passage')
+        blocks=layout.get('blocks')
+        if not isinstance(blocks,list) or not blocks:raise ValueError('Missing original paragraph/table structure')
+        for block in blocks:
+            if block.get('kind') in {'heading','paragraph'}:cells=[block]
+            elif block.get('kind')=='table':
+                rows=block.get('rows');widths=block.get('column_widths_twips')
+                if (not isinstance(widths,list) or not widths or any(type(x) not in (int,float) or not math.isfinite(x) or x<=0 for x in widths)
+                        or not isinstance(rows,list) or not rows or any(not isinstance(r,list) or len(r)!=len(widths) for r in rows)):
+                    raise ValueError('Original table rows/columns or widths are missing')
+                cells=[cell for row in rows for cell in row]
+            else:raise ValueError('Unsupported original source layout block')
+            for cell in cells:
+                lo=cell.get('start');hi=cell.get('end');quote=cell.get('quote')
+                if quote=='' and lo is None and hi is None and block['kind']=='table':continue
+                if (type(lo) is not int or type(hi) is not int or not cursor<=lo<hi<=len(passage)
+                        or passage[cursor:lo].strip() or passage[lo:hi]!=quote):
+                    raise ValueError('Original layout omits, reorders or changes frozen source text')
+                cursor=hi
+        if passage[cursor:].strip():raise ValueError('Original layout omits the end of the source')
+    return deepcopy(data['worlds'])
+
+
 def validate_authored_challenges(author, bundles, folder=None):
     """Opt in to complete, neutral question views inside existing task scenes.
 
@@ -48,7 +92,7 @@ def validate_authored_challenges(author, bundles, folder=None):
     if 'audience_challenges' not in author:return None
     decision=author['audience_challenges']
     keys={'contract_version','frames','presentation','request_source','pause_badge','questions'}
-    if (not isinstance(decision,dict) or set(decision)!=keys
+    if (not isinstance(decision,dict) or set(decision)-{'source_layout'}!=keys
             or decision['contract_version']!=CHALLENGE_VERSION
             or type(decision['frames']) is not int or decision['frames'] not in CHALLENGE_FRAME_CHOICES
             or decision['presentation']!='full_source_question_split'):
@@ -99,6 +143,7 @@ def validate_authored_challenges(author, bundles, folder=None):
         expected.append({'world':world,'scene_id':scene['id']})
     if questions!=expected:
         raise ValueError('Challenge world/scene/order differs from the actual first question tasks')
+    challenge_source_layout(author,bundles)
     return {'status':'BOUND_USER_REQUEST','contract_version':CHALLENGE_VERSION,
             'decision_sha':sha(decision),'request_source_sha256':binding['sha256'],
             'question_scenes':deepcopy(expected),'human_review':'PENDING','public_render_ready':False}
@@ -109,6 +154,7 @@ def _challenge_source_rows(author, bundles, worlds):
     if not isinstance(worlds,dict) or set(worlds)!=set(bundles):
         raise ValueError('Challenge needs the complete prepared source worlds')
     result={}
+    layouts=challenge_source_layout(author,bundles)
     for world,bundle in bundles.items():
         snapshot=bundle['source_snapshot'];data=worlds[world];source=author['sources'][world]
         if data['question']!=snapshot or data['source']!=source:
@@ -130,6 +176,9 @@ def _challenge_source_rows(author, bundles, worlds):
         if not compiled or cursor!=len(snapshot['passage']):
             raise ValueError('Challenge article blocks omit part of the full frozen passage')
         result[world]={'blocks':compiled,'source_files':files,'source_snapshot_sha':sha(snapshot)}
+        if layouts is not None:
+            result[world]['source_layout']=layouts[world]
+            result[world]['source_layout_binding']=deepcopy(author['audience_challenges']['source_layout'])
     return result
 
 
@@ -292,6 +341,9 @@ def require_hook_decision(author, folder=None, *, operation=None):
     """Historical inspection/cached films survive; fresh production must migrate."""
     if 'audience_hook' in author:
         return
+    if author.get('production_policy')=='industrial_bplus_v1':
+        validate_original_task_opening(author)
+        return
     # A marker file is not provenance. Historical replay requires the unchanged
     # saved author, measured plan and native project, and never permits a build.
     if folder is not None and operation not in {'voice','align','prepare','build'}:
@@ -313,6 +365,33 @@ def require_hook_decision(author, folder=None, *, operation=None):
     raise ValueError('CREATIVE_DECISION_REQUIRED: FREE_SHOWCASE needs the user-specified Audience Hook v1; no automatic creative fallback')
 
 
+def validate_original_task_opening(author):
+    """B+ may open on its real task; the existing task scene does the rendering.
+
+    This binding grants no creative, human or publication approval. In particular
+    it does not force the diagnostic film's shared-word teaser onto other exams.
+    """
+    h=author.get('audience_opening',{})
+    if (author.get('production_policy')!='industrial_bplus_v1'
+            or set(h)!={'strategy','scene_id','payoff_scene_id','viewing_question'}
+            or h['strategy']!='original_task' or not isinstance(h['viewing_question'],str)
+            or not h['viewing_question'].strip()):
+        raise ValueError('B+ author must bind its actual opening task and viewing question')
+    scenes=author['scenes'];first=scenes[0]
+    payoff=next((s for s in scenes if s['id']==h['payoff_scene_id']),None)
+    if (h['scene_id']!=first['id'] or first['kind']!='task' or not first.get('source_refs')
+            or not first.get('voice_ids') or payoff is None or payoff is first
+            or payoff.get('world')!=first.get('world')
+            or payoff.get('event') not in ('eliminate','supported','final')
+            or not payoff.get('source_refs') or not payoff.get('action_refs')
+            or not payoff.get('terminal_refs')):
+        raise ValueError('Opening/payoff must be actual same-question source-bound scenes')
+    return {'status':'BOUND_AUTHOR_ORIGINAL_TASK','decision_sha':sha(h),
+            'opening_scene_sha':sha(first),'payoff_scene_sha':sha(payoff),
+            'consumer':'existing authored task scene; no extra teaser',
+            'human_review':'PENDING','public_render_ready':False}
+
+
 def validate_authored_hook(author, bundles):
     """Validate user decisions inside Audience, without inventing a new Hook.
 
@@ -323,6 +402,7 @@ def validate_authored_hook(author, bundles):
     """
     h = author.get('audience_hook')
     if h is None:
+        if author.get('production_policy')=='industrial_bplus_v1':return validate_original_task_opening(author)
         return hook_migration_status(author)
     from jsonschema import Draft202012Validator, ValidationError
     from video_contracts import ROOT, read

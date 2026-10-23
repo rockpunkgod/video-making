@@ -1,18 +1,53 @@
 name: Registry and engine regression
-on: [push, pull_request]
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
 jobs:
   validate:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
       - uses: actions/setup-python@v5
         with:
           python-version: '3.13'
-      - run: python -m pip install -r requirements-dev.txt
-      - run: python -m unittest discover -s tests -v
-      - run: python -m answer_engine validate
+      - name: Install Python and media test dependencies
+        run: |
+          python -m pip install -r requirements-dev.txt
+          sudo apt-get update
+          sudo apt-get install --yes ffmpeg
+      - name: Verify actual codec tools
+        run: |
+          ffmpeg -version
+          ffprobe -version
+      - name: Quick registry and generated asset checks
+        run: python -m answer_engine validate
       - run: python -m scripts.build_video_schemas --check
       - run: python -m scripts.build_ae_schema --check
       - run: python -m answer_engine analyze examples/question-course.json
       - run: python -m answer_engine paper examples/paper-course.json
       - run: python -m answer_engine evaluate evaluation/datasets/synthetic-observations.json
+      - name: Affected or full regression (main and manual always full)
+        env:
+          CI_EVENT_NAME: ${{ github.event_name }}
+          CI_BASE_SHA: ${{ github.event.pull_request.base.sha }}
+          CI_HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+        run: python -m scripts.ci_regression --report "$RUNNER_TEMP/ci-regression.json"
+      - name: Preserve the selected tier and actual result
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: ci-regression-${{ github.run_id }}-${{ github.run_attempt }}
+          path: ${{ runner.temp }}/ci-regression.json
+          if-no-files-found: warn

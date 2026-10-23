@@ -1,5 +1,42 @@
 # 当前 FREE_SHOWCASE 生产入口
 
+## 2026-10-23 工业化 B+ 当前执行范围
+
+本轮优先真实 EP01 作者包、独立创意审阅与本人录音包；EP02/EP03 隔离前期。
+挑战画面的文章按原题格式呈现：保留真实标题、段落、缩进/对齐及表格行列，禁止把全文排成一段。
+`AV_AUTHOR.audience_challenges.source_layout` 绑定原始试卷版式清单及 SHA；清单逐段/单元格对应冻结正文范围，
+经现有 Audience 编译到 AV_PLAN，再由 `first-person-challenge.jsx` 排版原有字形。
+意群是阅读单位，不是替换原段落的依据；超出布局时明确拒绝，不靠吞段落、截字或无限缩小绕过。
+现有历史输入保留可读；新增格式的原生画面和手机可读性未实测前保持待验证，参数校验不能替代。
+既有诊断片仅作内部技术基线；已完成分段按实际收据复用，未覆盖能力只做有界原生小样，
+不为证明工作流而继续整部诊断片的高成本渲染。远端无 Runner 保持 BLOCKED_EXTERNAL。
+
+唯一入口和消费者保持不变。新正式作者选择 `production_policy=industrial_bplus_v1`，
+`producer.source=user_recording`，`subtitle_mode=premiere_sidecar`。默认 `voice` 等待真实录音；
+只有显式 `legacy_internal_tts` 可复查历史内部生成路径，B+ 不接受它。
+`voices` 是实际待录全文，不与旧 `recording_copy` 双轨混用。`script` 同时导出
+`EPISODE_SCRIPT.md`、`RECORDING_GUIDE.md`、`RECORDING_HANDOFF.json`，全文仍须发用户。
+每条 `recording_direction` 包含画面任务、语气、相对语速、自然停顿、重音、读音及衔接。
+没有录音时返回 PENDING_HUMAN_VO；不能继续 align 或伪造声画粗剪。
+
+`scripts.voice_delivery --import-request <request.json> --output <new-directory>` 沿用
+voice-delivery/v1。请求声明 user_recording、speaker，绑定实际录音声明和每条 audio、transcript、
+content_check 的 path/SHA；content_check 必须来自已执行的逐字核对并为 MATCHED。
+导入保留 originals，生成完整 PCM16/48k 单声道派生，测量真实时长；校验重算转换后的
+完整 PCM，不接受裁剪或变速后重绑哈希。凭证绑定不是声纹识别或试听。
+局部补录可由 `voice_inputs` 选取后列的精确全文完整 take，未变化声音保持原字节；
+随后重对齐并重编译，原生画面复用仍须通过既有严格依赖证明。
+
+AV_AUTHOR 可沿已有真实 task 场景选择 `audience_opening.strategy=original_task`，明确
+首场、同题后续有据 payoff 和观看问题。它使用现有原题画面，不新建 Hook 渲染器，
+也不强迫新高考题套用旧诊断片的同词冲突。原抽象 Hook 的已审外部绑定仍保留。
+独立创意审阅先看源题、全文和导演决定，再看作者理由；身份与同公司限制如实记录。
+真实 1080p 本人声画粗剪及独立观察先于 4K。粗剪、正式 PR 工程与收据分开保留；
+无声风险小样不能当作已完成声画粗剪。实际观看、试听、手机和高中生测试仍分别待审。
+
+Research-to-Design 的主工作区未提交资料保持原位，只把有来源的建议作为作者参考，
+不得替代冻结教学事实或自动成为硬门禁。公开展示许可和最终发布始终单独 HOLD。
+
 ## 2026-10-22 当前纠正与 FREE_SHOWCASE v2（制作中）
 
 最新用户纠正覆盖前一清单：方法仍在使用前点名，撤回统一 72px、橙色、动作后命名；

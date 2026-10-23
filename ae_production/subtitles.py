@@ -9,6 +9,8 @@ from scripts.voice_delivery import sha256
 def inspect_mode(folder):
     folder=Path(folder);author=read(folder/'AV_AUTHOR.json')
     mode=author.get('subtitle_mode','burned_in')
+    from ae_production.authored_native import premiere_path
+    captions=premiere_path(folder,'PR_CAPTIONS.json')
     native=folder/'native-identity.json';readback=folder/'NATIVE_READBACK.json'
     actual=read(readback) if readback.exists() else None
     layers=[r for r in actual.get('layers',[]) if r['name'].startswith('CAPTION_') and r['name']!='CAPTION_SAFE_AREA'] if actual else None
@@ -21,7 +23,7 @@ def inspect_mode(folder):
         'native_evidence':str(readback) if actual else None,'native_plan_binding_current':current,
         'native_mode':('burned_in' if layers else 'no_ae_caption_layers') if current and actual else None,
         'encoded_pixel_verification':None,'encoded_pixel_missing_reason':'This read-only command inspects saved engineering receipts; it does not infer text from encoded pixels',
-        'premiere_caption_receipt':str(folder/'PR_CAPTIONS.json') if (folder/'PR_CAPTIONS.json').exists() else None,
+        'premiere_caption_receipt':str(captions) if captions.exists() else None,
         'srt_path':str(folder/'EPISODE_SUBTITLES.srt') if (folder/'EPISODE_SUBTITLES.srt').exists() else None}
 
 
@@ -41,9 +43,10 @@ def validate_native_captions(plan,layers):
     return {'mode':'burned_in','native_caption_layers':len(captions)}
 
 
-def deliver_sidecar(folder,video):
+def deliver_sidecar(folder,video,*,master=None):
     folder=Path(folder);video=Path(video);plan=read(folder/'AV_PLAN.json')
     if plan.get('subtitle_mode')!='premiere_sidecar':return None
+    from ae_production.authored_native import premiere_path
     source=folder/'EPISODE_SUBTITLES.srt';target=video.with_suffix('.srt')
     if target.exists() and sha256(target)!=sha256(source):
         raise FileExistsError('Inspect mismatched subtitle delivery; never overwrite another revision')
@@ -52,7 +55,7 @@ def deliver_sidecar(folder,video):
         'srt':str(target),'srt_sha256':sha256(target),'plan_sha256':sha256(folder/'AV_PLAN.json'),
         'cue_count':len(plan['cues']),'picture_contains_captions':False,
         'picture_binding':'Native caption absence plus unchanged native picture packets in package QA',
-        'premiere_readback':str(folder/'PR_CAPTIONS.json'),'timing_basis':'CURRENT_UNCHANGED_COMPLETE_TAKES',
+        'premiere_readback':str(premiere_path(folder,'PR_CAPTIONS.json',master)),'timing_basis':'CURRENT_UNCHANGED_COMPLETE_TAKES',
         'future_recording_alignment':'NOT_APPLIED_NO_NEW_RECORDING_SUPPLIED'}
-    write(folder/'SUBTITLE_DELIVERY.json',receipt)
+    write(premiere_path(folder,'SUBTITLE_DELIVERY.json',master),receipt)
     return receipt

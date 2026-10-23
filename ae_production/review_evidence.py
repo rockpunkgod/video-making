@@ -361,7 +361,8 @@ def wave_levels(path):
 
 
 def audio(plan,qa,folder,out,media):
-    timeline_path=folder/'PR_TIMELINE.json';native=read(timeline_path) if timeline_path.exists() else {}
+    from ae_production.authored_native import premiere_path
+    timeline_path=premiere_path(folder,'PR_TIMELINE.json',qa.get('formal_4k_rendered',False));native=read(timeline_path) if timeline_path.exists() else {}
     clips=[c for t in native.get('audioTracks',[]) for c in t.get('clips',[])]
     rows=[]
     for s in plan['segments']:
@@ -386,7 +387,8 @@ def audio(plan,qa,folder,out,media):
             'caption_ids':[c['id'] for c in plan.get('cues',[]) if c.get('segment',c.get('segment_id',c.get('voice_id')))==s['id']],
             'native_placement_missing_reason':None if clip else 'No unique matching clip in the saved Premiere timeline',
             'timeline_source':str(timeline_path) if timeline_path.exists() else None})
-    automation=read(folder/'MUSIC_NATIVE_AUTOMATION.json') if (folder/'MUSIC_NATIVE_AUTOMATION.json').exists() else None
+    automation_path=premiere_path(folder,'MUSIC_NATIVE_AUTOMATION.json',qa.get('formal_4k_rendered',False))
+    automation=read(automation_path) if automation_path.exists() else None
     for i,m in enumerate(plan.get('music',[])):
         path=Path(m['clip_path']);matches=[c for c in clips if c['name']==path.name];clip=matches[0] if len(matches)==1 else None
         actual=[]
@@ -565,6 +567,9 @@ def validate_evidence(manifest_path):
 def export_review_evidence(folder,qa,probe_result=None):
     """Called by normal package after the existing actual same-version checks."""
     folder=Path(folder).resolve();media=Path(qa['media']).resolve();plan=read(folder/'AV_PLAN.json');native=read(folder/'native-identity.json')
+    from ae_production.authored_native import premiere_path
+    def actual_path(name):return premiere_path(folder,name,qa.get('formal_4k_rendered',False))
+    timeline_path=actual_path('PR_TIMELINE.json');caption_path=actual_path('PR_CAPTIONS.json')
     if qa['sha256']!=file_sha(media) or qa.get('plan_sha256')!=file_sha(folder/'AV_PLAN.json'):
         raise ValueError('Evidence requires the actual current same-version final MP4')
     snapshot=read(folder/'EVIDENCE_NATIVE_MOTION.json') if (folder/'EVIDENCE_NATIVE_MOTION.json').exists() else None
@@ -575,7 +580,7 @@ def export_review_evidence(folder,qa,probe_result=None):
     binding={'video':qa['sha256'],'plan':qa['plan_sha256'],'native':file_sha(folder/'native-identity.json'),
         'exporter_source_sha256':file_sha(__file__),
         'motion':None if snapshot is None else snapshot['parameters_sha256'],
-        'premiere_timeline':file_sha(folder/'PR_TIMELINE.json') if (folder/'PR_TIMELINE.json').exists() else None}
+        'premiere_timeline':file_sha(timeline_path) if timeline_path.exists() else None}
     out=media.parent/'review_evidence'/(media.stem+'-'+data_sha(binding)[:12])
     manifest=out/'review_evidence_manifest.json'
     if manifest.exists():validate_evidence(manifest);return str(manifest)
@@ -604,7 +609,7 @@ def export_review_evidence(folder,qa,probe_result=None):
         caption['native_element_id']=None if layer is None else layer['id']
         caption['native_missing_reason']=None if layer else ('Intentionally external Premiere subtitle track; no AE text is burned into the picture' if plan.get('subtitle_mode')=='premiere_sidecar' else 'No matching native layer readback for this output composition')
         caption['delivery_mode']=plan.get('subtitle_mode','burned_in')
-        caption['premiere_receipt']=str(folder/'PR_CAPTIONS.json') if (folder/'PR_CAPTIONS.json').exists() else None
+        caption['premiere_receipt']=str(caption_path) if caption_path.exists() else None
     wanted=choose_frames(tim['scenes'],mot['events'],len(pts),fps)
     index=extract_frames(media,out,wanted,pts,meta)
     docs={'video_metadata':meta,'timeline_manifest':tim,'motion_manifest':mot,'audio_manifest':aud,'frame_index':index}
@@ -613,7 +618,7 @@ def export_review_evidence(folder,qa,probe_result=None):
         dest=out/(name+'.json');write(dest,value);files[name]={'path':dest.name,'sha256':file_sha(dest)}
     snapshots=[]
     sources=[(role,Path(qa[role])) for role in ('native_project','premiere_project')]
-    sources.extend((name,folder/name) for name in ('AV_AUTHOR.json','AV_PLAN.json','native-identity.json',
+    sources.extend((name,actual_path(name)) for name in ('AV_AUTHOR.json','AV_PLAN.json','native-identity.json',
         'EVIDENCE_NATIVE_MOTION.json','PR_TIMELINE.json','MUSIC_NATIVE_AUTOMATION.json',
         'CHALLENGE_NATIVE_READBACK.json','SYMBOL_NATIVE_READBACK.json',
         'ANSWER_CONFIRMATION_NATIVE.json',
@@ -622,7 +627,7 @@ def export_review_evidence(folder,qa,probe_result=None):
         'SUBTITLE_NATIVE_AUDIT.json','PR_CAPTIONS.json','SUBTITLE_DELIVERY.json','VISUAL_MEMORY_NATIVE_READBACK.json',
         'AUDIENCE_LEARNING_CONTEXT.json','AUDIENCE_FROZEN_HYPOTHESIS.json','AUDIENCE_FROZEN_HYPOTHESIS_SNAPSHOT.json',
         'REVIEW_CANDIDATE_QA.json' if qa.get('formal_delivery') is False else 'MASTER_DELIVERY_QA.json' if qa.get('formal_4k_rendered') else 'DELIVERY_QA.json',
-        'MASTER_PICTURE_RECEIPT.json' if qa.get('formal_4k_rendered') else 'PICTURE_RECEIPT.json') if (folder/name).exists())
+        'MASTER_PICTURE_RECEIPT.json' if qa.get('formal_4k_rendered') else 'PICTURE_RECEIPT.json') if actual_path(name).exists())
     for pattern in ('COMPARISON_BACKGROUND_NATIVE_*.json','READING_CONTINUITY_NATIVE_*.json'):
         sources.extend((p.name,p) for p in sorted(folder.glob(pattern)))
     sources.extend(('native_source',p) for p in sorted((folder/'native-source').glob('*.jsx')))

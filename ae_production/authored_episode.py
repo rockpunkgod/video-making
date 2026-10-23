@@ -14,7 +14,7 @@ import sys
 import wave
 
 from video_contracts import ROOT, read, write, sha, pointer, verify_bundle, status_matches
-from scripts.voice_delivery import validate as validate_voice, asset, sha256, pad_to_video_frame, describe_clip
+from scripts.voice_delivery import validate as validate_voice, validate_user_recordings, asset, sha256, pad_to_video_frame, describe_clip
 from creative_os.teaching_focus import require_focus, validate_focus, direct_scene, resource_report
 from ae_production.article_chunking import chunk_stage, current_chunks, bind_worlds
 
@@ -23,7 +23,8 @@ AUTHOR = 'AV_AUTHOR.json'
 AUTHOR_KEYS = {'revision','product','format','media_role','public_render_ready','copy_review',
                'sources','input_files','voices','scenes','excerpts','producer','host',
                'voice_delivery','voice_inputs','music','teaching_focus','editorial','layout','alignment_source',
-               'copy_review_evidence','audience_hook','source_attribution','visual_states','replay_policy','audience_challenges','cognitive_symbols','subtitle_mode','recording_copy'}
+               'copy_review_evidence','audience_hook','source_attribution','visual_states','replay_policy','audience_challenges','cognitive_symbols','subtitle_mode','recording_copy',
+               'production_policy','recording_direction','production_risk','audience_opening'}
 KINDS = {'task', 'locate', 'compare', 'answer', 'replay', 'recap'}
 SHOT_KEYS = {'id', 'kind', 'world', 'voice_ids', 'title', 'excerpt', 'candidate',
              'event', 'replay_of', 'source_refs', 'action_refs', 'terminal_refs',
@@ -188,9 +189,39 @@ def script(folder):
     output.write_text(script_text(author), encoding='utf-8')
     if 'recording_copy' in author:
         (folder/'NEXT_RECORDING_SCRIPT.md').write_text(recording_script_text(author),encoding='utf-8')
+    if author.get('production_policy')=='industrial_bplus_v1':
+        recording_guide(folder,author)
     return {'revision': author['revision'], 'script': str(output),
             'complete_copy': script_text(author), 'copy_review': author['copy_review'],
             'handoff': 'Paste the complete copy in chat on every copy revision; exporting is not user approval.'}
+
+
+RECORDING_FIELDS=('viewer_task','tone','pace','pauses','emphasis','pronunciation','transition')
+
+
+def recording_guide(folder,author):
+    """Export the author's performance decisions separately from exact copy."""
+    directions=author.get('recording_direction',{})
+    if set(directions)!={v['id'] for v in author['voices']}:
+        raise ValueError('Author must supply recording direction for every actual take')
+    scenes={vid:s['id'] for s in author['scenes'] for vid in s['voice_ids']}
+    if 'audience_hook' in author:
+        scenes.update({v:author['audience_hook']['scene_id'] for v in author['audience_hook']['voice_ids']})
+    rows=[];lines=['# 分段录音指导','只读正文，不读标签和指导。整段自然录完，不追旧镜头秒数；补录保留原文件并增加版本号。','']
+    labels=('画面任务','语气','相对语速','自然停顿','强调','读音提示','前后衔接')
+    for v in author['voices']:
+        d=directions[v['id']]
+        if any(not isinstance(d.get(k),str) or not d[k].strip() for k in RECORDING_FIELDS):
+            raise ValueError('Incomplete authored recording direction: '+v['id'])
+        name=v['id']+'__take01.wav'
+        rows.append({'scene_id':scenes[v['id']],'take_id':v['id'],'text':v['text'],'direction':d,'suggested_file':name})
+        lines.extend(['## '+scenes[v['id']]+' / '+v['id'],v['text'],''])
+        lines.extend(label+'：'+d[key] for key,label in zip(RECORDING_FIELDS,labels))
+        lines.extend(['文件：'+name+'；补录用 take02，保持同一 Take ID。',''])
+    write(folder/'RECORDING_HANDOFF.json',{'schema':'authored-recording-handoff/v1',
+        'author_sha256':sha256(folder/AUTHOR),'status':'PENDING_HUMAN_VO','takes':rows,
+        'timing':'Measured only after actual recording import','human_approved':False})
+    (folder/'RECORDING_GUIDE.md').write_text('\n'.join(lines),encoding='utf-8')
 
 
 def check_script(folder, author):
@@ -265,13 +296,18 @@ def validate_source_attribution(author, bundles):
             raise ValueError('Paper attribution must introduce its actual question')
         # The frozen identity retains the original number even when Word uses
         # automatic list numbering, which is absent from paragraph text.
-        number_matches=q['question_id'].endswith('-Q'+str(row['question_number']))
+        number_matches=q['question_id'].lower().endswith('-q'+str(row['question_number']))
         if (row['question_id']!=q['question_id'] or not number_matches
                 or row['reading_section'] not in lines):
             raise ValueError('Attribution question identity changed')
         article_names={row['article_anchor'],
             '无总标题的文章（'+row['article_anchor']+' 小节）',
             '无总标题的产品介绍文章（'+row['article_anchor']+' 小节）'}
+        # An untitled passage can be identified by its real first paragraph;
+        # do not force the whole paragraph into an on-screen title or invent one.
+        preceding=[line.strip() for line in lines[:article_index] if line.strip()]
+        if preceding and preceding[-1]==row['reading_section']:
+            article_names.add(row['reading_section']+'篇（原文首段）')
         if (row['paper_display']!=' · '.join(row['paper_heading_quotes'])
                 or row['article_display'] not in article_names):
             raise ValueError('Screen paper name must retain the verified heading')
@@ -282,6 +318,12 @@ def checked_author(folder):
     a = read(folder / AUTHOR)
     if set(a)-AUTHOR_KEYS:raise ValueError('Unsupported production input: '+str(sorted(set(a)-AUTHOR_KEYS)))
     validate_copy_review(a)
+    if 'production_policy' in a and a['production_policy']!='industrial_bplus_v1':
+        raise ValueError('Unknown authored production policy')
+    if a.get('production_policy')=='industrial_bplus_v1' and a.get('producer',{}).get('source','user_recording')!='user_recording':
+        raise ValueError('Industrial B+ formal production requires user recordings')
+    if a.get('production_policy')=='industrial_bplus_v1' and 'recording_copy' in a:
+        raise ValueError('B+ records the actual voices text; migrate future copy into a new author revision first')
     if a.get('subtitle_mode','burned_in') not in ('burned_in','premiere_sidecar'):
         raise ValueError('Subtitle mode must be burned_in or premiere_sidecar')
     if 'recording_copy' in a:
@@ -498,6 +540,16 @@ def voice(folder):
     a, _ = checked_author(folder)
     check_script(folder, a)
     selected=delivery_path(folder,a)
+    source=a.get('producer',{}).get('source','user_recording')
+    if source not in ('user_recording','legacy_internal_tts'):
+        raise ValueError('Unknown voice source; never infer permission to generate TTS')
+    if source=='user_recording':
+        if not selected.exists():
+            if a.get('voice_inputs'):return select_takes(folder,a)
+            return {'status':'PENDING_HUMAN_VO','delivery':str(selected),
+                    'script':str(folder/'EPISODE_SCRIPT.md'),'recording_guide':str(folder/'RECORDING_GUIDE.md'),
+                    'reason':'Import actual user recordings with scripts.voice_delivery; no TTS fallback.'}
+        validate_user_recordings(selected)
     if selected.exists():
         delivery=validate_voice(selected)
         if a.get('voice_inputs') and delivery.get('selection_sha256')!=sha([(str(Path(p).resolve()),sha256(p)) for p in a['voice_inputs']]):
@@ -530,15 +582,19 @@ def select_takes(folder, author):
     Missing copy alone goes back to the existing producer. Nothing is selected
     by an invented listening score and old/failed deliveries are not overwritten.
     """
+    human=author.get('producer',{}).get('source','user_recording')=='user_recording'
     wanted={v['id']:v['text'] for v in author['voices']};chosen={}
     def add(path):
-        path=Path(path).resolve();delivery=validate_voice(path)
+        path=Path(path).resolve();delivery=validate_user_recordings(path) if human else validate_voice(path)
         for c in delivery['clips']:
             if c['id'] in wanted and asset(path.parent,c['transcript']).read_text('utf-8-sig').strip()==wanted[c['id']]:
                 if c['listening_review']=='REJECTED':continue
                 chosen[c['id']]=(path,c)
     for path in author['voice_inputs']:add(path)
     missing=[v for v in author['voices'] if v['id'] not in chosen]
+    if missing and human:
+        return {'status':'PENDING_HUMAN_VO','missing_take_ids':[v['id'] for v in missing],
+                'reusable_complete_take_ids':list(chosen),'reason':'Only actual exact-copy user takes can fill these slots.'}
     if missing:
         name=sha(missing)[:16];request=folder/('VOICE_INPUT-'+name+'.json');dest=folder/('voice-generated-'+name)
         if not request.exists():write(request,missing)
@@ -549,15 +605,31 @@ def select_takes(folder, author):
         add(dest/'delivery.json')
     if set(chosen)!=set(wanted):raise ValueError('Producer did not deliver every exact requested take')
     output=delivery_path(folder,author);output.parent.mkdir(exist_ok=False);rows=[];origins=[]
+    speaker=None;declaration=None
     for vid in wanted:
         src,c=chosen[vid];wav=vid+'.wav';txt=vid+'.txt'
         shutil.copyfile(asset(src.parent,c['audio']),output.parent/wav)
         shutil.copyfile(asset(src.parent,c['transcript']),output.parent/txt)
         rows.append(describe_clip(output.parent,vid,wav,txt,c['listening_review']))
-        origins.append({'id':vid,'delivery':str(src),'delivery_sha256':sha256(src),'audio_sha256':c['audio_sha256']})
+        if human:
+            parent=read(src);source=deepcopy(next(x for x in parent['sources'] if x['id']==vid))
+            name=parent['recording_source']['speaker']
+            if speaker is not None and speaker!=name:raise ValueError('User take selection cannot mix declared speakers')
+            speaker=name
+            for field in ('original_audio','content_check'):
+                item=source[field];dst=Path('originals')/(vid+'-'+field+Path(item['path']).suffix)
+                (output.parent/dst).parent.mkdir(exist_ok=True)
+                shutil.copyfile(asset(src.parent,item['path']),output.parent/dst);item['path']=dst.as_posix()
+            decl=parent['recording_source']['declaration'];dst=Path('originals')/(vid+'-declaration.txt')
+            shutil.copyfile(asset(src.parent,decl['path']),output.parent/dst)
+            source['recording_declaration']={'path':dst.as_posix(),'sha256':decl['sha256']}
+            declaration=declaration or source['recording_declaration']
+            source.update(delivery=str(src),delivery_sha256=sha256(src));origins.append(source)
+        else:origins.append({'id':vid,'delivery':str(src),'delivery_sha256':sha256(src),'audio_sha256':c['audio_sha256']})
     write(output,{'schema':'voice-delivery/v1','clips':rows,'producer':'existing producer, explicit complete-take selection','sources':origins,
+                  **({'recording_source':{'kind':'user_recording','speaker':speaker,'declaration':declaration}} if human else {}),
                   'selection_sha256':sha([(str(Path(p).resolve()),sha256(p)) for p in author['voice_inputs']])})
-    validate_voice(output)
+    (validate_user_recordings if human else validate_voice)(output)
     return {'delivery':str(output),'complete_takes':len(rows),'new_copy_takes':len(missing),'reused_exact_takes':len(rows)-len(missing)}
 
 
@@ -848,6 +920,7 @@ def prepare(folder):
     check_script(folder, a)
     chunks = current_chunks(folder, bundles)
     delivery_file = delivery_path(folder,a); delivery = validate_voice(delivery_file)
+    if a.get('production_policy')=='industrial_bplus_v1':validate_user_recordings(delivery_file)
     aligned_path = folder / 'VOICE_ALIGNMENT.json'
     if not aligned_path.exists(): raise FileNotFoundError('Run align for the actual new voice delivery first')
     aligned = {x['id']: x for x in read(aligned_path)['clips']}
@@ -894,6 +967,10 @@ def prepare(folder):
                 author_sha256=sha256(folder / AUTHOR), voice_delivery_sha256=sha256(delivery_file),
                 alignment_sha256=sha256(aligned_path), public_render_ready=False,
                 human_creative_review='PENDING', listening_review='PENDING', student_count=0)
+    if 'production_policy' in a:plan['production_policy']=a['production_policy']
+    if 'audience_opening' in a:
+        from creative_os.audience_engagement import validate_original_task_opening
+        plan['audience_opening']={**deepcopy(a['audience_opening']),**validate_original_task_opening(a)}
     if 'audience_challenges' in a:
         from creative_os.audience_engagement import compile_authored_challenges
         plan['audience_challenges']=compile_authored_challenges(a,bundles,plan,worlds,folder)
@@ -970,6 +1047,7 @@ def dispatch(operation, folder, **kwargs):
     if operation == 'voice': return voice(folder)
     if operation == 'align':
         a, _ = checked_author(folder)
+        if a.get('production_policy')=='industrial_bplus_v1':validate_user_recordings(delivery_path(folder,a))
         if a.get('alignment_source'):return reuse_alignment(folder,a)
         current=folder/'VOICE_ALIGNMENT.json'
         if current.exists() and read(current)['delivery_sha256']!=sha256(delivery_path(folder,a)):

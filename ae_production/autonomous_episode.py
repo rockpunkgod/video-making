@@ -21,6 +21,9 @@ from creative_os.audience_engagement import timed_scene_rows
 
 STAGES=('check','script','chunks','voice','align','prepare','build','audit','render-master',
         'premiere','package-master','review','restore')
+BPLUS_STAGES=('check','script','chunks','creative-review','voice','align','prepare','build','audit',
+              'render','premiere-rough','package','review-rough','render-master','premiere',
+              'review-copy','package-master','review','restore')
 
 
 def job(folder,role,packet,command=None):
@@ -47,7 +50,8 @@ def request_author(folder,brief):
     spec=read(brief)
     if spec.get('schema')!='autonomous-episode-brief/v1' or spec['product']!='FREE_SHOWCASE':
         raise ValueError('Explicit FREE_SHOWCASE brief required')
-    if not spec.get('audience_hook_decision') and not (folder/'AV_AUTHOR.json').exists():
+    industrial=spec.get('production_policy')=='industrial_bplus_v1'
+    if not industrial and not spec.get('audience_hook_decision') and not (folder/'AV_AUTHOR.json').exists():
         return {'status':'CREATIVE_DECISION_REQUIRED','module':'AUDIENCE_ENGAGEMENT',
             'missing':['student_pain_point','effective_method_trigger','approved_visual_conflict',
                        'bound_payoff','explicitly_specified_opening_copy'],
@@ -86,7 +90,10 @@ def request_author(folder,brief):
         'Record omitted explanation, accurate foreground scope, viewer payoff, understanding risk and observation plan. Prepare exports the existing AudienceLearning freeze request; keep propagation benefit hypothetical and real feedback pending.',
         'Read the knowledge inputs and bind specific design choices; hypotheses are not learning results.',
         'Missing language decisions are a language-author job, never a user approval stop.',
-        'Consume the exact external Audience Hook decision; never invent a Hook or self-approve creative choices.',
+        ('Within the brief, choose a source-bound Hook yourself. audience_opening strategy original_task may use the first real task and a later supported judgement payoff; do not force the old surface-overlap teaser on a new question. Independent blind then cross-review must challenge this choice.' if industrial else 'Consume the exact external Audience Hook decision; never invent a Hook or self-approve creative choices.'),
+        *(['Set production_policy=industrial_bplus_v1, producer.source=user_recording. Never generate synthetic formal narration.',
+           'Provide complete voices, per-take recording_direction and production_risk={requires_native_sample:boolean,reason:nonempty,scene_ids:[actual scene IDs]}. New or unverified native motion must declare risk.',
+           'Return actual identity={provider,model,agent_id}; never claim a cross-company or human identity you do not have.'] if industrial else []),
         'Every new copy must be exported and sent in full by the host; keep user review pending.',
         'Keep voices intact; selected rejected takes are ineligible; current rights remain unchanged.']},
         spec.get('agent_command'))
@@ -111,6 +118,9 @@ def complete_chunks(folder,command=None):
 
 def consume_author_response(folder,result,brief=None):
     a=result['author'];manifest=result['editorial_manifest']
+    if brief and read(brief).get('production_policy')=='industrial_bplus_v1':
+        if a.get('production_policy')!='industrial_bplus_v1':raise ValueError('Industrial brief cannot silently fall back to the legacy production path')
+        reviewer_identity(result.get('identity'))
     for p,d in result.get('input_files',{}).items():
         if sha256(p)!=d:raise ValueError('Changed authoring input: '+p)
     output=folder/'AV_AUTHOR.json'
@@ -132,9 +142,74 @@ def consume_author_response(folder,result,brief=None):
     if chunk.get('status')=='NEEDS_HOST_AGENT':return chunk
     write(folder/'AUTHORING_RECEIPT.json',{'response_sha':sha(result),'brief':str(brief),
         'author_sha256':sha256(output),'notes':result['authoring_notes'],
+        'author_identity':result.get('identity'),
         'human_approved':False,'public_render_ready':False})
     return {'status':'AUTHORED','revision':a['revision'],'questions':len(a['sources']),
             'voices':len(a['voices']),'author_sha256':sha256(output)}
+
+
+def reviewer_identity(value):
+    if (not isinstance(value,dict) or set(value)!={'provider','model','agent_id'}
+            or any(not isinstance(x,str) or not x.strip() or x.upper() in ('UNKNOWN','PENDING') for x in value.values())):
+        raise ValueError('Actual provider, model and independent agent identity required')
+    return value
+
+
+def creative_review(folder):
+    """Existing agent jobs: blind first, then compare the author's reasons."""
+    a,_=checked_author(folder)
+    if a.get('production_policy')!='industrial_bplus_v1':return {'status':'NOT_REQUIRED'}
+    receipt=read(folder/'AUTHORING_RECEIPT.json')
+    if receipt.get('author_sha256')!=sha256(folder/'AV_AUTHOR.json'):
+        raise ValueError('Preproduction review requires the current authoring receipt')
+    author_id=reviewer_identity(receipt.get('author_identity'))
+    # Deliberately do not supply the authoring receipt path, its self-evaluation,
+    # or the editorial manifesto until the blind response has been retained.
+    keys=('revision','product','sources','voices','scenes','excerpts','teaching_focus',
+          'audience_hook','audience_opening','audience_challenges','cognitive_symbols',
+          'recording_direction','production_risk')
+    packet={'author_sha256':sha256(folder/'AV_AUTHOR.json'),
+            'presentation':{k:deepcopy(a[k]) for k in keys if k in a},
+            'requirements':['Read only this presentation and its frozen sources for the blind pass; do not read author self-evaluation or other jobs.',
+              'Challenge viewing reason, method payoff, misleading compression, PPT-like motion, genuine question difficulty and simpler cinematic alternatives.',
+              'Return identity={provider,model,agent_id}, status=PASS or REVISE, and scene-bound findings. Never claim human perception or another provider.']}
+    blind=job(folder,'independent_creative_blind',packet)
+    if blind.get('status')=='NEEDS_HOST_AGENT':return blind
+    ident=reviewer_identity(blind.get('identity'))
+    if ident['agent_id']==author_id['agent_id']:
+        raise ValueError('The author cannot serve as its own independent reviewer')
+    if blind.get('status') not in ('PASS','REVISE') or not isinstance(blind.get('findings'),list):
+        raise ValueError('Blind reviewer must provide a concrete verdict and findings')
+    cross=job(folder,'independent_creative_cross',{
+        'author_sha256':packet['author_sha256'],'blind_response_sha256':sha(blind),
+        'blind_response':blind,'authoring_notes':receipt['notes'],
+        'authoring_receipt_sha256':sha256(folder/'AUTHORING_RECEIPT.json'),
+        'editorial':a.get('editorial'),'reviewer_identity':ident,
+        'requirements':['Compare the preserved blind findings with the author reasons. Do not edit the author or Adobe project.',
+            'Same independent reviewer returns identity, status=PASS or REVISE, findings and disposition of each blind finding. No fabricated cross-provider review.']})
+    if cross.get('status')=='NEEDS_HOST_AGENT':return cross
+    if reviewer_identity(cross.get('identity'))!=ident or cross.get('status') not in ('PASS','REVISE') or not isinstance(cross.get('findings'),list) or not isinstance(cross.get('dispositions'),list):
+        raise ValueError('Bound cross-review by the same independent reviewer required')
+    if len(cross['dispositions'])!=len(blind['findings']) or any(not item for item in cross['dispositions']):
+        raise ValueError('Cross-review must retain a disposition for each blind finding')
+    result={'schema':'industrial-creative-review/v1','status':cross['status'],
+        'author_sha256':packet['author_sha256'],'authoring_receipt_sha256':sha256(folder/'AUTHORING_RECEIPT.json'),
+        'blind_response_sha256':sha(blind),'cross_response_sha256':sha(cross),
+        'reviewer_identity':ident,'author_identity':author_id,
+        'cross_provider':ident['provider']!=author_id['provider'],
+        'independence_limit':'Independent agent context; same provider' if ident['provider']==author_id['provider'] else 'Declared distinct providers; identities are retained, not externally attested',
+        'human_approved':False,'public_render_ready':False}
+    target=folder/'CREATIVE_REVIEW.json'
+    if target.exists() and read(target)!=result:raise ValueError('Preserve prior creative review; revise into a new folder')
+    write(target,result)
+    return result
+
+
+def require_creative_review(folder):
+    result=creative_review(folder)
+    if result.get('status') not in ('PASS','NOT_REQUIRED'):
+        raise ValueError('Industrial B+ requires completed independent blind and cross-review before native production')
+    return result
 
 
 def status(folder):
@@ -149,9 +224,10 @@ def status(folder):
 
 def actual_scene_map(folder,plan,qa):
     """Map the real continuous native edit without claiming human observation."""
-    from ae_production.authored_native import validate_edit
+    from ae_production.authored_native import validate_edit,premiere_path
     picture=read(folder/('MASTER_PICTURE_RECEIPT.json' if qa['formal_4k_rendered'] else 'PICTURE_RECEIPT.json'))
-    timeline=read(folder/'PR_TIMELINE.json')
+    timeline_path=premiere_path(folder,'PR_TIMELINE.json',qa['formal_4k_rendered'])
+    timeline=read(timeline_path)
     if (qa.get('video_payload_and_timestamps_unchanged') is not True
             or qa['frames']!=plan['frames'] or sha256(picture['output'])!=picture['sha256']):
         raise ValueError('Actual scene mapping requires the unchanged complete native picture')
@@ -159,15 +235,16 @@ def actual_scene_map(folder,plan,qa):
     fps=plan['format']['fps']
     result={'schema':'authored-actual-media-map/v1','media':qa['media'],'media_sha256':qa['sha256'],
             'plan_sha256':qa['plan_sha256'],'native_picture_sha256':picture['sha256'],
-            'premiere_timeline_sha256':sha256(folder/'PR_TIMELINE.json'),
+            'premiere_timeline_sha256':sha256(timeline_path),
             'basis':'same native picture packets/timestamps; one full uncut native PR picture clip at zero; actual complete take placements',
             'authority':'automatic_engineering_mapping_not_external_human_review',
             'scenes':[{'scene':s['id'],'source_refs':s['source_refs'],
                        'actual_frame_range':[round(s['start']*fps),round(s['end']*fps)],
                        'actual_seconds':[s['start'],s['end']]} for s in timed_scene_rows(plan)],
             'human_confirmed':False,'public_render_ready':False}
-    write(folder/'ACTUAL_MEDIA_SCENE_MAP.json',result)
-    return {'path':str(folder/'ACTUAL_MEDIA_SCENE_MAP.json'),'sha256':sha256(folder/'ACTUAL_MEDIA_SCENE_MAP.json')}
+    target=folder/('ACTUAL_MEDIA_SCENE_MAP_ROUGH.json' if not qa['formal_4k_rendered'] and read(folder/'AV_AUTHOR.json').get('production_policy')=='industrial_bplus_v1' else 'ACTUAL_MEDIA_SCENE_MAP.json')
+    write(target,result)
+    return {'path':str(target),'sha256':sha256(target)}
 
 
 def production_ledger_root(folder,stored=None):
@@ -186,11 +263,11 @@ def production_ledger_root(folder,stored=None):
     return expected
 
 
-def review(folder):
+def review(folder,rough=False):
     """Request actual observations of the same final full film, not a PASS log."""
-    from ae_production.authored_native import plan
+    from ae_production.authored_native import plan,premiere_path
     a,p=plan(folder)
-    qpath=folder/'MASTER_DELIVERY_QA.json'
+    qpath=folder/('DELIVERY_QA.json' if rough else 'MASTER_DELIVERY_QA.json')
     if not qpath.exists():qpath=folder/'DELIVERY_QA.json'
     qa=read(qpath);media=qa['media']
     if sha256(media)!=qa['sha256']:raise ValueError('Review requires current actual encoded media')
@@ -205,9 +282,9 @@ def review(folder):
         'copy':script_text(a),'director':p.get('editorial_consumption',{}),
         'motion':read(folder/'native-audit.json') if (folder/'native-audit.json').exists() else None,
         'voice':{'delivery_sha256':p['voice_delivery_sha256'],'complete_takes':len(p['segments'])},
-        'premiere':read(folder/'PR_TIMELINE.json') if (folder/'PR_TIMELINE.json').exists() else None,
+        'premiere':read(premiere_path(folder,'PR_TIMELINE.json',not rough)) if premiere_path(folder,'PR_TIMELINE.json',not rough).exists() else None,
         'human_review':None})
-    write(folder/'CONTENT_PROFILE_CONTEXT.json',context)
+    write(folder/('CONTENT_PROFILE_CONTEXT_ROUGH.json' if rough else 'CONTENT_PROFILE_CONTEXT.json'),context)
     observation=job(folder,'independent_media_reviewer',{
         'media':media,'media_sha256':qa['sha256'],'duration':p['duration'],
         'plan':str(folder/'AV_PLAN.json'),'plan_sha256':sha256(folder/'AV_PLAN.json'),
@@ -217,7 +294,9 @@ def review(folder):
           'See real moving transitions and listen to real audio before claiming those scopes.',
           'Bind each issue to media SHA, scene, seconds, observed fact, severity, responsible module and recheck.',
           'Static frames, waveforms and hashes do not certify motion or natural delivery.',
-          'Keep unobserved video/audio scope explicit; do not fabricate observations.']})
+          'Keep unobserved video/audio scope explicit; do not fabricate observations.',
+          *(['For industrial_bplus_v1 return actual identity={provider,model,agent_id}, status=PASS or REVISE, author_sha256, plan_sha256, voice_delivery_sha256, playback_rate=1 and observation_evidence={path,sha256} pointing to the actual observation record. No available moving-video/audio perception means pending, not PASS.'] if a.get('production_policy')=='industrial_bplus_v1' else [])],
+        **({'author_sha256':sha256(folder/'AV_AUTHOR.json'),'voice_delivery_sha256':p['voice_delivery_sha256']} if a.get('production_policy')=='industrial_bplus_v1' else {})})
     if observation.get('status')=='NEEDS_HOST_AGENT':return observation
     if observation['media_sha256']!=qa['sha256']:raise ValueError('Reviewer observed another cut')
     if not {'issues','continuous_coverage','video_observed','audio_observed'}<=observation.keys():
@@ -227,7 +306,7 @@ def review(folder):
     # user_acceptance field cannot make an unchanged observation non-resumable.
     authority={'human_approved':False,'user_acceptance':'PENDING','public_render_ready':False}
     accepted_observation={**observation,**authority}
-    existing_path=folder/'INTERNAL_MEDIA_REVIEW.json'
+    existing_path=folder/('INTERNAL_MEDIA_REVIEW_ROUGH.json' if rough else 'INTERNAL_MEDIA_REVIEW.json')
     if existing_path.exists():
         previous=read(existing_path)
         derived={'actual_media_mapping','continuous_video_review_completed',
@@ -260,22 +339,23 @@ def review(folder):
     result={**observation,'actual_media_mapping':mapping,'continuous_video_review_completed':complete and observation['video_observed'],
             'complete_listening_review_completed':complete and observation['audio_observed'],
             'ledger_root':str(ledger_root),'ledger_records':ids,**authority}
-    write(folder/'INTERNAL_MEDIA_REVIEW.json',result)
+    write(existing_path,result)
     review_page(folder,qa,result)
     return result
 
 
 def review_page(folder,qa,observations=None):
+    from ae_production.authored_native import premiere_path
     p=read(folder/'AV_PLAN.json');media=Path(qa['media']).as_uri()
     sections=''.join('<li><a href="#" onclick="v.currentTime='+str(s['start'])+';v.play();return false">'
         +escape(s['id']+' · '+s['title'])+'</a> '+str(round(s['start'],3))+'s</li>' for s in timed_scene_rows(p))
     files=[(Path(qa['media']),'完整影片'),(folder/'media/MAIN_FILM.aep','AE 可编辑工程'),
-           (folder/'media/MAIN_FILM.prproj','Premiere 可编辑工程'),
+           (premiere_path(folder,'MAIN_FILM.prproj',qa.get('formal_4k_rendered',False)),'Premiere 可编辑工程'),
            (folder/'EPISODE_SCRIPT.md','完整逐字稿'),(folder/'EPISODE_SUBTITLES.srt','字幕'),
            (folder/'ARTICLE_CHUNKS_REVIEW.html','两篇文章的意群划分')]
     links=' '.join('<a class="file" href="'+path.resolve().as_uri()+'">'+escape(label)+'</a>' for path,label in files if path.exists())
     html='<!doctype html><html lang="zh-CN"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>英语有画说 · 整片审阅</title><style>body{max-width:1120px;margin:36px auto;padding:0 22px;background:#f2f0ea;color:#20211f;font:17px/1.7 Arial}h1{font-size:28px}video{width:100%;background:#17181a;border-radius:8px}a{color:#205c7c}.file{display:inline-block;margin:8px 16px 8px 0}li{margin:5px}details{margin:26px 0}pre{white-space:pre-wrap;font-size:13px}</style>'
-    html+='<h1>英语有画说 · 学霸这题怎么做？</h1><p>'+escape(p['revision'])+' · '+str(round(p['duration'],3))+' 秒 · 原生 4K / 24 帧 · 冻结诊断材料</p>'
+    html+='<h1>英语有画说 · 学霸这题怎么做？</h1><p>'+escape(p['revision'])+' · '+str(round(p['duration'],3))+' 秒 · '+('原生 4K' if qa.get('formal_4k_rendered') else '1080p 声画粗剪')+' / 24 帧</p>'
     html+='<video id="v" controls preload="metadata" src="'+media+'"></video><p>'+links+'</p>'
     if p.get('copy_review')=='USER_REVIEWED_EXACT_COPY':
         html+='<p>此逐字稿已由用户独立审阅；观感、听感和整片仍待你验收。内部 AI 观察不等于人类认证，也不授权公开发布。</p>'
@@ -320,26 +400,34 @@ def run(folder,brief=None,through='restore',batch_size=96):
         validate_cached_stage(folder,'restore')
         return {'status':'DELIVERED_HOSTS_ALREADY_RESTORED','media':q['media'],
                 'user_acceptance':'PENDING','public_render_ready':False}
-    for op in STAGES:
+    industrial=read(folder/'AV_AUTHOR.json').get('production_policy')=='industrial_bplus_v1'
+    stages=BPLUS_STAGES if industrial else STAGES
+    if through not in stages:raise ValueError('Requested stage does not belong to this production policy')
+    for op in stages:
         # Recompute read-only validations; native writes rely on their exact
         # existing receipts. Never use a completed log to replay uncertain work.
-        if op in index['stages'] and op in ('build','premiere','render-master','package-master','restore'):
+        if op in index['stages'] and op in ('build','premiere','premiere-rough','render','render-master','package','package-master','restore'):
             validate_cached_stage(folder,op)
             result=index['stages'][op]['result']
         else:
             index['active_stage']=op;write(receipt_path,index)
             try:
-                if op=='review':result=review(folder)
+                if op in ('review','review-rough'):result=review(folder,rough=op=='review-rough')
+                elif op=='creative-review':result=creative_review(folder)
                 elif op=='chunks':result=complete_chunks(folder,read(brief).get('agent_command') if brief else None)
                 elif op=='build' and (folder/'native-identity.json').exists():
                     from ae_production.authored_native import current_native
                     _,_,native=current_native(folder);result={'reused_verified_native_identity':sha(native)}
-                elif op=='premiere' and (folder/'PR_SEQUENCE.json').exists():
-                    if (folder/'PR_EXPORT_RECEIPT.json').exists():
-                        validate_cached_stage(folder,op);r=read(folder/'PR_EXPORT_RECEIPT.json');result={'native_export':r['output'],'verified_existing_export':True}
-                    else:result=dispatch('premiere-resume',folder)
-                elif op=='package-master' and (folder/'MASTER_DELIVERY_QA.json').exists():
-                    validate_cached_stage(folder,op);q=read(folder/'MASTER_DELIVERY_QA.json')
+                elif op in ('premiere','premiere-rough'):
+                    from ae_production.authored_native import premiere_path
+                    master=op=='premiere' and (folder/'MASTER_PICTURE_RECEIPT.json').exists()
+                    if premiere_path(folder,'PR_SEQUENCE.json',master).exists():
+                        if premiere_path(folder,'PR_EXPORT_RECEIPT.json',master).exists():
+                            validate_cached_stage(folder,op);r=read(premiere_path(folder,'PR_EXPORT_RECEIPT.json',master));result={'native_export':r['output'],'verified_existing_export':True}
+                        else:result=dispatch('premiere-resume',folder)
+                    else:result=dispatch('premiere',folder)
+                elif op in ('package-master','package') and (folder/('MASTER_DELIVERY_QA.json' if op=='package-master' else 'DELIVERY_QA.json')).exists():
+                    validate_cached_stage(folder,op);q=read(folder/('MASTER_DELIVERY_QA.json' if op=='package-master' else 'DELIVERY_QA.json'))
                     result={k:q[k] for k in ('media','actual_seconds','frames','full_decode','media_role')}
                 else:result=dispatch(op,folder,batch_size=batch_size)
             except BaseException as error:
@@ -348,7 +436,8 @@ def run(folder,brief=None,through='restore',batch_size=96):
             index['stages'][op]={'result':result,'author_sha256':sha256(folder/'AV_AUTHOR.json')}
             index.pop('failure',None);write(receipt_path,index)
         print(json.dumps({'stage':op,'result':result},ensure_ascii=False),flush=True)
-        if result.get('status')=='NEEDS_HOST_AGENT' or op==through:return result
+        if result.get('status') in ('NEEDS_HOST_AGENT','PENDING_HUMAN_VO','REVISE') or op==through:return result
+        if op=='review-rough' and result.get('status')!='PASS':return result
     return status(folder)
 
 
@@ -365,17 +454,19 @@ def restored_saved_projects(folder):
     restored=read(folder/'RESTORED_HOSTS.json');saved=restored['saved_current_projects']
     if (restored.get('results')!=result or set(saved)!={'after_effects','premiere'}):
         raise ValueError('Complete saved AE and Premiere restoration evidence required')
+    from ae_production.authored_native import premiere_path
     for name,filename in (('after_effects','MAIN_FILM.aep'),('premiere','MAIN_FILM.prproj')):
-        expected=(folder/'media'/filename).resolve();entry=saved[name]
+        expected=((folder/'media'/filename) if name=='after_effects' else premiere_path(folder,filename)).resolve();entry=saved[name]
         if (entry.get('path')!=str(expected) or not expected.is_file()
                 or sha256(expected)!=entry.get('sha256')):
             raise ValueError('Final restored project path or saved bytes changed')
     return saved
 
 
-def saved_project_matches(folder,name,digest):
+def saved_project_matches(folder,name,digest,master=None):
+    from ae_production.authored_native import premiere_path
     filename='MAIN_FILM.aep' if name=='after_effects' else 'MAIN_FILM.prproj'
-    path=(folder/'media'/filename).resolve();actual=sha256(path)
+    path=((folder/'media'/filename) if name=='after_effects' else premiere_path(folder,filename,master)).resolve();actual=sha256(path)
     if actual==digest:return True
     try:saved=restored_saved_projects(folder)
     except (ValueError,FileNotFoundError,KeyError,TypeError):return False
@@ -384,28 +475,32 @@ def saved_project_matches(folder,name,digest):
 
 def validate_cached_stage(folder,operation):
     """A stage log is not a substitute for its bound saved outputs."""
-    from ae_production.authored_native import current_native,media_directory
+    from ae_production.authored_native import current_native,media_directory,premiere_path,require_industrial_review
     if operation=='restore':
         restored_saved_projects(folder)
         return
-    _,p,n=current_native(folder)
+    a,p,n=current_native(folder)
+    if a.get('production_policy')=='industrial_bplus_v1':
+        require_industrial_review(folder,a,p,'rough' if operation in ('render-master','premiere','package-master') else 'build')
     if not (media_directory(folder)/'MAIN_FILM.aep').is_file():raise FileNotFoundError('Cached native build has no saved AEP')
-    if operation in ('premiere','package-master'):
-        r=read(folder/'PR_EXPORT_RECEIPT.json')
+    if operation in ('premiere','premiere-rough','package','package-master'):
+        master=operation in ('premiere','package-master') and (folder/'MASTER_PICTURE_RECEIPT.json').exists()
+        r=read(premiere_path(folder,'PR_EXPORT_RECEIPT.json',master))
         if (r.get('plan_sha256')!=sha256(folder/'AV_PLAN.json') or sha256(r['output'])!=r.get('sha256')
-                or not saved_project_matches(folder,'premiere',r.get('project_sha256'))):
+                or not saved_project_matches(folder,'premiere',r.get('project_sha256'),master)):
             raise ValueError('Cached native edit/export changed')
-        for name in ('PR_SEQUENCE.json','PR_TIMELINE.json','PR_SETTINGS.json'):read(folder/name)
-    if operation=='render-master':
-        picture=read(folder/'MASTER_PICTURE_RECEIPT.json')
+        for name in ('PR_SEQUENCE.json','PR_TIMELINE.json','PR_SETTINGS.json'):read(premiere_path(folder,name,master))
+    if operation in ('render-master','render'):
+        master=operation=='render-master';comp_id=n['master_comp_id'] if master else n['comp_id']
+        picture=read(folder/('MASTER_PICTURE_RECEIPT.json' if master else 'PICTURE_RECEIPT.json'))
         if (picture.get('plan_sha256')!=sha256(folder/'AV_PLAN.json')
-                or picture.get('comp_id')!=n['master_comp_id'] or picture.get('frames')!=p['frames']
-                or picture.get('formal_4k_rendered') is not True or sha256(picture['output'])!=picture['sha256']):
+                or picture.get('comp_id')!=comp_id or picture.get('frames')!=p['frames']
+                or picture.get('formal_4k_rendered') is not master or sha256(picture['output'])!=picture['sha256']):
             raise ValueError('Completed native master changed')
         cursor=0
         for part in picture['parts']:
             if (part.get('done') is not True or part['start']!=cursor
-                    or not 0<=part['start']<part['end']<=p['frames'] or part['comp_id']!=n['master_comp_id']
+                    or not 0<=part['start']<part['end']<=p['frames'] or part['comp_id']!=comp_id
                     or part['plan_sha256']!=picture['plan_sha256']
                     or part['native_identity_sha256']!=sha256(folder/'native-identity.json')
                     or sha256(part['path'])!=part['sha256']):
@@ -413,21 +508,24 @@ def validate_cached_stage(folder,operation):
             if 'reuse' in part or part.get('new_native_render') is False:
                 from ae_production.native_parts_reuse import validate_reused_part
                 validate_reused_part(folder,part,part['path'])
-            elif not Path(part['path']).resolve().is_relative_to((folder/'native-master-parts').resolve()):
+            elif not Path(part['path']).resolve().is_relative_to((folder/('native-master-parts' if master else 'native-parts')).resolve()):
                 raise ValueError('Parent master part requires a verified reuse proof')
             cursor=part['end']
         if cursor!=p['frames']:raise ValueError('Completed master has incomplete part coverage')
-    if operation=='package-master':
-        q=read(folder/'MASTER_DELIVERY_QA.json')
+    if operation in ('package-master','package'):
+        master=operation=='package-master';q=read(folder/('MASTER_DELIVERY_QA.json' if master else 'DELIVERY_QA.json'))
         required={'plan_sha256':sha256(folder/'AV_PLAN.json'),'same_revision':p['revision'],
                   'frames':p['frames'],'voice_delivery_sha256':p['voice_delivery_sha256'],
                   'complete_copy_sha256':p['complete_copy_sha256'],'full_decode':'PASS',
-                  'formal_4k_rendered':True,'media_role':'NATIVE_4K_MASTER',
+                  'formal_4k_rendered':master,'media_role':'NATIVE_4K_MASTER' if master else 'EDITORIAL_PROXY',
                   'video_payload_and_timestamps_unchanged':True,'audio_payload_unchanged':True,
                   'public_render_ready':False}
+        rough_snapshot=not master and a.get('production_policy')=='industrial_bplus_v1'
+        native_matches=(q.get('native_project')==str((media_directory(folder)/'MAIN_FILM_ROUGH.aep').resolve())
+                        and sha256(q['native_project'])==q['native_project_sha256']) if rough_snapshot else saved_project_matches(folder,'after_effects',q['native_project_sha256'])
         if (any(q.get(k)!=v for k,v in required.items()) or sha256(q['media'])!=q['sha256']
-                or not saved_project_matches(folder,'after_effects',q['native_project_sha256'])
-                or not saved_project_matches(folder,'premiere',q['premiere_project_sha256'])):
+                or not native_matches
+                or not saved_project_matches(folder,'premiere',q['premiere_project_sha256'],master)):
             raise ValueError('Completed full media or editable project changed')
         if ([x['id'] for x in q['complete_takes']]!=[s['id'] for s in p['segments']]
                 or any(not math.isfinite(x['correlation_at_actual_start']) or x['correlation_at_actual_start']<.99 or x['complete_samples']<=0 for x in q['complete_takes'])):
@@ -461,9 +559,9 @@ def revise(folder,new_folder,decision):
 
 def main():
     parser=argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('operation',choices=('request','author','run','status','review','revise'))
+    parser.add_argument('operation',choices=('request','author','run','status','review','creative-review','revise'))
     parser.add_argument('folder',type=Path);parser.add_argument('--brief',type=Path)
-    parser.add_argument('--through',choices=STAGES,default='restore');parser.add_argument('--batch-size',type=int,default=96)
+    parser.add_argument('--through',choices=tuple(dict.fromkeys(STAGES+BPLUS_STAGES)),default='restore');parser.add_argument('--batch-size',type=int,default=96)
     parser.add_argument('--new-folder',type=Path);parser.add_argument('--decision',type=Path)
     args=parser.parse_args();folder=args.folder.resolve()
     if not production_folder_allowed(folder):raise ValueError('Keep private production in indexed repository local-data')
@@ -477,7 +575,7 @@ def main():
         target=args.new_folder.resolve()
         if not target.is_relative_to((ROOT/'local-data').resolve()):raise ValueError('Keep the new private revision in local-data')
         result=revise(folder,target,args.decision)
-    else:result=globals()[args.operation](folder)
+    else:result=globals()[args.operation.replace('-','_')](folder)
     print(json.dumps(result,ensure_ascii=False))
 
 
