@@ -14,7 +14,11 @@ function cmChallengeStructuredLayout(groups,layout,width,fontsize,lineHeight){
  var placed={},y=fontsize,regions=[],maxRight=0,previousAfter=0;
  function paragraphSpace(block,side){
   var raw=block.spacing_raw||{},lines=raw[side+"Lines"],twips=raw[side],size=block.font_size_half_points;
-  if(raw[side+"Autospacing"]==="1"||raw[side+"Autospacing"]==="true")throw Error("Resolve original automatic paragraph spacing before layout");
+  var automatic=raw[side+"Autospacing"];
+  if(automatic!==undefined){
+   var flag=String(automatic).toLowerCase();
+   if(flag!=="0"&&flag!=="false"&&flag!=="off")throw Error("Resolve original automatic paragraph spacing before layout");
+  }
   var value=0;
   if(lines!==undefined)value=Number(lines)*lineHeight/100;
   else if(twips!==undefined&&Number(twips)!==0){

@@ -109,9 +109,14 @@ var paragraphs={blocks:[{kind:'paragraph',start:0,end:1,font_size_half_points:20
  {kind:'paragraph',start:4,end:5,spacing_raw:{beforeLines:'50'}}]};
 var spaced=cmChallengeStructuredLayout(groups,paragraphs,300,17,20.4);
 if(Math.abs(spaced.positions.b.y-spaced.positions.a.y-37.4)>1e-8||Math.abs(spaced.positions.c.y-spaced.positions.b.y-30.6)>1e-8)throw Error('source paragraph spacing lost');
-paragraphs.blocks[2].spacing_raw={beforeAutospacing:'1'};var automaticRejected=false;
-try{cmChallengeStructuredLayout(groups,paragraphs,300,17,20.4);}catch(e){automaticRejected=true;}
-if(!automaticRejected)throw Error('unresolved source spacing guessed');
+var flags=['1','true','on',true,1,'unknown'];
+for(var fi=0;fi<flags.length;fi++){
+ paragraphs.blocks[2].spacing_raw={beforeAutospacing:flags[fi]};var automaticRejected=false;
+ try{cmChallengeStructuredLayout(groups,paragraphs,300,17,20.4);}catch(e){automaticRejected=true;}
+ if(!automaticRejected)throw Error('unresolved source spacing guessed: '+flags[fi]);
+}
+var offFlags=['0','false','off',false,0];
+for(var fi=0;fi<offFlags.length;fi++){paragraphs.blocks[2].spacing_raw={beforeAutospacing:offFlags[fi]};cmChallengeStructuredLayout(groups,paragraphs,300,17,20.4);}
 groups[1].width=400;var rejected=false;try{cmChallengeStructuredLayout(groups,layout,300,17,20.4);}catch(e){rejected=true;}if(!rejected)throw Error('cell overflow accepted');
 console.log(JSON.stringify(r));
 '''
