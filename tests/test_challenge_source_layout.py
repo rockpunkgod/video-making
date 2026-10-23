@@ -103,6 +103,15 @@ var layout={blocks:[{kind:'heading',start:0,end:1,alignment:'center'},
  {kind:'table',column_widths_twips:[100,200],rows:[[{start:2,end:3},{start:4,end:5}]]}]};
 var r=cmChallengeStructuredLayout(groups,layout,300,17,20.4);
 if(r.positions.a.x!==135||r.positions.b.y!==r.positions.c.y||r.positions.c.x<=r.positions.b.x||r.positions.a.y>=r.positions.b.y)throw Error('source structure lost');
+if(Math.abs(r.positions.b.y-r.positions.a.y-20.4)>1e-8)throw Error('invented paragraph gap');
+var paragraphs={blocks:[{kind:'paragraph',start:0,end:1,font_size_half_points:20,spacing_raw:{after:'100'}},
+ {kind:'paragraph',start:2,end:3,font_size_half_points:20,spacing_raw:{before:'200'}},
+ {kind:'paragraph',start:4,end:5,spacing_raw:{beforeLines:'50'}}]};
+var spaced=cmChallengeStructuredLayout(groups,paragraphs,300,17,20.4);
+if(Math.abs(spaced.positions.b.y-spaced.positions.a.y-37.4)>1e-8||Math.abs(spaced.positions.c.y-spaced.positions.b.y-30.6)>1e-8)throw Error('source paragraph spacing lost');
+paragraphs.blocks[2].spacing_raw={beforeAutospacing:'1'};var automaticRejected=false;
+try{cmChallengeStructuredLayout(groups,paragraphs,300,17,20.4);}catch(e){automaticRejected=true;}
+if(!automaticRejected)throw Error('unresolved source spacing guessed');
 groups[1].width=400;var rejected=false;try{cmChallengeStructuredLayout(groups,layout,300,17,20.4);}catch(e){rejected=true;}if(!rejected)throw Error('cell overflow accepted');
 console.log(JSON.stringify(r));
 '''

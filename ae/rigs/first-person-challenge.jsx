@@ -11,7 +11,19 @@ function cmChallengeMeasure(value,doc){
 // Layout only: keep the original paragraph and table boundaries. Measurements
 // are native font advances; no new text objects replace the reading glyphs.
 function cmChallengeStructuredLayout(groups,layout,width,fontsize,lineHeight){
- var placed={},y=fontsize,regions=[],maxRight=0;
+ var placed={},y=fontsize,regions=[],maxRight=0,previousAfter=0;
+ function paragraphSpace(block,side){
+  var raw=block.spacing_raw||{},lines=raw[side+"Lines"],twips=raw[side],size=block.font_size_half_points;
+  if(raw[side+"Autospacing"]==="1"||raw[side+"Autospacing"]==="true")throw Error("Resolve original automatic paragraph spacing before layout");
+  var value=0;
+  if(lines!==undefined)value=Number(lines)*lineHeight/100;
+  else if(twips!==undefined&&Number(twips)!==0){
+   if(typeof size!=="number"||size<=0)throw Error("Original paragraph spacing requires resolved source font size");
+   value=Number(twips)/(size*10)*fontsize;
+  }
+  if(!isFinite(value)||value<0)throw Error("Invalid original paragraph spacing");
+  return value;
+ }
  function region(cell,left,available,top,kind,row,col){
   var selected=[],i,x=0,yy=top,lines=[[]];
   if(cell.start===null)return top;
@@ -43,6 +55,7 @@ function cmChallengeStructuredLayout(groups,layout,width,fontsize,lineHeight){
  }
  for(var bi=0;bi<layout.blocks.length;bi++){var block=layout.blocks[bi];
   if(block.kind==="table"){
+   y+=previousAfter;previousAfter=0;
    var sum=0;for(var ci=0;ci<block.column_widths_twips.length;ci++)sum+=block.column_widths_twips[ci];
    for(var ri=0;ri<block.rows.length;ri++){var xx=0,bottom=y;
     for(var ci=0;ci<block.rows[ri].length;ci++){var cw=width*block.column_widths_twips[ci]/sum;
@@ -50,7 +63,13 @@ function cmChallengeStructuredLayout(groups,layout,width,fontsize,lineHeight){
     }y=bottom+lineHeight;
    }
    y+=lineHeight*.4;
-  }else{y=region(block,0,width,y,block.kind,null,null)+lineHeight*1.5;}
+  }else{
+   // A new paragraph starts on the next baseline, not after an invented blank
+   // half-line. Preserve explicitly recorded source spacing when present.
+   y+=Math.max(previousAfter,paragraphSpace(block,"before"));
+   y=region(block,0,width,y,block.kind,null,null)+lineHeight;
+   previousAfter=paragraphSpace(block,"after");
+  }
  }
  for(var i=0;i<groups.length;i++)if(!placed[groups[i].id])throw Error("Original layout omitted source glyphs: "+groups[i].id);
  var bottom=0;for(var id in placed)bottom=Math.max(bottom,placed[id].y+4);
