@@ -192,10 +192,13 @@ def original_challenge_scope(plan, native):
                 or not _close(built['article_width'], measured_width, .01)
                 or not _close(built['article_height'], measured_height, .01)):
             raise ValueError('Complete original challenge article overflows its reading column')
+        question_plane_z = built.get('question_plane_z', 0)
+        if type(question_plane_z) not in (int, float) or question_plane_z not in (0, -3):
+            raise ValueError('Unexpected original challenge question depth')
         result.append({'scene': challenge['scene'], 'world': world, 'question_id': q['question_id'],
             'start': challenge['start'], 'end': challenge['end'], 'handoff_end': challenge['handoff_end'],
             'start_frame': challenge['start_frame'], 'end_frame': challenge['end_frame'],
-            'base': base, 'sources': source_rows, 'chunks': actual,
+            'base': base, 'sources': source_rows, 'chunks': actual, 'question_plane_z': question_plane_z,
             'glyph_names': [world+'_QUESTION']+[world+'_OPTION_'+c for c in 'ABCD'],
             'proxy_glyphs': built.get('original_glyphs', []),
             'glyph_texts': [q['stem']]+[c+'   '+q['options'][c] for c in 'ABCD']})
@@ -328,7 +331,7 @@ def validate_original_challenges(plan, native, rows):
             if any(not _close(a, 100) for a in sample['chunks']):
                 raise ValueError('Original challenge must continuously fold every sense group through all authored frames')
             for index, actual in enumerate(sample['glyphs']):
-                pos = [base+(830 if index else 820), 300+(index-1)*58 if index else 192, 0]
+                pos = [base+(830 if index else 820), 300+(index-1)*58 if index else 192, s['question_plane_z']]
                 _state(actual, pos, [38]*3, 'stem/options')
         handoff = row['handoff']
         times = [s['end']+i/24 for i in range(math.ceil((s['handoff_end']-s['end'])*24))]+[s['handoff_end']]
@@ -358,7 +361,7 @@ def validate_original_challenges(plan, native, rows):
                 if not _continuous(old, now, initial, source['position']+[100]*3, limits):
                     raise ValueError('Original article handoff jumps, reverses or overshoots instead of carrying the same glyphs')
             for index, (old, now) in enumerate(zip(prior_glyphs, sample['glyphs'])):
-                initial = [base+(830 if index else 820), 300+(index-1)*58 if index else 192, 0]+[38]*3
+                initial = [base+(830 if index else 820), 300+(index-1)*58 if index else 192, s['question_plane_z']]+[38]*3
                 target = [base+(90 if index else 80), 230+(index-1)*80 if index else 95, 0]+[100]*3
                 if not _continuous(old, now, initial, target):
                     raise ValueError('Original question handoff jumps, reverses or overshoots instead of carrying the same glyphs')

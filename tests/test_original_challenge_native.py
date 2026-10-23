@@ -84,7 +84,7 @@ class OriginalChallengeNative(unittest.TestCase):
                     begin = [base+40, 132, 0]+[1700/46]*3; end = source['position']+[100]*3
                     return [a+(b-a)*progress for a, b in zip(begin, end)]+[100, 1, 0]
                 def glyph_state(index, progress=0):
-                    begin = [base+(830 if index else 820), 300+(index-1)*58 if index else 192, 0]+[38]*3
+                    begin = [base+(830 if index else 820), 300+(index-1)*58 if index else 192, s['question_plane_z']]+[38]*3
                     end = [base+(90 if index else 80), 230+(index-1)*80 if index else 95, 0]+[100]*3
                     return [a+(b-a)*progress for a, b in zip(begin, end)]+[100, 1, 0]
                 samples = [{'frame': f, 'article': [article_state(a) for a in s['sources']],
@@ -111,6 +111,18 @@ class OriginalChallengeNative(unittest.TestCase):
         self.assertEqual(result['normal_speed_review'], 'UNOBSERVED')
         self.assertEqual(result['mobile_legibility'], 'UNOBSERVED')
         self.assertEqual(result['listening_review'], 'UNOBSERVED')
+
+    def test_separate_question_plane_preserves_all_glyphs_and_continuous_return(self):
+        for row in self.n['audit']['audience_challenges']:
+            row['question_plane_z'] = -3
+        self.rows = self.model_rows()
+        self.validate()
+        self.rows[0]['samples'][0]['glyphs'][0][2] = 0
+        with self.assertRaisesRegex(ValueError, 'stem/options'):
+            self.validate()
+        self.n['audit']['audience_challenges'][0]['question_plane_z'] = -30
+        with self.assertRaisesRegex(ValueError, 'question depth'):
+            self.model_rows()
 
     def test_both_compositions_and_each_question_are_required(self):
         self.rows.pop()

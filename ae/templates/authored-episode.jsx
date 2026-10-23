@@ -243,9 +243,11 @@ if(P.audience_challenges){
   if((ch.frames!==72&&ch.frames!==120&&ch.frames!==144)||Math.round((b-a)*24)!==ch.frames||Math.abs(land-b-.8)>1e-6)throw Error("Challenge must occupy its exact authored frame count");
   var folded=cmChallengeArticle(w,ch);
   var originals=[w.stem];for(var oi=0;oi<4;oi++)originals.push(w.options["ABCD".charAt(oi)]);
+  // Separate the original question glyph plane from folded article glyphs.
+  // Advanced 3D coplanar text quads can clip stem/option prefixes.
   var glyphs=[];
   for(var oi=0;oi<originals.length;oi++){
-   var l=originals[oi],pos=tr(l,"ADBE Position"),scale=tr(l,"ADBE Scale"),origin=pos.valueAtTime(land,false),originalScale=scale.valueAtTime(land,false),small=[w.base+(oi?830:820),oi?300+(oi-1)*58:192,0];
+   var l=originals[oi],pos=tr(l,"ADBE Position"),scale=tr(l,"ADBE Scale"),origin=pos.valueAtTime(land,false),originalScale=scale.valueAtTime(land,false),small=[w.base+(oi?830:820),oi?300+(oi-1)*58:192,-3];
    hold(pos,a,small);ease(pos,b,small);ease(pos,land,origin);
    hold(scale,a,[38,38,38]);ease(scale,b,[38,38,38]);ease(scale,land,originalScale);
    glyphs.push({name:l.name,source_layer_id:l.id,exact_text:l.property("Source Text").valueAtTime(a,false).text,position:small,scale:[38,38,38]});
@@ -260,7 +262,7 @@ if(P.audience_challenges){
   var badge=overlay("CHALLENGE_PAUSE_"+ch.scene,"想先自己做？可暂停",825,143,24,410,ink,a,b);
   badge.comment=JSON.stringify({kind:"screen_only_pause_entry",question_id:w.question.question_id,start_frame:ch.start_frame,end_frame:ch.end_frame,spoken:false});
   var material=C.layer("MATERIAL_IDENTITY");if(ci===0&&material){hold(tr(material,"ADBE Opacity"),a,0);hold(tr(material,"ADBE Opacity"),land,100);}
-  audit.audience_challenges.push({scene_id:ch.scene,world:ch.world,question_id:w.question.question_id,start:a,end:b,start_frame:ch.start_frame,end_frame:ch.end_frame,frames:ch.frames,article_layers:folded.article_layers,article_chunks:folded.chunks,article_height:folded.height,article_width:folded.width,source_identity:folded.source_identity,source_layout:folded.source_layout,original_glyphs:glyphs,badge_layer:badge.name,handoff_end:land,voice_policy:"existing_complete_take_continues",normal_speed_review:"UNOBSERVED",mobile_legibility:"UNOBSERVED"});
+  audit.audience_challenges.push({scene_id:ch.scene,world:ch.world,question_id:w.question.question_id,start:a,end:b,start_frame:ch.start_frame,end_frame:ch.end_frame,frames:ch.frames,article_layers:folded.article_layers,article_chunks:folded.chunks,article_height:folded.height,article_width:folded.width,source_identity:folded.source_identity,source_layout:folded.source_layout,original_glyphs:glyphs,question_plane_z:-3,badge_layer:badge.name,handoff_end:land,voice_policy:"existing_complete_take_continues",normal_speed_review:"UNOBSERVED",mobile_legibility:"UNOBSERVED"});
  }
 }
 /* FIRST_PERSON_CHALLENGE_V1_END */
