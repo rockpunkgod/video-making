@@ -26,6 +26,10 @@ def display_identity_binding():
     return {'path': str(path), 'sha256': hashlib.sha256(path.read_bytes()).hexdigest(), 'profile': profile,
             'consumer': str(DIRECTORY / 'display-identity.js'),
             'consumer_sha256': hashlib.sha256((DIRECTORY / 'display-identity.js').read_bytes()).hexdigest(),
+            'execution_policy': {'final_dark_graphics': 'native_ae',
+                'canvas_primitive_role': 'previsualization_and_parameter_reference',
+                'handoff': 'Continuous native text/shape objects; no held-frame reset between method, CTA and brand',
+                'proof': 'Native property readback, actual AE queue output and same-version encoded media'},
             'native_status': 'Map to existing AE text/shape properties; native consumption needs actual readback',
             'historical_inputs': 'Unchanged; bind only new creative requests and explicit revisions'}
 

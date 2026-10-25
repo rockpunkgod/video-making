@@ -34,6 +34,9 @@ class DisplayIdentityTests(unittest.TestCase):
         self.assertFalse(set(item['profile']['scope']) & set(item['profile']['excluded_scope']))
         self.assertIn('original_exam_layout', item['profile']['excluded_scope'])
         self.assertIn('source_glyph', item['profile']['excluded_scope'])
+        self.assertEqual(item['execution_policy']['final_dark_graphics'], 'native_ae')
+        self.assertEqual(item['execution_policy']['canvas_primitive_role'],
+                         'previsualization_and_parameter_reference')
 
     def test_author_request_really_binds_profile_and_consumer(self):
         with tempfile.TemporaryDirectory() as temp:
