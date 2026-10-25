@@ -1,5 +1,22 @@
 # Video production handoff
 
+## 2026-10-25 Opus 参考片驱动整期制作与 Csound 音效
+
+For reference-led film production, follow
+[the reference-led workflow](docs/workflows/REFERENCE_LED_FILM_PRODUCTION.md).
+Use the actual approved Opus media as a quality reference, then independently
+stage each question's cognitive turn. Do not copy the 2500 shot's plot into every
+question or claim that filters alone constitute native motion improvement.
+New and revised SFX use Csound, not Woosh; preserve historical originals and
+rebuild replacement mixes from independently verified clean stems. Log the real
+synthesis inputs, executable/version, event clock and output hashes. Missing
+Csound is a concrete dependency, never permission to fall back silently.
+The current EP01 is user-approved as a no-narration format; missing human VO is
+not its blocker. Other episodes retain their own explicit voice policy. Later
+user-authorized Codex edits are revision-scoped exceptions to default Opus
+artistic execution, with truthful authorship. No media or sensory-review status
+is upgraded merely by this workflow documentation.
+
 Current 2026-10-23 B+ production uses the user's own recordings. Export exact
 copy plus separate per-take recording guidance; absence of recordings is
 PENDING_HUMAN_VO, never permission to synthesize a replacement. Preserve original
