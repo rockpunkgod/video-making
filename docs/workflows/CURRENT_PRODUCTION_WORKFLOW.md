@@ -1,5 +1,16 @@
 # 当前 FREE_SHOWCASE 生产入口
 
+## 2026-10-25 增量：同类暗场统一质感
+
+现有 creative_author 请求自动绑定 `creative/motion-identity/display-identity.json`
+及绘制消费者的实际 SHA。暗场标题、结论、方法回收、品牌和三连共用 Opus 标杆的
+字体、层级、留白、纹理、细线与落稳标准；具体构图仍按观众任务决定。
+原题纸面、原字、物理三维世界和字幕属于各自职责，不强制排成品牌卡片。
+作者映射到现有场景字段及 EDITORIAL_MANIFEST，原生参数和成片分别核验；
+Canvas 消费不冒称 AE 已消费，历史工程与媒体不自动迁移。
+详见 [现行视觉规范](../../creative/motion-identity/motion-identity.md) 与
+[参考片驱动制作](REFERENCE_LED_FILM_PRODUCTION.md)。
+
 ## 2026-10-25 增量：由 Opus 标杆样片扩展整期
 
 按 [参考片驱动制作](REFERENCE_LED_FILM_PRODUCTION.md) 执行：核实实际参考版本，

@@ -5,6 +5,7 @@ from pathlib import Path
 import math
 import re
 import unicodedata
+import hashlib
 
 DIRECTORY = ROOT / 'creative/motion-identity'
 CREATIVE_DIMENSIONS = ('Composition', 'Shot Variety', 'Graphic Continuity', 'Typography',
@@ -12,6 +13,21 @@ CREATIVE_DIMENSIONS = ('Composition', 'Shot Variety', 'Graphic Continuity', 'Typ
     'AI Feel', 'Sound Rhythm', 'Cinematic Flow', 'Teaching Clarity',
     'Signature recognizability', 'Method-motion fidelity', 'Brand grammar consistency',
     'Mnemonic clarity', 'Motion distinctiveness', 'Motion-to-teaching alignment')
+
+
+def display_identity_binding():
+    """Project the real display asset to authors; never rewrite historical plans."""
+    path = DIRECTORY / 'display-identity.json'
+    profile = read(path)
+    if profile.get('authority') != 'visual_metaphor_only':
+        raise ValueError('Display identity has no teaching authority')
+    if set(profile['scope']) & set(profile['excluded_scope']):
+        raise ValueError('Display identity scope overlaps protected source presentation')
+    return {'path': str(path), 'sha256': hashlib.sha256(path.read_bytes()).hexdigest(), 'profile': profile,
+            'consumer': str(DIRECTORY / 'display-identity.js'),
+            'consumer_sha256': hashlib.sha256((DIRECTORY / 'display-identity.js').read_bytes()).hexdigest(),
+            'native_status': 'Map to existing AE text/shape properties; native consumption needs actual readback',
+            'historical_inputs': 'Unchanged; bind only new creative requests and explicit revisions'}
 
 
 def registry():

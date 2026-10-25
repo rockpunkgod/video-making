@@ -1,0 +1,23 @@
+{
+  "version": "1.0.0",
+  "profile_id": "opus-dark-display-v1",
+  "authority": "visual_metaphor_only",
+  "scope": ["dark_title", "dark_judgement", "method_recall", "brand", "engagement_graphics"],
+  "excluded_scope": ["original_exam_layout", "source_glyph", "paper_world", "physical_3d_scene", "subtitle_cue"],
+  "coordinate_system": "1920x1080 logical px; origin upper left; x right, y down; multiply by output width/1920",
+  "palette": {"background": "#07080b", "primary": "#e9eef2", "secondary": "#5d6670", "structural_accent": "#7fd3ff", "bound_discrepancy": "#ff6a2b"},
+  "type": {
+    "chinese_family": "Noto Sans SC",
+    "font_file": "NotoSansSC-VF.ttf",
+    "brand": {"size_px": 72, "weight": 700, "tracking_px": 10, "x_px": 960, "baseline_y_px": 550},
+    "subtitle": {"size_px": 28, "weight": 400, "tracking_px": 6, "x_px": 960, "baseline_y_px": 620},
+    "semantic_heading": {"size_px": 64, "weight": 700, "tracking_px": 4, "x_px": 960, "baseline_y_px": 500},
+    "semantic_support": {"size_px": 32, "weight": 400, "tracking_px": 2, "x_px": 960, "baseline_y_px": 620},
+    "note": "Brand geometry matches the reference; semantic copy must fit safe area. Never stretch a source glyph or silently substitute a font."
+  },
+  "graphic": {"stroke_px": 3, "inner_stroke_px": 1.2, "line_cap": "round", "line_join": "round", "fill_opacity": 0.09, "max_settle_scale": 1.012},
+  "surface": {"vignette_alpha": 0.45, "grain_alpha": 0.03, "grain_points_per_frame": 2200, "grain_size_px": 1.5, "grain_seed_rule": "floor(local_time_seconds*24)", "scope": "generated dark display surface only, not an overlay on the whole film"},
+  "motion": {"curve": "outExpo", "curve_definition": "k>=1 ? 1 : 1-pow(2,-10*k)", "primary_reveal_ms": 500, "secondary_delay_ms": 400, "secondary_reveal_ms": 400, "settle_translation_max_px": 6, "bounce": false, "overshoot": false, "engagement_stagger_ms": 480, "hold": "authored viewer task; no universal duration"},
+  "reference": {"role": "user-selected actual Opus brand landing", "media_sha256": "8b0ac9f69ed3568b9eff440791f50e896ad0419565e8585a32d592f80ebdf5d5", "frame_range_half_open": [4025, 4068], "source_size_px": [1920, 1080], "fps": 24, "paths_are_private": true},
+  "rules": ["Use the same hierarchy and material family, not the same composition in every scene.", "Do not apply dim brand metadata contrast to necessary reading text.", "Keep original paper formatting, original fonts and source identities.", "No decorative full-screen glow, large shadows, neon or arbitrary connector meaning.", "Method names remain before use; this visual profile changes no teaching order.", "Csound is the SFX source for new or revised sounds; reuse verified music separately.", "Pixels, engineering parameters, original-speed viewing and listening are separate evidence claims."]
+}

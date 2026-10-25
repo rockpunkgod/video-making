@@ -1,5 +1,18 @@
 # Video production handoff
 
+## 2026-10-25 同类暗场统一质感
+
+New FREE_SHOWCASE display graphics use the user-selected Opus dark display
+identity in creative/motion-identity/display-identity.json. The existing author
+request binds that file and its drawing primitive by byte hash. Map applicable
+roles to existing scene parameters and EDITORIAL_MANIFEST, then verify the real
+consumer and encoded output. Dark titles, judgement cards, method recalls,
+branding and engagement graphics share typography, hierarchy, texture, line
+weight and settling. Preserve source-paper layout, source glyphs and physical
+worlds; do not impose a brand card's low contrast on essential reading. Historical
+media is unchanged. Native, encoded, original-speed and listening claims remain
+separate. See the reference-led workflow for the precise scope.
+
 ## 2026-10-25 Opus 参考片驱动整期制作与 Csound 音效
 
 For reference-led film production, follow

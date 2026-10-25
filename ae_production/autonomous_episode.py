@@ -75,13 +75,20 @@ def request_author(folder,brief):
                      'source':b['source'],'question_id':b['source_snapshot']['question_id']})
         for key in ('bundle','status'):inputs[item[key]]=sha256(item[key])
     for p in spec['style_inputs']:inputs[p]=sha256(p)
+    from creative_os.motion_identity import display_identity_binding
+    display_identity = display_identity_binding() if spec['product'] == 'FREE_SHOWCASE' else None
+    if display_identity:
+        inputs[display_identity['path']] = display_identity['sha256']
+        inputs[display_identity['consumer']] = display_identity['consumer_sha256']
     from creative_os.content_profiles import editorial_handoffs,STAGES as PROFILE_STAGES
     context=editorial_handoffs(spec['product'],{s:None for s in PROFILE_STAGES})
     return job(folder,'creative_author',{'brief':str(Path(brief).resolve()),'brief_sha':sha(spec),
         'content_profile_context':context,'audience_hook_decision':hook,
+        'display_identity':display_identity,
         'input_files':inputs,'asset_pool':pool,'required_output':
         ['author','article_chunks','editorial_manifest','authoring_notes'],
         'requirements':['Read the complete frozen articles, current workflow and source-bound projections.',
+        'Consume the bound display_identity for every applicable dark title, judgement, method recall, brand and engagement graphic. Map roles and real parameters to existing author scene fields and EDITORIAL_MANIFEST; preserve original paper, source glyphs, semantic color meaning and readability. A style hash or static sample is not native or perceptual acceptance.',
         'Actually compare eligible candidates; never solve or relabel an old frozen package.',
         'Produce AV_AUTHOR decisions consumed by the current dispatch; use one scene order and clock.',
         'Point-of-use method name; quick/brief/focus; complete candidate checks; replay follows the explicit current user policy. FIRST_PERSON_CHALLENGE uses the complete first pass without an independent slow replay.',

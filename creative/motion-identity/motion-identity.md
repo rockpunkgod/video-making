@@ -1,5 +1,29 @@
 # Swiss Cognitive Motion · v0.1
 
+## 2026-10-25 current dark display identity
+
+New FREE_SHOWCASE dark titles, judgement displays, method recalls, brand landings
+and engagement graphics use [display-identity.json](display-identity.json), derived
+from the user's selected actual Opus reference. Cold white primary type, restrained
+secondary contrast, spacious tracking, thin deliberate geometry, quiet texture and
+precise settling belong to one family. Do not restore the heavier generic Chinese
+title treatment or introduce a different font/style in each interstitial.
+
+The current author job binds the profile and its Canvas drawing primitive bytes
+as actual inputs. Existing author fields and EDITORIAL_MANIFEST map each applicable
+scene to its role, actual parameters and consumer. AE authors map the same values
+to existing native text/shape properties and verify native readback; the Canvas
+primitive is not an AE execution claim. Missing font/layout capability must be
+reported, not silently replaced. Historical inputs and media remain unchanged.
+
+This display profile supersedes older dark-card typography suggestions only in
+its stated scope. It does not recolor all teaching evidence, flatten source paper,
+alter original exam fonts, desaturate a 3D world or make readable evidence as dim
+as brand metadata. Source identity, semantic color meaning, method-before-use and
+per-question camera/space decisions remain valid. Match material and hierarchy,
+not one repeated composition. Inspect actual encoded sequences; a profile hash
+or static frame never grants motion, listening or human acceptance.
+
 This is a visual mnemonic registry, not an ANSWER teaching registry. It supplies
 metaphors, movement phases, effects and memory phrases. Triggers, conclusions,
 candidate exclusions, evidence and Stop Rules always come from the frozen package.
