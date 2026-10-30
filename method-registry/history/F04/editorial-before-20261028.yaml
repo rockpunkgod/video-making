@@ -1,0 +1,133 @@
+method_id: F04
+brand_name: 时间分组
+source_name: 时态一致
+aliases:
+- 时态一致
+question_type: 七选五
+method_type: sub_action
+role: reducer
+primary_role: reducer
+secondary_roles: []
+output_type: reduce
+student_symptoms:
+- 选项存在真实时间差异
+trigger_cues:
+- 候选的真谓语或实际时间关系有可观察分组差异。
+core_action: 开头圈真谓语与时间词并说字母组，回文确认局部事件阶段，再在同组比主体、动作、指代、评价与两侧内容。
+decision_rule: 只产出当前时间相关候选；时间状语可作回查阶段的线索，不能以同组时间直接定案。
+verification: 只产出当前时间相关候选；时间状语可作回查阶段的线索，不能以同组时间直接定案。 非谓语词尾不分时态；无差异停止该维筛选；经历与感悟可切换，初筛错误可更正但不重演；不只比较异组后就选。
+stop_rule: 非谓语词尾不分时态；无差异停止该维筛选；经历与感悟可切换，初筛错误可更正但不重演；不只比较异组后就选。
+common_wrong_instinct: 看见-ed就分进过去组，或认定全篇所有空都应同一时态。
+failure_cases:
+- 看见-ed就分进过去组，或认定全篇所有空都应同一时态。
+- 非谓语词尾不分时态；无差异停止该维筛选；经历与感悟可切换，初筛错误可更正但不重演；不只比较异组后就选。
+counterexamples:
+- 选项中-ed形式是分词修饰，不承担句子时态；不能据其词尾排除当前事件的候选。
+transfer_pattern: 陌生题仍找真谓语与局部事件时间，不迁移表面词尾或整篇统一时态的假设。
+memory_line: 开头圈真谓语与时间词并说字母组，回文确认局部事件阶段，再在同组比主体、动作、指代、评价与两侧内容。
+anti_rule: 词尾-ed ≠ 谓语过去时。
+visual_formula: '真谓语 + 时间线索 → 字母时间组
+
+  回正文：当前事件阶段
+
+  → 优先候选（reduce）
+
+  分词词尾不分时态；同组核内容'
+challenge_prompt: 先不填，圈每项真正承担时态的谓语；不是谓语的-ed或-ing划开，再按实际事件时间落字母组。
+source_references:
+- repository: https://github.com/rockpunkgod/ANSWER.git
+  path: gaokao-english/references/seven-five.md
+  heading: 时态一致
+  commit: 1c388a0596b13935ae7c6a1af00834915a8efa33
+section_ids:
+- 94c1255b4334ece4
+can_follow: []
+usually_before: []
+usually_after: []
+conflicts_with: []
+cannot_replace:
+- 完整题面验证
+levels:
+  L1: 标每项谓语及时间词，按真实事件时间分组，不用分词词尾代替时态
+  L2: 只用真实谓语或明确时间线形成暂定字母组，回正文核当前事件阶段；同组继续比主体、动作、指代和两侧内容，不能以时态定案。
+  L3: 非谓语词尾不能分时态；没有真实时间差异就停筛。正文有经历、常态或感悟切换时按局部时间核，不强求全篇表面一致，也不重复三分。
+  L4: 陌生题仍找真谓语与局部事件时间，不迁移表面词尾或整篇统一时态的假设。
+compact:
+  line: 开头圈真谓语与时间词并说字母组，回文确认局部事件阶段，再在同组比主体、动作、指代、评价与两侧内容。
+  boundary: 非谓语词尾不分时态；无差异停止该维筛选；经历与感悟可切换，初筛错误可更正但不重演；不只比较异组后就选。
+  10s: 开头圈真谓语与时间词并说字母组，回文确认局部事件阶段，再在同组比主体、动作、指代、评价与两侧内容。 只产出当前时间相关候选；时间状语可作回查阶段的线索，不能以同组时间直接定案。
+  30s: 候选的真谓语或实际时间关系有可观察分组差异。 开头圈真谓语与时间词并说字母组，回文确认局部事件阶段，再在同组比主体、动作、指代、评价与两侧内容。 非谓语词尾不分时态；无差异停止该维筛选；经历与感悟可切换，初筛错误可更正但不重演；不只比较异组后就选。
+  90s: 候选的真谓语或实际时间关系有可观察分组差异。 手上先做：开头圈真谓语与时间词并说字母组，回文确认局部事件阶段，再在同组比主体、动作、指代、评价与两侧内容。
+    做完得到：只产出当前时间相关候选；时间状语可作回查阶段的线索，不能以同组时间直接定案。 停止：非谓语词尾不分时态；无差异停止该维筛选；经历与感悟可切换，初筛错误可更正但不重演；不只比较异组后就选。
+    反例（边界示意，非真题）：选项中-ed形式是分词修饰，不承担句子时态；不能据其词尾排除当前事件的候选。 挑战：先不填，圈每项真正承担时态的谓语；不是谓语的-ed或-ing划开，再按实际事件时间落字母组。
+full:
+  summary: 开头圈真谓语与时间词并说字母组，回文确认局部事件阶段，再在同组比主体、动作、指代、评价与两侧内容。 只产出当前时间相关候选；时间状语可作回查阶段的线索，不能以同组时间直接定案。
+  source_boundary: 非谓语词尾不分时态；无差异停止该维筛选；经历与感悟可切换，初筛错误可更正但不重演；不只比较异组后就选。
+  boundaries:
+  - 非谓语词尾不分时态；无差异停止该维筛选；经历与感悟可切换，初筛错误可更正但不重演；不只比较异组后就选。
+  - 选项中-ed形式是分词修饰，不承担句子时态；不能据其词尾排除当前事件的候选。
+  section_ids:
+  - 94c1255b4334ece4
+cases:
+  canonical: cases/seven-five/F04/canonical/case.yaml
+four_step_card:
+  start: 候选的真谓语或实际时间关系有可观察分组差异。
+  first_cut: 开头圈真谓语与时间词并说字母组，回文确认局部事件阶段，再在同组比主体、动作、指代、评价与两侧内容。
+  judge: 只产出当前时间相关候选；时间状语可作回查阶段的线索，不能以同组时间直接定案。
+  stop: 非谓语词尾不分时态；无差异停止该维筛选；经历与感悟可切换，初筛错误可更正但不重演；不只比较异组后就选。
+practicality_gate:
+  status: design_complete_empirical_pending
+  trigger: 候选的真谓语或实际时间关系有可观察分组差异。
+  action: 开头圈真谓语与时间词并说字母组，回文确认局部事件阶段，再在同组比主体、动作、指代、评价与两侧内容。
+  output: reduce；只产出当前时间相关候选；时间状语可作回查阶段的线索，不能以同组时间直接定案。
+  stop: 非谓语词尾不分时态；无差异停止该维筛选；经历与感悟可切换，初筛错误可更正但不重演；不只比较异组后就选。
+  transfer: 陌生题仍找真谓语与局部事件时间，不迁移表面词尾或整篇统一时态的假设。
+  efficiency: 真实阶段有区别时减少无效试填；避免逐空重分和假时态分组，效率未测。
+  misuse_cost: 未经实测；看见-ed就分进过去组，或认定全篇所有空都应同一时态。会导致误判；须先核触发、执行Stop，不允许辅助产物越级定案。
+first_use_test:
+  status: designed_not_run
+  trigger_success: null
+  action_success: null
+  evidence_success: null
+  stop_rule_success: null
+  no_answer_backfit: null
+  failure_type: null
+  final_result: pending_real_student_test
+evaluation:
+  baseline: 普通逐项核题面
+  primary_benefit_hypothesis: 真实阶段有区别时减少无效试填；避免逐空重分和假时态分组，效率未测。
+  trigger_precision: null
+  trigger_recall: null
+  resolution_rate: null
+  standalone_rate: null
+  assist_rate: null
+  false_trigger_rate: null
+  transfer_rate: null
+  boundary_accuracy: null
+  time_complexity_gain: null
+usefulness_level: Useful
+status: candidate
+maturity_status: candidate
+practical_value: Useful
+version: 1.2.0
+change_reason: ANSWER 1c388a0596b13935ae7c6a1af00834915a8efa33 增量来源同步；保留既有动作与版本，旧证据不自动获得新来源准入。
+affected_cases:
+- cases/seven-five/F04/canonical/case.yaml
+regression_result: pending_current_epoch_semantic_and_student_acceptance
+student_ready: false
+entry_copy: 候选的真谓语或实际时间关系有可观察分组差异。 手上先做：开头圈真谓语与时间词并说字母组，回文确认局部事件阶段，再在同组比主体、动作、指代、评价与两侧内容。
+  做完得到：只产出当前时间相关候选；时间状语可作回查阶段的线索，不能以同组时间直接定案。 停止：非谓语词尾不分时态；无差异停止该维筛选；经历与感悟可切换，初筛错误可更正但不重演；不只比较异组后就选。
+static_design_review:
+  status: source_rebound_semantic_reacceptance_pending
+  source_section_ids:
+  - 94c1255b4334ece4
+  participant_validation: pending_real_participant_validation
+  example_scope: schematic source boundary, not a verified exam
+source_alignment:
+  commit: 1c388a0596b13935ae7c6a1af00834915a8efa33
+  state: live_source_bound
+  source_content_changed: false
+  correction_profile_applied: true
+  authored_first_contact_draft: false
+  new_course_branches: preserved_in_full_contract_not_automatically_aliased
+  acceptance: unchanged_method_sections; added_source_contracts_preserved; learner/release_pending

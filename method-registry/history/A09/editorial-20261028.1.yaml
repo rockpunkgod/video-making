@@ -1,0 +1,139 @@
+method_id: A09
+brand_name: 应用文评分
+source_name: 15 分评分规范
+aliases:
+- 15 分评分规范
+question_type: 应用文
+method_type: internal_rule
+role: verifier
+primary_role: verifier
+secondary_roles: []
+output_type: verify
+student_symptoms:
+- 题目与学生全文可见且请求批改
+trigger_cues:
+- 题目与学生全文可见且请求批改
+core_action: 先按15分五档三维定档，逐条引用题面和原稿证据，缺材料不完整给分
+decision_rule: 只在题目、全文与相关可见材料充分时，引用内容组织、词汇语法、篇章结构证据先定15分档，再档内定分；词数附加按源规范处理，不机械累计方法扣分。
+verification: 先按15分五档三维定档，逐条引用题面和原稿证据，缺材料不完整给分。只在题目、全文与相关可见材料充分时，引用内容组织、词汇语法、篇章结构证据先定15分档，再档内定分；词数附加按源规范处理，不机械累计方法扣分。
+  无题目或缺全文不给完整分数；仅转写文本不评书写。书写只有清晰原稿且确实影响交际才按源规范降档，不因美观降档；训练模板、五检和高级词不是独立扣分项。
+stop_rule: 无题目或缺全文不给完整分数；仅转写文本不评书写。书写只有清晰原稿且确实影响交际才按源规范降档，不因美观降档；训练模板、五检和高级词不是独立扣分项。
+common_wrong_instinct: 拿语法错的个数或字体好看程度直接累计作文分数。
+failure_cases:
+- 拿语法错的个数或字体好看程度直接累计作文分数。
+- 无题目或缺全文不给完整分数；仅转写文本不评书写。书写只有清晰原稿且确实影响交际才按源规范降档，不因美观降档；训练模板、五检和高级词不是独立扣分项。
+counterexamples:
+- 转写稿能读清不代表原书写影响交际；反过来只有字体不漂亮也不能降档。没有题目时无法证明任务覆盖。此为条件示意，不是真题。
+transfer_pattern: 每篇稿都先核材料再三维定档，具体分数只依该篇全文证据和对应15分规范。
+memory_line: 先按15分五档三维定档，逐条引用题面和原稿证据，缺材料不完整给分
+anti_rule: 诊断项目 ≠ 独立扣分项。
+visual_formula: '题目 + 全文 → 三维证据
+
+  → 先定15分档 → 档内分数
+
+  词数按规范 / 书写须原稿影响交际'
+challenge_prompt: 先不报分，列出能看到和缺少的评分材料，再给内容、语言、结构各找一条原稿依据。
+source_references:
+- repository: https://github.com/rockpunkgod/ANSWER.git
+  path: gaokao-writing/references/application-writing-and-correction.md
+  heading: 15 分评分规范
+  commit: 1c388a0596b13935ae7c6a1af00834915a8efa33
+section_ids: &id001
+- 254fa3adfb42db4e
+- f8cfb194a81aad6e
+- ed19bd45d6bc3762
+can_follow: []
+usually_before: []
+usually_after: []
+conflicts_with: []
+cannot_replace:
+- 完整题面验证
+levels:
+  L1: 先按15分五档三维定档，逐条引用题面和原稿证据，缺材料不完整给分
+  L2: 只在题目、全文与相关可见材料充分时，引用内容组织、词汇语法、篇章结构证据先定15分档，再档内定分；词数附加按源规范处理，不机械累计方法扣分。
+  L3: 无题目或缺全文不给完整分数；仅转写文本不评书写。书写只有清晰原稿且确实影响交际才按源规范降档，不因美观降档；训练模板、五检和高级词不是独立扣分项。
+  L4: 每篇稿都先核材料再三维定档，具体分数只依该篇全文证据和对应15分规范。
+compact:
+  10s: 想给作文打分？先核题目和全文，再按内容语言结构定档；不按错误数或字体美观算分。
+  30s: 想给作文打分？先确认题目和全文是否齐；没材料不作完整评分，学生先自查任务覆盖。例如，只有转写文本时，不能判断原书写是否影响交际。缺题目或全文不给完整分，限对应15分规范。
+  90s: 想给作文打分？先按15分五档三维定档，逐条引用题面和原稿证据，缺材料不完整给分这一步得到的只是核验已有候选或稿件，不替代独立证据。判断时，只在题目、全文与相关可见材料充分时，引用内容组织、词汇语法、篇章结构证据先定15分档，再档内定分；词数附加按源规范处理，不机械累计方法扣分。什么时候停，无题目或缺全文不给完整分数；仅转写文本不评书写。书写只有清晰原稿且确实影响交际才按源规范降档，不因美观降档；训练模板、五检和高级词不是独立扣分项。反例示意，转写稿能读清不代表原书写影响交际；反过来只有字体不漂亮也不能降档。没有题目时无法证明任务覆盖。此为条件示意，不是真题。换题仍检查当前题面的对象和关系，不搬上一题结论。挑战，先不报分，列出能看到和缺少的评分材料，再给内容、语言、结构各找一条原稿依据。
+full:
+  summary: 先按15分五档三维定档，逐条引用题面和原稿证据，缺材料不完整给分 只在题目、全文与相关可见材料充分时，引用内容组织、词汇语法、篇章结构证据先定15分档，再档内定分；词数附加按源规范处理，不机械累计方法扣分。
+  source_boundary: 无题目或缺全文不给完整分数；仅转写文本不评书写。书写只有清晰原稿且确实影响交际才按源规范降档，不因美观降档；训练模板、五检和高级词不是独立扣分项。
+  boundaries:
+  - 无题目或缺全文不给完整分数；仅转写文本不评书写。书写只有清晰原稿且确实影响交际才按源规范降档，不因美观降档；训练模板、五检和高级词不是独立扣分项。
+  - 转写稿能读清不代表原书写影响交际；反过来只有字体不漂亮也不能降档。没有题目时无法证明任务覆盖。此为条件示意，不是真题。
+  section_ids:
+  - 254fa3adfb42db4e
+  - f8cfb194a81aad6e
+  - ed19bd45d6bc3762
+  beginner_support:
+    first_micro_action: 先确认题目和全文是否齐；没材料不作完整评分，学生先自查任务覆盖。
+    prerequisite: 先读清写给谁、要完成哪件事。基础句先做到谁、做什么或是什么清楚；准确简单句可以保留。
+    if_stuck: 保留准确简单句和已覆盖要点；不强加复杂句、AI或高级词，不据训练配额扣分。
+    example: 只有转写文本时，不能判断原书写是否影响交际。
+    example_scope: 关系/结构示意，非完整试题，不计真题或已验案例。
+    micro_action_is_not_completion: 完成第一小步不等于完整方法成功；继续完成四步卡的判断与停止核验。
+    short_stop: 缺题目或全文不给完整分，限对应15分规范。
+  presentation_revision: 2026-10-28.1
+cases:
+  canonical: cases/application-writing/A09/canonical/case.yaml
+four_step_card:
+  start: 题目与学生全文可见且请求批改
+  first_cut: 先按15分五档三维定档，逐条引用题面和原稿证据，缺材料不完整给分
+  judge: 只在题目、全文与相关可见材料充分时，引用内容组织、词汇语法、篇章结构证据先定15分档，再档内定分；词数附加按源规范处理，不机械累计方法扣分。
+  stop: 无题目或缺全文不给完整分数；仅转写文本不评书写。书写只有清晰原稿且确实影响交际才按源规范降档，不因美观降档；训练模板、五检和高级词不是独立扣分项。
+practicality_gate:
+  status: design_complete_empirical_pending
+  trigger: 题目与学生全文可见且请求批改
+  action: 先按15分五档三维定档，逐条引用题面和原稿证据，缺材料不完整给分
+  output: verify；只在题目、全文与相关可见材料充分时，引用内容组织、词汇语法、篇章结构证据先定15分档，再档内定分；词数附加按源规范处理，不机械累计方法扣分。
+  stop: 无题目或缺全文不给完整分数；仅转写文本不评书写。书写只有清晰原稿且确实影响交际才按源规范降档，不因美观降档；训练模板、五检和高级词不是独立扣分项。
+  transfer: 每篇稿都先核材料再三维定档，具体分数只依该篇全文证据和对应15分规范。
+  efficiency: 提高评分依据可追溯性与材料边界，价值不是自动提速；无独立评分一致性数据。
+  misuse_cost: 未经实测；拿语法错的个数或字体好看程度直接累计作文分数。会导致误判；须先核触发、执行Stop，不允许辅助产物越级定案。
+first_use_test:
+  status: designed_not_run
+  trigger_success: null
+  action_success: null
+  evidence_success: null
+  stop_rule_success: null
+  no_answer_backfit: null
+  failure_type: null
+  final_result: pending_real_student_test
+evaluation:
+  baseline: 普通逐项核题面
+  primary_benefit_hypothesis: 提高评分依据可追溯性与材料边界，价值不是自动提速；无独立评分一致性数据。
+  trigger_precision: null
+  trigger_recall: null
+  resolution_rate: null
+  standalone_rate: null
+  assist_rate: null
+  false_trigger_rate: null
+  transfer_rate: null
+  boundary_accuracy: null
+  time_complexity_gain: null
+usefulness_level: Useful
+status: candidate
+maturity_status: candidate
+practical_value: Useful
+version: 1.2.0
+change_reason: ANSWER 1c388a0596b13935ae7c6a1af00834915a8efa33 增量来源同步；保留既有动作与版本，旧证据不自动获得新来源准入。
+affected_cases:
+- cases/application-writing/A09/canonical/case.yaml
+regression_result: pending_current_epoch_semantic_and_student_acceptance
+student_ready: false
+entry_copy: 想给作文打分？先确认题目和全文是否齐；没材料不作完整评分，学生先自查任务覆盖。这一步得到的只是核验已有候选或稿件，不替代独立证据。如果卡住，保留准确简单句和已覆盖要点；不强加复杂句、AI或高级词，不据训练配额扣分。
+static_design_review:
+  status: source_bound_editorial_review
+  source_section_ids: *id001
+  participant_validation: pending_real_participant_validation
+  example_scope: 2026-10-28基础入口表达修订；保留原判据/Stop/课程绑定与语义版本，微动作和关系示意不是完整真题或真人实测。
+source_alignment:
+  commit: 1c388a0596b13935ae7c6a1af00834915a8efa33
+  state: live_source_bound
+  source_content_changed: false
+  correction_profile_applied: false
+  authored_first_contact_draft: true
+  new_course_branches: preserved_in_full_contract_not_automatically_aliased
+  acceptance: unchanged_method_sections; added_source_contracts_preserved; learner/release_pending

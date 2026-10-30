@@ -1,0 +1,133 @@
+method_id: G18
+brand_name: 考点重复反查
+source_name: 总路线
+aliases:
+- 总路线
+question_type: 语法填空
+method_type: verification_rule
+role: verifier
+primary_role: verifier
+secondary_roles: []
+output_type: verify
+student_symptoms:
+- 整篇完成后核对考点分布
+trigger_cues:
+- 整篇完成后核对考点分布
+core_action: 列每空实际考点，发现重复只触发回查，不能推翻该空独立句法语义证据
+decision_rule: 整篇完成后列每空实际考点，疑似重复只触发返回各空核独立句法、语义和搭配；输出复查信号，不推翻已充分支持的答案。
+verification: 列每空实际考点，发现重复只触发回查，不能推翻该空独立句法语义证据。整篇完成后列每空实际考点，疑似重复只触发返回各空核独立句法、语义和搭配；输出复查信号，不推翻已充分支持的答案。
+  一般不重复不是禁止重复；未核当前空独立证据前不得改词，不能为了凑分布把两个已成立结构拆成不同考点。
+stop_rule: 一般不重复不是禁止重复；未核当前空独立证据前不得改词，不能为了凑分布把两个已成立结构拆成不同考点。
+common_wrong_instinct: 认为某考点已经用过，所以另一空即使有证据也一定不能同考点。
+failure_cases:
+- 认为某考点已经用过，所以另一空即使有证据也一定不能同考点。
+- 一般不重复不是禁止重复；未核当前空独立证据前不得改词，不能为了凑分布把两个已成立结构拆成不同考点。
+counterexamples:
+- 两个空的独立结构均支持相同考点；分布经验不能凭空否定其中一个。
+transfer_pattern: 换语篇仍让分布提示服从每空独立证据，不迁移考点只能出现一次的约束。
+memory_line: 列每空实际考点，发现重复只触发回查，不能推翻该空独立句法语义证据
+anti_rule: 考点重复 ≠ 答案错误。
+visual_formula: '全篇每空实际考点 → 有重复？
+
+  有 → 返回各空核独立证据
+
+  无 → 继续其他核验
+
+  产物：复查信号（verify），不是改答案'
+challenge_prompt: 不改任何词，只给全篇各空写实际考点，圈疑似重复，并指定要回查的独立结构证据。
+source_references:
+- repository: https://github.com/rockpunkgod/ANSWER.git
+  path: gaokao-grammar-fill/references/grammar-fill.md
+  heading: 总路线
+  commit: 1c388a0596b13935ae7c6a1af00834915a8efa33
+section_ids:
+- 781c4478d621bf5c
+can_follow: []
+usually_before: []
+usually_after: []
+conflicts_with: []
+cannot_replace:
+- 完整题面验证
+levels:
+  L1: 列每空实际考点，发现重复只触发回查，不能推翻该空独立句法语义证据
+  L2: 整篇完成后列每空实际考点，疑似重复只触发返回各空核独立句法、语义和搭配；输出复查信号，不推翻已充分支持的答案。
+  L3: 一般不重复不是禁止重复；未核当前空独立证据前不得改词，不能为了凑分布把两个已成立结构拆成不同考点。
+  L4: 换语篇仍让分布提示服从每空独立证据，不迁移考点只能出现一次的约束。
+compact:
+  10s: 做完发现考点重复？只圈出来返回各空查证据；一般不重复不等于禁止重复，别为分布改答案。
+  30s: 全篇完成后，列各空实际考点，遇重复只作纠偏提示。边界示意：两个空都被独立结构支持时，不能为凑分布改其中一个。返回本句核句法语义与搭配；本步只核验，不凭已用考点报答案。
+  90s: 整篇完成后核对考点分布时，先确认：整篇完成后核对考点分布。第一刀：列每空实际考点，发现重复只触发回查，不能推翻该空独立句法语义证据。产物 verify：整篇完成后列每空实际考点，疑似重复只触发返回各空核独立句法、语义和搭配；输出复查信号，不推翻已充分支持的答案。
+    停止：一般不重复不是禁止重复；未核当前空独立证据前不得改词，不能为了凑分布把两个已成立结构拆成不同考点。 反例（关系示意，不是真题）：两个空的独立结构均支持相同考点；分布经验不能凭空否定其中一个。
+    迁移：换语篇仍让分布提示服从每空独立证据，不迁移考点只能出现一次的约束。 挑战：不改任何词，只给全篇各空写实际考点，圈疑似重复，并指定要回查的独立结构证据。
+full:
+  summary: 列每空实际考点，发现重复只触发回查，不能推翻该空独立句法语义证据 整篇完成后列每空实际考点，疑似重复只触发返回各空核独立句法、语义和搭配；输出复查信号，不推翻已充分支持的答案。
+  source_boundary: 一般不重复不是禁止重复；未核当前空独立证据前不得改词，不能为了凑分布把两个已成立结构拆成不同考点。
+  boundaries:
+  - 一般不重复不是禁止重复；未核当前空独立证据前不得改词，不能为了凑分布把两个已成立结构拆成不同考点。
+  - 两个空的独立结构均支持相同考点；分布经验不能凭空否定其中一个。
+  section_ids:
+  - 781c4478d621bf5c
+cases:
+  canonical: cases/grammar/G18/canonical/case.yaml
+four_step_card:
+  start: 整篇完成后核对考点分布
+  first_cut: 列每空实际考点，发现重复只触发回查，不能推翻该空独立句法语义证据
+  judge: 整篇完成后列每空实际考点，疑似重复只触发返回各空核独立句法、语义和搭配；输出复查信号，不推翻已充分支持的答案。
+  stop: 一般不重复不是禁止重复；未核当前空独立证据前不得改词，不能为了凑分布把两个已成立结构拆成不同考点。
+practicality_gate:
+  status: design_complete_empirical_pending
+  trigger: 整篇完成后核对考点分布
+  action: 列每空实际考点，发现重复只触发回查，不能推翻该空独立句法语义证据
+  output: verify；整篇完成后列每空实际考点，疑似重复只触发返回各空核独立句法、语义和搭配；输出复查信号，不推翻已充分支持的答案。
+  stop: 一般不重复不是禁止重复；未核当前空独立证据前不得改词，不能为了凑分布把两个已成立结构拆成不同考点。
+  transfer: 换语篇仍让分布提示服从每空独立证据，不迁移考点只能出现一次的约束。
+  efficiency: 提供低成本复查提示，可能发现分类错位；价值是纠偏，准确率和提速未测。
+  misuse_cost: 未经实测；认为某考点已经用过，所以另一空即使有证据也一定不能同考点。会导致误判；须先核触发、执行Stop，不允许辅助产物越级定案。
+first_use_test:
+  status: designed_not_run
+  trigger_success: null
+  action_success: null
+  evidence_success: null
+  stop_rule_success: null
+  no_answer_backfit: null
+  failure_type: null
+  final_result: pending_real_student_test
+evaluation:
+  baseline: 普通逐项核题面
+  primary_benefit_hypothesis: 提供低成本复查提示，可能发现分类错位；价值是纠偏，准确率和提速未测。
+  trigger_precision: null
+  trigger_recall: null
+  resolution_rate: null
+  standalone_rate: null
+  assist_rate: null
+  false_trigger_rate: null
+  transfer_rate: null
+  boundary_accuracy: null
+  time_complexity_gain: null
+usefulness_level: Useful
+status: candidate
+maturity_status: candidate
+practical_value: Useful
+version: 1.2.0
+change_reason: ANSWER 1c388a0596b13935ae7c6a1af00834915a8efa33 增量来源同步；保留既有动作与版本，旧证据不自动获得新来源准入。
+affected_cases:
+- cases/grammar/G18/canonical/case.yaml
+regression_result: pending_current_epoch_semantic_and_student_acceptance
+student_ready: false
+entry_copy: 整篇完成后核对考点分布时，第一眼先找：整篇完成后核对考点分布。手上先做：列每空实际考点，发现重复只触发回查，不能推翻该空独立句法语义证据。做完得到
+  verify，不是通用答案。整篇完成后列每空实际考点，疑似重复只触发返回各空核独立句法、语义和搭配；输出复查信号，不推翻已充分支持的答案。 什么时候停：一般不重复不是禁止重复；未核当前空独立证据前不得改词，不能为了凑分布把两个已成立结构拆成不同考点。
+  换题仍这样做：换语篇仍让分布提示服从每空独立证据，不迁移考点只能出现一次的约束。
+static_design_review:
+  status: source_rebound_semantic_reacceptance_pending
+  source_section_ids:
+  - 781c4478d621bf5c
+  participant_validation: pending_real_participant_validation
+  example_scope: schematic source boundary, not a verified exam
+source_alignment:
+  commit: 1c388a0596b13935ae7c6a1af00834915a8efa33
+  state: live_source_bound
+  source_content_changed: false
+  correction_profile_applied: false
+  authored_first_contact_draft: false
+  new_course_branches: preserved_in_full_contract_not_automatically_aliased
+  acceptance: unchanged_method_sections; added_source_contracts_preserved; learner/release_pending

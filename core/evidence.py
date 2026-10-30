@@ -32,7 +32,9 @@ def validate_graph(graph, question=None):
             candidates = sorted(set(question.get('options',{}))
                                 | {r['candidate'] for r in question.get('relations',[])})
             if (root['material_sha256'] != material_fingerprint(question)
-                    or root.get('candidate_ids',[]) != candidates):
+                    or root.get('candidate_ids',[]) != candidates
+                    or ('required_image_evidence' in root)!=('required_image_evidence' in question)
+                    or root.get('required_image_evidence')!=question.get('required_image_evidence')):
                 raise ValueError('Question signal scope differs from original material/candidates')
     adjacency = {i:[] for i in nodes}
     incoming = {i:[] for i in nodes}

@@ -8,6 +8,8 @@ import re
 from .evidence import check_span
 from .execution import covered_by
 from .question_verification import validate_question_verification_projection
+from video_contracts.answer_consistency import artifact_fingerprint
+from video_contracts.objective_images import segment_image_ids, validate_image_lesson
 
 TYPES={'阅读理解','七选五','完形填空','语法填空'}
 DELIVERY_PATH='gaokao-english/references/delivery-contract.md'
@@ -72,27 +74,41 @@ def lesson_feedback(question,analysis,registry,graph,trigger_nodes,relation_node
     review=deepcopy(supplied); source_ids=review['source_section_ids']
     check_lesson_sources(question['question_type'],source_ids,registry)
     matched={x['method_id'] for x in analysis['method_matches']}; used=set(); actions=set(); evidenced=set(); compared=set(); stopped=set(); ids=set(); evidence_ids=[]; bindings=[]
+    visual_candidates={c['candidate'] for c in analysis.get('question_verification',{}).get('review',{}).get('candidate_checks',[]) if c.get('image_evidence')}
+    image_compared=set()
+    spoken_image_edges=set()
     for segment in review['segments']:
         sid=segment['segment_id']; function=segment['function']
         if sid in ids: raise ValueError('Duplicate spoken segment id')
         ids.add(sid)
         if segment.get('segment_scope')=='whole_question':
-            if review['schema_version']!='1.1.0':
-                raise ValueError('Whole-question spoken segments require lesson-review 1.1.0')
+            if review['schema_version'] not in {'1.1.0','1.2.0'}:
+                raise ValueError('Whole-question spoken segments require lesson-review 1.1.0 or 1.2.0')
             spans=[check_span(question,s) for s in segment['evidence']]
             check_spoken_text(segment['text'],spans)
             targets=terminal_targets(segment,analysis,actions)
+            image_ids=[]
+            if review['review_status']=='reviewed':
+                if set(segment['candidate_ids']) & visual_candidates and review['schema_version']!='1.2.0':
+                    raise ValueError('Image-dependent spoken comparisons require lesson-review 1.2.0')
+                image_ids=segment_image_ids(segment,analysis)
+                image_compared.update(set(segment['candidate_ids']) & visual_candidates)
             compared.update(segment['candidate_ids'])
             if review['review_status']=='reviewed':
                 claim=graph.node('candidate_claim',segment['text'],candidate='spoken_segment:'+sid)
-                relation=graph.node('relation','整题候选口播记录',review_id=segment['terminal_review_id'],reviewed=True)
+                extra={'artifact_fingerprint':artifact_fingerprint(segment)} if review['schema_version']=='1.2.0' else {}
+                relation=graph.node('relation','整题候选口播记录',review_id=segment['terminal_review_id'],reviewed=True,**extra)
                 graph.edge(claim,relation,'supports')
                 for target in targets: graph.edge(target,relation,'supports')
+                for nid in image_ids:
+                    graph.edge(nid,relation,'supports')
+                    spoken_image_edges.add((nid,relation))
                 own_ids=[]
                 for s in spans:
                     nid=graph.node('source_evidence',s['quote'],span=s)
                     evidence_ids.append(nid); own_ids.append(nid); graph.edge(nid,relation,'supports')
                 bindings.append({'segment_id':sid,'claim_node_id':claim,'relation_node_id':relation,'evidence_ids':own_ids})
+                if review['schema_version']=='1.2.0': bindings[-1]['image_evidence_ids']=image_ids
             continue
         mid=segment['method_id']
         if mid not in matched or mid not in {x['method_id'] for x in analysis['method_chain']}:
@@ -128,7 +144,8 @@ def lesson_feedback(question,analysis,registry,graph,trigger_nodes,relation_node
         if review['review_status']=='reviewed':
             if not trigger_nodes.get(mid): raise ValueError('Spoken lesson requires independently reviewed method triggers')
             claim=graph.node('candidate_claim',segment['text'],candidate='spoken_segment:'+sid)
-            relation=graph.node('relation','外部单题口播记录',method_id=mid,reviewed=True)
+            extra={'artifact_fingerprint':artifact_fingerprint(segment)} if review['schema_version']=='1.2.0' else {}
+            relation=graph.node('relation','外部单题口播记录',method_id=mid,reviewed=True,**extra)
             graph.edge(claim,relation,'supports')
             own_ids=[]
             for signal in trigger_nodes[mid]: graph.edge(signal,relation,'supports')
@@ -137,7 +154,8 @@ def lesson_feedback(question,analysis,registry,graph,trigger_nodes,relation_node
             for index in refs: graph.edge(relation_nodes[index],relation,'supports')
             bindings.append({'segment_id':sid,'claim_node_id':claim,'relation_node_id':relation,'evidence_ids':own_ids})
     complete=bool(analysis['answer_verification']['closed'] and used and used<=actions and used<=evidenced and used<=stopped
-                  and set(analysis['answer_verification']['retained_candidates']+analysis['answer_verification']['eliminated_candidates'])<=compared)
+                  and set(analysis['answer_verification']['retained_candidates']+analysis['answer_verification']['eliminated_candidates'])<=compared
+                  and visual_candidates<=image_compared)
     grouping_ids=[]
     if question['question_type']=='七选五':
         partitions=[x for x in analysis['execution_trace'] if x['state']=='produced' and x['method_id']=='F01' and x['output']['kind']=='candidate_partition']
@@ -151,6 +169,8 @@ def lesson_feedback(question,analysis,registry,graph,trigger_nodes,relation_node
     scope='unreviewed' if review['review_status']!='reviewed' else 'single_question_lesson' if complete else 'partial_delivery'
     limitations=['单题口播为外部审阅输送，引用与覆盖检查不认证英语语义、文字忠实性、审阅身份或旧宿主表现。','仅单题入口，不证明整篇分组、阅读主旨优先或完形两遍等完整讲题顺序。']
     if scope!='single_question_lesson':
+        if spoken_image_edges:
+            graph.graph['edges']=[e for e in graph.graph['edges'] if (e['from'],e['to']) not in spoken_image_edges]
         review['segments']=[]
         bindings=[]
         grouping_ids=[]
@@ -165,6 +185,7 @@ def validate_lesson_projection(analysis,registry):
     if review['question_type']!=analysis['question_type']:
         raise ValueError('Spoken lesson question type mismatch')
     check_lesson_sources(analysis['question_type'],review['source_section_ids'],registry)
+    validate_image_lesson(analysis)
     if feedback['scope']!='single_question_lesson':
         if review['segments'] or feedback['segment_bindings'] or feedback['grouping_execution_ids']: raise ValueError('Partial/unreviewed lesson must withhold student delivery')
         return
@@ -185,7 +206,7 @@ def validate_lesson_projection(analysis,registry):
     used=set(); actions=set(); evidenced=set(); stopped=set(); compared=set()
     for s in review['segments']:
         if s.get('segment_scope')=='whole_question':
-            if review['schema_version']!='1.1.0': raise ValueError('Whole-question spoken segments require lesson-review 1.1.0')
+            if review['schema_version'] not in {'1.1.0','1.2.0'}: raise ValueError('Whole-question spoken segments require lesson-review 1.1.0 or 1.2.0')
             check_spoken_text(s['text'],s['evidence'])
             targets=terminal_targets(s,analysis,actions)
             binding=bindings[s['segment_id']]

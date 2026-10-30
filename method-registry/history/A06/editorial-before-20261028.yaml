@@ -1,0 +1,136 @@
+method_id: A06
+brand_name: 对照仿写
+source_name: 富兰克林写作法（寒4五步）
+aliases:
+- 富兰克林写作法（寒4五步）
+question_type: 应用文
+method_type: framework
+role: framework
+primary_role: framework
+secondary_roles: []
+output_type: interpret
+student_symptoms:
+- 课后需积累准确可迁移表达
+trigger_cues:
+- 课后要独立调用表达，原中文与对照范文可用。
+core_action: 中文必要时先简化，再独立英译、对照范文、记录并背诵缺失词或句式；第五步AI升级可选。
+decision_rule: 产出自己的表达缺口与已核素材；准确异写可保留，AI建议须保原意且搭配成立。
+verification: 产出自己的表达缺口与已核素材；准确异写可保留，AI建议须保原意且搭配成立。 范文或AI改变任务、意思或搭配未核就不背不抄；挖空法另列，不塞入寒4五步或改称六步。
+stop_rule: 范文或AI改变任务、意思或搭配未核就不背不抄；挖空法另列，不塞入寒4五步或改称六步。
+common_wrong_instinct: 先看范文再照写，觉得记住了却不能自己生成。
+failure_cases:
+- 先看范文再照写，觉得记住了却不能自己生成。
+- 范文或AI改变任务、意思或搭配未核就不背不抄；挖空法另列，不塞入寒4五步或改称六步。
+counterexamples:
+- 自译与范文用词不同但意思、搭配都成立，不应仅因不一致改成错误；AI写得复杂但偏离中文任务，也不能作为升级素材。此为条件示意，不是真题。
+transfer_pattern: 换范文仍先独立产出再对照，只记录已核准表达；仿写和挖空可另练，不改寒4五步定义。
+memory_line: 先自己译，对照后记缺口；AI升级可选。
+anti_rule: 看懂范文 ≠ 能独立复现。
+visual_formula: '必要时简化中文 → 独立英译
+
+  → 对照范文 → 记背缺失表达
+
+  → 可选AI升级（核原义与搭配）
+
+  挖空法：另列，不塞进五步'
+challenge_prompt: 遮住范文，先译一个简化中文句；揭开后只圈自己缺失的素材，不把所有异写都改错。
+source_references:
+- repository: https://github.com/rockpunkgod/ANSWER.git
+  path: gaokao-writing/references/application-writing-and-correction.md
+  heading: 富兰克林写作法（五步）
+  commit: 1c388a0596b13935ae7c6a1af00834915a8efa33
+section_ids:
+- 856c6b014460019f
+- 1b1197e2fa02ee07
+can_follow: []
+usually_before: []
+usually_after: []
+conflicts_with: []
+cannot_replace:
+- 完整题面验证
+levels:
+  L1: 先简化中文自行译，再对照范文记录缺失表达；背诵复现后在同结构仿写
+  L2: 先独立翻译简化中文，再对照范文圈缺失或不准的表达，记录、背诵、挖空复现并同结构仿写；产物是可复练差异，不是范文唯一答案。
+  L3: 适用于课后训练，不是考场先看答案；已准确且自然的异写不判错。范文或AI升级改变意思、搭配未核时不背不照抄。
+  L4: 换范文仍先独立产出再对照，仿写换内容而保留已经核准的结构。
+compact:
+  line: 中文必要时先简化，再独立英译、对照范文、记录并背诵缺失词或句式；第五步AI升级可选。
+  boundary: 范文或AI改变任务、意思或搭配未核就不背不抄；挖空法另列，不塞入寒4五步或改称六步。
+  10s: 中文必要时先简化，再独立英译、对照范文、记录并背诵缺失词或句式；第五步AI升级可选。 产出自己的表达缺口与已核素材；准确异写可保留，AI建议须保原意且搭配成立。
+  30s: 课后要独立调用表达，原中文与对照范文可用。 中文必要时先简化，再独立英译、对照范文、记录并背诵缺失词或句式；第五步AI升级可选。 范文或AI改变任务、意思或搭配未核就不背不抄；挖空法另列，不塞入寒4五步或改称六步。
+  90s: 课后要独立调用表达，原中文与对照范文可用。 手上先做：中文必要时先简化，再独立英译、对照范文、记录并背诵缺失词或句式；第五步AI升级可选。 做完得到：产出自己的表达缺口与已核素材；准确异写可保留，AI建议须保原意且搭配成立。
+    停止：范文或AI改变任务、意思或搭配未核就不背不抄；挖空法另列，不塞入寒4五步或改称六步。 反例（边界示意，非真题）：自译与范文用词不同但意思、搭配都成立，不应仅因不一致改成错误；AI写得复杂但偏离中文任务，也不能作为升级素材。此为条件示意，不是真题。
+    挑战：遮住范文，先译一个简化中文句；揭开后只圈自己缺失的素材，不把所有异写都改错。
+full:
+  summary: 中文必要时先简化，再独立英译、对照范文、记录并背诵缺失词或句式；第五步AI升级可选。 产出自己的表达缺口与已核素材；准确异写可保留，AI建议须保原意且搭配成立。
+  source_boundary: 范文或AI改变任务、意思或搭配未核就不背不抄；挖空法另列，不塞入寒4五步或改称六步。
+  boundaries:
+  - 范文或AI改变任务、意思或搭配未核就不背不抄；挖空法另列，不塞入寒4五步或改称六步。
+  - 自译与范文用词不同但意思、搭配都成立，不应仅因不一致改成错误；AI写得复杂但偏离中文任务，也不能作为升级素材。此为条件示意，不是真题。
+  section_ids:
+  - 856c6b014460019f
+  - 1b1197e2fa02ee07
+cases:
+  canonical: cases/application-writing/A06/canonical/case.yaml
+four_step_card:
+  start: 课后要独立调用表达，原中文与对照范文可用。
+  first_cut: 中文必要时先简化，再独立英译、对照范文、记录并背诵缺失词或句式；第五步AI升级可选。
+  judge: 产出自己的表达缺口与已核素材；准确异写可保留，AI建议须保原意且搭配成立。
+  stop: 范文或AI改变任务、意思或搭配未核就不背不抄；挖空法另列，不塞入寒4五步或改称六步。
+practicality_gate:
+  status: design_complete_empirical_pending
+  trigger: 课后要独立调用表达，原中文与对照范文可用。
+  action: 中文必要时先简化，再独立英译、对照范文、记录并背诵缺失词或句式；第五步AI升级可选。
+  output: interpret；产出自己的表达缺口与已核素材；准确异写可保留，AI建议须保原意且搭配成立。
+  stop: 范文或AI改变任务、意思或搭配未核就不背不抄；挖空法另列，不塞入寒4五步或改称六步。
+  transfer: 换范文仍先独立产出再对照，只记录已核准表达；仿写和挖空可另练，不改寒4五步定义。
+  efficiency: 提升独立调用素材与自查缺口的训练质量，不宣称现场提速或保证分数。
+  misuse_cost: 未经实测；先看范文再照写，觉得记住了却不能自己生成。会导致误判；须先核触发、执行Stop，不允许辅助产物越级定案。
+first_use_test:
+  status: designed_not_run
+  trigger_success: null
+  action_success: null
+  evidence_success: null
+  stop_rule_success: null
+  no_answer_backfit: null
+  failure_type: null
+  final_result: pending_real_student_test
+evaluation:
+  baseline: 普通逐项核题面
+  primary_benefit_hypothesis: 提升独立调用素材与自查缺口的训练质量，不宣称现场提速或保证分数。
+  trigger_precision: null
+  trigger_recall: null
+  resolution_rate: null
+  standalone_rate: null
+  assist_rate: null
+  false_trigger_rate: null
+  transfer_rate: null
+  boundary_accuracy: null
+  time_complexity_gain: null
+usefulness_level: Useful
+status: candidate
+maturity_status: candidate
+practical_value: Useful
+version: 1.2.0
+change_reason: ANSWER 1c388a0596b13935ae7c6a1af00834915a8efa33 增量来源同步；保留既有动作与版本，旧证据不自动获得新来源准入。
+affected_cases:
+- cases/application-writing/A06/canonical/case.yaml
+regression_result: pending_current_epoch_semantic_and_student_acceptance
+student_ready: false
+entry_copy: 课后要独立调用表达，原中文与对照范文可用。 手上先做：中文必要时先简化，再独立英译、对照范文、记录并背诵缺失词或句式；第五步AI升级可选。
+  做完得到：产出自己的表达缺口与已核素材；准确异写可保留，AI建议须保原意且搭配成立。 停止：范文或AI改变任务、意思或搭配未核就不背不抄；挖空法另列，不塞入寒4五步或改称六步。
+static_design_review:
+  status: source_rebound_semantic_reacceptance_pending
+  source_section_ids:
+  - 856c6b014460019f
+  - 1b1197e2fa02ee07
+  participant_validation: pending_real_participant_validation
+  example_scope: schematic source boundary, not a verified exam
+source_alignment:
+  commit: 1c388a0596b13935ae7c6a1af00834915a8efa33
+  state: live_source_bound
+  source_content_changed: false
+  correction_profile_applied: true
+  authored_first_contact_draft: false
+  new_course_branches: preserved_in_full_contract_not_automatically_aliased
+  acceptance: unchanged_method_sections; added_source_contracts_preserved; learner/release_pending

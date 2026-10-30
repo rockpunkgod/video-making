@@ -28,6 +28,18 @@ Graph绑定每段真实文本、独立方法触发、精确跨度和所引用候
 
 整题段不增加方法判项次数。四 Renderer 和篇级输出保留这些无 method_id 的段落，七选五仍只在开头展示一次合法三维分组。漏候选或漏停止说明时，核心可保留已经独立成立的整题答案，但完整口播实际扣留；两种验收信用分开。
 
+## 决定性图像的显式运输版本
+
+原题可选 `required_image_evidence` 非空数组，每项为 `{candidate,image_id,sha256,box}`，box 是原图像素的 `[x1,y1,x2,y2]`。它属于原始材料而非可删审阅注释，进入 material fingerprint、graph root 和 review_provider 原材料不变检查。必须由独立来源审阅先确定候选及完整必要区域；没有该声明时，程序不声称自己知道语义上是否必须看图。旧输入不生成这个字段。
+
+整题审阅 1.1.0 允许 candidate_checks 各项携非空 `image_evidence: [{image_id,sha256,box,observed}]`；至少一项有图证。每个来源义务必须由同候选的精确区域满足，不能用大框包含、空白角、另一候选或别的图替换。原 PNG/JPEG 严格解码，校验原字节 hash、实际 MIME、单帧、有界像素及区域；仍须保留完整候选、正文和题干证据及实际已产生的语义产物，不给定位、分组或缩范围动作定案权限。旧 1.0.0 不接受新图证字段。新分析和 content-export 版本为 1.9.0，旧无图证路径的输出不加空字段。
+
+讲解 1.2.0 的 whole_question 比较段可携 `image_evidence: [{candidate,region_index}]`，引用同一 terminal 中该候选图证的零起始位置，不另抄一份无归属观察。段内必须逐字包含被引用的 observed，并引用该段所有 candidate_ids 的全部图证；方法段没有这个字段，不扩大任何方法职责。数字或观察句的语义正确性仍须独立读图审阅，逐字出现不是语义认证。
+
+图节点分别绑定候选、terminal review、完整审阅/manifest/来源义务 fingerprint 及原区域，直接 supports 自己的候选审阅节点；完整口播另由绑定列表和直接边承接同一候选的验证节点与所有图节点。删 region、改 observed、挪候选、重算仅 graph 的 hash、漏口播区域或降级接口均不能交付完整稿。未审/不完整讲解仍实际扣留，学生输出不拼接自由终判文字，也不孤立报答案。
+
+便携冻结消费者使用无 core/Registry/solver 依赖的共享检查，重新解码 source_snapshot 原图，重核来源义务、terminal、完整 lesson 原输入和双向图绑定；export/status 及生命周期同时保留图证。单独 renderer 没有原 question，只能检查绑定 manifest 和图的内部一致性，不能重新认证原图字节。`content_os` 的视频 full_solution 门禁不在本次扩展，terminal-only 图证不自动取得视频全解、真实题语义、学生实效或发布资格。
+
 ## 学生输出
 
 student与legacy-wechat在完整口播存在时输出一条自然消息。开头只称呼一次同学并说我们来分析一下，随后按宿主动作顺序展示段落，最后从核心闭合结果汇总这一题答案一次。开场不先报题型或方法，正文不展示职责、置信度、路由、审阅、证据编号等内部术语。答案汇总不是从宿主另交答案键读取。

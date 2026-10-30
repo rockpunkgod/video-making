@@ -1,12 +1,10 @@
 {
   "scope": "current-epoch structural evidence only; not semantic, learner or release certification",
-  "source_commit": "61bc9c3e15004639cb442c20e7946ca9631f14ce",
+  "source_commit": "70db6d6f0423bc8da95c591ca1feda883c2865b1",
   "historical_registry": false,
   "method_count": 82,
   "entry_counts": {
-    "draft": 7,
-    "held_for_reacceptance": 46,
-    "static_entry_ready": 29
+    "draft": 82
   },
   "priority_entries": [
     {
@@ -17,7 +15,7 @@
       "primary_role": "decider",
       "output_role": "decide",
       "source_section_ids": [
-        "dfb7dd8dc0c2e8a1"
+        "079728b2a0305ff9"
       ],
       "guide_path": "student-guides/R01-选项加戏.md",
       "entry_state": "draft",
@@ -38,7 +36,7 @@
         "independent_guide_exposes_four_steps": true
       },
       "structural_gaps": [],
-      "semantic_review": "missing",
+      "semantic_review": "source_bound_editorial_review",
       "first_use_status": "pending_real_student_test",
       "timed_delivery": "unmeasured",
       "learner_acceptance": "pending_real_participant_validation",
@@ -47,13 +45,13 @@
     },
     {
       "method_id": "R02",
-      "method_version": "1.2.0",
+      "method_version": "1.2.1",
       "question_type": "阅读理解",
       "method_type": "method",
       "primary_role": "decider",
       "output_role": "decide",
       "source_section_ids": [
-        "fce5dc9189e1137b"
+        "33abd2c12caeb924"
       ],
       "guide_path": "student-guides/R02-谁干的陷阱.md",
       "entry_state": "draft",
@@ -74,7 +72,7 @@
         "independent_guide_exposes_four_steps": true
       },
       "structural_gaps": [],
-      "semantic_review": "missing",
+      "semantic_review": "source_bound_editorial_review",
       "first_use_status": "pending_real_student_test",
       "timed_delivery": "unmeasured",
       "learner_acceptance": "pending_real_participant_validation",
@@ -83,13 +81,13 @@
     },
     {
       "method_id": "R06",
-      "method_version": "1.2.0",
+      "method_version": "1.2.1",
       "question_type": "阅读理解",
       "method_type": "internal_rule",
       "primary_role": "decider",
       "output_role": "decide",
       "source_section_ids": [
-        "fd49a052453f33e0"
+        "16b214507547840e"
       ],
       "guide_path": "student-guides/R06-主旨缺块.md",
       "entry_state": "draft",
@@ -110,7 +108,7 @@
         "independent_guide_exposes_four_steps": true
       },
       "structural_gaps": [],
-      "semantic_review": "missing",
+      "semantic_review": "source_bound_editorial_review",
       "first_use_status": "pending_real_student_test",
       "timed_delivery": "unmeasured",
       "learner_acceptance": "pending_real_participant_validation",
@@ -125,7 +123,7 @@
       "primary_role": "framework",
       "output_role": "interpret",
       "source_section_ids": [
-        "25287b93945fdb97"
+        "a2ef5fb5d00f213c"
       ],
       "guide_path": "student-guides/R09-三步压文.md",
       "entry_state": "draft",
@@ -146,7 +144,7 @@
         "independent_guide_exposes_four_steps": true
       },
       "structural_gaps": [],
-      "semantic_review": "missing",
+      "semantic_review": "source_bound_editorial_review",
       "first_use_status": "pending_real_student_test",
       "timed_delivery": "unmeasured",
       "learner_acceptance": "pending_real_participant_validation",
@@ -162,8 +160,8 @@
       "output_role": "reduce",
       "source_section_ids": [
         "a8f0c4ae44ae61ff",
-        "7c0a77869754a1dc",
-        "4a9de82ef9741f92"
+        "be3f1c1eb7c11ee7",
+        "13b2d5c88710b11a"
       ],
       "guide_path": "student-guides/F01-选项三分.md",
       "entry_state": "draft",
@@ -184,7 +182,7 @@
         "independent_guide_exposes_four_steps": true
       },
       "structural_gaps": [],
-      "semantic_review": "missing",
+      "semantic_review": "source_bound_editorial_review",
       "first_use_status": "pending_real_student_test",
       "timed_delivery": "unmeasured",
       "learner_acceptance": "pending_real_participant_validation",
@@ -203,22 +201,22 @@
         "3527a85c4fe668d9",
         "781c4478d621bf5c",
         "8c050016facc6479",
-        "98a55752856ca984",
-        "92af20a0997f0b48",
-        "bdec04e2ce032b40",
-        "9b496b1572cdf49b",
-        "32c08d6c85a150ea",
-        "a166ae34f9256ee9",
-        "ab95cd79ca0709e2",
-        "9b610bdb9f63227e",
-        "a26dc83760c12ebb",
-        "28cb2fee202458a5",
-        "5131f97d0dc78441",
-        "a0bcc74f05b00671",
-        "f77de6ec724f8e88",
-        "7c16410a7f1b8e4f",
-        "62e443a0a04865bf",
-        "7ae166ccec059b00"
+        "dfb1dccd2a7f06e2",
+        "0c267d2ed379a98a",
+        "c78012aeef62d5b9",
+        "1bc229eecb92ae3c",
+        "ccfc09a472cb85a6",
+        "be5c8b287ffa3745",
+        "ab42f9a3682492c6",
+        "3cc12c22579257d5",
+        "b2282a270b8de478",
+        "8f7ca9480b5113bc",
+        "01b66e853d507205",
+        "c6ee3d2de761c2d8",
+        "68c5400be79ea170",
+        "5d83575e1d881f91",
+        "c0416230d2a90924",
+        "86faf5c280abdc74"
       ],
       "guide_path": "student-guides/G01-先判空位.md",
       "entry_state": "draft",
@@ -239,7 +237,7 @@
         "independent_guide_exposes_four_steps": true
       },
       "structural_gaps": [],
-      "semantic_review": "missing",
+      "semantic_review": "source_bound_editorial_review",
       "first_use_status": "pending_real_student_test",
       "timed_delivery": "unmeasured",
       "learner_acceptance": "pending_real_participant_validation",
@@ -256,7 +254,7 @@
       "primary_role": "decider",
       "output_role": "decide",
       "source_section_ids": [
-        "dfb7dd8dc0c2e8a1"
+        "079728b2a0305ff9"
       ],
       "guide_path": "student-guides/R01-选项加戏.md",
       "entry_state": "draft",
@@ -277,7 +275,7 @@
         "independent_guide_exposes_four_steps": true
       },
       "structural_gaps": [],
-      "semantic_review": "missing",
+      "semantic_review": "source_bound_editorial_review",
       "first_use_status": "pending_real_student_test",
       "timed_delivery": "unmeasured",
       "learner_acceptance": "pending_real_participant_validation",
@@ -286,13 +284,13 @@
     },
     {
       "method_id": "R02",
-      "method_version": "1.2.0",
+      "method_version": "1.2.1",
       "question_type": "阅读理解",
       "method_type": "method",
       "primary_role": "decider",
       "output_role": "decide",
       "source_section_ids": [
-        "fce5dc9189e1137b"
+        "33abd2c12caeb924"
       ],
       "guide_path": "student-guides/R02-谁干的陷阱.md",
       "entry_state": "draft",
@@ -313,7 +311,7 @@
         "independent_guide_exposes_four_steps": true
       },
       "structural_gaps": [],
-      "semantic_review": "missing",
+      "semantic_review": "source_bound_editorial_review",
       "first_use_status": "pending_real_student_test",
       "timed_delivery": "unmeasured",
       "learner_acceptance": "pending_real_participant_validation",
@@ -322,13 +320,13 @@
     },
     {
       "method_id": "R06",
-      "method_version": "1.2.0",
+      "method_version": "1.2.1",
       "question_type": "阅读理解",
       "method_type": "internal_rule",
       "primary_role": "decider",
       "output_role": "decide",
       "source_section_ids": [
-        "fd49a052453f33e0"
+        "16b214507547840e"
       ],
       "guide_path": "student-guides/R06-主旨缺块.md",
       "entry_state": "draft",
@@ -349,7 +347,7 @@
         "independent_guide_exposes_four_steps": true
       },
       "structural_gaps": [],
-      "semantic_review": "missing",
+      "semantic_review": "source_bound_editorial_review",
       "first_use_status": "pending_real_student_test",
       "timed_delivery": "unmeasured",
       "learner_acceptance": "pending_real_participant_validation",
@@ -364,7 +362,7 @@
       "primary_role": "framework",
       "output_role": "interpret",
       "source_section_ids": [
-        "25287b93945fdb97"
+        "a2ef5fb5d00f213c"
       ],
       "guide_path": "student-guides/R09-三步压文.md",
       "entry_state": "draft",
@@ -385,7 +383,7 @@
         "independent_guide_exposes_four_steps": true
       },
       "structural_gaps": [],
-      "semantic_review": "missing",
+      "semantic_review": "source_bound_editorial_review",
       "first_use_status": "pending_real_student_test",
       "timed_delivery": "unmeasured",
       "learner_acceptance": "pending_real_participant_validation",
@@ -400,124 +398,10 @@
       "primary_role": "interpreter",
       "output_role": "interpret",
       "source_section_ids": [
-        "664edd91ce02db49"
+        "bfe663258883ee1a"
       ],
       "guide_path": "student-guides/R03-换词不换义.md",
-      "entry_state": "held_for_reacceptance",
-      "structural_checks": {
-        "symptom_present": true,
-        "trigger_present": true,
-        "first_action_present": true,
-        "output_role_present": true,
-        "decision_present": true,
-        "stop_matches_card": true,
-        "transfer_present": true,
-        "visual_formula_present": true,
-        "wrong_instinct_present": true,
-        "anti_rule_present": true,
-        "challenge_present": true,
-        "counterexample_present": true,
-        "all_short_forms_present": true,
-        "independent_guide_exposes_four_steps": false
-      },
-      "structural_gaps": [
-        "independent_guide_exposes_four_steps"
-      ],
-      "semantic_review": "source_rebound_semantic_reacceptance_pending",
-      "first_use_status": "pending_real_student_test",
-      "timed_delivery": "unmeasured",
-      "learner_acceptance": "pending_real_participant_validation",
-      "maturity_status": "candidate",
-      "practical_value": "Useful"
-    },
-    {
-      "method_id": "R04",
-      "method_version": "1.2.0",
-      "question_type": "阅读理解",
-      "method_type": "method",
-      "primary_role": "decider",
-      "output_role": "decide",
-      "source_section_ids": [
-        "4311f90fc985aca0"
-      ],
-      "guide_path": "student-guides/R04-比较别偷换.md",
-      "entry_state": "held_for_reacceptance",
-      "structural_checks": {
-        "symptom_present": true,
-        "trigger_present": true,
-        "first_action_present": true,
-        "output_role_present": true,
-        "decision_present": true,
-        "stop_matches_card": true,
-        "transfer_present": true,
-        "visual_formula_present": true,
-        "wrong_instinct_present": true,
-        "anti_rule_present": true,
-        "challenge_present": true,
-        "counterexample_present": true,
-        "all_short_forms_present": true,
-        "independent_guide_exposes_four_steps": false
-      },
-      "structural_gaps": [
-        "independent_guide_exposes_four_steps"
-      ],
-      "semantic_review": "source_rebound_semantic_reacceptance_pending",
-      "first_use_status": "pending_real_student_test",
-      "timed_delivery": "unmeasured",
-      "learner_acceptance": "pending_real_participant_validation",
-      "maturity_status": "candidate",
-      "practical_value": "Useful"
-    },
-    {
-      "method_id": "R05",
-      "method_version": "1.2.0",
-      "question_type": "阅读理解",
-      "method_type": "method",
-      "primary_role": "decider",
-      "output_role": "decide",
-      "source_section_ids": [
-        "c26359463dd942f3"
-      ],
-      "guide_path": "student-guides/R05-因果别选反.md",
-      "entry_state": "held_for_reacceptance",
-      "structural_checks": {
-        "symptom_present": true,
-        "trigger_present": true,
-        "first_action_present": true,
-        "output_role_present": true,
-        "decision_present": true,
-        "stop_matches_card": true,
-        "transfer_present": true,
-        "visual_formula_present": true,
-        "wrong_instinct_present": true,
-        "anti_rule_present": true,
-        "challenge_present": true,
-        "counterexample_present": true,
-        "all_short_forms_present": true,
-        "independent_guide_exposes_four_steps": false
-      },
-      "structural_gaps": [
-        "independent_guide_exposes_four_steps"
-      ],
-      "semantic_review": "source_rebound_semantic_reacceptance_pending",
-      "first_use_status": "pending_real_student_test",
-      "timed_delivery": "unmeasured",
-      "learner_acceptance": "pending_real_participant_validation",
-      "maturity_status": "candidate",
-      "practical_value": "Useful"
-    },
-    {
-      "method_id": "R07",
-      "method_version": "1.2.0",
-      "question_type": "阅读理解",
-      "method_type": "method",
-      "primary_role": "reducer",
-      "output_role": "reduce",
-      "source_section_ids": [
-        "233f304ca6cf0622"
-      ],
-      "guide_path": "student-guides/R07-并列打包.md",
-      "entry_state": "static_entry_ready",
+      "entry_state": "draft",
       "structural_checks": {
         "symptom_present": true,
         "trigger_present": true,
@@ -535,7 +419,115 @@
         "independent_guide_exposes_four_steps": true
       },
       "structural_gaps": [],
-      "semantic_review": "source_rebound_semantic_reacceptance_pending",
+      "semantic_review": "source_bound_editorial_review",
+      "first_use_status": "pending_real_student_test",
+      "timed_delivery": "unmeasured",
+      "learner_acceptance": "pending_real_participant_validation",
+      "maturity_status": "candidate",
+      "practical_value": "Useful"
+    },
+    {
+      "method_id": "R04",
+      "method_version": "1.2.0",
+      "question_type": "阅读理解",
+      "method_type": "method",
+      "primary_role": "decider",
+      "output_role": "decide",
+      "source_section_ids": [
+        "12cbf7072ca95fcb"
+      ],
+      "guide_path": "student-guides/R04-比较别偷换.md",
+      "entry_state": "draft",
+      "structural_checks": {
+        "symptom_present": true,
+        "trigger_present": true,
+        "first_action_present": true,
+        "output_role_present": true,
+        "decision_present": true,
+        "stop_matches_card": true,
+        "transfer_present": true,
+        "visual_formula_present": true,
+        "wrong_instinct_present": true,
+        "anti_rule_present": true,
+        "challenge_present": true,
+        "counterexample_present": true,
+        "all_short_forms_present": true,
+        "independent_guide_exposes_four_steps": true
+      },
+      "structural_gaps": [],
+      "semantic_review": "source_bound_editorial_review",
+      "first_use_status": "pending_real_student_test",
+      "timed_delivery": "unmeasured",
+      "learner_acceptance": "pending_real_participant_validation",
+      "maturity_status": "candidate",
+      "practical_value": "Useful"
+    },
+    {
+      "method_id": "R05",
+      "method_version": "1.2.0",
+      "question_type": "阅读理解",
+      "method_type": "method",
+      "primary_role": "decider",
+      "output_role": "decide",
+      "source_section_ids": [
+        "c94cc356316596b9"
+      ],
+      "guide_path": "student-guides/R05-因果别选反.md",
+      "entry_state": "draft",
+      "structural_checks": {
+        "symptom_present": true,
+        "trigger_present": true,
+        "first_action_present": true,
+        "output_role_present": true,
+        "decision_present": true,
+        "stop_matches_card": true,
+        "transfer_present": true,
+        "visual_formula_present": true,
+        "wrong_instinct_present": true,
+        "anti_rule_present": true,
+        "challenge_present": true,
+        "counterexample_present": true,
+        "all_short_forms_present": true,
+        "independent_guide_exposes_four_steps": true
+      },
+      "structural_gaps": [],
+      "semantic_review": "source_bound_editorial_review",
+      "first_use_status": "pending_real_student_test",
+      "timed_delivery": "unmeasured",
+      "learner_acceptance": "pending_real_participant_validation",
+      "maturity_status": "candidate",
+      "practical_value": "Useful"
+    },
+    {
+      "method_id": "R07",
+      "method_version": "1.2.0",
+      "question_type": "阅读理解",
+      "method_type": "method",
+      "primary_role": "reducer",
+      "output_role": "reduce",
+      "source_section_ids": [
+        "040991117a2ad80e"
+      ],
+      "guide_path": "student-guides/R07-并列打包.md",
+      "entry_state": "draft",
+      "structural_checks": {
+        "symptom_present": true,
+        "trigger_present": true,
+        "first_action_present": true,
+        "output_role_present": true,
+        "decision_present": true,
+        "stop_matches_card": true,
+        "transfer_present": true,
+        "visual_formula_present": true,
+        "wrong_instinct_present": true,
+        "anti_rule_present": true,
+        "challenge_present": true,
+        "counterexample_present": true,
+        "all_short_forms_present": true,
+        "independent_guide_exposes_four_steps": true
+      },
+      "structural_gaps": [],
+      "semantic_review": "source_bound_editorial_review",
       "first_use_status": "pending_real_student_test",
       "timed_delivery": "unmeasured",
       "learner_acceptance": "pending_real_participant_validation",
@@ -550,10 +542,10 @@
       "primary_role": "interpreter",
       "output_role": "interpret",
       "source_section_ids": [
-        "ba96ebddcc797633"
+        "e90601120d085c34"
       ],
       "guide_path": "student-guides/R08-例子只作证.md",
-      "entry_state": "held_for_reacceptance",
+      "entry_state": "draft",
       "structural_checks": {
         "symptom_present": true,
         "trigger_present": true,
@@ -568,12 +560,10 @@
         "challenge_present": true,
         "counterexample_present": true,
         "all_short_forms_present": true,
-        "independent_guide_exposes_four_steps": false
+        "independent_guide_exposes_four_steps": true
       },
-      "structural_gaps": [
-        "independent_guide_exposes_four_steps"
-      ],
-      "semantic_review": "source_rebound_semantic_reacceptance_pending",
+      "structural_gaps": [],
+      "semantic_review": "source_bound_editorial_review",
       "first_use_status": "pending_real_student_test",
       "timed_delivery": "unmeasured",
       "learner_acceptance": "pending_real_participant_validation",
@@ -588,10 +578,10 @@
       "primary_role": "interpreter",
       "output_role": "interpret",
       "source_section_ids": [
-        "624926b4c68413ff"
+        "688367aeb67f68ad"
       ],
       "guide_path": "student-guides/R10-代词回填.md",
-      "entry_state": "held_for_reacceptance",
+      "entry_state": "draft",
       "structural_checks": {
         "symptom_present": true,
         "trigger_present": true,
@@ -606,12 +596,10 @@
         "challenge_present": true,
         "counterexample_present": true,
         "all_short_forms_present": true,
-        "independent_guide_exposes_four_steps": false
+        "independent_guide_exposes_four_steps": true
       },
-      "structural_gaps": [
-        "independent_guide_exposes_four_steps"
-      ],
-      "semantic_review": "source_rebound_semantic_reacceptance_pending",
+      "structural_gaps": [],
+      "semantic_review": "source_bound_editorial_review",
       "first_use_status": "pending_real_student_test",
       "timed_delivery": "unmeasured",
       "learner_acceptance": "pending_real_participant_validation",
@@ -626,10 +614,10 @@
       "primary_role": "interpreter",
       "output_role": "interpret",
       "source_section_ids": [
-        "0b966000686151d0"
+        "4ce3be7428bf040a"
       ],
       "guide_path": "student-guides/R11-长句拆骨.md",
-      "entry_state": "held_for_reacceptance",
+      "entry_state": "draft",
       "structural_checks": {
         "symptom_present": true,
         "trigger_present": true,
@@ -644,12 +632,10 @@
         "challenge_present": true,
         "counterexample_present": true,
         "all_short_forms_present": true,
-        "independent_guide_exposes_four_steps": false
+        "independent_guide_exposes_four_steps": true
       },
-      "structural_gaps": [
-        "independent_guide_exposes_four_steps"
-      ],
-      "semantic_review": "source_rebound_semantic_reacceptance_pending",
+      "structural_gaps": [],
+      "semantic_review": "source_bound_editorial_review",
       "first_use_status": "pending_real_student_test",
       "timed_delivery": "unmeasured",
       "learner_acceptance": "pending_real_participant_validation",
@@ -664,10 +650,10 @@
       "primary_role": "locator",
       "output_role": "locate",
       "source_section_ids": [
-        "7adfe6c470337e82"
+        "f8e5e07efbaef15c"
       ],
       "guide_path": "student-guides/R12-关键词追踪.md",
-      "entry_state": "held_for_reacceptance",
+      "entry_state": "draft",
       "structural_checks": {
         "symptom_present": true,
         "trigger_present": true,
@@ -682,12 +668,10 @@
         "challenge_present": true,
         "counterexample_present": true,
         "all_short_forms_present": true,
-        "independent_guide_exposes_four_steps": false
+        "independent_guide_exposes_four_steps": true
       },
-      "structural_gaps": [
-        "independent_guide_exposes_four_steps"
-      ],
-      "semantic_review": "source_rebound_semantic_reacceptance_pending",
+      "structural_gaps": [],
+      "semantic_review": "source_bound_editorial_review",
       "first_use_status": "pending_real_student_test",
       "timed_delivery": "unmeasured",
       "learner_acceptance": "pending_real_participant_validation",
@@ -703,10 +687,10 @@
       "output_role": "locate",
       "source_section_ids": [
         "3104f706064bf305",
-        "7adfe6c470337e82"
+        "f8e5e07efbaef15c"
       ],
       "guide_path": "student-guides/R13-名词追踪.md",
-      "entry_state": "held_for_reacceptance",
+      "entry_state": "draft",
       "structural_checks": {
         "symptom_present": true,
         "trigger_present": true,
@@ -721,12 +705,10 @@
         "challenge_present": true,
         "counterexample_present": true,
         "all_short_forms_present": true,
-        "independent_guide_exposes_four_steps": false
+        "independent_guide_exposes_four_steps": true
       },
-      "structural_gaps": [
-        "independent_guide_exposes_four_steps"
-      ],
-      "semantic_review": "source_rebound_semantic_reacceptance_pending",
+      "structural_gaps": [],
+      "semantic_review": "source_bound_editorial_review",
       "first_use_status": "pending_real_student_test",
       "timed_delivery": "unmeasured",
       "learner_acceptance": "pending_real_participant_validation",
@@ -742,10 +724,10 @@
       "output_role": "locate",
       "source_section_ids": [
         "3104f706064bf305",
-        "7adfe6c470337e82"
+        "f8e5e07efbaef15c"
       ],
       "guide_path": "student-guides/R14-顺序锁区.md",
-      "entry_state": "held_for_reacceptance",
+      "entry_state": "draft",
       "structural_checks": {
         "symptom_present": true,
         "trigger_present": true,
@@ -760,12 +742,10 @@
         "challenge_present": true,
         "counterexample_present": true,
         "all_short_forms_present": true,
-        "independent_guide_exposes_four_steps": false
+        "independent_guide_exposes_four_steps": true
       },
-      "structural_gaps": [
-        "independent_guide_exposes_four_steps"
-      ],
-      "semantic_review": "source_rebound_semantic_reacceptance_pending",
+      "structural_gaps": [],
+      "semantic_review": "source_bound_editorial_review",
       "first_use_status": "pending_real_student_test",
       "timed_delivery": "unmeasured",
       "learner_acceptance": "pending_real_participant_validation",
@@ -781,10 +761,10 @@
       "output_role": "interpret",
       "source_section_ids": [
         "3104f706064bf305",
-        "7adfe6c470337e82"
+        "f8e5e07efbaef15c"
       ],
       "guide_path": "student-guides/R15-动词定关系.md",
-      "entry_state": "held_for_reacceptance",
+      "entry_state": "draft",
       "structural_checks": {
         "symptom_present": true,
         "trigger_present": true,
@@ -799,12 +779,10 @@
         "challenge_present": true,
         "counterexample_present": true,
         "all_short_forms_present": true,
-        "independent_guide_exposes_four_steps": false
+        "independent_guide_exposes_four_steps": true
       },
-      "structural_gaps": [
-        "independent_guide_exposes_four_steps"
-      ],
-      "semantic_review": "source_rebound_semantic_reacceptance_pending",
+      "structural_gaps": [],
+      "semantic_review": "source_bound_editorial_review",
       "first_use_status": "pending_real_student_test",
       "timed_delivery": "unmeasured",
       "learner_acceptance": "pending_real_participant_validation",
@@ -819,10 +797,10 @@
       "primary_role": "framework",
       "output_role": "interpret",
       "source_section_ids": [
-        "fd49a052453f33e0"
+        "16b214507547840e"
       ],
       "guide_path": "student-guides/R16-主题锁定.md",
-      "entry_state": "held_for_reacceptance",
+      "entry_state": "draft",
       "structural_checks": {
         "symptom_present": true,
         "trigger_present": true,
@@ -837,12 +815,10 @@
         "challenge_present": true,
         "counterexample_present": true,
         "all_short_forms_present": true,
-        "independent_guide_exposes_four_steps": false
+        "independent_guide_exposes_four_steps": true
       },
-      "structural_gaps": [
-        "independent_guide_exposes_four_steps"
-      ],
-      "semantic_review": "source_rebound_semantic_reacceptance_pending",
+      "structural_gaps": [],
+      "semantic_review": "source_bound_editorial_review",
       "first_use_status": "pending_real_student_test",
       "timed_delivery": "unmeasured",
       "learner_acceptance": "pending_real_participant_validation",
@@ -858,11 +834,11 @@
       "output_role": "verify",
       "source_section_ids": [
         "fb9c5ef35a2a5763",
-        "664edd91ce02db49",
-        "624926b4c68413ff"
+        "bfe663258883ee1a",
+        "688367aeb67f68ad"
       ],
       "guide_path": "student-guides/R17-前后补证.md",
-      "entry_state": "held_for_reacceptance",
+      "entry_state": "draft",
       "structural_checks": {
         "symptom_present": true,
         "trigger_present": true,
@@ -877,12 +853,10 @@
         "challenge_present": true,
         "counterexample_present": true,
         "all_short_forms_present": true,
-        "independent_guide_exposes_four_steps": false
+        "independent_guide_exposes_four_steps": true
       },
-      "structural_gaps": [
-        "independent_guide_exposes_four_steps"
-      ],
-      "semantic_review": "source_rebound_semantic_reacceptance_pending",
+      "structural_gaps": [],
+      "semantic_review": "source_bound_editorial_review",
       "first_use_status": "pending_real_student_test",
       "timed_delivery": "unmeasured",
       "learner_acceptance": "pending_real_participant_validation",
@@ -898,8 +872,8 @@
       "output_role": "reduce",
       "source_section_ids": [
         "a8f0c4ae44ae61ff",
-        "7c0a77869754a1dc",
-        "4a9de82ef9741f92"
+        "be3f1c1eb7c11ee7",
+        "13b2d5c88710b11a"
       ],
       "guide_path": "student-guides/F01-选项三分.md",
       "entry_state": "draft",
@@ -920,7 +894,7 @@
         "independent_guide_exposes_four_steps": true
       },
       "structural_gaps": [],
-      "semantic_review": "missing",
+      "semantic_review": "source_bound_editorial_review",
       "first_use_status": "pending_real_student_test",
       "timed_delivery": "unmeasured",
       "learner_acceptance": "pending_real_participant_validation",
@@ -938,7 +912,7 @@
         "a8f0c4ae44ae61ff"
       ],
       "guide_path": "student-guides/F02-句型分组.md",
-      "entry_state": "static_entry_ready",
+      "entry_state": "draft",
       "structural_checks": {
         "symptom_present": true,
         "trigger_present": true,
@@ -956,7 +930,7 @@
         "independent_guide_exposes_four_steps": true
       },
       "structural_gaps": [],
-      "semantic_review": "source_rebound_semantic_reacceptance_pending",
+      "semantic_review": "source_bound_editorial_review",
       "first_use_status": "pending_real_student_test",
       "timed_delivery": "unmeasured",
       "learner_acceptance": "pending_real_participant_validation",
@@ -971,10 +945,10 @@
       "primary_role": "reducer",
       "output_role": "reduce",
       "source_section_ids": [
-        "7c0a77869754a1dc"
+        "be3f1c1eb7c11ee7"
       ],
       "guide_path": "student-guides/F03-主角分组.md",
-      "entry_state": "held_for_reacceptance",
+      "entry_state": "draft",
       "structural_checks": {
         "symptom_present": true,
         "trigger_present": true,
@@ -989,12 +963,10 @@
         "challenge_present": true,
         "counterexample_present": true,
         "all_short_forms_present": true,
-        "independent_guide_exposes_four_steps": false
+        "independent_guide_exposes_four_steps": true
       },
-      "structural_gaps": [
-        "independent_guide_exposes_four_steps"
-      ],
-      "semantic_review": "source_rebound_semantic_reacceptance_pending",
+      "structural_gaps": [],
+      "semantic_review": "source_bound_editorial_review",
       "first_use_status": "pending_real_student_test",
       "timed_delivery": "unmeasured",
       "learner_acceptance": "pending_real_participant_validation",
@@ -1009,10 +981,10 @@
       "primary_role": "reducer",
       "output_role": "reduce",
       "source_section_ids": [
-        "4a9de82ef9741f92"
+        "13b2d5c88710b11a"
       ],
       "guide_path": "student-guides/F04-时间分组.md",
-      "entry_state": "held_for_reacceptance",
+      "entry_state": "draft",
       "structural_checks": {
         "symptom_present": true,
         "trigger_present": true,
@@ -1027,12 +999,10 @@
         "challenge_present": true,
         "counterexample_present": true,
         "all_short_forms_present": true,
-        "independent_guide_exposes_four_steps": false
+        "independent_guide_exposes_four_steps": true
       },
-      "structural_gaps": [
-        "independent_guide_exposes_four_steps"
-      ],
-      "semantic_review": "source_rebound_semantic_reacceptance_pending",
+      "structural_gaps": [],
+      "semantic_review": "source_bound_editorial_review",
       "first_use_status": "pending_real_student_test",
       "timed_delivery": "unmeasured",
       "learner_acceptance": "pending_real_participant_validation",
@@ -1050,7 +1020,7 @@
         "1fcc9966ce085922"
       ],
       "guide_path": "student-guides/F05-段首统领.md",
-      "entry_state": "held_for_reacceptance",
+      "entry_state": "draft",
       "structural_checks": {
         "symptom_present": true,
         "trigger_present": true,
@@ -1065,12 +1035,10 @@
         "challenge_present": true,
         "counterexample_present": true,
         "all_short_forms_present": true,
-        "independent_guide_exposes_four_steps": false
+        "independent_guide_exposes_four_steps": true
       },
-      "structural_gaps": [
-        "independent_guide_exposes_four_steps"
-      ],
-      "semantic_review": "source_rebound_semantic_reacceptance_pending",
+      "structural_gaps": [],
+      "semantic_review": "source_bound_editorial_review",
       "first_use_status": "pending_real_student_test",
       "timed_delivery": "unmeasured",
       "learner_acceptance": "pending_real_participant_validation",
@@ -1088,7 +1056,7 @@
         "92ec24e9e7003cba"
       ],
       "guide_path": "student-guides/F06-前后呼应.md",
-      "entry_state": "held_for_reacceptance",
+      "entry_state": "draft",
       "structural_checks": {
         "symptom_present": true,
         "trigger_present": true,
@@ -1103,12 +1071,10 @@
         "challenge_present": true,
         "counterexample_present": true,
         "all_short_forms_present": true,
-        "independent_guide_exposes_four_steps": false
+        "independent_guide_exposes_four_steps": true
       },
-      "structural_gaps": [
-        "independent_guide_exposes_four_steps"
-      ],
-      "semantic_review": "source_rebound_semantic_reacceptance_pending",
+      "structural_gaps": [],
+      "semantic_review": "source_bound_editorial_review",
       "first_use_status": "pending_real_student_test",
       "timed_delivery": "unmeasured",
       "learner_acceptance": "pending_real_participant_validation",
@@ -1123,10 +1089,10 @@
       "primary_role": "verifier",
       "output_role": "verify",
       "source_section_ids": [
-        "03214bbc4e91eae2"
+        "d815465ca190a14f"
       ],
       "guide_path": "student-guides/F07-关系拼接.md",
-      "entry_state": "static_entry_ready",
+      "entry_state": "draft",
       "structural_checks": {
         "symptom_present": true,
         "trigger_present": true,
@@ -1144,7 +1110,7 @@
         "independent_guide_exposes_four_steps": true
       },
       "structural_gaps": [],
-      "semantic_review": "source_rebound_semantic_reacceptance_pending",
+      "semantic_review": "source_bound_editorial_review",
       "first_use_status": "pending_real_student_test",
       "timed_delivery": "unmeasured",
       "learner_acceptance": "pending_real_participant_validation",
@@ -1159,10 +1125,10 @@
       "primary_role": "reducer",
       "output_role": "reduce",
       "source_section_ids": [
-        "3d13a787824e210c"
+        "a3ba542eeb862762"
       ],
       "guide_path": "student-guides/F08-情绪同向.md",
-      "entry_state": "static_entry_ready",
+      "entry_state": "draft",
       "structural_checks": {
         "symptom_present": true,
         "trigger_present": true,
@@ -1180,7 +1146,7 @@
         "independent_guide_exposes_four_steps": true
       },
       "structural_gaps": [],
-      "semantic_review": "source_rebound_semantic_reacceptance_pending",
+      "semantic_review": "source_bound_editorial_review",
       "first_use_status": "pending_real_student_test",
       "timed_delivery": "unmeasured",
       "learner_acceptance": "pending_real_participant_validation",
@@ -1198,7 +1164,7 @@
         "a8f0c4ae44ae61ff"
       ],
       "guide_path": "student-guides/F09-半句补全.md",
-      "entry_state": "static_entry_ready",
+      "entry_state": "draft",
       "structural_checks": {
         "symptom_present": true,
         "trigger_present": true,
@@ -1216,7 +1182,7 @@
         "independent_guide_exposes_four_steps": true
       },
       "structural_gaps": [],
-      "semantic_review": "source_rebound_semantic_reacceptance_pending",
+      "semantic_review": "source_bound_editorial_review",
       "first_use_status": "pending_real_student_test",
       "timed_delivery": "unmeasured",
       "learner_acceptance": "pending_real_participant_validation",
@@ -1231,10 +1197,10 @@
       "primary_role": "verifier",
       "output_role": "verify",
       "source_section_ids": [
-        "d815465ca190a14f"
+        "c8a128adb1c07e71"
       ],
       "guide_path": "student-guides/F10-末轮反查.md",
-      "entry_state": "held_for_reacceptance",
+      "entry_state": "draft",
       "structural_checks": {
         "symptom_present": true,
         "trigger_present": true,
@@ -1249,12 +1215,10 @@
         "challenge_present": true,
         "counterexample_present": true,
         "all_short_forms_present": true,
-        "independent_guide_exposes_four_steps": false
+        "independent_guide_exposes_four_steps": true
       },
-      "structural_gaps": [
-        "independent_guide_exposes_four_steps"
-      ],
-      "semantic_review": "source_rebound_semantic_reacceptance_pending",
+      "structural_gaps": [],
+      "semantic_review": "source_bound_editorial_review",
       "first_use_status": "pending_real_student_test",
       "timed_delivery": "unmeasured",
       "learner_acceptance": "pending_real_participant_validation",
@@ -1269,10 +1233,10 @@
       "primary_role": "decider",
       "output_role": "decide",
       "source_section_ids": [
-        "d815465ca190a14f"
+        "c8a128adb1c07e71"
       ],
       "guide_path": "student-guides/F11-正文闭环.md",
-      "entry_state": "held_for_reacceptance",
+      "entry_state": "draft",
       "structural_checks": {
         "symptom_present": true,
         "trigger_present": true,
@@ -1287,12 +1251,10 @@
         "challenge_present": true,
         "counterexample_present": true,
         "all_short_forms_present": true,
-        "independent_guide_exposes_four_steps": false
+        "independent_guide_exposes_four_steps": true
       },
-      "structural_gaps": [
-        "independent_guide_exposes_four_steps"
-      ],
-      "semantic_review": "source_rebound_semantic_reacceptance_pending",
+      "structural_gaps": [],
+      "semantic_review": "source_bound_editorial_review",
       "first_use_status": "pending_real_student_test",
       "timed_delivery": "unmeasured",
       "learner_acceptance": "pending_real_participant_validation",
@@ -1311,7 +1273,7 @@
         "3f36ea92a4769ee5"
       ],
       "guide_path": "student-guides/C01-语篇线索链.md",
-      "entry_state": "held_for_reacceptance",
+      "entry_state": "draft",
       "structural_checks": {
         "symptom_present": true,
         "trigger_present": true,
@@ -1326,12 +1288,10 @@
         "challenge_present": true,
         "counterexample_present": true,
         "all_short_forms_present": true,
-        "independent_guide_exposes_four_steps": false
+        "independent_guide_exposes_four_steps": true
       },
-      "structural_gaps": [
-        "independent_guide_exposes_four_steps"
-      ],
-      "semantic_review": "source_rebound_semantic_reacceptance_pending",
+      "structural_gaps": [],
+      "semantic_review": "source_bound_editorial_review",
       "first_use_status": "pending_real_student_test",
       "timed_delivery": "unmeasured",
       "learner_acceptance": "pending_real_participant_validation",
@@ -1346,11 +1306,11 @@
       "primary_role": "verifier",
       "output_role": "verify",
       "source_section_ids": [
-        "b50b911407b9faa9",
+        "7ff85814d7d04b1a",
         "3f36ea92a4769ee5"
       ],
       "guide_path": "student-guides/C02-前后夹击.md",
-      "entry_state": "held_for_reacceptance",
+      "entry_state": "draft",
       "structural_checks": {
         "symptom_present": true,
         "trigger_present": true,
@@ -1365,12 +1325,10 @@
         "challenge_present": true,
         "counterexample_present": true,
         "all_short_forms_present": true,
-        "independent_guide_exposes_four_steps": false
+        "independent_guide_exposes_four_steps": true
       },
-      "structural_gaps": [
-        "independent_guide_exposes_four_steps"
-      ],
-      "semantic_review": "source_rebound_semantic_reacceptance_pending",
+      "structural_gaps": [],
+      "semantic_review": "source_bound_editorial_review",
       "first_use_status": "pending_real_student_test",
       "timed_delivery": "unmeasured",
       "learner_acceptance": "pending_real_participant_validation",
@@ -1388,7 +1346,7 @@
         "c84135f2763c6806"
       ],
       "guide_path": "student-guides/C03-首句定调.md",
-      "entry_state": "held_for_reacceptance",
+      "entry_state": "draft",
       "structural_checks": {
         "symptom_present": true,
         "trigger_present": true,
@@ -1403,12 +1361,10 @@
         "challenge_present": true,
         "counterexample_present": true,
         "all_short_forms_present": true,
-        "independent_guide_exposes_four_steps": false
+        "independent_guide_exposes_four_steps": true
       },
-      "structural_gaps": [
-        "independent_guide_exposes_four_steps"
-      ],
-      "semantic_review": "source_rebound_semantic_reacceptance_pending",
+      "structural_gaps": [],
+      "semantic_review": "source_bound_editorial_review",
       "first_use_status": "pending_real_student_test",
       "timed_delivery": "unmeasured",
       "learner_acceptance": "pending_real_participant_validation",
@@ -1423,10 +1379,10 @@
       "primary_role": "locator",
       "output_role": "locate",
       "source_section_ids": [
-        "b0b1e691060b321a"
+        "32023d73e6038aee"
       ],
       "guide_path": "student-guides/C04-词性导航.md",
-      "entry_state": "held_for_reacceptance",
+      "entry_state": "draft",
       "structural_checks": {
         "symptom_present": true,
         "trigger_present": true,
@@ -1441,12 +1397,10 @@
         "challenge_present": true,
         "counterexample_present": true,
         "all_short_forms_present": true,
-        "independent_guide_exposes_four_steps": false
+        "independent_guide_exposes_four_steps": true
       },
-      "structural_gaps": [
-        "independent_guide_exposes_four_steps"
-      ],
-      "semantic_review": "source_rebound_semantic_reacceptance_pending",
+      "structural_gaps": [],
+      "semantic_review": "source_bound_editorial_review",
       "first_use_status": "pending_real_student_test",
       "timed_delivery": "unmeasured",
       "learner_acceptance": "pending_real_participant_validation",
@@ -1461,10 +1415,10 @@
       "primary_role": "interpreter",
       "output_role": "interpret",
       "source_section_ids": [
-        "87987576b5e8284b"
+        "98c2c157b45f185a"
       ],
       "guide_path": "student-guides/C05-近义落地.md",
-      "entry_state": "static_entry_ready",
+      "entry_state": "draft",
       "structural_checks": {
         "symptom_present": true,
         "trigger_present": true,
@@ -1482,7 +1436,7 @@
         "independent_guide_exposes_four_steps": true
       },
       "structural_gaps": [],
-      "semantic_review": "source_rebound_semantic_reacceptance_pending",
+      "semantic_review": "source_bound_editorial_review",
       "first_use_status": "pending_real_student_test",
       "timed_delivery": "unmeasured",
       "learner_acceptance": "pending_real_participant_validation",
@@ -1497,10 +1451,10 @@
       "primary_role": "interpreter",
       "output_role": "interpret",
       "source_section_ids": [
-        "7abd608ebd73dbe2"
+        "7f0f15f40c83b385"
       ],
       "guide_path": "student-guides/C06-时间线复原.md",
-      "entry_state": "static_entry_ready",
+      "entry_state": "draft",
       "structural_checks": {
         "symptom_present": true,
         "trigger_present": true,
@@ -1518,7 +1472,7 @@
         "independent_guide_exposes_four_steps": true
       },
       "structural_gaps": [],
-      "semantic_review": "source_rebound_semantic_reacceptance_pending",
+      "semantic_review": "source_bound_editorial_review",
       "first_use_status": "pending_real_student_test",
       "timed_delivery": "unmeasured",
       "learner_acceptance": "pending_real_participant_validation",
@@ -1533,10 +1487,10 @@
       "primary_role": "locator",
       "output_role": "locate",
       "source_section_ids": [
-        "89415a44acd8248e"
+        "91f59a59fd1b5610"
       ],
       "guide_path": "student-guides/C07-名词回声.md",
-      "entry_state": "held_for_reacceptance",
+      "entry_state": "draft",
       "structural_checks": {
         "symptom_present": true,
         "trigger_present": true,
@@ -1551,12 +1505,10 @@
         "challenge_present": true,
         "counterexample_present": true,
         "all_short_forms_present": true,
-        "independent_guide_exposes_four_steps": false
+        "independent_guide_exposes_four_steps": true
       },
-      "structural_gaps": [
-        "independent_guide_exposes_four_steps"
-      ],
-      "semantic_review": "source_rebound_semantic_reacceptance_pending",
+      "structural_gaps": [],
+      "semantic_review": "source_bound_editorial_review",
       "first_use_status": "pending_real_student_test",
       "timed_delivery": "unmeasured",
       "learner_acceptance": "pending_real_participant_validation",
@@ -1571,10 +1523,10 @@
       "primary_role": "verifier",
       "output_role": "verify",
       "source_section_ids": [
-        "b7ce29d974576463"
+        "f7cd71358324b06d"
       ],
       "guide_path": "student-guides/C08-结果反推.md",
-      "entry_state": "static_entry_ready",
+      "entry_state": "draft",
       "structural_checks": {
         "symptom_present": true,
         "trigger_present": true,
@@ -1592,7 +1544,7 @@
         "independent_guide_exposes_four_steps": true
       },
       "structural_gaps": [],
-      "semantic_review": "source_rebound_semantic_reacceptance_pending",
+      "semantic_review": "source_bound_editorial_review",
       "first_use_status": "pending_real_student_test",
       "timed_delivery": "unmeasured",
       "learner_acceptance": "pending_real_participant_validation",
@@ -1607,10 +1559,10 @@
       "primary_role": "interpreter",
       "output_role": "interpret",
       "source_section_ids": [
-        "b7ce29d974576463"
+        "f7cd71358324b06d"
       ],
       "guide_path": "student-guides/C09-动作串联.md",
-      "entry_state": "static_entry_ready",
+      "entry_state": "draft",
       "structural_checks": {
         "symptom_present": true,
         "trigger_present": true,
@@ -1628,7 +1580,7 @@
         "independent_guide_exposes_four_steps": true
       },
       "structural_gaps": [],
-      "semantic_review": "source_rebound_semantic_reacceptance_pending",
+      "semantic_review": "source_bound_editorial_review",
       "first_use_status": "pending_real_student_test",
       "timed_delivery": "unmeasured",
       "learner_acceptance": "pending_real_participant_validation",
@@ -1647,22 +1599,22 @@
         "3527a85c4fe668d9",
         "781c4478d621bf5c",
         "8c050016facc6479",
-        "98a55752856ca984",
-        "92af20a0997f0b48",
-        "bdec04e2ce032b40",
-        "9b496b1572cdf49b",
-        "32c08d6c85a150ea",
-        "a166ae34f9256ee9",
-        "ab95cd79ca0709e2",
-        "9b610bdb9f63227e",
-        "a26dc83760c12ebb",
-        "28cb2fee202458a5",
-        "5131f97d0dc78441",
-        "a0bcc74f05b00671",
-        "f77de6ec724f8e88",
-        "7c16410a7f1b8e4f",
-        "62e443a0a04865bf",
-        "7ae166ccec059b00"
+        "dfb1dccd2a7f06e2",
+        "0c267d2ed379a98a",
+        "c78012aeef62d5b9",
+        "1bc229eecb92ae3c",
+        "ccfc09a472cb85a6",
+        "be5c8b287ffa3745",
+        "ab42f9a3682492c6",
+        "3cc12c22579257d5",
+        "b2282a270b8de478",
+        "8f7ca9480b5113bc",
+        "01b66e853d507205",
+        "c6ee3d2de761c2d8",
+        "68c5400be79ea170",
+        "5d83575e1d881f91",
+        "c0416230d2a90924",
+        "86faf5c280abdc74"
       ],
       "guide_path": "student-guides/G01-先判空位.md",
       "entry_state": "draft",
@@ -1683,7 +1635,7 @@
         "independent_guide_exposes_four_steps": true
       },
       "structural_gaps": [],
-      "semantic_review": "missing",
+      "semantic_review": "source_bound_editorial_review",
       "first_use_status": "pending_real_student_test",
       "timed_delivery": "unmeasured",
       "learner_acceptance": "pending_real_participant_validation",
@@ -1701,7 +1653,7 @@
         "781c4478d621bf5c"
       ],
       "guide_path": "student-guides/G02-双路分流.md",
-      "entry_state": "static_entry_ready",
+      "entry_state": "draft",
       "structural_checks": {
         "symptom_present": true,
         "trigger_present": true,
@@ -1719,7 +1671,7 @@
         "independent_guide_exposes_four_steps": true
       },
       "structural_gaps": [],
-      "semantic_review": "source_rebound_semantic_reacceptance_pending",
+      "semantic_review": "source_bound_editorial_review",
       "first_use_status": "pending_real_student_test",
       "timed_delivery": "unmeasured",
       "learner_acceptance": "pending_real_participant_validation",
@@ -1734,10 +1686,10 @@
       "primary_role": "decider",
       "output_role": "decide",
       "source_section_ids": [
-        "98a55752856ca984"
+        "dfb1dccd2a7f06e2"
       ],
       "guide_path": "student-guides/G03-限定词落位.md",
-      "entry_state": "static_entry_ready",
+      "entry_state": "draft",
       "structural_checks": {
         "symptom_present": true,
         "trigger_present": true,
@@ -1755,7 +1707,7 @@
         "independent_guide_exposes_four_steps": true
       },
       "structural_gaps": [],
-      "semantic_review": "source_rebound_semantic_reacceptance_pending",
+      "semantic_review": "source_bound_editorial_review",
       "first_use_status": "pending_real_student_test",
       "timed_delivery": "unmeasured",
       "learner_acceptance": "pending_real_participant_validation",
@@ -1770,10 +1722,10 @@
       "primary_role": "decider",
       "output_role": "decide",
       "source_section_ids": [
-        "92af20a0997f0b48"
+        "0c267d2ed379a98a"
       ],
       "guide_path": "student-guides/G04-指代落位.md",
-      "entry_state": "static_entry_ready",
+      "entry_state": "draft",
       "structural_checks": {
         "symptom_present": true,
         "trigger_present": true,
@@ -1791,7 +1743,7 @@
         "independent_guide_exposes_four_steps": true
       },
       "structural_gaps": [],
-      "semantic_review": "source_rebound_semantic_reacceptance_pending",
+      "semantic_review": "source_bound_editorial_review",
       "first_use_status": "pending_real_student_test",
       "timed_delivery": "unmeasured",
       "learner_acceptance": "pending_real_participant_validation",
@@ -1806,10 +1758,10 @@
       "primary_role": "decider",
       "output_role": "decide",
       "source_section_ids": [
-        "bdec04e2ce032b40"
+        "c78012aeef62d5b9"
       ],
       "guide_path": "student-guides/G05-介词看场景.md",
-      "entry_state": "static_entry_ready",
+      "entry_state": "draft",
       "structural_checks": {
         "symptom_present": true,
         "trigger_present": true,
@@ -1827,7 +1779,7 @@
         "independent_guide_exposes_four_steps": true
       },
       "structural_gaps": [],
-      "semantic_review": "source_rebound_semantic_reacceptance_pending",
+      "semantic_review": "source_bound_editorial_review",
       "first_use_status": "pending_real_student_test",
       "timed_delivery": "unmeasured",
       "learner_acceptance": "pending_real_participant_validation",
@@ -1842,10 +1794,10 @@
       "primary_role": "decider",
       "output_role": "decide",
       "source_section_ids": [
-        "9b496b1572cdf49b"
+        "1bc229eecb92ae3c"
       ],
       "guide_path": "student-guides/G06-从句找缺口.md",
-      "entry_state": "static_entry_ready",
+      "entry_state": "draft",
       "structural_checks": {
         "symptom_present": true,
         "trigger_present": true,
@@ -1863,7 +1815,7 @@
         "independent_guide_exposes_four_steps": true
       },
       "structural_gaps": [],
-      "semantic_review": "source_rebound_semantic_reacceptance_pending",
+      "semantic_review": "source_bound_editorial_review",
       "first_use_status": "pending_real_student_test",
       "timed_delivery": "unmeasured",
       "learner_acceptance": "pending_real_participant_validation",
@@ -1878,10 +1830,10 @@
       "primary_role": "decider",
       "output_role": "decide",
       "source_section_ids": [
-        "32c08d6c85a150ea"
+        "ccfc09a472cb85a6"
       ],
       "guide_path": "student-guides/G07-句间搭桥.md",
-      "entry_state": "static_entry_ready",
+      "entry_state": "draft",
       "structural_checks": {
         "symptom_present": true,
         "trigger_present": true,
@@ -1899,7 +1851,7 @@
         "independent_guide_exposes_four_steps": true
       },
       "structural_gaps": [],
-      "semantic_review": "source_rebound_semantic_reacceptance_pending",
+      "semantic_review": "source_bound_editorial_review",
       "first_use_status": "pending_real_student_test",
       "timed_delivery": "unmeasured",
       "learner_acceptance": "pending_real_participant_validation",
@@ -1914,10 +1866,10 @@
       "primary_role": "reducer",
       "output_role": "reduce",
       "source_section_ids": [
-        "a166ae34f9256ee9"
+        "be5c8b287ffa3745"
       ],
       "guide_path": "student-guides/G08-词性落位.md",
-      "entry_state": "static_entry_ready",
+      "entry_state": "draft",
       "structural_checks": {
         "symptom_present": true,
         "trigger_present": true,
@@ -1935,7 +1887,7 @@
         "independent_guide_exposes_four_steps": true
       },
       "structural_gaps": [],
-      "semantic_review": "source_rebound_semantic_reacceptance_pending",
+      "semantic_review": "source_bound_editorial_review",
       "first_use_status": "pending_real_student_test",
       "timed_delivery": "unmeasured",
       "learner_acceptance": "pending_real_participant_validation",
@@ -1950,10 +1902,10 @@
       "primary_role": "decider",
       "output_role": "decide",
       "source_section_ids": [
-        "ab95cd79ca0709e2"
+        "ab42f9a3682492c6"
       ],
       "guide_path": "student-guides/G09-名词节点.md",
-      "entry_state": "static_entry_ready",
+      "entry_state": "draft",
       "structural_checks": {
         "symptom_present": true,
         "trigger_present": true,
@@ -1971,7 +1923,7 @@
         "independent_guide_exposes_four_steps": true
       },
       "structural_gaps": [],
-      "semantic_review": "source_rebound_semantic_reacceptance_pending",
+      "semantic_review": "source_bound_editorial_review",
       "first_use_status": "pending_real_student_test",
       "timed_delivery": "unmeasured",
       "learner_acceptance": "pending_real_participant_validation",
@@ -1986,10 +1938,10 @@
       "primary_role": "decider",
       "output_role": "decide",
       "source_section_ids": [
-        "9b610bdb9f63227e"
+        "3cc12c22579257d5"
       ],
       "guide_path": "student-guides/G10-形副节点.md",
-      "entry_state": "static_entry_ready",
+      "entry_state": "draft",
       "structural_checks": {
         "symptom_present": true,
         "trigger_present": true,
@@ -2007,7 +1959,7 @@
         "independent_guide_exposes_four_steps": true
       },
       "structural_gaps": [],
-      "semantic_review": "source_rebound_semantic_reacceptance_pending",
+      "semantic_review": "source_bound_editorial_review",
       "first_use_status": "pending_real_student_test",
       "timed_delivery": "unmeasured",
       "learner_acceptance": "pending_real_participant_validation",
@@ -2022,10 +1974,10 @@
       "primary_role": "decider",
       "output_role": "decide",
       "source_section_ids": [
-        "a26dc83760c12ebb"
+        "b2282a270b8de478"
       ],
       "guide_path": "student-guides/G11-数词节点.md",
-      "entry_state": "static_entry_ready",
+      "entry_state": "draft",
       "structural_checks": {
         "symptom_present": true,
         "trigger_present": true,
@@ -2043,7 +1995,7 @@
         "independent_guide_exposes_four_steps": true
       },
       "structural_gaps": [],
-      "semantic_review": "source_rebound_semantic_reacceptance_pending",
+      "semantic_review": "source_bound_editorial_review",
       "first_use_status": "pending_real_student_test",
       "timed_delivery": "unmeasured",
       "learner_acceptance": "pending_real_participant_validation",
@@ -2058,10 +2010,10 @@
       "primary_role": "reducer",
       "output_role": "reduce",
       "source_section_ids": [
-        "5131f97d0dc78441"
+        "01b66e853d507205"
       ],
       "guide_path": "student-guides/G12-动词二分.md",
-      "entry_state": "static_entry_ready",
+      "entry_state": "draft",
       "structural_checks": {
         "symptom_present": true,
         "trigger_present": true,
@@ -2079,7 +2031,7 @@
         "independent_guide_exposes_four_steps": true
       },
       "structural_gaps": [],
-      "semantic_review": "source_rebound_semantic_reacceptance_pending",
+      "semantic_review": "source_bound_editorial_review",
       "first_use_status": "pending_real_student_test",
       "timed_delivery": "unmeasured",
       "learner_acceptance": "pending_real_participant_validation",
@@ -2094,10 +2046,10 @@
       "primary_role": "decider",
       "output_role": "decide",
       "source_section_ids": [
-        "a0bcc74f05b00671"
+        "c6ee3d2de761c2d8"
       ],
       "guide_path": "student-guides/G13-时态三查.md",
-      "entry_state": "static_entry_ready",
+      "entry_state": "draft",
       "structural_checks": {
         "symptom_present": true,
         "trigger_present": true,
@@ -2115,7 +2067,7 @@
         "independent_guide_exposes_four_steps": true
       },
       "structural_gaps": [],
-      "semantic_review": "source_rebound_semantic_reacceptance_pending",
+      "semantic_review": "source_bound_editorial_review",
       "first_use_status": "pending_real_student_test",
       "timed_delivery": "unmeasured",
       "learner_acceptance": "pending_real_participant_validation",
@@ -2130,10 +2082,10 @@
       "primary_role": "verifier",
       "output_role": "verify",
       "source_section_ids": [
-        "a0bcc74f05b00671"
+        "c6ee3d2de761c2d8"
       ],
       "guide_path": "student-guides/G14-找真主语.md",
-      "entry_state": "static_entry_ready",
+      "entry_state": "draft",
       "structural_checks": {
         "symptom_present": true,
         "trigger_present": true,
@@ -2151,7 +2103,7 @@
         "independent_guide_exposes_four_steps": true
       },
       "structural_gaps": [],
-      "semantic_review": "source_rebound_semantic_reacceptance_pending",
+      "semantic_review": "source_bound_editorial_review",
       "first_use_status": "pending_real_student_test",
       "timed_delivery": "unmeasured",
       "learner_acceptance": "pending_real_participant_validation",
@@ -2166,10 +2118,10 @@
       "primary_role": "decider",
       "output_role": "decide",
       "source_section_ids": [
-        "f77de6ec724f8e88"
+        "68c5400be79ea170"
       ],
       "guide_path": "student-guides/G15-非谓语三轴.md",
-      "entry_state": "static_entry_ready",
+      "entry_state": "draft",
       "structural_checks": {
         "symptom_present": true,
         "trigger_present": true,
@@ -2187,7 +2139,7 @@
         "independent_guide_exposes_four_steps": true
       },
       "structural_gaps": [],
-      "semantic_review": "source_rebound_semantic_reacceptance_pending",
+      "semantic_review": "source_bound_editorial_review",
       "first_use_status": "pending_real_student_test",
       "timed_delivery": "unmeasured",
       "learner_acceptance": "pending_real_participant_validation",
@@ -2202,10 +2154,10 @@
       "primary_role": "verifier",
       "output_role": "verify",
       "source_section_ids": [
-        "7c16410a7f1b8e4f"
+        "5d83575e1d881f91"
       ],
       "guide_path": "student-guides/G16-找动作主人.md",
-      "entry_state": "static_entry_ready",
+      "entry_state": "draft",
       "structural_checks": {
         "symptom_present": true,
         "trigger_present": true,
@@ -2223,7 +2175,7 @@
         "independent_guide_exposes_four_steps": true
       },
       "structural_gaps": [],
-      "semantic_review": "source_rebound_semantic_reacceptance_pending",
+      "semantic_review": "source_bound_editorial_review",
       "first_use_status": "pending_real_student_test",
       "timed_delivery": "unmeasured",
       "learner_acceptance": "pending_real_participant_validation",
@@ -2241,7 +2193,7 @@
         "781c4478d621bf5c"
       ],
       "guide_path": "student-guides/G17-长句脱壳.md",
-      "entry_state": "static_entry_ready",
+      "entry_state": "draft",
       "structural_checks": {
         "symptom_present": true,
         "trigger_present": true,
@@ -2259,7 +2211,7 @@
         "independent_guide_exposes_four_steps": true
       },
       "structural_gaps": [],
-      "semantic_review": "source_rebound_semantic_reacceptance_pending",
+      "semantic_review": "source_bound_editorial_review",
       "first_use_status": "pending_real_student_test",
       "timed_delivery": "unmeasured",
       "learner_acceptance": "pending_real_participant_validation",
@@ -2277,7 +2229,7 @@
         "781c4478d621bf5c"
       ],
       "guide_path": "student-guides/G18-考点重复反查.md",
-      "entry_state": "static_entry_ready",
+      "entry_state": "draft",
       "structural_checks": {
         "symptom_present": true,
         "trigger_present": true,
@@ -2295,7 +2247,7 @@
         "independent_guide_exposes_four_steps": true
       },
       "structural_gaps": [],
-      "semantic_review": "source_rebound_semantic_reacceptance_pending",
+      "semantic_review": "source_bound_editorial_review",
       "first_use_status": "pending_real_student_test",
       "timed_delivery": "unmeasured",
       "learner_acceptance": "pending_real_participant_validation",
@@ -2313,7 +2265,7 @@
         "781c4478d621bf5c"
       ],
       "guide_path": "student-guides/G19-变形次数反查.md",
-      "entry_state": "static_entry_ready",
+      "entry_state": "draft",
       "structural_checks": {
         "symptom_present": true,
         "trigger_present": true,
@@ -2331,7 +2283,7 @@
         "independent_guide_exposes_four_steps": true
       },
       "structural_gaps": [],
-      "semantic_review": "source_rebound_semantic_reacceptance_pending",
+      "semantic_review": "source_bound_editorial_review",
       "first_use_status": "pending_real_student_test",
       "timed_delivery": "unmeasured",
       "learner_acceptance": "pending_real_participant_validation",
@@ -2351,7 +2303,7 @@
         "ed19bd45d6bc3762"
       ],
       "guide_path": "student-guides/A01-作文五检.md",
-      "entry_state": "static_entry_ready",
+      "entry_state": "draft",
       "structural_checks": {
         "symptom_present": true,
         "trigger_present": true,
@@ -2369,7 +2321,7 @@
         "independent_guide_exposes_four_steps": true
       },
       "structural_gaps": [],
-      "semantic_review": "source_rebound_semantic_reacceptance_pending",
+      "semantic_review": "source_bound_editorial_review",
       "first_use_status": "pending_real_student_test",
       "timed_delivery": "unmeasured",
       "learner_acceptance": "pending_real_participant_validation",
@@ -2387,7 +2339,7 @@
         "0a6f5b5594a41dd6"
       ],
       "guide_path": "student-guides/A02-六步成稿.md",
-      "entry_state": "held_for_reacceptance",
+      "entry_state": "draft",
       "structural_checks": {
         "symptom_present": true,
         "trigger_present": true,
@@ -2402,12 +2354,10 @@
         "challenge_present": true,
         "counterexample_present": true,
         "all_short_forms_present": true,
-        "independent_guide_exposes_four_steps": false
+        "independent_guide_exposes_four_steps": true
       },
-      "structural_gaps": [
-        "independent_guide_exposes_four_steps"
-      ],
-      "semantic_review": "source_rebound_semantic_reacceptance_pending",
+      "structural_gaps": [],
+      "semantic_review": "source_bound_editorial_review",
       "first_use_status": "pending_real_student_test",
       "timed_delivery": "unmeasured",
       "learner_acceptance": "pending_real_participant_validation",
@@ -2423,10 +2373,10 @@
       "output_role": "interpret",
       "source_section_ids": [
         "15e18423e3364f72",
-        "8cc4571377b8183a"
+        "674a33a24f97831a"
       ],
       "guide_path": "student-guides/A03-三步造句.md",
-      "entry_state": "held_for_reacceptance",
+      "entry_state": "draft",
       "structural_checks": {
         "symptom_present": true,
         "trigger_present": true,
@@ -2441,12 +2391,10 @@
         "challenge_present": true,
         "counterexample_present": true,
         "all_short_forms_present": true,
-        "independent_guide_exposes_four_steps": false
+        "independent_guide_exposes_four_steps": true
       },
-      "structural_gaps": [
-        "independent_guide_exposes_four_steps"
-      ],
-      "semantic_review": "source_rebound_semantic_reacceptance_pending",
+      "structural_gaps": [],
+      "semantic_review": "source_bound_editorial_review",
       "first_use_status": "pending_real_student_test",
       "timed_delivery": "unmeasured",
       "learner_acceptance": "pending_real_participant_validation",
@@ -2462,10 +2410,10 @@
       "output_role": "interpret",
       "source_section_ids": [
         "15e18423e3364f72",
-        "8cc4571377b8183a"
+        "674a33a24f97831a"
       ],
       "guide_path": "student-guides/A04-句块拼接.md",
-      "entry_state": "held_for_reacceptance",
+      "entry_state": "draft",
       "structural_checks": {
         "symptom_present": true,
         "trigger_present": true,
@@ -2480,12 +2428,10 @@
         "challenge_present": true,
         "counterexample_present": true,
         "all_short_forms_present": true,
-        "independent_guide_exposes_four_steps": false
+        "independent_guide_exposes_four_steps": true
       },
-      "structural_gaps": [
-        "independent_guide_exposes_four_steps"
-      ],
-      "semantic_review": "source_rebound_semantic_reacceptance_pending",
+      "structural_gaps": [],
+      "semantic_review": "source_bound_editorial_review",
       "first_use_status": "pending_real_student_test",
       "timed_delivery": "unmeasured",
       "learner_acceptance": "pending_real_participant_validation",
@@ -2501,10 +2447,10 @@
       "output_role": "interpret",
       "source_section_ids": [
         "15e18423e3364f72",
-        "8cc4571377b8183a"
+        "674a33a24f97831a"
       ],
       "guide_path": "student-guides/A05-长句重组.md",
-      "entry_state": "held_for_reacceptance",
+      "entry_state": "draft",
       "structural_checks": {
         "symptom_present": true,
         "trigger_present": true,
@@ -2519,12 +2465,10 @@
         "challenge_present": true,
         "counterexample_present": true,
         "all_short_forms_present": true,
-        "independent_guide_exposes_four_steps": false
+        "independent_guide_exposes_four_steps": true
       },
-      "structural_gaps": [
-        "independent_guide_exposes_four_steps"
-      ],
-      "semantic_review": "source_rebound_semantic_reacceptance_pending",
+      "structural_gaps": [],
+      "semantic_review": "source_bound_editorial_review",
       "first_use_status": "pending_real_student_test",
       "timed_delivery": "unmeasured",
       "learner_acceptance": "pending_real_participant_validation",
@@ -2533,17 +2477,17 @@
     },
     {
       "method_id": "A06",
-      "method_version": "1.2.0",
+      "method_version": "1.2.1",
       "question_type": "应用文",
       "method_type": "framework",
       "primary_role": "framework",
       "output_role": "interpret",
       "source_section_ids": [
-        "27cf55e8f2cf7c93",
+        "1c2d18c01623f09f",
         "1b1197e2fa02ee07"
       ],
       "guide_path": "student-guides/A06-对照仿写.md",
-      "entry_state": "held_for_reacceptance",
+      "entry_state": "draft",
       "structural_checks": {
         "symptom_present": true,
         "trigger_present": true,
@@ -2558,12 +2502,10 @@
         "challenge_present": true,
         "counterexample_present": true,
         "all_short_forms_present": true,
-        "independent_guide_exposes_four_steps": false
+        "independent_guide_exposes_four_steps": true
       },
-      "structural_gaps": [
-        "independent_guide_exposes_four_steps"
-      ],
-      "semantic_review": "source_rebound_semantic_reacceptance_pending",
+      "structural_gaps": [],
+      "semantic_review": "source_bound_editorial_review",
       "first_use_status": "pending_real_student_test",
       "timed_delivery": "unmeasured",
       "learner_acceptance": "pending_real_participant_validation",
@@ -2572,17 +2514,17 @@
     },
     {
       "method_id": "A07",
-      "method_version": "1.2.0",
+      "method_version": "1.2.1",
       "question_type": "应用文",
       "method_type": "method",
       "primary_role": "interpreter",
       "output_role": "interpret",
       "source_section_ids": [
-        "4dde2ad49f107ae2",
-        "3f39d3b03e8baef0"
+        "826bddb7694b0a21",
+        "a3a39e51c18207af"
       ],
       "guide_path": "student-guides/A07-长句搭积木.md",
-      "entry_state": "held_for_reacceptance",
+      "entry_state": "draft",
       "structural_checks": {
         "symptom_present": true,
         "trigger_present": true,
@@ -2597,12 +2539,10 @@
         "challenge_present": true,
         "counterexample_present": true,
         "all_short_forms_present": true,
-        "independent_guide_exposes_four_steps": false
+        "independent_guide_exposes_four_steps": true
       },
-      "structural_gaps": [
-        "independent_guide_exposes_four_steps"
-      ],
-      "semantic_review": "source_rebound_semantic_reacceptance_pending",
+      "structural_gaps": [],
+      "semantic_review": "source_bound_editorial_review",
       "first_use_status": "pending_real_student_test",
       "timed_delivery": "unmeasured",
       "learner_acceptance": "pending_real_participant_validation",
@@ -2617,11 +2557,11 @@
       "primary_role": "framework",
       "output_role": "interpret",
       "source_section_ids": [
-        "cfc5531cda2a9b91",
-        "e68392b5352c1bc7"
+        "e690e665e166ac99",
+        "037a6e97d44a42b0"
       ],
       "guide_path": "student-guides/A08-文体骨架.md",
-      "entry_state": "held_for_reacceptance",
+      "entry_state": "draft",
       "structural_checks": {
         "symptom_present": true,
         "trigger_present": true,
@@ -2636,12 +2576,10 @@
         "challenge_present": true,
         "counterexample_present": true,
         "all_short_forms_present": true,
-        "independent_guide_exposes_four_steps": false
+        "independent_guide_exposes_four_steps": true
       },
-      "structural_gaps": [
-        "independent_guide_exposes_four_steps"
-      ],
-      "semantic_review": "source_rebound_semantic_reacceptance_pending",
+      "structural_gaps": [],
+      "semantic_review": "source_bound_editorial_review",
       "first_use_status": "pending_real_student_test",
       "timed_delivery": "unmeasured",
       "learner_acceptance": "pending_real_participant_validation",
@@ -2661,7 +2599,7 @@
         "ed19bd45d6bc3762"
       ],
       "guide_path": "student-guides/A09-应用文评分.md",
-      "entry_state": "static_entry_ready",
+      "entry_state": "draft",
       "structural_checks": {
         "symptom_present": true,
         "trigger_present": true,
@@ -2679,7 +2617,7 @@
         "independent_guide_exposes_four_steps": true
       },
       "structural_gaps": [],
-      "semantic_review": "source_rebound_semantic_reacceptance_pending",
+      "semantic_review": "source_bound_editorial_review",
       "first_use_status": "pending_real_student_test",
       "timed_delivery": "unmeasured",
       "learner_acceptance": "pending_real_participant_validation",
@@ -2694,11 +2632,11 @@
       "primary_role": "framework",
       "output_role": "interpret",
       "source_section_ids": [
-        "c827be84f7798683",
+        "8cc4571377b8183a",
         "0a6f5b5594a41dd6"
       ],
       "guide_path": "student-guides/A10-读背仿与训练阶段.md",
-      "entry_state": "held_for_reacceptance",
+      "entry_state": "draft",
       "structural_checks": {
         "symptom_present": true,
         "trigger_present": true,
@@ -2713,12 +2651,10 @@
         "challenge_present": true,
         "counterexample_present": true,
         "all_short_forms_present": true,
-        "independent_guide_exposes_four_steps": false
+        "independent_guide_exposes_four_steps": true
       },
-      "structural_gaps": [
-        "independent_guide_exposes_four_steps"
-      ],
-      "semantic_review": "source_rebound_semantic_reacceptance_pending",
+      "structural_gaps": [],
+      "semantic_review": "source_bound_editorial_review",
       "first_use_status": "pending_real_student_test",
       "timed_delivery": "unmeasured",
       "learner_acceptance": "pending_real_participant_validation",
@@ -2740,10 +2676,10 @@
         "9b52c2a999ab29a2",
         "0cf979fcaa4e9965",
         "7b4c299267a685c2",
-        "27662f3285730b79"
+        "fc2eb7086313fb80"
       ],
       "guide_path": "student-guides/W01-五步锁剧情.md",
-      "entry_state": "held_for_reacceptance",
+      "entry_state": "draft",
       "structural_checks": {
         "symptom_present": true,
         "trigger_present": true,
@@ -2758,12 +2694,10 @@
         "challenge_present": true,
         "counterexample_present": true,
         "all_short_forms_present": true,
-        "independent_guide_exposes_four_steps": false
+        "independent_guide_exposes_four_steps": true
       },
-      "structural_gaps": [
-        "independent_guide_exposes_four_steps"
-      ],
-      "semantic_review": "source_rebound_semantic_reacceptance_pending",
+      "structural_gaps": [],
+      "semantic_review": "source_bound_editorial_review",
       "first_use_status": "pending_real_student_test",
       "timed_delivery": "unmeasured",
       "learner_acceptance": "pending_real_participant_validation",
@@ -2779,9 +2713,9 @@
       "output_role": "interpret",
       "source_section_ids": [
         "c7b254c23e9755d1",
-        "01e63cdd038968e7",
+        "5f3815b7a4645e0d",
         "7b4c299267a685c2",
-        "27662f3285730b79"
+        "fc2eb7086313fb80"
       ],
       "guide_path": "student-guides/W02-十句五锚.md",
       "entry_state": "draft",
@@ -2802,7 +2736,7 @@
         "independent_guide_exposes_four_steps": true
       },
       "structural_gaps": [],
-      "semantic_review": "source_rebound_semantic_reacceptance_pending",
+      "semantic_review": "source_bound_editorial_review",
       "first_use_status": "pending_real_student_test",
       "timed_delivery": "unmeasured",
       "learner_acceptance": "pending_real_participant_validation",
@@ -2819,10 +2753,10 @@
       "source_section_ids": [
         "486a5ba8d06a5eb7",
         "a9f982dcfec817d9",
-        "6570e8d5c4fff00d"
+        "5e20d2f7b2a66be1"
       ],
       "guide_path": "student-guides/W03-剧情四格.md",
-      "entry_state": "held_for_reacceptance",
+      "entry_state": "draft",
       "structural_checks": {
         "symptom_present": true,
         "trigger_present": true,
@@ -2837,12 +2771,10 @@
         "challenge_present": true,
         "counterexample_present": true,
         "all_short_forms_present": true,
-        "independent_guide_exposes_four_steps": false
+        "independent_guide_exposes_four_steps": true
       },
-      "structural_gaps": [
-        "independent_guide_exposes_four_steps"
-      ],
-      "semantic_review": "source_rebound_semantic_reacceptance_pending",
+      "structural_gaps": [],
+      "semantic_review": "source_bound_editorial_review",
       "first_use_status": "pending_real_student_test",
       "timed_delivery": "unmeasured",
       "learner_acceptance": "pending_real_participant_validation",
@@ -2857,12 +2789,12 @@
       "primary_role": "locator",
       "output_role": "locate",
       "source_section_ids": [
-        "637ac5c60b37baf7",
+        "866388dfa1b014b3",
         "a9f982dcfec817d9",
         "7b4c299267a685c2"
       ],
       "guide_path": "student-guides/W04-首句找缺口.md",
-      "entry_state": "held_for_reacceptance",
+      "entry_state": "draft",
       "structural_checks": {
         "symptom_present": true,
         "trigger_present": true,
@@ -2877,12 +2809,10 @@
         "challenge_present": true,
         "counterexample_present": true,
         "all_short_forms_present": true,
-        "independent_guide_exposes_four_steps": false
+        "independent_guide_exposes_four_steps": true
       },
-      "structural_gaps": [
-        "independent_guide_exposes_four_steps"
-      ],
-      "semantic_review": "source_rebound_semantic_reacceptance_pending",
+      "structural_gaps": [],
+      "semantic_review": "source_bound_editorial_review",
       "first_use_status": "pending_real_student_test",
       "timed_delivery": "unmeasured",
       "learner_acceptance": "pending_real_participant_validation",
@@ -2891,17 +2821,17 @@
     },
     {
       "method_id": "W05",
-      "method_version": "1.2.0",
+      "method_version": "1.2.1",
       "question_type": "读后续写",
       "method_type": "method",
       "primary_role": "interpreter",
       "output_role": "interpret",
       "source_section_ids": [
-        "866388dfa1b014b3",
+        "314387087cce4dda",
         "5391fbc041ed3f90"
       ],
       "guide_path": "student-guides/W05-动作拆链.md",
-      "entry_state": "held_for_reacceptance",
+      "entry_state": "draft",
       "structural_checks": {
         "symptom_present": true,
         "trigger_present": true,
@@ -2916,12 +2846,10 @@
         "challenge_present": true,
         "counterexample_present": true,
         "all_short_forms_present": true,
-        "independent_guide_exposes_four_steps": false
+        "independent_guide_exposes_four_steps": true
       },
-      "structural_gaps": [
-        "independent_guide_exposes_four_steps"
-      ],
-      "semantic_review": "source_rebound_semantic_reacceptance_pending",
+      "structural_gaps": [],
+      "semantic_review": "source_bound_editorial_review",
       "first_use_status": "pending_real_student_test",
       "timed_delivery": "unmeasured",
       "learner_acceptance": "pending_real_participant_validation",
@@ -2936,11 +2864,11 @@
       "primary_role": "locator",
       "output_role": "locate",
       "source_section_ids": [
-        "0601c0f1de7a4b8f",
+        "65f20f86dc7c5210",
         "a9f982dcfec817d9"
       ],
       "guide_path": "student-guides/W06-三点锁题.md",
-      "entry_state": "held_for_reacceptance",
+      "entry_state": "draft",
       "structural_checks": {
         "symptom_present": true,
         "trigger_present": true,
@@ -2955,12 +2883,10 @@
         "challenge_present": true,
         "counterexample_present": true,
         "all_short_forms_present": true,
-        "independent_guide_exposes_four_steps": false
+        "independent_guide_exposes_four_steps": true
       },
-      "structural_gaps": [
-        "independent_guide_exposes_four_steps"
-      ],
-      "semantic_review": "source_rebound_semantic_reacceptance_pending",
+      "structural_gaps": [],
+      "semantic_review": "source_bound_editorial_review",
       "first_use_status": "pending_real_student_test",
       "timed_delivery": "unmeasured",
       "learner_acceptance": "pending_real_participant_validation",
@@ -2975,12 +2901,12 @@
       "primary_role": "verifier",
       "output_role": "verify",
       "source_section_ids": [
-        "0601c0f1de7a4b8f",
-        "6570e8d5c4fff00d",
+        "65f20f86dc7c5210",
+        "5e20d2f7b2a66be1",
         "a9f982dcfec817d9"
       ],
       "guide_path": "student-guides/W07-伏笔回扣.md",
-      "entry_state": "held_for_reacceptance",
+      "entry_state": "draft",
       "structural_checks": {
         "symptom_present": true,
         "trigger_present": true,
@@ -2995,12 +2921,10 @@
         "challenge_present": true,
         "counterexample_present": true,
         "all_short_forms_present": true,
-        "independent_guide_exposes_four_steps": false
+        "independent_guide_exposes_four_steps": true
       },
-      "structural_gaps": [
-        "independent_guide_exposes_four_steps"
-      ],
-      "semantic_review": "source_rebound_semantic_reacceptance_pending",
+      "structural_gaps": [],
+      "semantic_review": "source_bound_editorial_review",
       "first_use_status": "pending_real_student_test",
       "timed_delivery": "unmeasured",
       "learner_acceptance": "pending_real_participant_validation",
@@ -3015,11 +2939,11 @@
       "primary_role": "interpreter",
       "output_role": "interpret",
       "source_section_ids": [
-        "0601c0f1de7a4b8f",
+        "65f20f86dc7c5210",
         "a9f982dcfec817d9"
       ],
       "guide_path": "student-guides/W08-因果三连.md",
-      "entry_state": "held_for_reacceptance",
+      "entry_state": "draft",
       "structural_checks": {
         "symptom_present": true,
         "trigger_present": true,
@@ -3034,12 +2958,10 @@
         "challenge_present": true,
         "counterexample_present": true,
         "all_short_forms_present": true,
-        "independent_guide_exposes_four_steps": false
+        "independent_guide_exposes_four_steps": true
       },
-      "structural_gaps": [
-        "independent_guide_exposes_four_steps"
-      ],
-      "semantic_review": "source_rebound_semantic_reacceptance_pending",
+      "structural_gaps": [],
+      "semantic_review": "source_bound_editorial_review",
       "first_use_status": "pending_real_student_test",
       "timed_delivery": "unmeasured",
       "learner_acceptance": "pending_real_participant_validation",
@@ -3054,12 +2976,12 @@
       "primary_role": "interpreter",
       "output_role": "interpret",
       "source_section_ids": [
-        "0601c0f1de7a4b8f",
+        "65f20f86dc7c5210",
         "5391fbc041ed3f90",
-        "6570e8d5c4fff00d"
+        "5e20d2f7b2a66be1"
       ],
       "guide_path": "student-guides/W09-细节三镜.md",
-      "entry_state": "held_for_reacceptance",
+      "entry_state": "draft",
       "structural_checks": {
         "symptom_present": true,
         "trigger_present": true,
@@ -3074,12 +2996,10 @@
         "challenge_present": true,
         "counterexample_present": true,
         "all_short_forms_present": true,
-        "independent_guide_exposes_four_steps": false
+        "independent_guide_exposes_four_steps": true
       },
-      "structural_gaps": [
-        "independent_guide_exposes_four_steps"
-      ],
-      "semantic_review": "source_rebound_semantic_reacceptance_pending",
+      "structural_gaps": [],
+      "semantic_review": "source_bound_editorial_review",
       "first_use_status": "pending_real_student_test",
       "timed_delivery": "unmeasured",
       "learner_acceptance": "pending_real_participant_validation",
@@ -3094,10 +3014,10 @@
       "primary_role": "interpreter",
       "output_role": "interpret",
       "source_section_ids": [
-        "0601c0f1de7a4b8f"
+        "65f20f86dc7c5210"
       ],
       "guide_path": "student-guides/W10-无痕衔接.md",
-      "entry_state": "held_for_reacceptance",
+      "entry_state": "draft",
       "structural_checks": {
         "symptom_present": true,
         "trigger_present": true,
@@ -3112,12 +3032,10 @@
         "challenge_present": true,
         "counterexample_present": true,
         "all_short_forms_present": true,
-        "independent_guide_exposes_four_steps": false
+        "independent_guide_exposes_four_steps": true
       },
-      "structural_gaps": [
-        "independent_guide_exposes_four_steps"
-      ],
-      "semantic_review": "source_rebound_semantic_reacceptance_pending",
+      "structural_gaps": [],
+      "semantic_review": "source_bound_editorial_review",
       "first_use_status": "pending_real_student_test",
       "timed_delivery": "unmeasured",
       "learner_acceptance": "pending_real_participant_validation",
@@ -3132,13 +3050,13 @@
       "primary_role": "interpreter",
       "output_role": "interpret",
       "source_section_ids": [
-        "0601c0f1de7a4b8f",
-        "45b51237476e0ec8",
+        "65f20f86dc7c5210",
+        "3251f3f539ab88d7",
         "a9f982dcfec817d9",
-        "6570e8d5c4fff00d"
+        "5e20d2f7b2a66be1"
       ],
       "guide_path": "student-guides/W11-小转折.md",
-      "entry_state": "held_for_reacceptance",
+      "entry_state": "draft",
       "structural_checks": {
         "symptom_present": true,
         "trigger_present": true,
@@ -3153,12 +3071,10 @@
         "challenge_present": true,
         "counterexample_present": true,
         "all_short_forms_present": true,
-        "independent_guide_exposes_four_steps": false
+        "independent_guide_exposes_four_steps": true
       },
-      "structural_gaps": [
-        "independent_guide_exposes_four_steps"
-      ],
-      "semantic_review": "source_rebound_semantic_reacceptance_pending",
+      "structural_gaps": [],
+      "semantic_review": "source_bound_editorial_review",
       "first_use_status": "pending_real_student_test",
       "timed_delivery": "unmeasured",
       "learner_acceptance": "pending_real_participant_validation",
@@ -3173,11 +3089,11 @@
       "primary_role": "interpreter",
       "output_role": "interpret",
       "source_section_ids": [
-        "0601c0f1de7a4b8f",
-        "3c0a4de4ecbf9d90"
+        "65f20f86dc7c5210",
+        "4b1d65a04c19b519"
       ],
       "guide_path": "student-guides/W12-精准换词.md",
-      "entry_state": "held_for_reacceptance",
+      "entry_state": "draft",
       "structural_checks": {
         "symptom_present": true,
         "trigger_present": true,
@@ -3192,12 +3108,10 @@
         "challenge_present": true,
         "counterexample_present": true,
         "all_short_forms_present": true,
-        "independent_guide_exposes_four_steps": false
+        "independent_guide_exposes_four_steps": true
       },
-      "structural_gaps": [
-        "independent_guide_exposes_four_steps"
-      ],
-      "semantic_review": "source_rebound_semantic_reacceptance_pending",
+      "structural_gaps": [],
+      "semantic_review": "source_bound_editorial_review",
       "first_use_status": "pending_real_student_test",
       "timed_delivery": "unmeasured",
       "learner_acceptance": "pending_real_participant_validation",
@@ -3212,13 +3126,13 @@
       "primary_role": "verifier",
       "output_role": "verify",
       "source_section_ids": [
-        "27662f3285730b79",
+        "fc2eb7086313fb80",
         "0cf979fcaa4e9965",
-        "6570e8d5c4fff00d",
+        "5e20d2f7b2a66be1",
         "a9f982dcfec817d9"
       ],
       "guide_path": "student-guides/W13-结尾回扣.md",
-      "entry_state": "held_for_reacceptance",
+      "entry_state": "draft",
       "structural_checks": {
         "symptom_present": true,
         "trigger_present": true,
@@ -3233,12 +3147,10 @@
         "challenge_present": true,
         "counterexample_present": true,
         "all_short_forms_present": true,
-        "independent_guide_exposes_four_steps": false
+        "independent_guide_exposes_four_steps": true
       },
-      "structural_gaps": [
-        "independent_guide_exposes_four_steps"
-      ],
-      "semantic_review": "source_rebound_semantic_reacceptance_pending",
+      "structural_gaps": [],
+      "semantic_review": "source_bound_editorial_review",
       "first_use_status": "pending_real_student_test",
       "timed_delivery": "unmeasured",
       "learner_acceptance": "pending_real_participant_validation",
@@ -3253,13 +3165,13 @@
       "primary_role": "framework",
       "output_role": "interpret",
       "source_section_ids": [
-        "4b1d65a04c19b519",
+        "625feff688a4d50a",
         "c7b254c23e9755d1",
-        "6570e8d5c4fff00d",
+        "5e20d2f7b2a66be1",
         "a9f982dcfec817d9"
       ],
       "guide_path": "student-guides/W14-骨架句与肌肉句.md",
-      "entry_state": "held_for_reacceptance",
+      "entry_state": "draft",
       "structural_checks": {
         "symptom_present": true,
         "trigger_present": true,
@@ -3274,12 +3186,10 @@
         "challenge_present": true,
         "counterexample_present": true,
         "all_short_forms_present": true,
-        "independent_guide_exposes_four_steps": false
+        "independent_guide_exposes_four_steps": true
       },
-      "structural_gaps": [
-        "independent_guide_exposes_four_steps"
-      ],
-      "semantic_review": "source_rebound_semantic_reacceptance_pending",
+      "structural_gaps": [],
+      "semantic_review": "source_bound_editorial_review",
       "first_use_status": "pending_real_student_test",
       "timed_delivery": "unmeasured",
       "learner_acceptance": "pending_real_participant_validation",
@@ -3297,10 +3207,10 @@
         "d2dc77b78b7ce906",
         "7b4c299267a685c2",
         "09015032f4ec758b",
-        "27662f3285730b79"
+        "fc2eb7086313fb80"
       ],
       "guide_path": "student-guides/W15-续写评分.md",
-      "entry_state": "held_for_reacceptance",
+      "entry_state": "draft",
       "structural_checks": {
         "symptom_present": true,
         "trigger_present": true,
@@ -3315,12 +3225,10 @@
         "challenge_present": true,
         "counterexample_present": true,
         "all_short_forms_present": true,
-        "independent_guide_exposes_four_steps": false
+        "independent_guide_exposes_four_steps": true
       },
-      "structural_gaps": [
-        "independent_guide_exposes_four_steps"
-      ],
-      "semantic_review": "source_rebound_semantic_reacceptance_pending",
+      "structural_gaps": [],
+      "semantic_review": "source_bound_editorial_review",
       "first_use_status": "pending_real_student_test",
       "timed_delivery": "unmeasured",
       "learner_acceptance": "pending_real_participant_validation",
@@ -3335,11 +3243,11 @@
       "primary_role": "framework",
       "output_role": "interpret",
       "source_section_ids": [
-        "0601c0f1de7a4b8f",
+        "65f20f86dc7c5210",
         "7b4c299267a685c2"
       ],
       "guide_path": "student-guides/W16-五档训练升级.md",
-      "entry_state": "held_for_reacceptance",
+      "entry_state": "draft",
       "structural_checks": {
         "symptom_present": true,
         "trigger_present": true,
@@ -3354,12 +3262,10 @@
         "challenge_present": true,
         "counterexample_present": true,
         "all_short_forms_present": true,
-        "independent_guide_exposes_four_steps": false
+        "independent_guide_exposes_four_steps": true
       },
-      "structural_gaps": [
-        "independent_guide_exposes_four_steps"
-      ],
-      "semantic_review": "source_rebound_semantic_reacceptance_pending",
+      "structural_gaps": [],
+      "semantic_review": "source_bound_editorial_review",
       "first_use_status": "pending_real_student_test",
       "timed_delivery": "unmeasured",
       "learner_acceptance": "pending_real_participant_validation",

@@ -1,0 +1,147 @@
+method_id: W02
+brand_name: 十句五锚
+source_name: 十句五定法
+aliases:
+- 十句五定法
+question_type: 读后续写
+method_type: framework
+role: framework
+primary_role: framework
+secondary_roles: []
+output_type: interpret
+student_symptoms:
+- 需要搭两段功能提纲或诊断桥接
+trigger_cues:
+- 原文和两段开头语齐全；未动笔需要搭两段提纲，或已有自写内容需要查功能衔接。
+core_action: 未动笔先在两段首句下列中文提纲，标接第一首句、必要段间桥、接第二首句、解决冲突、回应五处；已有稿则在现稿标这些功能。自写十句才对应1/5/6/9/10。
+decision_rule: 产出五处功能提纲或现稿的功能缺口；逐处标原文或段首句依据，有依据保留，缺依据留待证；不按编号评分，不凭五格写满宣布故事成立。
+verification: 逐处回原文和两首句核拟写或现有内容是否接续、解决核心冲突并回应关键线索；规划不是已完成作文，功能检查不是评分。
+stop_rule: 缺原文或任一首句就停完整衔接判断；拟写无依据先留空。已有稿按真实位置核功能，不凑十句；已衔接不补可省过渡或重述第二首句，给定首句不必重抄，独立升华句非必需。
+common_wrong_instinct: 只记十句模板，觉得第九句有结果就代表核心矛盾已经解决。
+failure_cases:
+- 只记十句模板，觉得第九句有结果就代表核心矛盾已经解决。
+- 把拟写提纲当成学生已经写出的内容，据此虚构缺句、纠错或分数。
+- 缺原文或任一首句就停完整衔接判断；拟写无依据先留空，现稿不凑十句，已衔接不强补桥或独立升华。
+counterexamples:
+- 十一句但桥接、解决、回应均成立，不因多一句扣分；第九句只交代次要事件而核心矛盾未解，不能按句位宣布完成。此为功能示意，不是真题。
+transfer_pattern: 换剧情仍核五项功能，句数和具体动作随故事调整。
+memory_line: 先锚五处，十句可选；提纲不等于成稿。
+anti_rule: 十句齐 ≠ 功能齐。
+visual_formula: '原文 + 两首句
+
+  未写 → 中文提纲；已写 → 现稿位置
+
+  接首句 / 必要桥 / 接第二首句 / 解决 / 回应
+
+  采用十句 → 可映射1/5/6/9/10
+
+  句数不同 → 仍查功能，不凑数
+
+  无依据 → 留空；给定首句不必重抄'
+challenge_prompt: 先不写全文，在实际提纲上标五个功能位置；若选十句框架，再对应1/5/6/9/10，指出哪座桥确实必要。
+source_references:
+- repository: https://github.com/rockpunkgod/ANSWER.git
+  path: gaokao-writing/references/continuation-writing-and-correction.md
+  heading: 十句五定法
+  commit: 1c388a0596b13935ae7c6a1af00834915a8efa33
+section_ids:
+- c7b254c23e9755d1
+- 01e63cdd038968e7
+- 7b4c299267a685c2
+- 27662f3285730b79
+can_follow: []
+usually_before: []
+usually_after: []
+conflicts_with: []
+cannot_replace:
+- 完整题面验证
+levels:
+  L1: 未写先列中文提纲，已写标现稿五处功能；只在采用自写十句时对应1/5/6/9/10，不算给定首句。
+  L2: 先核接句、必要段间桥、第二段接续、冲突解决、主题回应五处功能；只有选自写十句框架时才参考1/5/6/9/10，句数不同按实际功能映射，不以句数判分。
+  L3: 给定首句不计学生十句，未抄首句正常；实际不是十句时按功能映射，不为凑数删合理内容。缺原文或首句不判完整衔接，独立升华句非必需。
+  L4: 换剧情仍核五项功能，句数和具体动作随故事调整。
+compact:
+  line: 未写先列中文提纲，已写标现稿五处功能；自写十句才对应1/5/6/9/10。
+  boundary: 缺原文或任一首句就停完整衔接判断；无依据先留空，不凑十句，不强补桥或独立升华，不要求重抄首句。
+  10s: 原文、两首句齐却不会接？先列接句、必要桥、接续、结局、回应五格提纲；有据才填，无据先空。
+  30s: 原文和两首句都有，却不知道两段怎么接？未写先列中文提纲，标接句、必要桥、接续、结局、回应五处，逐处找原文或首句依据。示意：第二首句已写推门，提纲已把人送到门前，就不另补到门口。缺材料或依据先停，不凑十句。
+  90s: 原文和两段首句齐全，未动笔需要提纲或已有稿需要查衔接时，先锚五处。未写就在首句下列中文提纲，已写则标现稿实际位置：接第一首句、必要段间桥、接第二首句、解决原文核心冲突、回应关键线索。逐处圈原文或首句依据，有依据保留，缺依据留待证；产物只是功能提纲或功能缺口，不是完整作文或分数。缺原文或任一首句就停完整衔接判断。自写十句时才对应1/5/6/9/10，句数不同不凑数，给定首句不必重抄，已衔接不强补桥，独立升华句非必需。
+    反例（边界示意，非真题）：十一句但桥接、解决、回应均成立，不因多一句扣分；第九句只交代次要事件而核心矛盾未解，不能按句位宣布完成。此为功能示意，不是真题。
+    挑战：先不写全文，在实际提纲上标五个功能位置；若选十句框架，再对应1/5/6/9/10，指出哪座桥确实必要。
+full:
+  summary: 未动笔先在两段首句下列中文提纲，标接第一首句、必要段间桥、接第二首句、解决冲突、回应五处；已有稿则在现稿标这些功能。自写十句才对应1/5/6/9/10。
+    产出五处功能提纲或现稿的功能缺口；逐处标原文或段首句依据，有依据保留，缺依据留待证；不按编号评分，不凭五格写满宣布故事成立。
+  source_boundary: 缺原文或任一首句就停完整衔接判断；拟写无依据先留空。已有稿按真实位置核功能，不凑十句；已衔接不补可省过渡或重述第二首句，给定首句不必重抄，独立升华句非必需。
+  boundaries:
+  - 写前提纲与写后诊断分开；没有学生现稿，不报告学生缺句、语言错误或分数。句数不同按功能映射，不凑十句；给定首句不重抄，已衔接不强补桥或独立升华。
+  - 十一句但桥接、解决、回应均成立，不因多一句扣分；第九句只交代次要事件而核心矛盾未解，不能按句位宣布完成。此为功能示意，不是真题。
+  section_ids:
+  - c7b254c23e9755d1
+  - 01e63cdd038968e7
+  - 7b4c299267a685c2
+  - 27662f3285730b79
+cases:
+  canonical: cases/continuation-writing/W02/canonical/case.yaml
+four_step_card:
+  start: 原文和两段开头语齐全；未动笔需要搭两段提纲，或已有自写内容需要查功能衔接。
+  first_cut: 未动笔先在两段首句下列中文提纲，标接第一首句、必要段间桥、接第二首句、解决冲突、回应五处；已有稿则在现稿标这些功能。自写十句才对应1/5/6/9/10。
+  judge: 产出五处功能提纲或现稿的功能缺口；逐处标原文或段首句依据，有依据保留，缺依据留待证；不按编号评分，不凭五格写满宣布故事成立。
+  stop: 缺原文或任一首句就停完整衔接判断；拟写无依据先留空。已有稿按真实位置核功能，不凑十句；已衔接不补可省过渡或重述第二首句，给定首句不必重抄，独立升华句非必需。
+practicality_gate:
+  status: design_complete_empirical_pending
+  trigger: 原文和两段开头语齐全；未动笔需要搭两段提纲，或已有自写内容需要查功能衔接。
+  action: 未动笔先在两段首句下列中文提纲，标接第一首句、必要段间桥、接第二首句、解决冲突、回应五处；已有稿则在现稿标这些功能。自写十句才对应1/5/6/9/10。
+  output: interpret；五处功能提纲或现稿功能缺口，非成稿、答案或分数。
+  stop: 缺原文或任一首句就停完整衔接判断；拟写无依据先留空。已有稿按真实位置核功能，不凑十句；已衔接不补可省过渡或重述第二首句，给定首句不必重抄，独立升华句非必需。
+  transfer: 换剧情仍核五项功能，句数和具体动作随故事调整。
+  efficiency: 把诊断从逐句数数转为关键功能检查，降低提纲负担；实际效果待真人。
+  misuse_cost: 未经实测；只记十句模板，觉得第九句有结果就代表核心矛盾已经解决。会导致误判；须先核触发、执行Stop，不允许辅助产物越级定案。
+first_use_test:
+  status: designed_not_run
+  trigger_success: null
+  action_success: null
+  evidence_success: null
+  stop_rule_success: null
+  no_answer_backfit: null
+  failure_type: null
+  final_result: pending_real_student_test
+evaluation:
+  baseline: 普通逐项核题面
+  primary_benefit_hypothesis: 把诊断从逐句数数转为关键功能检查，降低提纲负担；实际效果待真人。
+  trigger_precision: null
+  trigger_recall: null
+  resolution_rate: null
+  standalone_rate: null
+  assist_rate: null
+  false_trigger_rate: null
+  transfer_rate: null
+  boundary_accuracy: null
+  time_complexity_gain: null
+usefulness_level: Useful
+status: candidate
+maturity_status: candidate
+practical_value: Useful
+version: 1.3.0
+change_reason: ANSWER 1c388a0596b13935ae7c6a1af00834915a8efa33 增量来源同步；保留既有动作与版本，旧证据不自动获得新来源准入。
+affected_cases:
+- cases/continuation-writing/W02/canonical/case.yaml
+regression_result: pending_current_epoch_semantic_and_student_acceptance
+student_ready: false
+entry_copy: 拿到原文和两段首句，却不知道两段怎么接？先别凑十句。未写先在首句下列中文提纲，已有稿则标现稿的接句、必要桥、接续、结局、回应五处；每处圈原文或首句依据。得到的是功能提纲或缺口，不是成稿或分数。缺材料或依据先停；已衔接不强补桥，首句不必重抄，独立升华句非必需。
+static_design_review:
+  status: source_rebound_semantic_reacceptance_pending
+  source_section_ids:
+  - c7b254c23e9755d1
+  - 01e63cdd038968e7
+  - 7b4c299267a685c2
+  - 27662f3285730b79
+  participant_validation: pending_real_participant_validation
+  example_scope: schematic source boundary, not a verified exam
+source_alignment:
+  commit: 1c388a0596b13935ae7c6a1af00834915a8efa33
+  state: live_source_bound
+  source_content_changed: false
+  correction_profile_applied: true
+  authored_first_contact_draft: true
+  new_course_branches: preserved_in_full_contract_not_automatically_aliased
+  acceptance: unchanged_method_sections; added_source_contracts_preserved; learner/release_pending

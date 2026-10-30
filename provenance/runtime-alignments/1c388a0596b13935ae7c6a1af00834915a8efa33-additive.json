@@ -1,0 +1,21 @@
+{
+  "scope": "additive_source_sync_not_method_or_student_promotion",
+  "from_commit": "61bc9c3e15004639cb442c20e7946ca9631f14ce",
+  "to_commit": "1c388a0596b13935ae7c6a1af00834915a8efa33",
+  "captured_documents_verified": 51,
+  "validation": {
+    "methods": 82,
+    "source_documents": 20,
+    "status": "PASS"
+  },
+  "existing_method_sections_changed": 0,
+  "method_versions_changed": 0,
+  "source_repository_modified": false,
+  "historical_cases_modified": false,
+  "method_promotion_applied": false,
+  "learner_acceptance": "pending",
+  "status": "source_bound_candidate_epoch_active",
+  "backup_directory": "E:\\自媒体\\video-making\\local-data\\answer-sync-2026-10-24\\backup-pzv9_kij",
+  "asset_write_count": 172,
+  "full_regression": "pending"
+}

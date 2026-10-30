@@ -1,0 +1,21 @@
+case_id: R11-canonical
+method_id: R11
+question_type: 阅读理解
+source:
+  repository: https://github.com/rockpunkgod/ANSWER.git
+  commit: b04ebc26d7fa096404111a0bb12f6c77cc8525b9
+  path: gaokao-english/references/reading-comprehension.md
+  heading: 逻辑简化
+question: null
+answer: null
+trigger: 定位长句主干与枝叶混在一起
+evidence: []
+method_role: interpreter
+expected_action: 圈谓语和对应主体，划开修饰枝叶，但保留否定、条件、范围和比较
+expected_output: interpret
+stop_rule: 枝叶中含改变结论的否定、条件、范围或比较时必须恢复；不能将目标当现状、多个动作当已证过程或转折后当答案。
+case_type: canonical
+status: evidence_gap
+notes: 源方法可核；尚未逐题核验案例，不可当成功样例
+method_version: 1.1.0
+source_commit: b04ebc26d7fa096404111a0bb12f6c77cc8525b9

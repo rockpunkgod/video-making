@@ -407,12 +407,94 @@ class FirstUseMaterialsTests(unittest.TestCase):
         self.assert_invalid_batch_preflight({'student_draft':['synthetic text']},'student draft')
 
     def test_f01_core_rules_unchanged_from_pre_revision_snapshot(self):
+        from copy import deepcopy
         from core.registry import ROOT
         original=json.loads((ROOT/'provenance/student-entry-revisions/F01-1.2.0-before-conditional-challenge.json').read_text(encoding='utf-8'))['method']
         current=self.registry.methods['F01']
-        for key in ('version','core_action','trigger_cues','decision_rule','stop_rule','primary_role','four_step_card','full'):
+        for key in ('version','core_action','trigger_cues','decision_rule','stop_rule','primary_role','four_step_card'):
             self.assertEqual(current[key],original[key],key)
+        history=Registry(snapshot_commit=original['source_alignment']['commit'])
+        old_sections=[history.sources['sections'][sid] for sid in original['full']['section_ids']]
+        new_sections=[self.registry.sources['sections'][sid] for sid in current['full']['section_ids']]
+        self.assertEqual(len(new_sections),len(old_sections))
+        for old,new in zip(old_sections,new_sections):
+            self.assertEqual({key:new[key] for key in ('path','heading','content')},
+                             {key:old[key] for key in ('path','heading','content')})
+        expected_full=deepcopy(original['full'])
+        expected_full['section_ids']=list(current['full']['section_ids'])
+        if self.registry.index['source_baseline']['commit']=='70db6d6f0423bc8da95c591ca1feda883c2865b1':
+            from scripts.align_answer_20261030 import NOTES
+            expected_full['source_update_note']=NOTES['F']
+        # Optional presentation support cannot change any existing full-card
+        # rule, boundary or source binding. Check additions separately rather
+        # than requiring the old full object to have no new optional fields.
+        support_keys={'beginner_support','presentation_revision'}
+        self.assertEqual({key:value for key,value in current['full'].items()
+                          if key not in support_keys},expected_full)
+        if 'beginner_support' in current['full']:
+            self.assertEqual(current['full']['presentation_revision'],'2026-10-28.2')
+            self.assertTrue(current['full']['beginner_support']['first_micro_action'])
+            self.assertIn('无区分度',current['full']['beginner_support']['short_stop']+
+                          current['compact']['30s'])
         self.assertNotEqual(current['challenge_prompt'],original['challenge_prompt'])
+
+    def test_new_export_includes_bound_beginner_support_without_observations(self):
+        result=self.run_export(); output=Path(result['output'])
+        meta=json.loads((output/'facilitator.json').read_bytes())
+        text=(output/'student-material.md').read_text(encoding='utf-8')
+        support=self.registry.methods['F01']['full']['beginner_support']
+        self.assertEqual(meta['teaching_binding_scope'],'first_use_card_challenge_and_support_v3')
+        for key in ['first_micro_action','prerequisite','if_stuck','micro_action_is_not_completion']:
+            self.assertIn(support[key],text)
+        self.assertTrue(all(value is None for value in meta['first_use_test'].values()))
+        self.assertFalse(meta['collection_allowed'])
+        self.assertNotIn('SECRET',text)
+        self.assertNotIn(support['first_micro_action'],text.split('## 第二道题')[1])
+
+    def test_same_semantic_version_changed_support_invalidates_new_kit(self):
+        result=self.run_export()
+        support=self.registry.methods['F01']['full']['beginner_support']
+        with patch.dict(support,{'first_micro_action':'synthetic changed first action'}):
+            with self.assertRaisesRegex(ValueError,'stale'):
+                verify(result['output'],self.registry)
+
+    def test_absent_support_preserves_exact_v2_fingerprint_and_projection(self):
+        from scripts.prepare_first_use_materials import teaching_fingerprint,teaching_binding_scope,render_student_material
+        method=json.loads(json.dumps(self.registry.methods['F01']))
+        method['full'].pop('beginner_support')
+        method['full'].pop('presentation_revision')
+        fields={key:method[key] for key in ('method_id','version','brand_name','student_symptoms',
+                'four_step_card','primary_role','output_type','section_ids','challenge_prompt')}
+        self.assertEqual(teaching_fingerprint(method),question_fingerprint(fields))
+        self.assertEqual(teaching_binding_scope(method),'first_use_card_and_challenge_v2')
+        demo,_=read_question(self.demo); transfer,_=read_question(self.transfer)
+        walkthrough=json.loads(self.walkthrough.read_bytes())
+        text=render_student_material(method,demo,transfer,walkthrough)
+        self.assertNotIn('先做一小步',text)
+        self.assertIn('第一刀：'+method['four_step_card']['first_cut'],text)
+
+    def test_unused_example_does_not_rebind_first_use_material(self):
+        from scripts.prepare_first_use_materials import teaching_fingerprint
+        method=self.registry.methods['F01']
+        before=teaching_fingerprint(method)
+        with patch.dict(method['full']['beginner_support'],{'example':'unused synthetic illustration'}):
+            self.assertEqual(teaching_fingerprint(method),before)
+
+    def test_v2_scope_cannot_wrap_new_support_even_with_current_hash(self):
+        result=self.run_export(); output=Path(result['output'])
+        path=output/'facilitator.json'; meta=json.loads(path.read_bytes())
+        meta['teaching_binding_scope']='first_use_card_and_challenge_v2'
+        self.save(path,meta)
+        with self.assertRaisesRegex(ValueError,'stale'):
+            verify(output,self.registry)
+
+    def test_incomplete_support_fails_before_new_kit_is_created(self):
+        support=self.registry.methods['F01']['full']['beginner_support']
+        output=self.root/'local-data/missing-support'
+        with patch.dict(support,{'first_micro_action':''}):
+            with self.assertRaisesRegex(ValueError,'Beginner support'):
+                self.run_export(output)
+        self.assertFalse(output.exists())
 
 
 if __name__=='__main__': unittest.main()

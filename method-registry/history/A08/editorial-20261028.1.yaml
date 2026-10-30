@@ -1,0 +1,138 @@
+method_id: A08
+brand_name: 文体骨架
+source_name: 常见文体骨架
+aliases:
+- 常见文体骨架
+question_type: 应用文
+method_type: category
+role: framework
+primary_role: framework
+secondary_roles: []
+output_type: interpret
+student_symptoms:
+- 应用文需要匹配文体与交际目的
+trigger_cues:
+- 应用文题面需要安排文体、对象与交际目的相符的内容骨架。
+core_action: 圈题面文体、对象、目的及明示格式，让各段承担实际要点功能，再选择相应文体骨架。
+decision_rule: 产出服务题面内容的结构计划；人物介绍等细化依题目取用，三件套四件套等整理便称不冒充独立原名。
+verification: 产出服务题面内容的结构计划；人物介绍等细化依题目取用，三件套四件套等整理便称不冒充独立原名。 题面已给标题首尾或特殊格式就按要求保留，不硬套段数；示范句型不作每篇配额，骨架齐不等于要点完成。
+stop_rule: 题面已给标题首尾或特殊格式就按要求保留，不硬套段数；示范句型不作每篇配额，骨架齐不等于要点完成。
+common_wrong_instinct: 看到某文体就抄整段模板，忘记核对任务和读者。
+failure_cases:
+- 看到某文体就抄整段模板，忘记核对任务和读者。
+- 题面已给标题首尾或特殊格式就按要求保留，不硬套段数；示范句型不作每篇配额，骨架齐不等于要点完成。
+counterexamples:
+- 有邀请结尾的模板不适合只需感谢的任务；题目已给开场时不应再重写一个改变格式的开头。此为条件示意，不是真题。
+transfer_pattern: 文体变时更换段落任务，但始终由对象、目的和具体要点决定内容。
+memory_line: 圈题面文体、对象、目的及明示格式，让各段承担实际要点功能，再选择相应文体骨架。
+anti_rule: 模板对路 ≠ 要点齐全。
+visual_formula: '文体 + 对象 + 目的
+
+  → 开头任务 / 主体任务 / 结尾任务
+
+  → 逐项安放题面内容'
+challenge_prompt: 不写套话，只圈文体对象目的，再给三部分各写一个任务标签。
+source_references:
+- repository: https://github.com/rockpunkgod/ANSWER.git
+  path: gaokao-writing/references/application-writing-and-correction.md
+  heading: 常见文体骨架
+  commit: 1c388a0596b13935ae7c6a1af00834915a8efa33
+section_ids: &id001
+- 3bdff468bd64db47
+- 7b0d6fffa882d4ed
+can_follow: []
+usually_before: []
+usually_after: []
+conflicts_with: []
+cannot_replace:
+- 完整题面验证
+levels:
+  L1: 圈题目文体对象目的，调用对应骨架，不把文体模板算独立原创规则
+  L2: 圈文体、对象与交际目的，再让开头、主体、结尾各承担对应任务；邀请/建议/感谢/通知/演讲/报道的骨架只组织题面内容，不新增义务。
+  L3: 题面格式、已给首尾或目的另有要求时服从题面，不硬套三段或称呼；骨架不是原创品牌判据，也不能以句型齐全判内容完成。
+  L4: 文体变时更换段落任务，但始终由对象、目的和具体要点决定内容。
+compact:
+  line: 圈题面文体、对象、目的及明示格式，让各段承担实际要点功能，再选择相应文体骨架。
+  boundary: 题面已给标题首尾或特殊格式就按要求保留，不硬套段数；示范句型不作每篇配额，骨架齐不等于要点完成。
+  10s: 文体格式拿不准？先圈写给谁和写作目的，再安排段落任务；骨架不是要点。
+  30s: 文体格式拿不准？先圈题面文体和写给谁，再把一个要点分配给相应段落。例如，感谢和邀请的结尾任务不同，不能照搬同一模板。题面给了特殊格式先遵守，不强套段数或句型。
+  90s: 文体格式拿不准？圈题面文体、对象、目的及明示格式，让各段承担实际要点功能，再选择相应文体骨架。这一步得到的是一份待核的框架或计划，不是答案或分数。判断时，产出服务题面内容的结构计划；人物介绍等细化依题目取用，三件套四件套等整理便称不冒充独立原名。什么时候停，题面已给标题首尾或特殊格式就按要求保留，不硬套段数；示范句型不作每篇配额，骨架齐不等于要点完成。反例示意，有邀请结尾的模板不适合只需感谢的任务；题目已给开场时不应再重写一个改变格式的开头。此为条件示意，不是真题。换题仍检查当前题面的对象和关系，不搬上一题结论。挑战，不写套话，只圈文体对象目的，再给三部分各写一个任务标签。
+full:
+  summary: 圈题面文体、对象、目的及明示格式，让各段承担实际要点功能，再选择相应文体骨架。 产出服务题面内容的结构计划；人物介绍等细化依题目取用，三件套四件套等整理便称不冒充独立原名。
+  source_boundary: 题面已给标题首尾或特殊格式就按要求保留，不硬套段数；示范句型不作每篇配额，骨架齐不等于要点完成。
+  boundaries:
+  - 题面已给标题首尾或特殊格式就按要求保留，不硬套段数；示范句型不作每篇配额，骨架齐不等于要点完成。
+  - 有邀请结尾的模板不适合只需感谢的任务；题目已给开场时不应再重写一个改变格式的开头。此为条件示意，不是真题。
+  section_ids:
+  - 3bdff468bd64db47
+  - 7b0d6fffa882d4ed
+  beginner_support:
+    first_micro_action: 先圈题面文体和写给谁，再把一个要点分配给相应段落。
+    prerequisite: 先读清写给谁、要完成哪件事。基础句先做到谁、做什么或是什么清楚；准确简单句可以保留。
+    if_stuck: 保留准确简单句和已覆盖要点；不强加复杂句、AI或高级词，不据训练配额扣分。
+    example: 感谢和邀请的结尾任务不同，不能照搬同一模板。
+    example_scope: 关系/结构示意，非完整试题，不计真题或已验案例。
+    micro_action_is_not_completion: 完成第一小步不等于完整方法成功；继续完成四步卡的判断与停止核验。
+    short_stop: 题面给了特殊格式先遵守，不强套段数或句型。
+  presentation_revision: 2026-10-28.1
+cases:
+  canonical: cases/application-writing/A08/canonical/case.yaml
+four_step_card:
+  start: 应用文题面需要安排文体、对象与交际目的相符的内容骨架。
+  first_cut: 圈题面文体、对象、目的及明示格式，让各段承担实际要点功能，再选择相应文体骨架。
+  judge: 产出服务题面内容的结构计划；人物介绍等细化依题目取用，三件套四件套等整理便称不冒充独立原名。
+  stop: 题面已给标题首尾或特殊格式就按要求保留，不硬套段数；示范句型不作每篇配额，骨架齐不等于要点完成。
+practicality_gate:
+  status: design_complete_empirical_pending
+  trigger: 应用文题面需要安排文体、对象与交际目的相符的内容骨架。
+  action: 圈题面文体、对象、目的及明示格式，让各段承担实际要点功能，再选择相应文体骨架。
+  output: interpret；产出服务题面内容的结构计划；人物介绍等细化依题目取用，三件套四件套等整理便称不冒充独立原名。
+  stop: 题面已给标题首尾或特殊格式就按要求保留，不硬套段数；示范句型不作每篇配额，骨架齐不等于要点完成。
+  transfer: 文体变时更换段落任务，但始终由对象、目的和具体要点决定内容。
+  efficiency: 减少组织顺序的负担，价值在交际结构而不是模板自动得分。
+  misuse_cost: 未经实测；看到某文体就抄整段模板，忘记核对任务和读者。会导致误判；须先核触发、执行Stop，不允许辅助产物越级定案。
+first_use_test:
+  status: designed_not_run
+  trigger_success: null
+  action_success: null
+  evidence_success: null
+  stop_rule_success: null
+  no_answer_backfit: null
+  failure_type: null
+  final_result: pending_real_student_test
+evaluation:
+  baseline: 普通逐项核题面
+  primary_benefit_hypothesis: 减少组织顺序的负担，价值在交际结构而不是模板自动得分。
+  trigger_precision: null
+  trigger_recall: null
+  resolution_rate: null
+  standalone_rate: null
+  assist_rate: null
+  false_trigger_rate: null
+  transfer_rate: null
+  boundary_accuracy: null
+  time_complexity_gain: null
+usefulness_level: Useful
+status: candidate
+maturity_status: candidate
+practical_value: Useful
+version: 1.2.0
+change_reason: ANSWER 1c388a0596b13935ae7c6a1af00834915a8efa33 增量来源同步；保留既有动作与版本，旧证据不自动获得新来源准入。
+affected_cases:
+- cases/application-writing/A08/canonical/case.yaml
+regression_result: pending_current_epoch_semantic_and_student_acceptance
+student_ready: false
+entry_copy: 文体格式拿不准？先圈题面文体和写给谁，再把一个要点分配给相应段落。这一步得到的是一份待核的框架或计划，不是答案或分数。如果卡住，保留准确简单句和已覆盖要点；不强加复杂句、AI或高级词，不据训练配额扣分。
+static_design_review:
+  status: source_bound_editorial_review
+  source_section_ids: *id001
+  participant_validation: pending_real_participant_validation
+  example_scope: 2026-10-28基础入口表达修订；保留原判据/Stop/课程绑定与语义版本，微动作和关系示意不是完整真题或真人实测。
+source_alignment:
+  commit: 1c388a0596b13935ae7c6a1af00834915a8efa33
+  state: live_source_bound
+  source_content_changed: false
+  correction_profile_applied: true
+  authored_first_contact_draft: true
+  new_course_branches: preserved_in_full_contract_not_automatically_aliased
+  acceptance: unchanged_method_sections; added_source_contracts_preserved; learner/release_pending

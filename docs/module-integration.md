@@ -2,6 +2,8 @@
 
 本文件夹是 `video-making` 中 ANSWER Method Engine 的完整源码交付快照，不是原 ANSWER 仓库，也不是已完成真实教学验证的自动解题服务。先看本文件，再看 `docs/final-acceptance.md`。总体状态为 **PARTIAL**；82项方法均为 Useful + candidate，没有已认证的 Efficient / Signature。
 
+视频呈现设计从[认知设计工作流](cognitive-design-workflow.md)进入：已有冻结学生体验/动作编排通过 `creative_os direction-prepare` 自动消费知识；规则不参与解题或答案闭合。
+
 ## 1. 保留整个文件夹
 
 运行时会从源码根目录读取 `method-registry`、`schemas`、`cases` 和课程来源章节。不要只复制 `core`，也不要把单独 Skill 当成已经部署的引擎。支持 Python 3.10+、源码目录运行及 editable 安装；不承诺独立 wheel 包含课程数据。
@@ -66,7 +68,7 @@ paper = PaperAnalyzer(analyzer).analyze({'paper_id': 'your-paper-id',
 
 `observations` / `relations` / `action_executions` 是宿主或人工提交的外部审阅记录，不是引擎自己证明的英语事实。Python `review_provider` 可补这些记录，但不能修改原题号、题型、题面、选项、提示词、学生原稿或原图；不是安全沙箱。跨度、指纹和图一致也不能认证审阅者身份、语义正确或评分正确。
 
-`locate` 找证据位置，`interpret` 形成语义/框架，`reduce` 缩候选，`decide` 判断当前候选，`verify` 回填核验。不要把定位、骨架或分组包装成答案。完整机器输出保留方法全链；学生fallback只给一个待核入口及四步卡，已有真实停止或失败核验时不继续邀请执行后续计划。没有显式解除缺口的契约，后来的独立产物不会自动解除此前刹车。
+`locate` 找证据位置，`interpret` 形成语义/框架，`reduce` 缩候选，`decide` 判断当前候选，`verify` 回填核验。不要把定位、骨架或分组包装成答案。完整机器输出保留方法全链；客观题只有具备完整已审 `lesson_review` 才输出完整学生讲解。缺失、不完整或未审讲解时，`student` / `legacy-wechat` 只显示讲解未齐及当前未闭合、停止或待补讲解状态，不展示后台审查自由字段、执行产物、终判表或单独答案，也不临时拼方法卡充当现场讲解。机器答案和全部审计记录仍在 `structured` / `content-export` 中保留；这项受众边界不改变核心判据。已有真实停止或失败核验时不继续邀请执行后续计划；没有显式解除缺口的契约，后来的独立产物不会自动解除此前刹车。
 
 ## 4. 内容模块的使用限制
 

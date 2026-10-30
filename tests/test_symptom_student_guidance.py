@@ -75,5 +75,26 @@ class SymptomGuidanceTests(unittest.TestCase):
         self.assertIn('第一刀',result.stdout)
         self.assertFalse(result.stdout.lstrip().startswith('['))
 
+    def test_current_navigation_exposes_micro_action_and_keeps_complete_stop(self):
+        method=self.registry.methods['R11']
+        support=method['full']['beginner_support']
+        text=render_symptom('阅读理解','看不懂长句',self.registry)
+        self.assertIn('第一刀，'+support['first_micro_action'],text)
+        self.assertIn(support['if_stuck'],text)
+        self.assertIn(method['stop_rule'],text)
+        self.assertIn('现在不报答案',text)
+
+    def test_no_support_retains_old_navigation_shape(self):
+        from copy import deepcopy
+        from unittest.mock import patch
+        method=deepcopy(self.registry.methods['R11'])
+        method['full'].pop('beginner_support')
+        method['full'].pop('presentation_revision')
+        with patch.dict(self.registry.methods,{'R11':method}):
+            text=render_symptom('阅读理解','看不懂长句',self.registry)
+        self.assertIn('第一刀，'+method['four_step_card']['first_cut'].split('；')[0],text)
+        self.assertNotIn('继续核完整动作',text)
+        self.assertNotIn('如果卡住',text)
+
 
 if __name__=='__main__': unittest.main()

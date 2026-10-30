@@ -2,6 +2,8 @@
 
 基线协议为根目录EVALUATION_PROTOCOL.md：传播→冻结→Practicality Gate→First-use→Blind与Baseline，第二阶段优先级更高。当前pending_real_participant_validation。
 
+自动工程验收使用 `python -X utf8 -m scripts.run_acceptance`，或通过 `--output local-data/NEW-ACCEPTANCE-RUN` 指定尚不存在的私有目录。它重跑全量测试与 CLI、保存真实日志/计数/跳过及源码快照；任何失败、CLI 非零或运行期指纹变化均不得写成工程 PASS。每次另存，不覆盖当前总览与旧公开报告，不自动认证全部 Phase/Gate、上游工作区清洁或真人效果。当前正式总览仍由逐项证据审阅后更新；旧公开 engineering-acceptance.json 仅属其原快照，不能作为新版证明。
+
 ## 新版学生入口与真实首用材料
 
 `python -m scripts.audit_student_entries` 读取当前来源版本、逐方法四步卡及独立学生稿，输出结构缺口。它不自动批准语义一致性、短版时长或真实学生成功；历史报告中的入口数量不能覆盖本版检查。
@@ -32,7 +34,7 @@ python -m scripts.prepare_first_use_materials --verify local-data/STUDY-DRAFT
 
 复核学生文件哈希、原题与示范文件哈希、题面指纹及当前教学卡指纹，并重新检查导出时的题型、候选完整性、提示词、示范身份、第二篇独立性及学生正文投影。即使重算一个被改文件的自声明哈希，错方法示范、复用文章或脱离所绑定题面的学生正文也不能通过。同版本卡片的四步动作变化也会使旧材料失效。检查只证明数据一致性，不认证来源真实性、教学效力或研究许可；材料草稿不能夹带伪造的 First-use 观察。旧材料版本保留，重新生成须用新目录。
 
-当前材料绑定范围为 `first_use_card_and_challenge_v2`，包含 Challenge；不能仅凭同版本四步卡未变继续使用旧练习任务。旧范围缺此绑定时须重新导出。`python -m scripts.refresh_first_use_drafts --index local-data/STUDY/CURRENT_DRAFTS.json --suffix REVISION` 可批量重导未采集草稿，并输出新的索引供明确选择；不会改旧稿。已有观察值、已批准采集、来源文件变化或方法版本变化均拒绝刷新，不能把真实旧观察迁成新结果。
+带基础提示的新材料使用 `first_use_card_challenge_and_support_v3`：除四步卡与Challenge，还绑定实际展示的第一小步、必要基础、卡住退路、微动作不等于完成的提醒及表达修订号。无这些可选字段的旧表达模型保持 `first_use_card_and_challenge_v2` 的哈希与格式；这不允许把旧v2包冒充含新提示的v3包。不能仅凭同版本四步卡未变继续使用已变更的练习文案；旧包保留原样，新版采集须明确另导出并核验。`python -m scripts.refresh_first_use_drafts --index local-data/STUDY/CURRENT_DRAFTS.json --suffix REVISION` 可批量重导未采集草稿，并输出新的索引供明确选择；不会改旧稿。已有观察值、已批准采集、来源文件变化或方法版本变化均拒绝刷新，不能把真实旧观察迁成新结果。本次只改代码接线和临时合成测试，没有批量刷新真实旧包。
 
 学生文件按共享投影写精确 UTF-8，不让 Windows 把题面已有 CRLF 扩成 CRCRLF；复核对实际与预期两侧统一 LF/CRLF/CR 进行正文比较，文件哈希仍核原始字节。批量刷新在写任何新稿前复用同一声明及材料检查，已知无效的后项不能留下先项新稿。此预检不保证磁盘故障或跨进程材料变更下的事务原子性；原稿和观察不会被改写，失败现场不得自动覆盖重试。
 

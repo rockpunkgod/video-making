@@ -1,0 +1,134 @@
+method_id: G06
+brand_name: 从句找缺口
+source_name: 连词、关系词与名词性从句连接词
+aliases:
+- 连词、关系词与名词性从句连接词
+question_type: 语法填空
+method_type: method
+role: decider
+primary_role: decider
+secondary_roles: []
+output_type: decide
+student_symptoms:
+- 句间连接位置且可能是从句
+trigger_cues:
+- 句间连接位置且可能是从句
+core_action: 分别圈两侧谓语，核从句是否缺主语、宾语、表语或状语，再判连接功能
+decision_rule: 先划两侧分句与谓语，判连接类型；定语从句找先行词并标主宾定状缺口，名词性从句标承担成分及所缺内容，再核连接形式。
+verification: 分别圈两侧谓语，核从句是否缺主语、宾语、表语或状语，再判连接功能。先划两侧分句与谓语，判连接类型；定语从句找先行词并标主宾定状缺口，名词性从句标承担成分及所缺内容，再核连接形式。
+  只知先行词是地点、时间或原因不能定where/when/why；从句类型、缺口或实际搭配不明就停。结构完整仍要核语义，不用发生/未发生一条口诀决定why/how。
+stop_rule: 只知先行词是地点、时间或原因不能定where/when/why；从句类型、缺口或实际搭配不明就停。结构完整仍要核语义，不用发生/未发生一条口诀决定why/how。
+common_wrong_instinct: 先行词是地点就填where，觉得从句结构完整就机械填that。
+failure_cases:
+- 先行词是地点就填where，觉得从句结构完整就机械填that。
+- 只知先行词是地点、时间或原因不能定where/when/why；从句类型、缺口或实际搭配不明就停。结构完整仍要核语义，不用发生/未发生一条口诀决定why/how。
+counterexamples:
+- 先行词表示地点，但从句缺的不是地点状语而是主语或宾语；不能仅凭地点名词选关系副词。
+transfer_pattern: 新从句仍先分范围、标成分缺口和联系，不迁移先行词词类到固定连接词。
+memory_line: 分别圈两侧谓语，核从句是否缺主语、宾语、表语或状语，再判连接功能
+anti_rule: 地点先行词 ≠ 必填where。
+visual_formula: '两侧谓语 → 分句/连接类型
+
+  定语：先行词 + 主/宾/定/状缺口
+
+  名词性：承担成分 + 结构/语义缺口
+
+  → 连接词决定；类型不清 → 停'
+challenge_prompt: 先不填连接词，分别圈两侧谓语，划从句范围，标它缺主语、宾语、定语、状语还是只缺语义联系。
+source_references:
+- repository: https://github.com/rockpunkgod/ANSWER.git
+  path: gaokao-grammar-fill/references/grammar-fill.md
+  heading: 连词、关系词与名词性从句连接词
+  commit: 1c388a0596b13935ae7c6a1af00834915a8efa33
+section_ids:
+- 9b496b1572cdf49b
+can_follow: []
+usually_before: []
+usually_after: []
+conflicts_with: []
+cannot_replace:
+- 完整题面验证
+levels:
+  L1: 分别圈两侧谓语，核从句是否缺主语、宾语、表语或状语，再判连接功能
+  L2: 先划两侧分句与谓语，判连接类型；定语从句找先行词并标主宾定状缺口，名词性从句标承担成分及所缺内容，再核连接形式。
+  L3: 只知先行词是地点、时间或原因不能定where/when/why；从句类型、缺口或实际搭配不明就停。结构完整仍要核语义，不用发生/未发生一条口诀决定why/how。
+  L4: 新从句仍先分范围、标成分缺口和联系，不迁移先行词词类到固定连接词。
+compact:
+  10s: 从句连接词不会？圈两侧谓语，划从句并标缺口；地点词不自动where，类型或缺口不清就停。
+  30s: 空处连接分句时，先圈两侧谓语，判并列、从属或从句缺成分。结构示意：地点先行词的从句若缺宾语，不能只按地点选where。名词性从句还核语义；类型、缺口或搭配不明先停，不见完整句就填that。
+  90s: 句间连接位置且可能是从句时，先确认：句间连接位置且可能是从句。第一刀：分别圈两侧谓语，核从句是否缺主语、宾语、表语或状语，再判连接功能。产物 decide：先划两侧分句与谓语，判连接类型；定语从句找先行词并标主宾定状缺口，名词性从句标承担成分及所缺内容，再核连接形式。
+    停止：只知先行词是地点、时间或原因不能定where/when/why；从句类型、缺口或实际搭配不明就停。结构完整仍要核语义，不用发生/未发生一条口诀决定why/how。
+    反例（关系示意，不是真题）：先行词表示地点，但从句缺的不是地点状语而是主语或宾语；不能仅凭地点名词选关系副词。 迁移：新从句仍先分范围、标成分缺口和联系，不迁移先行词词类到固定连接词。
+    挑战：先不填连接词，分别圈两侧谓语，划从句范围，标它缺主语、宾语、定语、状语还是只缺语义联系。
+full:
+  summary: 分别圈两侧谓语，核从句是否缺主语、宾语、表语或状语，再判连接功能 先划两侧分句与谓语，判连接类型；定语从句找先行词并标主宾定状缺口，名词性从句标承担成分及所缺内容，再核连接形式。
+  source_boundary: 只知先行词是地点、时间或原因不能定where/when/why；从句类型、缺口或实际搭配不明就停。结构完整仍要核语义，不用发生/未发生一条口诀决定why/how。
+  boundaries:
+  - 只知先行词是地点、时间或原因不能定where/when/why；从句类型、缺口或实际搭配不明就停。结构完整仍要核语义，不用发生/未发生一条口诀决定why/how。
+  - 先行词表示地点，但从句缺的不是地点状语而是主语或宾语；不能仅凭地点名词选关系副词。
+  section_ids:
+  - 9b496b1572cdf49b
+cases:
+  canonical: cases/grammar/G06/canonical/case.yaml
+four_step_card:
+  start: 句间连接位置且可能是从句
+  first_cut: 分别圈两侧谓语，核从句是否缺主语、宾语、表语或状语，再判连接功能
+  judge: 先划两侧分句与谓语，判连接类型；定语从句找先行词并标主宾定状缺口，名词性从句标承担成分及所缺内容，再核连接形式。
+  stop: 只知先行词是地点、时间或原因不能定where/when/why；从句类型、缺口或实际搭配不明就停。结构完整仍要核语义，不用发生/未发生一条口诀决定why/how。
+practicality_gate:
+  status: design_complete_empirical_pending
+  trigger: 句间连接位置且可能是从句
+  action: 分别圈两侧谓语，核从句是否缺主语、宾语、表语或状语，再判连接功能
+  output: decide；先划两侧分句与谓语，判连接类型；定语从句找先行词并标主宾定状缺口，名词性从句标承担成分及所缺内容，再核连接形式。
+  stop: 只知先行词是地点、时间或原因不能定where/when/why；从句类型、缺口或实际搭配不明就停。结构完整仍要核语义，不用发生/未发生一条口诀决定why/how。
+  transfer: 新从句仍先分范围、标成分缺口和联系，不迁移先行词词类到固定连接词。
+  efficiency: 先定位缺口再调用关系词规则，降低名词标签触发误用；效率未测。
+  misuse_cost: 未经实测；先行词是地点就填where，觉得从句结构完整就机械填that。会导致误判；须先核触发、执行Stop，不允许辅助产物越级定案。
+first_use_test:
+  status: designed_not_run
+  trigger_success: null
+  action_success: null
+  evidence_success: null
+  stop_rule_success: null
+  no_answer_backfit: null
+  failure_type: null
+  final_result: pending_real_student_test
+evaluation:
+  baseline: 普通逐项核题面
+  primary_benefit_hypothesis: 先定位缺口再调用关系词规则，降低名词标签触发误用；效率未测。
+  trigger_precision: null
+  trigger_recall: null
+  resolution_rate: null
+  standalone_rate: null
+  assist_rate: null
+  false_trigger_rate: null
+  transfer_rate: null
+  boundary_accuracy: null
+  time_complexity_gain: null
+usefulness_level: Useful
+status: candidate
+maturity_status: candidate
+practical_value: Useful
+version: 1.2.0
+change_reason: ANSWER 1c388a0596b13935ae7c6a1af00834915a8efa33 增量来源同步；保留既有动作与版本，旧证据不自动获得新来源准入。
+affected_cases:
+- cases/grammar/G06/canonical/case.yaml
+regression_result: pending_current_epoch_semantic_and_student_acceptance
+student_ready: false
+entry_copy: 句间连接位置且可能是从句时，第一眼先找：句间连接位置且可能是从句。手上先做：分别圈两侧谓语，核从句是否缺主语、宾语、表语或状语，再判连接功能。做完得到
+  decide，不是通用答案。先划两侧分句与谓语，判连接类型；定语从句找先行词并标主宾定状缺口，名词性从句标承担成分及所缺内容，再核连接形式。 什么时候停：只知先行词是地点、时间或原因不能定where/when/why；从句类型、缺口或实际搭配不明就停。结构完整仍要核语义，不用发生/未发生一条口诀决定why/how。
+  换题仍这样做：新从句仍先分范围、标成分缺口和联系，不迁移先行词词类到固定连接词。
+static_design_review:
+  status: source_rebound_semantic_reacceptance_pending
+  source_section_ids:
+  - 9b496b1572cdf49b
+  participant_validation: pending_real_participant_validation
+  example_scope: schematic source boundary, not a verified exam
+source_alignment:
+  commit: 1c388a0596b13935ae7c6a1af00834915a8efa33
+  state: live_source_bound
+  source_content_changed: false
+  correction_profile_applied: false
+  authored_first_contact_draft: false
+  new_course_branches: preserved_in_full_contract_not_automatically_aliased
+  acceptance: unchanged_method_sections; added_source_contracts_preserved; learner/release_pending

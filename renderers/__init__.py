@@ -23,6 +23,8 @@ def render(analysis,kind='structured',registry=None):
         exported={'export_schema_version':'1.7.0','question_id':analysis['question_id'],'answer':analysis['answer'],'answer_verification':analysis['answer_verification'],'grammar_navigation':analysis['grammar_navigation'],'writing_feedback':analysis['writing_feedback'],'lesson_feedback':analysis['lesson_feedback'],'execution_trace':analysis['execution_trace'],'method_chain':analysis['method_chain'],'evidence_graph':analysis['evidence_graph'],'methods':assets,'eligible_for_review':analysis['content_eligible'],'safe_for_release':'untested','limitations':analysis['limitations']}
         if 'question_verification' in analysis:
             exported.update(export_schema_version='1.8.0',question_verification=analysis['question_verification'])
+            if analysis['question_verification']['review']['schema_version']=='1.1.0':
+                exported['export_schema_version']='1.9.0'
         return json.dumps(exported,ensure_ascii=False,indent=2)
     if kind not in {'student','legacy-wechat'}: raise ValueError('Unknown renderer')
     lesson=analysis['lesson_feedback']
@@ -38,6 +40,8 @@ def render(analysis,kind='structured',registry=None):
         body='\n\n'.join(paragraphs)
         ending='最后这一空填'+analysis['answer']+'。' if analysis['question_type']=='语法填空' else '最后这一题选'+analysis['answer']+'。'
         return '同学，我们来分析一下。\n\n'+body+'\n\n'+ending
+    if analysis['question_type'] in {'阅读理解','七选五','完形填空','语法填空'}:
+        return render_incomplete_objective(analysis)
     feedback=analysis['writing_feedback']
     if feedback and feedback['scope']!='unreviewed':
         body=render_writing(feedback)
@@ -111,6 +115,30 @@ def render(analysis,kind='structured',registry=None):
     if not parts: parts=['题面或证据不足，请补齐后再判断。']
     body = '\n\n'.join(parts)
     return ('同学你好，咱们先把下一步做清楚。\n\n'+body) if kind=='legacy-wechat' else body
+
+def render_incomplete_objective(analysis):
+    """Expose delivery status, never turn audit annotations into a lesson.
+
+    Analysis and its closed answer remain available to machine consumers. A
+    missing/partial/unreviewed lesson does not authorize copying free-form
+    action, artifact, candidate or terminal-review text to a student.
+    """
+    trace=analysis['execution_trace']
+    terminal=analysis.get('question_verification')
+    stopped=any(x['state']=='stopped' for x in trace) or bool(terminal and terminal['state']=='stopped')
+    failed=any(x['state']=='produced' and x['output']['kind']=='verification_result'
+               and (x['output']['verdict']=='unresolved' or
+                    (x['output'].get('scope')!='candidate_relation_check'
+                     and x['output']['verdict']=='rejects')) for x in trace)
+    if stopped:
+        next_step='这一步需要先停下来，核清影响判断的依据后再继续，现在先不报答案。'
+    elif failed:
+        next_step='当前判断还没有通过核对，需要先回到题面核清依据，现在先不报答案。'
+    elif not analysis['answer_verification']['closed']:
+        next_step='决定答案的题面依据还没核清，现在先不报答案。'
+    else:
+        next_step='还需要补齐从题面依据到结论的讲解，当前不单独报答案。'
+    return '同学，这题的逐步讲解还没齐，暂时不能给你完整解答。\n\n'+next_step
 
 def render_artifact(output):
     kind=output['kind']

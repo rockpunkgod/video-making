@@ -115,7 +115,8 @@ class GrammarMigrationTest(unittest.TestCase):
         projected=json.loads(render(out,'content-export',self.r))
         self.assertEqual(projected['grammar_navigation'],out['grammar_navigation'])
         self.assertIsNone(projected['answer']); self.assertEqual(projected['safe_for_release'],'untested')
-        self.assertIn('树只导航',render(out,'student',self.r))
+        self.assertIn('逐步讲解还没齐',render(out,'student',self.r))
+        self.assertIn('现在先不报答案',render(out,'student',self.r))
 
     def test_source_risks_bind_quotes_and_reject_edited_audit_claims(self):
         for risk in self.r.risks:

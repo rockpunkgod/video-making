@@ -95,8 +95,10 @@ def build_plan(commit=TARGET, repo_root=ROOT):
     current=Registry()
     if current.asset_root.resolve()!=repo_root:
         raise ValueError('Registry and planning root disagree')
-    registry=(Registry(snapshot_commit=manifest['previous_runtime_commit'])
-              if current.index['source_baseline']['commit']==commit else current)
+    # Historical plans stay bound to their actual starting epoch even after
+    # live rules advance again; never reinterpret an old migration from HEAD.
+    registry=(current if current.index['source_baseline']['commit']==manifest['previous_runtime_commit']
+              else Registry(snapshot_commit=manifest['previous_runtime_commit']))
     registry.validate()
     history=Registry(snapshot_commit=registry.index['source_baseline']['commit'])
     # Planning must start from a byte-preserved, replayable historical epoch.

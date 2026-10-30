@@ -1,0 +1,132 @@
+method_id: A03
+brand_name: 三步造句
+source_name: 基础句式锚定法
+aliases:
+- 基础句式锚定法
+question_type: 应用文
+method_type: method
+role: interpreter
+primary_role: interpreter
+secondary_roles: []
+output_type: interpret
+student_symptoms:
+- 要点已确定但简单句写不出来
+trigger_cues:
+- 要点已确定，但还写不出准确的基础句。
+core_action: 先写核心主体，再写动作或状态，最后加入题面支持且服务要点的时间地点等细节。
+decision_rule: 产出可继续组篇的准确基础句；主干、搭配、时态与题面要点对应，不代表整篇任务完成。
+verification: 产出可继续组篇的准确基础句；主干、搭配、时态与题面要点对应，不代表整篇任务完成。 主体或动作不明先回要点，不编背景；基础不成立先修，不靠堆修饰升级，基础句式锚定不与另两种方法合并。
+stop_rule: 主体或动作不明先回要点，不编背景；基础不成立先修，不靠堆修饰升级，基础句式锚定不与另两种方法合并。
+common_wrong_instinct: 中文想表达很多信息，开头就堆长句却没有明确谁做什么。
+failure_cases:
+- 中文想表达很多信息，开头就堆长句却没有明确谁做什么。
+- 主体或动作不明先回要点，不编背景；基础不成立先修，不靠堆修饰升级，基础句式锚定不与另两种方法合并。
+counterexamples:
+- 题面只要求表达感谢，擅加对方实施了某项帮助会改事实；加再多时间地点也不能修复缺失谓语。此为条件示意，不是真题。
+transfer_pattern: 换要点仍先定主体与动作或状态，场景内容随新任务变。
+memory_line: 先写核心主体，再写动作或状态，最后加入题面支持且服务要点的时间地点等细节。
+anti_rule: 句子长 ≠ 句子成立。
+visual_formula: '谁 → 做什么 / 什么状态 → 场景
+
+  → 有主干的基础句'
+challenge_prompt: 先不升级句子，只写一个要点的主体、动作或状态，再指出准备加入的细节从哪里来。
+source_references:
+- repository: https://github.com/rockpunkgod/ANSWER.git
+  path: gaokao-writing/references/application-writing-and-correction.md
+  heading: 三种写作表达方法
+  commit: 1c388a0596b13935ae7c6a1af00834915a8efa33
+section_ids:
+- 15e18423e3364f72
+- 4dde2ad49f107ae2
+can_follow: []
+usually_before: []
+usually_after: []
+conflicts_with: []
+cannot_replace:
+- 完整题面验证
+levels:
+  L1: 先写主体，再写动作或状态，最后嵌入题面支持的场景细节
+  L2: 主体、动作/状态、场景分别对应要点，基础句主干成立且细节有题面支持才保留；得到可继续组织的句子，不代表整篇任务已完成。
+  L3: 主体或动作不确定先回要点，不能编背景补空；句子主干、搭配或时态不成立先修准确，不急着加修饰。
+  L4: 换要点仍先定主体与动作或状态，场景内容随新任务变。
+compact:
+  line: 先写核心主体，再写动作或状态，最后加入题面支持且服务要点的时间地点等细节。
+  boundary: 主体或动作不明先回要点，不编背景；基础不成立先修，不靠堆修饰升级，基础句式锚定不与另两种方法合并。
+  10s: 先写核心主体，再写动作或状态，最后加入题面支持且服务要点的时间地点等细节。 产出可继续组篇的准确基础句；主干、搭配、时态与题面要点对应，不代表整篇任务完成。
+  30s: 要点已确定，但还写不出准确的基础句。 先写核心主体，再写动作或状态，最后加入题面支持且服务要点的时间地点等细节。 主体或动作不明先回要点，不编背景；基础不成立先修，不靠堆修饰升级，基础句式锚定不与另两种方法合并。
+  90s: 要点已确定，但还写不出准确的基础句。 手上先做：先写核心主体，再写动作或状态，最后加入题面支持且服务要点的时间地点等细节。 做完得到：产出可继续组篇的准确基础句；主干、搭配、时态与题面要点对应，不代表整篇任务完成。
+    停止：主体或动作不明先回要点，不编背景；基础不成立先修，不靠堆修饰升级，基础句式锚定不与另两种方法合并。 反例（边界示意，非真题）：题面只要求表达感谢，擅加对方实施了某项帮助会改事实；加再多时间地点也不能修复缺失谓语。此为条件示意，不是真题。
+    挑战：先不升级句子，只写一个要点的主体、动作或状态，再指出准备加入的细节从哪里来。
+full:
+  summary: 先写核心主体，再写动作或状态，最后加入题面支持且服务要点的时间地点等细节。 产出可继续组篇的准确基础句；主干、搭配、时态与题面要点对应，不代表整篇任务完成。
+  source_boundary: 主体或动作不明先回要点，不编背景；基础不成立先修，不靠堆修饰升级，基础句式锚定不与另两种方法合并。
+  boundaries:
+  - 主体或动作不明先回要点，不编背景；基础不成立先修，不靠堆修饰升级，基础句式锚定不与另两种方法合并。
+  - 题面只要求表达感谢，擅加对方实施了某项帮助会改事实；加再多时间地点也不能修复缺失谓语。此为条件示意，不是真题。
+  section_ids:
+  - 15e18423e3364f72
+  - 4dde2ad49f107ae2
+cases:
+  canonical: cases/application-writing/A03/canonical/case.yaml
+four_step_card:
+  start: 要点已确定，但还写不出准确的基础句。
+  first_cut: 先写核心主体，再写动作或状态，最后加入题面支持且服务要点的时间地点等细节。
+  judge: 产出可继续组篇的准确基础句；主干、搭配、时态与题面要点对应，不代表整篇任务完成。
+  stop: 主体或动作不明先回要点，不编背景；基础不成立先修，不靠堆修饰升级，基础句式锚定不与另两种方法合并。
+practicality_gate:
+  status: design_complete_empirical_pending
+  trigger: 要点已确定，但还写不出准确的基础句。
+  action: 先写核心主体，再写动作或状态，最后加入题面支持且服务要点的时间地点等细节。
+  output: interpret；产出可继续组篇的准确基础句；主干、搭配、时态与题面要点对应，不代表整篇任务完成。
+  stop: 主体或动作不明先回要点，不编背景；基础不成立先修，不靠堆修饰升级，基础句式锚定不与另两种方法合并。
+  transfer: 换要点仍先定主体与动作或状态，场景内容随新任务变。
+  efficiency: 减少同时安排主干与修饰的负担，价值先在句子准确性；实际效率待测。
+  misuse_cost: 未经实测；中文想表达很多信息，开头就堆长句却没有明确谁做什么。会导致误判；须先核触发、执行Stop，不允许辅助产物越级定案。
+first_use_test:
+  status: designed_not_run
+  trigger_success: null
+  action_success: null
+  evidence_success: null
+  stop_rule_success: null
+  no_answer_backfit: null
+  failure_type: null
+  final_result: pending_real_student_test
+evaluation:
+  baseline: 普通逐项核题面
+  primary_benefit_hypothesis: 减少同时安排主干与修饰的负担，价值先在句子准确性；实际效率待测。
+  trigger_precision: null
+  trigger_recall: null
+  resolution_rate: null
+  standalone_rate: null
+  assist_rate: null
+  false_trigger_rate: null
+  transfer_rate: null
+  boundary_accuracy: null
+  time_complexity_gain: null
+usefulness_level: Useful
+status: candidate
+maturity_status: candidate
+practical_value: Useful
+version: 1.2.0
+change_reason: ANSWER 1c388a0596b13935ae7c6a1af00834915a8efa33 增量来源同步；保留既有动作与版本，旧证据不自动获得新来源准入。
+affected_cases:
+- cases/application-writing/A03/canonical/case.yaml
+regression_result: pending_current_epoch_semantic_and_student_acceptance
+student_ready: false
+entry_copy: 要点已确定，但还写不出准确的基础句。 手上先做：先写核心主体，再写动作或状态，最后加入题面支持且服务要点的时间地点等细节。 做完得到：产出可继续组篇的准确基础句；主干、搭配、时态与题面要点对应，不代表整篇任务完成。
+  停止：主体或动作不明先回要点，不编背景；基础不成立先修，不靠堆修饰升级，基础句式锚定不与另两种方法合并。
+static_design_review:
+  status: source_rebound_semantic_reacceptance_pending
+  source_section_ids:
+  - 15e18423e3364f72
+  - 4dde2ad49f107ae2
+  participant_validation: pending_real_participant_validation
+  example_scope: schematic source boundary, not a verified exam
+source_alignment:
+  commit: 1c388a0596b13935ae7c6a1af00834915a8efa33
+  state: live_source_bound
+  source_content_changed: false
+  correction_profile_applied: true
+  authored_first_contact_draft: false
+  new_course_branches: preserved_in_full_contract_not_automatically_aliased
+  acceptance: unchanged_method_sections; added_source_contracts_preserved; learner/release_pending

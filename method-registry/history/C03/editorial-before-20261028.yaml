@@ -1,0 +1,129 @@
+method_id: C03
+brand_name: 首句定调
+source_name: 首句建立粗框架（语篇行文结构的子动作）
+aliases:
+- 首句建立粗框架（语篇行文结构的子动作）
+question_type: 完形填空
+method_type: sub_action
+role: interpreter
+primary_role: interpreter
+secondary_roles: []
+output_type: interpret
+student_symptoms:
+- 当前空依赖人物背景或全文基调
+trigger_cues:
+- 需要先建立粗框架，或当前空确实依赖主题、基调、视角或局部线索不足。
+core_action: 从首句或前几句标人物、背景、主题、视角与暂定基调，再核当前空实际需要的对象和关系。
+decision_rule: 产出粗框架而非答案；首句提供理解前提，单空已局部闭合不必每次复述。
+verification: 产出粗框架而非答案；首句提供理解前提，单空已局部闭合不必每次复述。 首句未给的信息不预编；积极态度不等于遭遇顺利，外在表现、遭遇与态度不混同；不报课程系列为方法。
+stop_rule: 首句未给的信息不预编；积极态度不等于遭遇顺利，外在表现、遭遇与态度不混同；不报课程系列为方法。
+common_wrong_instinct: 首句看出积极主题，就默认人物之后一切顺利、所有空都选积极词。
+failure_cases:
+- 首句看出积极主题，就默认人物之后一切顺利、所有空都选积极词。
+- 首句未给的信息不预编；积极态度不等于遭遇顺利，外在表现、遭遇与态度不混同；不报课程系列为方法。
+counterexamples:
+- 首句显示人物乐观，后文却交代遭遇困难；不能把态度直接改成客观处境。
+transfer_pattern: 新故事仍从已给首句记录框架，分开态度与遭遇，不迁移上一题情节。
+memory_line: 从首句或前几句标人物、背景、主题、视角与暂定基调，再核当前空实际需要的对象和关系。
+anti_rule: 积极态度 ≠ 顺利遭遇。
+visual_formula: "首句/前几句 → 人物｜背景｜主题｜视角｜基调\n          ↓ 暂定粗框架（interpret）\n当前空依赖？→ 调回核\n\
+  局部已闭合？→ 不重复；不预编故事"
+challenge_prompt: 先不做任何空，只用首句写人物、背景和暂定基调；未给的情节明确写未知。
+source_references:
+- repository: https://github.com/rockpunkgod/ANSWER.git
+  path: gaokao-english/references/cloze.md
+  heading: 语篇行文结构的已核验操作（内容说明，非新增方法名）
+  commit: 1c388a0596b13935ae7c6a1af00834915a8efa33
+section_ids:
+- c84135f2763c6806
+can_follow: []
+usually_before: []
+usually_after: []
+conflicts_with: []
+cannot_replace:
+- 完整题面验证
+levels:
+  L1: 从首句记录人物、背景、主题、视角和暂定基调，不据此预编后续情节
+  L2: 从首句或前几句写人物、背景、主题、视角和暂定基调；产出粗框架，只在当前空确实依赖这些内容或局部不足时回用。
+  L3: 首句没有的信息不能预编；人物态度、外在表现和实际遭遇须分开。当前空能局部闭合就不机械复述首句，框架不选词。
+  L4: 新故事仍从已给首句记录框架，分开态度与遭遇，不迁移上一题情节。
+compact:
+  line: 从首句或前几句标人物、背景、主题、视角与暂定基调，再核当前空实际需要的对象和关系。
+  boundary: 首句未给的信息不预编；积极态度不等于遭遇顺利，外在表现、遭遇与态度不混同；不报课程系列为方法。
+  10s: 从首句或前几句标人物、背景、主题、视角与暂定基调，再核当前空实际需要的对象和关系。 产出粗框架而非答案；首句提供理解前提，单空已局部闭合不必每次复述。
+  30s: 需要先建立粗框架，或当前空确实依赖主题、基调、视角或局部线索不足。 从首句或前几句标人物、背景、主题、视角与暂定基调，再核当前空实际需要的对象和关系。
+    首句未给的信息不预编；积极态度不等于遭遇顺利，外在表现、遭遇与态度不混同；不报课程系列为方法。
+  90s: 需要先建立粗框架，或当前空确实依赖主题、基调、视角或局部线索不足。 手上先做：从首句或前几句标人物、背景、主题、视角与暂定基调，再核当前空实际需要的对象和关系。
+    做完得到：产出粗框架而非答案；首句提供理解前提，单空已局部闭合不必每次复述。 停止：首句未给的信息不预编；积极态度不等于遭遇顺利，外在表现、遭遇与态度不混同；不报课程系列为方法。
+    反例（边界示意，非真题）：首句显示人物乐观，后文却交代遭遇困难；不能把态度直接改成客观处境。 挑战：先不做任何空，只用首句写人物、背景和暂定基调；未给的情节明确写未知。
+full:
+  summary: 从首句或前几句标人物、背景、主题、视角与暂定基调，再核当前空实际需要的对象和关系。 产出粗框架而非答案；首句提供理解前提，单空已局部闭合不必每次复述。
+  source_boundary: 首句未给的信息不预编；积极态度不等于遭遇顺利，外在表现、遭遇与态度不混同；不报课程系列为方法。
+  boundaries:
+  - 首句未给的信息不预编；积极态度不等于遭遇顺利，外在表现、遭遇与态度不混同；不报课程系列为方法。
+  - 首句显示人物乐观，后文却交代遭遇困难；不能把态度直接改成客观处境。
+  section_ids:
+  - c84135f2763c6806
+cases:
+  canonical: cases/cloze/C03/canonical/case.yaml
+four_step_card:
+  start: 需要先建立粗框架，或当前空确实依赖主题、基调、视角或局部线索不足。
+  first_cut: 从首句或前几句标人物、背景、主题、视角与暂定基调，再核当前空实际需要的对象和关系。
+  judge: 产出粗框架而非答案；首句提供理解前提，单空已局部闭合不必每次复述。
+  stop: 首句未给的信息不预编；积极态度不等于遭遇顺利，外在表现、遭遇与态度不混同；不报课程系列为方法。
+practicality_gate:
+  status: design_complete_empirical_pending
+  trigger: 需要先建立粗框架，或当前空确实依赖主题、基调、视角或局部线索不足。
+  action: 从首句或前几句标人物、背景、主题、视角与暂定基调，再核当前空实际需要的对象和关系。
+  output: interpret；产出粗框架而非答案；首句提供理解前提，单空已局部闭合不必每次复述。
+  stop: 首句未给的信息不预编；积极态度不等于遭遇顺利，外在表现、遭遇与态度不混同；不报课程系列为方法。
+  transfer: 新故事仍从已给首句记录框架，分开态度与遭遇，不迁移上一题情节。
+  efficiency: 形成可回用的粗框架，减少每空重复全文复述；不保证提速或积极词正确率。
+  misuse_cost: 未经实测；首句看出积极主题，就默认人物之后一切顺利、所有空都选积极词。会导致误判；须先核触发、执行Stop，不允许辅助产物越级定案。
+first_use_test:
+  status: designed_not_run
+  trigger_success: null
+  action_success: null
+  evidence_success: null
+  stop_rule_success: null
+  no_answer_backfit: null
+  failure_type: null
+  final_result: pending_real_student_test
+evaluation:
+  baseline: 普通逐项核题面
+  primary_benefit_hypothesis: 形成可回用的粗框架，减少每空重复全文复述；不保证提速或积极词正确率。
+  trigger_precision: null
+  trigger_recall: null
+  resolution_rate: null
+  standalone_rate: null
+  assist_rate: null
+  false_trigger_rate: null
+  transfer_rate: null
+  boundary_accuracy: null
+  time_complexity_gain: null
+usefulness_level: Useful
+status: candidate
+maturity_status: candidate
+practical_value: Useful
+version: 1.2.0
+change_reason: ANSWER 1c388a0596b13935ae7c6a1af00834915a8efa33 增量来源同步；保留既有动作与版本，旧证据不自动获得新来源准入。
+affected_cases:
+- cases/cloze/C03/canonical/case.yaml
+regression_result: pending_current_epoch_semantic_and_student_acceptance
+student_ready: false
+entry_copy: 需要先建立粗框架，或当前空确实依赖主题、基调、视角或局部线索不足。 手上先做：从首句或前几句标人物、背景、主题、视角与暂定基调，再核当前空实际需要的对象和关系。
+  做完得到：产出粗框架而非答案；首句提供理解前提，单空已局部闭合不必每次复述。 停止：首句未给的信息不预编；积极态度不等于遭遇顺利，外在表现、遭遇与态度不混同；不报课程系列为方法。
+static_design_review:
+  status: source_rebound_semantic_reacceptance_pending
+  source_section_ids:
+  - c84135f2763c6806
+  participant_validation: pending_real_participant_validation
+  example_scope: schematic source boundary, not a verified exam
+source_alignment:
+  commit: 1c388a0596b13935ae7c6a1af00834915a8efa33
+  state: live_source_bound
+  source_content_changed: false
+  correction_profile_applied: true
+  authored_first_contact_draft: false
+  new_course_branches: preserved_in_full_contract_not_automatically_aliased
+  acceptance: unchanged_method_sections; added_source_contracts_preserved; learner/release_pending

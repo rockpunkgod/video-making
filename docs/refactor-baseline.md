@@ -1,5 +1,7 @@
 # 施工基线（before_refactor）
 
+本页记录原始施工时点，以下旧课程策略和 16 项测试数仅作 before_refactor 对照，不是当前规则。当前来源、题序和验收请使用[新版交接](source-alignment-2026-10-13.md)及[当前验收](final-acceptance.md)。
+
 日期：2026-10-05。目标仓库 video-making，施工前 HEAD 60ebaf4；课程源 ANSWER 固定 b04ebc26d7fa096404111a0bb12f6c77cc8525b9，只读，不向其提交。
 
 施工前目标仓库有三份 YAML 方法集、六份学生首次接触稿、24 个案例占位或可核片段、传播先验收/实用性高优先级协议、16 项 unittest。执行 `python -m unittest discover -s tests -v`：16/16 PASS。没有 Analyzer、Composer、结构化输出接口或实测评估工具。

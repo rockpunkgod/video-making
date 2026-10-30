@@ -44,7 +44,12 @@ class CurrentEntryTests(unittest.TestCase):
         self.assertEqual(self.report['source_commit'], self.registry.index['source_baseline']['commit'])
 
     def test_held_guide_cannot_pass_as_independent_instruction(self):
-        held = [row for row in self.report['methods'] if row['entry_state']=='held_for_reacceptance']
+        # Exercise an actual held input even after all current entries have
+        # authored drafts. Do not require production to retain placeholders.
+        with patch.dict(self.registry.methods['F02']['source_alignment'],
+                        {'authored_first_contact_draft':False}):
+            held = [row for row in audit(self.registry)['methods']
+                    if row['entry_state']=='held_for_reacceptance']
         self.assertTrue(held)
         for row in held:
             self.assertIn('independent_guide_exposes_four_steps', row['structural_gaps'])

@@ -1,0 +1,176 @@
+method_id: R09
+brand_name: 三步压文
+source_name: 三化法
+aliases:
+- 对象-判断-结构
+- 全文压缩
+question_type: 阅读理解
+role: framework
+primary_role: framework
+secondary_roles: []
+output_type: interpret
+student_symptoms:
+- 长文读完只记得零散事实，说不出全文在完成什么任务。
+- 主旨题只会数重复词或抄段首句，无法形成完整主题判断。
+trigger_cues:
+- 主要段落齐备，需要全文主题、态度、结构、标题或长文框架。
+core_action: 先读实际题干及相关选项；共同/重复概念仅作假设；再化简有效首尾，最后读中间段首及必要回答或段尾。
+decision_rule: 回全文验证对象、核心判断、结构任务三格，产出全文骨架卡，不直接定答案。
+verification: 回全文验证对象、核心判断、结构任务三格，产出全文骨架卡，不直接定答案。 局部题或缺主要段落不启动；重复线索缺失只跳过该观察；三格无正文支持则暂留，不编相关题目。
+stop_rule: 局部题或缺主要段落不启动；重复线索缺失只跳过该观察；三格无正文支持则暂留，不编相关题目。
+common_wrong_instinct: 找到重复词或首尾句就停，没有压出作者对对象的核心判断和全文任务。
+failure_cases:
+- 找到重复词或首尾句就停，没有压出作者对对象的核心判断和全文任务。
+- 局部题或缺主要段落不启动；重复线索缺失只跳过该观察；三格无正文支持则暂留，不编相关题目。
+counterexamples:
+- 某词全文高频，但它只是背景对象，未表达核心判断；仅凭词频不能定主旨。
+- 首段只引入背景，真正判断在后文展开；不能把首段话题直接当全文任务。
+transfer_pattern: 可在说明、议论、对比、变化和问题—解决类长文中重复执行对象—判断—结构压缩。
+memory_line: 先按题面取证，再压出对象、判断、结构。
+anti_rule: 段首 ≠ 中心句。
+visual_formula: '题面实际题干 + 相关选项
+
+  → 可用共同概念（假设，可跳过）
+
+  → 有效首尾 → 中间段首及必要展开
+
+  → 全文核验
+
+  骨架卡：对象 | 核心判断 | 结构任务'
+challenge_prompt: 先标第一眼应读的实际题干与相关选项，再填对象、核心判断和结构任务三格，逐格指出正文证据。
+source_references:
+- repository: https://github.com/rockpunkgod/ANSWER.git
+  path: gaokao-english/references/reading-comprehension.md
+  heading: 三化法
+  commit: 1c388a0596b13935ae7c6a1af00834915a8efa33
+- repository: https://github.com/rockpunkgod/ANSWER.git
+  path: gaokao-english/references/course-evidence.md
+  heading: 其他已激活阅读方法
+  commit: 1c388a0596b13935ae7c6a1af00834915a8efa33
+can_follow:
+- 题干与主旨选项假设
+usually_before:
+- R06
+- mainly题与主旨大意
+usually_after:
+- 对全文任务的识别
+conflicts_with: []
+cannot_replace:
+- R06
+- 候选完整断言核对
+- 局部细节方法
+levels:
+  L1: 只压出全文主要对象。
+  L2: 在对象上加入作者的核心判断。
+  L3: 识别解释、对比、问题—答案、变化、论证或分类结构。
+  L4: 处理背景首段、设问段首、无重复词与多层全文任务。
+compact:
+  line: 先读实际题干及相关选项；共同/重复概念仅作假设；再化简有效首尾，最后读中间段首及必要回答或段尾。
+  boundary: 局部题或缺主要段落不启动；重复线索缺失只跳过该观察；三格无正文支持则暂留，不编相关题目。
+  10s: 长文一团乱？先看题干与相关选项，再核正文，压出对象、判断、结构；骨架不是答案。
+  30s: 全文主题、态度、标题或框架任务卡住时，先读实际题干与相关选项，共同概念只作假设；再核有效首尾、中间段首及必要展开。比如首段只讲背景就不能当核心判断。压成对象、判断、结构三格；缺主要段落停，没重复词则跳过该线索。
+  90s: 主要段落齐备且需要全文框架才启动。第一眼看题面实际题干与相关选项，没有主旨题就不编主旨选项。共同或重复概念可形成假设；再化简有效首尾，再看中间段首，背景段首转看必要段尾，设问连回答。最后用全文核对象、核心判断、结构任务三格，唯一产物是全文骨架卡。反例：背景词反复出现，真正判断却在后文；词频和首尾位置都不能直接定案。缺主要段落或三格无法核实则停，重复线索缺失只跳过该观察。换题仍按实际任务取证而非搬文章结构。挑战：先标第一眼读的位置，再填三格并逐格指出证据。
+full:
+  summary: 先读实际题干及相关选项；共同/重复概念仅作假设；再化简有效首尾，最后读中间段首及必要回答或段尾。 回全文验证对象、核心判断、结构任务三格，产出全文骨架卡，不直接定答案。
+  source_boundary: 局部题或缺主要段落不启动；重复线索缺失只跳过该观察；三格无正文支持则暂留，不编相关题目。
+  boundaries:
+  - 局部题或缺主要段落不启动；重复线索缺失只跳过该观察；三格无正文支持则暂留，不编相关题目。
+  - 某词全文高频，但它只是背景对象，未表达核心判断；仅凭词频不能定主旨。
+  - 首段只引入背景，真正判断在后文展开；不能把首段话题直接当全文任务。
+  section_ids:
+  - 040991117a2ad80e
+cases:
+  canonical: cases/R09/canonical/case.yaml
+  counterexample: cases/R09/counterexamples/case.yaml
+  boundary: cases/R09/boundary/case.yaml
+  transfer: cases/R09/transfer/case.yaml
+  hard: cases/R09/hard/case.yaml
+four_step_card:
+  start: 主要段落齐备，需要全文主题、态度、结构、标题或长文框架。
+  first_cut: 先圈实际题干所问范围，再读题面真正给出的相关选项；没有就不编。
+  judge: 回全文验证对象、核心判断、结构任务三格，产出全文骨架卡，不直接定答案。
+  stop: 局部题或缺主要段落不启动；重复线索缺失只跳过该观察；三格无正文支持则暂留，不编相关题目。
+practicality_gate:
+  status: design_complete_empirical_pending
+  trigger: 主要段落齐备，需要全文主题、态度、结构、标题或长文框架。
+  action: 先读实际题干及相关选项；共同/重复概念仅作假设；再化简有效首尾，最后读中间段首及必要回答或段尾。
+  output: interpret；回全文验证对象、核心判断、结构任务三格，产出全文骨架卡，不直接定答案。
+  stop: 局部题或缺主要段落不启动；重复线索缺失只跳过该观察；三格无正文支持则暂留，不编相关题目。
+  transfer: 可在说明、议论、对比、变化和问题—解决类长文中重复执行对象—判断—结构压缩。
+  efficiency: 将整篇细节压缩为三格外部记忆，降低工作记忆负担；主要价值是结构理解，不预设一定提速。
+  misuse_cost: high；把取证入口当固定三步或直接答案会丢失全文判断。
+first_use_test:
+  status: designed_not_run
+  trigger_success: null
+  action_success: null
+  evidence_success: null
+  stop_rule_success: null
+  no_answer_backfit: null
+  final_result: pending_real_student_test
+  failure_type: null
+evaluation:
+  baseline: 逐段复述+凭词频或首尾句猜主旨
+  trigger_precision: null
+  trigger_recall: null
+  resolution_rate: null
+  standalone_rate: null
+  assist_rate: null
+  false_trigger_rate: null
+  transfer_rate: null
+  time_complexity_gain: null
+  primary_benefit_hypothesis: 改善全文结构理解与工作记忆，为 R06 或主旨比较产生稳定输入。
+  boundary_accuracy: null
+usefulness_level: Useful
+status: candidate
+version: 1.2.0
+section_ids:
+- 040991117a2ad80e
+method_type: framework
+maturity_status: candidate
+practical_value: Useful
+change_reason: ANSWER 1c388a0596b13935ae7c6a1af00834915a8efa33 增量来源同步；保留既有动作与版本，旧证据不自动获得新来源准入。
+affected_cases:
+- cases/R09/canonical/case.yaml
+- cases/R09/counterexamples/case.yaml
+- cases/R09/boundary/case.yaml
+- cases/R09/transfer/case.yaml
+- cases/R09/hard/case.yaml
+regression_result: pending_current_epoch_semantic_and_student_acceptance
+role_correctness:
+  declared_primary_role: framework
+  observed_actual_role: null
+  role_match: null
+  overclaim_detected: null
+  notes: pending_real_participant_validation
+short_version_safety:
+- version: 10s
+  false_trigger_rate: null
+  boundary_accuracy: null
+  role_overclaim_rate: null
+  stop_rule_failure_rate: null
+  safe_for_release: untested
+- version: 30s
+  false_trigger_rate: null
+  boundary_accuracy: null
+  role_overclaim_rate: null
+  stop_rule_failure_rate: null
+  safe_for_release: untested
+- version: 90s
+  false_trigger_rate: null
+  boundary_accuracy: null
+  role_overclaim_rate: null
+  stop_rule_failure_rate: null
+  safe_for_release: untested
+entry_copy: '长文一团乱？先看题干与相关选项，再核正文，压出对象、判断、结构；骨架不是答案。
+
+
+  主要段落齐备且需要全文框架才启动。第一眼看题面实际题干与相关选项，没有主旨题就不编主旨选项。共同或重复概念可形成假设；再化简有效首尾，再看中间段首，背景段首转看必要段尾，设问连回答。最后用全文核对象、核心判断、结构任务三格，唯一产物是全文骨架卡。反例：背景词反复出现，真正判断却在后文；词频和首尾位置都不能直接定案。缺主要段落或三格无法核实则停，重复线索缺失只跳过该观察。换题仍按实际任务取证而非搬文章结构。挑战：先标第一眼读的位置，再填三格并逐格指出证据。'
+student_ready: false
+source_alignment:
+  commit: 1c388a0596b13935ae7c6a1af00834915a8efa33
+  state: live_source_bound
+  source_content_changed: false
+  correction_profile_applied: true
+  authored_first_contact_draft: true
+  new_course_branches: preserved_in_full_contract_not_automatically_aliased
+  acceptance: unchanged_method_sections; added_source_contracts_preserved; learner/release_pending

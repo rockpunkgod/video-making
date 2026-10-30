@@ -1,0 +1,139 @@
+method_id: A01
+brand_name: 作文五检
+source_name: 批改顺序：先五审法
+aliases:
+- 批改顺序：先五审法
+question_type: 应用文
+method_type: framework
+role: framework
+primary_role: framework
+secondary_roles: []
+output_type: interpret
+student_symptoms:
+- 应用文题面要点或稿件任务不清
+trigger_cues:
+- 应用文题面要点或稿件任务不清
+core_action: 按文体、对象、要点、逻辑、语言逐栏记录题面与原稿证据，先任务后语言
+decision_rule: 五栏逐项对照题面与原稿：标出已覆盖、不充分、遗漏或偏离，先圈影响交际任务的缺口，再列确定的语言问题；得到修改清单，不直接得到分数。
+verification: 按文体、对象、要点、逻辑、语言逐栏记录题面与原稿证据，先任务后语言。五栏逐项对照题面与原稿：标出已覆盖、不充分、遗漏或偏离，先圈影响交际任务的缺口，再列确定的语言问题；得到修改清单，不直接得到分数。
+  无题目只能校对可见语言和大致结构；无全文不做全篇诊断。书写只看清晰原稿是否影响交际，五检项目不是逐项扣分表。
+stop_rule: 无题目只能校对可见语言和大致结构；无全文不做全篇诊断。书写只看清晰原稿是否影响交际，五检项目不是逐项扣分表。
+common_wrong_instinct: 一拿到作文就换高级词，题目要求的活动安排却没写全。
+failure_cases:
+- 一拿到作文就换高级词，题目要求的活动安排却没写全。
+- 无题目只能校对可见语言和大致结构；无全文不做全篇诊断。书写只看清晰原稿是否影响交际，五检项目不是逐项扣分表。
+counterexamples:
+- 语言漂亮但题面核心要点遗漏，不能因高级词多判任务完成；只有转写文本时也不能诊断原稿书写。此为条件示意，不是真题。
+transfer_pattern: 换文体仍做题面要求—原稿位置配对，具体格式和目的随题目变化。
+memory_line: 按文体、对象、要点、逻辑、语言逐栏记录题面与原稿证据，先任务后语言
+anti_rule: 五检 ≠ 五项扣分。
+visual_formula: '题面要求 ↔ 原稿位置
+
+  文体 / 对象 / 要点 / 逻辑 / 语言
+
+  → 有证据的修改清单'
+challenge_prompt: 先不打分、不改全文，给每个题面要点找一个原稿位置；找不到的标遗漏。
+source_references:
+- repository: https://github.com/rockpunkgod/ANSWER.git
+  path: gaokao-writing/references/application-writing-and-correction.md
+  heading: 批改顺序：先五审法
+  commit: 1c388a0596b13935ae7c6a1af00834915a8efa33
+section_ids: &id001
+- dac147e9a947370c
+- f8cfb194a81aad6e
+- ed19bd45d6bc3762
+can_follow: []
+usually_before: []
+usually_after: []
+conflicts_with: []
+cannot_replace:
+- 完整题面验证
+levels:
+  L1: 按文体、对象、要点、逻辑、语言逐栏记录题面与原稿证据，先任务后语言
+  L2: 五栏逐项对照题面与原稿：标出已覆盖、不充分、遗漏或偏离，先圈影响交际任务的缺口，再列确定的语言问题；得到修改清单，不直接得到分数。
+  L3: 无题目只能校对可见语言和大致结构；无全文不做全篇诊断。书写只看清晰原稿是否影响交际，五检项目不是逐项扣分表。
+  L4: 换文体仍做题面要求—原稿位置配对，具体格式和目的随题目变化。
+compact:
+  10s: 作文读着顺却怕漏点？把题面要求逐条对回原稿，先补任务；五检不是扣分表。
+  30s: 作文读着顺却怕漏点？先圈题目一个明确要求，在原稿旁标写到了还是没写到，再展开五检。例如，邀请目的写了，时间地点没交代，要先补活动安排。无题目只校语言，无全文不做整篇诊断。
+  90s: 作文读着顺却怕漏点？按文体、对象、要点、逻辑、语言逐栏记录题面与原稿证据，先任务后语言这一步得到的是一份待核的框架或计划，不是答案或分数。判断时，五栏逐项对照题面与原稿：标出已覆盖、不充分、遗漏或偏离，先圈影响交际任务的缺口，再列确定的语言问题；得到修改清单，不直接得到分数。什么时候停，无题目只能校对可见语言和大致结构；无全文不做全篇诊断。书写只看清晰原稿是否影响交际，五检项目不是逐项扣分表。反例示意，语言漂亮但题面核心要点遗漏，不能因高级词多判任务完成；只有转写文本时也不能诊断原稿书写。此为条件示意，不是真题。换题仍检查当前题面的对象和关系，不搬上一题结论。挑战，先不打分、不改全文，给每个题面要点找一个原稿位置；找不到的标遗漏。
+full:
+  summary: 按文体、对象、要点、逻辑、语言逐栏记录题面与原稿证据，先任务后语言 五栏逐项对照题面与原稿：标出已覆盖、不充分、遗漏或偏离，先圈影响交际任务的缺口，再列确定的语言问题；得到修改清单，不直接得到分数。
+  source_boundary: 无题目只能校对可见语言和大致结构；无全文不做全篇诊断。书写只看清晰原稿是否影响交际，五检项目不是逐项扣分表。
+  boundaries:
+  - 无题目只能校对可见语言和大致结构；无全文不做全篇诊断。书写只看清晰原稿是否影响交际，五检项目不是逐项扣分表。
+  - 语言漂亮但题面核心要点遗漏，不能因高级词多判任务完成；只有转写文本时也不能诊断原稿书写。此为条件示意，不是真题。
+  section_ids:
+  - dac147e9a947370c
+  - f8cfb194a81aad6e
+  - ed19bd45d6bc3762
+  beginner_support:
+    first_micro_action: 先圈题目一个明确要求，在原稿旁标写到了还是没写到，再展开五检。
+    prerequisite: 先读清写给谁、要完成哪件事。基础句先做到谁、做什么或是什么清楚；准确简单句可以保留。
+    if_stuck: 保留准确简单句和已覆盖要点；不强加复杂句、AI或高级词，不据训练配额扣分。
+    example: 邀请目的写了，时间地点没交代，要先补活动安排。
+    example_scope: 关系/结构示意，非完整试题，不计真题或已验案例。
+    micro_action_is_not_completion: 完成第一小步不等于完整方法成功；继续完成四步卡的判断与停止核验。
+    short_stop: 无题目只校语言，无全文不做整篇诊断。
+  presentation_revision: 2026-10-28.1
+cases:
+  canonical: cases/application-writing/A01/canonical/case.yaml
+four_step_card:
+  start: 应用文题面要点或稿件任务不清
+  first_cut: 按文体、对象、要点、逻辑、语言逐栏记录题面与原稿证据，先任务后语言
+  judge: 五栏逐项对照题面与原稿：标出已覆盖、不充分、遗漏或偏离，先圈影响交际任务的缺口，再列确定的语言问题；得到修改清单，不直接得到分数。
+  stop: 无题目只能校对可见语言和大致结构；无全文不做全篇诊断。书写只看清晰原稿是否影响交际，五检项目不是逐项扣分表。
+practicality_gate:
+  status: design_complete_empirical_pending
+  trigger: 应用文题面要点或稿件任务不清
+  action: 按文体、对象、要点、逻辑、语言逐栏记录题面与原稿证据，先任务后语言
+  output: interpret；五栏逐项对照题面与原稿：标出已覆盖、不充分、遗漏或偏离，先圈影响交际任务的缺口，再列确定的语言问题；得到修改清单，不直接得到分数。
+  stop: 无题目只能校对可见语言和大致结构；无全文不做全篇诊断。书写只看清晰原稿是否影响交际，五检项目不是逐项扣分表。
+  transfer: 换文体仍做题面要求—原稿位置配对，具体格式和目的随题目变化。
+  efficiency: 优先减少无关润色和返工，改善任务覆盖诊断；是否节时须真实对照。
+  misuse_cost: 未经实测；一拿到作文就换高级词，题目要求的活动安排却没写全。会导致误判；须先核触发、执行Stop，不允许辅助产物越级定案。
+first_use_test:
+  status: designed_not_run
+  trigger_success: null
+  action_success: null
+  evidence_success: null
+  stop_rule_success: null
+  no_answer_backfit: null
+  failure_type: null
+  final_result: pending_real_student_test
+evaluation:
+  baseline: 普通逐项核题面
+  primary_benefit_hypothesis: 优先减少无关润色和返工，改善任务覆盖诊断；是否节时须真实对照。
+  trigger_precision: null
+  trigger_recall: null
+  resolution_rate: null
+  standalone_rate: null
+  assist_rate: null
+  false_trigger_rate: null
+  transfer_rate: null
+  boundary_accuracy: null
+  time_complexity_gain: null
+usefulness_level: Useful
+status: candidate
+maturity_status: candidate
+practical_value: Useful
+version: 1.2.0
+change_reason: ANSWER 1c388a0596b13935ae7c6a1af00834915a8efa33 增量来源同步；保留既有动作与版本，旧证据不自动获得新来源准入。
+affected_cases:
+- cases/application-writing/A01/canonical/case.yaml
+regression_result: pending_current_epoch_semantic_and_student_acceptance
+student_ready: false
+entry_copy: 作文读着顺却怕漏点？先圈题目一个明确要求，在原稿旁标写到了还是没写到，再展开五检。这一步得到的是一份待核的框架或计划，不是答案或分数。如果卡住，保留准确简单句和已覆盖要点；不强加复杂句、AI或高级词，不据训练配额扣分。
+static_design_review:
+  status: source_bound_editorial_review
+  source_section_ids: *id001
+  participant_validation: pending_real_participant_validation
+  example_scope: 2026-10-28基础入口表达修订；保留原判据/Stop/课程绑定与语义版本，微动作和关系示意不是完整真题或真人实测。
+source_alignment:
+  commit: 1c388a0596b13935ae7c6a1af00834915a8efa33
+  state: live_source_bound
+  source_content_changed: false
+  correction_profile_applied: false
+  authored_first_contact_draft: true
+  new_course_branches: preserved_in_full_contract_not_automatically_aliased
+  acceptance: unchanged_method_sections; added_source_contracts_preserved; learner/release_pending

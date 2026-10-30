@@ -6,6 +6,10 @@ identity, learner outcomes or release eligibility. No answer key is consumed.
 from copy import deepcopy
 from .evidence import check_span
 from .execution import artifact_fingerprint
+from .image_evidence import image_manifest
+from video_contracts.objective_images import (
+    validate_image_inputs, image_ref, scope_fingerprint, region_fingerprint,
+)
 
 from video_contracts.answer_consistency import (
     MATERIAL_FIELDS, material_fingerprint, upstream_blocked, candidate_support,
@@ -56,9 +60,17 @@ def verify_question(question, analysis, registry, graph):
         raise ValueError('Whole-question review cannot bypass a stopped or failed upstream check')
     active = review['review_status'] == 'reviewed' and not review['stop_applied']
     state = 'stopped' if review['stop_applied'] else 'reviewed' if active else 'unreviewed'
+    report = {'review': deepcopy(review), 'state': state}
+    visual = review['schema_version']=='1.1.0'
+    manifest = image_manifest(question) if visual else []
+    validate_image_inputs(question, review, manifest)
+    if visual:
+        report['image_manifest'] = manifest
+        if 'required_image_evidence' in question:
+            report['required_image_evidence'] = deepcopy(question['required_image_evidence'])
     scope_node=graph.node('question_scope','完整原题、任务与整题审阅载荷绑定',
         review_id=review['review_id'],material_sha256=review['material_sha256'],
-        candidate_ids=sorted(question['options']),artifact_fingerprint=artifact_fingerprint(review))
+        candidate_ids=sorted(question['options']),artifact_fingerprint=scope_fingerprint(report))
     stem = graph.node('source_evidence', question['stem'], span={
         'field': 'stem', 'start': 0, 'end': len(question['stem']), 'quote': question['stem']})
     bindings = []
@@ -92,6 +104,14 @@ def verify_question(question, analysis, registry, graph):
             nid = graph.node('source_evidence', s['quote'], span=s)
             evidence_ids.append(nid)
             graph.edge(nid, relation, 'supports')
+        image_ids = []
+        for index, region in enumerate(c.get('image_evidence', [])):
+            nid = graph.node('image_evidence', region['observed'],
+                candidate=c['candidate'], review_id=review['review_id'],
+                image_ref=image_ref(region),
+                artifact_fingerprint=region_fingerprint(report, c['candidate'], index))
+            image_ids.append(nid)
+            graph.edge(nid, relation, 'supports')
         decision = verification = None
         if effect != 'undetermined':
             decision = graph.node('question_decision', effect, candidate=c['candidate'],
@@ -104,8 +124,11 @@ def verify_question(question, analysis, registry, graph):
         bindings.append({'candidate': c['candidate'], 'effect': effect,
                          'review_node_id': relation, 'decision_node_id': decision,
                          'verification_node_id': verification, 'evidence_ids': evidence_ids})
-    return {'review': deepcopy(review), 'state': state, 'scope_node_id':scope_node,'candidate_bindings': bindings,
+        if visual:
+            bindings[-1]['image_evidence_ids'] = image_ids
+    report.update({'scope_node_id':scope_node,'candidate_bindings': bindings,
             'consumed_artifacts': [{'execution_id': x['execution_id'],
                 'artifact_node_id': x['artifact_node_id'],
                 'output_sha256': artifact_fingerprint(x['output'])} for x in consumed],
-            'scope': 'external_whole_question_review_not_brand_method_credit'}
+            'scope': 'external_whole_question_review_not_brand_method_credit'})
+    return report

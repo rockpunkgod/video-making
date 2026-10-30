@@ -59,7 +59,9 @@ class QuestionVerificationTests(unittest.TestCase):
         self.assertEqual(q,before)
         for kind in ('structured','student','legacy-wechat','content-export'):
             self.assertTrue(render(result,kind,self.registry))
-        self.assertIn('不是辅助方法直接定案',render(result,'student',self.registry))
+        self.assertIn('逐步讲解还没齐',render(result,'student',self.registry))
+        self.assertNotIn('不是辅助方法直接定案',render(result,'student',self.registry))
+        self.assertEqual(json.loads(render(result,'content-export',self.registry))['question_verification'],result['question_verification'])
 
     def relation_question(self):
         q=self.question(); q.update(question_type='七选五',requested_chain=['F07'])

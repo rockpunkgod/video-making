@@ -1,0 +1,141 @@
+method_id: R17
+brand_name: 前后补证
+source_name: 定位后必要上下文核对（内部动作说明）
+aliases:
+- 定位后必要上下文核对（内部动作说明）
+question_type: 阅读理解
+method_type: verification_rule
+role: verifier
+primary_role: verifier
+secondary_roles: []
+output_type: verify
+student_symptoms:
+- 定位句缺原因、指代或转折关系
+trigger_cues:
+- 当前定位句缺决定本题的原因、结果、指代、转折或限定关系。
+core_action: 先写清缺哪条关系，只向必要前后文扩读到能补清它的位置，再回完整断言核主体、动作和限制。
+decision_rule: 产出补到的文本联系与仍存缺口；这是内部补证动作，不借左顾右盼或完形瞻前顾后的原名扩大范围。
+verification: 产出补到的文本联系与仍存缺口；这是内部补证动作，不借左顾右盼或完形瞻前顾后的原名扩大范围。 定位句已闭合即停扩读；固定邻一句仍不足就按缺口继续，材料不足或关系不明则暂留，不编依据。
+stop_rule: 定位句已闭合即停扩读；固定邻一句仍不足就按缺口继续，材料不足或关系不明则暂留，不编依据。
+common_wrong_instinct: 随便多读前后一句就认为证据齐了，或把附近任何同词句都当支持。
+failure_cases:
+- 随便多读前后一句就认为证据齐了，或把附近任何同词句都当支持。
+- 定位句已闭合即停扩读；固定邻一句仍不足就按缺口继续，材料不足或关系不明则暂留，不编依据。
+counterexamples:
+- 多读到的邻句与所问原因无关；即使对象重复，也没有补清缺口，不能据此完成核验。
+transfer_pattern: 换题材仍先命名证据缺口，再扩到能闭合的句子，不固化前后句数。
+memory_line: 先写清缺哪条关系，只向必要前后文扩读到能补清它的位置，再回完整断言核主体、动作和限制。
+anti_rule: 多读一句 ≠ 补证完成。
+visual_formula: "定位句 → 缺什么关系？\n原因 / 结果 / 指代 / 转折\n      ↓ 只为该缺口扩读\n回原断言核验；未闭合 → 暂留"
+challenge_prompt: 先不选，写出定位句缺哪种关系，再圈一处新增证据，说清它补上的是哪条联系。
+source_references:
+- repository: https://github.com/rockpunkgod/ANSWER.git
+  path: gaokao-english/references/reading-comprehension.md
+  heading: 阅读方法适用边界
+  commit: 1c388a0596b13935ae7c6a1af00834915a8efa33
+- repository: https://github.com/rockpunkgod/ANSWER.git
+  path: gaokao-english/references/reading-comprehension.md
+  heading: 同源替换
+  commit: 1c388a0596b13935ae7c6a1af00834915a8efa33
+- repository: https://github.com/rockpunkgod/ANSWER.git
+  path: gaokao-english/references/reading-comprehension.md
+  heading: 代词指代
+  commit: 1c388a0596b13935ae7c6a1af00834915a8efa33
+section_ids:
+- fb9c5ef35a2a5763
+- b1e4f5435d11268b
+- 18e597fd8b3fc0ef
+can_follow: []
+usually_before: []
+usually_after: []
+conflicts_with: []
+cannot_replace:
+- 完整题面验证
+levels:
+  L1: 明确缺哪种关系，只向前后扩读到能补清它的句子，再核主体和动作
+  L2: 扩读句必须补清当前缺少的原因、结果、指代或转折，并能说明如何改变主体—动作断言的核验；输出补证结果。
+  L3: 定位句已闭合就不扩读；前后固定一句仍不足就按缺口继续找，关键内容未展示或仍不能闭合时暂留，不补造关系。
+  L4: 换题材仍先命名证据缺口，再扩到能闭合的句子，不固化前后句数。
+compact:
+  line: 先写清缺哪条关系，只向必要前后文扩读到能补清它的位置，再回完整断言核主体、动作和限制。
+  boundary: 定位句已闭合即停扩读；固定邻一句仍不足就按缺口继续，材料不足或关系不明则暂留，不编依据。
+  10s: 先写清缺哪条关系，只向必要前后文扩读到能补清它的位置，再回完整断言核主体、动作和限制。 产出补到的文本联系与仍存缺口；这是内部补证动作，不借左顾右盼或完形瞻前顾后的原名扩大范围。
+  30s: 当前定位句缺决定本题的原因、结果、指代、转折或限定关系。 先写清缺哪条关系，只向必要前后文扩读到能补清它的位置，再回完整断言核主体、动作和限制。 定位句已闭合即停扩读；固定邻一句仍不足就按缺口继续，材料不足或关系不明则暂留，不编依据。
+  90s: 当前定位句缺决定本题的原因、结果、指代、转折或限定关系。 手上先做：先写清缺哪条关系，只向必要前后文扩读到能补清它的位置，再回完整断言核主体、动作和限制。
+    做完得到：产出补到的文本联系与仍存缺口；这是内部补证动作，不借左顾右盼或完形瞻前顾后的原名扩大范围。 停止：定位句已闭合即停扩读；固定邻一句仍不足就按缺口继续，材料不足或关系不明则暂留，不编依据。
+    反例（边界示意，非真题）：多读到的邻句与所问原因无关；即使对象重复，也没有补清缺口，不能据此完成核验。 挑战：先不选，写出定位句缺哪种关系，再圈一处新增证据，说清它补上的是哪条联系。
+full:
+  summary: 先写清缺哪条关系，只向必要前后文扩读到能补清它的位置，再回完整断言核主体、动作和限制。 产出补到的文本联系与仍存缺口；这是内部补证动作，不借左顾右盼或完形瞻前顾后的原名扩大范围。
+  source_boundary: 定位句已闭合即停扩读；固定邻一句仍不足就按缺口继续，材料不足或关系不明则暂留，不编依据。
+  boundaries:
+  - 定位句已闭合即停扩读；固定邻一句仍不足就按缺口继续，材料不足或关系不明则暂留，不编依据。
+  - 多读到的邻句与所问原因无关；即使对象重复，也没有补清缺口，不能据此完成核验。
+  section_ids:
+  - fb9c5ef35a2a5763
+  - b1e4f5435d11268b
+  - 18e597fd8b3fc0ef
+cases:
+  canonical: cases/reading/R17/canonical/case.yaml
+four_step_card:
+  start: 当前定位句缺决定本题的原因、结果、指代、转折或限定关系。
+  first_cut: 先写清缺哪条关系，只向必要前后文扩读到能补清它的位置，再回完整断言核主体、动作和限制。
+  judge: 产出补到的文本联系与仍存缺口；这是内部补证动作，不借左顾右盼或完形瞻前顾后的原名扩大范围。
+  stop: 定位句已闭合即停扩读；固定邻一句仍不足就按缺口继续，材料不足或关系不明则暂留，不编依据。
+practicality_gate:
+  status: design_complete_empirical_pending
+  trigger: 当前定位句缺决定本题的原因、结果、指代、转折或限定关系。
+  action: 先写清缺哪条关系，只向必要前后文扩读到能补清它的位置，再回完整断言核主体、动作和限制。
+  output: verify；产出补到的文本联系与仍存缺口；这是内部补证动作，不借左顾右盼或完形瞻前顾后的原名扩大范围。
+  stop: 定位句已闭合即停扩读；固定邻一句仍不足就按缺口继续，材料不足或关系不明则暂留，不编依据。
+  transfer: 换题材仍先命名证据缺口，再扩到能闭合的句子，不固化前后句数。
+  efficiency: 按明确缺口扩大证据而非重读全篇，预期减少无效阅读，同时防止单句误判。
+  misuse_cost: 未经实测；随便多读前后一句就认为证据齐了，或把附近任何同词句都当支持。会导致误判，必须先核触发并执行上述Stop，不允许从辅助产物越级定案。
+first_use_test:
+  status: designed_not_run
+  trigger_success: null
+  action_success: null
+  evidence_success: null
+  stop_rule_success: null
+  no_answer_backfit: null
+  failure_type: null
+  final_result: pending_real_student_test
+evaluation:
+  baseline: 普通逐项核题面
+  primary_benefit_hypothesis: 按明确缺口扩大证据而非重读全篇，预期减少无效阅读，同时防止单句误判。
+  trigger_precision: null
+  trigger_recall: null
+  resolution_rate: null
+  standalone_rate: null
+  assist_rate: null
+  false_trigger_rate: null
+  transfer_rate: null
+  boundary_accuracy: null
+  time_complexity_gain: null
+usefulness_level: Useful
+status: candidate
+maturity_status: candidate
+practical_value: Useful
+version: 1.2.0
+change_reason: ANSWER 1c388a0596b13935ae7c6a1af00834915a8efa33 增量来源同步；保留既有动作与版本，旧证据不自动获得新来源准入。
+affected_cases:
+- cases/reading/R17/canonical/case.yaml
+regression_result: pending_current_epoch_semantic_and_student_acceptance
+student_ready: false
+entry_copy: 当前定位句缺决定本题的原因、结果、指代、转折或限定关系。 手上先做：先写清缺哪条关系，只向必要前后文扩读到能补清它的位置，再回完整断言核主体、动作和限制。
+  做完得到：产出补到的文本联系与仍存缺口；这是内部补证动作，不借左顾右盼或完形瞻前顾后的原名扩大范围。 停止：定位句已闭合即停扩读；固定邻一句仍不足就按缺口继续，材料不足或关系不明则暂留，不编依据。
+static_design_review:
+  status: source_rebound_semantic_reacceptance_pending
+  source_section_ids:
+  - fb9c5ef35a2a5763
+  - b1e4f5435d11268b
+  - 18e597fd8b3fc0ef
+  participant_validation: pending_real_participant_validation
+  example_scope: counterexample is a schematic source boundary, not a verified exam
+source_alignment:
+  commit: 1c388a0596b13935ae7c6a1af00834915a8efa33
+  state: live_source_bound
+  source_content_changed: false
+  correction_profile_applied: true
+  authored_first_contact_draft: false
+  new_course_branches: preserved_in_full_contract_not_automatically_aliased
+  acceptance: unchanged_method_sections; added_source_contracts_preserved; learner/release_pending

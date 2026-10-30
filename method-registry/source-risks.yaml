@@ -1,15 +1,15 @@
 risks:
 - risk_id: GRAMMAR-PARTICIPLE-QUICK-SPLIT
-  section_id: a0bcc74f05b00671
+  section_id: c6ee3d2de761c2d8
   affected_methods:
   - G01
   - G12
   - G13
   - G14
-  source_quote: 过去分词的快速二分：有 `be` 的是谓语被动，没有 `be` 的是非谓语。
-  status: withheld_as_standalone_rule
-  reason: 同节同时要求分清状态性过去分词、真正主语和句法作用；快速二分不能脱离这些边界作为独立判据。
-  action: 保留原文用于审计，不机械执行这条口诀；回该节完整句法、语态与状态边界求证。
+  source_quote: 不能用有无 `be` 机械二分
+  status: upstream_corrected_boundary_retained
+  reason: 新版已明确收紧旧简化口径；旧全称说法仅留历史快照，当前按本句结构、语义与时间关系核验。
+  action: 执行新版完整边界；不再把已纠正原话呈为当前来源，不按有无be、发生/未发生或完成形式名称独立选排。
 - risk_id: CONTINUATION-VERSION-TENSION
   affected_methods:
   - W01
@@ -25,19 +25,19 @@ risks:
   reason: 原模块显式记录26S春语言重心与原文根基/冲突设计的张力，且保留无铺垫新增事件不成立、独立升华句非必须项。
   action: 逐一保留寒8板书、同课表格、寒14与旧高二PPT的定义，不混用；训练安排不作评分硬项。
 - risk_id: GRAMMAR-WHY-HOW-TEMPORAL-SHORTCUT
-  section_id: 9b496b1572cdf49b
+  section_id: 1bc229eecb92ae3c
   affected_methods:
   - G06
-  source_quote: 宾语从句不缺成分时：`why` 指已经发生，`how` 指尚未达成，`that` 未提及过程。
-  status: withheld_as_standalone_rule
-  reason: 同节要求先核从句作用、结构缺口和语义；时间概括不能独立替代这些条件，当前Case没有验证其跨题适用范围。
-  action: 原话留作审计，不把发生/未发生独立映射为连接词；回本句从句功能、完整命题与所问语义求证。
+  source_quote: 不能以事件已经发生或尚未达成独立定词
+  status: upstream_corrected_boundary_retained
+  reason: 新版已明确收紧旧简化口径；旧全称说法仅留历史快照，当前按本句结构、语义与时间关系核验。
+  action: 执行新版完整边界；不再把已纠正原话呈为当前来源，不按有无be、发生/未发生或完成形式名称独立选排。
 - risk_id: GRAMMAR-NONFINITE-UNIVERSAL-LISTS
-  section_id: 7c16410a7f1b8e4f
+  section_id: 5d83575e1d881f91
   affected_methods:
   - G15
   - G16
-  source_quote: '**完成形式不能作定语**：所有非谓语动词的完成形式都不能作定语'
-  status: contextual_review_required
-  reason: 该全称句与同节固定选择清单尚无覆盖全部形式和句法位置的案例；不能仅据清单标题作跨题无条件排除。
-  action: 原文保留用于审计；实际题先核作用、具体结构、逻辑主语与相对时间，触及此全称限制或简化清单而缺本句支持时暂留并请求独立审阅，不自行补成另一条普遍规则。
+  source_quote: 完成不定式则可在适当结构中作后置修饰
+  status: upstream_corrected_boundary_retained
+  reason: 新版已明确收紧旧简化口径；旧全称说法仅留历史快照，当前按本句结构、语义与时间关系核验。
+  action: 执行新版完整边界；不再把已纠正原话呈为当前来源，不按有无be、发生/未发生或完成形式名称独立选排。

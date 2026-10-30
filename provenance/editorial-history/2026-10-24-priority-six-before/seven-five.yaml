@@ -1,0 +1,1510 @@
+methods:
+- method_id: F01
+  brand_name: 选项三分
+  source_name: 结构一致 + 主语一致 + 时态一致
+  aliases:
+  - 三一致初筛
+  - 先分组再拼回去
+  question_type: 七选五
+  role: reducer
+  primary_role: reducer
+  secondary_roles: []
+  output_type: reduce
+  student_symptoms:
+  - 七个选项感觉都能放，拿到每个空都从 A–G 凭语感试填。
+  - 知道结构、主体或时态有用，却容易命中一项就直接定答案。
+  trigger_cues:
+  - 整篇七选五开头或单题开始，需要先识别选项间实际可见的结构、主角与真谓语时间差异。
+  core_action: 在选项区按句型、实际主角、真谓语时间各标一次组并说清字母；无区分度如实标记，随后按突破口回正文。
+  decision_rule: 只产出优先候选组；放回正文核对象、动作、两侧关系和段落任务，内容证据才定案。
+  verification: 只产出优先候选组；放回正文核对象、动作、两侧关系和段落任务，内容证据才定案。 无区别不编组；发现漏纳、指代或谓语初筛错误可在当前比较纠正，不重演完整三分；不据组小、占用或剩一项选。
+  stop_rule: 无区别不编组；发现漏纳、指代或谓语初筛错误可在当前比较纠正，不重演完整三分；不据组小、占用或剩一项选。
+  common_wrong_instinct: 拿到一个空就在七个选项里凭语感试填，或看到同主语、同时态、同句型就直接选。
+  failure_cases:
+  - 拿到一个空就在七个选项里凭语感试填，或看到同主语、同时态、同句型就直接选。
+  - 无区别不编组；发现漏纳、指代或谓语初筛错误可在当前比较纠正，不重演完整三分；不据组小、占用或剩一项选。
+  counterexamples:
+  - 两个选项都是祈使句且行动者相同，但一项针对的对象与本段任务不符；同组不等于同时成立。
+  - 段中出现过去时事件，但当前空转向一般感悟；不能因最近动词是过去时就只留过去时组。
+  transfer_pattern: 适用于任何七选五选项区的一次性初筛，不依赖文章题材。
+  memory_line: 在选项区按句型、实际主角、真谓语时间各标一次组并说清字母；无区分度如实标记，随后按突破口回正文。
+  anti_rule: 分组 ≠ 答案。
+  visual_formula: "A–G 选项\n  ├─ 句型组\n  ├─ 主角组     → 优先候选\n  └─ 时间组\n             \
+    \      ↓\n           拼回空前+空后\n                   ↓\n              内容才定案"
+  challenge_prompt: 不填任何空，按句型、主角和真谓语时间的实际差异各分一次A–G，并说清字母；若某一维没有区别，就说明无区分度，不编组。
+  source_references:
+  - repository: https://github.com/rockpunkgod/ANSWER.git
+    path: gaokao-english/references/seven-five.md
+    heading: 结构一致
+    commit: 1c388a0596b13935ae7c6a1af00834915a8efa33
+  - repository: https://github.com/rockpunkgod/ANSWER.git
+    path: gaokao-english/references/seven-five.md
+    heading: 主语一致
+    commit: 1c388a0596b13935ae7c6a1af00834915a8efa33
+  - repository: https://github.com/rockpunkgod/ANSWER.git
+    path: gaokao-english/references/seven-five.md
+    heading: 时态一致
+    commit: 1c388a0596b13935ae7c6a1af00834915a8efa33
+  - repository: https://github.com/rockpunkgod/ANSWER.git
+    path: gaokao-english/references/course-evidence.md
+    heading: 结构一致
+    commit: 1c388a0596b13935ae7c6a1af00834915a8efa33
+  - repository: https://github.com/rockpunkgod/ANSWER.git
+    path: gaokao-english/references/course-evidence.md
+    heading: 七选五主语一致
+    commit: 1c388a0596b13935ae7c6a1af00834915a8efa33
+  - repository: https://github.com/rockpunkgod/ANSWER.git
+    path: gaokao-english/references/course-evidence.md
+    heading: 七选五时态一致
+    commit: 1c388a0596b13935ae7c6a1af00834915a8efa33
+  - repository: https://github.com/rockpunkgod/ANSWER.git
+    path: gaokao-grammar-fill/references/course-evidence.md
+    heading: 七选五
+    commit: 1c388a0596b13935ae7c6a1af00834915a8efa33
+  can_follow: []
+  usually_before:
+  - 总起句做题法
+  - 对应词法
+  - 逻辑关系法
+  - 褒贬一致
+  usually_after: []
+  conflicts_with: []
+  cannot_replace:
+  - 空前空后内容核对
+  - 段落任务判断
+  - 最终回填验证
+  levels:
+    L1: 只识别明显完整句、半句、小标题或祈使句。
+    L2: 加入语法主语、核心话题、代词与省略行动者分组。
+    L3: 识别真谓语和局部时间线，不被非谓语词形误导。
+    L4: 在三维重叠或无区分度时，正确转入主体、动作、对象、前后关系和段落任务。
+  compact:
+    line: 在选项区按句型、实际主角、真谓语时间各标一次组并说清字母；无区分度如实标记，随后按突破口回正文。
+    boundary: 无区别不编组；发现漏纳、指代或谓语初筛错误可在当前比较纠正，不重演完整三分；不据组小、占用或剩一项选。
+    10s: 七项乱试？先按句型、主角、时间分组并说字母，再回正文。分组不定案。
+    30s: 七选五开始别逐项乱填。扫A–G，按完整句型、实际主角和真谓语时间各分一次，说清字母；没有差异的维度如实跳过。比如同为祈使句仍可能讲不同对象，须回空前空后比内容。发现初筛错误可更正，不重演分组；内容不闭合就暂留。
+    90s: 整篇开头统一三分一次，单题在该题开头做；结构、主角或真谓语时间有差异才形成有用组。第一刀先在选项区标实际组别并说清A–G字母，无区分度不编组，再按突破口回正文核对象、动作、两侧关系和段落任务。只得优先候选组，不直接得答案。反例：过去事件之后转为一般感悟，不能只留过去时项；同组两项也可能只一项接通内容。新证据纠正初筛时在当前比较说明，不再展示完整分组。换题仍由新选项分组，不搬旧组。挑战：先不填空，按实际差异分A–G；若某一维没有区别，就说明无区分度，再指出待正文核的关系。
+  full:
+    summary: 在选项区按句型、实际主角、真谓语时间各标一次组并说清字母；无区分度如实标记，随后按突破口回正文。 只产出优先候选组；放回正文核对象、动作、两侧关系和段落任务，内容证据才定案。
+    source_boundary: 无区别不编组；发现漏纳、指代或谓语初筛错误可在当前比较纠正，不重演完整三分；不据组小、占用或剩一项选。
+    boundaries:
+    - 无区别不编组；发现漏纳、指代或谓语初筛错误可在当前比较纠正，不重演完整三分；不据组小、占用或剩一项选。
+    - 两个选项都是祈使句且行动者相同，但一项针对的对象与本段任务不符；同组不等于同时成立。
+    - 段中出现过去时事件，但当前空转向一般感悟；不能因最近动词是过去时就只留过去时组。
+    section_ids:
+    - a8f0c4ae44ae61ff
+    - 4b7e8e63d5d6c442
+    - 94c1255b4334ece4
+  cases:
+    canonical: cases/F01/canonical/case.yaml
+    counterexample: cases/F01/counterexamples/case.yaml
+    boundary: cases/F01/boundary/case.yaml
+    transfer: cases/F01/transfer/case.yaml
+    hard: cases/F01/hard/case.yaml
+  four_step_card:
+    start: 整篇七选五开头或单题开始，需要先识别选项间实际可见的结构、主角与真谓语时间差异。
+    first_cut: 先在A–G选项区标结构、主角、真谓语时间的暂定字母组，不填空。
+    judge: 只产出优先候选组；放回正文核对象、动作、两侧关系和段落任务，内容证据才定案。
+    stop: 无区别不编组；发现漏纳、指代或谓语初筛错误可在当前比较纠正，不重演完整三分；不据组小、占用或剩一项选。
+  practicality_gate:
+    status: design_complete_empirical_pending
+    trigger: 整篇七选五开头或单题开始，需要先识别选项间实际可见的结构、主角与真谓语时间差异。
+    action: 在选项区按句型、实际主角、真谓语时间各标一次组并说清字母；无区分度如实标记，随后按突破口回正文。
+    output: reduce；只产出优先候选组；放回正文核对象、动作、两侧关系和段落任务，内容证据才定案。
+    stop: 无区别不编组；发现漏纳、指代或谓语初筛错误可在当前比较纠正，不重演完整三分；不据组小、占用或剩一项选。
+    transfer: 适用于任何七选五选项区的一次性初筛，不依赖文章题材。
+    efficiency: 目标是减少每空从七项重新试填的比较量；是否显著提速待盲测。
+    misuse_cost: high；将 reduce 当 decide 会直接误选，所以首次版反复显示分组不定案。
+  first_use_test:
+    status: designed_not_run
+    trigger_success: null
+    action_success: null
+    evidence_success: null
+    stop_rule_success: null
+    no_answer_backfit: null
+    final_result: pending_real_student_test
+    failure_type: null
+  evaluation:
+    baseline: 每空对 A–G 全部试填+凭语感排除
+    trigger_precision: null
+    trigger_recall: null
+    resolution_rate: null
+    standalone_rate: null
+    assist_rate: null
+    false_trigger_rate: null
+    transfer_rate: null
+    time_complexity_gain: null
+    primary_benefit_hypothesis: 减少候选比较数量和无效试填，但不承担定案。
+    boundary_accuracy: null
+  usefulness_level: Useful
+  status: candidate
+  version: 1.2.0
+  section_ids:
+  - a8f0c4ae44ae61ff
+  - 4b7e8e63d5d6c442
+  - 94c1255b4334ece4
+  method_type: method
+  maturity_status: candidate
+  practical_value: Useful
+  change_reason: ANSWER 1c388a0596b13935ae7c6a1af00834915a8efa33 增量来源同步；保留既有动作与版本，旧证据不自动获得新来源准入。
+  affected_cases:
+  - cases/F01/canonical/case.yaml
+  - cases/F01/counterexamples/case.yaml
+  - cases/F01/boundary/case.yaml
+  - cases/F01/transfer/case.yaml
+  - cases/F01/hard/case.yaml
+  regression_result: pending_current_epoch_semantic_and_student_acceptance
+  role_correctness:
+    declared_primary_role: reducer
+    observed_actual_role: null
+    role_match: null
+    overclaim_detected: null
+    notes: pending_real_participant_validation
+  short_version_safety:
+  - version: 10s
+    false_trigger_rate: null
+    boundary_accuracy: null
+    role_overclaim_rate: null
+    stop_rule_failure_rate: null
+    safe_for_release: untested
+  - version: 30s
+    false_trigger_rate: null
+    boundary_accuracy: null
+    role_overclaim_rate: null
+    stop_rule_failure_rate: null
+    safe_for_release: untested
+  - version: 90s
+    false_trigger_rate: null
+    boundary_accuracy: null
+    role_overclaim_rate: null
+    stop_rule_failure_rate: null
+    safe_for_release: untested
+  entry_copy: '七项乱试？先按句型、主角、时间分组并说字母，再回正文。分组不定案。
+
+
+    整篇开头统一三分一次，单题在该题开头做；结构、主角或真谓语时间有差异才形成有用组。第一刀先在选项区标实际组别并说清A–G字母，无区分度不编组，再按突破口回正文核对象、动作、两侧关系和段落任务。只得优先候选组，不直接得答案。反例：过去事件之后转为一般感悟，不能只留过去时项；同组两项也可能只一项接通内容。新证据纠正初筛时在当前比较说明，不再展示完整分组。换题仍由新选项分组，不搬旧组。挑战：先不填空，按实际差异分A–G；若某一维没有区别，就说明无区分度，再指出待正文核的关系。'
+  student_ready: false
+  source_alignment:
+    commit: 1c388a0596b13935ae7c6a1af00834915a8efa33
+    state: live_source_bound
+    source_content_changed: false
+    correction_profile_applied: true
+    authored_first_contact_draft: true
+    new_course_branches: preserved_in_full_contract_not_automatically_aliased
+    acceptance: unchanged_method_sections; added_source_contracts_preserved; learner/release_pending
+  student_entry_revision:
+    revision_id: F01-conditional-challenge-v1
+    previous_snapshot: provenance/student-entry-revisions/F01-1.2.0-before-conditional-challenge.json
+    scope: unfrozen student entry correction; core trigger/action/decision/stop/role
+      unchanged
+- method_id: F02
+  brand_name: 句型分组
+  source_name: 结构一致
+  aliases:
+  - 结构一致
+  question_type: 七选五
+  method_type: sub_action
+  role: reducer
+  primary_role: reducer
+  secondary_roles: []
+  output_type: reduce
+  student_symptoms:
+  - 选项存在不同句式且空位有结构线索
+  trigger_cues:
+  - 选项存在不同句式且空位有结构线索
+  core_action: 一次圈出完整句/半句/疑问/祈使等真实结构并分组，再回正文核内容
+  decision_rule: 按空位真实结构角色给选项字母归组：完整句、半句、小标题或其他实际句式；组只决定优先核谁，必须回正文核对象、动作与段落任务。
+  verification: 一次圈出完整句/半句/疑问/祈使等真实结构并分组，再回正文核内容。按空位真实结构角色给选项字母归组：完整句、半句、小标题或其他实际句式；组只决定优先核谁，必须回正文核对象、动作与段落任务。
+    没有可观察句型差异就标无区分度；两项结构都能接时停止结构筛选，不凭大小写、句首修饰或同句型定案。
+  stop_rule: 没有可观察句型差异就标无区分度；两项结构都能接时停止结构筛选，不凭大小写、句首修饰或同句型定案。
+  common_wrong_instinct: 看到大写就当完整句，看到祈使形式或同句式就直接选。
+  failure_cases:
+  - 看到大写就当完整句，看到祈使形式或同句式就直接选。
+  - 没有可观察句型差异就标无区分度；两项结构都能接时停止结构筛选，不凭大小写、句首修饰或同句型定案。
+  counterexamples:
+  - 两项都是祈使句，但对不同对象给出不同动作；结构相同不能区分本空内容。
+  transfer_pattern: 陌生题仍按真实句式和空位角色分组，不沿用上题字母或大小写口诀。
+  memory_line: 一次圈出完整句/半句/疑问/祈使等真实结构并分组，再回正文核内容
+  anti_rule: 同句型 ≠ 同内容。
+  visual_formula: '空位结构角色 → 选项字母分组
+
+    完整句 / 半句 / 小标题 / 实际句式
+
+    → 优先候选（reduce）
+
+    回正文核内容；无差异 → 停筛'
+  challenge_prompt: 先不填空，只把A–G按真实完整句型归组并标字母；没区别的维度写无区分度。
+  source_references:
+  - repository: https://github.com/rockpunkgod/ANSWER.git
+    path: gaokao-english/references/seven-five.md
+    heading: 结构一致
+    commit: 1c388a0596b13935ae7c6a1af00834915a8efa33
+  section_ids:
+  - a8f0c4ae44ae61ff
+  can_follow: []
+  usually_before: []
+  usually_after: []
+  conflicts_with: []
+  cannot_replace:
+  - 完整题面验证
+  levels:
+    L1: 一次圈出完整句/半句/疑问/祈使等真实结构并分组，再回正文核内容
+    L2: 按空位真实结构角色给选项字母归组：完整句、半句、小标题或其他实际句式；组只决定优先核谁，必须回正文核对象、动作与段落任务。
+    L3: 没有可观察句型差异就标无区分度；两项结构都能接时停止结构筛选，不凭大小写、句首修饰或同句型定案。
+    L4: 陌生题仍按真实句式和空位角色分组，不沿用上题字母或大小写口诀。
+  compact:
+    10s: 句型像就想填？按空位角色给字母分组，只缩范围；两项都能接就停筛，回正文核内容。
+    30s: 空位有句式线索时，先判是完整句、半句还是标题，再把选项落到字母组。结构示意：I在句中仍大写，不能凭大写判句首。没有区别就不编组；同句型多项时，回正文核对象和动作，不在这里定案。
+    90s: 选项存在不同句式且空位有结构线索时，先确认：选项存在不同句式且空位有结构线索。第一刀：一次圈出完整句/半句/疑问/祈使等真实结构并分组，再回正文核内容。产物
+      reduce：按空位真实结构角色给选项字母归组：完整句、半句、小标题或其他实际句式；组只决定优先核谁，必须回正文核对象、动作与段落任务。 停止：没有可观察句型差异就标无区分度；两项结构都能接时停止结构筛选，不凭大小写、句首修饰或同句型定案。
+      反例（关系示意，不是真题）：两项都是祈使句，但对不同对象给出不同动作；结构相同不能区分本空内容。 迁移：陌生题仍按真实句式和空位角色分组，不沿用上题字母或大小写口诀。
+      挑战：先不填空，只把A–G按真实完整句型归组并标字母；没区别的维度写无区分度。
+  full:
+    summary: 一次圈出完整句/半句/疑问/祈使等真实结构并分组，再回正文核内容 按空位真实结构角色给选项字母归组：完整句、半句、小标题或其他实际句式；组只决定优先核谁，必须回正文核对象、动作与段落任务。
+    source_boundary: 没有可观察句型差异就标无区分度；两项结构都能接时停止结构筛选，不凭大小写、句首修饰或同句型定案。
+    boundaries:
+    - 没有可观察句型差异就标无区分度；两项结构都能接时停止结构筛选，不凭大小写、句首修饰或同句型定案。
+    - 两项都是祈使句，但对不同对象给出不同动作；结构相同不能区分本空内容。
+    section_ids:
+    - a8f0c4ae44ae61ff
+  cases:
+    canonical: cases/seven-five/F02/canonical/case.yaml
+  four_step_card:
+    start: 选项存在不同句式且空位有结构线索
+    first_cut: 一次圈出完整句/半句/疑问/祈使等真实结构并分组，再回正文核内容
+    judge: 按空位真实结构角色给选项字母归组：完整句、半句、小标题或其他实际句式；组只决定优先核谁，必须回正文核对象、动作与段落任务。
+    stop: 没有可观察句型差异就标无区分度；两项结构都能接时停止结构筛选，不凭大小写、句首修饰或同句型定案。
+  practicality_gate:
+    status: design_complete_empirical_pending
+    trigger: 选项存在不同句式且空位有结构线索
+    action: 一次圈出完整句/半句/疑问/祈使等真实结构并分组，再回正文核内容
+    output: reduce；按空位真实结构角色给选项字母归组：完整句、半句、小标题或其他实际句式；组只决定优先核谁，必须回正文核对象、动作与段落任务。
+    stop: 没有可观察句型差异就标无区分度；两项结构都能接时停止结构筛选，不凭大小写、句首修饰或同句型定案。
+    transfer: 陌生题仍按真实句式和空位角色分组，不沿用上题字母或大小写口诀。
+    efficiency: 结构确有差异时减少优先回填项；无差异及时退出，减少无效分组。效率未测。
+    misuse_cost: 未经实测；看到大写就当完整句，看到祈使形式或同句式就直接选。会导致误判；须先核触发、执行Stop，不允许辅助产物越级定案。
+  first_use_test:
+    status: designed_not_run
+    trigger_success: null
+    action_success: null
+    evidence_success: null
+    stop_rule_success: null
+    no_answer_backfit: null
+    failure_type: null
+    final_result: pending_real_student_test
+  evaluation:
+    baseline: 普通逐项核题面
+    primary_benefit_hypothesis: 结构确有差异时减少优先回填项；无差异及时退出，减少无效分组。效率未测。
+    trigger_precision: null
+    trigger_recall: null
+    resolution_rate: null
+    standalone_rate: null
+    assist_rate: null
+    false_trigger_rate: null
+    transfer_rate: null
+    boundary_accuracy: null
+    time_complexity_gain: null
+  usefulness_level: Useful
+  status: candidate
+  maturity_status: candidate
+  practical_value: Useful
+  version: 1.2.0
+  change_reason: ANSWER 1c388a0596b13935ae7c6a1af00834915a8efa33 增量来源同步；保留既有动作与版本，旧证据不自动获得新来源准入。
+  affected_cases:
+  - cases/seven-five/F02/canonical/case.yaml
+  regression_result: pending_current_epoch_semantic_and_student_acceptance
+  student_ready: false
+  entry_copy: 选项存在不同句式且空位有结构线索时，第一眼先找：选项存在不同句式且空位有结构线索。手上先做：一次圈出完整句/半句/疑问/祈使等真实结构并分组，再回正文核内容。做完得到
+    reduce，不是通用答案。按空位真实结构角色给选项字母归组：完整句、半句、小标题或其他实际句式；组只决定优先核谁，必须回正文核对象、动作与段落任务。 什么时候停：没有可观察句型差异就标无区分度；两项结构都能接时停止结构筛选，不凭大小写、句首修饰或同句型定案。
+    换题仍这样做：陌生题仍按真实句式和空位角色分组，不沿用上题字母或大小写口诀。
+  static_design_review:
+    status: source_rebound_semantic_reacceptance_pending
+    source_section_ids:
+    - a8f0c4ae44ae61ff
+    participant_validation: pending_real_participant_validation
+    example_scope: schematic source boundary, not a verified exam
+  source_alignment:
+    commit: 1c388a0596b13935ae7c6a1af00834915a8efa33
+    state: live_source_bound
+    source_content_changed: false
+    correction_profile_applied: false
+    authored_first_contact_draft: false
+    new_course_branches: preserved_in_full_contract_not_automatically_aliased
+    acceptance: unchanged_method_sections; added_source_contracts_preserved; learner/release_pending
+- method_id: F03
+  brand_name: 主角分组
+  source_name: 主语一致
+  aliases:
+  - 主语一致
+  question_type: 七选五
+  method_type: sub_action
+  role: reducer
+  primary_role: reducer
+  secondary_roles: []
+  output_type: reduce
+  student_symptoms:
+  - 选项谈论的主体或代词不同
+  trigger_cues:
+  - 候选的语法主语、核心话题、指代或祈使句行动者可形成相关组。
+  core_action: 开头圈主体与指代并展示暂定字母组，回文确认当前主体对象，再在同组比完整动作及段落推进。
+  decision_rule: 产出主体相关候选；宾语代词也可承接话题，共同主角只缩范围，不代替内容闭环。
+  verification: 产出主体相关候选；宾语代词也可承接话题，共同主角只缩范围，不代替内容闭环。 同主角但对象不同继续比；新证据改变话题或发现漏纳、指代初筛错误时更正，不重演分组；归属不明暂留。
+  stop_rule: 同主角但对象不同继续比；新证据改变话题或发现漏纳、指代初筛错误时更正，不重演分组；归属不明暂留。
+  common_wrong_instinct: 以为选项都说you就是一样的建议，忽略行动对象和段落推进。
+  failure_cases:
+  - 以为选项都说you就是一样的建议，忽略行动对象和段落推进。
+  - 同主角但对象不同继续比；新证据改变话题或发现漏纳、指代初筛错误时更正，不重演分组；归属不明暂留。
+  counterexamples:
+  - 两项祈使句共享省略行动者，却分别处理不同物件；不能因为主角相同就任填一项。
+  transfer_pattern: 换题仍圈实际主体和核心话题，再核当前对象；不把代词字面相同当同指。
+  memory_line: 开头圈主体与指代并展示暂定字母组，回文确认当前主体对象，再在同组比完整动作及段落推进。
+  anti_rule: 同主角 ≠ 同动作。
+  visual_formula: '选项主角/核心话题 → 字母组
+
+    回正文：当前主角 + 对象
+
+    → 优先候选（reduce）
+
+    同组仍比动作与段落推进'
+  challenge_prompt: 不填空，只圈各选项的主角或指代对象，按主体落字母组；再说同组还差哪项内容证据。
+  source_references:
+  - repository: https://github.com/rockpunkgod/ANSWER.git
+    path: gaokao-english/references/seven-five.md
+    heading: 主语一致
+    commit: 1c388a0596b13935ae7c6a1af00834915a8efa33
+  section_ids:
+  - 4b7e8e63d5d6c442
+  can_follow: []
+  usually_before: []
+  usually_after: []
+  conflicts_with: []
+  cannot_replace:
+  - 完整题面验证
+  levels:
+    L1: 圈选项主语与指代对象，按实际主体分组，正文发生话题转换时重新核对
+    L2: 按语法主语、核心话题、指代对象或祈使句省略行动者形成暂定字母组，再回正文确认当前对象；产物是优先候选，不是答案。
+    L3: 同主角仍需比谁对什么做什么；正文话题切换要核当前候选，不重新机械三分。指代未还原、共享行动者但对象不同就停主体筛选。
+    L4: 换题仍圈实际主体和核心话题，再核当前对象；不把代词字面相同当同指。
+  compact:
+    line: 开头圈主体与指代并展示暂定字母组，回文确认当前主体对象，再在同组比完整动作及段落推进。
+    boundary: 同主角但对象不同继续比；新证据改变话题或发现漏纳、指代初筛错误时更正，不重演分组；归属不明暂留。
+    10s: 开头圈主体与指代并展示暂定字母组，回文确认当前主体对象，再在同组比完整动作及段落推进。 产出主体相关候选；宾语代词也可承接话题，共同主角只缩范围，不代替内容闭环。
+    30s: 候选的语法主语、核心话题、指代或祈使句行动者可形成相关组。 开头圈主体与指代并展示暂定字母组，回文确认当前主体对象，再在同组比完整动作及段落推进。
+      同主角但对象不同继续比；新证据改变话题或发现漏纳、指代初筛错误时更正，不重演分组；归属不明暂留。
+    90s: 候选的语法主语、核心话题、指代或祈使句行动者可形成相关组。 手上先做：开头圈主体与指代并展示暂定字母组，回文确认当前主体对象，再在同组比完整动作及段落推进。
+      做完得到：产出主体相关候选；宾语代词也可承接话题，共同主角只缩范围，不代替内容闭环。 停止：同主角但对象不同继续比；新证据改变话题或发现漏纳、指代初筛错误时更正，不重演分组；归属不明暂留。
+      反例（边界示意，非真题）：两项祈使句共享省略行动者，却分别处理不同物件；不能因为主角相同就任填一项。 挑战：不填空，只圈各选项的主角或指代对象，按主体落字母组；再说同组还差哪项内容证据。
+  full:
+    summary: 开头圈主体与指代并展示暂定字母组，回文确认当前主体对象，再在同组比完整动作及段落推进。 产出主体相关候选；宾语代词也可承接话题，共同主角只缩范围，不代替内容闭环。
+    source_boundary: 同主角但对象不同继续比；新证据改变话题或发现漏纳、指代初筛错误时更正，不重演分组；归属不明暂留。
+    boundaries:
+    - 同主角但对象不同继续比；新证据改变话题或发现漏纳、指代初筛错误时更正，不重演分组；归属不明暂留。
+    - 两项祈使句共享省略行动者，却分别处理不同物件；不能因为主角相同就任填一项。
+    section_ids:
+    - 4b7e8e63d5d6c442
+  cases:
+    canonical: cases/seven-five/F03/canonical/case.yaml
+  four_step_card:
+    start: 候选的语法主语、核心话题、指代或祈使句行动者可形成相关组。
+    first_cut: 开头圈主体与指代并展示暂定字母组，回文确认当前主体对象，再在同组比完整动作及段落推进。
+    judge: 产出主体相关候选；宾语代词也可承接话题，共同主角只缩范围，不代替内容闭环。
+    stop: 同主角但对象不同继续比；新证据改变话题或发现漏纳、指代初筛错误时更正，不重演分组；归属不明暂留。
+  practicality_gate:
+    status: design_complete_empirical_pending
+    trigger: 候选的语法主语、核心话题、指代或祈使句行动者可形成相关组。
+    action: 开头圈主体与指代并展示暂定字母组，回文确认当前主体对象，再在同组比完整动作及段落推进。
+    output: reduce；产出主体相关候选；宾语代词也可承接话题，共同主角只缩范围，不代替内容闭环。
+    stop: 同主角但对象不同继续比；新证据改变话题或发现漏纳、指代初筛错误时更正，不重演分组；归属不明暂留。
+    transfer: 换题仍圈实际主体和核心话题，再核当前对象；不把代词字面相同当同指。
+    efficiency: 主体真实不同可减少优先核项；只做一次初筛可减少逐空重复。效果未测。
+    misuse_cost: 未经实测；以为选项都说you就是一样的建议，忽略行动对象和段落推进。会导致误判；须先核触发、执行Stop，不允许辅助产物越级定案。
+  first_use_test:
+    status: designed_not_run
+    trigger_success: null
+    action_success: null
+    evidence_success: null
+    stop_rule_success: null
+    no_answer_backfit: null
+    failure_type: null
+    final_result: pending_real_student_test
+  evaluation:
+    baseline: 普通逐项核题面
+    primary_benefit_hypothesis: 主体真实不同可减少优先核项；只做一次初筛可减少逐空重复。效果未测。
+    trigger_precision: null
+    trigger_recall: null
+    resolution_rate: null
+    standalone_rate: null
+    assist_rate: null
+    false_trigger_rate: null
+    transfer_rate: null
+    boundary_accuracy: null
+    time_complexity_gain: null
+  usefulness_level: Useful
+  status: candidate
+  maturity_status: candidate
+  practical_value: Useful
+  version: 1.2.0
+  change_reason: ANSWER 1c388a0596b13935ae7c6a1af00834915a8efa33 增量来源同步；保留既有动作与版本，旧证据不自动获得新来源准入。
+  affected_cases:
+  - cases/seven-five/F03/canonical/case.yaml
+  regression_result: pending_current_epoch_semantic_and_student_acceptance
+  student_ready: false
+  entry_copy: 候选的语法主语、核心话题、指代或祈使句行动者可形成相关组。 手上先做：开头圈主体与指代并展示暂定字母组，回文确认当前主体对象，再在同组比完整动作及段落推进。
+    做完得到：产出主体相关候选；宾语代词也可承接话题，共同主角只缩范围，不代替内容闭环。 停止：同主角但对象不同继续比；新证据改变话题或发现漏纳、指代初筛错误时更正，不重演分组；归属不明暂留。
+  static_design_review:
+    status: source_rebound_semantic_reacceptance_pending
+    source_section_ids:
+    - 4b7e8e63d5d6c442
+    participant_validation: pending_real_participant_validation
+    example_scope: schematic source boundary, not a verified exam
+  source_alignment:
+    commit: 1c388a0596b13935ae7c6a1af00834915a8efa33
+    state: live_source_bound
+    source_content_changed: false
+    correction_profile_applied: true
+    authored_first_contact_draft: false
+    new_course_branches: preserved_in_full_contract_not_automatically_aliased
+    acceptance: unchanged_method_sections; added_source_contracts_preserved; learner/release_pending
+- method_id: F04
+  brand_name: 时间分组
+  source_name: 时态一致
+  aliases:
+  - 时态一致
+  question_type: 七选五
+  method_type: sub_action
+  role: reducer
+  primary_role: reducer
+  secondary_roles: []
+  output_type: reduce
+  student_symptoms:
+  - 选项存在真实时间差异
+  trigger_cues:
+  - 候选的真谓语或实际时间关系有可观察分组差异。
+  core_action: 开头圈真谓语与时间词并说字母组，回文确认局部事件阶段，再在同组比主体、动作、指代、评价与两侧内容。
+  decision_rule: 只产出当前时间相关候选；时间状语可作回查阶段的线索，不能以同组时间直接定案。
+  verification: 只产出当前时间相关候选；时间状语可作回查阶段的线索，不能以同组时间直接定案。 非谓语词尾不分时态；无差异停止该维筛选；经历与感悟可切换，初筛错误可更正但不重演；不只比较异组后就选。
+  stop_rule: 非谓语词尾不分时态；无差异停止该维筛选；经历与感悟可切换，初筛错误可更正但不重演；不只比较异组后就选。
+  common_wrong_instinct: 看见-ed就分进过去组，或认定全篇所有空都应同一时态。
+  failure_cases:
+  - 看见-ed就分进过去组，或认定全篇所有空都应同一时态。
+  - 非谓语词尾不分时态；无差异停止该维筛选；经历与感悟可切换，初筛错误可更正但不重演；不只比较异组后就选。
+  counterexamples:
+  - 选项中-ed形式是分词修饰，不承担句子时态；不能据其词尾排除当前事件的候选。
+  transfer_pattern: 陌生题仍找真谓语与局部事件时间，不迁移表面词尾或整篇统一时态的假设。
+  memory_line: 开头圈真谓语与时间词并说字母组，回文确认局部事件阶段，再在同组比主体、动作、指代、评价与两侧内容。
+  anti_rule: 词尾-ed ≠ 谓语过去时。
+  visual_formula: '真谓语 + 时间线索 → 字母时间组
+
+    回正文：当前事件阶段
+
+    → 优先候选（reduce）
+
+    分词词尾不分时态；同组核内容'
+  challenge_prompt: 先不填，圈每项真正承担时态的谓语；不是谓语的-ed或-ing划开，再按实际事件时间落字母组。
+  source_references:
+  - repository: https://github.com/rockpunkgod/ANSWER.git
+    path: gaokao-english/references/seven-five.md
+    heading: 时态一致
+    commit: 1c388a0596b13935ae7c6a1af00834915a8efa33
+  section_ids:
+  - 94c1255b4334ece4
+  can_follow: []
+  usually_before: []
+  usually_after: []
+  conflicts_with: []
+  cannot_replace:
+  - 完整题面验证
+  levels:
+    L1: 标每项谓语及时间词，按真实事件时间分组，不用分词词尾代替时态
+    L2: 只用真实谓语或明确时间线形成暂定字母组，回正文核当前事件阶段；同组继续比主体、动作、指代和两侧内容，不能以时态定案。
+    L3: 非谓语词尾不能分时态；没有真实时间差异就停筛。正文有经历、常态或感悟切换时按局部时间核，不强求全篇表面一致，也不重复三分。
+    L4: 陌生题仍找真谓语与局部事件时间，不迁移表面词尾或整篇统一时态的假设。
+  compact:
+    line: 开头圈真谓语与时间词并说字母组，回文确认局部事件阶段，再在同组比主体、动作、指代、评价与两侧内容。
+    boundary: 非谓语词尾不分时态；无差异停止该维筛选；经历与感悟可切换，初筛错误可更正但不重演；不只比较异组后就选。
+    10s: 开头圈真谓语与时间词并说字母组，回文确认局部事件阶段，再在同组比主体、动作、指代、评价与两侧内容。 只产出当前时间相关候选；时间状语可作回查阶段的线索，不能以同组时间直接定案。
+    30s: 候选的真谓语或实际时间关系有可观察分组差异。 开头圈真谓语与时间词并说字母组，回文确认局部事件阶段，再在同组比主体、动作、指代、评价与两侧内容。
+      非谓语词尾不分时态；无差异停止该维筛选；经历与感悟可切换，初筛错误可更正但不重演；不只比较异组后就选。
+    90s: 候选的真谓语或实际时间关系有可观察分组差异。 手上先做：开头圈真谓语与时间词并说字母组，回文确认局部事件阶段，再在同组比主体、动作、指代、评价与两侧内容。
+      做完得到：只产出当前时间相关候选；时间状语可作回查阶段的线索，不能以同组时间直接定案。 停止：非谓语词尾不分时态；无差异停止该维筛选；经历与感悟可切换，初筛错误可更正但不重演；不只比较异组后就选。
+      反例（边界示意，非真题）：选项中-ed形式是分词修饰，不承担句子时态；不能据其词尾排除当前事件的候选。 挑战：先不填，圈每项真正承担时态的谓语；不是谓语的-ed或-ing划开，再按实际事件时间落字母组。
+  full:
+    summary: 开头圈真谓语与时间词并说字母组，回文确认局部事件阶段，再在同组比主体、动作、指代、评价与两侧内容。 只产出当前时间相关候选；时间状语可作回查阶段的线索，不能以同组时间直接定案。
+    source_boundary: 非谓语词尾不分时态；无差异停止该维筛选；经历与感悟可切换，初筛错误可更正但不重演；不只比较异组后就选。
+    boundaries:
+    - 非谓语词尾不分时态；无差异停止该维筛选；经历与感悟可切换，初筛错误可更正但不重演；不只比较异组后就选。
+    - 选项中-ed形式是分词修饰，不承担句子时态；不能据其词尾排除当前事件的候选。
+    section_ids:
+    - 94c1255b4334ece4
+  cases:
+    canonical: cases/seven-five/F04/canonical/case.yaml
+  four_step_card:
+    start: 候选的真谓语或实际时间关系有可观察分组差异。
+    first_cut: 开头圈真谓语与时间词并说字母组，回文确认局部事件阶段，再在同组比主体、动作、指代、评价与两侧内容。
+    judge: 只产出当前时间相关候选；时间状语可作回查阶段的线索，不能以同组时间直接定案。
+    stop: 非谓语词尾不分时态；无差异停止该维筛选；经历与感悟可切换，初筛错误可更正但不重演；不只比较异组后就选。
+  practicality_gate:
+    status: design_complete_empirical_pending
+    trigger: 候选的真谓语或实际时间关系有可观察分组差异。
+    action: 开头圈真谓语与时间词并说字母组，回文确认局部事件阶段，再在同组比主体、动作、指代、评价与两侧内容。
+    output: reduce；只产出当前时间相关候选；时间状语可作回查阶段的线索，不能以同组时间直接定案。
+    stop: 非谓语词尾不分时态；无差异停止该维筛选；经历与感悟可切换，初筛错误可更正但不重演；不只比较异组后就选。
+    transfer: 陌生题仍找真谓语与局部事件时间，不迁移表面词尾或整篇统一时态的假设。
+    efficiency: 真实阶段有区别时减少无效试填；避免逐空重分和假时态分组，效率未测。
+    misuse_cost: 未经实测；看见-ed就分进过去组，或认定全篇所有空都应同一时态。会导致误判；须先核触发、执行Stop，不允许辅助产物越级定案。
+  first_use_test:
+    status: designed_not_run
+    trigger_success: null
+    action_success: null
+    evidence_success: null
+    stop_rule_success: null
+    no_answer_backfit: null
+    failure_type: null
+    final_result: pending_real_student_test
+  evaluation:
+    baseline: 普通逐项核题面
+    primary_benefit_hypothesis: 真实阶段有区别时减少无效试填；避免逐空重分和假时态分组，效率未测。
+    trigger_precision: null
+    trigger_recall: null
+    resolution_rate: null
+    standalone_rate: null
+    assist_rate: null
+    false_trigger_rate: null
+    transfer_rate: null
+    boundary_accuracy: null
+    time_complexity_gain: null
+  usefulness_level: Useful
+  status: candidate
+  maturity_status: candidate
+  practical_value: Useful
+  version: 1.2.0
+  change_reason: ANSWER 1c388a0596b13935ae7c6a1af00834915a8efa33 增量来源同步；保留既有动作与版本，旧证据不自动获得新来源准入。
+  affected_cases:
+  - cases/seven-five/F04/canonical/case.yaml
+  regression_result: pending_current_epoch_semantic_and_student_acceptance
+  student_ready: false
+  entry_copy: 候选的真谓语或实际时间关系有可观察分组差异。 手上先做：开头圈真谓语与时间词并说字母组，回文确认局部事件阶段，再在同组比主体、动作、指代、评价与两侧内容。
+    做完得到：只产出当前时间相关候选；时间状语可作回查阶段的线索，不能以同组时间直接定案。 停止：非谓语词尾不分时态；无差异停止该维筛选；经历与感悟可切换，初筛错误可更正但不重演；不只比较异组后就选。
+  static_design_review:
+    status: source_rebound_semantic_reacceptance_pending
+    source_section_ids:
+    - 94c1255b4334ece4
+    participant_validation: pending_real_participant_validation
+    example_scope: schematic source boundary, not a verified exam
+  source_alignment:
+    commit: 1c388a0596b13935ae7c6a1af00834915a8efa33
+    state: live_source_bound
+    source_content_changed: false
+    correction_profile_applied: true
+    authored_first_contact_draft: false
+    new_course_branches: preserved_in_full_contract_not_automatically_aliased
+    acceptance: unchanged_method_sections; added_source_contracts_preserved; learner/release_pending
+- method_id: F05
+  brand_name: 段首统领
+  source_name: 总起句做题法
+  aliases:
+  - 总起句做题法
+  question_type: 七选五
+  method_type: method
+  role: interpreter
+  primary_role: interpreter
+  secondary_roles: []
+  output_type: interpret
+  student_symptoms:
+  - 空位在段首或第一段段尾附近，且后文围绕共同主题展开
+  trigger_cues:
+  - 段首或第一段段尾常提示统领关系，但仍需候选概括并引出实际后续展开。
+  core_action: 先标候选管一个段还是后续若干分项，概括全部管辖内容的共同对象和展开方向，再核代词承接与实际展开。
+  decision_rule: 产出统领范围及段落任务解释；候选既要覆盖全部管辖范围，也要能引出实际展开。
+  verification: 产出统领范围及段落任务解释；候选既要覆盖全部管辖范围，也要能引出实际展开。 位置或Here are不定案；只对应一个例子、数据或步骤就撤回初判；不把较概括项推广到任意位置，竞争未闭合继续核。
+  stop_rule: 位置或Here are不定案；只对应一个例子、数据或步骤就撤回初判；不把较概括项推广到任意位置，竞争未闭合继续核。
+  common_wrong_instinct: 只读段首位置或提示词，就选最宽泛的句子，没看后文各分项在做什么。
+  failure_cases:
+  - 只读段首位置或提示词，就选最宽泛的句子，没看后文各分项在做什么。
+  - 位置或Here are不定案；只对应一个例子、数据或步骤就撤回初判；不把较概括项推广到任意位置，竞争未闭合继续核。
+  counterexamples:
+  - 候选正好概括下文一个例子，但后面其他分项处理的是另一共同问题；局部匹配不能统领整个管辖范围。
+  transfer_pattern: 新文章仍先画管辖范围，再核全部分项，不把段首位置当中心证明。
+  memory_line: 先标候选管一个段还是后续若干分项，概括全部管辖内容的共同对象和展开方向，再核代词承接与实际展开。
+  anti_rule: 段首 ≠ 统领成立。
+  visual_formula: '管辖范围：整段 / 后续分项
+
+    分项1 + 分项2 + … → 共同对象/方向
+
+    候选预测展开 ↔ 实际展开
+
+    → 统领解释（interpret）'
+  challenge_prompt: 先不填，把候选应该管的段落或分项框出来，各写一个任务短语，再写共同方向。
+  source_references:
+  - repository: https://github.com/rockpunkgod/ANSWER.git
+    path: gaokao-english/references/seven-five.md
+    heading: 总起句做题法
+    commit: 1c388a0596b13935ae7c6a1af00834915a8efa33
+  section_ids:
+  - 1fcc9966ce085922
+  can_follow: []
+  usually_before: []
+  usually_after: []
+  conflicts_with: []
+  cannot_replace:
+  - 完整题面验证
+  levels:
+    L1: 列下文共同对象、动作与段落任务，再核候选能否统领，不把段首自动当中心
+    L2: 列候选所管辖的整段或后续分项，核共同对象与展开方向；产出统领范围和段落任务，不能因位于段首直接定案。
+    L3: 候选只覆盖一个例子、数据或步骤，或预测展开与后文不符时停初判；段首和Here are等只作入口，指代承接还要核。
+    L4: 新文章仍先画管辖范围，再核全部分项，不把段首位置当中心证明。
+  compact:
+    line: 先标候选管一个段还是后续若干分项，概括全部管辖内容的共同对象和展开方向，再核代词承接与实际展开。
+    boundary: 位置或Here are不定案；只对应一个例子、数据或步骤就撤回初判；不把较概括项推广到任意位置，竞争未闭合继续核。
+    10s: 先标候选管一个段还是后续若干分项，概括全部管辖内容的共同对象和展开方向，再核代词承接与实际展开。 产出统领范围及段落任务解释；候选既要覆盖全部管辖范围，也要能引出实际展开。
+    30s: 段首或第一段段尾常提示统领关系，但仍需候选概括并引出实际后续展开。 先标候选管一个段还是后续若干分项，概括全部管辖内容的共同对象和展开方向，再核代词承接与实际展开。
+      位置或Here are不定案；只对应一个例子、数据或步骤就撤回初判；不把较概括项推广到任意位置，竞争未闭合继续核。
+    90s: 段首或第一段段尾常提示统领关系，但仍需候选概括并引出实际后续展开。 手上先做：先标候选管一个段还是后续若干分项，概括全部管辖内容的共同对象和展开方向，再核代词承接与实际展开。
+      做完得到：产出统领范围及段落任务解释；候选既要覆盖全部管辖范围，也要能引出实际展开。 停止：位置或Here are不定案；只对应一个例子、数据或步骤就撤回初判；不把较概括项推广到任意位置，竞争未闭合继续核。
+      反例（边界示意，非真题）：候选正好概括下文一个例子，但后面其他分项处理的是另一共同问题；局部匹配不能统领整个管辖范围。 挑战：先不填，把候选应该管的段落或分项框出来，各写一个任务短语，再写共同方向。
+  full:
+    summary: 先标候选管一个段还是后续若干分项，概括全部管辖内容的共同对象和展开方向，再核代词承接与实际展开。 产出统领范围及段落任务解释；候选既要覆盖全部管辖范围，也要能引出实际展开。
+    source_boundary: 位置或Here are不定案；只对应一个例子、数据或步骤就撤回初判；不把较概括项推广到任意位置，竞争未闭合继续核。
+    boundaries:
+    - 位置或Here are不定案；只对应一个例子、数据或步骤就撤回初判；不把较概括项推广到任意位置，竞争未闭合继续核。
+    - 候选正好概括下文一个例子，但后面其他分项处理的是另一共同问题；局部匹配不能统领整个管辖范围。
+    section_ids:
+    - 1fcc9966ce085922
+  cases:
+    canonical: cases/seven-five/F05/canonical/case.yaml
+  four_step_card:
+    start: 段首或第一段段尾常提示统领关系，但仍需候选概括并引出实际后续展开。
+    first_cut: 先标候选管一个段还是后续若干分项，概括全部管辖内容的共同对象和展开方向，再核代词承接与实际展开。
+    judge: 产出统领范围及段落任务解释；候选既要覆盖全部管辖范围，也要能引出实际展开。
+    stop: 位置或Here are不定案；只对应一个例子、数据或步骤就撤回初判；不把较概括项推广到任意位置，竞争未闭合继续核。
+  practicality_gate:
+    status: design_complete_empirical_pending
+    trigger: 段首或第一段段尾常提示统领关系，但仍需候选概括并引出实际后续展开。
+    action: 先标候选管一个段还是后续若干分项，概括全部管辖内容的共同对象和展开方向，再核代词承接与实际展开。
+    output: interpret；产出统领范围及段落任务解释；候选既要覆盖全部管辖范围，也要能引出实际展开。
+    stop: 位置或Here are不定案；只对应一个例子、数据或步骤就撤回初判；不把较概括项推广到任意位置，竞争未闭合继续核。
+    transfer: 新文章仍先画管辖范围，再核全部分项，不把段首位置当中心证明。
+    efficiency: 以共同任务筛掉局部概括的干扰方向，预期减少漫无目的试填；速度未测。
+    misuse_cost: 未经实测；只读段首位置或提示词，就选最宽泛的句子，没看后文各分项在做什么。会导致误判；须先核触发、执行Stop，不允许辅助产物越级定案。
+  first_use_test:
+    status: designed_not_run
+    trigger_success: null
+    action_success: null
+    evidence_success: null
+    stop_rule_success: null
+    no_answer_backfit: null
+    failure_type: null
+    final_result: pending_real_student_test
+  evaluation:
+    baseline: 普通逐项核题面
+    primary_benefit_hypothesis: 以共同任务筛掉局部概括的干扰方向，预期减少漫无目的试填；速度未测。
+    trigger_precision: null
+    trigger_recall: null
+    resolution_rate: null
+    standalone_rate: null
+    assist_rate: null
+    false_trigger_rate: null
+    transfer_rate: null
+    boundary_accuracy: null
+    time_complexity_gain: null
+  usefulness_level: Useful
+  status: candidate
+  maturity_status: candidate
+  practical_value: Useful
+  version: 1.3.0
+  change_reason: ANSWER 1c388a0596b13935ae7c6a1af00834915a8efa33 增量来源同步；保留既有动作与版本，旧证据不自动获得新来源准入。
+  affected_cases:
+  - cases/seven-five/F05/canonical/case.yaml
+  regression_result: pending_current_epoch_semantic_and_student_acceptance
+  student_ready: false
+  entry_copy: 段首或第一段段尾常提示统领关系，但仍需候选概括并引出实际后续展开。 手上先做：先标候选管一个段还是后续若干分项，概括全部管辖内容的共同对象和展开方向，再核代词承接与实际展开。
+    做完得到：产出统领范围及段落任务解释；候选既要覆盖全部管辖范围，也要能引出实际展开。 停止：位置或Here are不定案；只对应一个例子、数据或步骤就撤回初判；不把较概括项推广到任意位置，竞争未闭合继续核。
+  static_design_review:
+    status: source_rebound_semantic_reacceptance_pending
+    source_section_ids:
+    - 1fcc9966ce085922
+    participant_validation: pending_real_participant_validation
+    example_scope: schematic source boundary, not a verified exam
+  source_alignment:
+    commit: 1c388a0596b13935ae7c6a1af00834915a8efa33
+    state: live_source_bound
+    source_content_changed: false
+    correction_profile_applied: true
+    authored_first_contact_draft: false
+    new_course_branches: preserved_in_full_contract_not_automatically_aliased
+    acceptance: unchanged_method_sections; added_source_contracts_preserved; learner/release_pending
+- method_id: F06
+  brand_name: 前后呼应
+  source_name: 对应词法
+  aliases:
+  - 对应词法
+  question_type: 七选五
+  method_type: method
+  role: verifier
+  primary_role: verifier
+  secondary_roles: []
+  output_type: verify
+  student_symptoms:
+  - 候选与上下句有对象或词义复现
+  trigger_cues:
+  - 候选与正文有可确认词语、指代或整句内容呼应，而非只是同一主题。
+  core_action: 圈呼应表达并写它承接哪个对象、事件或整句内容，回填两侧；需要时由空后代词反查候选提供的前提。
+  decision_rule: 产出实际呼应的核验；同词多项局部接通时比空前条件、空后结果与全段任务，不数重词定案。
+  verification: 产出实际呼应的核验；同词多项局部接通时比空前条件、空后结果与全段任务，不数重词定案。 无明确呼应不命名本法；形式it不强找名词，latter要有真实成对对象；前提未引出不提前放，段界连下段起句核。
+  stop_rule: 无明确呼应不命名本法；形式it不强找名词，latter要有真实成对对象；前提未引出不提前放，段界连下段起句核。
+  common_wrong_instinct: 每找到一个重复词就增加信心，却没有说明它到底承接谁或哪件事。
+  failure_cases:
+  - 每找到一个重复词就增加信心，却没有说明它到底承接谁或哪件事。
+  - 无明确呼应不命名本法；形式it不强找名词，latter要有真实成对对象；前提未引出不提前放，段界连下段起句核。
+  counterexamples:
+  - 两个候选都重复同一个主题词，但其中一项的动作不能承接空前条件；重词再多也不证明闭环。
+  transfer_pattern: 换文章仍核同指或同义的实际对象及前后联系，不迁移固定对应词对。
+  memory_line: 圈呼应表达并写它承接哪个对象、事件或整句内容，回填两侧；需要时由空后代词反查候选提供的前提。
+  anti_rule: 重复词 ≠ 内容接通。
+  visual_formula: "呼应词 → 哪个对象/事件/整件事？\n         ↓ 放回两侧\n空前条件 + 候选完整断言 + 空后结果\n→ 呼应核验（verify）；同词不定案"
+  challenge_prompt: 不选答案，只连一对呼应表达，写明它们对应哪个对象或事件，再标还需核的前后联系。
+  source_references:
+  - repository: https://github.com/rockpunkgod/ANSWER.git
+    path: gaokao-english/references/seven-five.md
+    heading: 对应词法
+    commit: 1c388a0596b13935ae7c6a1af00834915a8efa33
+  section_ids:
+  - 92ec24e9e7003cba
+  can_follow: []
+  usually_before: []
+  usually_after: []
+  conflicts_with: []
+  cannot_replace:
+  - 完整题面验证
+  levels:
+    L1: 圈两边对应对象与动作，标同指或同义关系，再回填核上下句和段落任务
+    L2: 圈明确复现、近义或指代，写清连接的对象、事件或整句内容，再回填核空前条件、空后结果和段落任务；输出呼应核验，不靠重词数量定案。
+    L3: 只是同主题或翻译通却没有明确呼应时不命名本法；同词多项都能接时比完整断言。形式it、概括名词或latter必须按实际内容还原，不能强找最近名词。
+    L4: 换文章仍核同指或同义的实际对象及前后联系，不迁移固定对应词对。
+  compact:
+    line: 圈呼应表达并写它承接哪个对象、事件或整句内容，回填两侧；需要时由空后代词反查候选提供的前提。
+    boundary: 无明确呼应不命名本法；形式it不强找名词，latter要有真实成对对象；前提未引出不提前放，段界连下段起句核。
+    10s: 圈呼应表达并写它承接哪个对象、事件或整句内容，回填两侧；需要时由空后代词反查候选提供的前提。 产出实际呼应的核验；同词多项局部接通时比空前条件、空后结果与全段任务，不数重词定案。
+    30s: 候选与正文有可确认词语、指代或整句内容呼应，而非只是同一主题。 圈呼应表达并写它承接哪个对象、事件或整句内容，回填两侧；需要时由空后代词反查候选提供的前提。
+      无明确呼应不命名本法；形式it不强找名词，latter要有真实成对对象；前提未引出不提前放，段界连下段起句核。
+    90s: 候选与正文有可确认词语、指代或整句内容呼应，而非只是同一主题。 手上先做：圈呼应表达并写它承接哪个对象、事件或整句内容，回填两侧；需要时由空后代词反查候选提供的前提。
+      做完得到：产出实际呼应的核验；同词多项局部接通时比空前条件、空后结果与全段任务，不数重词定案。 停止：无明确呼应不命名本法；形式it不强找名词，latter要有真实成对对象；前提未引出不提前放，段界连下段起句核。
+      反例（边界示意，非真题）：两个候选都重复同一个主题词，但其中一项的动作不能承接空前条件；重词再多也不证明闭环。 挑战：不选答案，只连一对呼应表达，写明它们对应哪个对象或事件，再标还需核的前后联系。
+  full:
+    summary: 圈呼应表达并写它承接哪个对象、事件或整句内容，回填两侧；需要时由空后代词反查候选提供的前提。 产出实际呼应的核验；同词多项局部接通时比空前条件、空后结果与全段任务，不数重词定案。
+    source_boundary: 无明确呼应不命名本法；形式it不强找名词，latter要有真实成对对象；前提未引出不提前放，段界连下段起句核。
+    boundaries:
+    - 无明确呼应不命名本法；形式it不强找名词，latter要有真实成对对象；前提未引出不提前放，段界连下段起句核。
+    - 两个候选都重复同一个主题词，但其中一项的动作不能承接空前条件；重词再多也不证明闭环。
+    section_ids:
+    - 92ec24e9e7003cba
+  cases:
+    canonical: cases/seven-five/F06/canonical/case.yaml
+  four_step_card:
+    start: 候选与正文有可确认词语、指代或整句内容呼应，而非只是同一主题。
+    first_cut: 圈呼应表达并写它承接哪个对象、事件或整句内容，回填两侧；需要时由空后代词反查候选提供的前提。
+    judge: 产出实际呼应的核验；同词多项局部接通时比空前条件、空后结果与全段任务，不数重词定案。
+    stop: 无明确呼应不命名本法；形式it不强找名词，latter要有真实成对对象；前提未引出不提前放，段界连下段起句核。
+  practicality_gate:
+    status: design_complete_empirical_pending
+    trigger: 候选与正文有可确认词语、指代或整句内容呼应，而非只是同一主题。
+    action: 圈呼应表达并写它承接哪个对象、事件或整句内容，回填两侧；需要时由空后代词反查候选提供的前提。
+    output: verify；产出实际呼应的核验；同词多项局部接通时比空前条件、空后结果与全段任务，不数重词定案。
+    stop: 无明确呼应不命名本法；形式it不强找名词，latter要有真实成对对象；前提未引出不提前放，段界连下段起句核。
+    transfer: 换文章仍核同指或同义的实际对象及前后联系，不迁移固定对应词对。
+    efficiency: 把找词变为对象/事件连线，可减少无效罗列并暴露指代缺口；效率未测。
+    misuse_cost: 未经实测；每找到一个重复词就增加信心，却没有说明它到底承接谁或哪件事。会导致误判；须先核触发、执行Stop，不允许辅助产物越级定案。
+  first_use_test:
+    status: designed_not_run
+    trigger_success: null
+    action_success: null
+    evidence_success: null
+    stop_rule_success: null
+    no_answer_backfit: null
+    failure_type: null
+    final_result: pending_real_student_test
+  evaluation:
+    baseline: 普通逐项核题面
+    primary_benefit_hypothesis: 把找词变为对象/事件连线，可减少无效罗列并暴露指代缺口；效率未测。
+    trigger_precision: null
+    trigger_recall: null
+    resolution_rate: null
+    standalone_rate: null
+    assist_rate: null
+    false_trigger_rate: null
+    transfer_rate: null
+    boundary_accuracy: null
+    time_complexity_gain: null
+  usefulness_level: Useful
+  status: candidate
+  maturity_status: candidate
+  practical_value: Useful
+  version: 1.2.0
+  change_reason: ANSWER 1c388a0596b13935ae7c6a1af00834915a8efa33 增量来源同步；保留既有动作与版本，旧证据不自动获得新来源准入。
+  affected_cases:
+  - cases/seven-five/F06/canonical/case.yaml
+  regression_result: pending_current_epoch_semantic_and_student_acceptance
+  student_ready: false
+  entry_copy: 候选与正文有可确认词语、指代或整句内容呼应，而非只是同一主题。 手上先做：圈呼应表达并写它承接哪个对象、事件或整句内容，回填两侧；需要时由空后代词反查候选提供的前提。
+    做完得到：产出实际呼应的核验；同词多项局部接通时比空前条件、空后结果与全段任务，不数重词定案。 停止：无明确呼应不命名本法；形式it不强找名词，latter要有真实成对对象；前提未引出不提前放，段界连下段起句核。
+  static_design_review:
+    status: source_rebound_semantic_reacceptance_pending
+    source_section_ids:
+    - 92ec24e9e7003cba
+    participant_validation: pending_real_participant_validation
+    example_scope: schematic source boundary, not a verified exam
+  source_alignment:
+    commit: 1c388a0596b13935ae7c6a1af00834915a8efa33
+    state: live_source_bound
+    source_content_changed: false
+    correction_profile_applied: true
+    authored_first_contact_draft: false
+    new_course_branches: preserved_in_full_contract_not_automatically_aliased
+    acceptance: unchanged_method_sections; added_source_contracts_preserved; learner/release_pending
+- method_id: F07
+  brand_name: 关系拼接
+  source_name: 逻辑关系法
+  aliases:
+  - 逻辑关系法
+  question_type: 七选五
+  method_type: method
+  role: verifier
+  primary_role: verifier
+  secondary_roles: []
+  output_type: verify
+  student_symptoms:
+  - 空前后显示转折、因果、解释等关系
+  trigger_cues:
+  - 空前后显示转折、因果、解释等关系
+  core_action: 写出两侧完整内容，指出实际关系，再核候选连接后是否成立
+  decision_rule: 把两侧完整内容写成关系方向，回填核转折、因果、递进、例证或措施的实际联系；两侧与段落任务共同成立才通过这一项核验。
+  verification: 写出两侧完整内容，指出实际关系，再核候选连接后是否成立。把两侧完整内容写成关系方向，回填核转折、因果、递进、例证或措施的实际联系；两侧与段落任务共同成立才通过这一项核验。
+    仅连接词同类、只接前句却冲突后句或措施时点错误时不能通过；否定只做某事不是完全禁止，例子也必须真的支持观点。
+  stop_rule: 仅连接词同类、只接前句却冲突后句或措施时点错误时不能通过；否定只做某事不是完全禁止，例子也必须真的支持观点。
+  common_wrong_instinct: 一看到however就找反义词，一看到因果词就选像原因的项，不读两侧完整内容。
+  failure_cases:
+  - 一看到however就找反义词，一看到因果词就选像原因的项，不读两侧完整内容。
+  - 仅连接词同类、只接前句却冲突后句或措施时点错误时不能通过；否定只做某事不是完全禁止，例子也必须真的支持观点。
+  counterexamples:
+  - 候选能接前句的问题，却提出事后补救，而空位要求事前准备；措施主题相同也不能通过时间关系核验。
+  transfer_pattern: 新题仍用两侧完整命题证明箭头，不把连接词或负面词机械对应成答案。
+  memory_line: 写出两侧完整内容，指出实际关系，再核候选连接后是否成立
+  anti_rule: 同连接词 ≠ 同关系成立。
+  visual_formula: "空前完整内容 → 关系方向 → 空后完整内容\n           ↑ 回填候选\n核两侧 + 行动时点 + 段落任务\n\
+    → 关系核验（verify）"
+  challenge_prompt: 先不填，写空前和空后各说什么，再画一条有方向的关系箭头；给箭头指出内容依据而非只抄连接词。
+  source_references:
+  - repository: https://github.com/rockpunkgod/ANSWER.git
+    path: gaokao-english/references/seven-five.md
+    heading: 逻辑关系法
+    commit: 1c388a0596b13935ae7c6a1af00834915a8efa33
+  section_ids:
+  - b24e557dbb06cb98
+  can_follow: []
+  usually_before: []
+  usually_after: []
+  conflicts_with: []
+  cannot_replace:
+  - 完整题面验证
+  levels:
+    L1: 写出两侧完整内容，指出实际关系，再核候选连接后是否成立
+    L2: 把两侧完整内容写成关系方向，回填核转折、因果、递进、例证或措施的实际联系；两侧与段落任务共同成立才通过这一项核验。
+    L3: 仅连接词同类、只接前句却冲突后句或措施时点错误时不能通过；否定只做某事不是完全禁止，例子也必须真的支持观点。
+    L4: 新题仍用两侧完整命题证明箭头，不把连接词或负面词机械对应成答案。
+  compact:
+    10s: 连接词让你犹豫？写两侧完整内容和关系方向，再核行动时点；只接前句或同连接词，不能通过。
+    30s: 转折、因果、例证或措施关系可见时，写两侧完整内容，再标实际方向并回填。关系示意：事后补救不能冒充事前准备。只接前句、与后句冲突就停；没有显式连接词也能核内容，但不能补造关系。
+    90s: 空前后显示转折、因果、解释等关系时，先确认：空前后显示转折、因果、解释等关系。第一刀：写出两侧完整内容，指出实际关系，再核候选连接后是否成立。产物
+      verify：把两侧完整内容写成关系方向，回填核转折、因果、递进、例证或措施的实际联系；两侧与段落任务共同成立才通过这一项核验。 停止：仅连接词同类、只接前句却冲突后句或措施时点错误时不能通过；否定只做某事不是完全禁止，例子也必须真的支持观点。
+      反例（关系示意，不是真题）：候选能接前句的问题，却提出事后补救，而空位要求事前准备；措施主题相同也不能通过时间关系核验。 迁移：新题仍用两侧完整命题证明箭头，不把连接词或负面词机械对应成答案。
+      挑战：先不填，写空前和空后各说什么，再画一条有方向的关系箭头；给箭头指出内容依据而非只抄连接词。
+  full:
+    summary: 写出两侧完整内容，指出实际关系，再核候选连接后是否成立 把两侧完整内容写成关系方向，回填核转折、因果、递进、例证或措施的实际联系；两侧与段落任务共同成立才通过这一项核验。
+    source_boundary: 仅连接词同类、只接前句却冲突后句或措施时点错误时不能通过；否定只做某事不是完全禁止，例子也必须真的支持观点。
+    boundaries:
+    - 仅连接词同类、只接前句却冲突后句或措施时点错误时不能通过；否定只做某事不是完全禁止，例子也必须真的支持观点。
+    - 候选能接前句的问题，却提出事后补救，而空位要求事前准备；措施主题相同也不能通过时间关系核验。
+    section_ids:
+    - b24e557dbb06cb98
+  cases:
+    canonical: cases/seven-five/F07/canonical/case.yaml
+  four_step_card:
+    start: 空前后显示转折、因果、解释等关系
+    first_cut: 写出两侧完整内容，指出实际关系，再核候选连接后是否成立
+    judge: 把两侧完整内容写成关系方向，回填核转折、因果、递进、例证或措施的实际联系；两侧与段落任务共同成立才通过这一项核验。
+    stop: 仅连接词同类、只接前句却冲突后句或措施时点错误时不能通过；否定只做某事不是完全禁止，例子也必须真的支持观点。
+  practicality_gate:
+    status: design_complete_empirical_pending
+    trigger: 空前后显示转折、因果、解释等关系
+    action: 写出两侧完整内容，指出实际关系，再核候选连接后是否成立
+    output: verify；把两侧完整内容写成关系方向，回填核转折、因果、递进、例证或措施的实际联系；两侧与段落任务共同成立才通过这一项核验。
+    stop: 仅连接词同类、只接前句却冲突后句或措施时点错误时不能通过；否定只做某事不是完全禁止，例子也必须真的支持观点。
+    transfer: 新题仍用两侧完整命题证明箭头，不把连接词或负面词机械对应成答案。
+    efficiency: 把标志词猜测改为可核的双侧联系，预期降低方向和行动时点混淆；效率未测。
+    misuse_cost: 未经实测；一看到however就找反义词，一看到因果词就选像原因的项，不读两侧完整内容。会导致误判；须先核触发、执行Stop，不允许辅助产物越级定案。
+  first_use_test:
+    status: designed_not_run
+    trigger_success: null
+    action_success: null
+    evidence_success: null
+    stop_rule_success: null
+    no_answer_backfit: null
+    failure_type: null
+    final_result: pending_real_student_test
+  evaluation:
+    baseline: 普通逐项核题面
+    primary_benefit_hypothesis: 把标志词猜测改为可核的双侧联系，预期降低方向和行动时点混淆；效率未测。
+    trigger_precision: null
+    trigger_recall: null
+    resolution_rate: null
+    standalone_rate: null
+    assist_rate: null
+    false_trigger_rate: null
+    transfer_rate: null
+    boundary_accuracy: null
+    time_complexity_gain: null
+  usefulness_level: Useful
+  status: candidate
+  maturity_status: candidate
+  practical_value: Useful
+  version: 1.2.0
+  change_reason: ANSWER 1c388a0596b13935ae7c6a1af00834915a8efa33 增量来源同步；保留既有动作与版本，旧证据不自动获得新来源准入。
+  affected_cases:
+  - cases/seven-five/F07/canonical/case.yaml
+  regression_result: pending_current_epoch_semantic_and_student_acceptance
+  student_ready: false
+  entry_copy: 空前后显示转折、因果、解释等关系时，第一眼先找：空前后显示转折、因果、解释等关系。手上先做：写出两侧完整内容，指出实际关系，再核候选连接后是否成立。做完得到
+    verify，不是通用答案。把两侧完整内容写成关系方向，回填核转折、因果、递进、例证或措施的实际联系；两侧与段落任务共同成立才通过这一项核验。 什么时候停：仅连接词同类、只接前句却冲突后句或措施时点错误时不能通过；否定只做某事不是完全禁止，例子也必须真的支持观点。
+    换题仍这样做：新题仍用两侧完整命题证明箭头，不把连接词或负面词机械对应成答案。
+  static_design_review:
+    status: source_rebound_semantic_reacceptance_pending
+    source_section_ids:
+    - b24e557dbb06cb98
+    participant_validation: pending_real_participant_validation
+    example_scope: schematic source boundary, not a verified exam
+  source_alignment:
+    commit: 1c388a0596b13935ae7c6a1af00834915a8efa33
+    state: live_source_bound
+    source_content_changed: false
+    correction_profile_applied: false
+    authored_first_contact_draft: false
+    new_course_branches: preserved_in_full_contract_not_automatically_aliased
+    acceptance: unchanged_method_sections; added_source_contracts_preserved; learner/release_pending
+- method_id: F08
+  brand_name: 情绪同向
+  source_name: 褒贬一致
+  aliases:
+  - 褒贬一致
+  question_type: 七选五
+  method_type: sub_action
+  role: reducer
+  primary_role: reducer
+  secondary_roles: []
+  output_type: reduce
+  student_symptoms:
+  - 同一对象有可确认的评价方向
+  trigger_cues:
+  - 同一对象有可确认的评价方向
+  core_action: 圈评价词及它评价的对象，比较候选评价维度，不因同为积极词就定案
+  decision_rule: 先读完整命题与否定范围，圈评价对象和实际功能；同维同向只形成优先候选，继续比处境、措施与句间任务。
+  verification: 圈评价词及它评价的对象，比较候选评价维度，不因同为积极词就定案。先读完整命题与否定范围，圈评价对象和实际功能；同维同向只形成优先候选，继续比处境、措施与句间任务。
+    中性句不强分褒贬；负面处境可能引出改善，否定形式可能表达肯定。方向相同仍不能定案，更不能靠另一空占用来证明。
+  stop_rule: 中性句不强分褒贬；负面处境可能引出改善，否定形式可能表达肯定。方向相同仍不能定案，更不能靠另一空占用来证明。
+  common_wrong_instinct: 把困难词一律归负面、帮助词一律归正面，以为同方向就能填。
+  failure_cases:
+  - 把困难词一律归负面、帮助词一律归正面，以为同方向就能填。
+  - 中性句不强分褒贬；负面处境可能引出改善，否定形式可能表达肯定。方向相同仍不能定案，更不能靠另一空占用来证明。
+  counterexamples:
+  - 候选描述困难是为了提出帮助，并非否定对象价值；只按负面词分组会把功能分错。
+  transfer_pattern: 新材料仍读完整评价和否定范围，不沿用积极词必选或负面词必排。
+  memory_line: 圈评价词及它评价的对象，比较候选评价维度，不因同为积极词就定案
+  anti_rule: 同褒贬 ≠ 同功能。
+  visual_formula: '完整命题 + 否定范围
+
+    → 评价谁？陈述困难 / 帮助 / 评价结果？
+
+    → 同维优先组（reduce）
+
+    中性不分；同向仍核内容'
+  challenge_prompt: 先不填，圈评价对象和否定范围，给候选标陈述困难、提出帮助或评价结果；中性项注明不分褒贬。
+  source_references:
+  - repository: https://github.com/rockpunkgod/ANSWER.git
+    path: gaokao-english/references/seven-five.md
+    heading: 褒贬一致
+    commit: 1c388a0596b13935ae7c6a1af00834915a8efa33
+  section_ids:
+  - 109b61973bdf9497
+  can_follow: []
+  usually_before: []
+  usually_after: []
+  conflicts_with: []
+  cannot_replace:
+  - 完整题面验证
+  levels:
+    L1: 圈评价词及它评价的对象，比较候选评价维度，不因同为积极词就定案
+    L2: 先读完整命题与否定范围，圈评价对象和实际功能；同维同向只形成优先候选，继续比处境、措施与句间任务。
+    L3: 中性句不强分褒贬；负面处境可能引出改善，否定形式可能表达肯定。方向相同仍不能定案，更不能靠另一空占用来证明。
+    L4: 新材料仍读完整评价和否定范围，不沿用积极词必选或负面词必排。
+  compact:
+    10s: 褒贬词让你想直接选？圈评价对象，读完否定范围再暂分；中性不强分，同方向不算答案。
+    30s: 评价方向明确时，圈评价谁、否定到哪里，再判句子陈述困难、提供帮助还是评价结果。关系示意：提困难可能为给帮助，不是贬低。中性不强分；同向候选仍比措施和句间功能，只缩范围。
+    90s: 同一对象有可确认的评价方向时，先确认：同一对象有可确认的评价方向。第一刀：圈评价词及它评价的对象，比较候选评价维度，不因同为积极词就定案。产物 reduce：先读完整命题与否定范围，圈评价对象和实际功能；同维同向只形成优先候选，继续比处境、措施与句间任务。
+      停止：中性句不强分褒贬；负面处境可能引出改善，否定形式可能表达肯定。方向相同仍不能定案，更不能靠另一空占用来证明。 反例（关系示意，不是真题）：候选描述困难是为了提出帮助，并非否定对象价值；只按负面词分组会把功能分错。
+      迁移：新材料仍读完整评价和否定范围，不沿用积极词必选或负面词必排。 挑战：先不填，圈评价对象和否定范围，给候选标陈述困难、提出帮助或评价结果；中性项注明不分褒贬。
+  full:
+    summary: 圈评价词及它评价的对象，比较候选评价维度，不因同为积极词就定案 先读完整命题与否定范围，圈评价对象和实际功能；同维同向只形成优先候选，继续比处境、措施与句间任务。
+    source_boundary: 中性句不强分褒贬；负面处境可能引出改善，否定形式可能表达肯定。方向相同仍不能定案，更不能靠另一空占用来证明。
+    boundaries:
+    - 中性句不强分褒贬；负面处境可能引出改善，否定形式可能表达肯定。方向相同仍不能定案，更不能靠另一空占用来证明。
+    - 候选描述困难是为了提出帮助，并非否定对象价值；只按负面词分组会把功能分错。
+    section_ids:
+    - 109b61973bdf9497
+  cases:
+    canonical: cases/seven-five/F08/canonical/case.yaml
+  four_step_card:
+    start: 同一对象有可确认的评价方向
+    first_cut: 圈评价词及它评价的对象，比较候选评价维度，不因同为积极词就定案
+    judge: 先读完整命题与否定范围，圈评价对象和实际功能；同维同向只形成优先候选，继续比处境、措施与句间任务。
+    stop: 中性句不强分褒贬；负面处境可能引出改善，否定形式可能表达肯定。方向相同仍不能定案，更不能靠另一空占用来证明。
+  practicality_gate:
+    status: design_complete_empirical_pending
+    trigger: 同一对象有可确认的评价方向
+    action: 圈评价词及它评价的对象，比较候选评价维度，不因同为积极词就定案
+    output: reduce；先读完整命题与否定范围，圈评价对象和实际功能；同维同向只形成优先候选，继续比处境、措施与句间任务。
+    stop: 中性句不强分褒贬；负面处境可能引出改善，否定形式可能表达肯定。方向相同仍不能定案，更不能靠另一空占用来证明。
+    transfer: 新材料仍读完整评价和否定范围，不沿用积极词必选或负面词必排。
+    efficiency: 减少凭单词情绪误排，并在实际评价差异下减少优先候选；效果未测。
+    misuse_cost: 未经实测；把困难词一律归负面、帮助词一律归正面，以为同方向就能填。会导致误判；须先核触发、执行Stop，不允许辅助产物越级定案。
+  first_use_test:
+    status: designed_not_run
+    trigger_success: null
+    action_success: null
+    evidence_success: null
+    stop_rule_success: null
+    no_answer_backfit: null
+    failure_type: null
+    final_result: pending_real_student_test
+  evaluation:
+    baseline: 普通逐项核题面
+    primary_benefit_hypothesis: 减少凭单词情绪误排，并在实际评价差异下减少优先候选；效果未测。
+    trigger_precision: null
+    trigger_recall: null
+    resolution_rate: null
+    standalone_rate: null
+    assist_rate: null
+    false_trigger_rate: null
+    transfer_rate: null
+    boundary_accuracy: null
+    time_complexity_gain: null
+  usefulness_level: Useful
+  status: candidate
+  maturity_status: candidate
+  practical_value: Useful
+  version: 1.2.0
+  change_reason: ANSWER 1c388a0596b13935ae7c6a1af00834915a8efa33 增量来源同步；保留既有动作与版本，旧证据不自动获得新来源准入。
+  affected_cases:
+  - cases/seven-five/F08/canonical/case.yaml
+  regression_result: pending_current_epoch_semantic_and_student_acceptance
+  student_ready: false
+  entry_copy: 同一对象有可确认的评价方向时，第一眼先找：同一对象有可确认的评价方向。手上先做：圈评价词及它评价的对象，比较候选评价维度，不因同为积极词就定案。做完得到
+    reduce，不是通用答案。先读完整命题与否定范围，圈评价对象和实际功能；同维同向只形成优先候选，继续比处境、措施与句间任务。 什么时候停：中性句不强分褒贬；负面处境可能引出改善，否定形式可能表达肯定。方向相同仍不能定案，更不能靠另一空占用来证明。
+    换题仍这样做：新材料仍读完整评价和否定范围，不沿用积极词必选或负面词必排。
+  static_design_review:
+    status: source_rebound_semantic_reacceptance_pending
+    source_section_ids:
+    - 109b61973bdf9497
+    participant_validation: pending_real_participant_validation
+    example_scope: schematic source boundary, not a verified exam
+  source_alignment:
+    commit: 1c388a0596b13935ae7c6a1af00834915a8efa33
+    state: live_source_bound
+    source_content_changed: false
+    correction_profile_applied: false
+    authored_first_contact_draft: false
+    new_course_branches: preserved_in_full_contract_not_automatically_aliased
+    acceptance: unchanged_method_sections; added_source_contracts_preserved; learner/release_pending
+- method_id: F09
+  brand_name: 半句补全
+  source_name: 结构一致
+  aliases:
+  - 结构一致
+  question_type: 七选五
+  method_type: sub_action
+  role: interpreter
+  primary_role: interpreter
+  secondary_roles: []
+  output_type: interpret
+  student_symptoms:
+  - 空位与选项是需要拼接的半句
+  trigger_cues:
+  - 空位与选项是需要拼接的半句
+  core_action: 把候选接到现有半句，标主语谓语与连接位置，再检验完整语义
+  decision_rule: 先把候选与空前未完成结构接成一句，标主语、谓语和连接位置，再核完整语义；产物是拼接后的句法解释，不是仅凭结构定案。
+  verification: 把候选接到现有半句，标主语谓语与连接位置，再检验完整语义。先把候选与空前未完成结构接成一句，标主语、谓语和连接位置，再核完整语义；产物是拼接后的句法解释，不是仅凭结构定案。
+    结构都可补全时必须比对象、动作和段落任务；不能凭大小写或半句长度选。接成句却与前后内容冲突时停止初判。
+  stop_rule: 结构都可补全时必须比对象、动作和段落任务；不能凭大小写或半句长度选。接成句却与前后内容冲突时停止初判。
+  common_wrong_instinct: 看到小写开头就认为只能放在半句空，或者只要拼起来语法通就选。
+  failure_cases:
+  - 看到小写开头就认为只能放在半句空，或者只要拼起来语法通就选。
+  - 结构都可补全时必须比对象、动作和段落任务；不能凭大小写或半句长度选。接成句却与前后内容冲突时停止初判。
+  counterexamples:
+  - 两个候选都补成完整句，但一个把动作对象换了；半句结构成立不能替代语义与段落核验。
+  transfer_pattern: 换半句题仍先合句再标结构与意思，不迁移候选首字母或句长。
+  memory_line: 把候选接到现有半句，标主语谓语与连接位置，再检验完整语义
+  anti_rule: 接成一句 ≠ 内容成立。
+  visual_formula: "空前未完成结构 + 候选半句\n            ↓ 标主体/谓语/连接\n完整句结构 + 完整意思\n→ 拼接解释（interpret）；再核段落"
+  challenge_prompt: 先不选，把候选接到现有半句，圈合成句的主语和谓语，再指出连接词连接哪两部分。
+  source_references:
+  - repository: https://github.com/rockpunkgod/ANSWER.git
+    path: gaokao-english/references/seven-five.md
+    heading: 结构一致
+    commit: 1c388a0596b13935ae7c6a1af00834915a8efa33
+  section_ids:
+  - a8f0c4ae44ae61ff
+  can_follow: []
+  usually_before: []
+  usually_after: []
+  conflicts_with: []
+  cannot_replace:
+  - 完整题面验证
+  levels:
+    L1: 把候选接到现有半句，标主语谓语与连接位置，再检验完整语义
+    L2: 先把候选与空前未完成结构接成一句，标主语、谓语和连接位置，再核完整语义；产物是拼接后的句法解释，不是仅凭结构定案。
+    L3: 结构都可补全时必须比对象、动作和段落任务；不能凭大小写或半句长度选。接成句却与前后内容冲突时停止初判。
+    L4: 换半句题仍先合句再标结构与意思，不迁移候选首字母或句长。
+  compact:
+    10s: 半句空怕接错？把候选拼成一句，圈主语谓语和连接位；语法接通不等于内容成立。
+    30s: 空前结构未完成时，先把候选接上，圈完整句主语、谓语与连接位置。结构示意：两项都能补句，但动作对象可不同。大小写仅辅助；结构都成立就停句型筛选，核完整意思和段落任务，不直接选。
+    90s: 空位与选项是需要拼接的半句时，先确认：空位与选项是需要拼接的半句。第一刀：把候选接到现有半句，标主语谓语与连接位置，再检验完整语义。产物 interpret：先把候选与空前未完成结构接成一句，标主语、谓语和连接位置，再核完整语义；产物是拼接后的句法解释，不是仅凭结构定案。
+      停止：结构都可补全时必须比对象、动作和段落任务；不能凭大小写或半句长度选。接成句却与前后内容冲突时停止初判。 反例（关系示意，不是真题）：两个候选都补成完整句，但一个把动作对象换了；半句结构成立不能替代语义与段落核验。
+      迁移：换半句题仍先合句再标结构与意思，不迁移候选首字母或句长。 挑战：先不选，把候选接到现有半句，圈合成句的主语和谓语，再指出连接词连接哪两部分。
+  full:
+    summary: 把候选接到现有半句，标主语谓语与连接位置，再检验完整语义 先把候选与空前未完成结构接成一句，标主语、谓语和连接位置，再核完整语义；产物是拼接后的句法解释，不是仅凭结构定案。
+    source_boundary: 结构都可补全时必须比对象、动作和段落任务；不能凭大小写或半句长度选。接成句却与前后内容冲突时停止初判。
+    boundaries:
+    - 结构都可补全时必须比对象、动作和段落任务；不能凭大小写或半句长度选。接成句却与前后内容冲突时停止初判。
+    - 两个候选都补成完整句，但一个把动作对象换了；半句结构成立不能替代语义与段落核验。
+    section_ids:
+    - a8f0c4ae44ae61ff
+  cases:
+    canonical: cases/seven-five/F09/canonical/case.yaml
+  four_step_card:
+    start: 空位与选项是需要拼接的半句
+    first_cut: 把候选接到现有半句，标主语谓语与连接位置，再检验完整语义
+    judge: 先把候选与空前未完成结构接成一句，标主语、谓语和连接位置，再核完整语义；产物是拼接后的句法解释，不是仅凭结构定案。
+    stop: 结构都可补全时必须比对象、动作和段落任务；不能凭大小写或半句长度选。接成句却与前后内容冲突时停止初判。
+  practicality_gate:
+    status: design_complete_empirical_pending
+    trigger: 空位与选项是需要拼接的半句
+    action: 把候选接到现有半句，标主语谓语与连接位置，再检验完整语义
+    output: interpret；先把候选与空前未完成结构接成一句，标主语、谓语和连接位置，再核完整语义；产物是拼接后的句法解释，不是仅凭结构定案。
+    stop: 结构都可补全时必须比对象、动作和段落任务；不能凭大小写或半句长度选。接成句却与前后内容冲突时停止初判。
+    transfer: 换半句题仍先合句再标结构与意思，不迁移候选首字母或句长。
+    efficiency: 把未完成结构显式拼成完整句，预期减少断句错误和凭大小写试填；提速未测。
+    misuse_cost: 未经实测；看到小写开头就认为只能放在半句空，或者只要拼起来语法通就选。会导致误判；须先核触发、执行Stop，不允许辅助产物越级定案。
+  first_use_test:
+    status: designed_not_run
+    trigger_success: null
+    action_success: null
+    evidence_success: null
+    stop_rule_success: null
+    no_answer_backfit: null
+    failure_type: null
+    final_result: pending_real_student_test
+  evaluation:
+    baseline: 普通逐项核题面
+    primary_benefit_hypothesis: 把未完成结构显式拼成完整句，预期减少断句错误和凭大小写试填；提速未测。
+    trigger_precision: null
+    trigger_recall: null
+    resolution_rate: null
+    standalone_rate: null
+    assist_rate: null
+    false_trigger_rate: null
+    transfer_rate: null
+    boundary_accuracy: null
+    time_complexity_gain: null
+  usefulness_level: Useful
+  status: candidate
+  maturity_status: candidate
+  practical_value: Useful
+  version: 1.2.0
+  change_reason: ANSWER 1c388a0596b13935ae7c6a1af00834915a8efa33 增量来源同步；保留既有动作与版本，旧证据不自动获得新来源准入。
+  affected_cases:
+  - cases/seven-five/F09/canonical/case.yaml
+  regression_result: pending_current_epoch_semantic_and_student_acceptance
+  student_ready: false
+  entry_copy: 空位与选项是需要拼接的半句时，第一眼先找：空位与选项是需要拼接的半句。手上先做：把候选接到现有半句，标主语谓语与连接位置，再检验完整语义。做完得到
+    interpret，不是通用答案。先把候选与空前未完成结构接成一句，标主语、谓语和连接位置，再核完整语义；产物是拼接后的句法解释，不是仅凭结构定案。 什么时候停：结构都可补全时必须比对象、动作和段落任务；不能凭大小写或半句长度选。接成句却与前后内容冲突时停止初判。
+    换题仍这样做：换半句题仍先合句再标结构与意思，不迁移候选首字母或句长。
+  static_design_review:
+    status: source_rebound_semantic_reacceptance_pending
+    source_section_ids:
+    - a8f0c4ae44ae61ff
+    participant_validation: pending_real_participant_validation
+    example_scope: schematic source boundary, not a verified exam
+  source_alignment:
+    commit: 1c388a0596b13935ae7c6a1af00834915a8efa33
+    state: live_source_bound
+    source_content_changed: false
+    correction_profile_applied: false
+    authored_first_contact_draft: false
+    new_course_branches: preserved_in_full_contract_not_automatically_aliased
+    acceptance: unchanged_method_sections; added_source_contracts_preserved; learner/release_pending
+- method_id: F10
+  brand_name: 末轮反查
+  source_name: 定案与输出
+  aliases:
+  - 定案与输出
+  question_type: 七选五
+  method_type: verification_rule
+  role: verifier
+  primary_role: verifier
+  secondary_roles: []
+  output_type: verify
+  student_symptoms:
+  - 整篇初填后需要回查
+  trigger_cues:
+  - 整篇初填完成，需要回填并按课程排除项分析核对未选候选。
+  core_action: 逐空回填核对象、动作、两侧功能与段落任务，再核未选项的内容承接和断言范围，疑似对应已填位置则返回。
+  decision_rule: 产出已填关系的核验和待回查位置；不要求学生逐项重演全部分组与无关排除过程。
+  verification: 产出已填关系的核验和待回查位置；不要求学生逐项重演全部分组与无关排除过程。 内容仍多项成立或缺关键关系就暂留；占用与剩余不作本空依据，已证伪项不无据恢复。
+  stop_rule: 内容仍多项成立或缺关键关系就暂留；占用与剩余不作本空依据，已证伪项不无据恢复。
+  common_wrong_instinct: 初填完后只看选项是否各用一次，把剩下或被占用当作当前空的证明。
+  failure_cases:
+  - 初填完后只看选项是否各用一次，把剩下或被占用当作当前空的证明。
+  - 内容仍多项成立或缺关键关系就暂留；占用与剩余不作本空依据，已证伪项不无据恢复。
+  counterexamples:
+  - 某候选已填另一空，但那一空尚未独立闭合；不能用它已被占用来排除当前空，而应回查两个位置。
+  transfer_pattern: 新卷仍逐空证明内容闭合，再核未选项与已填位置，不迁移字母占用链。
+  memory_line: 逐空回填核对象、动作、两侧功能与段落任务，再核未选项的内容承接和断言范围，疑似对应已填位置则返回。
+  anti_rule: 已占用 ≠ 本空排除证据。
+  visual_formula: "逐空回填 → 两侧 + 段落任务\n未选项 → 可能对应哪个已填位置？\n          ↓ 返回重核\n核验闭合；仍竞争\
+    \ → 暂留"
+  challenge_prompt: 不换答案，任选一个已填空，标它两侧的决定性关系；再给一个未选项指出最可能回查的位置与缺口。
+  source_references:
+  - repository: https://github.com/rockpunkgod/ANSWER.git
+    path: gaokao-english/references/seven-five.md
+    heading: 定案与输出
+    commit: 1c388a0596b13935ae7c6a1af00834915a8efa33
+  section_ids:
+  - 92511a76aee9e894
+  can_follow: []
+  usually_before: []
+  usually_after: []
+  conflicts_with: []
+  cannot_replace:
+  - 完整题面验证
+  levels:
+    L1: 逐空回填，核主体、动作、对象、上下句关系及段落任务，不以占用或剩余定案
+    L2: 将初填项逐空放回，核主体、动作、对象、两侧功能与段落任务，再查未选项是否可能对应已填位置；输出已填关系的核验，不由占用定案。
+    L3: 当前空仍有多个内容成立项或关键关系缺失时停止确认并暂留；发现其他项可能对应已填空就返回该处重核，不能无据恢复已证伪项。
+    L4: 新卷仍逐空证明内容闭合，再核未选项与已填位置，不迁移字母占用链。
+  compact:
+    line: 逐空回填核对象、动作、两侧功能与段落任务，再核未选项的内容承接和断言范围，疑似对应已填位置则返回。
+    boundary: 内容仍多项成立或缺关键关系就暂留；占用与剩余不作本空依据，已证伪项不无据恢复。
+    10s: 逐空回填核对象、动作、两侧功能与段落任务，再核未选项的内容承接和断言范围，疑似对应已填位置则返回。 产出已填关系的核验和待回查位置；不要求学生逐项重演全部分组与无关排除过程。
+    30s: 整篇初填完成，需要回填并按课程排除项分析核对未选候选。 逐空回填核对象、动作、两侧功能与段落任务，再核未选项的内容承接和断言范围，疑似对应已填位置则返回。
+      内容仍多项成立或缺关键关系就暂留；占用与剩余不作本空依据，已证伪项不无据恢复。
+    90s: 整篇初填完成，需要回填并按课程排除项分析核对未选候选。 手上先做：逐空回填核对象、动作、两侧功能与段落任务，再核未选项的内容承接和断言范围，疑似对应已填位置则返回。
+      做完得到：产出已填关系的核验和待回查位置；不要求学生逐项重演全部分组与无关排除过程。 停止：内容仍多项成立或缺关键关系就暂留；占用与剩余不作本空依据，已证伪项不无据恢复。
+      反例（边界示意，非真题）：某候选已填另一空，但那一空尚未独立闭合；不能用它已被占用来排除当前空，而应回查两个位置。 挑战：不换答案，任选一个已填空，标它两侧的决定性关系；再给一个未选项指出最可能回查的位置与缺口。
+  full:
+    summary: 逐空回填核对象、动作、两侧功能与段落任务，再核未选项的内容承接和断言范围，疑似对应已填位置则返回。 产出已填关系的核验和待回查位置；不要求学生逐项重演全部分组与无关排除过程。
+    source_boundary: 内容仍多项成立或缺关键关系就暂留；占用与剩余不作本空依据，已证伪项不无据恢复。
+    boundaries:
+    - 内容仍多项成立或缺关键关系就暂留；占用与剩余不作本空依据，已证伪项不无据恢复。
+    - 某候选已填另一空，但那一空尚未独立闭合；不能用它已被占用来排除当前空，而应回查两个位置。
+    section_ids:
+    - 92511a76aee9e894
+  cases:
+    canonical: cases/seven-five/F10/canonical/case.yaml
+  four_step_card:
+    start: 整篇初填完成，需要回填并按课程排除项分析核对未选候选。
+    first_cut: 逐空回填核对象、动作、两侧功能与段落任务，再核未选项的内容承接和断言范围，疑似对应已填位置则返回。
+    judge: 产出已填关系的核验和待回查位置；不要求学生逐项重演全部分组与无关排除过程。
+    stop: 内容仍多项成立或缺关键关系就暂留；占用与剩余不作本空依据，已证伪项不无据恢复。
+  practicality_gate:
+    status: design_complete_empirical_pending
+    trigger: 整篇初填完成，需要回填并按课程排除项分析核对未选候选。
+    action: 逐空回填核对象、动作、两侧功能与段落任务，再核未选项的内容承接和断言范围，疑似对应已填位置则返回。
+    output: verify；产出已填关系的核验和待回查位置；不要求学生逐项重演全部分组与无关排除过程。
+    stop: 内容仍多项成立或缺关键关系就暂留；占用与剩余不作本空依据，已证伪项不无据恢复。
+    transfer: 新卷仍逐空证明内容闭合，再核未选项与已填位置，不迁移字母占用链。
+    efficiency: 发现跨空占用循环和遗漏候选，主要改善可靠性；可能增加核验时间，提速未测。
+    misuse_cost: 未经实测；初填完后只看选项是否各用一次，把剩下或被占用当作当前空的证明。会导致误判；须先核触发、执行Stop，不允许辅助产物越级定案。
+  first_use_test:
+    status: designed_not_run
+    trigger_success: null
+    action_success: null
+    evidence_success: null
+    stop_rule_success: null
+    no_answer_backfit: null
+    failure_type: null
+    final_result: pending_real_student_test
+  evaluation:
+    baseline: 普通逐项核题面
+    primary_benefit_hypothesis: 发现跨空占用循环和遗漏候选，主要改善可靠性；可能增加核验时间，提速未测。
+    trigger_precision: null
+    trigger_recall: null
+    resolution_rate: null
+    standalone_rate: null
+    assist_rate: null
+    false_trigger_rate: null
+    transfer_rate: null
+    boundary_accuracy: null
+    time_complexity_gain: null
+  usefulness_level: Useful
+  status: candidate
+  maturity_status: candidate
+  practical_value: Useful
+  version: 1.2.0
+  change_reason: ANSWER 1c388a0596b13935ae7c6a1af00834915a8efa33 增量来源同步；保留既有动作与版本，旧证据不自动获得新来源准入。
+  affected_cases:
+  - cases/seven-five/F10/canonical/case.yaml
+  regression_result: pending_current_epoch_semantic_and_student_acceptance
+  student_ready: false
+  entry_copy: 整篇初填完成，需要回填并按课程排除项分析核对未选候选。 手上先做：逐空回填核对象、动作、两侧功能与段落任务，再核未选项的内容承接和断言范围，疑似对应已填位置则返回。
+    做完得到：产出已填关系的核验和待回查位置；不要求学生逐项重演全部分组与无关排除过程。 停止：内容仍多项成立或缺关键关系就暂留；占用与剩余不作本空依据，已证伪项不无据恢复。
+  static_design_review:
+    status: source_rebound_semantic_reacceptance_pending
+    source_section_ids:
+    - 92511a76aee9e894
+    participant_validation: pending_real_participant_validation
+    example_scope: schematic source boundary, not a verified exam
+  source_alignment:
+    commit: 1c388a0596b13935ae7c6a1af00834915a8efa33
+    state: live_source_bound
+    source_content_changed: false
+    correction_profile_applied: true
+    authored_first_contact_draft: false
+    new_course_branches: preserved_in_full_contract_not_automatically_aliased
+    acceptance: unchanged_method_sections; added_source_contracts_preserved; learner/release_pending
+- method_id: F11
+  brand_name: 正文闭环
+  source_name: 定案与输出
+  aliases:
+  - 定案与输出
+  question_type: 七选五
+  method_type: internal_rule
+  role: decider
+  primary_role: decider
+  secondary_roles: []
+  output_type: decide
+  student_symptoms:
+  - 候选已回填且必须区分竞争项
+  trigger_cues:
+  - 当前空有需要解决的竞争候选，且能用本空条件、结果及段落任务核差异。
+  core_action: 并排核竞争项完整断言怎样承接空前具体条件、空后结果与全段问题，标实际支持或冲突。
+  decision_rule: 本空决定性内容关系闭合才定案；同形式、同词或时间只给候选入口。
+  verification: 本空决定性内容关系闭合才定案；同形式、同词或时间只给候选入口。 多个候选仍成立则暂留，不按主观更像原因撤销另一项；不靠他空占用、剩一项或无文本的直觉定案。
+  stop_rule: 多个候选仍成立则暂留，不按主观更像原因撤销另一项；不靠他空占用、剩一项或无文本的直觉定案。
+  common_wrong_instinct: 一个候选读得顺就报答案，竞争项没有内容反证却被说成不如它好。
+  failure_cases:
+  - 一个候选读得顺就报答案，竞争项没有内容反证却被说成不如它好。
+  - 多个候选仍成立则暂留，不按主观更像原因撤销另一项；不靠他空占用、剩一项或无文本的直觉定案。
+  counterexamples:
+  - 两项都能解释空后结果，但只有回空前具体条件和持续段落问题才能检验差异；未核这些约束不能凭更像原因选。
+  transfer_pattern: 换话题仍逐项证明条件—断言—结果与段落任务，不迁移初筛标签或答案字母。
+  memory_line: 并排核竞争项完整断言怎样承接空前具体条件、空后结果与全段问题，标实际支持或冲突。
+  anti_rule: 局部接通 ≠ 本空定案。
+  visual_formula: "空前条件 + 候选完整断言 + 空后结果\n                      + 段落任务\n逐项核自身证据与冲突\n\
+    差异闭合 → decide；仍竞争 → 暂留"
+  challenge_prompt: 先不报字母，分别为两个竞争项写空前承接、空后承接、段落任务三栏；哪栏缺证据就标缺口。
+  source_references:
+  - repository: https://github.com/rockpunkgod/ANSWER.git
+    path: gaokao-english/references/seven-five.md
+    heading: 定案与输出
+    commit: 1c388a0596b13935ae7c6a1af00834915a8efa33
+  section_ids:
+  - 92511a76aee9e894
+  can_follow: []
+  usually_before: []
+  usually_after: []
+  conflicts_with: []
+  cannot_replace:
+  - 完整题面验证
+  levels:
+    L1: 逐项核候选主体、动作、对象、上下句关系和段落任务，只以当前空自身的决定性关系定案
+    L2: 候选必须同时承接空前具体条件、空后结果并履行全段任务；逐项写出决定性关系与冲突，竞争差异被证据解决后才定当前空。
+    L3: 多项仅局部接通或仍共同成立时暂留，不按主观更像原因撤销另一项；形式、同词、时态、占用或剩余均不能替代当前空自身证据。
+    L4: 换话题仍逐项证明条件—断言—结果与段落任务，不迁移初筛标签或答案字母。
+  compact:
+    line: 并排核竞争项完整断言怎样承接空前具体条件、空后结果与全段问题，标实际支持或冲突。
+    boundary: 多个候选仍成立则暂留，不按主观更像原因撤销另一项；不靠他空占用、剩一项或无文本的直觉定案。
+    10s: 并排核竞争项完整断言怎样承接空前具体条件、空后结果与全段问题，标实际支持或冲突。 本空决定性内容关系闭合才定案；同形式、同词或时间只给候选入口。
+    30s: 当前空有需要解决的竞争候选，且能用本空条件、结果及段落任务核差异。 并排核竞争项完整断言怎样承接空前具体条件、空后结果与全段问题，标实际支持或冲突。
+      多个候选仍成立则暂留，不按主观更像原因撤销另一项；不靠他空占用、剩一项或无文本的直觉定案。
+    90s: 当前空有需要解决的竞争候选，且能用本空条件、结果及段落任务核差异。 手上先做：并排核竞争项完整断言怎样承接空前具体条件、空后结果与全段问题，标实际支持或冲突。
+      做完得到：本空决定性内容关系闭合才定案；同形式、同词或时间只给候选入口。 停止：多个候选仍成立则暂留，不按主观更像原因撤销另一项；不靠他空占用、剩一项或无文本的直觉定案。
+      反例（边界示意，非真题）：两项都能解释空后结果，但只有回空前具体条件和持续段落问题才能检验差异；未核这些约束不能凭更像原因选。 挑战：先不报字母，分别为两个竞争项写空前承接、空后承接、段落任务三栏；哪栏缺证据就标缺口。
+  full:
+    summary: 并排核竞争项完整断言怎样承接空前具体条件、空后结果与全段问题，标实际支持或冲突。 本空决定性内容关系闭合才定案；同形式、同词或时间只给候选入口。
+    source_boundary: 多个候选仍成立则暂留，不按主观更像原因撤销另一项；不靠他空占用、剩一项或无文本的直觉定案。
+    boundaries:
+    - 多个候选仍成立则暂留，不按主观更像原因撤销另一项；不靠他空占用、剩一项或无文本的直觉定案。
+    - 两项都能解释空后结果，但只有回空前具体条件和持续段落问题才能检验差异；未核这些约束不能凭更像原因选。
+    section_ids:
+    - 92511a76aee9e894
+  cases:
+    canonical: cases/seven-five/F11/canonical/case.yaml
+  four_step_card:
+    start: 当前空有需要解决的竞争候选，且能用本空条件、结果及段落任务核差异。
+    first_cut: 并排核竞争项完整断言怎样承接空前具体条件、空后结果与全段问题，标实际支持或冲突。
+    judge: 本空决定性内容关系闭合才定案；同形式、同词或时间只给候选入口。
+    stop: 多个候选仍成立则暂留，不按主观更像原因撤销另一项；不靠他空占用、剩一项或无文本的直觉定案。
+  practicality_gate:
+    status: design_complete_empirical_pending
+    trigger: 当前空有需要解决的竞争候选，且能用本空条件、结果及段落任务核差异。
+    action: 并排核竞争项完整断言怎样承接空前具体条件、空后结果与全段问题，标实际支持或冲突。
+    output: decide；本空决定性内容关系闭合才定案；同形式、同词或时间只给候选入口。
+    stop: 多个候选仍成立则暂留，不按主观更像原因撤销另一项；不靠他空占用、剩一项或无文本的直觉定案。
+    transfer: 换话题仍逐项证明条件—断言—结果与段落任务，不迁移初筛标签或答案字母。
+    efficiency: 把主观通顺改为明确的竞争差异核验，主要改善正确性和可解释性；不保证更快。
+    misuse_cost: 未经实测；一个候选读得顺就报答案，竞争项没有内容反证却被说成不如它好。会导致误判；须先核触发、执行Stop，不允许辅助产物越级定案。
+  first_use_test:
+    status: designed_not_run
+    trigger_success: null
+    action_success: null
+    evidence_success: null
+    stop_rule_success: null
+    no_answer_backfit: null
+    failure_type: null
+    final_result: pending_real_student_test
+  evaluation:
+    baseline: 普通逐项核题面
+    primary_benefit_hypothesis: 把主观通顺改为明确的竞争差异核验，主要改善正确性和可解释性；不保证更快。
+    trigger_precision: null
+    trigger_recall: null
+    resolution_rate: null
+    standalone_rate: null
+    assist_rate: null
+    false_trigger_rate: null
+    transfer_rate: null
+    boundary_accuracy: null
+    time_complexity_gain: null
+  usefulness_level: Useful
+  status: candidate
+  maturity_status: candidate
+  practical_value: Useful
+  version: 1.2.0
+  change_reason: ANSWER 1c388a0596b13935ae7c6a1af00834915a8efa33 增量来源同步；保留既有动作与版本，旧证据不自动获得新来源准入。
+  affected_cases:
+  - cases/seven-five/F11/canonical/case.yaml
+  regression_result: pending_current_epoch_semantic_and_student_acceptance
+  student_ready: false
+  entry_copy: 当前空有需要解决的竞争候选，且能用本空条件、结果及段落任务核差异。 手上先做：并排核竞争项完整断言怎样承接空前具体条件、空后结果与全段问题，标实际支持或冲突。
+    做完得到：本空决定性内容关系闭合才定案；同形式、同词或时间只给候选入口。 停止：多个候选仍成立则暂留，不按主观更像原因撤销另一项；不靠他空占用、剩一项或无文本的直觉定案。
+  static_design_review:
+    status: source_rebound_semantic_reacceptance_pending
+    source_section_ids:
+    - 92511a76aee9e894
+    participant_validation: pending_real_participant_validation
+    example_scope: schematic source boundary, not a verified exam
+  source_alignment:
+    commit: 1c388a0596b13935ae7c6a1af00834915a8efa33
+    state: live_source_bound
+    source_content_changed: false
+    correction_profile_applied: true
+    authored_first_contact_draft: false
+    new_course_branches: preserved_in_full_contract_not_automatically_aliased
+    acceptance: unchanged_method_sections; added_source_contracts_preserved; learner/release_pending

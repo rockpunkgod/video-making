@@ -44,7 +44,32 @@ def teaching_fingerprint(method):
         'primary_role','output_type','section_ids','challenge_prompt')}
     if method['method_id']=='G01':
         fields['visual_formula']=method['visual_formula']
+    support=first_use_support(method)
+    if support:
+        fields['beginner_support']=support
+        fields['presentation_revision']=method['full']['presentation_revision']
     return question_fingerprint(fields)
+
+
+def first_use_support(method):
+    """Only bind/display the support consumed by this material, not examples
+    or private scoring hints. Absence preserves the old v2 contract exactly.
+    """
+    support=method.get('full',{}).get('beginner_support')
+    if not support:
+        return None
+    keys=('first_micro_action','prerequisite','if_stuck','micro_action_is_not_completion')
+    if (not isinstance(support,dict) or
+            any(not isinstance(support.get(key),str) or not support[key].strip() for key in keys) or
+            not isinstance(method['full'].get('presentation_revision'),str) or
+            not method['full']['presentation_revision'].strip()):
+        raise ValueError('Beginner support requires complete text and a presentation revision')
+    return {key:support[key] for key in keys}
+
+
+def teaching_binding_scope(method):
+    return ('first_use_card_challenge_and_support_v3' if first_use_support(method)
+            else 'first_use_card_and_challenge_v2')
 
 
 def read_question(path, question_id=None):
@@ -187,9 +212,17 @@ def normalized_newlines(text):
 def render_student_material(method, demo, transfer, walkthrough):
     """One projection shared by export and verify; never supplies test results."""
     card=method['four_step_card']
+    support=first_use_support(method)
+    support_copy=[]
+    if support:
+        support_copy=['先做一小步：'+support['first_micro_action'],
+                      '起步提示：'+support['prerequisite'],
+                      '如果卡住：'+support['if_stuck'],
+                      support['micro_action_is_not_completion']]
     return '\n\n'.join([
         '# '+method['brand_name'],
         '你可能遇到：'+method['student_symptoms'][0],
+        *support_copy,
         '什么时候启动：'+card['start'], '第一刀：'+card['first_cut'],
         '怎么判：'+card['judge'], '什么时候停：'+card['stop'],
         *(['```text\n'+method['visual_formula']+'\n```'] if method['method_id']=='G01' else []),
@@ -226,7 +259,7 @@ def prepare(method_id, demonstration_path, transfer_path, walkthrough_path, outp
         'method_id': method_id, 'method_version': method['version'],
         'source_commit': registry.index['source_baseline']['commit'],
         'teaching_card_sha256':teaching_fingerprint(method),
-        'teaching_binding_scope':'first_use_card_and_challenge_v2',
+        'teaching_binding_scope':teaching_binding_scope(method),
         **DRAFT_MARKERS,
         'question_ids': [demo['question_id'],transfer['question_id']],
         'source_refs': [demo_ref,transfer_ref,{'path':str(walkthrough_path),
@@ -254,7 +287,7 @@ def verify(output, registry=None):
     meta=json.loads((output/'facilitator.json').read_text(encoding='utf-8'))
     method=registry.methods.get(meta.get('method_id'))
     if (registry.is_historical or method is None or method['method_id'] not in PRIORITY or
-            meta.get('teaching_binding_scope')!='first_use_card_and_challenge_v2' or
+            meta.get('teaching_binding_scope')!=teaching_binding_scope(method) or
             meta.get('method_version')!=method['version'] or
             meta.get('source_commit')!=registry.index['source_baseline']['commit'] or
             meta.get('teaching_card_sha256')!=teaching_fingerprint(method)):

@@ -49,6 +49,7 @@ class PrivateRealCaseTest(unittest.TestCase):
         self.temp = TemporaryDirectory(); self.addCleanup(self.temp.cleanup)
         self.root = Path(self.temp.name)
         self.registry = Registry(); self.method = self.registry.methods['R01']
+        source_commit = self.registry.index['source_baseline']['commit']
         question = {'question_id':'synthetic-001-q1','question_type':'阅读理解',
                     'stem':'SYNTHETIC prompt', 'passage':'SYNTHETIC passage',
                     'options':{'A':'SYNTHETIC A','B':'SYNTHETIC B'}}
@@ -70,6 +71,7 @@ class PrivateRealCaseTest(unittest.TestCase):
                      'execution_id':'synthetic-action','output':{'kind':'candidate_decision'}}
         analysis = {'evidence_graph':{'nodes':[],'edges':[]},'execution_trace':[execution]}
         action = put(self.root,'action.json',{'exam_id':'synthetic-001','question_id':'synthetic-001-q1',
+                    'source_commit':source_commit,
                     'method_id':'R01','method_version':self.method['version'],
                     'mechanical_prediction_sha256':blind['sha256'],
                     'question':action_question,'analysis':analysis})
@@ -88,6 +90,7 @@ class PrivateRealCaseTest(unittest.TestCase):
                                                     '/options/A':'SYNTHETIC A',
                                                     '/options/B':'SYNTHETIC B'}.items()}}}
         review = {'stage':'post_reveal_case_review','reviewer_kind':'AI',
+                  'source_commit':source_commit,
                   'reviewer':'second-ai','paper_agent':'first-ai','independent_from_paper_agent':True,
                   'checks':{k:True for k in ('trigger','action','evidence','role','stop','case_type')},
                   'pass_scope':'private_research_case_only','case_type':'canonical',
@@ -108,6 +111,7 @@ class PrivateRealCaseTest(unittest.TestCase):
                   'action':'synthetic action','evidence':[{'synthetic':True}]}
         case_review = put(self.root,'review.json',review)
         self.request = {'question_id':'synthetic-001-q1','canonical_question_id':'synthetic-001-q1','method_id':'R01',
+                        'source_commit':source_commit,
                         'method_version':self.method['version'],'case_type':'canonical',
                         'source':source,'blind':blind,
                         'blind_question_pointer':'/typed_method_actions/0/question',
@@ -436,7 +440,7 @@ class PrivateRealCaseTest(unittest.TestCase):
     def test_word_original_real_analyzer_schema_graph_trace_end_to_end_synthetic(self):
         self._real_pipeline_original('docx')
 
-    def _real_pipeline_original(self, fmt):
+    def _real_pipeline_original(self, fmt, *, prepare_only=False):
         """No mocks: exercises the real typed R01 pipeline with program-only text."""
         q=fixture(); method=self.registry.methods['R01']
         original=material(q)
@@ -472,11 +476,13 @@ class PrivateRealCaseTest(unittest.TestCase):
              if x['method_id']=='R01' and x['state']=='produced']
         self.assertTrue(own)
         action=put(self.root,'typed-action.json',{'paper_id':'synthetic-typed-paper',
+                   'source_commit':self.registry.index['source_baseline']['commit'],
                    'question_id':q['question_id'],'method_id':'R01',
                    'method_version':method['version'],
                    'mechanical_prediction_sha256':blind['sha256'],
                    'question':q,'analysis':analysis})
         review=put(self.root,'typed-review.json',{'stage':'post_reveal_case_review',
+                  'source_commit':self.registry.index['source_baseline']['commit'],
                   'reviewer_kind':'AI','reviewer':'synthetic-second-ai',
                   'paper_agent':'synthetic-paper-agent','independent_from_paper_agent':True,
                   'checks':{k:True for k in ('trigger','action','evidence','role','stop','case_type')},
@@ -496,6 +502,7 @@ class PrivateRealCaseTest(unittest.TestCase):
                   'own_method_credit_only':True,'trigger':'synthetic reviewed trigger',
                   'action':'synthetic typed decision','evidence':[{'synthetic_program_only':True}]})
         request={'question_id':q['question_id'],'canonical_question_id':q['question_id'],
+                 'source_commit':self.registry.index['source_baseline']['commit'],
                  'method_id':'R01','method_version':method['version'],'case_type':'canonical',
                  'source':{('original_path' if fmt=='docx' else 'pdf_path'):source_name,
                            ('original_sha256' if fmt=='docx' else 'pdf_sha256'):pdf_hash,
@@ -509,6 +516,8 @@ class PrivateRealCaseTest(unittest.TestCase):
                  'question_input_sha256':json_digest(original),'reveal':reveal,
                  'action':action,'case_review':review}
         if fmt=='docx': request['source']['source_format']='docx'
+        if prepare_only:
+            return request, analysis
         req=put(self.root,'typed-request.json',request)
         result=register(self.root,req['path'])
         self.assertEqual(result['review_scope'],'private_AI_reviewed')
@@ -518,6 +527,94 @@ class PrivateRealCaseTest(unittest.TestCase):
         reference_pdf_path.write_bytes(b'%PDF changed synthetic reference')
         with self.assertRaisesRegex(ValueError,'fingerprint'):
             load_catalog(self.root)
+
+    def _epoch_fixture(self):
+        history=Registry(snapshot_commit='61bc9c3e15004639cb442c20e7946ca9631f14ce')
+        current=self.registry
+        self.registry=history
+        try:
+            request, analysis=self._real_pipeline_original('pdf',prepare_only=True)
+        finally:
+            self.registry=current
+        action=json.loads((self.root/request['action']['path']).read_bytes())
+        self.assertEqual(history.methods['R01']['version'],current.methods['R01']['version'])
+        self.assertEqual(analysis,QuestionAnalyzer(current).analyze(action['question']))
+        return history,request,action,json.loads((self.root/request['case_review']['path']).read_bytes())
+
+    def _rebind_epoch_envelopes(self, request, action, review, name):
+        request=json.loads(json.dumps(request));review=json.loads(json.dumps(review))
+        request['action']=put(self.root,name+'-action.json',action)
+        review['action_sha256']=request['action']['sha256']
+        request['case_review']=put(self.root,name+'-review.json',review)
+        return request
+
+    def test_same_version_equal_analyzer_cannot_admit_missing_or_old_source_epochs(self):
+        history,original,old_action,old_review=self._epoch_fixture()
+        current_commit=self.registry.index['source_baseline']['commit']
+        self.assertNotEqual(history.index['source_baseline']['commit'],current_commit)
+        for envelope,label in (('request','Case request'),('action','Own action'),('review','Case Review')):
+            for epoch in (None,history.index['source_baseline']['commit'],'0'*40):
+                with self.subTest(envelope=envelope,epoch=epoch):
+                    request=json.loads(json.dumps(original))
+                    action=json.loads(json.dumps(old_action));review=json.loads(json.dumps(old_review))
+                    for value in (request,action,review):value['source_commit']=current_commit
+                    target={'request':request,'action':action,'review':review}[envelope]
+                    if epoch is None:target.pop('source_commit')
+                    else:target['source_commit']=epoch
+                    request=self._rebind_epoch_envelopes(request,action,review,'epoch-negative')
+                    ref=put(self.root,'epoch-negative-request.json',request)
+                    with self.assertRaisesRegex(ValueError,label+' ANSWER source_commit'):
+                        validate_request(self.root,request,self.registry)
+                    with self.assertRaisesRegex(ValueError,label+' ANSWER source_commit'):
+                        register(self.root,ref['path'])
+        self.assertFalse((self.root/'real-case-catalog').exists())
+
+    def _historical_epoch_catalog(self, *, legacy=False):
+        history,request,action,review=self._epoch_fixture()
+        if legacy:
+            for value in (request,action,review):value.pop('source_commit')
+        request=self._rebind_epoch_envelopes(request,action,review,'historical')
+        request_ref=put(self.root,'historical-request.json',request)
+        # Model an immutable already-existing historical catalog. The public
+        # admission API is deliberately not used to create a legacy request.
+        record=real_cases.expected_record(request,request_ref,history.methods['R01'],
+                 material(action['question']),json.loads((self.root/request['case_review']['path']).read_bytes()),
+                 request['question_id']+'-R01-canonical')
+        case_ref=put(self.root,'real-case-catalog/cases/'+record['case_id']+'.json',record)
+        put(self.root,'real-case-catalog/catalog-000001.json',
+            {'revision':1,'previous_sha256':None,'cases':[case_ref],'aliases':[]})
+        real_cases.freeze_runtime_context(self.root,history.index['source_baseline']['commit'])
+        return history,request
+
+    def test_explicit_old_epoch_catalog_remains_history_without_current_credit(self):
+        self._historical_epoch_catalog()
+        before={p.relative_to(self.root):p.read_bytes() for p in self.root.rglob('*') if p.is_file()}
+        self.assertEqual(load_catalog(self.root)['revision'],1)
+        overlay=self.registry.case_coverage(self.root)['private_catalog']
+        self.assertEqual(overlay['private_reviewed_case_count'],1)
+        self.assertEqual(overlay['current_structural_case_count'],0)
+        self.assertEqual(overlay['historical_or_unbound_case_count'],1)
+        self.assertEqual(before,{p.relative_to(self.root):p.read_bytes() for p in self.root.rglob('*') if p.is_file()})
+
+    def test_legacy_catalog_missing_epochs_is_readable_but_strict_admission_refuses(self):
+        history,request=self._historical_epoch_catalog(legacy=True)
+        self.assertEqual(load_catalog(self.root)['revision'],1)
+        self.assertEqual(self.registry.case_coverage(self.root)['private_catalog']['current_structural_case_count'],0)
+        with self.assertRaisesRegex(ValueError,'Case request ANSWER source_commit'):
+            validate_request(self.root,request,history)
+        with self.assertRaises(TypeError):
+            validate_request(self.root,request,history,_catalog_replay=True)
+
+    def test_catalog_replay_rejects_explicit_epoch_mismatch_in_each_envelope(self):
+        history,original,old_action,old_review=self._epoch_fixture()
+        for envelope,label in (('request','Case request'),('action','Own action'),('review','Case Review')):
+            with self.subTest(envelope=envelope):
+                request=json.loads(json.dumps(original))
+                action=json.loads(json.dumps(old_action));review=json.loads(json.dumps(old_review))
+                {'request':request,'action':action,'review':review}[envelope]['source_commit']='0'*40
+                request=self._rebind_epoch_envelopes(request,action,review,'wrong-epoch')
+                with self.assertRaisesRegex(ValueError,label+' ANSWER source_commit'):
+                    real_cases._validate_request(self.root,request,history,_catalog_replay=True)
 
 
 if __name__ == '__main__': unittest.main()

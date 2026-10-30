@@ -1,0 +1,21 @@
+case_id: W07-canonical
+method_id: W07
+question_type: 读后续写
+source:
+  repository: https://github.com/rockpunkgod/ANSWER.git
+  commit: b04ebc26d7fa096404111a0bb12f6c77cc8525b9
+  path: gaokao-writing/references/continuation-writing-and-correction.md
+  heading: 五档升级路径（训练用）
+question: null
+answer: null
+trigger: 人物行为或物件需要兑现原文线索
+evidence: []
+method_role: verifier
+expected_action: 把关键行为与原文伏笔逐对连线，找悬空线索，不强行用无关细节
+expected_output: verify
+stop_rule: 对应只找到同词却说不清因果或用途时停止核验；不能为了兑现添加无铺垫能力或事件。缺原文无法证明回扣。
+case_type: canonical
+status: evidence_gap
+notes: 源方法可核；尚未逐题核验案例，不可当成功样例
+method_version: 1.1.0
+source_commit: b04ebc26d7fa096404111a0bb12f6c77cc8525b9

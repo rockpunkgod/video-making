@@ -1,0 +1,46 @@
+{
+  "date": "2026-10-28",
+  "status": "OPTIONAL_BEGINNER_SUPPORT_CONNECTED_SCOPED_TESTS_PASS",
+  "scope": [
+    "Student symptom navigation reads the current micro-action and fallback, while retaining complete action/role/Stop and no-answer guidance.",
+    "New first-use material projects only the4 consumed support fields; teaching fingerprint also binds presentation revision.",
+    "Support absent retains v2 fingerprint/format; support present requires v3. Already exported real packets were not rewritten."
+  ],
+  "files": [
+    {
+      "path": "E:\\自媒体\\video-making\\renderers\\symptom.py",
+      "sha256": "9b895ab422581c18750abe0e383e7c2ed339575cb997048b22b7b5bd3d60b8aa"
+    },
+    {
+      "path": "E:\\自媒体\\video-making\\scripts\\prepare_first_use_materials.py",
+      "sha256": "8693c579c99ca9b36e6433e21eba2593e836ad1fbcda184c868ff83974c4ab74"
+    }
+  ],
+  "tests": [
+    {
+      "command": "python -m unittest tests.test_symptom_student_guidance plus4 explicitly selected first-use support tests",
+      "tests_run": 16,
+      "elapsed_seconds": 24.185,
+      "exit_code": 0
+    },
+    {
+      "command": "python -m unittest tests.test_first_use_materials.FirstUseMaterialsTests.test_v2_scope_cannot_wrap_new_support_even_with_current_hash tests.test_first_use_materials.FirstUseMaterialsTests.test_incomplete_support_fails_before_new_kit_is_created",
+      "tests_run": 2,
+      "elapsed_seconds": 5.727,
+      "exit_code": 0
+    }
+  ],
+  "total_distinct_tests": 18,
+  "actual_cli": {
+    "command": "python -m answer_engine symptom 阅读理解 看不懂长句 --renderer student",
+    "exit_code": 0,
+    "readback": "Shows current R11 micro-action, complete relevant sentence action, full Stop, fallback, task-evidence request and no answer. Not trigger success on a real question."
+  },
+  "full_suite_rerun": false,
+  "new_workers": 0,
+  "new_real_study_exports": 0,
+  "new_registered_Cases": 0,
+  "ANSWER_modified": false,
+  "learner_validation": "pending_real_participant_validation",
+  "limits": "Contract/projection and synthetic controls only. No real student, measured timing, full exam regression, source-semantic or publication approval."
+}

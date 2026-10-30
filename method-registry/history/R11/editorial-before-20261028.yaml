@@ -1,0 +1,128 @@
+method_id: R11
+brand_name: 长句拆骨
+source_name: 逻辑简化
+aliases:
+- 逻辑简化
+question_type: 阅读理解
+method_type: method
+role: interpreter
+primary_role: interpreter
+secondary_roles: []
+output_type: interpret
+student_symptoms:
+- 定位长句主干与枝叶混在一起
+trigger_cues:
+- 复杂句或关系妨碍看清所问主干，或候选确有同对象阶段/持续含义差异。
+core_action: 先圈谓语及对应主体，划分真实结构并保留答题相关修饰；阶段差异核当前与目标，持续差异直接核动作含义和必要上下文。
+decision_rule: 产出保留关键限制的核心关系解释；按题干取相关主旨、态度或结构观察，不要求局部题三问齐做。
+verification: 产出保留关键限制的核心关系解释；按题干取相关主旨、态度或结构观察，不要求局部题三问齐做。 分结构不等于删修饰作答；不强制持续检查前先画时间线或比时长，不凭时态、持续词或转折位置定案；含义不明停该检查。
+stop_rule: 分结构不等于删修饰作答；不强制持续检查前先画时间线或比时长，不凭时态、持续词或转折位置定案；含义不明停该检查。
+common_wrong_instinct: 把所有修饰删光，主干看懂了就直接选，漏掉 only、not 或条件。
+failure_cases:
+- 把所有修饰删光，主干看懂了就直接选，漏掉 only、not 或条件。
+- 分结构不等于删修饰作答；不强制持续检查前先画时间线或比时长，不凭时态、持续词或转折位置定案；含义不明停该检查。
+counterexamples:
+- 条件从句外观看似枝叶，但决定动作只在某条件下成立；删掉后变成无条件断言，必须恢复。
+transfer_pattern: 换长句仍先找谓语，再区分修饰与改变结论的限定，不迁移删除清单。
+memory_line: 先圈谓语及对应主体，划分真实结构并保留答题相关修饰；阶段差异核当前与目标，持续差异直接核动作含义和必要上下文。
+anti_rule: 拆骨 ≠ 删掉限定。
+visual_formula: "长句 → 主体｜完整谓语｜对象\n       + 否定/范围/条件/比较\n回原句复核 → 语义骨架\n骨架 ≠ 答案"
+challenge_prompt: 不选答案，圈主干谓语和主体，划开修饰，再用另一种标记保留改变结论的限定。
+source_references:
+- repository: https://github.com/rockpunkgod/ANSWER.git
+  path: gaokao-english/references/reading-comprehension.md
+  heading: 逻辑简化
+  commit: 1c388a0596b13935ae7c6a1af00834915a8efa33
+section_ids:
+- 6a5ab23a6a107e82
+can_follow: []
+usually_before: []
+usually_after: []
+conflicts_with: []
+cannot_replace:
+- 完整题面验证
+levels:
+  L1: 圈谓语和对应主体，划开修饰枝叶，但保留否定、条件、范围和比较
+  L2: 化简后写主体—完整谓语—对象及必要限定；回原句核否定、条件、比较、转折和因果未丢，才得到语义骨架。
+  L3: 枝叶中含改变结论的否定、条件、范围或比较时必须恢复；不能将目标当现状、多个动作当已证过程或转折后当答案。
+  L4: 换长句仍先找谓语，再区分修饰与改变结论的限定，不迁移删除清单。
+compact:
+  line: 先圈谓语及对应主体，划分真实结构并保留答题相关修饰；阶段差异核当前与目标，持续差异直接核动作含义和必要上下文。
+  boundary: 分结构不等于删修饰作答；不强制持续检查前先画时间线或比时长，不凭时态、持续词或转折位置定案；含义不明停该检查。
+  10s: 先圈谓语及对应主体，划分真实结构并保留答题相关修饰；阶段差异核当前与目标，持续差异直接核动作含义和必要上下文。 产出保留关键限制的核心关系解释；按题干取相关主旨、态度或结构观察，不要求局部题三问齐做。
+  30s: 复杂句或关系妨碍看清所问主干，或候选确有同对象阶段/持续含义差异。 先圈谓语及对应主体，划分真实结构并保留答题相关修饰；阶段差异核当前与目标，持续差异直接核动作含义和必要上下文。
+    分结构不等于删修饰作答；不强制持续检查前先画时间线或比时长，不凭时态、持续词或转折位置定案；含义不明停该检查。
+  90s: 复杂句或关系妨碍看清所问主干，或候选确有同对象阶段/持续含义差异。 手上先做：先圈谓语及对应主体，划分真实结构并保留答题相关修饰；阶段差异核当前与目标，持续差异直接核动作含义和必要上下文。
+    做完得到：产出保留关键限制的核心关系解释；按题干取相关主旨、态度或结构观察，不要求局部题三问齐做。 停止：分结构不等于删修饰作答；不强制持续检查前先画时间线或比时长，不凭时态、持续词或转折位置定案；含义不明停该检查。
+    反例（边界示意，非真题）：条件从句外观看似枝叶，但决定动作只在某条件下成立；删掉后变成无条件断言，必须恢复。 挑战：不选答案，圈主干谓语和主体，划开修饰，再用另一种标记保留改变结论的限定。
+full:
+  summary: 先圈谓语及对应主体，划分真实结构并保留答题相关修饰；阶段差异核当前与目标，持续差异直接核动作含义和必要上下文。 产出保留关键限制的核心关系解释；按题干取相关主旨、态度或结构观察，不要求局部题三问齐做。
+  source_boundary: 分结构不等于删修饰作答；不强制持续检查前先画时间线或比时长，不凭时态、持续词或转折位置定案；含义不明停该检查。
+  boundaries:
+  - 分结构不等于删修饰作答；不强制持续检查前先画时间线或比时长，不凭时态、持续词或转折位置定案；含义不明停该检查。
+  - 条件从句外观看似枝叶，但决定动作只在某条件下成立；删掉后变成无条件断言，必须恢复。
+  section_ids:
+  - 6a5ab23a6a107e82
+cases:
+  canonical: cases/reading/R11/canonical/case.yaml
+four_step_card:
+  start: 复杂句或关系妨碍看清所问主干，或候选确有同对象阶段/持续含义差异。
+  first_cut: 先圈谓语及对应主体，划分真实结构并保留答题相关修饰；阶段差异核当前与目标，持续差异直接核动作含义和必要上下文。
+  judge: 产出保留关键限制的核心关系解释；按题干取相关主旨、态度或结构观察，不要求局部题三问齐做。
+  stop: 分结构不等于删修饰作答；不强制持续检查前先画时间线或比时长，不凭时态、持续词或转折位置定案；含义不明停该检查。
+practicality_gate:
+  status: design_complete_empirical_pending
+  trigger: 复杂句或关系妨碍看清所问主干，或候选确有同对象阶段/持续含义差异。
+  action: 先圈谓语及对应主体，划分真实结构并保留答题相关修饰；阶段差异核当前与目标，持续差异直接核动作含义和必要上下文。
+  output: interpret；产出保留关键限制的核心关系解释；按题干取相关主旨、态度或结构观察，不要求局部题三问齐做。
+  stop: 分结构不等于删修饰作答；不强制持续检查前先画时间线或比时长，不凭时态、持续词或转折位置定案；含义不明停该检查。
+  transfer: 换长句仍先找谓语，再区分修饰与改变结论的限定，不迁移删除清单。
+  efficiency: 将句法负担拆开，预期提高结构理解并减少丢限定；提速未测。
+  misuse_cost: 未经实测；把所有修饰删光，主干看懂了就直接选，漏掉 only、not 或条件。会导致误判，必须先核触发并执行上述Stop，不允许从辅助产物越级定案。
+first_use_test:
+  status: designed_not_run
+  trigger_success: null
+  action_success: null
+  evidence_success: null
+  stop_rule_success: null
+  no_answer_backfit: null
+  failure_type: null
+  final_result: pending_real_student_test
+evaluation:
+  baseline: 普通逐项核题面
+  primary_benefit_hypothesis: 将句法负担拆开，预期提高结构理解并减少丢限定；提速未测。
+  trigger_precision: null
+  trigger_recall: null
+  resolution_rate: null
+  standalone_rate: null
+  assist_rate: null
+  false_trigger_rate: null
+  transfer_rate: null
+  boundary_accuracy: null
+  time_complexity_gain: null
+usefulness_level: Useful
+status: candidate
+maturity_status: candidate
+practical_value: Useful
+version: 1.2.0
+change_reason: ANSWER 1c388a0596b13935ae7c6a1af00834915a8efa33 增量来源同步；保留既有动作与版本，旧证据不自动获得新来源准入。
+affected_cases:
+- cases/reading/R11/canonical/case.yaml
+regression_result: pending_current_epoch_semantic_and_student_acceptance
+student_ready: false
+entry_copy: 复杂句或关系妨碍看清所问主干，或候选确有同对象阶段/持续含义差异。 手上先做：先圈谓语及对应主体，划分真实结构并保留答题相关修饰；阶段差异核当前与目标，持续差异直接核动作含义和必要上下文。
+  做完得到：产出保留关键限制的核心关系解释；按题干取相关主旨、态度或结构观察，不要求局部题三问齐做。 停止：分结构不等于删修饰作答；不强制持续检查前先画时间线或比时长，不凭时态、持续词或转折位置定案；含义不明停该检查。
+static_design_review:
+  status: source_rebound_semantic_reacceptance_pending
+  source_section_ids:
+  - 6a5ab23a6a107e82
+  participant_validation: pending_real_participant_validation
+  example_scope: counterexample is a schematic source boundary, not a verified exam
+source_alignment:
+  commit: 1c388a0596b13935ae7c6a1af00834915a8efa33
+  state: live_source_bound
+  source_content_changed: false
+  correction_profile_applied: true
+  authored_first_contact_draft: false
+  new_course_branches: preserved_in_full_contract_not_automatically_aliased
+  acceptance: unchanged_method_sections; added_source_contracts_preserved; learner/release_pending

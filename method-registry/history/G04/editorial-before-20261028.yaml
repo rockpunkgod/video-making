@@ -1,0 +1,133 @@
+method_id: G04
+brand_name: 指代落位
+source_name: 代词
+aliases:
+- 代词
+question_type: 语法填空
+method_type: internal_rule
+role: decider
+primary_role: decider
+secondary_roles: []
+output_type: decide
+student_symptoms:
+- 空位需要代词或所有格功能
+trigger_cues:
+- 空位需要代词或所有格功能
+core_action: 标空位作主语/宾语/限定/反身功能，回指实际对象再用节点规则
+decision_rule: 先还原所指，再标空作主语、宾语、限定、独立名词成分或反身功能，核人称数格与实际搭配；缺成分和所指均闭合才定形式。
+verification: 标空位作主语/宾语/限定/反身功能，回指实际对象再用节点规则。先还原所指，再标空作主语、宾语、限定、独立名词成分或反身功能，核人称数格与实际搭配；缺成分和所指均闭合才定形式。
+  代词所指或省略内容不清先停回指；介词后不必然宾格，it可能是形式主/宾语，反身需动作回到主体或具体结构支持。
+stop_rule: 代词所指或省略内容不清先停回指；介词后不必然宾格，it可能是形式主/宾语，反身需动作回到主体或具体结构支持。
+common_wrong_instinct: 介词后一律填宾格，看见重复代词就改反身，空后名词被省略也没看出来。
+failure_cases:
+- 介词后一律填宾格，看见重复代词就改反身，空后名词被省略也没看出来。
+- 代词所指或省略内容不清先停回指；介词后不必然宾格，it可能是形式主/宾语，反身需动作回到主体或具体结构支持。
+counterexamples:
+- 课程in ___ (I)省略memory，需要独立物主mine；不能只因in就在该处填me。
+transfer_pattern: 新句仍回指并确认成分和省略，不迁移介词对应某格的固定口令。
+memory_line: 标空位作主语/宾语/限定/反身功能，回指实际对象再用节点规则
+anti_rule: 介词后 ≠ 一律宾格。
+visual_formula: '所指 → 空位功能
+
+  名词前所属 / 独立名词成分 / 宾语 / 反身
+
+  ↓ 人称 + 数 + 格 + 省略/搭配
+
+  → 代词形式（decide）'
+challenge_prompt: 先不变提示代词，只圈所指对象，标空后有没有名词及是否存在省略，再写空位功能。
+source_references:
+- repository: https://github.com/rockpunkgod/ANSWER.git
+  path: gaokao-grammar-fill/references/grammar-fill.md
+  heading: 代词
+  commit: 1c388a0596b13935ae7c6a1af00834915a8efa33
+section_ids:
+- 92af20a0997f0b48
+can_follow: []
+usually_before: []
+usually_after: []
+conflicts_with: []
+cannot_replace:
+- 完整题面验证
+levels:
+  L1: 标空位作主语/宾语/限定/反身功能，回指实际对象再用节点规则
+  L2: 先还原所指，再标空作主语、宾语、限定、独立名词成分或反身功能，核人称数格与实际搭配；缺成分和所指均闭合才定形式。
+  L3: 代词所指或省略内容不清先停回指；介词后不必然宾格，it可能是形式主/宾语，反身需动作回到主体或具体结构支持。
+  L4: 新句仍回指并确认成分和省略，不迁移介词对应某格的固定口令。
+compact:
+  10s: 代词怎么变？先回指，再标空位功能和空后名词；介词后不一律宾格，省略内容不清就停。
+  30s: 代词或所有格位置，先圈所指，标人称数格及空后名词。课程片段in ___ (I)省略memory，用独立物主路线而非见in就宾格。所指、省略或真实主宾语不清就停，再核具体结构。
+  90s: 空位需要代词或所有格功能时，先确认：空位需要代词或所有格功能。第一刀：标空位作主语/宾语/限定/反身功能，回指实际对象再用节点规则。产物 decide：先还原所指，再标空作主语、宾语、限定、独立名词成分或反身功能，核人称数格与实际搭配；缺成分和所指均闭合才定形式。
+    停止：代词所指或省略内容不清先停回指；介词后不必然宾格，it可能是形式主/宾语，反身需动作回到主体或具体结构支持。 反例（关系示意，不是真题）：课程in ___
+    (I)省略memory，需要独立物主mine；不能只因in就在该处填me。 迁移：新句仍回指并确认成分和省略，不迁移介词对应某格的固定口令。 挑战：先不变提示代词，只圈所指对象，标空后有没有名词及是否存在省略，再写空位功能。
+full:
+  summary: 标空位作主语/宾语/限定/反身功能，回指实际对象再用节点规则 先还原所指，再标空作主语、宾语、限定、独立名词成分或反身功能，核人称数格与实际搭配；缺成分和所指均闭合才定形式。
+  source_boundary: 代词所指或省略内容不清先停回指；介词后不必然宾格，it可能是形式主/宾语，反身需动作回到主体或具体结构支持。
+  boundaries:
+  - 代词所指或省略内容不清先停回指；介词后不必然宾格，it可能是形式主/宾语，反身需动作回到主体或具体结构支持。
+  - 课程in ___ (I)省略memory，需要独立物主mine；不能只因in就在该处填me。
+  section_ids:
+  - 92af20a0997f0b48
+cases:
+  canonical: cases/grammar/G04/canonical/case.yaml
+four_step_card:
+  start: 空位需要代词或所有格功能
+  first_cut: 标空位作主语/宾语/限定/反身功能，回指实际对象再用节点规则
+  judge: 先还原所指，再标空作主语、宾语、限定、独立名词成分或反身功能，核人称数格与实际搭配；缺成分和所指均闭合才定形式。
+  stop: 代词所指或省略内容不清先停回指；介词后不必然宾格，it可能是形式主/宾语，反身需动作回到主体或具体结构支持。
+practicality_gate:
+  status: design_complete_empirical_pending
+  trigger: 空位需要代词或所有格功能
+  action: 标空位作主语/宾语/限定/反身功能，回指实际对象再用节点规则
+  output: decide；先还原所指，再标空作主语、宾语、限定、独立名词成分或反身功能，核人称数格与实际搭配；缺成分和所指均闭合才定形式。
+  stop: 代词所指或省略内容不清先停回指；介词后不必然宾格，it可能是形式主/宾语，反身需动作回到主体或具体结构支持。
+  transfer: 新句仍回指并确认成分和省略，不迁移介词对应某格的固定口令。
+  efficiency: 减少按相邻介词变格的误用，主要提升结构准确性；效率未测。
+  misuse_cost: 未经实测；介词后一律填宾格，看见重复代词就改反身，空后名词被省略也没看出来。会导致误判；须先核触发、执行Stop，不允许辅助产物越级定案。
+first_use_test:
+  status: designed_not_run
+  trigger_success: null
+  action_success: null
+  evidence_success: null
+  stop_rule_success: null
+  no_answer_backfit: null
+  failure_type: null
+  final_result: pending_real_student_test
+evaluation:
+  baseline: 普通逐项核题面
+  primary_benefit_hypothesis: 减少按相邻介词变格的误用，主要提升结构准确性；效率未测。
+  trigger_precision: null
+  trigger_recall: null
+  resolution_rate: null
+  standalone_rate: null
+  assist_rate: null
+  false_trigger_rate: null
+  transfer_rate: null
+  boundary_accuracy: null
+  time_complexity_gain: null
+usefulness_level: Useful
+status: candidate
+maturity_status: candidate
+practical_value: Useful
+version: 1.2.0
+change_reason: ANSWER 1c388a0596b13935ae7c6a1af00834915a8efa33 增量来源同步；保留既有动作与版本，旧证据不自动获得新来源准入。
+affected_cases:
+- cases/grammar/G04/canonical/case.yaml
+regression_result: pending_current_epoch_semantic_and_student_acceptance
+student_ready: false
+entry_copy: 空位需要代词或所有格功能时，第一眼先找：空位需要代词或所有格功能。手上先做：标空位作主语/宾语/限定/反身功能，回指实际对象再用节点规则。做完得到
+  decide，不是通用答案。先还原所指，再标空作主语、宾语、限定、独立名词成分或反身功能，核人称数格与实际搭配；缺成分和所指均闭合才定形式。 什么时候停：代词所指或省略内容不清先停回指；介词后不必然宾格，it可能是形式主/宾语，反身需动作回到主体或具体结构支持。
+  换题仍这样做：新句仍回指并确认成分和省略，不迁移介词对应某格的固定口令。
+static_design_review:
+  status: source_rebound_semantic_reacceptance_pending
+  source_section_ids:
+  - 92af20a0997f0b48
+  participant_validation: pending_real_participant_validation
+  example_scope: schematic source boundary, not a verified exam
+source_alignment:
+  commit: 1c388a0596b13935ae7c6a1af00834915a8efa33
+  state: live_source_bound
+  source_content_changed: false
+  correction_profile_applied: false
+  authored_first_contact_draft: false
+  new_course_branches: preserved_in_full_contract_not_automatically_aliased
+  acceptance: unchanged_method_sections; added_source_contracts_preserved; learner/release_pending

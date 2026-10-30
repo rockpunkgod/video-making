@@ -1,0 +1,134 @@
+method_id: A10
+brand_name: 读背仿与训练阶段
+source_name: 复习路径与分数锚定
+aliases:
+- 复习路径与分数锚定
+question_type: 应用文
+method_type: framework
+role: framework
+primary_role: framework
+secondary_roles: []
+output_type: interpret
+student_symptoms:
+- 课后需要规划作文训练而非现场答案
+trigger_cues:
+- 课后需要按当前表达缺口安排下一项写作训练。
+core_action: 依据现有稿件或练习，标任务骨架、基础翻译、素材调用或自然升级的缺口，选择一个对应阶段的复练动作。
+decision_rule: 产出下一次具体训练计划；读背仿与分数锚定只作原课程训练参考，不是现场答案或个体得分保证。
+verification: 产出下一次具体训练计划；读背仿与分数锚定只作原课程训练参考，不是现场答案或个体得分保证。 没有现稿不精确承诺档次；基础未稳不跳华丽结构，金句积累数量不作单篇使用数，110/120不当整篇词数策略。
+stop_rule: 没有现稿不精确承诺档次；基础未稳不跳华丽结构，金句积累数量不作单篇使用数，110/120不当整篇词数策略。
+common_wrong_instinct: 把背模板、背金句的完成数量当成稳定得分保证。
+failure_cases:
+- 把背模板、背金句的完成数量当成稳定得分保证。
+- 没有现稿不精确承诺档次；基础未稳不跳华丽结构，金句积累数量不作单篇使用数，110/120不当整篇词数策略。
+counterexamples:
+- 背熟升级素材但基础句和任务要点还错，不应直接进入满分训练，也不能据背诵量判真实作文档次。此为条件示意，不是真题。
+transfer_pattern: 不同薄弱点仍用当前产出定缺口和下一步，不用模板数量替代能力证据。
+memory_line: 依据现有稿件或练习，标任务骨架、基础翻译、素材调用或自然升级的缺口，选择一个对应阶段的复练动作。
+anti_rule: 完成训练量 ≠ 保证分数。
+visual_formula: '训练缺口 → 当前阶段
+
+  模板 / 素材 / 自然升级 / 重构
+
+  → 一个复练任务，不预测分数'
+challenge_prompt: 先不报目标分，只用一条自己的产出说明当前缺口，再选一个读、背或仿写任务。
+source_references:
+- repository: https://github.com/rockpunkgod/ANSWER.git
+  path: gaokao-writing/references/application-writing-and-correction.md
+  heading: 复习路径与分数锚定
+  commit: 1c388a0596b13935ae7c6a1af00834915a8efa33
+section_ids:
+- fcb5c059a6a2bc12
+- 0a6f5b5594a41dd6
+can_follow: []
+usually_before: []
+usually_after: []
+conflicts_with: []
+cannot_replace:
+- 完整题面验证
+levels:
+  L1: 按材料中的训练阶段选一个下一步，不把分数锚定当个体提分保证
+  L2: 辨认当前训练缺口，按模板基础→句子素材→自然句型升级→句式重构选择一个可复练任务，读/背/仿记录实际完成产物；分数锚定只作课程训练参考。
+  L3: 这是课后训练规划，不是当场答案或个体得分预测；基础翻译、任务覆盖未稳不跳到复杂升级，不因背完金句承诺10分或15分。
+  L4: 不同薄弱点仍用当前产出定缺口和下一步，不用模板数量替代能力证据。
+compact:
+  line: 依据现有稿件或练习，标任务骨架、基础翻译、素材调用或自然升级的缺口，选择一个对应阶段的复练动作。
+  boundary: 没有现稿不精确承诺档次；基础未稳不跳华丽结构，金句积累数量不作单篇使用数，110/120不当整篇词数策略。
+  10s: 依据现有稿件或练习，标任务骨架、基础翻译、素材调用或自然升级的缺口，选择一个对应阶段的复练动作。 产出下一次具体训练计划；读背仿与分数锚定只作原课程训练参考，不是现场答案或个体得分保证。
+  30s: 课后需要按当前表达缺口安排下一项写作训练。 依据现有稿件或练习，标任务骨架、基础翻译、素材调用或自然升级的缺口，选择一个对应阶段的复练动作。 没有现稿不精确承诺档次；基础未稳不跳华丽结构，金句积累数量不作单篇使用数，110/120不当整篇词数策略。
+  90s: 课后需要按当前表达缺口安排下一项写作训练。 手上先做：依据现有稿件或练习，标任务骨架、基础翻译、素材调用或自然升级的缺口，选择一个对应阶段的复练动作。
+    做完得到：产出下一次具体训练计划；读背仿与分数锚定只作原课程训练参考，不是现场答案或个体得分保证。 停止：没有现稿不精确承诺档次；基础未稳不跳华丽结构，金句积累数量不作单篇使用数，110/120不当整篇词数策略。
+    反例（边界示意，非真题）：背熟升级素材但基础句和任务要点还错，不应直接进入满分训练，也不能据背诵量判真实作文档次。此为条件示意，不是真题。 挑战：先不报目标分，只用一条自己的产出说明当前缺口，再选一个读、背或仿写任务。
+full:
+  summary: 依据现有稿件或练习，标任务骨架、基础翻译、素材调用或自然升级的缺口，选择一个对应阶段的复练动作。 产出下一次具体训练计划；读背仿与分数锚定只作原课程训练参考，不是现场答案或个体得分保证。
+  source_boundary: 没有现稿不精确承诺档次；基础未稳不跳华丽结构，金句积累数量不作单篇使用数，110/120不当整篇词数策略。
+  boundaries:
+  - 没有现稿不精确承诺档次；基础未稳不跳华丽结构，金句积累数量不作单篇使用数，110/120不当整篇词数策略。
+  - 背熟升级素材但基础句和任务要点还错，不应直接进入满分训练，也不能据背诵量判真实作文档次。此为条件示意，不是真题。
+  section_ids:
+  - fcb5c059a6a2bc12
+  - 0a6f5b5594a41dd6
+cases:
+  canonical: cases/application-writing/A10/canonical/case.yaml
+four_step_card:
+  start: 课后需要按当前表达缺口安排下一项写作训练。
+  first_cut: 依据现有稿件或练习，标任务骨架、基础翻译、素材调用或自然升级的缺口，选择一个对应阶段的复练动作。
+  judge: 产出下一次具体训练计划；读背仿与分数锚定只作原课程训练参考，不是现场答案或个体得分保证。
+  stop: 没有现稿不精确承诺档次；基础未稳不跳华丽结构，金句积累数量不作单篇使用数，110/120不当整篇词数策略。
+practicality_gate:
+  status: design_complete_empirical_pending
+  trigger: 课后需要按当前表达缺口安排下一项写作训练。
+  action: 依据现有稿件或练习，标任务骨架、基础翻译、素材调用或自然升级的缺口，选择一个对应阶段的复练动作。
+  output: interpret；产出下一次具体训练计划；读背仿与分数锚定只作原课程训练参考，不是现场答案或个体得分保证。
+  stop: 没有现稿不精确承诺档次；基础未稳不跳华丽结构，金句积累数量不作单篇使用数，110/120不当整篇词数策略。
+  transfer: 不同薄弱点仍用当前产出定缺口和下一步，不用模板数量替代能力证据。
+  efficiency: 缩小训练选择范围，改善练习针对性与负担；真实效率和成绩变化需独立试验。
+  misuse_cost: 未经实测；把背模板、背金句的完成数量当成稳定得分保证。会导致误判；须先核触发、执行Stop，不允许辅助产物越级定案。
+first_use_test:
+  status: designed_not_run
+  trigger_success: null
+  action_success: null
+  evidence_success: null
+  stop_rule_success: null
+  no_answer_backfit: null
+  failure_type: null
+  final_result: pending_real_student_test
+evaluation:
+  baseline: 普通逐项核题面
+  primary_benefit_hypothesis: 缩小训练选择范围，改善练习针对性与负担；真实效率和成绩变化需独立试验。
+  trigger_precision: null
+  trigger_recall: null
+  resolution_rate: null
+  standalone_rate: null
+  assist_rate: null
+  false_trigger_rate: null
+  transfer_rate: null
+  boundary_accuracy: null
+  time_complexity_gain: null
+usefulness_level: Useful
+status: candidate
+maturity_status: candidate
+practical_value: Useful
+version: 1.2.0
+change_reason: ANSWER 1c388a0596b13935ae7c6a1af00834915a8efa33 增量来源同步；保留既有动作与版本，旧证据不自动获得新来源准入。
+affected_cases:
+- cases/application-writing/A10/canonical/case.yaml
+regression_result: pending_current_epoch_semantic_and_student_acceptance
+student_ready: false
+entry_copy: 课后需要按当前表达缺口安排下一项写作训练。 手上先做：依据现有稿件或练习，标任务骨架、基础翻译、素材调用或自然升级的缺口，选择一个对应阶段的复练动作。
+  做完得到：产出下一次具体训练计划；读背仿与分数锚定只作原课程训练参考，不是现场答案或个体得分保证。 停止：没有现稿不精确承诺档次；基础未稳不跳华丽结构，金句积累数量不作单篇使用数，110/120不当整篇词数策略。
+static_design_review:
+  status: source_rebound_semantic_reacceptance_pending
+  source_section_ids:
+  - fcb5c059a6a2bc12
+  - 0a6f5b5594a41dd6
+  participant_validation: pending_real_participant_validation
+  example_scope: schematic source boundary, not a verified exam
+source_alignment:
+  commit: 1c388a0596b13935ae7c6a1af00834915a8efa33
+  state: live_source_bound
+  source_content_changed: false
+  correction_profile_applied: true
+  authored_first_contact_draft: false
+  new_course_branches: preserved_in_full_contract_not_automatically_aliased
+  acceptance: unchanged_method_sections; added_source_contracts_preserved; learner/release_pending

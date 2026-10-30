@@ -1,0 +1,133 @@
+method_id: C09
+brand_name: 动作串联
+source_name: 评价、结果与动作链
+aliases:
+- 评价、结果与动作链
+question_type: 完形填空
+method_type: sub_action
+role: interpreter
+primary_role: interpreter
+secondary_roles: []
+output_type: interpret
+student_symptoms:
+- 连续动作需要先后或因果衔接
+trigger_cues:
+- 连续动作需要先后或因果衔接
+core_action: 按已有动作画先后链，逐个标连接关系，不增添题面没有的时长或因果
+decision_rule: 按题面已有动作画先后链，每条边分别标实际先后、因果或属性联系；把候选回到整段核主角、对象和推进，产出动作关系解释。
+verification: 按已有动作画先后链，逐个标连接关系，不增添题面没有的时长或因果。按题面已有动作画先后链，每条边分别标实际先后、因果或属性联系；把候选回到整段核主角、对象和推进，产出动作关系解释。
+  动作多不证明因果或完整过程；单句各自顺口不证明整段成立。题面未给的时长、动作方式或角色关系不补造，链边无据就暂留。
+stop_rule: 动作多不证明因果或完整过程；单句各自顺口不证明整段成立。题面未给的时长、动作方式或角色关系不补造，链边无据就暂留。
+common_wrong_instinct: 连续动词看着顺，就默认形成同一过程，忽略谁在做和动作间的真实联系。
+failure_cases:
+- 连续动词看着顺，就默认形成同一过程，忽略谁在做和动作间的真实联系。
+- 动作多不证明因果或完整过程；单句各自顺口不证明整段成立。题面未给的时长、动作方式或角色关系不补造，链边无据就暂留。
+counterexamples:
+- 各句分别读得通，但动作对应不同对象，无法接成题面中的连续过程；不能以单句顺口证明整段关系。
+transfer_pattern: 换故事仍逐边证明同一主体、对象与联系，不迁移动作词顺序或补出的因果。
+memory_line: 按已有动作画先后链，逐个标连接关系，不增添题面没有的时长或因果
+anti_rule: 连续动作 ≠ 已证因果链。
+visual_formula: '动作A → 动作B → 动作C
+
+  每条边：先后？因果？属性？
+
+  主体/对象一致且联系有据 → 动作链解释
+
+  无据边 → 暂留；不补时长/方式'
+challenge_prompt: 先不选，把已有动作画成链，给每条箭头标关系类型和题面依据；没依据的边留空。
+source_references:
+- repository: https://github.com/rockpunkgod/ANSWER.git
+  path: gaokao-english/references/cloze.md
+  heading: 评价、结果与动作链
+  commit: 1c388a0596b13935ae7c6a1af00834915a8efa33
+section_ids:
+- b7ce29d974576463
+can_follow: []
+usually_before: []
+usually_after: []
+conflicts_with: []
+cannot_replace:
+- 完整题面验证
+levels:
+  L1: 按已有动作画先后链，逐个标连接关系，不增添题面没有的时长或因果
+  L2: 按题面已有动作画先后链，每条边分别标实际先后、因果或属性联系；把候选回到整段核主角、对象和推进，产出动作关系解释。
+  L3: 动作多不证明因果或完整过程；单句各自顺口不证明整段成立。题面未给的时长、动作方式或角色关系不补造，链边无据就暂留。
+  L4: 换故事仍逐边证明同一主体、对象与联系，不迁移动作词顺序或补出的因果。
+compact:
+  10s: 动作连着却选不稳？画已有动作链，逐箭头标关系依据；动作多不等于因果，单句顺口不算整段成立。
+  30s: 当前空依赖连续动作时，按题面已有行为画先后链，分别标因果、先后或属性联系。关系示意：各句都通，但对象不同，可能接不成同一过程。箭头没依据就暂留，不能补时长或方式；本步解释动作关系。
+  90s: 连续动作需要先后或因果衔接时，先确认：连续动作需要先后或因果衔接。第一刀：按已有动作画先后链，逐个标连接关系，不增添题面没有的时长或因果。产物 interpret：按题面已有动作画先后链，每条边分别标实际先后、因果或属性联系；把候选回到整段核主角、对象和推进，产出动作关系解释。
+    停止：动作多不证明因果或完整过程；单句各自顺口不证明整段成立。题面未给的时长、动作方式或角色关系不补造，链边无据就暂留。 反例（关系示意，不是真题）：各句分别读得通，但动作对应不同对象，无法接成题面中的连续过程；不能以单句顺口证明整段关系。
+    迁移：换故事仍逐边证明同一主体、对象与联系，不迁移动作词顺序或补出的因果。 挑战：先不选，把已有动作画成链，给每条箭头标关系类型和题面依据；没依据的边留空。
+full:
+  summary: 按已有动作画先后链，逐个标连接关系，不增添题面没有的时长或因果 按题面已有动作画先后链，每条边分别标实际先后、因果或属性联系；把候选回到整段核主角、对象和推进，产出动作关系解释。
+  source_boundary: 动作多不证明因果或完整过程；单句各自顺口不证明整段成立。题面未给的时长、动作方式或角色关系不补造，链边无据就暂留。
+  boundaries:
+  - 动作多不证明因果或完整过程；单句各自顺口不证明整段成立。题面未给的时长、动作方式或角色关系不补造，链边无据就暂留。
+  - 各句分别读得通，但动作对应不同对象，无法接成题面中的连续过程；不能以单句顺口证明整段关系。
+  section_ids:
+  - b7ce29d974576463
+cases:
+  canonical: cases/cloze/C09/canonical/case.yaml
+four_step_card:
+  start: 连续动作需要先后或因果衔接
+  first_cut: 按已有动作画先后链，逐个标连接关系，不增添题面没有的时长或因果
+  judge: 按题面已有动作画先后链，每条边分别标实际先后、因果或属性联系；把候选回到整段核主角、对象和推进，产出动作关系解释。
+  stop: 动作多不证明因果或完整过程；单句各自顺口不证明整段成立。题面未给的时长、动作方式或角色关系不补造，链边无据就暂留。
+practicality_gate:
+  status: design_complete_empirical_pending
+  trigger: 连续动作需要先后或因果衔接
+  action: 按已有动作画先后链，逐个标连接关系，不增添题面没有的时长或因果
+  output: interpret；按题面已有动作画先后链，每条边分别标实际先后、因果或属性联系；把候选回到整段核主角、对象和推进，产出动作关系解释。
+  stop: 动作多不证明因果或完整过程；单句各自顺口不证明整段成立。题面未给的时长、动作方式或角色关系不补造，链边无据就暂留。
+  transfer: 换故事仍逐边证明同一主体、对象与联系，不迁移动作词顺序或补出的因果。
+  efficiency: 把连续动作的缺边与对象变化显式呈现，预期降低整段关系误判；速度未测。
+  misuse_cost: 未经实测；连续动词看着顺，就默认形成同一过程，忽略谁在做和动作间的真实联系。会导致误判；须先核触发、执行Stop，不允许辅助产物越级定案。
+first_use_test:
+  status: designed_not_run
+  trigger_success: null
+  action_success: null
+  evidence_success: null
+  stop_rule_success: null
+  no_answer_backfit: null
+  failure_type: null
+  final_result: pending_real_student_test
+evaluation:
+  baseline: 普通逐项核题面
+  primary_benefit_hypothesis: 把连续动作的缺边与对象变化显式呈现，预期降低整段关系误判；速度未测。
+  trigger_precision: null
+  trigger_recall: null
+  resolution_rate: null
+  standalone_rate: null
+  assist_rate: null
+  false_trigger_rate: null
+  transfer_rate: null
+  boundary_accuracy: null
+  time_complexity_gain: null
+usefulness_level: Useful
+status: candidate
+maturity_status: candidate
+practical_value: Useful
+version: 1.2.0
+change_reason: ANSWER 1c388a0596b13935ae7c6a1af00834915a8efa33 增量来源同步；保留既有动作与版本，旧证据不自动获得新来源准入。
+affected_cases:
+- cases/cloze/C09/canonical/case.yaml
+regression_result: pending_current_epoch_semantic_and_student_acceptance
+student_ready: false
+entry_copy: 连续动作需要先后或因果衔接时，第一眼先找：连续动作需要先后或因果衔接。手上先做：按已有动作画先后链，逐个标连接关系，不增添题面没有的时长或因果。做完得到
+  interpret，不是通用答案。按题面已有动作画先后链，每条边分别标实际先后、因果或属性联系；把候选回到整段核主角、对象和推进，产出动作关系解释。 什么时候停：动作多不证明因果或完整过程；单句各自顺口不证明整段成立。题面未给的时长、动作方式或角色关系不补造，链边无据就暂留。
+  换题仍这样做：换故事仍逐边证明同一主体、对象与联系，不迁移动作词顺序或补出的因果。
+static_design_review:
+  status: source_rebound_semantic_reacceptance_pending
+  source_section_ids:
+  - b7ce29d974576463
+  participant_validation: pending_real_participant_validation
+  example_scope: schematic source boundary, not a verified exam
+source_alignment:
+  commit: 1c388a0596b13935ae7c6a1af00834915a8efa33
+  state: live_source_bound
+  source_content_changed: false
+  correction_profile_applied: false
+  authored_first_contact_draft: false
+  new_course_branches: preserved_in_full_contract_not_automatically_aliased
+  acceptance: unchanged_method_sections; added_source_contracts_preserved; learner/release_pending

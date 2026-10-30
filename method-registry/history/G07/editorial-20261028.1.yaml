@@ -1,0 +1,137 @@
+method_id: G07
+brand_name: 句间搭桥
+source_name: 句间逻辑衔接
+aliases:
+- 句间逻辑衔接
+question_type: 语法填空
+method_type: method
+role: decider
+primary_role: decider
+secondary_roles: []
+output_type: decide
+student_symptoms:
+- 两个结构完整的句子缺逻辑连接
+trigger_cues:
+- 两个结构完整的句子缺逻辑连接
+core_action: 写两侧完整意思，标实际转折/因果/并列等关系，不由单个提示词定案
+decision_rule: 写前后两个完整命题，标实际转折、补充或因果，再同时核连接功能、语法与标点；各项相符才确定逻辑词。
+verification: 写两侧完整意思，标实际转折/因果/并列等关系，不由单个提示词定案。写前后两个完整命题，标实际转折、补充或因果，再同时核连接功能、语法与标点；各项相符才确定逻辑词。
+  标点或中文转折不能独立定词；句子成分未完整先回从句节点。However等功能须按本句说明，不能把所有逻辑词称为并列连词。
+stop_rule: 标点或中文转折不能独立定词；句子成分未完整先回从句节点。However等功能须按本句说明，不能把所有逻辑词称为并列连词。
+common_wrong_instinct: 看见逗号或中文但是就直接写however，并把它叫连词。
+failure_cases:
+- 看见逗号或中文但是就直接写however，并把它叫连词。
+- 标点或中文转折不能独立定词；句子成分未完整先回从句节点。However等功能须按本句说明，不能把所有逻辑词称为并列连词。
+counterexamples:
+- 同样表达转折的候选在本句词类与连接功能不同；不能只看翻译同义忽略句法。
+transfer_pattern: 换句仍核完整命题、实际关系和词的功能，不迁移逗号或中文翻译口诀。
+memory_line: 写两侧完整意思，标实际转折/因果/并列等关系，不由单个提示词定案
+anti_rule: 标点 ≠ 逻辑词答案。
+visual_formula: '前句完整意思 ↔ 后句完整意思
+
+  ↓ 实际关系 + 连接功能 + 标点
+
+  → 逻辑词（decide）
+
+  结构不全 → 返回从句节点'
+challenge_prompt: 先不填，写两侧各说什么，标实际关系，并说明空是句间衔接还是从句连接位置。
+source_references:
+- repository: https://github.com/rockpunkgod/ANSWER.git
+  path: gaokao-grammar-fill/references/grammar-fill.md
+  heading: 句间逻辑衔接
+  commit: 1c388a0596b13935ae7c6a1af00834915a8efa33
+section_ids: &id001
+- 32c08d6c85a150ea
+can_follow: []
+usually_before: []
+usually_after: []
+conflicts_with: []
+cannot_replace:
+- 完整题面验证
+levels:
+  L1: 写两侧完整意思，标实际转折/因果/并列等关系，不由单个提示词定案
+  L2: 写前后两个完整命题，标实际转折、补充或因果，再同时核连接功能、语法与标点；各项相符才确定逻辑词。
+  L3: 标点或中文转折不能独立定词；句子成分未完整先回从句节点。However等功能须按本句说明，不能把所有逻辑词称为并列连词。
+  L4: 换句仍核完整命题、实际关系和词的功能，不迁移逗号或中文翻译口诀。
+compact:
+  10s: 两句之间不会填？写两侧意思，再核关系、词类和标点；逗号不决定词。
+  30s: 两句之间不会填？先确认两侧句子各自是否完整，再各写一句大意。例如，都译作转折，连接词与连接副词在句中功能仍不同。句子成分不完整先回从句判断，不能只凭中文转折选词。
+  90s: 两句之间不会填？写两侧完整意思，标实际转折/因果/并列等关系，不由单个提示词定案这一步得到的只判断当前证据能支持或排除什么，不能由剩余项自动定案。判断时，写前后两个完整命题，标实际转折、补充或因果，再同时核连接功能、语法与标点；各项相符才确定逻辑词。什么时候停，标点或中文转折不能独立定词；句子成分未完整先回从句节点。However等功能须按本句说明，不能把所有逻辑词称为并列连词。反例示意，同样表达转折的候选在本句词类与连接功能不同；不能只看翻译同义忽略句法。换题仍检查当前题面的对象和关系，不搬上一题结论。挑战，先不填，写两侧各说什么，标实际关系，并说明空是句间衔接还是从句连接位置。
+full:
+  summary: 写两侧完整意思，标实际转折/因果/并列等关系，不由单个提示词定案 写前后两个完整命题，标实际转折、补充或因果，再同时核连接功能、语法与标点；各项相符才确定逻辑词。
+  source_boundary: 标点或中文转折不能独立定词；句子成分未完整先回从句节点。However等功能须按本句说明，不能把所有逻辑词称为并列连词。
+  boundaries:
+  - 标点或中文转折不能独立定词；句子成分未完整先回从句节点。However等功能须按本句说明，不能把所有逻辑词称为并列连词。
+  - 同样表达转折的候选在本句词类与连接功能不同；不能只看翻译同义忽略句法。
+  section_ids:
+  - 32c08d6c85a150ea
+  beginner_support:
+    first_micro_action: 先确认两侧句子各自是否完整，再各写一句大意。
+    prerequisite: 先把空保留不填，圈本句动作和对应的人或物。主语是谁或什么，谓语是这句的完整动作或状态；分不清先核完整句。
+    if_stuck: 先标有无提示和空位所在结构；成分/词义不清停在节点前，不从答案倒贴功能。
+    example: 都译作转折，连接词与连接副词在句中功能仍不同。
+    example_scope: 关系/结构示意，非完整试题，不计真题或已验案例。
+    micro_action_is_not_completion: 完成第一小步不等于完整方法成功；继续完成四步卡的判断与停止核验。
+    short_stop: 句子成分不完整先回从句判断，不能只凭中文转折选词。
+  presentation_revision: 2026-10-28.1
+cases:
+  canonical: cases/grammar/G07/canonical/case.yaml
+four_step_card:
+  start: 两个结构完整的句子缺逻辑连接
+  first_cut: 写两侧完整意思，标实际转折/因果/并列等关系，不由单个提示词定案
+  judge: 写前后两个完整命题，标实际转折、补充或因果，再同时核连接功能、语法与标点；各项相符才确定逻辑词。
+  stop: 标点或中文转折不能独立定词；句子成分未完整先回从句节点。However等功能须按本句说明，不能把所有逻辑词称为并列连词。
+practicality_gate:
+  status: design_complete_empirical_pending
+  trigger: 两个结构完整的句子缺逻辑连接
+  action: 写两侧完整意思，标实际转折/因果/并列等关系，不由单个提示词定案
+  output: decide；写前后两个完整命题，标实际转折、补充或因果，再同时核连接功能、语法与标点；各项相符才确定逻辑词。
+  stop: 标点或中文转折不能独立定词；句子成分未完整先回从句节点。However等功能须按本句说明，不能把所有逻辑词称为并列连词。
+  transfer: 换句仍核完整命题、实际关系和词的功能，不迁移逗号或中文翻译口诀。
+  efficiency: 补足四类功能词外的句间路线，主要避免错误封闭分类，效率未测。
+  misuse_cost: 未经实测；看见逗号或中文但是就直接写however，并把它叫连词。会导致误判；须先核触发、执行Stop，不允许辅助产物越级定案。
+first_use_test:
+  status: designed_not_run
+  trigger_success: null
+  action_success: null
+  evidence_success: null
+  stop_rule_success: null
+  no_answer_backfit: null
+  failure_type: null
+  final_result: pending_real_student_test
+evaluation:
+  baseline: 普通逐项核题面
+  primary_benefit_hypothesis: 补足四类功能词外的句间路线，主要避免错误封闭分类，效率未测。
+  trigger_precision: null
+  trigger_recall: null
+  resolution_rate: null
+  standalone_rate: null
+  assist_rate: null
+  false_trigger_rate: null
+  transfer_rate: null
+  boundary_accuracy: null
+  time_complexity_gain: null
+usefulness_level: Useful
+status: candidate
+maturity_status: candidate
+practical_value: Useful
+version: 1.2.0
+change_reason: ANSWER 1c388a0596b13935ae7c6a1af00834915a8efa33 增量来源同步；保留既有动作与版本，旧证据不自动获得新来源准入。
+affected_cases:
+- cases/grammar/G07/canonical/case.yaml
+regression_result: pending_current_epoch_semantic_and_student_acceptance
+student_ready: false
+entry_copy: 两句之间不会填？先确认两侧句子各自是否完整，再各写一句大意。这一步得到的只判断当前证据能支持或排除什么，不能由剩余项自动定案。如果卡住，先标有无提示和空位所在结构；成分/词义不清停在节点前，不从答案倒贴功能。
+static_design_review:
+  status: source_bound_editorial_review
+  source_section_ids: *id001
+  participant_validation: pending_real_participant_validation
+  example_scope: 2026-10-28基础入口表达修订；保留原判据/Stop/课程绑定与语义版本，微动作和关系示意不是完整真题或真人实测。
+source_alignment:
+  commit: 1c388a0596b13935ae7c6a1af00834915a8efa33
+  state: live_source_bound
+  source_content_changed: false
+  correction_profile_applied: false
+  authored_first_contact_draft: true
+  new_course_branches: preserved_in_full_contract_not_automatically_aliased
+  acceptance: unchanged_method_sections; added_source_contracts_preserved; learner/release_pending

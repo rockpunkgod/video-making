@@ -1,0 +1,135 @@
+method_id: G13
+brand_name: 时态三查
+source_name: 时态判定三步法
+aliases:
+- 谓语：检查时态、语态、主谓一致
+- 时态判定三步法
+question_type: 语法填空
+method_type: sub_action
+role: decider
+primary_role: decider
+secondary_roles: []
+output_type: decide
+student_symptoms:
+- 空位是谓语且需判时态
+trigger_cues:
+- 空位是谓语且需判时态
+core_action: 圈明确时间、上下文事件先后和句内语态，再与真主语核数
+decision_rule: 谓语位置按课程时态判定三步法核时间线索、主被动、复合时态参照，并与真正主语核数；时间、语态和一致共同支持后定谓语形式。
+verification: 圈明确时间、上下文事件先后和句内语态，再与真主语核数。谓语位置按课程时态判定三步法核时间线索、主被动、复合时态参照，并与真正主语核数；时间、语态和一致共同支持后定谓语形式。
+  单个since/by等只提示，不免上下文参照核对；主语角色、状态性分词或时间参照不明就停，不执行有be/无be快速二分口诀。
+stop_rule: 单个since/by等只提示，不免上下文参照核对；主语角色、状态性分词或时间参照不明就停，不执行有be/无be快速二分口诀。
+common_wrong_instinct: 看见时间词就填固定时态，或者有be就默认所有-ed是一次被动动作。
+failure_cases:
+- 看见时间词就填固定时态，或者有be就默认所有-ed是一次被动动作。
+- 单个since/by等只提示，不免上下文参照核对；主语角色、状态性分词或时间参照不明就停，不执行有be/无be快速二分口诀。
+counterexamples:
+- 过去分词可表示状态，看到be不能跳过句法作用与动作关系，直接按一次被动动作解释。
+transfer_pattern: 新句仍以实际时间参照、动作角色和真主语定形，不迁移同一时间词的固定答案。
+memory_line: 圈明确时间、上下文事件先后和句内语态，再与真主语核数
+anti_rule: 时间提示词 ≠ 时态定案。
+visual_formula: '已判谓语 → 时间线索
+
+  ↓ 主被动关系
+
+  ↓ 复合时态的参照点
+
+  + 真主语的数
+
+  → 谓语形式；参照不明 → 停'
+challenge_prompt: 先不变动词，只圈时间线索、主语和动作关系，再写复合时态的参照事件；没有参照就标缺口。
+source_references:
+- repository: https://github.com/rockpunkgod/ANSWER.git
+  path: gaokao-grammar-fill/references/grammar-fill.md
+  heading: 谓语：检查时态、语态、主谓一致
+  commit: 1c388a0596b13935ae7c6a1af00834915a8efa33
+section_ids:
+- a0bcc74f05b00671
+can_follow: []
+usually_before: []
+usually_after: []
+conflicts_with: []
+cannot_replace:
+- 完整题面验证
+levels:
+  L1: 圈明确时间、上下文事件先后和句内语态，再与真主语核数
+  L2: 谓语位置按课程时态判定三步法核时间线索、主被动、复合时态参照，并与真正主语核数；时间、语态和一致共同支持后定谓语形式。
+  L3: 单个since/by等只提示，不免上下文参照核对；主语角色、状态性分词或时间参照不明就停，不执行有be/无be快速二分口诀。
+  L4: 新句仍以实际时间参照、动作角色和真主语定形，不迁移同一时间词的固定答案。
+compact:
+  10s: 谓语时态犹豫？查时间、主被动和复合时态参照，再核真主语；时间词不独立定案，be口诀停用。
+  30s: 已判谓语时，按课程三步查时间线索、主被动和复合时态参照，再核真主语的数。关系示意：状态性过去分词不能仅凭be认成一次被动动作。参照或角色不明就停，since/by等只提示，不替整句核对。
+  90s: 空位是谓语且需判时态时，先确认：空位是谓语且需判时态。第一刀：圈明确时间、上下文事件先后和句内语态，再与真主语核数。产物 decide：谓语位置按课程时态判定三步法核时间线索、主被动、复合时态参照，并与真正主语核数；时间、语态和一致共同支持后定谓语形式。
+    停止：单个since/by等只提示，不免上下文参照核对；主语角色、状态性分词或时间参照不明就停，不执行有be/无be快速二分口诀。 反例（关系示意，不是真题）：过去分词可表示状态，看到be不能跳过句法作用与动作关系，直接按一次被动动作解释。
+    迁移：新句仍以实际时间参照、动作角色和真主语定形，不迁移同一时间词的固定答案。 挑战：先不变动词，只圈时间线索、主语和动作关系，再写复合时态的参照事件；没有参照就标缺口。
+full:
+  summary: 圈明确时间、上下文事件先后和句内语态，再与真主语核数 谓语位置按课程时态判定三步法核时间线索、主被动、复合时态参照，并与真正主语核数；时间、语态和一致共同支持后定谓语形式。
+  source_boundary: 单个since/by等只提示，不免上下文参照核对；主语角色、状态性分词或时间参照不明就停，不执行有be/无be快速二分口诀。
+  boundaries:
+  - 单个since/by等只提示，不免上下文参照核对；主语角色、状态性分词或时间参照不明就停，不执行有be/无be快速二分口诀。
+  - 过去分词可表示状态，看到be不能跳过句法作用与动作关系，直接按一次被动动作解释。
+  section_ids:
+  - a0bcc74f05b00671
+cases:
+  canonical: cases/grammar/G13/canonical/case.yaml
+four_step_card:
+  start: 空位是谓语且需判时态
+  first_cut: 圈明确时间、上下文事件先后和句内语态，再与真主语核数
+  judge: 谓语位置按课程时态判定三步法核时间线索、主被动、复合时态参照，并与真正主语核数；时间、语态和一致共同支持后定谓语形式。
+  stop: 单个since/by等只提示，不免上下文参照核对；主语角色、状态性分词或时间参照不明就停，不执行有be/无be快速二分口诀。
+practicality_gate:
+  status: design_complete_empirical_pending
+  trigger: 空位是谓语且需判时态
+  action: 圈明确时间、上下文事件先后和句内语态，再与真主语核数
+  output: decide；谓语位置按课程时态判定三步法核时间线索、主被动、复合时态参照，并与真正主语核数；时间、语态和一致共同支持后定谓语形式。
+  stop: 单个since/by等只提示，不免上下文参照核对；主语角色、状态性分词或时间参照不明就停，不执行有be/无be快速二分口诀。
+  transfer: 新句仍以实际时间参照、动作角色和真主语定形，不迁移同一时间词的固定答案。
+  efficiency: 将时态、语态与一致共同闭合，主要减少单提示词误判；提速未测。
+  misuse_cost: 未经实测；看见时间词就填固定时态，或者有be就默认所有-ed是一次被动动作。会导致误判；须先核触发、执行Stop，不允许辅助产物越级定案。
+first_use_test:
+  status: designed_not_run
+  trigger_success: null
+  action_success: null
+  evidence_success: null
+  stop_rule_success: null
+  no_answer_backfit: null
+  failure_type: null
+  final_result: pending_real_student_test
+evaluation:
+  baseline: 普通逐项核题面
+  primary_benefit_hypothesis: 将时态、语态与一致共同闭合，主要减少单提示词误判；提速未测。
+  trigger_precision: null
+  trigger_recall: null
+  resolution_rate: null
+  standalone_rate: null
+  assist_rate: null
+  false_trigger_rate: null
+  transfer_rate: null
+  boundary_accuracy: null
+  time_complexity_gain: null
+usefulness_level: Useful
+status: candidate
+maturity_status: candidate
+practical_value: Useful
+version: 1.2.0
+change_reason: ANSWER 1c388a0596b13935ae7c6a1af00834915a8efa33 增量来源同步；保留既有动作与版本，旧证据不自动获得新来源准入。
+affected_cases:
+- cases/grammar/G13/canonical/case.yaml
+regression_result: pending_current_epoch_semantic_and_student_acceptance
+student_ready: false
+entry_copy: 空位是谓语且需判时态时，第一眼先找：空位是谓语且需判时态。手上先做：圈明确时间、上下文事件先后和句内语态，再与真主语核数。做完得到 decide，不是通用答案。谓语位置按课程时态判定三步法核时间线索、主被动、复合时态参照，并与真正主语核数；时间、语态和一致共同支持后定谓语形式。
+  什么时候停：单个since/by等只提示，不免上下文参照核对；主语角色、状态性分词或时间参照不明就停，不执行有be/无be快速二分口诀。 换题仍这样做：新句仍以实际时间参照、动作角色和真主语定形，不迁移同一时间词的固定答案。
+static_design_review:
+  status: source_rebound_semantic_reacceptance_pending
+  source_section_ids:
+  - a0bcc74f05b00671
+  participant_validation: pending_real_participant_validation
+  example_scope: schematic source boundary, not a verified exam
+source_alignment:
+  commit: 1c388a0596b13935ae7c6a1af00834915a8efa33
+  state: live_source_bound
+  source_content_changed: false
+  correction_profile_applied: false
+  authored_first_contact_draft: false
+  new_course_branches: preserved_in_full_contract_not_automatically_aliased
+  acceptance: unchanged_method_sections; added_source_contracts_preserved; learner/release_pending

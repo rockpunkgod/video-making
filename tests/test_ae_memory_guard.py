@@ -32,12 +32,19 @@ class MemoryGuardTests(unittest.TestCase):
 
     @unittest.skipUnless(os.name=='nt','native Windows job guard')
     def test_new_owned_process_is_logged_and_exits(self):
-        with TemporaryDirectory() as folder:
+        # Exercise the real owned Job/process/log path with a controlled memory
+        # sample. Workstation pressure belongs to the separate low-memory gate
+        # test, not this successful-lifecycle fixture. No Adobe is launched.
+        with TemporaryDirectory() as folder, \
+                patch('ae_production.memory_guard.available_memory',return_value=2*2**30):
             target=Path(folder)/'log.txt'
             result=guarded_run([sys.executable,'-c','print("synthetic owned process")'],target)
             self.assertEqual(result['exit_code'],0)
             self.assertTrue(result['existing_processes_untouched'])
             self.assertIn('synthetic owned process',target.read_text())
+            self.assertEqual(result['minimum_free_limit_bytes'],2**30)
+            self.assertEqual(result['minimum_free_bytes'],2*2**30)
+            self.assertEqual(result['job_limit_bytes'],2**30)
 
 
 if __name__=='__main__':unittest.main()

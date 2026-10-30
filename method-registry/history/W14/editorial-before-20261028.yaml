@@ -1,0 +1,140 @@
+method_id: W14
+brand_name: 骨架句与肌肉句
+source_name: 肌肉句与骨架句
+aliases:
+- 肌肉句与骨架句
+question_type: 读后续写
+method_type: category
+role: framework
+primary_role: framework
+secondary_roles: []
+output_type: interpret
+student_symptoms:
+- 功能提纲与扩写位置需要区分
+trigger_cues:
+- 功能提纲已确定，需要分清哪里保证衔接、哪里适合扩写。
+core_action: 标接首句、必要桥接、解决与收束等实际功能为骨架，其余位置按本题因果与画面需要选写有把握内容。
+decision_rule: 产出骨架与扩写分工；采用十句时可对应功能位，但不是所有题固定句数。
+verification: 产出骨架与扩写分工；采用十句时可对应功能位，但不是所有题固定句数。 骨架未接通先补功能；非功能位也受原文约束，不会什么就硬背什么，不因句数或句位本身扣分。
+stop_rule: 骨架未接通先补功能；非功能位也受原文约束，不会什么就硬背什么，不因句数或句位本身扣分。
+common_wrong_instinct: 以为不定句可以自由发挥，把背过的精彩句硬填进去。
+failure_cases:
+- 以为不定句可以自由发挥，把背过的精彩句硬填进去。
+- 骨架未接通先补功能；非功能位也受原文约束，不会什么就硬背什么，不因句数或句位本身扣分。
+counterexamples:
+- 非功能位置写无铺垫新事件仍不成立；骨架功能句本身包含准确必要细节，也不因不是肌肉位而删掉。此为分类示意，不是真题。
+transfer_pattern: 换稿仍先功能分工再有界扩写，句位随实际内容映射。
+memory_line: 标接首句、必要桥接、解决与收束等实际功能为骨架，其余位置按本题因果与画面需要选写有把握内容。
+anti_rule: 不定句 ≠ 无约束。
+visual_formula: '骨架：接续 / 桥接 / 解决 / 回扣
+
+  肌肉：补因果 / 有效画面
+
+  两层共同受原文约束'
+challenge_prompt: 先不改语言，把现有内容标为骨架功能或扩写内容，并指出一个缺失功能。
+source_references:
+- repository: https://github.com/rockpunkgod/ANSWER.git
+  path: gaokao-writing/references/continuation-writing-and-correction.md
+  heading: 肌肉句与骨架句
+  commit: 1c388a0596b13935ae7c6a1af00834915a8efa33
+section_ids:
+- 4b1d65a04c19b519
+- c7b254c23e9755d1
+- 6570e8d5c4fff00d
+- a9f982dcfec817d9
+can_follow: []
+usually_before: []
+usually_after: []
+conflicts_with: []
+cannot_replace:
+- 完整题面验证
+levels:
+  L1: 标确定功能位为骨架，其余位置按因果与画面扩写，不把句数当评分扣分项
+  L2: 先标接首句、桥接、解决、回扣等确定功能为骨架，其他位置只补必要因果和有效画面；得到扩写分工，不给不定句无限创作权。
+  L3: 骨架任务未接通先补功能，不先堆肌肉；非功能位也受原文人物事实与因果限制，不能会什么背什么。句数不是独立扣分项。
+  L4: 换稿仍先功能分工再有界扩写，句位随实际内容映射。
+compact:
+  line: 标接首句、必要桥接、解决与收束等实际功能为骨架，其余位置按本题因果与画面需要选写有把握内容。
+  boundary: 骨架未接通先补功能；非功能位也受原文约束，不会什么就硬背什么，不因句数或句位本身扣分。
+  10s: 标接首句、必要桥接、解决与收束等实际功能为骨架，其余位置按本题因果与画面需要选写有把握内容。 产出骨架与扩写分工；采用十句时可对应功能位，但不是所有题固定句数。
+  30s: 功能提纲已确定，需要分清哪里保证衔接、哪里适合扩写。 标接首句、必要桥接、解决与收束等实际功能为骨架，其余位置按本题因果与画面需要选写有把握内容。 骨架未接通先补功能；非功能位也受原文约束，不会什么就硬背什么，不因句数或句位本身扣分。
+  90s: 功能提纲已确定，需要分清哪里保证衔接、哪里适合扩写。 手上先做：标接首句、必要桥接、解决与收束等实际功能为骨架，其余位置按本题因果与画面需要选写有把握内容。
+    做完得到：产出骨架与扩写分工；采用十句时可对应功能位，但不是所有题固定句数。 停止：骨架未接通先补功能；非功能位也受原文约束，不会什么就硬背什么，不因句数或句位本身扣分。
+    反例（边界示意，非真题）：非功能位置写无铺垫新事件仍不成立；骨架功能句本身包含准确必要细节，也不因不是肌肉位而删掉。此为分类示意，不是真题。 挑战：先不改语言，把现有内容标为骨架功能或扩写内容，并指出一个缺失功能。
+full:
+  summary: 标接首句、必要桥接、解决与收束等实际功能为骨架，其余位置按本题因果与画面需要选写有把握内容。 产出骨架与扩写分工；采用十句时可对应功能位，但不是所有题固定句数。
+  source_boundary: 骨架未接通先补功能；非功能位也受原文约束，不会什么就硬背什么，不因句数或句位本身扣分。
+  boundaries:
+  - 骨架未接通先补功能；非功能位也受原文约束，不会什么就硬背什么，不因句数或句位本身扣分。
+  - 非功能位置写无铺垫新事件仍不成立；骨架功能句本身包含准确必要细节，也不因不是肌肉位而删掉。此为分类示意，不是真题。
+  section_ids:
+  - 4b1d65a04c19b519
+  - c7b254c23e9755d1
+  - 6570e8d5c4fff00d
+  - a9f982dcfec817d9
+cases:
+  canonical: cases/continuation-writing/W14/canonical/case.yaml
+four_step_card:
+  start: 功能提纲已确定，需要分清哪里保证衔接、哪里适合扩写。
+  first_cut: 标接首句、必要桥接、解决与收束等实际功能为骨架，其余位置按本题因果与画面需要选写有把握内容。
+  judge: 产出骨架与扩写分工；采用十句时可对应功能位，但不是所有题固定句数。
+  stop: 骨架未接通先补功能；非功能位也受原文约束，不会什么就硬背什么，不因句数或句位本身扣分。
+practicality_gate:
+  status: design_complete_empirical_pending
+  trigger: 功能提纲已确定，需要分清哪里保证衔接、哪里适合扩写。
+  action: 标接首句、必要桥接、解决与收束等实际功能为骨架，其余位置按本题因果与画面需要选写有把握内容。
+  output: interpret；产出骨架与扩写分工；采用十句时可对应功能位，但不是所有题固定句数。
+  stop: 骨架未接通先补功能；非功能位也受原文约束，不会什么就硬背什么，不因句数或句位本身扣分。
+  transfer: 换稿仍先功能分工再有界扩写，句位随实际内容映射。
+  efficiency: 分开主线功能与表达扩写，降低结构规划负担；不是高分句数量规则。
+  misuse_cost: 未经实测；以为不定句可以自由发挥，把背过的精彩句硬填进去。会导致误判；须先核触发、执行Stop，不允许辅助产物越级定案。
+first_use_test:
+  status: designed_not_run
+  trigger_success: null
+  action_success: null
+  evidence_success: null
+  stop_rule_success: null
+  no_answer_backfit: null
+  failure_type: null
+  final_result: pending_real_student_test
+evaluation:
+  baseline: 普通逐项核题面
+  primary_benefit_hypothesis: 分开主线功能与表达扩写，降低结构规划负担；不是高分句数量规则。
+  trigger_precision: null
+  trigger_recall: null
+  resolution_rate: null
+  standalone_rate: null
+  assist_rate: null
+  false_trigger_rate: null
+  transfer_rate: null
+  boundary_accuracy: null
+  time_complexity_gain: null
+usefulness_level: Useful
+status: candidate
+maturity_status: candidate
+practical_value: Useful
+version: 1.2.0
+change_reason: ANSWER 1c388a0596b13935ae7c6a1af00834915a8efa33 增量来源同步；保留既有动作与版本，旧证据不自动获得新来源准入。
+affected_cases:
+- cases/continuation-writing/W14/canonical/case.yaml
+regression_result: pending_current_epoch_semantic_and_student_acceptance
+student_ready: false
+entry_copy: 功能提纲已确定，需要分清哪里保证衔接、哪里适合扩写。 手上先做：标接首句、必要桥接、解决与收束等实际功能为骨架，其余位置按本题因果与画面需要选写有把握内容。
+  做完得到：产出骨架与扩写分工；采用十句时可对应功能位，但不是所有题固定句数。 停止：骨架未接通先补功能；非功能位也受原文约束，不会什么就硬背什么，不因句数或句位本身扣分。
+static_design_review:
+  status: source_rebound_semantic_reacceptance_pending
+  source_section_ids:
+  - 4b1d65a04c19b519
+  - c7b254c23e9755d1
+  - 6570e8d5c4fff00d
+  - a9f982dcfec817d9
+  participant_validation: pending_real_participant_validation
+  example_scope: schematic source boundary, not a verified exam
+source_alignment:
+  commit: 1c388a0596b13935ae7c6a1af00834915a8efa33
+  state: live_source_bound
+  source_content_changed: false
+  correction_profile_applied: true
+  authored_first_contact_draft: false
+  new_course_branches: preserved_in_full_contract_not_automatically_aliased
+  acceptance: unchanged_method_sections; added_source_contracts_preserved; learner/release_pending

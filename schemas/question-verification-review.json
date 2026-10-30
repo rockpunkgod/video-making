@@ -5,7 +5,8 @@
   "properties": {
     "schema_version": {
       "enum": [
-        "1.0.0"
+        "1.0.0",
+        "1.1.0"
       ]
     },
     "review_id": {
@@ -132,6 +133,43 @@
               "rejects",
               "unresolved"
             ]
+          },
+          "image_evidence": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "image_id": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "sha256": {
+                  "type": "string",
+                  "pattern": "^[0-9a-f]{64}$"
+                },
+                "box": {
+                  "type": "array",
+                  "items": {
+                    "type": "integer",
+                    "minimum": 0
+                  },
+                  "minItems": 4,
+                  "maxItems": 4
+                },
+                "observed": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              },
+              "required": [
+                "image_id",
+                "sha256",
+                "box",
+                "observed"
+              ],
+              "additionalProperties": false
+            },
+            "minItems": 1
           }
         },
         "required": [
@@ -164,5 +202,29 @@
     "stop_applied",
     "candidate_checks"
   ],
-  "additionalProperties": false
+  "additionalProperties": false,
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "schema_version": {
+            "const": "1.0.0"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "candidate_checks": {
+            "items": {
+              "not": {
+                "required": [
+                  "image_evidence"
+                ]
+              }
+            }
+          }
+        }
+      }
+    }
+  ]
 }

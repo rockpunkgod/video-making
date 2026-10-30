@@ -1,0 +1,139 @@
+method_id: F05
+brand_name: 段首统领
+source_name: 总起句做题法
+aliases:
+- 总起句做题法
+question_type: 七选五
+method_type: method
+role: interpreter
+primary_role: interpreter
+secondary_roles: []
+output_type: interpret
+student_symptoms:
+- 空位在段首或第一段段尾附近，且后文围绕共同主题展开
+trigger_cues:
+- 段首或第一段段尾常提示统领关系，但仍需候选概括并引出实际后续展开。
+core_action: 先标候选管一个段还是后续若干分项，概括全部管辖内容的共同对象和展开方向，再核代词承接与实际展开。
+decision_rule: 产出统领范围及段落任务解释；候选既要覆盖全部管辖范围，也要能引出实际展开。
+verification: 产出统领范围及段落任务解释；候选既要覆盖全部管辖范围，也要能引出实际展开。 位置或Here are不定案；只对应一个例子、数据或步骤就撤回初判；不把较概括项推广到任意位置，竞争未闭合继续核。
+stop_rule: 位置或Here are不定案；只对应一个例子、数据或步骤就撤回初判；不把较概括项推广到任意位置，竞争未闭合继续核。
+common_wrong_instinct: 只读段首位置或提示词，就选最宽泛的句子，没看后文各分项在做什么。
+failure_cases:
+- 只读段首位置或提示词，就选最宽泛的句子，没看后文各分项在做什么。
+- 位置或Here are不定案；只对应一个例子、数据或步骤就撤回初判；不把较概括项推广到任意位置，竞争未闭合继续核。
+counterexamples:
+- 候选正好概括下文一个例子，但后面其他分项处理的是另一共同问题；局部匹配不能统领整个管辖范围。
+transfer_pattern: 新文章仍先画管辖范围，再核全部分项，不把段首位置当中心证明。
+memory_line: 先标候选管一个段还是后续若干分项，概括全部管辖内容的共同对象和展开方向，再核代词承接与实际展开。
+anti_rule: 段首 ≠ 统领成立。
+visual_formula: '管辖范围：整段 / 后续分项
+
+  分项1 + 分项2 + … → 共同对象/方向
+
+  候选预测展开 ↔ 实际展开
+
+  → 统领解释（interpret）'
+challenge_prompt: 先不填，把候选应该管的段落或分项框出来，各写一个任务短语，再写共同方向。
+source_references:
+- repository: https://github.com/rockpunkgod/ANSWER.git
+  path: gaokao-english/references/seven-five.md
+  heading: 总起句做题法
+  commit: 1c388a0596b13935ae7c6a1af00834915a8efa33
+section_ids: &id001
+- 1fcc9966ce085922
+can_follow: []
+usually_before: []
+usually_after: []
+conflicts_with: []
+cannot_replace:
+- 完整题面验证
+levels:
+  L1: 列下文共同对象、动作与段落任务，再核候选能否统领，不把段首自动当中心
+  L2: 列候选所管辖的整段或后续分项，核共同对象与展开方向；产出统领范围和段落任务，不能因位于段首直接定案。
+  L3: 候选只覆盖一个例子、数据或步骤，或预测展开与后文不符时停初判；段首和Here are等只作入口，指代承接还要核。
+  L4: 新文章仍先画管辖范围，再核全部分项，不把段首位置当中心证明。
+compact:
+  line: 先标候选管一个段还是后续若干分项，概括全部管辖内容的共同对象和展开方向，再核代词承接与实际展开。
+  boundary: 位置或Here are不定案；只对应一个例子、数据或步骤就撤回初判；不把较概括项推广到任意位置，竞争未闭合继续核。
+  10s: 段首空不知选谁？先标它管哪些内容，再核是否都能统领；概括大不自动对。
+  30s: 段首空不知选谁？先用括号标这句要统领哪个段或哪些分项，再看共同内容。例如，一项只概括一个例子，不能统领后面所有分项。段首位置和Here are不定案，局部匹配不够。
+  90s: 段首空不知选谁？先标候选管一个段还是后续若干分项，概括全部管辖内容的共同对象和展开方向，再核代词承接与实际展开。这一步得到的是把当前关系或表达解释清楚，还要核完整题目。判断时，产出统领范围及段落任务解释；候选既要覆盖全部管辖范围，也要能引出实际展开。什么时候停，位置或Here
+    are不定案；只对应一个例子、数据或步骤就撤回初判；不把较概括项推广到任意位置，竞争未闭合继续核。反例示意，候选正好概括下文一个例子，但后面其他分项处理的是另一共同问题；局部匹配不能统领整个管辖范围。换题仍检查当前题面的对象和关系，不搬上一题结论。挑战，先不填，把候选应该管的段落或分项框出来，各写一个任务短语，再写共同方向。
+full:
+  summary: 先标候选管一个段还是后续若干分项，概括全部管辖内容的共同对象和展开方向，再核代词承接与实际展开。 产出统领范围及段落任务解释；候选既要覆盖全部管辖范围，也要能引出实际展开。
+  source_boundary: 位置或Here are不定案；只对应一个例子、数据或步骤就撤回初判；不把较概括项推广到任意位置，竞争未闭合继续核。
+  boundaries:
+  - 位置或Here are不定案；只对应一个例子、数据或步骤就撤回初判；不把较概括项推广到任意位置，竞争未闭合继续核。
+  - 候选正好概括下文一个例子，但后面其他分项处理的是另一共同问题；局部匹配不能统领整个管辖范围。
+  section_ids:
+  - 1fcc9966ce085922
+  beginner_support:
+    first_micro_action: 先用括号标这句要统领哪个段或哪些分项，再看共同内容。
+    prerequisite: 先分清一句是否说完整，再找句中实际谈谁。真谓语就是承担本句时间的动词；-ed或-ing词尾本身不能证明它是谓语。
+    if_stuck: 先记录暂定分组或一侧真实内容；关系不清回正文或暂留，不靠占用、组小或剩余定案。
+    example: 一项只概括一个例子，不能统领后面所有分项。
+    example_scope: 关系/结构示意，非完整试题，不计真题或已验案例。
+    micro_action_is_not_completion: 完成第一小步不等于完整方法成功；继续完成四步卡的判断与停止核验。
+    short_stop: 段首位置和Here are不定案，局部匹配不够。
+  presentation_revision: 2026-10-28.1
+cases:
+  canonical: cases/seven-five/F05/canonical/case.yaml
+four_step_card:
+  start: 段首或第一段段尾常提示统领关系，但仍需候选概括并引出实际后续展开。
+  first_cut: 先标候选管一个段还是后续若干分项，概括全部管辖内容的共同对象和展开方向，再核代词承接与实际展开。
+  judge: 产出统领范围及段落任务解释；候选既要覆盖全部管辖范围，也要能引出实际展开。
+  stop: 位置或Here are不定案；只对应一个例子、数据或步骤就撤回初判；不把较概括项推广到任意位置，竞争未闭合继续核。
+practicality_gate:
+  status: design_complete_empirical_pending
+  trigger: 段首或第一段段尾常提示统领关系，但仍需候选概括并引出实际后续展开。
+  action: 先标候选管一个段还是后续若干分项，概括全部管辖内容的共同对象和展开方向，再核代词承接与实际展开。
+  output: interpret；产出统领范围及段落任务解释；候选既要覆盖全部管辖范围，也要能引出实际展开。
+  stop: 位置或Here are不定案；只对应一个例子、数据或步骤就撤回初判；不把较概括项推广到任意位置，竞争未闭合继续核。
+  transfer: 新文章仍先画管辖范围，再核全部分项，不把段首位置当中心证明。
+  efficiency: 以共同任务筛掉局部概括的干扰方向，预期减少漫无目的试填；速度未测。
+  misuse_cost: 未经实测；只读段首位置或提示词，就选最宽泛的句子，没看后文各分项在做什么。会导致误判；须先核触发、执行Stop，不允许辅助产物越级定案。
+first_use_test:
+  status: designed_not_run
+  trigger_success: null
+  action_success: null
+  evidence_success: null
+  stop_rule_success: null
+  no_answer_backfit: null
+  failure_type: null
+  final_result: pending_real_student_test
+evaluation:
+  baseline: 普通逐项核题面
+  primary_benefit_hypothesis: 以共同任务筛掉局部概括的干扰方向，预期减少漫无目的试填；速度未测。
+  trigger_precision: null
+  trigger_recall: null
+  resolution_rate: null
+  standalone_rate: null
+  assist_rate: null
+  false_trigger_rate: null
+  transfer_rate: null
+  boundary_accuracy: null
+  time_complexity_gain: null
+usefulness_level: Useful
+status: candidate
+maturity_status: candidate
+practical_value: Useful
+version: 1.3.0
+change_reason: ANSWER 1c388a0596b13935ae7c6a1af00834915a8efa33 增量来源同步；保留既有动作与版本，旧证据不自动获得新来源准入。
+affected_cases:
+- cases/seven-five/F05/canonical/case.yaml
+regression_result: pending_current_epoch_semantic_and_student_acceptance
+student_ready: false
+entry_copy: 段首空不知选谁？先用括号标这句要统领哪个段或哪些分项，再看共同内容。这一步得到的是把当前关系或表达解释清楚，还要核完整题目。如果卡住，先记录暂定分组或一侧真实内容；关系不清回正文或暂留，不靠占用、组小或剩余定案。
+static_design_review:
+  status: source_bound_editorial_review
+  source_section_ids: *id001
+  participant_validation: pending_real_participant_validation
+  example_scope: 2026-10-28基础入口表达修订；保留原判据/Stop/课程绑定与语义版本，微动作和关系示意不是完整真题或真人实测。
+source_alignment:
+  commit: 1c388a0596b13935ae7c6a1af00834915a8efa33
+  state: live_source_bound
+  source_content_changed: false
+  correction_profile_applied: true
+  authored_first_contact_draft: true
+  new_course_branches: preserved_in_full_contract_not_automatically_aliased
+  acceptance: unchanged_method_sections; added_source_contracts_preserved; learner/release_pending

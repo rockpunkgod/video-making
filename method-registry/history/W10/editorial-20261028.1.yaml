@@ -1,0 +1,136 @@
+method_id: W10
+brand_name: 无痕衔接
+source_name: 五档升级路径（训练用）
+aliases:
+- 五档升级路径（训练用）
+question_type: 读后续写
+method_type: sub_action
+role: interpreter
+primary_role: interpreter
+secondary_roles: []
+output_type: interpret
+student_symptoms:
+- 连接词堆砌却对象衔接不清
+trigger_cues:
+- 相邻句对象与行动衔接不清，或机械堆连接词影响表达。
+core_action: 圈共同对象和代词回指，回填所指并核动作接续；可用关键词复现或指代替代无用连接词。
+decision_rule: 产出对象、动作与关系连贯的表达；必要因果、否定和转折须保留。
+verification: 产出对象、动作与关系连贯的表达；必要因果、否定和转折须保留。 代词歧义先明确对象；同对象不证明有因果，删词会改关系就保留或换准确表达，不为无痕而删逻辑。
+stop_rule: 代词歧义先明确对象；同对象不证明有因果，删词会改关系就保留或换准确表达，不为无痕而删逻辑。
+common_wrong_instinct: 把and、so、then全删掉，再重复关键词就觉得文章自动连贯。
+failure_cases:
+- 把and、so、then全删掉，再重复关键词就觉得文章自动连贯。
+- 代词歧义先明确对象；同对象不证明有因果，删词会改关系就保留或换准确表达，不为无痕而删逻辑。
+counterexamples:
+- 两个人都可作he的所指，代词会使接续更乱，应先明指；本来必要的转折也不能为无痕而删掉。此为关系示意，不是真题。
+transfer_pattern: 换人物仍做共同对象—代词回填—动作关系三项核对。
+memory_line: 圈共同对象和代词回指，回填所指并核动作接续；可用关键词复现或指代替代无用连接词。
+anti_rule: 复现关键词 ≠ 关系成立。
+visual_formula: '句1对象 ↔ 句2关键词 / 代词
+
+  回填所指 → 核动作关系
+
+  必要因果 / 转折保留'
+challenge_prompt: 先不换连接词，只圈相邻句共同对象，把代词换回具体人物，检查是否有歧义。
+source_references:
+- repository: https://github.com/rockpunkgod/ANSWER.git
+  path: gaokao-writing/references/continuation-writing-and-correction.md
+  heading: 五档升级路径（训练用）
+  commit: 1c388a0596b13935ae7c6a1af00834915a8efa33
+section_ids: &id001
+- 0601c0f1de7a4b8f
+can_follow: []
+usually_before: []
+usually_after: []
+conflicts_with: []
+cannot_replace:
+- 完整题面验证
+levels:
+  L1: 圈相邻句共同对象和代词回指，使用关键词复现，不删掉必要逻辑关系
+  L2: 圈相邻句共同对象并回填代词所指，核对象、动作和关系接续；关键词复现/代词指代可替代机械连接词堆砌，但必要因果、转折不能删除。
+  L3: 代词有歧义先明确对象；两句对象相同但动作无因果不宣称自然衔接。删连接词会改变逻辑时保留或换准确表达。
+  L4: 换人物仍做共同对象—代词回填—动作关系三项核对。
+compact:
+  line: 圈共同对象和代词回指，回填所指并核动作接续；可用关键词复现或指代替代无用连接词。
+  boundary: 代词歧义先明确对象；同对象不证明有因果，删词会改关系就保留或换准确表达，不为无痕而删逻辑。
+  10s: 相邻句接得别扭？圈共同对象、回填代词，再核动作接续；不为无痕删必要逻辑。
+  30s: 相邻句接得别扭？先圈相邻两句的同一对象，再核代词是否回指清楚。例如，两个人都能被he指代时，先明说具体人物。有歧义先明确，删词会改转折或因果就保留。
+  90s: 相邻句接得别扭？圈共同对象和代词回指，回填所指并核动作接续；可用关键词复现或指代替代无用连接词。这一步得到的是把当前关系或表达解释清楚，还要核完整题目。判断时，产出对象、动作与关系连贯的表达；必要因果、否定和转折须保留。什么时候停，代词歧义先明确对象；同对象不证明有因果，删词会改关系就保留或换准确表达，不为无痕而删逻辑。反例示意，两个人都可作he的所指，代词会使接续更乱，应先明指；本来必要的转折也不能为无痕而删掉。此为关系示意，不是真题。换题仍检查当前题面的对象和关系，不搬上一题结论。挑战，先不换连接词，只圈相邻句共同对象，把代词换回具体人物，检查是否有歧义。
+full:
+  summary: 圈共同对象和代词回指，回填所指并核动作接续；可用关键词复现或指代替代无用连接词。 产出对象、动作与关系连贯的表达；必要因果、否定和转折须保留。
+  source_boundary: 代词歧义先明确对象；同对象不证明有因果，删词会改关系就保留或换准确表达，不为无痕而删逻辑。
+  boundaries:
+  - 代词歧义先明确对象；同对象不证明有因果，删词会改关系就保留或换准确表达，不为无痕而删逻辑。
+  - 两个人都可作he的所指，代词会使接续更乱，应先明指；本来必要的转折也不能为无痕而删掉。此为关系示意，不是真题。
+  section_ids:
+  - 0601c0f1de7a4b8f
+  beginner_support:
+    first_micro_action: 先圈相邻两句的同一对象，再核代词是否回指清楚。
+    prerequisite: 先备齐原文与两段首句，分清原文已发生与自己准备写的内容；可以先用中文标功能，不急着写复杂英文。
+    if_stuck: 先保留有依据的中文功能提纲或准确简单句；缺口留空，不能用事故、超能力或独立升华填补。
+    example: 两个人都能被he指代时，先明说具体人物。
+    example_scope: 关系/结构示意，非完整试题，不计真题或已验案例。
+    micro_action_is_not_completion: 完成第一小步不等于完整方法成功；继续完成四步卡的判断与停止核验。
+    short_stop: 有歧义先明确，删词会改转折或因果就保留。
+  presentation_revision: 2026-10-28.1
+cases:
+  canonical: cases/continuation-writing/W10/canonical/case.yaml
+four_step_card:
+  start: 相邻句对象与行动衔接不清，或机械堆连接词影响表达。
+  first_cut: 圈共同对象和代词回指，回填所指并核动作接续；可用关键词复现或指代替代无用连接词。
+  judge: 产出对象、动作与关系连贯的表达；必要因果、否定和转折须保留。
+  stop: 代词歧义先明确对象；同对象不证明有因果，删词会改关系就保留或换准确表达，不为无痕而删逻辑。
+practicality_gate:
+  status: design_complete_empirical_pending
+  trigger: 相邻句对象与行动衔接不清，或机械堆连接词影响表达。
+  action: 圈共同对象和代词回指，回填所指并核动作接续；可用关键词复现或指代替代无用连接词。
+  output: interpret；产出对象、动作与关系连贯的表达；必要因果、否定和转折须保留。
+  stop: 代词歧义先明确对象；同对象不证明有因果，删词会改关系就保留或换准确表达，不为无痕而删逻辑。
+  transfer: 换人物仍做共同对象—代词回填—动作关系三项核对。
+  efficiency: 降低衔接修辞的盲目替换，价值在指代清楚与关系保真；效果待测。
+  misuse_cost: 未经实测；把and、so、then全删掉，再重复关键词就觉得文章自动连贯。会导致误判；须先核触发、执行Stop，不允许辅助产物越级定案。
+first_use_test:
+  status: designed_not_run
+  trigger_success: null
+  action_success: null
+  evidence_success: null
+  stop_rule_success: null
+  no_answer_backfit: null
+  failure_type: null
+  final_result: pending_real_student_test
+evaluation:
+  baseline: 普通逐项核题面
+  primary_benefit_hypothesis: 降低衔接修辞的盲目替换，价值在指代清楚与关系保真；效果待测。
+  trigger_precision: null
+  trigger_recall: null
+  resolution_rate: null
+  standalone_rate: null
+  assist_rate: null
+  false_trigger_rate: null
+  transfer_rate: null
+  boundary_accuracy: null
+  time_complexity_gain: null
+usefulness_level: Useful
+status: candidate
+maturity_status: candidate
+practical_value: Useful
+version: 1.2.0
+change_reason: ANSWER 1c388a0596b13935ae7c6a1af00834915a8efa33 增量来源同步；保留既有动作与版本，旧证据不自动获得新来源准入。
+affected_cases:
+- cases/continuation-writing/W10/canonical/case.yaml
+regression_result: pending_current_epoch_semantic_and_student_acceptance
+student_ready: false
+entry_copy: 相邻句接得别扭？先圈相邻两句的同一对象，再核代词是否回指清楚。这一步得到的是把当前关系或表达解释清楚，还要核完整题目。如果卡住，先保留有依据的中文功能提纲或准确简单句；缺口留空，不能用事故、超能力或独立升华填补。
+static_design_review:
+  status: source_bound_editorial_review
+  source_section_ids: *id001
+  participant_validation: pending_real_participant_validation
+  example_scope: 2026-10-28基础入口表达修订；保留原判据/Stop/课程绑定与语义版本，微动作和关系示意不是完整真题或真人实测。
+source_alignment:
+  commit: 1c388a0596b13935ae7c6a1af00834915a8efa33
+  state: live_source_bound
+  source_content_changed: false
+  correction_profile_applied: true
+  authored_first_contact_draft: true
+  new_course_branches: preserved_in_full_contract_not_automatically_aliased
+  acceptance: unchanged_method_sections; added_source_contracts_preserved; learner/release_pending

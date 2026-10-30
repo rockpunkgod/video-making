@@ -119,6 +119,11 @@ def verify_bundle(bundle):
     q, a, fp = bundle['source_snapshot'], bundle['analysis'], bundle['binding_fingerprint']
     from .answer_consistency import validate_frozen_answer
     validate_frozen_answer(q, a)
+    if a.get('question_verification',{}).get('review',{}).get('schema_version')=='1.1.0':
+        expected_evidence=[{'artifact_id':n['id'],'status':'active'} for n in a['evidence_graph']['nodes']
+                           if n['type'] in {'source_evidence','image_evidence'}]
+        if bundle['lifecycle']['evidence']!=expected_evidence:
+            raise ValueError('Frozen objective image evidence lifecycle differs from its bound proof graph')
     expected = {'question_snapshot_sha': sha(q), 'analysis_sha': sha(a),
                 'method_versions': {m['method_id']: m['version'] for m in bundle['methods']},
                 'evidence_graph_sha': sha(a['evidence_graph']), 'execution_trace_sha': sha(a['execution_trace']),
@@ -152,6 +157,9 @@ def status_matches(bundle, status):
     verify_bundle(bundle)
     validate('artifact-status-manifest', status)
     verify_seal(status)
+    if bundle['analysis'].get('question_verification',{}).get('review',{}).get('schema_version')=='1.1.0':
+        if status['lifecycle']!=bundle['lifecycle']:
+            return False
     return (status['asset_id'] == bundle['asset_id']
             and status['semantic_binding_sha'] == bundle['semantic_binding_sha']
             and status['source_sha'] == sha(bundle['source'])

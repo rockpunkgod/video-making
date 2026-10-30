@@ -148,6 +148,44 @@
               "box"
             ],
             "additionalProperties": false
+          },
+          "required_image_evidence": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "candidate": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "image_id": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "sha256": {
+                  "type": "string",
+                  "pattern": "^[0-9a-f]{64}$"
+                },
+                "box": {
+                  "type": "array",
+                  "items": {
+                    "type": "integer",
+                    "minimum": 0
+                  },
+                  "minItems": 4,
+                  "maxItems": 4
+                }
+              },
+              "required": [
+                "candidate",
+                "image_id",
+                "sha256",
+                "box"
+              ],
+              "additionalProperties": false
+            },
+            "minItems": 1,
+            "uniqueItems": true
           }
         },
         "required": [

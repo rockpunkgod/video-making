@@ -1,0 +1,1338 @@
+methods:
+- method_id: A01
+  brand_name: 作文五检
+  source_name: 批改顺序：先五审法
+  aliases:
+  - 批改顺序：先五审法
+  question_type: 应用文
+  method_type: framework
+  role: framework
+  primary_role: framework
+  secondary_roles: []
+  output_type: interpret
+  student_symptoms:
+  - 应用文题面要点或稿件任务不清
+  trigger_cues:
+  - 应用文题面要点或稿件任务不清
+  core_action: 按文体、对象、要点、逻辑、语言逐栏记录题面与原稿证据，先任务后语言
+  decision_rule: 五栏逐项对照题面与原稿：标出已覆盖、不充分、遗漏或偏离，先圈影响交际任务的缺口，再列确定的语言问题；得到修改清单，不直接得到分数。
+  verification: 按文体、对象、要点、逻辑、语言逐栏记录题面与原稿证据，先任务后语言。五栏逐项对照题面与原稿：标出已覆盖、不充分、遗漏或偏离，先圈影响交际任务的缺口，再列确定的语言问题；得到修改清单，不直接得到分数。
+    无题目只能校对可见语言和大致结构；无全文不做全篇诊断。书写只看清晰原稿是否影响交际，五检项目不是逐项扣分表。
+  stop_rule: 无题目只能校对可见语言和大致结构；无全文不做全篇诊断。书写只看清晰原稿是否影响交际，五检项目不是逐项扣分表。
+  common_wrong_instinct: 一拿到作文就换高级词，题目要求的活动安排却没写全。
+  failure_cases:
+  - 一拿到作文就换高级词，题目要求的活动安排却没写全。
+  - 无题目只能校对可见语言和大致结构；无全文不做全篇诊断。书写只看清晰原稿是否影响交际，五检项目不是逐项扣分表。
+  counterexamples:
+  - 语言漂亮但题面核心要点遗漏，不能因高级词多判任务完成；只有转写文本时也不能诊断原稿书写。此为条件示意，不是真题。
+  transfer_pattern: 换文体仍做题面要求—原稿位置配对，具体格式和目的随题目变化。
+  memory_line: 按文体、对象、要点、逻辑、语言逐栏记录题面与原稿证据，先任务后语言
+  anti_rule: 五检 ≠ 五项扣分。
+  visual_formula: '题面要求 ↔ 原稿位置
+
+    文体 / 对象 / 要点 / 逻辑 / 语言
+
+    → 有证据的修改清单'
+  challenge_prompt: 先不打分、不改全文，给每个题面要点找一个原稿位置；找不到的标遗漏。
+  source_references:
+  - repository: https://github.com/rockpunkgod/ANSWER.git
+    path: gaokao-writing/references/application-writing-and-correction.md
+    heading: 批改顺序：先五审法
+    commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
+  section_ids: &id001
+  - dac147e9a947370c
+  - f8cfb194a81aad6e
+  - ed19bd45d6bc3762
+  can_follow: []
+  usually_before: []
+  usually_after: []
+  conflicts_with: []
+  cannot_replace:
+  - 完整题面验证
+  levels:
+    L1: 按文体、对象、要点、逻辑、语言逐栏记录题面与原稿证据，先任务后语言
+    L2: 五栏逐项对照题面与原稿：标出已覆盖、不充分、遗漏或偏离，先圈影响交际任务的缺口，再列确定的语言问题；得到修改清单，不直接得到分数。
+    L3: 无题目只能校对可见语言和大致结构；无全文不做全篇诊断。书写只看清晰原稿是否影响交际，五检项目不是逐项扣分表。
+    L4: 换文体仍做题面要求—原稿位置配对，具体格式和目的随题目变化。
+  compact:
+    10s: 作文读着顺却不知道缺什么？把题面要求逐条对到原稿，先列任务缺口再查语言；五检不等于五项扣分。
+    30s: 作文看着顺也先别升级词。把文体、对象、要点、逻辑、语言列五栏，给每条评价标题面或原句位置。例如邀请目的写了，时间地点没写，先补安排。没有题目就停在语言校对，不宣称要点齐全。
+    90s: 应用文题面要点或稿件任务不清时，先确认：应用文题面要点或稿件任务不清。第一刀：按文体、对象、要点、逻辑、语言逐栏记录题面与原稿证据，先任务后语言。产物
+      interpret：五栏逐项对照题面与原稿：标出已覆盖、不充分、遗漏或偏离，先圈影响交际任务的缺口，再列确定的语言问题；得到修改清单，不直接得到分数。
+      停止：无题目只能校对可见语言和大致结构；无全文不做全篇诊断。书写只看清晰原稿是否影响交际，五检项目不是逐项扣分表。 反例（关系示意，不是真题）：语言漂亮但题面核心要点遗漏，不能因高级词多判任务完成；只有转写文本时也不能诊断原稿书写。此为条件示意，不是真题。
+      迁移：换文体仍做题面要求—原稿位置配对，具体格式和目的随题目变化。 挑战：先不打分、不改全文，给每个题面要点找一个原稿位置；找不到的标遗漏。
+  full:
+    summary: 按文体、对象、要点、逻辑、语言逐栏记录题面与原稿证据，先任务后语言 五栏逐项对照题面与原稿：标出已覆盖、不充分、遗漏或偏离，先圈影响交际任务的缺口，再列确定的语言问题；得到修改清单，不直接得到分数。
+    source_boundary: 无题目只能校对可见语言和大致结构；无全文不做全篇诊断。书写只看清晰原稿是否影响交际，五检项目不是逐项扣分表。
+    boundaries:
+    - 无题目只能校对可见语言和大致结构；无全文不做全篇诊断。书写只看清晰原稿是否影响交际，五检项目不是逐项扣分表。
+    - 语言漂亮但题面核心要点遗漏，不能因高级词多判任务完成；只有转写文本时也不能诊断原稿书写。此为条件示意，不是真题。
+    section_ids:
+    - dac147e9a947370c
+    - f8cfb194a81aad6e
+    - ed19bd45d6bc3762
+  cases:
+    canonical: cases/application-writing/A01/canonical/case.yaml
+  four_step_card:
+    start: 应用文题面要点或稿件任务不清
+    first_cut: 按文体、对象、要点、逻辑、语言逐栏记录题面与原稿证据，先任务后语言
+    judge: 五栏逐项对照题面与原稿：标出已覆盖、不充分、遗漏或偏离，先圈影响交际任务的缺口，再列确定的语言问题；得到修改清单，不直接得到分数。
+    stop: 无题目只能校对可见语言和大致结构；无全文不做全篇诊断。书写只看清晰原稿是否影响交际，五检项目不是逐项扣分表。
+  practicality_gate:
+    status: design_complete_empirical_pending
+    trigger: 应用文题面要点或稿件任务不清
+    action: 按文体、对象、要点、逻辑、语言逐栏记录题面与原稿证据，先任务后语言
+    output: interpret；五栏逐项对照题面与原稿：标出已覆盖、不充分、遗漏或偏离，先圈影响交际任务的缺口，再列确定的语言问题；得到修改清单，不直接得到分数。
+    stop: 无题目只能校对可见语言和大致结构；无全文不做全篇诊断。书写只看清晰原稿是否影响交际，五检项目不是逐项扣分表。
+    transfer: 换文体仍做题面要求—原稿位置配对，具体格式和目的随题目变化。
+    efficiency: 优先减少无关润色和返工，改善任务覆盖诊断；是否节时须真实对照。
+    misuse_cost: 未经实测；一拿到作文就换高级词，题目要求的活动安排却没写全。会导致误判；须先核触发、执行Stop，不允许辅助产物越级定案。
+  first_use_test:
+    status: designed_not_run
+    trigger_success: null
+    action_success: null
+    evidence_success: null
+    stop_rule_success: null
+    no_answer_backfit: null
+    failure_type: null
+    final_result: pending_real_student_test
+  evaluation:
+    baseline: 普通逐项核题面
+    primary_benefit_hypothesis: 优先减少无关润色和返工，改善任务覆盖诊断；是否节时须真实对照。
+    trigger_precision: null
+    trigger_recall: null
+    resolution_rate: null
+    standalone_rate: null
+    assist_rate: null
+    false_trigger_rate: null
+    transfer_rate: null
+    boundary_accuracy: null
+    time_complexity_gain: null
+  usefulness_level: Useful
+  status: candidate
+  maturity_status: candidate
+  practical_value: Useful
+  version: 1.2.0
+  change_reason: ANSWER 61bc9c3e15004639cb442c20e7946ca9631f14ce 来源重绑定；旧证据仅按归档版本复核，新规则与传播入口仍待重新验收。
+  affected_cases:
+  - cases/application-writing/A01/canonical/case.yaml
+  regression_result: pending_current_epoch_semantic_and_student_acceptance
+  student_ready: true
+  entry_copy: 应用文题面要点或稿件任务不清时，第一眼先找：应用文题面要点或稿件任务不清。手上先做：按文体、对象、要点、逻辑、语言逐栏记录题面与原稿证据，先任务后语言。做完得到
+    interpret，不是通用答案。五栏逐项对照题面与原稿：标出已覆盖、不充分、遗漏或偏离，先圈影响交际任务的缺口，再列确定的语言问题；得到修改清单，不直接得到分数。
+    什么时候停：无题目只能校对可见语言和大致结构；无全文不做全篇诊断。书写只看清晰原稿是否影响交际，五检项目不是逐项扣分表。 换题仍这样做：换文体仍做题面要求—原稿位置配对，具体格式和目的随题目变化。
+  static_design_review:
+    status: source_rebound_semantic_reacceptance_pending
+    source_section_ids: *id001
+    participant_validation: pending_real_participant_validation
+    example_scope: schematic source boundary, not a verified exam
+  source_alignment:
+    commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
+    state: live_source_bound
+    source_content_changed: false
+    correction_profile_applied: false
+    authored_first_contact_draft: false
+    new_course_branches: preserved_in_full_contract_not_automatically_aliased
+    acceptance: source_alignment_only; semantic/learner/release acceptance remains
+      pending
+- method_id: A02
+  brand_name: 六步成稿
+  source_name: 应用文写作六步训练法通用梳理框架
+  aliases:
+  - 应用文写作六步训练法通用梳理框架
+  question_type: 应用文
+  method_type: framework
+  role: framework
+  primary_role: framework
+  secondary_roles: []
+  output_type: interpret
+  student_symptoms:
+  - 有题目但需要从审题到成稿路线
+  trigger_cues:
+  - 有应用文题目，需要从要点安排到成稿的通用训练支架。
+  core_action: 圈题面限定与全部要点，搭合适文体骨架，写准确单句再按真实关系组篇、升级和复核。
+  decision_rule: 产出有要点和复核记录的成稿计划；六步是通用梳理框架，不冒充独立课程原名算法。
+  verification: 产出有要点和复核记录的成稿计划；六步是通用梳理框架，不冒充独立课程原名算法。 题目或对象不清先补材料；基础内容未成立先修，不照抄不合语境模板，不保证分数。
+  stop_rule: 题目或对象不清先补材料；基础内容未成立先修，不照抄不合语境模板，不保证分数。
+  common_wrong_instinct: 背好模板就直接填词，不核题目身份、要点和目的。
+  failure_cases:
+  - 背好模板就直接填词，不核题目身份、要点和目的。
+  - 题目或对象不清先补材料；基础内容未成立先修，不照抄不合语境模板，不保证分数。
+  counterexamples:
+  - 模板有邀请结束语而题目要求感谢，句型再熟也不应照搬；正确简单句已达意时不必强塞复杂结构。此为条件示意，不是真题。
+  transfer_pattern: 换题材保留六个动作，提纲、内容与语气服从新题目的限定。
+  memory_line: 圈题面限定与全部要点，搭合适文体骨架，写准确单句再按真实关系组篇、升级和复核。
+  anti_rule: 套完模板 ≠ 完成任务。
+  visual_formula: '圈要点 → 搭骨架 → 基础句
+
+    → 内容模块 → 合理升级 → 逐条复核'
+  challenge_prompt: 先不写全文，只交限定/要点表和开头、主体、结尾各负责的任务。
+  source_references:
+  - repository: https://github.com/rockpunkgod/ANSWER.git
+    path: gaokao-writing/references/application-writing-and-correction.md
+    heading: 应用文写作六步训练法通用梳理框架
+    commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
+  section_ids: &id002
+  - 0a6f5b5594a41dd6
+  can_follow: []
+  usually_before: []
+  usually_after: []
+  conflicts_with: []
+  cannot_replace:
+  - 完整题面验证
+  levels:
+    L1: 先圈限定和全部要点，搭文体骨架，再依原六步造句、组篇、升级和复核
+    L2: 六步留下可见产物：限定/要点表→文体提纲→正确基础句→内容模块→有用的升级→要点和语言复核；未完成前项先补前项，不用模板替代任务。
+    L3: 题目或交际对象不清先补信息；基础句或内容未成立时停止升级。模板不合语境不得照抄，完成六步不保证分数。
+    L4: 换题材保留六个动作，提纲、内容与语气服从新题目的限定。
+  compact:
+    line: 圈题面限定与全部要点，搭合适文体骨架，写准确单句再按真实关系组篇、升级和复核。
+    boundary: 题目或对象不清先补材料；基础内容未成立先修，不照抄不合语境模板，不保证分数。
+    10s: 圈题面限定与全部要点，搭合适文体骨架，写准确单句再按真实关系组篇、升级和复核。 产出有要点和复核记录的成稿计划；六步是通用梳理框架，不冒充独立课程原名算法。
+    30s: 有应用文题目，需要从要点安排到成稿的通用训练支架。 圈题面限定与全部要点，搭合适文体骨架，写准确单句再按真实关系组篇、升级和复核。 题目或对象不清先补材料；基础内容未成立先修，不照抄不合语境模板，不保证分数。
+    90s: 有应用文题目，需要从要点安排到成稿的通用训练支架。 手上先做：圈题面限定与全部要点，搭合适文体骨架，写准确单句再按真实关系组篇、升级和复核。 做完得到：产出有要点和复核记录的成稿计划；六步是通用梳理框架，不冒充独立课程原名算法。
+      停止：题目或对象不清先补材料；基础内容未成立先修，不照抄不合语境模板，不保证分数。 反例（边界示意，非真题）：模板有邀请结束语而题目要求感谢，句型再熟也不应照搬；正确简单句已达意时不必强塞复杂结构。此为条件示意，不是真题。
+      挑战：先不写全文，只交限定/要点表和开头、主体、结尾各负责的任务。
+  full:
+    summary: 圈题面限定与全部要点，搭合适文体骨架，写准确单句再按真实关系组篇、升级和复核。 产出有要点和复核记录的成稿计划；六步是通用梳理框架，不冒充独立课程原名算法。
+    source_boundary: 题目或对象不清先补材料；基础内容未成立先修，不照抄不合语境模板，不保证分数。
+    boundaries:
+    - 题目或对象不清先补材料；基础内容未成立先修，不照抄不合语境模板，不保证分数。
+    - 模板有邀请结束语而题目要求感谢，句型再熟也不应照搬；正确简单句已达意时不必强塞复杂结构。此为条件示意，不是真题。
+    section_ids:
+    - 0a6f5b5594a41dd6
+  cases:
+    canonical: cases/application-writing/A02/canonical/case.yaml
+  four_step_card:
+    start: 有应用文题目，需要从要点安排到成稿的通用训练支架。
+    first_cut: 圈题面限定与全部要点，搭合适文体骨架，写准确单句再按真实关系组篇、升级和复核。
+    judge: 产出有要点和复核记录的成稿计划；六步是通用梳理框架，不冒充独立课程原名算法。
+    stop: 题目或对象不清先补材料；基础内容未成立先修，不照抄不合语境模板，不保证分数。
+  practicality_gate:
+    status: design_complete_empirical_pending
+    trigger: 有应用文题目，需要从要点安排到成稿的通用训练支架。
+    action: 圈题面限定与全部要点，搭合适文体骨架，写准确单句再按真实关系组篇、升级和复核。
+    output: interpret；产出有要点和复核记录的成稿计划；六步是通用梳理框架，不冒充独立课程原名算法。
+    stop: 题目或对象不清先补材料；基础内容未成立先修，不照抄不合语境模板，不保证分数。
+    transfer: 换题材保留六个动作，提纲、内容与语气服从新题目的限定。
+    efficiency: 降低构思和润色顺序的认知负担，减少未完成任务就升级的返工；无实际提速结论。
+    misuse_cost: 未经实测；背好模板就直接填词，不核题目身份、要点和目的。会导致误判；须先核触发、执行Stop，不允许辅助产物越级定案。
+  first_use_test:
+    status: designed_not_run
+    trigger_success: null
+    action_success: null
+    evidence_success: null
+    stop_rule_success: null
+    no_answer_backfit: null
+    failure_type: null
+    final_result: pending_real_student_test
+  evaluation:
+    baseline: 普通逐项核题面
+    primary_benefit_hypothesis: 降低构思和润色顺序的认知负担，减少未完成任务就升级的返工；无实际提速结论。
+    trigger_precision: null
+    trigger_recall: null
+    resolution_rate: null
+    standalone_rate: null
+    assist_rate: null
+    false_trigger_rate: null
+    transfer_rate: null
+    boundary_accuracy: null
+    time_complexity_gain: null
+  usefulness_level: Useful
+  status: candidate
+  maturity_status: candidate
+  practical_value: Useful
+  version: 1.2.0
+  change_reason: ANSWER 61bc9c3e15004639cb442c20e7946ca9631f14ce 来源重绑定；旧证据仅按归档版本复核，新规则与传播入口仍待重新验收。
+  affected_cases:
+  - cases/application-writing/A02/canonical/case.yaml
+  regression_result: pending_current_epoch_semantic_and_student_acceptance
+  student_ready: false
+  entry_copy: 有应用文题目，需要从要点安排到成稿的通用训练支架。 手上先做：圈题面限定与全部要点，搭合适文体骨架，写准确单句再按真实关系组篇、升级和复核。
+    做完得到：产出有要点和复核记录的成稿计划；六步是通用梳理框架，不冒充独立课程原名算法。 停止：题目或对象不清先补材料；基础内容未成立先修，不照抄不合语境模板，不保证分数。
+  static_design_review:
+    status: source_rebound_semantic_reacceptance_pending
+    source_section_ids: *id002
+    participant_validation: pending_real_participant_validation
+    example_scope: schematic source boundary, not a verified exam
+  source_alignment:
+    commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
+    state: live_source_bound
+    source_content_changed: true
+    correction_profile_applied: true
+    authored_first_contact_draft: false
+    new_course_branches: preserved_in_full_contract_not_automatically_aliased
+    acceptance: source_alignment_only; semantic/learner/release acceptance remains
+      pending
+- method_id: A03
+  brand_name: 三步造句
+  source_name: 基础句式锚定法
+  aliases:
+  - 基础句式锚定法
+  question_type: 应用文
+  method_type: method
+  role: interpreter
+  primary_role: interpreter
+  secondary_roles: []
+  output_type: interpret
+  student_symptoms:
+  - 要点已确定但简单句写不出来
+  trigger_cues:
+  - 要点已确定，但还写不出准确的基础句。
+  core_action: 先写核心主体，再写动作或状态，最后加入题面支持且服务要点的时间地点等细节。
+  decision_rule: 产出可继续组篇的准确基础句；主干、搭配、时态与题面要点对应，不代表整篇任务完成。
+  verification: 产出可继续组篇的准确基础句；主干、搭配、时态与题面要点对应，不代表整篇任务完成。 主体或动作不明先回要点，不编背景；基础不成立先修，不靠堆修饰升级，基础句式锚定不与另两种方法合并。
+  stop_rule: 主体或动作不明先回要点，不编背景；基础不成立先修，不靠堆修饰升级，基础句式锚定不与另两种方法合并。
+  common_wrong_instinct: 中文想表达很多信息，开头就堆长句却没有明确谁做什么。
+  failure_cases:
+  - 中文想表达很多信息，开头就堆长句却没有明确谁做什么。
+  - 主体或动作不明先回要点，不编背景；基础不成立先修，不靠堆修饰升级，基础句式锚定不与另两种方法合并。
+  counterexamples:
+  - 题面只要求表达感谢，擅加对方实施了某项帮助会改事实；加再多时间地点也不能修复缺失谓语。此为条件示意，不是真题。
+  transfer_pattern: 换要点仍先定主体与动作或状态，场景内容随新任务变。
+  memory_line: 先写核心主体，再写动作或状态，最后加入题面支持且服务要点的时间地点等细节。
+  anti_rule: 句子长 ≠ 句子成立。
+  visual_formula: '谁 → 做什么 / 什么状态 → 场景
+
+    → 有主干的基础句'
+  challenge_prompt: 先不升级句子，只写一个要点的主体、动作或状态，再指出准备加入的细节从哪里来。
+  source_references:
+  - repository: https://github.com/rockpunkgod/ANSWER.git
+    path: gaokao-writing/references/application-writing-and-correction.md
+    heading: 三种写作表达方法
+    commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
+  section_ids: &id003
+  - 15e18423e3364f72
+  - 8cc4571377b8183a
+  can_follow: []
+  usually_before: []
+  usually_after: []
+  conflicts_with: []
+  cannot_replace:
+  - 完整题面验证
+  levels:
+    L1: 先写主体，再写动作或状态，最后嵌入题面支持的场景细节
+    L2: 主体、动作/状态、场景分别对应要点，基础句主干成立且细节有题面支持才保留；得到可继续组织的句子，不代表整篇任务已完成。
+    L3: 主体或动作不确定先回要点，不能编背景补空；句子主干、搭配或时态不成立先修准确，不急着加修饰。
+    L4: 换要点仍先定主体与动作或状态，场景内容随新任务变。
+  compact:
+    line: 先写核心主体，再写动作或状态，最后加入题面支持且服务要点的时间地点等细节。
+    boundary: 主体或动作不明先回要点，不编背景；基础不成立先修，不靠堆修饰升级，基础句式锚定不与另两种方法合并。
+    10s: 先写核心主体，再写动作或状态，最后加入题面支持且服务要点的时间地点等细节。 产出可继续组篇的准确基础句；主干、搭配、时态与题面要点对应，不代表整篇任务完成。
+    30s: 要点已确定，但还写不出准确的基础句。 先写核心主体，再写动作或状态，最后加入题面支持且服务要点的时间地点等细节。 主体或动作不明先回要点，不编背景；基础不成立先修，不靠堆修饰升级，基础句式锚定不与另两种方法合并。
+    90s: 要点已确定，但还写不出准确的基础句。 手上先做：先写核心主体，再写动作或状态，最后加入题面支持且服务要点的时间地点等细节。 做完得到：产出可继续组篇的准确基础句；主干、搭配、时态与题面要点对应，不代表整篇任务完成。
+      停止：主体或动作不明先回要点，不编背景；基础不成立先修，不靠堆修饰升级，基础句式锚定不与另两种方法合并。 反例（边界示意，非真题）：题面只要求表达感谢，擅加对方实施了某项帮助会改事实；加再多时间地点也不能修复缺失谓语。此为条件示意，不是真题。
+      挑战：先不升级句子，只写一个要点的主体、动作或状态，再指出准备加入的细节从哪里来。
+  full:
+    summary: 先写核心主体，再写动作或状态，最后加入题面支持且服务要点的时间地点等细节。 产出可继续组篇的准确基础句；主干、搭配、时态与题面要点对应，不代表整篇任务完成。
+    source_boundary: 主体或动作不明先回要点，不编背景；基础不成立先修，不靠堆修饰升级，基础句式锚定不与另两种方法合并。
+    boundaries:
+    - 主体或动作不明先回要点，不编背景；基础不成立先修，不靠堆修饰升级，基础句式锚定不与另两种方法合并。
+    - 题面只要求表达感谢，擅加对方实施了某项帮助会改事实；加再多时间地点也不能修复缺失谓语。此为条件示意，不是真题。
+    section_ids:
+    - 15e18423e3364f72
+    - 8cc4571377b8183a
+  cases:
+    canonical: cases/application-writing/A03/canonical/case.yaml
+  four_step_card:
+    start: 要点已确定，但还写不出准确的基础句。
+    first_cut: 先写核心主体，再写动作或状态，最后加入题面支持且服务要点的时间地点等细节。
+    judge: 产出可继续组篇的准确基础句；主干、搭配、时态与题面要点对应，不代表整篇任务完成。
+    stop: 主体或动作不明先回要点，不编背景；基础不成立先修，不靠堆修饰升级，基础句式锚定不与另两种方法合并。
+  practicality_gate:
+    status: design_complete_empirical_pending
+    trigger: 要点已确定，但还写不出准确的基础句。
+    action: 先写核心主体，再写动作或状态，最后加入题面支持且服务要点的时间地点等细节。
+    output: interpret；产出可继续组篇的准确基础句；主干、搭配、时态与题面要点对应，不代表整篇任务完成。
+    stop: 主体或动作不明先回要点，不编背景；基础不成立先修，不靠堆修饰升级，基础句式锚定不与另两种方法合并。
+    transfer: 换要点仍先定主体与动作或状态，场景内容随新任务变。
+    efficiency: 减少同时安排主干与修饰的负担，价值先在句子准确性；实际效率待测。
+    misuse_cost: 未经实测；中文想表达很多信息，开头就堆长句却没有明确谁做什么。会导致误判；须先核触发、执行Stop，不允许辅助产物越级定案。
+  first_use_test:
+    status: designed_not_run
+    trigger_success: null
+    action_success: null
+    evidence_success: null
+    stop_rule_success: null
+    no_answer_backfit: null
+    failure_type: null
+    final_result: pending_real_student_test
+  evaluation:
+    baseline: 普通逐项核题面
+    primary_benefit_hypothesis: 减少同时安排主干与修饰的负担，价值先在句子准确性；实际效率待测。
+    trigger_precision: null
+    trigger_recall: null
+    resolution_rate: null
+    standalone_rate: null
+    assist_rate: null
+    false_trigger_rate: null
+    transfer_rate: null
+    boundary_accuracy: null
+    time_complexity_gain: null
+  usefulness_level: Useful
+  status: candidate
+  maturity_status: candidate
+  practical_value: Useful
+  version: 1.2.0
+  change_reason: ANSWER 61bc9c3e15004639cb442c20e7946ca9631f14ce 来源重绑定；旧证据仅按归档版本复核，新规则与传播入口仍待重新验收。
+  affected_cases:
+  - cases/application-writing/A03/canonical/case.yaml
+  regression_result: pending_current_epoch_semantic_and_student_acceptance
+  student_ready: false
+  entry_copy: 要点已确定，但还写不出准确的基础句。 手上先做：先写核心主体，再写动作或状态，最后加入题面支持且服务要点的时间地点等细节。 做完得到：产出可继续组篇的准确基础句；主干、搭配、时态与题面要点对应，不代表整篇任务完成。
+    停止：主体或动作不明先回要点，不编背景；基础不成立先修，不靠堆修饰升级，基础句式锚定不与另两种方法合并。
+  static_design_review:
+    status: source_rebound_semantic_reacceptance_pending
+    source_section_ids: *id003
+    participant_validation: pending_real_participant_validation
+    example_scope: schematic source boundary, not a verified exam
+  source_alignment:
+    commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
+    state: live_source_bound
+    source_content_changed: true
+    correction_profile_applied: true
+    authored_first_contact_draft: false
+    new_course_branches: preserved_in_full_contract_not_automatically_aliased
+    acceptance: source_alignment_only; semantic/learner/release acceptance remains
+      pending
+- method_id: A04
+  brand_name: 句块拼接
+  source_name: 复杂句式模块法
+  aliases:
+  - 复杂句式模块法
+  question_type: 应用文
+  method_type: method
+  role: interpreter
+  primary_role: interpreter
+  secondary_roles: []
+  output_type: interpret
+  student_symptoms:
+  - 多个动作要合成复杂句
+  trigger_cues:
+  - 已有准确主干及相关动作，需要按真实逻辑合成复杂表达。
+  core_action: 各动作先独立写成正确简单句，标实际关系，再选合适从句、非谓语、连接词或介词短语粘连。
+  decision_rule: 产出主干、指代与原关系不变的复杂句块；两简一复从是原课扩句练习，不是整篇句数或从句配额。
+  verification: 产出主干、指代与原关系不变的复杂句块；两简一复从是原课扩句练习，不是整篇句数或从句配额。 基础句或关系未成立不合并；动作主体或依附错误退回独立句，不为复杂度强拼或把训练配比作语法上限。
+  stop_rule: 基础句或关系未成立不合并；动作主体或依附错误退回独立句，不为复杂度强拼或把训练配比作语法上限。
+  common_wrong_instinct: 只要两句能加一个连接词，就默认复杂句更高级。
+  failure_cases:
+  - 只要两句能加一个连接词，就默认复杂句更高级。
+  - 基础句或关系未成立不合并；动作主体或依附错误退回独立句，不为复杂度强拼或把训练配比作语法上限。
+  counterexamples:
+  - 两个动作发生在不同主体上，不能随便用省略主体的非谓语串到同一主句；本来无因果的两项也不能靠because造因果。此为关系示意，不是真题。
+  transfer_pattern: 不同题材都先拆动作、核主体，再按实际关系拼接。
+  memory_line: 各动作先独立写成正确简单句，标实际关系，再选合适从句、非谓语、连接词或介词短语粘连。
+  anti_rule: 拼得长 ≠ 接得对。
+  visual_formula: '动作1 → 正确简单句
+
+    动作2 → 正确简单句
+
+    真实关系 + 合法连接 → 句块'
+  challenge_prompt: 先不合句，把要写的内容拆成动作模块；给每块写主体，再标两块的实际关系。
+  source_references:
+  - repository: https://github.com/rockpunkgod/ANSWER.git
+    path: gaokao-writing/references/application-writing-and-correction.md
+    heading: 三种写作表达方法
+    commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
+  section_ids: &id004
+  - 15e18423e3364f72
+  - 8cc4571377b8183a
+  can_follow: []
+  usually_before: []
+  usually_after: []
+  conflicts_with: []
+  cannot_replace:
+  - 完整题面验证
+  levels:
+    L1: 每个动作先写正确简单句，再按真实关系用从句、非谓语或连接词粘连
+    L2: 每个模块先独立成句，再标实际并列、因果、条件或修饰关系；连接后主干和指代不变才保留，得到逻辑成立的句块。
+    L3: 基础句未正确先修句；逻辑关系不明不合并。非谓语的动作主体或从句依附不成立，退回独立句，不为复杂度强拼。
+    L4: 不同题材都先拆动作、核主体，再按实际关系拼接。
+  compact:
+    line: 各动作先独立写成正确简单句，标实际关系，再选合适从句、非谓语、连接词或介词短语粘连。
+    boundary: 基础句或关系未成立不合并；动作主体或依附错误退回独立句，不为复杂度强拼或把训练配比作语法上限。
+    10s: 各动作先独立写成正确简单句，标实际关系，再选合适从句、非谓语、连接词或介词短语粘连。 产出主干、指代与原关系不变的复杂句块；两简一复从是原课扩句练习，不是整篇句数或从句配额。
+    30s: 已有准确主干及相关动作，需要按真实逻辑合成复杂表达。 各动作先独立写成正确简单句，标实际关系，再选合适从句、非谓语、连接词或介词短语粘连。 基础句或关系未成立不合并；动作主体或依附错误退回独立句，不为复杂度强拼或把训练配比作语法上限。
+    90s: 已有准确主干及相关动作，需要按真实逻辑合成复杂表达。 手上先做：各动作先独立写成正确简单句，标实际关系，再选合适从句、非谓语、连接词或介词短语粘连。
+      做完得到：产出主干、指代与原关系不变的复杂句块；两简一复从是原课扩句练习，不是整篇句数或从句配额。 停止：基础句或关系未成立不合并；动作主体或依附错误退回独立句，不为复杂度强拼或把训练配比作语法上限。
+      反例（边界示意，非真题）：两个动作发生在不同主体上，不能随便用省略主体的非谓语串到同一主句；本来无因果的两项也不能靠because造因果。此为关系示意，不是真题。
+      挑战：先不合句，把要写的内容拆成动作模块；给每块写主体，再标两块的实际关系。
+  full:
+    summary: 各动作先独立写成正确简单句，标实际关系，再选合适从句、非谓语、连接词或介词短语粘连。 产出主干、指代与原关系不变的复杂句块；两简一复从是原课扩句练习，不是整篇句数或从句配额。
+    source_boundary: 基础句或关系未成立不合并；动作主体或依附错误退回独立句，不为复杂度强拼或把训练配比作语法上限。
+    boundaries:
+    - 基础句或关系未成立不合并；动作主体或依附错误退回独立句，不为复杂度强拼或把训练配比作语法上限。
+    - 两个动作发生在不同主体上，不能随便用省略主体的非谓语串到同一主句；本来无因果的两项也不能靠because造因果。此为关系示意，不是真题。
+    section_ids:
+    - 15e18423e3364f72
+    - 8cc4571377b8183a
+  cases:
+    canonical: cases/application-writing/A04/canonical/case.yaml
+  four_step_card:
+    start: 已有准确主干及相关动作，需要按真实逻辑合成复杂表达。
+    first_cut: 各动作先独立写成正确简单句，标实际关系，再选合适从句、非谓语、连接词或介词短语粘连。
+    judge: 产出主干、指代与原关系不变的复杂句块；两简一复从是原课扩句练习，不是整篇句数或从句配额。
+    stop: 基础句或关系未成立不合并；动作主体或依附错误退回独立句，不为复杂度强拼或把训练配比作语法上限。
+  practicality_gate:
+    status: design_complete_empirical_pending
+    trigger: 已有准确主干及相关动作，需要按真实逻辑合成复杂表达。
+    action: 各动作先独立写成正确简单句，标实际关系，再选合适从句、非谓语、连接词或介词短语粘连。
+    output: interpret；产出主干、指代与原关系不变的复杂句块；两简一复从是原课扩句练习，不是整篇句数或从句配额。
+    stop: 基础句或关系未成立不合并；动作主体或依附错误退回独立句，不为复杂度强拼或把训练配比作语法上限。
+    transfer: 不同题材都先拆动作、核主体，再按实际关系拼接。
+    efficiency: 降低多动作同时造句的复杂度，防止连接错误；是否更快、更准需真实数据。
+    misuse_cost: 未经实测；只要两句能加一个连接词，就默认复杂句更高级。会导致误判；须先核触发、执行Stop，不允许辅助产物越级定案。
+  first_use_test:
+    status: designed_not_run
+    trigger_success: null
+    action_success: null
+    evidence_success: null
+    stop_rule_success: null
+    no_answer_backfit: null
+    failure_type: null
+    final_result: pending_real_student_test
+  evaluation:
+    baseline: 普通逐项核题面
+    primary_benefit_hypothesis: 降低多动作同时造句的复杂度，防止连接错误；是否更快、更准需真实数据。
+    trigger_precision: null
+    trigger_recall: null
+    resolution_rate: null
+    standalone_rate: null
+    assist_rate: null
+    false_trigger_rate: null
+    transfer_rate: null
+    boundary_accuracy: null
+    time_complexity_gain: null
+  usefulness_level: Useful
+  status: candidate
+  maturity_status: candidate
+  practical_value: Useful
+  version: 1.2.0
+  change_reason: ANSWER 61bc9c3e15004639cb442c20e7946ca9631f14ce 来源重绑定；旧证据仅按归档版本复核，新规则与传播入口仍待重新验收。
+  affected_cases:
+  - cases/application-writing/A04/canonical/case.yaml
+  regression_result: pending_current_epoch_semantic_and_student_acceptance
+  student_ready: false
+  entry_copy: 已有准确主干及相关动作，需要按真实逻辑合成复杂表达。 手上先做：各动作先独立写成正确简单句，标实际关系，再选合适从句、非谓语、连接词或介词短语粘连。
+    做完得到：产出主干、指代与原关系不变的复杂句块；两简一复从是原课扩句练习，不是整篇句数或从句配额。 停止：基础句或关系未成立不合并；动作主体或依附错误退回独立句，不为复杂度强拼或把训练配比作语法上限。
+  static_design_review:
+    status: source_rebound_semantic_reacceptance_pending
+    source_section_ids: *id004
+    participant_validation: pending_real_participant_validation
+    example_scope: schematic source boundary, not a verified exam
+  source_alignment:
+    commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
+    state: live_source_bound
+    source_content_changed: true
+    correction_profile_applied: true
+    authored_first_contact_draft: false
+    new_course_branches: preserved_in_full_contract_not_automatically_aliased
+    acceptance: source_alignment_only; semantic/learner/release acceptance remains
+      pending
+- method_id: A05
+  brand_name: 长句重组
+  source_name: 长句翻译重构法
+  aliases:
+  - 长句翻译重构法
+  question_type: 应用文
+  method_type: method
+  role: interpreter
+  primary_role: interpreter
+  secondary_roles: []
+  output_type: interpret
+  student_symptoms:
+  - 中文长句信息和修饰混杂
+  trigger_cues:
+  - 中文信息与修饰混杂，需要重构英文表达而非按整篇词数选法。
+  core_action: 拆核心与修饰信息，按主体→核心动作→场景重组，再校时态、词性、单复数和衔接风格。
+  decision_rule: 产出保留原义、对象与限制的句子；按信息复杂度与表达能力选用，不由110/120整篇词数触发。
+  verification: 产出保留原义、对象与限制的句子；按信息复杂度与表达能力选用，不由110/120整篇词数触发。 核心不清先停重排；否定、时间、数量、条件不能当枝叶删；不宣称缺连续口述或新完整例的分支已全面验收。
+  stop_rule: 核心不清先停重排；否定、时间、数量、条件不能当枝叶删；不宣称缺连续口述或新完整例的分支已全面验收。
+  common_wrong_instinct: 照中文词序逐词翻译，或简化时把关键限制也删了。
+  failure_cases:
+  - 照中文词序逐词翻译，或简化时把关键限制也删了。
+  - 核心不清先停重排；否定、时间、数量、条件不能当枝叶删；不宣称缺连续口述或新完整例的分支已全面验收。
+  counterexamples:
+  - 句首的条件看着像修饰，却决定动作何时成立，重组不能删除；主客体对调后语法通顺也不是正确翻译。此为关系示意，不是真题。
+  transfer_pattern: 换中文内容仍先拆信息，再保限定地重排和校准。
+  memory_line: 拆核心与修饰信息，按主体→核心动作→场景重组，再校时态、词性、单复数和衔接风格。
+  anti_rule: 换语序 ≠ 换意思。
+  visual_formula: '中文信息 → 核心 / 修饰
+
+    主体 → 核心动作 → 场景
+
+    → 校形式 + 核原义'
+  challenge_prompt: 先不译长句，只标必须保留的核心与限定，再写英文主干的信息顺序。
+  source_references:
+  - repository: https://github.com/rockpunkgod/ANSWER.git
+    path: gaokao-writing/references/application-writing-and-correction.md
+    heading: 三种写作表达方法
+    commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
+  section_ids: &id005
+  - 15e18423e3364f72
+  - 8cc4571377b8183a
+  can_follow: []
+  usually_before: []
+  usually_after: []
+  conflicts_with: []
+  cannot_replace:
+  - 完整题面验证
+  levels:
+    L1: 拆核心与修饰，按主体→动作→场景重组，再校时态词性单复数与风格
+    L2: 区分必须传达的核心信息与修饰，先重组主体—核心动作—场景，再校准时态、词性、单复数和风格；保留原义与限定才成立。
+    L3: 核心与修饰还分不清先停重排；否定、时间、数量或条件不能当枝叶丢掉。改写改变身份、动作或因果时退回原意。
+    L4: 换中文内容仍先拆信息，再保限定地重排和校准。
+  compact:
+    line: 拆核心与修饰信息，按主体→核心动作→场景重组，再校时态、词性、单复数和衔接风格。
+    boundary: 核心不清先停重排；否定、时间、数量、条件不能当枝叶删；不宣称缺连续口述或新完整例的分支已全面验收。
+    10s: 拆核心与修饰信息，按主体→核心动作→场景重组，再校时态、词性、单复数和衔接风格。 产出保留原义、对象与限制的句子；按信息复杂度与表达能力选用，不由110/120整篇词数触发。
+    30s: 中文信息与修饰混杂，需要重构英文表达而非按整篇词数选法。 拆核心与修饰信息，按主体→核心动作→场景重组，再校时态、词性、单复数和衔接风格。 核心不清先停重排；否定、时间、数量、条件不能当枝叶删；不宣称缺连续口述或新完整例的分支已全面验收。
+    90s: 中文信息与修饰混杂，需要重构英文表达而非按整篇词数选法。 手上先做：拆核心与修饰信息，按主体→核心动作→场景重组，再校时态、词性、单复数和衔接风格。
+      做完得到：产出保留原义、对象与限制的句子；按信息复杂度与表达能力选用，不由110/120整篇词数触发。 停止：核心不清先停重排；否定、时间、数量、条件不能当枝叶删；不宣称缺连续口述或新完整例的分支已全面验收。
+      反例（边界示意，非真题）：句首的条件看着像修饰，却决定动作何时成立，重组不能删除；主客体对调后语法通顺也不是正确翻译。此为关系示意，不是真题。 挑战：先不译长句，只标必须保留的核心与限定，再写英文主干的信息顺序。
+  full:
+    summary: 拆核心与修饰信息，按主体→核心动作→场景重组，再校时态、词性、单复数和衔接风格。 产出保留原义、对象与限制的句子；按信息复杂度与表达能力选用，不由110/120整篇词数触发。
+    source_boundary: 核心不清先停重排；否定、时间、数量、条件不能当枝叶删；不宣称缺连续口述或新完整例的分支已全面验收。
+    boundaries:
+    - 核心不清先停重排；否定、时间、数量、条件不能当枝叶删；不宣称缺连续口述或新完整例的分支已全面验收。
+    - 句首的条件看着像修饰，却决定动作何时成立，重组不能删除；主客体对调后语法通顺也不是正确翻译。此为关系示意，不是真题。
+    section_ids:
+    - 15e18423e3364f72
+    - 8cc4571377b8183a
+  cases:
+    canonical: cases/application-writing/A05/canonical/case.yaml
+  four_step_card:
+    start: 中文信息与修饰混杂，需要重构英文表达而非按整篇词数选法。
+    first_cut: 拆核心与修饰信息，按主体→核心动作→场景重组，再校时态、词性、单复数和衔接风格。
+    judge: 产出保留原义、对象与限制的句子；按信息复杂度与表达能力选用，不由110/120整篇词数触发。
+    stop: 核心不清先停重排；否定、时间、数量、条件不能当枝叶删；不宣称缺连续口述或新完整例的分支已全面验收。
+  practicality_gate:
+    status: design_complete_empirical_pending
+    trigger: 中文信息与修饰混杂，需要重构英文表达而非按整篇词数选法。
+    action: 拆核心与修饰信息，按主体→核心动作→场景重组，再校时态、词性、单复数和衔接风格。
+    output: interpret；产出保留原义、对象与限制的句子；按信息复杂度与表达能力选用，不由110/120整篇词数触发。
+    stop: 核心不清先停重排；否定、时间、数量、条件不能当枝叶删；不宣称缺连续口述或新完整例的分支已全面验收。
+    transfer: 换中文内容仍先拆信息，再保限定地重排和校准。
+    efficiency: 分开信息组织和词形校准，降低同时处理的负担，是否节时待测。
+    misuse_cost: 未经实测；照中文词序逐词翻译，或简化时把关键限制也删了。会导致误判；须先核触发、执行Stop，不允许辅助产物越级定案。
+  first_use_test:
+    status: designed_not_run
+    trigger_success: null
+    action_success: null
+    evidence_success: null
+    stop_rule_success: null
+    no_answer_backfit: null
+    failure_type: null
+    final_result: pending_real_student_test
+  evaluation:
+    baseline: 普通逐项核题面
+    primary_benefit_hypothesis: 分开信息组织和词形校准，降低同时处理的负担，是否节时待测。
+    trigger_precision: null
+    trigger_recall: null
+    resolution_rate: null
+    standalone_rate: null
+    assist_rate: null
+    false_trigger_rate: null
+    transfer_rate: null
+    boundary_accuracy: null
+    time_complexity_gain: null
+  usefulness_level: Useful
+  status: candidate
+  maturity_status: candidate
+  practical_value: Useful
+  version: 1.2.0
+  change_reason: ANSWER 61bc9c3e15004639cb442c20e7946ca9631f14ce 来源重绑定；旧证据仅按归档版本复核，新规则与传播入口仍待重新验收。
+  affected_cases:
+  - cases/application-writing/A05/canonical/case.yaml
+  regression_result: pending_current_epoch_semantic_and_student_acceptance
+  student_ready: false
+  entry_copy: 中文信息与修饰混杂，需要重构英文表达而非按整篇词数选法。 手上先做：拆核心与修饰信息，按主体→核心动作→场景重组，再校时态、词性、单复数和衔接风格。
+    做完得到：产出保留原义、对象与限制的句子；按信息复杂度与表达能力选用，不由110/120整篇词数触发。 停止：核心不清先停重排；否定、时间、数量、条件不能当枝叶删；不宣称缺连续口述或新完整例的分支已全面验收。
+  static_design_review:
+    status: source_rebound_semantic_reacceptance_pending
+    source_section_ids: *id005
+    participant_validation: pending_real_participant_validation
+    example_scope: schematic source boundary, not a verified exam
+  source_alignment:
+    commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
+    state: live_source_bound
+    source_content_changed: true
+    correction_profile_applied: true
+    authored_first_contact_draft: false
+    new_course_branches: preserved_in_full_contract_not_automatically_aliased
+    acceptance: source_alignment_only; semantic/learner/release acceptance remains
+      pending
+- method_id: A06
+  brand_name: 对照仿写
+  source_name: 富兰克林写作法（寒4五步）
+  aliases:
+  - 富兰克林写作法（寒4五步）
+  question_type: 应用文
+  method_type: framework
+  role: framework
+  primary_role: framework
+  secondary_roles: []
+  output_type: interpret
+  student_symptoms:
+  - 课后需积累准确可迁移表达
+  trigger_cues:
+  - 课后要独立调用表达，原中文与对照范文可用。
+  core_action: 中文必要时先简化，再独立英译、对照范文、记录并背诵缺失词或句式；第五步AI升级可选。
+  decision_rule: 产出自己的表达缺口与已核素材；准确异写可保留，AI建议须保原意且搭配成立。
+  verification: 产出自己的表达缺口与已核素材；准确异写可保留，AI建议须保原意且搭配成立。 范文或AI改变任务、意思或搭配未核就不背不抄；挖空法另列，不塞入寒4五步或改称六步。
+  stop_rule: 范文或AI改变任务、意思或搭配未核就不背不抄；挖空法另列，不塞入寒4五步或改称六步。
+  common_wrong_instinct: 先看范文再照写，觉得记住了却不能自己生成。
+  failure_cases:
+  - 先看范文再照写，觉得记住了却不能自己生成。
+  - 范文或AI改变任务、意思或搭配未核就不背不抄；挖空法另列，不塞入寒4五步或改称六步。
+  counterexamples:
+  - 自译与范文用词不同但意思、搭配都成立，不应仅因不一致改成错误；AI写得复杂但偏离中文任务，也不能作为升级素材。此为条件示意，不是真题。
+  transfer_pattern: 换范文仍先独立产出再对照，只记录已核准表达；仿写和挖空可另练，不改寒4五步定义。
+  memory_line: 先自己译，对照后记缺口；AI升级可选。
+  anti_rule: 看懂范文 ≠ 能独立复现。
+  visual_formula: '必要时简化中文 → 独立英译
+
+    → 对照范文 → 记背缺失表达
+
+    → 可选AI升级（核原义与搭配）
+
+    挖空法：另列，不塞进五步'
+  challenge_prompt: 遮住范文，先译一个简化中文句；揭开后只圈自己缺失的素材，不把所有异写都改错。
+  source_references:
+  - repository: https://github.com/rockpunkgod/ANSWER.git
+    path: gaokao-writing/references/application-writing-and-correction.md
+    heading: 富兰克林写作法（五步）
+    commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
+  section_ids: &id006
+  - 27cf55e8f2cf7c93
+  - 1b1197e2fa02ee07
+  can_follow: []
+  usually_before: []
+  usually_after: []
+  conflicts_with: []
+  cannot_replace:
+  - 完整题面验证
+  levels:
+    L1: 先简化中文自行译，再对照范文记录缺失表达；背诵复现后在同结构仿写
+    L2: 先独立翻译简化中文，再对照范文圈缺失或不准的表达，记录、背诵、挖空复现并同结构仿写；产物是可复练差异，不是范文唯一答案。
+    L3: 适用于课后训练，不是考场先看答案；已准确且自然的异写不判错。范文或AI升级改变意思、搭配未核时不背不照抄。
+    L4: 换范文仍先独立产出再对照，仿写换内容而保留已经核准的结构。
+  compact:
+    line: 中文必要时先简化，再独立英译、对照范文、记录并背诵缺失词或句式；第五步AI升级可选。
+    boundary: 范文或AI改变任务、意思或搭配未核就不背不抄；挖空法另列，不塞入寒4五步或改称六步。
+    10s: 中文必要时先简化，再独立英译、对照范文、记录并背诵缺失词或句式；第五步AI升级可选。 产出自己的表达缺口与已核素材；准确异写可保留，AI建议须保原意且搭配成立。
+    30s: 课后要独立调用表达，原中文与对照范文可用。 中文必要时先简化，再独立英译、对照范文、记录并背诵缺失词或句式；第五步AI升级可选。 范文或AI改变任务、意思或搭配未核就不背不抄；挖空法另列，不塞入寒4五步或改称六步。
+    90s: 课后要独立调用表达，原中文与对照范文可用。 手上先做：中文必要时先简化，再独立英译、对照范文、记录并背诵缺失词或句式；第五步AI升级可选。 做完得到：产出自己的表达缺口与已核素材；准确异写可保留，AI建议须保原意且搭配成立。
+      停止：范文或AI改变任务、意思或搭配未核就不背不抄；挖空法另列，不塞入寒4五步或改称六步。 反例（边界示意，非真题）：自译与范文用词不同但意思、搭配都成立，不应仅因不一致改成错误；AI写得复杂但偏离中文任务，也不能作为升级素材。此为条件示意，不是真题。
+      挑战：遮住范文，先译一个简化中文句；揭开后只圈自己缺失的素材，不把所有异写都改错。
+  full:
+    summary: 中文必要时先简化，再独立英译、对照范文、记录并背诵缺失词或句式；第五步AI升级可选。 产出自己的表达缺口与已核素材；准确异写可保留，AI建议须保原意且搭配成立。
+    source_boundary: 范文或AI改变任务、意思或搭配未核就不背不抄；挖空法另列，不塞入寒4五步或改称六步。
+    boundaries:
+    - 范文或AI改变任务、意思或搭配未核就不背不抄；挖空法另列，不塞入寒4五步或改称六步。
+    - 自译与范文用词不同但意思、搭配都成立，不应仅因不一致改成错误；AI写得复杂但偏离中文任务，也不能作为升级素材。此为条件示意，不是真题。
+    section_ids:
+    - 27cf55e8f2cf7c93
+    - 1b1197e2fa02ee07
+  cases:
+    canonical: cases/application-writing/A06/canonical/case.yaml
+  four_step_card:
+    start: 课后要独立调用表达，原中文与对照范文可用。
+    first_cut: 中文必要时先简化，再独立英译、对照范文、记录并背诵缺失词或句式；第五步AI升级可选。
+    judge: 产出自己的表达缺口与已核素材；准确异写可保留，AI建议须保原意且搭配成立。
+    stop: 范文或AI改变任务、意思或搭配未核就不背不抄；挖空法另列，不塞入寒4五步或改称六步。
+  practicality_gate:
+    status: design_complete_empirical_pending
+    trigger: 课后要独立调用表达，原中文与对照范文可用。
+    action: 中文必要时先简化，再独立英译、对照范文、记录并背诵缺失词或句式；第五步AI升级可选。
+    output: interpret；产出自己的表达缺口与已核素材；准确异写可保留，AI建议须保原意且搭配成立。
+    stop: 范文或AI改变任务、意思或搭配未核就不背不抄；挖空法另列，不塞入寒4五步或改称六步。
+    transfer: 换范文仍先独立产出再对照，只记录已核准表达；仿写和挖空可另练，不改寒4五步定义。
+    efficiency: 提升独立调用素材与自查缺口的训练质量，不宣称现场提速或保证分数。
+    misuse_cost: 未经实测；先看范文再照写，觉得记住了却不能自己生成。会导致误判；须先核触发、执行Stop，不允许辅助产物越级定案。
+  first_use_test:
+    status: designed_not_run
+    trigger_success: null
+    action_success: null
+    evidence_success: null
+    stop_rule_success: null
+    no_answer_backfit: null
+    failure_type: null
+    final_result: pending_real_student_test
+  evaluation:
+    baseline: 普通逐项核题面
+    primary_benefit_hypothesis: 提升独立调用素材与自查缺口的训练质量，不宣称现场提速或保证分数。
+    trigger_precision: null
+    trigger_recall: null
+    resolution_rate: null
+    standalone_rate: null
+    assist_rate: null
+    false_trigger_rate: null
+    transfer_rate: null
+    boundary_accuracy: null
+    time_complexity_gain: null
+  usefulness_level: Useful
+  status: candidate
+  maturity_status: candidate
+  practical_value: Useful
+  version: 1.2.0
+  change_reason: ANSWER 61bc9c3e15004639cb442c20e7946ca9631f14ce 来源重绑定；旧证据仅按归档版本复核，新规则与传播入口仍待重新验收。
+  affected_cases:
+  - cases/application-writing/A06/canonical/case.yaml
+  regression_result: pending_current_epoch_semantic_and_student_acceptance
+  student_ready: false
+  entry_copy: 课后要独立调用表达，原中文与对照范文可用。 手上先做：中文必要时先简化，再独立英译、对照范文、记录并背诵缺失词或句式；第五步AI升级可选。
+    做完得到：产出自己的表达缺口与已核素材；准确异写可保留，AI建议须保原意且搭配成立。 停止：范文或AI改变任务、意思或搭配未核就不背不抄；挖空法另列，不塞入寒4五步或改称六步。
+  static_design_review:
+    status: source_rebound_semantic_reacceptance_pending
+    source_section_ids: *id006
+    participant_validation: pending_real_participant_validation
+    example_scope: schematic source boundary, not a verified exam
+  source_alignment:
+    commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
+    state: live_source_bound
+    source_content_changed: true
+    correction_profile_applied: true
+    authored_first_contact_draft: false
+    new_course_branches: preserved_in_full_contract_not_automatically_aliased
+    acceptance: source_alignment_only; semantic/learner/release acceptance remains
+      pending
+- method_id: A07
+  brand_name: 长句搭积木
+  source_name: 反向劫匪插葱
+  aliases:
+  - 反向劫匪插葱
+  question_type: 应用文
+  method_type: method
+  role: interpreter
+  primary_role: interpreter
+  secondary_roles: []
+  output_type: interpret
+  student_symptoms:
+  - 基础句准确且需要自然升级
+  trigger_cues:
+  - 基础句准确，已有相关简单句需要按真实逻辑粘连。
+  core_action: 并排写出相关简单句，标共同主体和实际关系，再选合适从句、非谓语或介词短语拼接。
+  decision_rule: 合成句须保原信息、主体、关系和句法；口诀只是记忆称呼，不规定拆字步骤或固定先后。
+  verification: 合成句须保原信息、主体、关系和句法；口诀只是记忆称呼，不规定拆字步骤或固定先后。 主体、语义关系或搭配不成立退回独立句；不靠110/120整篇词数选法，不借续写同名定义。
+  stop_rule: 主体、语义关系或搭配不成立退回独立句；不靠110/120整篇词数选法，不借续写同名定义。
+  common_wrong_instinct: 把所有句型积木都塞进去，句子看着高级就认为更好。
+  failure_cases:
+  - 把所有句型积木都塞进去，句子看着高级就认为更好。
+  - 主体、语义关系或搭配不成立退回独立句；不靠110/120整篇词数选法，不借续写同名定义。
+  counterexamples:
+  - 源示范的咖啡场景和情绪只对该示范成立，不能复制到无此背景的题目；一个准确简单句也不必每层升级。此为边界示意，不是真题。
+  transfer_pattern: 换题仍从当前准确句与真实关系选择粘连，不固定层层升级、词数门槛或口诀顺序。
+  memory_line: 把相关简单句按真实关系粘起来。
+  anti_rule: 加修饰 ≠ 加质量。
+  visual_formula: '相关正确简单句
+
+    → 标主体 + 真实关系
+
+    → 从句 / 非谓语 / 介词短语（按需选）
+
+    → 核原义与句法，不拆口诀排步骤'
+  challenge_prompt: 先并排写两句准确简单句，只标真实关系，再选一种合适粘连方式并说明主体是否保持。
+  source_references:
+  - repository: https://github.com/rockpunkgod/ANSWER.git
+    path: gaokao-writing/references/application-writing-and-correction.md
+    heading: 反向劫匪插葱
+    commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
+  section_ids: &id007
+  - 4dde2ad49f107ae2
+  - 3f39d3b03e8baef0
+  can_follow: []
+  usually_before: []
+  usually_after: []
+  conflicts_with: []
+  cannot_replace:
+  - 完整题面验证
+  levels:
+    L1: 先简化中文、译正确简单句，再加入服务真实逻辑的修饰或从句，搭配不明停升级
+    L2: 先简化中文并译成准确简单句，再逐层添加实际服务语义的介词短语、非谓语、从句或自然替换；每层回拆主干，原义和搭配未变才保留。
+    L3: 基础句不成立先修基础；升级引入原任务没有的事件、感受或因果时停止。动作主体、搭配或句法不明则撤回该层，不追求层层加满。
+    L4: 新题仍按准确底座—单层添加—回拆核验，积木内容只服务新任务。
+  compact:
+    line: 并排写出相关简单句，标共同主体和实际关系，再选合适从句、非谓语或介词短语拼接。
+    boundary: 主体、语义关系或搭配不成立退回独立句；不靠110/120整篇词数选法，不借续写同名定义。
+    10s: 并排写出相关简单句，标共同主体和实际关系，再选合适从句、非谓语或介词短语拼接。 合成句须保原信息、主体、关系和句法；口诀只是记忆称呼，不规定拆字步骤或固定先后。
+    30s: 基础句准确，已有相关简单句需要按真实逻辑粘连。 并排写出相关简单句，标共同主体和实际关系，再选合适从句、非谓语或介词短语拼接。 主体、语义关系或搭配不成立退回独立句；不靠110/120整篇词数选法，不借续写同名定义。
+    90s: 基础句准确，已有相关简单句需要按真实逻辑粘连。 手上先做：并排写出相关简单句，标共同主体和实际关系，再选合适从句、非谓语或介词短语拼接。 做完得到：合成句须保原信息、主体、关系和句法；口诀只是记忆称呼，不规定拆字步骤或固定先后。
+      停止：主体、语义关系或搭配不成立退回独立句；不靠110/120整篇词数选法，不借续写同名定义。 反例（边界示意，非真题）：源示范的咖啡场景和情绪只对该示范成立，不能复制到无此背景的题目；一个准确简单句也不必每层升级。此为边界示意，不是真题。
+      挑战：先并排写两句准确简单句，只标真实关系，再选一种合适粘连方式并说明主体是否保持。
+  full:
+    summary: 并排写出相关简单句，标共同主体和实际关系，再选合适从句、非谓语或介词短语拼接。 合成句须保原信息、主体、关系和句法；口诀只是记忆称呼，不规定拆字步骤或固定先后。
+    source_boundary: 主体、语义关系或搭配不成立退回独立句；不靠110/120整篇词数选法，不借续写同名定义。
+    boundaries:
+    - 主体、语义关系或搭配不成立退回独立句；不靠110/120整篇词数选法，不借续写同名定义。
+    - 源示范的咖啡场景和情绪只对该示范成立，不能复制到无此背景的题目；一个准确简单句也不必每层升级。此为边界示意，不是真题。
+    section_ids:
+    - 4dde2ad49f107ae2
+    - 3f39d3b03e8baef0
+  cases:
+    canonical: cases/application-writing/A07/canonical/case.yaml
+  four_step_card:
+    start: 基础句准确，已有相关简单句需要按真实逻辑粘连。
+    first_cut: 并排写出相关简单句，标共同主体和实际关系，再选合适从句、非谓语或介词短语拼接。
+    judge: 合成句须保原信息、主体、关系和句法；口诀只是记忆称呼，不规定拆字步骤或固定先后。
+    stop: 主体、语义关系或搭配不成立退回独立句；不靠110/120整篇词数选法，不借续写同名定义。
+  practicality_gate:
+    status: design_complete_empirical_pending
+    trigger: 基础句准确，已有相关简单句需要按真实逻辑粘连。
+    action: 并排写出相关简单句，标共同主体和实际关系，再选合适从句、非谓语或介词短语拼接。
+    output: interpret；合成句须保原信息、主体、关系和句法；口诀只是记忆称呼，不规定拆字步骤或固定先后。
+    stop: 主体、语义关系或搭配不成立退回独立句；不靠110/120整篇词数选法，不借续写同名定义。
+    transfer: 换题仍从当前准确句与真实关系选择粘连，不固定层层升级、词数门槛或口诀顺序。
+    efficiency: 分层升级减少一次性造复杂句的负担，并使错误更易定位；不保证提分提速。
+    misuse_cost: 未经实测；把所有句型积木都塞进去，句子看着高级就认为更好。会导致误判；须先核触发、执行Stop，不允许辅助产物越级定案。
+  first_use_test:
+    status: designed_not_run
+    trigger_success: null
+    action_success: null
+    evidence_success: null
+    stop_rule_success: null
+    no_answer_backfit: null
+    failure_type: null
+    final_result: pending_real_student_test
+  evaluation:
+    baseline: 普通逐项核题面
+    primary_benefit_hypothesis: 分层升级减少一次性造复杂句的负担，并使错误更易定位；不保证提分提速。
+    trigger_precision: null
+    trigger_recall: null
+    resolution_rate: null
+    standalone_rate: null
+    assist_rate: null
+    false_trigger_rate: null
+    transfer_rate: null
+    boundary_accuracy: null
+    time_complexity_gain: null
+  usefulness_level: Useful
+  status: candidate
+  maturity_status: candidate
+  practical_value: Useful
+  version: 1.2.0
+  change_reason: ANSWER 61bc9c3e15004639cb442c20e7946ca9631f14ce 来源重绑定；旧证据仅按归档版本复核，新规则与传播入口仍待重新验收。
+  affected_cases:
+  - cases/application-writing/A07/canonical/case.yaml
+  regression_result: pending_current_epoch_semantic_and_student_acceptance
+  student_ready: false
+  entry_copy: 基础句准确，已有相关简单句需要按真实逻辑粘连。 手上先做：并排写出相关简单句，标共同主体和实际关系，再选合适从句、非谓语或介词短语拼接。
+    做完得到：合成句须保原信息、主体、关系和句法；口诀只是记忆称呼，不规定拆字步骤或固定先后。 停止：主体、语义关系或搭配不成立退回独立句；不靠110/120整篇词数选法，不借续写同名定义。
+  static_design_review:
+    status: source_rebound_semantic_reacceptance_pending
+    source_section_ids: *id007
+    participant_validation: pending_real_participant_validation
+    example_scope: schematic source boundary, not a verified exam
+  source_alignment:
+    commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
+    state: live_source_bound
+    source_content_changed: true
+    correction_profile_applied: true
+    authored_first_contact_draft: false
+    new_course_branches: preserved_in_full_contract_not_automatically_aliased
+    acceptance: source_alignment_only; semantic/learner/release acceptance remains
+      pending
+- method_id: A08
+  brand_name: 文体骨架
+  source_name: 常见文体骨架
+  aliases:
+  - 常见文体骨架
+  question_type: 应用文
+  method_type: category
+  role: framework
+  primary_role: framework
+  secondary_roles: []
+  output_type: interpret
+  student_symptoms:
+  - 应用文需要匹配文体与交际目的
+  trigger_cues:
+  - 应用文题面需要安排文体、对象与交际目的相符的内容骨架。
+  core_action: 圈题面文体、对象、目的及明示格式，让各段承担实际要点功能，再选择相应文体骨架。
+  decision_rule: 产出服务题面内容的结构计划；人物介绍等细化依题目取用，三件套四件套等整理便称不冒充独立原名。
+  verification: 产出服务题面内容的结构计划；人物介绍等细化依题目取用，三件套四件套等整理便称不冒充独立原名。 题面已给标题首尾或特殊格式就按要求保留，不硬套段数；示范句型不作每篇配额，骨架齐不等于要点完成。
+  stop_rule: 题面已给标题首尾或特殊格式就按要求保留，不硬套段数；示范句型不作每篇配额，骨架齐不等于要点完成。
+  common_wrong_instinct: 看到某文体就抄整段模板，忘记核对任务和读者。
+  failure_cases:
+  - 看到某文体就抄整段模板，忘记核对任务和读者。
+  - 题面已给标题首尾或特殊格式就按要求保留，不硬套段数；示范句型不作每篇配额，骨架齐不等于要点完成。
+  counterexamples:
+  - 有邀请结尾的模板不适合只需感谢的任务；题目已给开场时不应再重写一个改变格式的开头。此为条件示意，不是真题。
+  transfer_pattern: 文体变时更换段落任务，但始终由对象、目的和具体要点决定内容。
+  memory_line: 圈题面文体、对象、目的及明示格式，让各段承担实际要点功能，再选择相应文体骨架。
+  anti_rule: 模板对路 ≠ 要点齐全。
+  visual_formula: '文体 + 对象 + 目的
+
+    → 开头任务 / 主体任务 / 结尾任务
+
+    → 逐项安放题面内容'
+  challenge_prompt: 不写套话，只圈文体对象目的，再给三部分各写一个任务标签。
+  source_references:
+  - repository: https://github.com/rockpunkgod/ANSWER.git
+    path: gaokao-writing/references/application-writing-and-correction.md
+    heading: 常见文体骨架
+    commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
+  section_ids: &id008
+  - cfc5531cda2a9b91
+  - e68392b5352c1bc7
+  can_follow: []
+  usually_before: []
+  usually_after: []
+  conflicts_with: []
+  cannot_replace:
+  - 完整题面验证
+  levels:
+    L1: 圈题目文体对象目的，调用对应骨架，不把文体模板算独立原创规则
+    L2: 圈文体、对象与交际目的，再让开头、主体、结尾各承担对应任务；邀请/建议/感谢/通知/演讲/报道的骨架只组织题面内容，不新增义务。
+    L3: 题面格式、已给首尾或目的另有要求时服从题面，不硬套三段或称呼；骨架不是原创品牌判据，也不能以句型齐全判内容完成。
+    L4: 文体变时更换段落任务，但始终由对象、目的和具体要点决定内容。
+  compact:
+    line: 圈题面文体、对象、目的及明示格式，让各段承担实际要点功能，再选择相应文体骨架。
+    boundary: 题面已给标题首尾或特殊格式就按要求保留，不硬套段数；示范句型不作每篇配额，骨架齐不等于要点完成。
+    10s: 圈题面文体、对象、目的及明示格式，让各段承担实际要点功能，再选择相应文体骨架。 产出服务题面内容的结构计划；人物介绍等细化依题目取用，三件套四件套等整理便称不冒充独立原名。
+    30s: 应用文题面需要安排文体、对象与交际目的相符的内容骨架。 圈题面文体、对象、目的及明示格式，让各段承担实际要点功能，再选择相应文体骨架。 题面已给标题首尾或特殊格式就按要求保留，不硬套段数；示范句型不作每篇配额，骨架齐不等于要点完成。
+    90s: 应用文题面需要安排文体、对象与交际目的相符的内容骨架。 手上先做：圈题面文体、对象、目的及明示格式，让各段承担实际要点功能，再选择相应文体骨架。
+      做完得到：产出服务题面内容的结构计划；人物介绍等细化依题目取用，三件套四件套等整理便称不冒充独立原名。 停止：题面已给标题首尾或特殊格式就按要求保留，不硬套段数；示范句型不作每篇配额，骨架齐不等于要点完成。
+      反例（边界示意，非真题）：有邀请结尾的模板不适合只需感谢的任务；题目已给开场时不应再重写一个改变格式的开头。此为条件示意，不是真题。 挑战：不写套话，只圈文体对象目的，再给三部分各写一个任务标签。
+  full:
+    summary: 圈题面文体、对象、目的及明示格式，让各段承担实际要点功能，再选择相应文体骨架。 产出服务题面内容的结构计划；人物介绍等细化依题目取用，三件套四件套等整理便称不冒充独立原名。
+    source_boundary: 题面已给标题首尾或特殊格式就按要求保留，不硬套段数；示范句型不作每篇配额，骨架齐不等于要点完成。
+    boundaries:
+    - 题面已给标题首尾或特殊格式就按要求保留，不硬套段数；示范句型不作每篇配额，骨架齐不等于要点完成。
+    - 有邀请结尾的模板不适合只需感谢的任务；题目已给开场时不应再重写一个改变格式的开头。此为条件示意，不是真题。
+    section_ids:
+    - cfc5531cda2a9b91
+    - e68392b5352c1bc7
+  cases:
+    canonical: cases/application-writing/A08/canonical/case.yaml
+  four_step_card:
+    start: 应用文题面需要安排文体、对象与交际目的相符的内容骨架。
+    first_cut: 圈题面文体、对象、目的及明示格式，让各段承担实际要点功能，再选择相应文体骨架。
+    judge: 产出服务题面内容的结构计划；人物介绍等细化依题目取用，三件套四件套等整理便称不冒充独立原名。
+    stop: 题面已给标题首尾或特殊格式就按要求保留，不硬套段数；示范句型不作每篇配额，骨架齐不等于要点完成。
+  practicality_gate:
+    status: design_complete_empirical_pending
+    trigger: 应用文题面需要安排文体、对象与交际目的相符的内容骨架。
+    action: 圈题面文体、对象、目的及明示格式，让各段承担实际要点功能，再选择相应文体骨架。
+    output: interpret；产出服务题面内容的结构计划；人物介绍等细化依题目取用，三件套四件套等整理便称不冒充独立原名。
+    stop: 题面已给标题首尾或特殊格式就按要求保留，不硬套段数；示范句型不作每篇配额，骨架齐不等于要点完成。
+    transfer: 文体变时更换段落任务，但始终由对象、目的和具体要点决定内容。
+    efficiency: 减少组织顺序的负担，价值在交际结构而不是模板自动得分。
+    misuse_cost: 未经实测；看到某文体就抄整段模板，忘记核对任务和读者。会导致误判；须先核触发、执行Stop，不允许辅助产物越级定案。
+  first_use_test:
+    status: designed_not_run
+    trigger_success: null
+    action_success: null
+    evidence_success: null
+    stop_rule_success: null
+    no_answer_backfit: null
+    failure_type: null
+    final_result: pending_real_student_test
+  evaluation:
+    baseline: 普通逐项核题面
+    primary_benefit_hypothesis: 减少组织顺序的负担，价值在交际结构而不是模板自动得分。
+    trigger_precision: null
+    trigger_recall: null
+    resolution_rate: null
+    standalone_rate: null
+    assist_rate: null
+    false_trigger_rate: null
+    transfer_rate: null
+    boundary_accuracy: null
+    time_complexity_gain: null
+  usefulness_level: Useful
+  status: candidate
+  maturity_status: candidate
+  practical_value: Useful
+  version: 1.2.0
+  change_reason: ANSWER 61bc9c3e15004639cb442c20e7946ca9631f14ce 来源重绑定；旧证据仅按归档版本复核，新规则与传播入口仍待重新验收。
+  affected_cases:
+  - cases/application-writing/A08/canonical/case.yaml
+  regression_result: pending_current_epoch_semantic_and_student_acceptance
+  student_ready: false
+  entry_copy: 应用文题面需要安排文体、对象与交际目的相符的内容骨架。 手上先做：圈题面文体、对象、目的及明示格式，让各段承担实际要点功能，再选择相应文体骨架。
+    做完得到：产出服务题面内容的结构计划；人物介绍等细化依题目取用，三件套四件套等整理便称不冒充独立原名。 停止：题面已给标题首尾或特殊格式就按要求保留，不硬套段数；示范句型不作每篇配额，骨架齐不等于要点完成。
+  static_design_review:
+    status: source_rebound_semantic_reacceptance_pending
+    source_section_ids: *id008
+    participant_validation: pending_real_participant_validation
+    example_scope: schematic source boundary, not a verified exam
+  source_alignment:
+    commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
+    state: live_source_bound
+    source_content_changed: true
+    correction_profile_applied: true
+    authored_first_contact_draft: false
+    new_course_branches: preserved_in_full_contract_not_automatically_aliased
+    acceptance: source_alignment_only; semantic/learner/release acceptance remains
+      pending
+- method_id: A09
+  brand_name: 应用文评分
+  source_name: 15 分评分规范
+  aliases:
+  - 15 分评分规范
+  question_type: 应用文
+  method_type: internal_rule
+  role: verifier
+  primary_role: verifier
+  secondary_roles: []
+  output_type: verify
+  student_symptoms:
+  - 题目与学生全文可见且请求批改
+  trigger_cues:
+  - 题目与学生全文可见且请求批改
+  core_action: 先按15分五档三维定档，逐条引用题面和原稿证据，缺材料不完整给分
+  decision_rule: 只在题目、全文与相关可见材料充分时，引用内容组织、词汇语法、篇章结构证据先定15分档，再档内定分；词数附加按源规范处理，不机械累计方法扣分。
+  verification: 先按15分五档三维定档，逐条引用题面和原稿证据，缺材料不完整给分。只在题目、全文与相关可见材料充分时，引用内容组织、词汇语法、篇章结构证据先定15分档，再档内定分；词数附加按源规范处理，不机械累计方法扣分。
+    无题目或缺全文不给完整分数；仅转写文本不评书写。书写只有清晰原稿且确实影响交际才按源规范降档，不因美观降档；训练模板、五检和高级词不是独立扣分项。
+  stop_rule: 无题目或缺全文不给完整分数；仅转写文本不评书写。书写只有清晰原稿且确实影响交际才按源规范降档，不因美观降档；训练模板、五检和高级词不是独立扣分项。
+  common_wrong_instinct: 拿语法错的个数或字体好看程度直接累计作文分数。
+  failure_cases:
+  - 拿语法错的个数或字体好看程度直接累计作文分数。
+  - 无题目或缺全文不给完整分数；仅转写文本不评书写。书写只有清晰原稿且确实影响交际才按源规范降档，不因美观降档；训练模板、五检和高级词不是独立扣分项。
+  counterexamples:
+  - 转写稿能读清不代表原书写影响交际；反过来只有字体不漂亮也不能降档。没有题目时无法证明任务覆盖。此为条件示意，不是真题。
+  transfer_pattern: 每篇稿都先核材料再三维定档，具体分数只依该篇全文证据和对应15分规范。
+  memory_line: 先按15分五档三维定档，逐条引用题面和原稿证据，缺材料不完整给分
+  anti_rule: 诊断项目 ≠ 独立扣分项。
+  visual_formula: '题目 + 全文 → 三维证据
+
+    → 先定15分档 → 档内分数
+
+    词数按规范 / 书写须原稿影响交际'
+  challenge_prompt: 先不报分，列出能看到和缺少的评分材料，再给内容、语言、结构各找一条原稿依据。
+  source_references:
+  - repository: https://github.com/rockpunkgod/ANSWER.git
+    path: gaokao-writing/references/application-writing-and-correction.md
+    heading: 15 分评分规范
+    commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
+  section_ids: &id009
+  - 254fa3adfb42db4e
+  - f8cfb194a81aad6e
+  - ed19bd45d6bc3762
+  can_follow: []
+  usually_before: []
+  usually_after: []
+  conflicts_with: []
+  cannot_replace:
+  - 完整题面验证
+  levels:
+    L1: 先按15分五档三维定档，逐条引用题面和原稿证据，缺材料不完整给分
+    L2: 只在题目、全文与相关可见材料充分时，引用内容组织、词汇语法、篇章结构证据先定15分档，再档内定分；词数附加按源规范处理，不机械累计方法扣分。
+    L3: 无题目或缺全文不给完整分数；仅转写文本不评书写。书写只有清晰原稿且确实影响交际才按源规范降档，不因美观降档；训练模板、五检和高级词不是独立扣分项。
+    L4: 每篇稿都先核材料再三维定档，具体分数只依该篇全文证据和对应15分规范。
+  compact:
+    10s: 要批改先核材料：题目和全文齐不齐？用内容、语言、结构证据先定15分档，不靠错误计数或字体美观打分。
+    30s: 给应用文分数前先确认题目与全文，再引用三维实际证据定档、档内定分，词数按源附加规则。例：只有转写文本不能判断书写，字体不美也不是降档理由。缺题目或全文就停在有限反馈，方法名称不产生独立扣分。
+    90s: 题目与学生全文可见且请求批改时，先确认：题目与学生全文可见且请求批改。第一刀：先按15分五档三维定档，逐条引用题面和原稿证据，缺材料不完整给分。产物
+      verify：只在题目、全文与相关可见材料充分时，引用内容组织、词汇语法、篇章结构证据先定15分档，再档内定分；词数附加按源规范处理，不机械累计方法扣分。
+      停止：无题目或缺全文不给完整分数；仅转写文本不评书写。书写只有清晰原稿且确实影响交际才按源规范降档，不因美观降档；训练模板、五检和高级词不是独立扣分项。
+      反例（关系示意，不是真题）：转写稿能读清不代表原书写影响交际；反过来只有字体不漂亮也不能降档。没有题目时无法证明任务覆盖。此为条件示意，不是真题。 迁移：每篇稿都先核材料再三维定档，具体分数只依该篇全文证据和对应15分规范。
+      挑战：先不报分，列出能看到和缺少的评分材料，再给内容、语言、结构各找一条原稿依据。
+  full:
+    summary: 先按15分五档三维定档，逐条引用题面和原稿证据，缺材料不完整给分 只在题目、全文与相关可见材料充分时，引用内容组织、词汇语法、篇章结构证据先定15分档，再档内定分；词数附加按源规范处理，不机械累计方法扣分。
+    source_boundary: 无题目或缺全文不给完整分数；仅转写文本不评书写。书写只有清晰原稿且确实影响交际才按源规范降档，不因美观降档；训练模板、五检和高级词不是独立扣分项。
+    boundaries:
+    - 无题目或缺全文不给完整分数；仅转写文本不评书写。书写只有清晰原稿且确实影响交际才按源规范降档，不因美观降档；训练模板、五检和高级词不是独立扣分项。
+    - 转写稿能读清不代表原书写影响交际；反过来只有字体不漂亮也不能降档。没有题目时无法证明任务覆盖。此为条件示意，不是真题。
+    section_ids:
+    - 254fa3adfb42db4e
+    - f8cfb194a81aad6e
+    - ed19bd45d6bc3762
+  cases:
+    canonical: cases/application-writing/A09/canonical/case.yaml
+  four_step_card:
+    start: 题目与学生全文可见且请求批改
+    first_cut: 先按15分五档三维定档，逐条引用题面和原稿证据，缺材料不完整给分
+    judge: 只在题目、全文与相关可见材料充分时，引用内容组织、词汇语法、篇章结构证据先定15分档，再档内定分；词数附加按源规范处理，不机械累计方法扣分。
+    stop: 无题目或缺全文不给完整分数；仅转写文本不评书写。书写只有清晰原稿且确实影响交际才按源规范降档，不因美观降档；训练模板、五检和高级词不是独立扣分项。
+  practicality_gate:
+    status: design_complete_empirical_pending
+    trigger: 题目与学生全文可见且请求批改
+    action: 先按15分五档三维定档，逐条引用题面和原稿证据，缺材料不完整给分
+    output: verify；只在题目、全文与相关可见材料充分时，引用内容组织、词汇语法、篇章结构证据先定15分档，再档内定分；词数附加按源规范处理，不机械累计方法扣分。
+    stop: 无题目或缺全文不给完整分数；仅转写文本不评书写。书写只有清晰原稿且确实影响交际才按源规范降档，不因美观降档；训练模板、五检和高级词不是独立扣分项。
+    transfer: 每篇稿都先核材料再三维定档，具体分数只依该篇全文证据和对应15分规范。
+    efficiency: 提高评分依据可追溯性与材料边界，价值不是自动提速；无独立评分一致性数据。
+    misuse_cost: 未经实测；拿语法错的个数或字体好看程度直接累计作文分数。会导致误判；须先核触发、执行Stop，不允许辅助产物越级定案。
+  first_use_test:
+    status: designed_not_run
+    trigger_success: null
+    action_success: null
+    evidence_success: null
+    stop_rule_success: null
+    no_answer_backfit: null
+    failure_type: null
+    final_result: pending_real_student_test
+  evaluation:
+    baseline: 普通逐项核题面
+    primary_benefit_hypothesis: 提高评分依据可追溯性与材料边界，价值不是自动提速；无独立评分一致性数据。
+    trigger_precision: null
+    trigger_recall: null
+    resolution_rate: null
+    standalone_rate: null
+    assist_rate: null
+    false_trigger_rate: null
+    transfer_rate: null
+    boundary_accuracy: null
+    time_complexity_gain: null
+  usefulness_level: Useful
+  status: candidate
+  maturity_status: candidate
+  practical_value: Useful
+  version: 1.2.0
+  change_reason: ANSWER 61bc9c3e15004639cb442c20e7946ca9631f14ce 来源重绑定；旧证据仅按归档版本复核，新规则与传播入口仍待重新验收。
+  affected_cases:
+  - cases/application-writing/A09/canonical/case.yaml
+  regression_result: pending_current_epoch_semantic_and_student_acceptance
+  student_ready: true
+  entry_copy: 题目与学生全文可见且请求批改时，第一眼先找：题目与学生全文可见且请求批改。手上先做：先按15分五档三维定档，逐条引用题面和原稿证据，缺材料不完整给分。做完得到
+    verify，不是通用答案。只在题目、全文与相关可见材料充分时，引用内容组织、词汇语法、篇章结构证据先定15分档，再档内定分；词数附加按源规范处理，不机械累计方法扣分。
+    什么时候停：无题目或缺全文不给完整分数；仅转写文本不评书写。书写只有清晰原稿且确实影响交际才按源规范降档，不因美观降档；训练模板、五检和高级词不是独立扣分项。
+    换题仍这样做：每篇稿都先核材料再三维定档，具体分数只依该篇全文证据和对应15分规范。
+  static_design_review:
+    status: source_rebound_semantic_reacceptance_pending
+    source_section_ids: *id009
+    participant_validation: pending_real_participant_validation
+    example_scope: schematic source boundary, not a verified exam
+  source_alignment:
+    commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
+    state: live_source_bound
+    source_content_changed: false
+    correction_profile_applied: false
+    authored_first_contact_draft: false
+    new_course_branches: preserved_in_full_contract_not_automatically_aliased
+    acceptance: source_alignment_only; semantic/learner/release acceptance remains
+      pending
+- method_id: A10
+  brand_name: 读背仿与训练阶段
+  source_name: 复习路径与分数锚定
+  aliases:
+  - 复习路径与分数锚定
+  question_type: 应用文
+  method_type: framework
+  role: framework
+  primary_role: framework
+  secondary_roles: []
+  output_type: interpret
+  student_symptoms:
+  - 课后需要规划作文训练而非现场答案
+  trigger_cues:
+  - 课后需要按当前表达缺口安排下一项写作训练。
+  core_action: 依据现有稿件或练习，标任务骨架、基础翻译、素材调用或自然升级的缺口，选择一个对应阶段的复练动作。
+  decision_rule: 产出下一次具体训练计划；读背仿与分数锚定只作原课程训练参考，不是现场答案或个体得分保证。
+  verification: 产出下一次具体训练计划；读背仿与分数锚定只作原课程训练参考，不是现场答案或个体得分保证。 没有现稿不精确承诺档次；基础未稳不跳华丽结构，金句积累数量不作单篇使用数，110/120不当整篇词数策略。
+  stop_rule: 没有现稿不精确承诺档次；基础未稳不跳华丽结构，金句积累数量不作单篇使用数，110/120不当整篇词数策略。
+  common_wrong_instinct: 把背模板、背金句的完成数量当成稳定得分保证。
+  failure_cases:
+  - 把背模板、背金句的完成数量当成稳定得分保证。
+  - 没有现稿不精确承诺档次；基础未稳不跳华丽结构，金句积累数量不作单篇使用数，110/120不当整篇词数策略。
+  counterexamples:
+  - 背熟升级素材但基础句和任务要点还错，不应直接进入满分训练，也不能据背诵量判真实作文档次。此为条件示意，不是真题。
+  transfer_pattern: 不同薄弱点仍用当前产出定缺口和下一步，不用模板数量替代能力证据。
+  memory_line: 依据现有稿件或练习，标任务骨架、基础翻译、素材调用或自然升级的缺口，选择一个对应阶段的复练动作。
+  anti_rule: 完成训练量 ≠ 保证分数。
+  visual_formula: '训练缺口 → 当前阶段
+
+    模板 / 素材 / 自然升级 / 重构
+
+    → 一个复练任务，不预测分数'
+  challenge_prompt: 先不报目标分，只用一条自己的产出说明当前缺口，再选一个读、背或仿写任务。
+  source_references:
+  - repository: https://github.com/rockpunkgod/ANSWER.git
+    path: gaokao-writing/references/application-writing-and-correction.md
+    heading: 复习路径与分数锚定
+    commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
+  section_ids: &id010
+  - c827be84f7798683
+  - 0a6f5b5594a41dd6
+  can_follow: []
+  usually_before: []
+  usually_after: []
+  conflicts_with: []
+  cannot_replace:
+  - 完整题面验证
+  levels:
+    L1: 按材料中的训练阶段选一个下一步，不把分数锚定当个体提分保证
+    L2: 辨认当前训练缺口，按模板基础→句子素材→自然句型升级→句式重构选择一个可复练任务，读/背/仿记录实际完成产物；分数锚定只作课程训练参考。
+    L3: 这是课后训练规划，不是当场答案或个体得分预测；基础翻译、任务覆盖未稳不跳到复杂升级，不因背完金句承诺10分或15分。
+    L4: 不同薄弱点仍用当前产出定缺口和下一步，不用模板数量替代能力证据。
+  compact:
+    line: 依据现有稿件或练习，标任务骨架、基础翻译、素材调用或自然升级的缺口，选择一个对应阶段的复练动作。
+    boundary: 没有现稿不精确承诺档次；基础未稳不跳华丽结构，金句积累数量不作单篇使用数，110/120不当整篇词数策略。
+    10s: 依据现有稿件或练习，标任务骨架、基础翻译、素材调用或自然升级的缺口，选择一个对应阶段的复练动作。 产出下一次具体训练计划；读背仿与分数锚定只作原课程训练参考，不是现场答案或个体得分保证。
+    30s: 课后需要按当前表达缺口安排下一项写作训练。 依据现有稿件或练习，标任务骨架、基础翻译、素材调用或自然升级的缺口，选择一个对应阶段的复练动作。 没有现稿不精确承诺档次；基础未稳不跳华丽结构，金句积累数量不作单篇使用数，110/120不当整篇词数策略。
+    90s: 课后需要按当前表达缺口安排下一项写作训练。 手上先做：依据现有稿件或练习，标任务骨架、基础翻译、素材调用或自然升级的缺口，选择一个对应阶段的复练动作。
+      做完得到：产出下一次具体训练计划；读背仿与分数锚定只作原课程训练参考，不是现场答案或个体得分保证。 停止：没有现稿不精确承诺档次；基础未稳不跳华丽结构，金句积累数量不作单篇使用数，110/120不当整篇词数策略。
+      反例（边界示意，非真题）：背熟升级素材但基础句和任务要点还错，不应直接进入满分训练，也不能据背诵量判真实作文档次。此为条件示意，不是真题。 挑战：先不报目标分，只用一条自己的产出说明当前缺口，再选一个读、背或仿写任务。
+  full:
+    summary: 依据现有稿件或练习，标任务骨架、基础翻译、素材调用或自然升级的缺口，选择一个对应阶段的复练动作。 产出下一次具体训练计划；读背仿与分数锚定只作原课程训练参考，不是现场答案或个体得分保证。
+    source_boundary: 没有现稿不精确承诺档次；基础未稳不跳华丽结构，金句积累数量不作单篇使用数，110/120不当整篇词数策略。
+    boundaries:
+    - 没有现稿不精确承诺档次；基础未稳不跳华丽结构，金句积累数量不作单篇使用数，110/120不当整篇词数策略。
+    - 背熟升级素材但基础句和任务要点还错，不应直接进入满分训练，也不能据背诵量判真实作文档次。此为条件示意，不是真题。
+    section_ids:
+    - c827be84f7798683
+    - 0a6f5b5594a41dd6
+  cases:
+    canonical: cases/application-writing/A10/canonical/case.yaml
+  four_step_card:
+    start: 课后需要按当前表达缺口安排下一项写作训练。
+    first_cut: 依据现有稿件或练习，标任务骨架、基础翻译、素材调用或自然升级的缺口，选择一个对应阶段的复练动作。
+    judge: 产出下一次具体训练计划；读背仿与分数锚定只作原课程训练参考，不是现场答案或个体得分保证。
+    stop: 没有现稿不精确承诺档次；基础未稳不跳华丽结构，金句积累数量不作单篇使用数，110/120不当整篇词数策略。
+  practicality_gate:
+    status: design_complete_empirical_pending
+    trigger: 课后需要按当前表达缺口安排下一项写作训练。
+    action: 依据现有稿件或练习，标任务骨架、基础翻译、素材调用或自然升级的缺口，选择一个对应阶段的复练动作。
+    output: interpret；产出下一次具体训练计划；读背仿与分数锚定只作原课程训练参考，不是现场答案或个体得分保证。
+    stop: 没有现稿不精确承诺档次；基础未稳不跳华丽结构，金句积累数量不作单篇使用数，110/120不当整篇词数策略。
+    transfer: 不同薄弱点仍用当前产出定缺口和下一步，不用模板数量替代能力证据。
+    efficiency: 缩小训练选择范围，改善练习针对性与负担；真实效率和成绩变化需独立试验。
+    misuse_cost: 未经实测；把背模板、背金句的完成数量当成稳定得分保证。会导致误判；须先核触发、执行Stop，不允许辅助产物越级定案。
+  first_use_test:
+    status: designed_not_run
+    trigger_success: null
+    action_success: null
+    evidence_success: null
+    stop_rule_success: null
+    no_answer_backfit: null
+    failure_type: null
+    final_result: pending_real_student_test
+  evaluation:
+    baseline: 普通逐项核题面
+    primary_benefit_hypothesis: 缩小训练选择范围，改善练习针对性与负担；真实效率和成绩变化需独立试验。
+    trigger_precision: null
+    trigger_recall: null
+    resolution_rate: null
+    standalone_rate: null
+    assist_rate: null
+    false_trigger_rate: null
+    transfer_rate: null
+    boundary_accuracy: null
+    time_complexity_gain: null
+  usefulness_level: Useful
+  status: candidate
+  maturity_status: candidate
+  practical_value: Useful
+  version: 1.2.0
+  change_reason: ANSWER 61bc9c3e15004639cb442c20e7946ca9631f14ce 来源重绑定；旧证据仅按归档版本复核，新规则与传播入口仍待重新验收。
+  affected_cases:
+  - cases/application-writing/A10/canonical/case.yaml
+  regression_result: pending_current_epoch_semantic_and_student_acceptance
+  student_ready: false
+  entry_copy: 课后需要按当前表达缺口安排下一项写作训练。 手上先做：依据现有稿件或练习，标任务骨架、基础翻译、素材调用或自然升级的缺口，选择一个对应阶段的复练动作。
+    做完得到：产出下一次具体训练计划；读背仿与分数锚定只作原课程训练参考，不是现场答案或个体得分保证。 停止：没有现稿不精确承诺档次；基础未稳不跳华丽结构，金句积累数量不作单篇使用数，110/120不当整篇词数策略。
+  static_design_review:
+    status: source_rebound_semantic_reacceptance_pending
+    source_section_ids: *id010
+    participant_validation: pending_real_participant_validation
+    example_scope: schematic source boundary, not a verified exam
+  source_alignment:
+    commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
+    state: live_source_bound
+    source_content_changed: true
+    correction_profile_applied: true
+    authored_first_contact_draft: false
+    new_course_branches: preserved_in_full_contract_not_automatically_aliased
+    acceptance: source_alignment_only; semantic/learner/release acceptance remains
+      pending

@@ -41,10 +41,17 @@ def build():
     case_schema['allOf']=[{'if':{'properties':{'status':{'const':'reviewed_real_exam_case'}}},'then':{'required':['registration_key','frozen_refs','review_scope','learner_validation','redistribution_rights'],'properties':{'registration_key':{'type':'array','prefixItems':[{'type':'string'},{'type':'string'},enum(['canonical','counterexample','boundary','transfer','hard']),{'type':'string'}],'minItems':4,'maxItems':4},'frozen_refs':{'type':'object','required':['blind','reveal','action','case_review']},'review_scope':{'const':'private_AI_reviewed'},'learner_validation':{'const':'pending_real_participant_validation'},'redistribution_rights':{'const':'not_verified'}}}}]
     write('case',case_schema)
     span = obj({'field':STR,'start':{'type':'integer','minimum':0},'end':{'type':'integer','minimum':1},'quote':STR})
+    image_ref=obj({'image_id':STR,'sha256':{'type':'string','pattern':'^[0-9a-f]{64}$'},'box':{'type':'array','items':{'type':'integer','minimum':0},'minItems':4,'maxItems':4}})
+    objective_region=obj({**image_ref['properties'],'observed':STR})
+    image_requirement=obj({'candidate':STR,**image_ref['properties']})
+    image_requirements={**array(image_requirement,1),'uniqueItems':True}
+    manifest=array(obj({'image_id':STR,'sha256':{'type':'string','pattern':'^[0-9a-f]{64}$'},'mime_type':enum(['image/png','image/jpeg']),'width':{'type':'integer','minimum':1},'height':{'type':'integer','minimum':1}}))
     numeric_marker_binding=obj({'question_id':STR,'question_number':{'type':'integer','minimum':1,'maximum':999},'target_span':span,'printed_blank_confirmed':{'const':True},'source_review_note':STR})
     hint_review=obj({'state':{'const':'without_hint'},'target_marker':STR,'evidence':array(span,1),'reviewer':STR,'review_status':enum(['reviewed','unreviewed']),'review_notes':STR,'numeric_marker_binding':numeric_marker_binding},required=['state','target_marker','evidence','reviewer','review_status','review_notes'])
     question_check=obj({'candidate':STR,'claim':STR,'effect':enum(['retain','eliminate','undetermined']),'evidence':array(span,1),'decision_rule_check':STR,'backfill_check':STR,'backfill_verdict':enum(['supports','rejects','unresolved'])})
-    question_review=obj({'schema_version':enum(['1.0.0']),'review_id':STR,'question_id':STR,'task_type':STR,'source_commit':{'type':'string','pattern':'^[0-9a-f]{40}$'},'material_sha256':{'type':'string','pattern':'^[0-9a-f]{64}$'},'reviewer':STR,'review_status':enum(['reviewed','unreviewed']),'source_section_ids':{**array(STR,1),'uniqueItems':True},'input_artifact_ids':array(STR,1),'concrete_action':STR,'stop_rule_check':STR,'stop_applied':BOOL,'candidate_checks':array(question_check,1)})
+    question_check['properties']['image_evidence']=array(objective_region,1)
+    question_review=obj({'schema_version':enum(['1.0.0','1.1.0']),'review_id':STR,'question_id':STR,'task_type':STR,'source_commit':{'type':'string','pattern':'^[0-9a-f]{40}$'},'material_sha256':{'type':'string','pattern':'^[0-9a-f]{64}$'},'reviewer':STR,'review_status':enum(['reviewed','unreviewed']),'source_section_ids':{**array(STR,1),'uniqueItems':True},'input_artifact_ids':array(STR,1),'concrete_action':STR,'stop_rule_check':STR,'stop_applied':BOOL,'candidate_checks':array(question_check,1)})
+    question_review['allOf']=[{'if':{'properties':{'schema_version':{'const':'1.0.0'}}},'then':{'properties':{'candidate_checks':{'items':{'not':{'required':['image_evidence']}}}}}}]
     write('question-verification-review',question_review)
     relation = obj({'method_id':STR,'candidate':STR,'effect':enum(['retain','eliminate','undetermined']),'claim':STR,'evidence':array(span,1),'decision_rule_check':STR,'stop_rule_check':STR,'verification':STR,'reviewer':STR,'review_status':enum(['reviewed','unreviewed'])})
     relation['properties']['execution_role'] = enum(ROLES)
@@ -69,14 +76,15 @@ def build():
     write('method-execution',execution)
     method_segment=obj({'segment_id':STR,'function':enum(['action','evidence','comparison','stop']),'method_id':STR,'text':STR,'evidence':array(span,1),'relation_indices':array({'type':'integer','minimum':0})})
     terminal_segment=obj({'segment_id':STR,'segment_scope':{'const':'whole_question'},'function':{'const':'comparison'},'text':STR,'evidence':array(span,1),'terminal_review_id':STR,'candidate_ids':{**array(STR,1),'uniqueItems':True}})
+    terminal_segment['properties']['image_evidence']=array(obj({'candidate':STR,'region_index':{'type':'integer','minimum':0}}),1)
     lesson_segment={'oneOf':[method_segment,terminal_segment]}
-    lesson_review=obj({'schema_version':enum(['1.0.0','1.1.0']),'question_type':enum(TYPES[:4]),'reviewer':STR,'review_status':enum(['reviewed','unreviewed']),'source_section_ids':array(STR,1),'segments':array(lesson_segment,1)})
+    lesson_review=obj({'schema_version':enum(['1.0.0','1.1.0','1.2.0']),'question_type':enum(TYPES[:4]),'reviewer':STR,'review_status':enum(['reviewed','unreviewed']),'source_section_ids':array(STR,1),'segments':array(lesson_segment,1)})
+    lesson_review['allOf']=[{'if':{'properties':{'schema_version':enum(['1.0.0','1.1.0'])}},'then':{'properties':{'segments':{'items':{'not':{'required':['image_evidence']}}}}}}]
     write('lesson-review',lesson_review)
     writing_section=obj({'key':enum(['overall','diagnostics','anchors','emotion','outline','revised_text','practice','materials']),'text':STR,'evidence':array(span,1)})
     correction=obj({'original':span,'replacement':STR,'reason':STR,'kind':enum(['error','optional'])})
     proposed_score=obj({'scale':enum([15,25]),'lower':{'type':'integer','minimum':0,'maximum':25},'upper':{'type':'integer','minimum':0,'maximum':25},'band':STR,'rationale':STR,'evidence':array(span,1),'source_section_id':STR,'handwriting_applied':BOOL,'original_handwriting_reference':NULLSTR})
     proposed_score['properties']['word_count_adjustment']=obj({'reviewer':STR,'review_status':enum(['reviewed','unreviewed']),'source_section_id':STR,'source_quote':STR,'word_count':{'type':'integer','minimum':0},'deduction_points':{'type':'integer','minimum':1,'maximum':25},'score_before':obj({'lower':{'type':'integer','minimum':0,'maximum':25},'upper':{'type':'integer','minimum':0,'maximum':25}}),'evidence':array(span,1),'rationale':STR})
-    image_ref=obj({'image_id':STR,'sha256':{'type':'string','pattern':'^[0-9a-f]{64}$'},'box':{'type':'array','items':{'type':'integer','minimum':0},'minItems':4,'maxItems':4}})
     image_region=obj({**image_ref['properties'],'observed':STR,'communication_impact':STR})
     handwriting=obj({'reviewer':STR,'review_status':enum(['reviewed','unreviewed']),'original_handwriting':BOOL,'clear_image':BOOL,'affects_communication':{'type':['boolean','null']},'rationale':STR,'source_section_id':STR,'regions':array(image_region,1),'adjustment_kind':enum(['none','lower_one_band','discretionary_deduction']),'band_before':NULLSTR,'deduction_points':{'type':['integer','null'],'minimum':1,'maximum':25},'score_before':{'anyOf':[{'type':'null'},obj({'lower':{'type':'integer','minimum':0,'maximum':25},'upper':{'type':'integer','minimum':0,'maximum':25}})]}})
     writing_review=obj({'schema_version':enum(['1.0.0']),'question_type':enum(['应用文','读后续写']),'kind':enum(['guidance','correction']),'reviewer':STR,'review_status':enum(['reviewed','unreviewed']),'source_section_ids':array(STR,1),'student_text_complete':BOOL,'student_text_excludes_given_starters':BOOL,'sections':array(writing_section),'corrections':array(correction),'reviewed_student_spans':array(span),'proposed_score':{'anyOf':[{'type':'null'},proposed_score]}})
@@ -88,6 +96,7 @@ def build():
     write('question-input',obj({'question_id':STR,'question_type':enum(TYPES+['未知']),'task_type':STR,'passage':{'type':'string'},'stem':{'type':'string'},'options':{'type':'object','additionalProperties':STR},'student_symptoms':array(STR),'observations':array(obj({'method_id':STR,'evidence':array(span,1),'reviewed':BOOL})),'relations':array(relation),'given_word':{'type':['string','null']},'student_text':{'type':'string'},'continuation_starters':array(STR),'requested_chain':array(STR),'difficulty':enum(['easy','medium','hard','unknown']),'writing_review':writing_review,'action_executions':array(execution),'lesson_review':lesson_review},required=['question_id','question_type','stem'],extra=False))
     question_schema=json.loads((ROOT/'schemas/question-input.json').read_text(encoding='utf-8'))
     question_schema['properties'].update(grammar_hint_review=hint_review,question_verification_review=question_review)
+    question_schema['properties']['required_image_evidence']=image_requirements
     question_schema['properties']['original_images']=array(obj({'image_id':STR,'sha256':{'type':'string','pattern':'^[0-9a-f]{64}$'},'mime_type':enum(['image/png','image/jpeg']),'data_base64':{'type':'string','minLength':1,'maxLength':13981016}}))
     write('question-input',question_schema)
     artifact_kinds=sorted({kind for kinds in ROLE_ARTIFACTS.values() for kind in kinds})
@@ -97,6 +106,7 @@ def build():
     node['properties'].update(review_id=STR,effect=enum(['retain','eliminate','undetermined']),material_sha256={'type':'string','pattern':'^[0-9a-f]{64}$'},candidate_ids={**array(STR,1),'uniqueItems':True})
     node['properties']['verification_scope']=enum(['candidate_relation_check'])
     node['properties']['image_ref']=image_ref
+    node['properties']['required_image_evidence']=image_requirements
     edge = obj({'from':STR,'to':STR,'type':enum(['supports','contradicts','locates','expands','narrows','eliminates','verifies'])})
     graph = obj({'nodes':array(node),'edges':array(edge)})
     write('evidence-graph',graph)
@@ -118,12 +128,16 @@ def build():
     analysis['properties']['execution_trace']=array(executed)
     analysis['required'].append('execution_trace')
     delivered_review=obj({**lesson_review['properties'],'segments':array(lesson_segment)})
+    delivered_review['allOf']=lesson_review['allOf']
     lesson=obj({'review':delivered_review,'scope':enum(['single_question_lesson','partial_delivery','unreviewed']),'evidence_ids':array(STR),'segment_bindings':array(obj({'segment_id':STR,'claim_node_id':STR,'relation_node_id':STR,'evidence_ids':array(STR,1)})),'grouping_execution_ids':array(STR),'limitations':array(STR,1)})
+    lesson['properties']['segment_bindings']['items']['properties']['image_evidence_ids']=array(STR)
     analysis['properties']['lesson_feedback']={'anyOf':[{'type':'null'},lesson]}
     analysis['required'].append('lesson_feedback')
     binding=obj({'candidate':STR,'effect':enum(['retain','eliminate','undetermined']),'review_node_id':STR,'decision_node_id':NULLSTR,'verification_node_id':NULLSTR,'evidence_ids':array(STR,1)})
+    binding['properties']['image_evidence_ids']=array(STR)
     consumed=obj({'execution_id':STR,'artifact_node_id':STR,'output_sha256':{'type':'string','pattern':'^[0-9a-f]{64}$'}})
     analysis['properties']['question_verification']=obj({'review':question_review,'state':enum(['reviewed','stopped','unreviewed']),'scope_node_id':STR,'candidate_bindings':array(binding,1),'consumed_artifacts':array(consumed,1),'scope':enum(['external_whole_question_review_not_brand_method_credit'])})
+    analysis['properties']['question_verification']['properties'].update(image_manifest=manifest,required_image_evidence=image_requirements)
     write('question-analysis',analysis)
     paper=obj({'schema_version':enum(['1.0.0','1.1.0']),'paper_id':STR,'questions':array(analysis),'recommendations':array(STR),'method_counts':{'type':'object','additionalProperties':{'type':'integer','minimum':0}},'difficulty_counts':{'type':'object'},'evidence_complete_count':{'type':'integer','minimum':0},'case_candidates':array(STR),'limitations':array(STR)})
     stage_ids={**array(STR),'uniqueItems':True}

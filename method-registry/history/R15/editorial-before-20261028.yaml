@@ -1,0 +1,134 @@
+method_id: R15
+brand_name: 动词定关系
+source_name: 动词定逻辑
+aliases:
+- 动词定逻辑
+question_type: 阅读理解
+method_type: sub_action
+role: interpreter
+primary_role: interpreter
+secondary_roles: []
+output_type: interpret
+student_symptoms:
+- 同一名词对应多个动作关系
+trigger_cues:
+- 同一对象对应多个动作或关系，需要核题干所问究竟是哪一项。
+core_action: 圈题干动词及对应主体对象，并排配回定位句的完整谓语，保留否定、阶段、范围和条件。
+decision_rule: 只产出对象—动作关系解释；动作词相同仍须核施受和限制，动词定逻辑不与顺藤摸瓜合并。
+verification: 只产出对象—动作关系解释；动作词相同仍须核施受和限制，动词定逻辑不与顺藤摸瓜合并。 主体、对象或动词含义未确认不判等同；缺指代、因果或阶段联系就补必要上下文，不把一致当整项正解。
+stop_rule: 主体、对象或动词含义未确认不判等同；缺指代、因果或阶段联系就补必要上下文，不把一致当整项正解。
+common_wrong_instinct: 同名对象找到了，就不再核做了什么；或看见相同动词又忽略动作指向谁。
+failure_cases:
+- 同名对象找到了，就不再核做了什么；或看见相同动词又忽略动作指向谁。
+- 主体、对象或动词含义未确认不判等同；缺指代、因果或阶段联系就补必要上下文，不把一致当整项正解。
+counterexamples:
+- 原文和候选动词相同，动作发出者与承受者却互换；不能因为动词一致就判关系等同。
+transfer_pattern: 更换材料仍将动词配回主体、对象和阶段，不迁移上题动词含义。
+memory_line: 圈题干动词及对应主体对象，并排配回定位句的完整谓语，保留否定、阶段、范围和条件。
+anti_rule: 同动词 ≠ 同关系。
+visual_formula: "题干：谁 → 完整动作 → 对谁\n原文：谁 → 完整动作 → 对谁\n      + 阶段/限定\n逐槽比较 → 动作关系"
+challenge_prompt: 先不选，把题干和定位句各写成谁—完整动作—对谁，圈出角色或阶段差异。
+source_references:
+- repository: https://github.com/rockpunkgod/ANSWER.git
+  path: gaokao-english/references/reading-comprehension.md
+  heading: 按题型任务分流，不按文体硬套
+  commit: 1c388a0596b13935ae7c6a1af00834915a8efa33
+- repository: https://github.com/rockpunkgod/ANSWER.git
+  path: gaokao-english/references/reading-comprehension.md
+  heading: 跳读定位
+  commit: 1c388a0596b13935ae7c6a1af00834915a8efa33
+section_ids:
+- 3104f706064bf305
+- 688367aeb67f68ad
+can_follow: []
+usually_before: []
+usually_after: []
+conflicts_with: []
+cannot_replace:
+- 完整题面验证
+levels:
+  L1: 圈题干动词，配回主体和对象，与定位句的完整谓语比较
+  L2: 题干动词必须与原文同一主体、对象、状态阶段及完整谓语对应；输出动作关系，仍需核限定与整项回答。
+  L3: 只命中动词而主体或对象不同，或动作词义尚不明时停止关系等同；定位句缺原因指代时转补证。
+  L4: 更换材料仍将动词配回主体、对象和阶段，不迁移上题动词含义。
+compact:
+  line: 圈题干动词及对应主体对象，并排配回定位句的完整谓语，保留否定、阶段、范围和条件。
+  boundary: 主体、对象或动词含义未确认不判等同；缺指代、因果或阶段联系就补必要上下文，不把一致当整项正解。
+  10s: 圈题干动词及对应主体对象，并排配回定位句的完整谓语，保留否定、阶段、范围和条件。 只产出对象—动作关系解释；动作词相同仍须核施受和限制，动词定逻辑不与顺藤摸瓜合并。
+  30s: 同一对象对应多个动作或关系，需要核题干所问究竟是哪一项。 圈题干动词及对应主体对象，并排配回定位句的完整谓语，保留否定、阶段、范围和条件。 主体、对象或动词含义未确认不判等同；缺指代、因果或阶段联系就补必要上下文，不把一致当整项正解。
+  90s: 同一对象对应多个动作或关系，需要核题干所问究竟是哪一项。 手上先做：圈题干动词及对应主体对象，并排配回定位句的完整谓语，保留否定、阶段、范围和条件。
+    做完得到：只产出对象—动作关系解释；动作词相同仍须核施受和限制，动词定逻辑不与顺藤摸瓜合并。 停止：主体、对象或动词含义未确认不判等同；缺指代、因果或阶段联系就补必要上下文，不把一致当整项正解。
+    反例（边界示意，非真题）：原文和候选动词相同，动作发出者与承受者却互换；不能因为动词一致就判关系等同。 挑战：先不选，把题干和定位句各写成谁—完整动作—对谁，圈出角色或阶段差异。
+full:
+  summary: 圈题干动词及对应主体对象，并排配回定位句的完整谓语，保留否定、阶段、范围和条件。 只产出对象—动作关系解释；动作词相同仍须核施受和限制，动词定逻辑不与顺藤摸瓜合并。
+  source_boundary: 主体、对象或动词含义未确认不判等同；缺指代、因果或阶段联系就补必要上下文，不把一致当整项正解。
+  boundaries:
+  - 主体、对象或动词含义未确认不判等同；缺指代、因果或阶段联系就补必要上下文，不把一致当整项正解。
+  - 原文和候选动词相同，动作发出者与承受者却互换；不能因为动词一致就判关系等同。
+  section_ids:
+  - 3104f706064bf305
+  - 688367aeb67f68ad
+cases:
+  canonical: cases/reading/R15/canonical/case.yaml
+four_step_card:
+  start: 同一对象对应多个动作或关系，需要核题干所问究竟是哪一项。
+  first_cut: 圈题干动词及对应主体对象，并排配回定位句的完整谓语，保留否定、阶段、范围和条件。
+  judge: 只产出对象—动作关系解释；动作词相同仍须核施受和限制，动词定逻辑不与顺藤摸瓜合并。
+  stop: 主体、对象或动词含义未确认不判等同；缺指代、因果或阶段联系就补必要上下文，不把一致当整项正解。
+practicality_gate:
+  status: design_complete_empirical_pending
+  trigger: 同一对象对应多个动作或关系，需要核题干所问究竟是哪一项。
+  action: 圈题干动词及对应主体对象，并排配回定位句的完整谓语，保留否定、阶段、范围和条件。
+  output: interpret；只产出对象—动作关系解释；动作词相同仍须核施受和限制，动词定逻辑不与顺藤摸瓜合并。
+  stop: 主体、对象或动词含义未确认不判等同；缺指代、因果或阶段联系就补必要上下文，不把一致当整项正解。
+  transfer: 更换材料仍将动词配回主体、对象和阶段，不迁移上题动词含义。
+  efficiency: 把同名对象的多处内容缩到具体动作关系，预期降低重复定位和角色混淆。
+  misuse_cost: 未经实测；同名对象找到了，就不再核做了什么；或看见相同动词又忽略动作指向谁。会导致误判，必须先核触发并执行上述Stop，不允许从辅助产物越级定案。
+first_use_test:
+  status: designed_not_run
+  trigger_success: null
+  action_success: null
+  evidence_success: null
+  stop_rule_success: null
+  no_answer_backfit: null
+  failure_type: null
+  final_result: pending_real_student_test
+evaluation:
+  baseline: 普通逐项核题面
+  primary_benefit_hypothesis: 把同名对象的多处内容缩到具体动作关系，预期降低重复定位和角色混淆。
+  trigger_precision: null
+  trigger_recall: null
+  resolution_rate: null
+  standalone_rate: null
+  assist_rate: null
+  false_trigger_rate: null
+  transfer_rate: null
+  boundary_accuracy: null
+  time_complexity_gain: null
+usefulness_level: Useful
+status: candidate
+maturity_status: candidate
+practical_value: Useful
+version: 1.2.0
+change_reason: ANSWER 1c388a0596b13935ae7c6a1af00834915a8efa33 增量来源同步；保留既有动作与版本，旧证据不自动获得新来源准入。
+affected_cases:
+- cases/reading/R15/canonical/case.yaml
+regression_result: pending_current_epoch_semantic_and_student_acceptance
+student_ready: false
+entry_copy: 同一对象对应多个动作或关系，需要核题干所问究竟是哪一项。 手上先做：圈题干动词及对应主体对象，并排配回定位句的完整谓语，保留否定、阶段、范围和条件。
+  做完得到：只产出对象—动作关系解释；动作词相同仍须核施受和限制，动词定逻辑不与顺藤摸瓜合并。 停止：主体、对象或动词含义未确认不判等同；缺指代、因果或阶段联系就补必要上下文，不把一致当整项正解。
+static_design_review:
+  status: source_rebound_semantic_reacceptance_pending
+  source_section_ids:
+  - 3104f706064bf305
+  - 688367aeb67f68ad
+  participant_validation: pending_real_participant_validation
+  example_scope: counterexample is a schematic source boundary, not a verified exam
+source_alignment:
+  commit: 1c388a0596b13935ae7c6a1af00834915a8efa33
+  state: live_source_bound
+  source_content_changed: false
+  correction_profile_applied: true
+  authored_first_contact_draft: false
+  new_course_branches: preserved_in_full_contract_not_automatically_aliased
+  acceptance: unchanged_method_sections; added_source_contracts_preserved; learner/release_pending

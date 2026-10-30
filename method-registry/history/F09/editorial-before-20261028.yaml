@@ -1,0 +1,127 @@
+method_id: F09
+brand_name: 半句补全
+source_name: 结构一致
+aliases:
+- 结构一致
+question_type: 七选五
+method_type: sub_action
+role: interpreter
+primary_role: interpreter
+secondary_roles: []
+output_type: interpret
+student_symptoms:
+- 空位与选项是需要拼接的半句
+trigger_cues:
+- 空位与选项是需要拼接的半句
+core_action: 把候选接到现有半句，标主语谓语与连接位置，再检验完整语义
+decision_rule: 先把候选与空前未完成结构接成一句，标主语、谓语和连接位置，再核完整语义；产物是拼接后的句法解释，不是仅凭结构定案。
+verification: 把候选接到现有半句，标主语谓语与连接位置，再检验完整语义。先把候选与空前未完成结构接成一句，标主语、谓语和连接位置，再核完整语义；产物是拼接后的句法解释，不是仅凭结构定案。
+  结构都可补全时必须比对象、动作和段落任务；不能凭大小写或半句长度选。接成句却与前后内容冲突时停止初判。
+stop_rule: 结构都可补全时必须比对象、动作和段落任务；不能凭大小写或半句长度选。接成句却与前后内容冲突时停止初判。
+common_wrong_instinct: 看到小写开头就认为只能放在半句空，或者只要拼起来语法通就选。
+failure_cases:
+- 看到小写开头就认为只能放在半句空，或者只要拼起来语法通就选。
+- 结构都可补全时必须比对象、动作和段落任务；不能凭大小写或半句长度选。接成句却与前后内容冲突时停止初判。
+counterexamples:
+- 两个候选都补成完整句，但一个把动作对象换了；半句结构成立不能替代语义与段落核验。
+transfer_pattern: 换半句题仍先合句再标结构与意思，不迁移候选首字母或句长。
+memory_line: 把候选接到现有半句，标主语谓语与连接位置，再检验完整语义
+anti_rule: 接成一句 ≠ 内容成立。
+visual_formula: "空前未完成结构 + 候选半句\n            ↓ 标主体/谓语/连接\n完整句结构 + 完整意思\n→ 拼接解释（interpret）；再核段落"
+challenge_prompt: 先不选，把候选接到现有半句，圈合成句的主语和谓语，再指出连接词连接哪两部分。
+source_references:
+- repository: https://github.com/rockpunkgod/ANSWER.git
+  path: gaokao-english/references/seven-five.md
+  heading: 结构一致
+  commit: 1c388a0596b13935ae7c6a1af00834915a8efa33
+section_ids:
+- a8f0c4ae44ae61ff
+can_follow: []
+usually_before: []
+usually_after: []
+conflicts_with: []
+cannot_replace:
+- 完整题面验证
+levels:
+  L1: 把候选接到现有半句，标主语谓语与连接位置，再检验完整语义
+  L2: 先把候选与空前未完成结构接成一句，标主语、谓语和连接位置，再核完整语义；产物是拼接后的句法解释，不是仅凭结构定案。
+  L3: 结构都可补全时必须比对象、动作和段落任务；不能凭大小写或半句长度选。接成句却与前后内容冲突时停止初判。
+  L4: 换半句题仍先合句再标结构与意思，不迁移候选首字母或句长。
+compact:
+  10s: 半句空怕接错？把候选拼成一句，圈主语谓语和连接位；语法接通不等于内容成立。
+  30s: 空前结构未完成时，先把候选接上，圈完整句主语、谓语与连接位置。结构示意：两项都能补句，但动作对象可不同。大小写仅辅助；结构都成立就停句型筛选，核完整意思和段落任务，不直接选。
+  90s: 空位与选项是需要拼接的半句时，先确认：空位与选项是需要拼接的半句。第一刀：把候选接到现有半句，标主语谓语与连接位置，再检验完整语义。产物 interpret：先把候选与空前未完成结构接成一句，标主语、谓语和连接位置，再核完整语义；产物是拼接后的句法解释，不是仅凭结构定案。
+    停止：结构都可补全时必须比对象、动作和段落任务；不能凭大小写或半句长度选。接成句却与前后内容冲突时停止初判。 反例（关系示意，不是真题）：两个候选都补成完整句，但一个把动作对象换了；半句结构成立不能替代语义与段落核验。
+    迁移：换半句题仍先合句再标结构与意思，不迁移候选首字母或句长。 挑战：先不选，把候选接到现有半句，圈合成句的主语和谓语，再指出连接词连接哪两部分。
+full:
+  summary: 把候选接到现有半句，标主语谓语与连接位置，再检验完整语义 先把候选与空前未完成结构接成一句，标主语、谓语和连接位置，再核完整语义；产物是拼接后的句法解释，不是仅凭结构定案。
+  source_boundary: 结构都可补全时必须比对象、动作和段落任务；不能凭大小写或半句长度选。接成句却与前后内容冲突时停止初判。
+  boundaries:
+  - 结构都可补全时必须比对象、动作和段落任务；不能凭大小写或半句长度选。接成句却与前后内容冲突时停止初判。
+  - 两个候选都补成完整句，但一个把动作对象换了；半句结构成立不能替代语义与段落核验。
+  section_ids:
+  - a8f0c4ae44ae61ff
+cases:
+  canonical: cases/seven-five/F09/canonical/case.yaml
+four_step_card:
+  start: 空位与选项是需要拼接的半句
+  first_cut: 把候选接到现有半句，标主语谓语与连接位置，再检验完整语义
+  judge: 先把候选与空前未完成结构接成一句，标主语、谓语和连接位置，再核完整语义；产物是拼接后的句法解释，不是仅凭结构定案。
+  stop: 结构都可补全时必须比对象、动作和段落任务；不能凭大小写或半句长度选。接成句却与前后内容冲突时停止初判。
+practicality_gate:
+  status: design_complete_empirical_pending
+  trigger: 空位与选项是需要拼接的半句
+  action: 把候选接到现有半句，标主语谓语与连接位置，再检验完整语义
+  output: interpret；先把候选与空前未完成结构接成一句，标主语、谓语和连接位置，再核完整语义；产物是拼接后的句法解释，不是仅凭结构定案。
+  stop: 结构都可补全时必须比对象、动作和段落任务；不能凭大小写或半句长度选。接成句却与前后内容冲突时停止初判。
+  transfer: 换半句题仍先合句再标结构与意思，不迁移候选首字母或句长。
+  efficiency: 把未完成结构显式拼成完整句，预期减少断句错误和凭大小写试填；提速未测。
+  misuse_cost: 未经实测；看到小写开头就认为只能放在半句空，或者只要拼起来语法通就选。会导致误判；须先核触发、执行Stop，不允许辅助产物越级定案。
+first_use_test:
+  status: designed_not_run
+  trigger_success: null
+  action_success: null
+  evidence_success: null
+  stop_rule_success: null
+  no_answer_backfit: null
+  failure_type: null
+  final_result: pending_real_student_test
+evaluation:
+  baseline: 普通逐项核题面
+  primary_benefit_hypothesis: 把未完成结构显式拼成完整句，预期减少断句错误和凭大小写试填；提速未测。
+  trigger_precision: null
+  trigger_recall: null
+  resolution_rate: null
+  standalone_rate: null
+  assist_rate: null
+  false_trigger_rate: null
+  transfer_rate: null
+  boundary_accuracy: null
+  time_complexity_gain: null
+usefulness_level: Useful
+status: candidate
+maturity_status: candidate
+practical_value: Useful
+version: 1.2.0
+change_reason: ANSWER 1c388a0596b13935ae7c6a1af00834915a8efa33 增量来源同步；保留既有动作与版本，旧证据不自动获得新来源准入。
+affected_cases:
+- cases/seven-five/F09/canonical/case.yaml
+regression_result: pending_current_epoch_semantic_and_student_acceptance
+student_ready: false
+entry_copy: 空位与选项是需要拼接的半句时，第一眼先找：空位与选项是需要拼接的半句。手上先做：把候选接到现有半句，标主语谓语与连接位置，再检验完整语义。做完得到
+  interpret，不是通用答案。先把候选与空前未完成结构接成一句，标主语、谓语和连接位置，再核完整语义；产物是拼接后的句法解释，不是仅凭结构定案。 什么时候停：结构都可补全时必须比对象、动作和段落任务；不能凭大小写或半句长度选。接成句却与前后内容冲突时停止初判。
+  换题仍这样做：换半句题仍先合句再标结构与意思，不迁移候选首字母或句长。
+static_design_review:
+  status: source_rebound_semantic_reacceptance_pending
+  source_section_ids:
+  - a8f0c4ae44ae61ff
+  participant_validation: pending_real_participant_validation
+  example_scope: schematic source boundary, not a verified exam
+source_alignment:
+  commit: 1c388a0596b13935ae7c6a1af00834915a8efa33
+  state: live_source_bound
+  source_content_changed: false
+  correction_profile_applied: false
+  authored_first_contact_draft: false
+  new_course_branches: preserved_in_full_contract_not_automatically_aliased
+  acceptance: unchanged_method_sections; added_source_contracts_preserved; learner/release_pending

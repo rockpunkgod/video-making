@@ -1,0 +1,140 @@
+method_id: W15
+brand_name: 续写评分
+source_name: 25 分评分规范
+aliases:
+- 25 分评分规范
+question_type: 读后续写
+method_type: internal_rule
+role: verifier
+primary_role: verifier
+secondary_roles: []
+output_type: verify
+student_symptoms:
+- 原文首句和学生续写齐全且请求评分
+trigger_cues:
+- 原文、两段首句和完整自写续文齐备，且请求评分。
+core_action: 按25分档次逐项引用原文与自写稿证据，先核融洽、情节和完整性，再核语言与衔接。
+decision_rule: 产出有证据的档次建议；训练的动作数、句型数、十句位置和独立升华句不作硬扣分项。
+verification: 产出有证据的档次建议；训练的动作数、句型数、十句位置和独立升华句不作硬扣分项。 缺必要材料不报完整分；不抄给定首句正常；仅原手写可见且影响交际才按规范处理书写，不伪造固定扣分。
+stop_rule: 缺必要材料不报完整分；不抄给定首句正常；仅原手写可见且影响交际才按规范处理书写，不伪造固定扣分。
+common_wrong_instinct: 按有没有抄首句、凑满十句、写独立升华句来机械扣分。
+failure_cases:
+- 按有没有抄首句、凑满十句、写独立升华句来机械扣分。
+- 缺必要材料不报完整分；不抄给定首句正常；仅原手写可见且影响交际才按规范处理书写，不伪造固定扣分。
+counterexamples:
+- 学生没抄题面首句但自写内容自然接续，不能判缺失；少独立升华句而主题已由结果呈现，也不自动降档。转写稿无法判断原稿书写。此为条件示意，不是真题。
+transfer_pattern: 每篇续写都用自身原文首句和自写稿三端证据，不套应用文15分标准。
+memory_line: 按25分档次逐项引用原文与自写稿证据，先核融洽、情节和完整性，再核语言与衔接。
+anti_rule: 功能支架 ≠ 独立扣分表。
+visual_formula: '原文 + 两首句 + 自写全文
+
+  → 融洽 / 合理完整 / 语言 / 结构证据
+
+  → 25分定档；方法不逐项扣分'
+challenge_prompt: 先不报分，列出原文、两首句和自写全文是否齐全，再给一项剧情诊断标两端证据。
+source_references:
+- repository: https://github.com/rockpunkgod/ANSWER.git
+  path: gaokao-writing/references/continuation-writing-and-correction.md
+  heading: 25 分评分规范
+  commit: 1c388a0596b13935ae7c6a1af00834915a8efa33
+section_ids:
+- d2dc77b78b7ce906
+- 7b4c299267a685c2
+- 09015032f4ec758b
+- 27662f3285730b79
+can_follow: []
+usually_before: []
+usually_after: []
+conflicts_with: []
+cannot_replace:
+- 完整题面验证
+levels:
+  L1: 只按25分续写档次核原文融洽、语言与结构；不抄首句正常，书写只在实见影响交际时评
+  L2: 原文、两首句和学生自写全文齐全时，用融洽度、情节合理完整、语言和结构的实际证据先定25分档，再档内定分；十句功能用于诊断，不独立计扣分。
+  L3: 缺原文或任一首句只能校语言，不评完整剧情或分数；不抄首句正常，给定首句不计学生字数句数。仅清晰原手写且影响交际才评书写，独立升华句和恰好十句都不是必须项。
+  L4: 每篇续写都用自身原文首句和自写稿三端证据，不套应用文15分标准。
+compact:
+  line: 按25分档次逐项引用原文与自写稿证据，先核融洽、情节和完整性，再核语言与衔接。
+  boundary: 缺必要材料不报完整分；不抄给定首句正常；仅原手写可见且影响交际才按规范处理书写，不伪造固定扣分。
+  10s: 按25分档次逐项引用原文与自写稿证据，先核融洽、情节和完整性，再核语言与衔接。 产出有证据的档次建议；训练的动作数、句型数、十句位置和独立升华句不作硬扣分项。
+  30s: 原文、两段首句和完整自写续文齐备，且请求评分。 按25分档次逐项引用原文与自写稿证据，先核融洽、情节和完整性，再核语言与衔接。 缺必要材料不报完整分；不抄给定首句正常；仅原手写可见且影响交际才按规范处理书写，不伪造固定扣分。
+  90s: 原文、两段首句和完整自写续文齐备，且请求评分。 手上先做：按25分档次逐项引用原文与自写稿证据，先核融洽、情节和完整性，再核语言与衔接。 做完得到：产出有证据的档次建议；训练的动作数、句型数、十句位置和独立升华句不作硬扣分项。
+    停止：缺必要材料不报完整分；不抄给定首句正常；仅原手写可见且影响交际才按规范处理书写，不伪造固定扣分。 反例（边界示意，非真题）：学生没抄题面首句但自写内容自然接续，不能判缺失；少独立升华句而主题已由结果呈现，也不自动降档。转写稿无法判断原稿书写。此为条件示意，不是真题。
+    挑战：先不报分，列出原文、两首句和自写全文是否齐全，再给一项剧情诊断标两端证据。
+full:
+  summary: 按25分档次逐项引用原文与自写稿证据，先核融洽、情节和完整性，再核语言与衔接。 产出有证据的档次建议；训练的动作数、句型数、十句位置和独立升华句不作硬扣分项。
+  source_boundary: 缺必要材料不报完整分；不抄给定首句正常；仅原手写可见且影响交际才按规范处理书写，不伪造固定扣分。
+  boundaries:
+  - 缺必要材料不报完整分；不抄给定首句正常；仅原手写可见且影响交际才按规范处理书写，不伪造固定扣分。
+  - 学生没抄题面首句但自写内容自然接续，不能判缺失；少独立升华句而主题已由结果呈现，也不自动降档。转写稿无法判断原稿书写。此为条件示意，不是真题。
+  section_ids:
+  - d2dc77b78b7ce906
+  - 7b4c299267a685c2
+  - 09015032f4ec758b
+  - 27662f3285730b79
+cases:
+  canonical: cases/continuation-writing/W15/canonical/case.yaml
+four_step_card:
+  start: 原文、两段首句和完整自写续文齐备，且请求评分。
+  first_cut: 按25分档次逐项引用原文与自写稿证据，先核融洽、情节和完整性，再核语言与衔接。
+  judge: 产出有证据的档次建议；训练的动作数、句型数、十句位置和独立升华句不作硬扣分项。
+  stop: 缺必要材料不报完整分；不抄给定首句正常；仅原手写可见且影响交际才按规范处理书写，不伪造固定扣分。
+practicality_gate:
+  status: design_complete_empirical_pending
+  trigger: 原文、两段首句和完整自写续文齐备，且请求评分。
+  action: 按25分档次逐项引用原文与自写稿证据，先核融洽、情节和完整性，再核语言与衔接。
+  output: verify；产出有证据的档次建议；训练的动作数、句型数、十句位置和独立升华句不作硬扣分项。
+  stop: 缺必要材料不报完整分；不抄给定首句正常；仅原手写可见且影响交际才按规范处理书写，不伪造固定扣分。
+  transfer: 每篇续写都用自身原文首句和自写稿三端证据，不套应用文15分标准。
+  efficiency: 强化评分可追溯性与材料边界，避免误扣；没有自动评分一致性或提速验证。
+  misuse_cost: 未经实测；按有没有抄首句、凑满十句、写独立升华句来机械扣分。会导致误判；须先核触发、执行Stop，不允许辅助产物越级定案。
+first_use_test:
+  status: designed_not_run
+  trigger_success: null
+  action_success: null
+  evidence_success: null
+  stop_rule_success: null
+  no_answer_backfit: null
+  failure_type: null
+  final_result: pending_real_student_test
+evaluation:
+  baseline: 普通逐项核题面
+  primary_benefit_hypothesis: 强化评分可追溯性与材料边界，避免误扣；没有自动评分一致性或提速验证。
+  trigger_precision: null
+  trigger_recall: null
+  resolution_rate: null
+  standalone_rate: null
+  assist_rate: null
+  false_trigger_rate: null
+  transfer_rate: null
+  boundary_accuracy: null
+  time_complexity_gain: null
+usefulness_level: Useful
+status: candidate
+maturity_status: candidate
+practical_value: Useful
+version: 1.2.0
+change_reason: ANSWER 1c388a0596b13935ae7c6a1af00834915a8efa33 增量来源同步；保留既有动作与版本，旧证据不自动获得新来源准入。
+affected_cases:
+- cases/continuation-writing/W15/canonical/case.yaml
+regression_result: pending_current_epoch_semantic_and_student_acceptance
+student_ready: false
+entry_copy: 原文、两段首句和完整自写续文齐备，且请求评分。 手上先做：按25分档次逐项引用原文与自写稿证据，先核融洽、情节和完整性，再核语言与衔接。 做完得到：产出有证据的档次建议；训练的动作数、句型数、十句位置和独立升华句不作硬扣分项。
+  停止：缺必要材料不报完整分；不抄给定首句正常；仅原手写可见且影响交际才按规范处理书写，不伪造固定扣分。
+static_design_review:
+  status: source_rebound_semantic_reacceptance_pending
+  source_section_ids:
+  - d2dc77b78b7ce906
+  - 7b4c299267a685c2
+  - 09015032f4ec758b
+  - 27662f3285730b79
+  participant_validation: pending_real_participant_validation
+  example_scope: schematic source boundary, not a verified exam
+source_alignment:
+  commit: 1c388a0596b13935ae7c6a1af00834915a8efa33
+  state: live_source_bound
+  source_content_changed: false
+  correction_profile_applied: true
+  authored_first_contact_draft: false
+  new_course_branches: preserved_in_full_contract_not_automatically_aliased
+  acceptance: unchanged_method_sections; added_source_contracts_preserved; learner/release_pending

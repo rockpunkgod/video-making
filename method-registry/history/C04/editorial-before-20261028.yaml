@@ -1,0 +1,133 @@
+method_id: C04
+brand_name: 词性导航
+source_name: 词性只引导找线索
+aliases:
+- 词性只引导找线索
+question_type: 完形填空
+method_type: sub_action
+role: locator
+primary_role: locator
+secondary_roles: []
+output_type: locate
+student_symptoms:
+- 空内词的句法作用能指向线索类型
+trigger_cues:
+- 空内词的句法作用能指向当前需要的修饰或动作线索。
+core_action: 标空内作用并圈实际修饰同一对象或动作的结构；动词空核谁做、指向谁及真实施受归属。
+decision_rule: 只产出可查线索位置；同词性、形式或后缀不定答案，观察者感受不能移作人物行动。
+verification: 只产出可查线索位置；同词性、形式或后缀不定答案，观察者感受不能移作人物行动。 修饰对象、逻辑主语或具体词义未确认先停该定位结论；不凭职业惯例、心理猜测补候选所需前提。
+stop_rule: 修饰对象、逻辑主语或具体词义未确认先停该定位结论；不凭职业惯例、心理猜测补候选所需前提。
+common_wrong_instinct: 选项都是形容词，就直接按褒贬挑一个，不找它实际描写的对象。
+failure_cases:
+- 选项都是形容词，就直接按褒贬挑一个，不找它实际描写的对象。
+- 修饰对象、逻辑主语或具体词义未确认先停该定位结论；不凭职业惯例、心理猜测补候选所需前提。
+counterexamples:
+- 两个候选词性相同，却分别描述情感投入和客观状态；词性分类不能替代当前对象的具体语义。
+transfer_pattern: 换句子仍先标作用和被修饰对象，再找相应证据，不迁移词尾或词性口诀。
+memory_line: 标空内作用并圈实际修饰同一对象或动作的结构；动词空核谁做、指向谁及真实施受归属。
+anti_rule: 词性相同 ≠ 语境词义相同。
+visual_formula: '空内句法作用 → 查哪类提示？
+
+  修饰对象/动作 ← 从句/非谓语/介词短语
+
+  → 线索位置（locate）
+
+  同词性不选答案'
+challenge_prompt: 先不选，把空在句中修饰或支配的对象圈出来，再标一处修饰同一对象的潜在线索。
+source_references:
+- repository: https://github.com/rockpunkgod/ANSWER.git
+  path: gaokao-english/references/cloze.md
+  heading: 词性只引导找线索
+  commit: 1c388a0596b13935ae7c6a1af00834915a8efa33
+section_ids:
+- b0b1e691060b321a
+can_follow: []
+usually_before: []
+usually_after: []
+conflicts_with: []
+cannot_replace:
+- 完整题面验证
+levels:
+  L1: 标空内作用，再圈修饰同一对象或动作的结构，不凭词性定案
+  L2: 先标空内词的句法作用，再圈修饰同一对象或动作的从句、非谓语或介词短语；产物是可查线索位置，同词性不筛出答案。
+  L3: 只看词尾或词性仍无法确认所修饰对象时停止定位结论；动词空要另核谁做、指向谁、回应什么，不能把观察者感受当人物行动。
+  L4: 换句子仍先标作用和被修饰对象，再找相应证据，不迁移词尾或词性口诀。
+compact:
+  line: 标空内作用并圈实际修饰同一对象或动作的结构；动词空核谁做、指向谁及真实施受归属。
+  boundary: 修饰对象、逻辑主语或具体词义未确认先停该定位结论；不凭职业惯例、心理猜测补候选所需前提。
+  10s: 标空内作用并圈实际修饰同一对象或动作的结构；动词空核谁做、指向谁及真实施受归属。 只产出可查线索位置；同词性、形式或后缀不定答案，观察者感受不能移作人物行动。
+  30s: 空内词的句法作用能指向当前需要的修饰或动作线索。 标空内作用并圈实际修饰同一对象或动作的结构；动词空核谁做、指向谁及真实施受归属。 修饰对象、逻辑主语或具体词义未确认先停该定位结论；不凭职业惯例、心理猜测补候选所需前提。
+  90s: 空内词的句法作用能指向当前需要的修饰或动作线索。 手上先做：标空内作用并圈实际修饰同一对象或动作的结构；动词空核谁做、指向谁及真实施受归属。 做完得到：只产出可查线索位置；同词性、形式或后缀不定答案，观察者感受不能移作人物行动。
+    停止：修饰对象、逻辑主语或具体词义未确认先停该定位结论；不凭职业惯例、心理猜测补候选所需前提。 反例（边界示意，非真题）：两个候选词性相同，却分别描述情感投入和客观状态；词性分类不能替代当前对象的具体语义。
+    挑战：先不选，把空在句中修饰或支配的对象圈出来，再标一处修饰同一对象的潜在线索。
+full:
+  summary: 标空内作用并圈实际修饰同一对象或动作的结构；动词空核谁做、指向谁及真实施受归属。 只产出可查线索位置；同词性、形式或后缀不定答案，观察者感受不能移作人物行动。
+  source_boundary: 修饰对象、逻辑主语或具体词义未确认先停该定位结论；不凭职业惯例、心理猜测补候选所需前提。
+  boundaries:
+  - 修饰对象、逻辑主语或具体词义未确认先停该定位结论；不凭职业惯例、心理猜测补候选所需前提。
+  - 两个候选词性相同，却分别描述情感投入和客观状态；词性分类不能替代当前对象的具体语义。
+  section_ids:
+  - b0b1e691060b321a
+cases:
+  canonical: cases/cloze/C04/canonical/case.yaml
+four_step_card:
+  start: 空内词的句法作用能指向当前需要的修饰或动作线索。
+  first_cut: 标空内作用并圈实际修饰同一对象或动作的结构；动词空核谁做、指向谁及真实施受归属。
+  judge: 只产出可查线索位置；同词性、形式或后缀不定答案，观察者感受不能移作人物行动。
+  stop: 修饰对象、逻辑主语或具体词义未确认先停该定位结论；不凭职业惯例、心理猜测补候选所需前提。
+practicality_gate:
+  status: design_complete_empirical_pending
+  trigger: 空内词的句法作用能指向当前需要的修饰或动作线索。
+  action: 标空内作用并圈实际修饰同一对象或动作的结构；动词空核谁做、指向谁及真实施受归属。
+  output: locate；只产出可查线索位置；同词性、形式或后缀不定答案，观察者感受不能移作人物行动。
+  stop: 修饰对象、逻辑主语或具体词义未确认先停该定位结论；不凭职业惯例、心理猜测补候选所需前提。
+  transfer: 换句子仍先标作用和被修饰对象，再找相应证据，不迁移词尾或词性口诀。
+  efficiency: 按句法作用限定取证对象，预期减少找错修饰语和无效读句；提速未测。
+  misuse_cost: 未经实测；选项都是形容词，就直接按褒贬挑一个，不找它实际描写的对象。会导致误判；须先核触发、执行Stop，不允许辅助产物越级定案。
+first_use_test:
+  status: designed_not_run
+  trigger_success: null
+  action_success: null
+  evidence_success: null
+  stop_rule_success: null
+  no_answer_backfit: null
+  failure_type: null
+  final_result: pending_real_student_test
+evaluation:
+  baseline: 普通逐项核题面
+  primary_benefit_hypothesis: 按句法作用限定取证对象，预期减少找错修饰语和无效读句；提速未测。
+  trigger_precision: null
+  trigger_recall: null
+  resolution_rate: null
+  standalone_rate: null
+  assist_rate: null
+  false_trigger_rate: null
+  transfer_rate: null
+  boundary_accuracy: null
+  time_complexity_gain: null
+usefulness_level: Useful
+status: candidate
+maturity_status: candidate
+practical_value: Useful
+version: 1.2.0
+change_reason: ANSWER 1c388a0596b13935ae7c6a1af00834915a8efa33 增量来源同步；保留既有动作与版本，旧证据不自动获得新来源准入。
+affected_cases:
+- cases/cloze/C04/canonical/case.yaml
+regression_result: pending_current_epoch_semantic_and_student_acceptance
+student_ready: false
+entry_copy: 空内词的句法作用能指向当前需要的修饰或动作线索。 手上先做：标空内作用并圈实际修饰同一对象或动作的结构；动词空核谁做、指向谁及真实施受归属。
+  做完得到：只产出可查线索位置；同词性、形式或后缀不定答案，观察者感受不能移作人物行动。 停止：修饰对象、逻辑主语或具体词义未确认先停该定位结论；不凭职业惯例、心理猜测补候选所需前提。
+static_design_review:
+  status: source_rebound_semantic_reacceptance_pending
+  source_section_ids:
+  - b0b1e691060b321a
+  participant_validation: pending_real_participant_validation
+  example_scope: schematic source boundary, not a verified exam
+source_alignment:
+  commit: 1c388a0596b13935ae7c6a1af00834915a8efa33
+  state: live_source_bound
+  source_content_changed: false
+  correction_profile_applied: true
+  authored_first_contact_draft: false
+  new_course_branches: preserved_in_full_contract_not_automatically_aliased
+  acceptance: unchanged_method_sections; added_source_contracts_preserved; learner/release_pending

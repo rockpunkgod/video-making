@@ -3,6 +3,7 @@ import json
 from pathlib import Path
 import subprocess
 import sys
+from tempfile import TemporaryDirectory
 import unittest
 import yaml
 from jsonschema import ValidationError
@@ -37,12 +38,41 @@ class RegistryEngineTest(unittest.TestCase):
     def test_all_source_documents_preserved(self):
         for d in self.r.sources['documents']:
             self.assertEqual(self.r.document(d['path']),(ROOT/'provenance/ANSWER'/d['path']).read_text(encoding='utf-8'))
+    def _checkout_frozen_bytes(self, files, attributes):
+        # Exercise real Git filters against an isolated index, regardless of
+        # which source epoch the user's live index currently contains.
+        with TemporaryDirectory(prefix='frozen-checkout-test-') as temporary:
+            repo=Path(temporary)/'repo'; repo.mkdir()
+            exported=Path(temporary)/'checkout'; exported.mkdir()
+            def git(*args):
+                return subprocess.run(['git','-c','core.autocrlf=true',*args],
+                    cwd=repo,capture_output=True,check=True)
+            git('init','--quiet')
+            (repo/'.gitattributes').write_bytes(attributes)
+            for relative,raw in files.items():
+                path=repo/relative; path.parent.mkdir(parents=True,exist_ok=True)
+                path.write_bytes(raw)
+            git('add','--','.gitattributes',*sorted(files))
+            git('checkout-index','--all','--prefix='+exported.as_posix()+'/')
+            return {relative:(exported/relative).read_bytes() for relative in files}
     def test_frozen_hashes_survive_git_checkout(self):
         import hashlib
-        for item in load('provenance/manifest.yaml')['files']:
-            path='provenance/ANSWER/'+item['path']
-            blob=subprocess.run(['git','show',':'+path],cwd=ROOT,capture_output=True,check=True).stdout
-            self.assertEqual(hashlib.sha256(blob).hexdigest(),item['sha256'])
+        expected={'provenance/ANSWER/'+item['path']:item['sha256']
+                  for item in load('provenance/manifest.yaml')['files']}
+        files={path:(ROOT/path).read_bytes() for path in expected}
+        checked=self._checkout_frozen_bytes(files,(ROOT/'.gitattributes').read_bytes())
+        for path,fingerprint in expected.items():
+            with self.subTest(path=path):
+                self.assertEqual(hashlib.sha256(files[path]).hexdigest(),fingerprint)
+                self.assertEqual(hashlib.sha256(checked[path]).hexdigest(),fingerprint)
+    def test_frozen_checkout_detects_missing_byte_preservation_attributes(self):
+        path='provenance/ANSWER/synthetic-crlf.txt'
+        raw=b'SYNTHETIC frozen bytes\r\nsecond line\r\n'
+        protected=self._checkout_frozen_bytes({path:raw},(ROOT/'.gitattributes').read_bytes())
+        self.assertEqual(protected[path],raw)
+        unprotected=self._checkout_frozen_bytes({path:raw},b'* text=auto eol=lf\n')
+        self.assertNotEqual(unprotected[path],raw)
+        self.assertEqual(unprotected[path],raw.replace(b'\r\n',b'\n'))
     def test_generated_assets_have_no_drift(self): self.assertEqual(generate(True)['generated_assets'],'PASS')
     def test_unique_ids_indexed_once(self): self.assertEqual(set(self.r.methods),set(self.r.index['methods']))
     def test_six_types_with_gaps_not_fake_cases(self):
@@ -68,7 +98,9 @@ class RegistryEngineTest(unittest.TestCase):
         for mid in self.r.index['golden_methods']:
             self.assertEqual(load('method-registry/history/'+mid+'/1.0.0.yaml')['version'],'1.0.0')
             self.assertEqual(Registry(snapshot_commit='b04ebc26d7fa096404111a0bb12f6c77cc8525b9').methods[mid]['version'],'1.1.0')
-            self.assertEqual(self.r.methods[mid]['version'],'1.2.0')
+            expected='1.2.1' if mid in ('R02','R06') else '1.2.0'
+            self.assertEqual(self.r.methods[mid]['version'],expected)
+            self.assertEqual(load('method-registry/history/'+mid+'/1.2.0.yaml')['version'],'1.2.0')
 
 class AnalyzerTest(unittest.TestCase):
     @classmethod
@@ -243,7 +275,10 @@ class AnalyzerTest(unittest.TestCase):
         for kind in ['structured','content-export']:
             projected=json.loads(render(out,kind,self.r)); self.assertEqual(projected['answer'],out['answer'])
             self.assertEqual(projected['evidence_graph'],out['evidence_graph'])
-        for kind in ['student','legacy-wechat']: self.assertIn('protection',render(out,kind,self.r))
+        for kind in ['student','legacy-wechat']:
+            body=render(out,kind,self.r)
+            self.assertIn('逐步讲解还没齐',body)
+            self.assertNotIn('protection',body)
     def test_content_export_never_claims_release(self):
         out=json.loads(render(self.a.analyze(grammar_review()),'content-export',self.r))
         self.assertEqual(out['safe_for_release'],'untested')

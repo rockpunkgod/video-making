@@ -1,0 +1,132 @@
+method_id: G05
+brand_name: 介词看场景
+source_name: 介词
+aliases:
+- 介词
+question_type: 语法填空
+method_type: method
+role: decider
+primary_role: decider
+secondary_roles: []
+output_type: decide
+student_symptoms:
+- 空位已判需要介词
+trigger_cues:
+- 空位已判需要介词
+core_action: 圈介词后的中心词及所属动作，核场景关系或固定搭配，陌生搭配不猜
+decision_rule: 圈介词后的中心内容及所属动作，先核已知搭配，再核时空、工具方式或实际关系；具体结构和句意支持后才选介词。
+verification: 圈介词后的中心词及所属动作，核场景关系或固定搭配，陌生搭配不猜。圈介词后的中心内容及所属动作，先核已知搭配，再核时空、工具方式或实际关系；具体结构和句意支持后才选介词。
+  搭配未知或场景关系不能确认时暂停；多于两个对象不自动among，数量增加了与增加到须分开，不能把宽泛方向口诀作唯一依据。
+stop_rule: 搭配未知或场景关系不能确认时暂停；多于两个对象不自动among，数量增加了与增加到须分开，不能把宽泛方向口诀作唯一依据。
+common_wrong_instinct: 看见三个人就填among，看到increase就随便选by/to，不区分关系。
+failure_cases:
+- 看见三个人就填among，看到increase就随便选by/to，不区分关系。
+- 搭配未知或场景关系不能确认时暂停；多于两个对象不自动among，数量增加了与增加到须分开，不能把宽泛方向口诀作唯一依据。
+counterexamples:
+- 对象多于两个但题面逐一明确相互关系，可需between路线；只数对象不能选介词。
+transfer_pattern: 换场景仍核支配结构与实际联系，不迁移人数或中文词的唯一对应。
+memory_line: 圈介词后的中心词及所属动作，核场景关系或固定搭配，陌生搭配不猜
+anti_rule: 对象多 ≠ 必用among。
+visual_formula: '动作/搭配 + 介词后中心词
+
+  ↓ 时间 / 空间 / 工具 / 实际关系
+
+  increase：差量by / 终点to
+
+  → 有据介词（decide）；搭配未知 → 停'
+challenge_prompt: 先不填介词，圈它后面的中心词与支配动作，写题面要表达哪种关系，而不是只数对象。
+source_references:
+- repository: https://github.com/rockpunkgod/ANSWER.git
+  path: gaokao-grammar-fill/references/grammar-fill.md
+  heading: 介词
+  commit: 1c388a0596b13935ae7c6a1af00834915a8efa33
+section_ids:
+- bdec04e2ce032b40
+can_follow: []
+usually_before: []
+usually_after: []
+conflicts_with: []
+cannot_replace:
+- 完整题面验证
+levels:
+  L1: 圈介词后的中心词及所属动作，核场景关系或固定搭配，陌生搭配不猜
+  L2: 圈介词后的中心内容及所属动作，先核已知搭配，再核时空、工具方式或实际关系；具体结构和句意支持后才选介词。
+  L3: 搭配未知或场景关系不能确认时暂停；多于两个对象不自动among，数量增加了与增加到须分开，不能把宽泛方向口诀作唯一依据。
+  L4: 换场景仍核支配结构与实际联系，不迁移人数或中文词的唯一对应。
+compact:
+  10s: 介词总凭感觉？圈动作和后面的中心词，先查搭配再判场景关系；对象多不自动among，未知搭配停。
+  30s: 确定需要介词后，圈支配动作与后面中心内容，核搭配和时空工具关系。关系示意：increase by是差量，to是达到量。多于两者也需看是否逐一关系；搭配或场景不明就停，别用单词清单直接填。
+  90s: 空位已判需要介词时，先确认：空位已判需要介词。第一刀：圈介词后的中心词及所属动作，核场景关系或固定搭配，陌生搭配不猜。产物 decide：圈介词后的中心内容及所属动作，先核已知搭配，再核时空、工具方式或实际关系；具体结构和句意支持后才选介词。
+    停止：搭配未知或场景关系不能确认时暂停；多于两个对象不自动among，数量增加了与增加到须分开，不能把宽泛方向口诀作唯一依据。 反例（关系示意，不是真题）：对象多于两个但题面逐一明确相互关系，可需between路线；只数对象不能选介词。
+    迁移：换场景仍核支配结构与实际联系，不迁移人数或中文词的唯一对应。 挑战：先不填介词，圈它后面的中心词与支配动作，写题面要表达哪种关系，而不是只数对象。
+full:
+  summary: 圈介词后的中心词及所属动作，核场景关系或固定搭配，陌生搭配不猜 圈介词后的中心内容及所属动作，先核已知搭配，再核时空、工具方式或实际关系；具体结构和句意支持后才选介词。
+  source_boundary: 搭配未知或场景关系不能确认时暂停；多于两个对象不自动among，数量增加了与增加到须分开，不能把宽泛方向口诀作唯一依据。
+  boundaries:
+  - 搭配未知或场景关系不能确认时暂停；多于两个对象不自动among，数量增加了与增加到须分开，不能把宽泛方向口诀作唯一依据。
+  - 对象多于两个但题面逐一明确相互关系，可需between路线；只数对象不能选介词。
+  section_ids:
+  - bdec04e2ce032b40
+cases:
+  canonical: cases/grammar/G05/canonical/case.yaml
+four_step_card:
+  start: 空位已判需要介词
+  first_cut: 圈介词后的中心词及所属动作，核场景关系或固定搭配，陌生搭配不猜
+  judge: 圈介词后的中心内容及所属动作，先核已知搭配，再核时空、工具方式或实际关系；具体结构和句意支持后才选介词。
+  stop: 搭配未知或场景关系不能确认时暂停；多于两个对象不自动among，数量增加了与增加到须分开，不能把宽泛方向口诀作唯一依据。
+practicality_gate:
+  status: design_complete_empirical_pending
+  trigger: 空位已判需要介词
+  action: 圈介词后的中心词及所属动作，核场景关系或固定搭配，陌生搭配不猜
+  output: decide；圈介词后的中心内容及所属动作，先核已知搭配，再核时空、工具方式或实际关系；具体结构和句意支持后才选介词。
+  stop: 搭配未知或场景关系不能确认时暂停；多于两个对象不自动among，数量增加了与增加到须分开，不能把宽泛方向口诀作唯一依据。
+  transfer: 换场景仍核支配结构与实际联系，不迁移人数或中文词的唯一对应。
+  efficiency: 把介词选择约束到具体搭配和关系，减少无目标试词；效果未测。
+  misuse_cost: 未经实测；看见三个人就填among，看到increase就随便选by/to，不区分关系。会导致误判；须先核触发、执行Stop，不允许辅助产物越级定案。
+first_use_test:
+  status: designed_not_run
+  trigger_success: null
+  action_success: null
+  evidence_success: null
+  stop_rule_success: null
+  no_answer_backfit: null
+  failure_type: null
+  final_result: pending_real_student_test
+evaluation:
+  baseline: 普通逐项核题面
+  primary_benefit_hypothesis: 把介词选择约束到具体搭配和关系，减少无目标试词；效果未测。
+  trigger_precision: null
+  trigger_recall: null
+  resolution_rate: null
+  standalone_rate: null
+  assist_rate: null
+  false_trigger_rate: null
+  transfer_rate: null
+  boundary_accuracy: null
+  time_complexity_gain: null
+usefulness_level: Useful
+status: candidate
+maturity_status: candidate
+practical_value: Useful
+version: 1.2.0
+change_reason: ANSWER 1c388a0596b13935ae7c6a1af00834915a8efa33 增量来源同步；保留既有动作与版本，旧证据不自动获得新来源准入。
+affected_cases:
+- cases/grammar/G05/canonical/case.yaml
+regression_result: pending_current_epoch_semantic_and_student_acceptance
+student_ready: false
+entry_copy: 空位已判需要介词时，第一眼先找：空位已判需要介词。手上先做：圈介词后的中心词及所属动作，核场景关系或固定搭配，陌生搭配不猜。做完得到 decide，不是通用答案。圈介词后的中心内容及所属动作，先核已知搭配，再核时空、工具方式或实际关系；具体结构和句意支持后才选介词。
+  什么时候停：搭配未知或场景关系不能确认时暂停；多于两个对象不自动among，数量增加了与增加到须分开，不能把宽泛方向口诀作唯一依据。 换题仍这样做：换场景仍核支配结构与实际联系，不迁移人数或中文词的唯一对应。
+static_design_review:
+  status: source_rebound_semantic_reacceptance_pending
+  source_section_ids:
+  - bdec04e2ce032b40
+  participant_validation: pending_real_participant_validation
+  example_scope: schematic source boundary, not a verified exam
+source_alignment:
+  commit: 1c388a0596b13935ae7c6a1af00834915a8efa33
+  state: live_source_bound
+  source_content_changed: false
+  correction_profile_applied: false
+  authored_first_contact_draft: false
+  new_course_branches: preserved_in_full_contract_not_automatically_aliased
+  acceptance: unchanged_method_sections; added_source_contracts_preserved; learner/release_pending

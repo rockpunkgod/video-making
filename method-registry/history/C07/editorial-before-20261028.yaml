@@ -1,0 +1,129 @@
+method_id: C07
+brand_name: 名词回声
+source_name: 名词复现只是线索
+aliases:
+- 名词复现只是线索
+question_type: 完形填空
+method_type: sub_action
+role: locator
+primary_role: locator
+secondary_roles: []
+output_type: locate
+student_symptoms:
+- 名词空需要同一人物物件或事件线索
+trigger_cues:
+- 名词空有可确认原词、近义、同源复现或真实语义对照线索。
+core_action: 圈相关表达及其内容，确认仍指同一人物、状态或事件；已知派生关系再核词义，必要时向后找并回填。
+decision_rule: 只产出词汇呼应的对象线索；对照需同一语义维度，后续仍核句意、推进和主线。
+verification: 只产出词汇呼应的对象线索；对照需同一语义维度，后续仍核句意、推进和主线。 未知词根不拆猜，共同后缀或形近不当同根；and不强定同向，复现、类别或次数不定案；同指或词义不明暂留。
+stop_rule: 未知词根不拆猜，共同后缀或形近不当同根；and不强定同向，复现、类别或次数不定案；同指或词义不明暂留。
+common_wrong_instinct: 某个名词重复就直接填它，不核是否还是同一对象或同一次事件。
+failure_cases:
+- 某个名词重复就直接填它，不核是否还是同一对象或同一次事件。
+- 未知词根不拆猜，共同后缀或形近不当同根；and不强定同向，复现、类别或次数不定案；同指或词义不明暂留。
+counterexamples:
+- 两个地方用了同一个名词，但指不同事件或对象；重复词形不能证明本空需要该含义。
+transfer_pattern: 换文仍证明同指后使用复现，不迁移上篇词对或固定比例说法。
+memory_line: 圈相关表达及其内容，确认仍指同一人物、状态或事件；已知派生关系再核词义，必要时向后找并回填。
+anti_rule: 复现 ≠ 本空答案。
+visual_formula: "原词/近义/同源复现\n        ↓ 同一对象或事件？\n是 → 标线索位置（locate）→ 核句意/推进\n否/未知 →\
+  \ 停止采用；不凭复现选"
+challenge_prompt: 不填名词，只连出两处复现表达，分别标对象或事件；说清为什么是同一对象，而不只指出词一样。
+source_references:
+- repository: https://github.com/rockpunkgod/ANSWER.git
+  path: gaokao-english/references/cloze.md
+  heading: 名词复现只是线索
+  commit: 1c388a0596b13935ae7c6a1af00834915a8efa33
+section_ids:
+- 89415a44acd8248e
+can_follow: []
+usually_before: []
+usually_after: []
+conflicts_with: []
+cannot_replace:
+- 完整题面验证
+levels:
+  L1: 圈原词/同义/同源复现并核是否同一对象，不把复现直接当答案
+  L2: 圈原词、同义、近义或同源复现，并逐对核仍指同一人物、物品或事件；产物是对象线索位置，之后须核句意、段落推进与主线。
+  L3: 宽泛类别、同词或复现次数不构成定案；同名不同事件需分开，邻句不足可找后面几句，但缺同指关系就停止采用该线索。
+  L4: 换文仍证明同指后使用复现，不迁移上篇词对或固定比例说法。
+compact:
+  line: 圈相关表达及其内容，确认仍指同一人物、状态或事件；已知派生关系再核词义，必要时向后找并回填。
+  boundary: 未知词根不拆猜，共同后缀或形近不当同根；and不强定同向，复现、类别或次数不定案；同指或词义不明暂留。
+  10s: 圈相关表达及其内容，确认仍指同一人物、状态或事件；已知派生关系再核词义，必要时向后找并回填。 只产出词汇呼应的对象线索；对照需同一语义维度，后续仍核句意、推进和主线。
+  30s: 名词空有可确认原词、近义、同源复现或真实语义对照线索。 圈相关表达及其内容，确认仍指同一人物、状态或事件；已知派生关系再核词义，必要时向后找并回填。
+    未知词根不拆猜，共同后缀或形近不当同根；and不强定同向，复现、类别或次数不定案；同指或词义不明暂留。
+  90s: 名词空有可确认原词、近义、同源复现或真实语义对照线索。 手上先做：圈相关表达及其内容，确认仍指同一人物、状态或事件；已知派生关系再核词义，必要时向后找并回填。
+    做完得到：只产出词汇呼应的对象线索；对照需同一语义维度，后续仍核句意、推进和主线。 停止：未知词根不拆猜，共同后缀或形近不当同根；and不强定同向，复现、类别或次数不定案；同指或词义不明暂留。
+    反例（边界示意，非真题）：两个地方用了同一个名词，但指不同事件或对象；重复词形不能证明本空需要该含义。 挑战：不填名词，只连出两处复现表达，分别标对象或事件；说清为什么是同一对象，而不只指出词一样。
+full:
+  summary: 圈相关表达及其内容，确认仍指同一人物、状态或事件；已知派生关系再核词义，必要时向后找并回填。 只产出词汇呼应的对象线索；对照需同一语义维度，后续仍核句意、推进和主线。
+  source_boundary: 未知词根不拆猜，共同后缀或形近不当同根；and不强定同向，复现、类别或次数不定案；同指或词义不明暂留。
+  boundaries:
+  - 未知词根不拆猜，共同后缀或形近不当同根；and不强定同向，复现、类别或次数不定案；同指或词义不明暂留。
+  - 两个地方用了同一个名词，但指不同事件或对象；重复词形不能证明本空需要该含义。
+  section_ids:
+  - 89415a44acd8248e
+cases:
+  canonical: cases/cloze/C07/canonical/case.yaml
+four_step_card:
+  start: 名词空有可确认原词、近义、同源复现或真实语义对照线索。
+  first_cut: 圈相关表达及其内容，确认仍指同一人物、状态或事件；已知派生关系再核词义，必要时向后找并回填。
+  judge: 只产出词汇呼应的对象线索；对照需同一语义维度，后续仍核句意、推进和主线。
+  stop: 未知词根不拆猜，共同后缀或形近不当同根；and不强定同向，复现、类别或次数不定案；同指或词义不明暂留。
+practicality_gate:
+  status: design_complete_empirical_pending
+  trigger: 名词空有可确认原词、近义、同源复现或真实语义对照线索。
+  action: 圈相关表达及其内容，确认仍指同一人物、状态或事件；已知派生关系再核词义，必要时向后找并回填。
+  output: locate；只产出词汇呼应的对象线索；对照需同一语义维度，后续仍核句意、推进和主线。
+  stop: 未知词根不拆猜，共同后缀或形近不当同根；and不强定同向，复现、类别或次数不定案；同指或词义不明暂留。
+  transfer: 换文仍证明同指后使用复现，不迁移上篇词对或固定比例说法。
+  efficiency: 复现确实同指时缩小阅读区域；主动剔除不同指线索可减少无效判断，效果未测。
+  misuse_cost: 未经实测；某个名词重复就直接填它，不核是否还是同一对象或同一次事件。会导致误判；须先核触发、执行Stop，不允许辅助产物越级定案。
+first_use_test:
+  status: designed_not_run
+  trigger_success: null
+  action_success: null
+  evidence_success: null
+  stop_rule_success: null
+  no_answer_backfit: null
+  failure_type: null
+  final_result: pending_real_student_test
+evaluation:
+  baseline: 普通逐项核题面
+  primary_benefit_hypothesis: 复现确实同指时缩小阅读区域；主动剔除不同指线索可减少无效判断，效果未测。
+  trigger_precision: null
+  trigger_recall: null
+  resolution_rate: null
+  standalone_rate: null
+  assist_rate: null
+  false_trigger_rate: null
+  transfer_rate: null
+  boundary_accuracy: null
+  time_complexity_gain: null
+usefulness_level: Useful
+status: candidate
+maturity_status: candidate
+practical_value: Useful
+version: 1.2.0
+change_reason: ANSWER 1c388a0596b13935ae7c6a1af00834915a8efa33 增量来源同步；保留既有动作与版本，旧证据不自动获得新来源准入。
+affected_cases:
+- cases/cloze/C07/canonical/case.yaml
+regression_result: pending_current_epoch_semantic_and_student_acceptance
+student_ready: false
+entry_copy: 名词空有可确认原词、近义、同源复现或真实语义对照线索。 手上先做：圈相关表达及其内容，确认仍指同一人物、状态或事件；已知派生关系再核词义，必要时向后找并回填。
+  做完得到：只产出词汇呼应的对象线索；对照需同一语义维度，后续仍核句意、推进和主线。 停止：未知词根不拆猜，共同后缀或形近不当同根；and不强定同向，复现、类别或次数不定案；同指或词义不明暂留。
+static_design_review:
+  status: source_rebound_semantic_reacceptance_pending
+  source_section_ids:
+  - 89415a44acd8248e
+  participant_validation: pending_real_participant_validation
+  example_scope: schematic source boundary, not a verified exam
+source_alignment:
+  commit: 1c388a0596b13935ae7c6a1af00834915a8efa33
+  state: live_source_bound
+  source_content_changed: false
+  correction_profile_applied: true
+  authored_first_contact_draft: false
+  new_course_branches: preserved_in_full_contract_not_automatically_aliased
+  acceptance: unchanged_method_sections; added_source_contracts_preserved; learner/release_pending

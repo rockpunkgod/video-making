@@ -1,0 +1,1727 @@
+{
+  "from_commit": "1c388a0596b13935ae7c6a1af00834915a8efa33",
+  "to_commit": "70db6d6f0423bc8da95c591ca1feda883c2865b1",
+  "validation": {
+    "methods": 82,
+    "source_documents": 21,
+    "status": "PASS"
+  },
+  "methods_reviewed": [
+    {
+      "method_id": "R01",
+      "source_deltas": [],
+      "review": "主客一致补观察/假设与语义施受边界；主语、时态、动静独立保名，不借七选五分组。期末两首一尾来源不覆盖三化入口。",
+      "version_before": "1.2.0",
+      "version_after": "1.2.0"
+    },
+    {
+      "method_id": "R02",
+      "source_deltas": [
+        {
+          "old_heading": "主客一致",
+          "new_heading": "主客一致",
+          "before_sha256": "6e24bb3635b2046cf8ae085a24f0cd024b2dfc5ba641685ff77886c296f6b6f6",
+          "after_sha256": "9fcae3d7aed400f17b64c49e8c905d88518c36f77988b474e28515820a17a03e"
+        }
+      ],
+      "review": "主客一致补观察/假设与语义施受边界；主语、时态、动静独立保名，不借七选五分组。期末两首一尾来源不覆盖三化入口。",
+      "version_before": "1.2.1",
+      "version_after": "1.2.1"
+    },
+    {
+      "method_id": "R06",
+      "source_deltas": [],
+      "review": "主客一致补观察/假设与语义施受边界；主语、时态、动静独立保名，不借七选五分组。期末两首一尾来源不覆盖三化入口。",
+      "version_before": "1.2.1",
+      "version_after": "1.2.1"
+    },
+    {
+      "method_id": "R09",
+      "source_deltas": [],
+      "review": "主客一致补观察/假设与语义施受边界；主语、时态、动静独立保名，不借七选五分组。期末两首一尾来源不覆盖三化入口。",
+      "version_before": "1.2.0",
+      "version_after": "1.2.0"
+    },
+    {
+      "method_id": "R03",
+      "source_deltas": [],
+      "review": "主客一致补观察/假设与语义施受边界；主语、时态、动静独立保名，不借七选五分组。期末两首一尾来源不覆盖三化入口。",
+      "version_before": "1.2.0",
+      "version_after": "1.2.0"
+    },
+    {
+      "method_id": "R04",
+      "source_deltas": [],
+      "review": "主客一致补观察/假设与语义施受边界；主语、时态、动静独立保名，不借七选五分组。期末两首一尾来源不覆盖三化入口。",
+      "version_before": "1.2.0",
+      "version_after": "1.2.0"
+    },
+    {
+      "method_id": "R05",
+      "source_deltas": [],
+      "review": "主客一致补观察/假设与语义施受边界；主语、时态、动静独立保名，不借七选五分组。期末两首一尾来源不覆盖三化入口。",
+      "version_before": "1.2.0",
+      "version_after": "1.2.0"
+    },
+    {
+      "method_id": "R07",
+      "source_deltas": [],
+      "review": "主客一致补观察/假设与语义施受边界；主语、时态、动静独立保名，不借七选五分组。期末两首一尾来源不覆盖三化入口。",
+      "version_before": "1.2.0",
+      "version_after": "1.2.0"
+    },
+    {
+      "method_id": "R08",
+      "source_deltas": [],
+      "review": "主客一致补观察/假设与语义施受边界；主语、时态、动静独立保名，不借七选五分组。期末两首一尾来源不覆盖三化入口。",
+      "version_before": "1.2.0",
+      "version_after": "1.2.0"
+    },
+    {
+      "method_id": "R10",
+      "source_deltas": [],
+      "review": "主客一致补观察/假设与语义施受边界；主语、时态、动静独立保名，不借七选五分组。期末两首一尾来源不覆盖三化入口。",
+      "version_before": "1.2.0",
+      "version_after": "1.2.0"
+    },
+    {
+      "method_id": "R11",
+      "source_deltas": [
+        {
+          "old_heading": "逻辑简化",
+          "new_heading": "逻辑简化",
+          "before_sha256": "daa8ae8cef2b2e0046a6652f8486e51c4f101f5b867cbe66f0f47d3be348d676",
+          "after_sha256": "fa97eb8885bc7e5e0e6e4787ea1d410f521f21b7d9b6dc88b30bedf7644c20c7"
+        }
+      ],
+      "review": "主客一致补观察/假设与语义施受边界；主语、时态、动静独立保名，不借七选五分组。期末两首一尾来源不覆盖三化入口。",
+      "version_before": "1.2.0",
+      "version_after": "1.2.0"
+    },
+    {
+      "method_id": "R12",
+      "source_deltas": [],
+      "review": "主客一致补观察/假设与语义施受边界；主语、时态、动静独立保名，不借七选五分组。期末两首一尾来源不覆盖三化入口。",
+      "version_before": "1.2.0",
+      "version_after": "1.2.0"
+    },
+    {
+      "method_id": "R13",
+      "source_deltas": [],
+      "review": "主客一致补观察/假设与语义施受边界；主语、时态、动静独立保名，不借七选五分组。期末两首一尾来源不覆盖三化入口。",
+      "version_before": "1.2.0",
+      "version_after": "1.2.0"
+    },
+    {
+      "method_id": "R14",
+      "source_deltas": [],
+      "review": "主客一致补观察/假设与语义施受边界；主语、时态、动静独立保名，不借七选五分组。期末两首一尾来源不覆盖三化入口。",
+      "version_before": "1.2.0",
+      "version_after": "1.2.0"
+    },
+    {
+      "method_id": "R15",
+      "source_deltas": [],
+      "review": "主客一致补观察/假设与语义施受边界；主语、时态、动静独立保名，不借七选五分组。期末两首一尾来源不覆盖三化入口。",
+      "version_before": "1.2.0",
+      "version_after": "1.2.0"
+    },
+    {
+      "method_id": "R16",
+      "source_deltas": [],
+      "review": "主客一致补观察/假设与语义施受边界；主语、时态、动静独立保名，不借七选五分组。期末两首一尾来源不覆盖三化入口。",
+      "version_before": "1.2.0",
+      "version_after": "1.2.0"
+    },
+    {
+      "method_id": "R17",
+      "source_deltas": [],
+      "review": "主客一致补观察/假设与语义施受边界；主语、时态、动静独立保名，不借七选五分组。期末两首一尾来源不覆盖三化入口。",
+      "version_before": "1.2.0",
+      "version_after": "1.2.0"
+    },
+    {
+      "method_id": "F01",
+      "source_deltas": [],
+      "review": "单复一致为指代/概括检查，不增加第四分组维度；逻辑判断内容关联保独立原名，不新增整题顺序。",
+      "version_before": "1.2.0",
+      "version_after": "1.2.0"
+    },
+    {
+      "method_id": "F02",
+      "source_deltas": [],
+      "review": "单复一致为指代/概括检查，不增加第四分组维度；逻辑判断内容关联保独立原名，不新增整题顺序。",
+      "version_before": "1.2.0",
+      "version_after": "1.2.0"
+    },
+    {
+      "method_id": "F03",
+      "source_deltas": [],
+      "review": "单复一致为指代/概括检查，不增加第四分组维度；逻辑判断内容关联保独立原名，不新增整题顺序。",
+      "version_before": "1.2.0",
+      "version_after": "1.2.0"
+    },
+    {
+      "method_id": "F04",
+      "source_deltas": [],
+      "review": "单复一致为指代/概括检查，不增加第四分组维度；逻辑判断内容关联保独立原名，不新增整题顺序。",
+      "version_before": "1.2.0",
+      "version_after": "1.2.0"
+    },
+    {
+      "method_id": "F05",
+      "source_deltas": [],
+      "review": "单复一致为指代/概括检查，不增加第四分组维度；逻辑判断内容关联保独立原名，不新增整题顺序。",
+      "version_before": "1.3.0",
+      "version_after": "1.3.0"
+    },
+    {
+      "method_id": "F06",
+      "source_deltas": [],
+      "review": "单复一致为指代/概括检查，不增加第四分组维度；逻辑判断内容关联保独立原名，不新增整题顺序。",
+      "version_before": "1.2.0",
+      "version_after": "1.2.0"
+    },
+    {
+      "method_id": "F07",
+      "source_deltas": [],
+      "review": "单复一致为指代/概括检查，不增加第四分组维度；逻辑判断内容关联保独立原名，不新增整题顺序。",
+      "version_before": "1.2.0",
+      "version_after": "1.2.0"
+    },
+    {
+      "method_id": "F08",
+      "source_deltas": [],
+      "review": "单复一致为指代/概括检查，不增加第四分组维度；逻辑判断内容关联保独立原名，不新增整题顺序。",
+      "version_before": "1.2.0",
+      "version_after": "1.2.0"
+    },
+    {
+      "method_id": "F09",
+      "source_deltas": [],
+      "review": "单复一致为指代/概括检查，不增加第四分组维度；逻辑判断内容关联保独立原名，不新增整题顺序。",
+      "version_before": "1.2.0",
+      "version_after": "1.2.0"
+    },
+    {
+      "method_id": "F10",
+      "source_deltas": [],
+      "review": "单复一致为指代/概括检查，不增加第四分组维度；逻辑判断内容关联保独立原名，不新增整题顺序。",
+      "version_before": "1.2.0",
+      "version_after": "1.2.0"
+    },
+    {
+      "method_id": "F11",
+      "source_deltas": [],
+      "review": "单复一致为指代/概括检查，不增加第四分组维度；逻辑判断内容关联保独立原名，不新增整题顺序。",
+      "version_before": "1.2.0",
+      "version_after": "1.2.0"
+    },
+    {
+      "method_id": "C01",
+      "source_deltas": [
+        {
+          "old_heading": "语篇行文结构的已核验操作（内容说明，非新增方法名）",
+          "new_heading": "行文结构（结构认识与已核操作）",
+          "before_sha256": "512ac477bc094d44fa074163e673bcedea76605c1cb3a6f87c744331568d0fb6",
+          "after_sha256": "61f0f96fb37dbcb2468d54fbb7501d085aef8e8677b4e29a72bf808ddba6453d"
+        }
+      ],
+      "review": "行文结构是结构认识与取证入口；首句给假设，组合口诀和无信靠主题不替代单空证据，不强制遍数。",
+      "version_before": "1.2.1",
+      "version_after": "1.2.1"
+    },
+    {
+      "method_id": "C02",
+      "source_deltas": [],
+      "review": "行文结构是结构认识与取证入口；首句给假设，组合口诀和无信靠主题不替代单空证据，不强制遍数。",
+      "version_before": "1.2.1",
+      "version_after": "1.2.1"
+    },
+    {
+      "method_id": "C03",
+      "source_deltas": [
+        {
+          "old_heading": "语篇行文结构的已核验操作（内容说明，非新增方法名）",
+          "new_heading": "行文结构（结构认识与已核操作）",
+          "before_sha256": "512ac477bc094d44fa074163e673bcedea76605c1cb3a6f87c744331568d0fb6",
+          "after_sha256": "61f0f96fb37dbcb2468d54fbb7501d085aef8e8677b4e29a72bf808ddba6453d"
+        }
+      ],
+      "review": "行文结构是结构认识与取证入口；首句给假设，组合口诀和无信靠主题不替代单空证据，不强制遍数。",
+      "version_before": "1.2.0",
+      "version_after": "1.2.0"
+    },
+    {
+      "method_id": "C04",
+      "source_deltas": [],
+      "review": "行文结构是结构认识与取证入口；首句给假设，组合口诀和无信靠主题不替代单空证据，不强制遍数。",
+      "version_before": "1.2.0",
+      "version_after": "1.2.0"
+    },
+    {
+      "method_id": "C05",
+      "source_deltas": [],
+      "review": "行文结构是结构认识与取证入口；首句给假设，组合口诀和无信靠主题不替代单空证据，不强制遍数。",
+      "version_before": "1.2.0",
+      "version_after": "1.2.0"
+    },
+    {
+      "method_id": "C06",
+      "source_deltas": [],
+      "review": "行文结构是结构认识与取证入口；首句给假设，组合口诀和无信靠主题不替代单空证据，不强制遍数。",
+      "version_before": "1.2.0",
+      "version_after": "1.2.0"
+    },
+    {
+      "method_id": "C07",
+      "source_deltas": [],
+      "review": "行文结构是结构认识与取证入口；首句给假设，组合口诀和无信靠主题不替代单空证据，不强制遍数。",
+      "version_before": "1.2.0",
+      "version_after": "1.2.0"
+    },
+    {
+      "method_id": "C08",
+      "source_deltas": [],
+      "review": "行文结构是结构认识与取证入口；首句给假设，组合口诀和无信靠主题不替代单空证据，不强制遍数。",
+      "version_before": "1.2.0",
+      "version_after": "1.2.0"
+    },
+    {
+      "method_id": "C09",
+      "source_deltas": [],
+      "review": "行文结构是结构认识与取证入口；首句给假设，组合口诀和无信靠主题不替代单空证据，不强制遍数。",
+      "version_before": "1.2.0",
+      "version_after": "1.2.0"
+    },
+    {
+      "method_id": "G01",
+      "source_deltas": [
+        {
+          "old_heading": "总路线",
+          "new_heading": "总路线",
+          "before_sha256": "0cc0b1a8811ce26426fdc6424a572eca95c892aef717683db814e0a75d158a17",
+          "after_sha256": "340c814b04b615cb44633ba2b6a14690e30c7e99ed824be9cb25d160a93667cd"
+        },
+        {
+          "old_heading": "无提示词",
+          "new_heading": "无提示词",
+          "before_sha256": "faefb2f1b483dc2c6c78ead411875806ae7b9ff4a37e33bd3cb2e364ad04cc63",
+          "after_sha256": "b4a5752e8151ebd9cf66e7d2ec604559b6c34301d08161eb8b6b061a8c5793be"
+        },
+        {
+          "old_heading": "代词",
+          "new_heading": "代词",
+          "before_sha256": "b07c207759190d01e2e17f36531203bb6e749349b3ccb68384ae569222173a8d",
+          "after_sha256": "37685c9e90d6af39d63c1f9d9759125b1594e41b1635fe38994fd4d5f456a87c"
+        },
+        {
+          "old_heading": "连词、关系词与名词性从句连接词",
+          "new_heading": "连词、关系词与名词性从句连接词",
+          "before_sha256": "2e83deb672decb823bdf9e50e97b7b3de60827fc18dd059ac9a00353ffc3bc70",
+          "after_sha256": "70b2f669c3cd81614bd0c75310d1f4257d6d3f574897be337260b565fd265b8b"
+        },
+        {
+          "old_heading": "第一步：数谓语、看连接",
+          "new_heading": "第一步：数谓语、看连接",
+          "before_sha256": "2b26b51c4d37aa556124a3a2cfa0da8c29412772f2b434a80eedac746bb9b669",
+          "after_sha256": "70e487e2ece1b2bfcc6024677de3622bf40fb94d1efaefeb578cdf83656eaf1a"
+        },
+        {
+          "old_heading": "谓语：检查时态、语态、主谓一致",
+          "new_heading": "谓语：检查时态、语态、主谓一致",
+          "before_sha256": "377a24294ace85f4018f2738fb2af2da0a30706f6518d998bc3920a8eed97839",
+          "after_sha256": "64c20fa40c081da6038e0433ceccc89221f6c86ba3cf6e9ea1d558632aab6bee"
+        },
+        {
+          "old_heading": "非谓语：作用、主被动与先后",
+          "new_heading": "非谓语：作用、主被动与先后",
+          "before_sha256": "7aadefef7ed71be1b87f0cf184c5cb4449241a30eea2d078e4ae0be818e326b1",
+          "after_sha256": "53f53a5e2c013b2f271ebd699171bd295b8edc1f36ecee9b4932d361a1c5c9b7"
+        },
+        {
+          "old_heading": "26S春 补充（非谓语动词专项）",
+          "new_heading": "26S春 补充（非谓语动词专项）",
+          "before_sha256": "cc16fced8db2b4425ab9d873533fb89cfabeecf7c2ccb0f8bff35965b5dbe3dc",
+          "after_sha256": "83cd41a072bf15b9004d7ee8656f5e8bb054e62d64b3a98c4359ccf9b82383db"
+        },
+        {
+          "old_heading": "学生直接问方法时",
+          "new_heading": "学生直接问方法时",
+          "before_sha256": "ebb681e796879c38857fb41f7623735eb1e44b4b4f94444e75f0e706ffb379ac",
+          "after_sha256": "7ec6e06ae3e4e8810332abe4b6c076298885a0a2bf7b8e7d92dbd48b8a814407"
+        }
+      ],
+      "review": "一看二思保原名；反身回查不靠人称重复；why/how不按是否发生定词；非谓语按成分定主人，完成不定式不一律禁作后置修饰，逗号不独自定doing。",
+      "version_before": "1.2.0",
+      "version_after": "1.2.0"
+    },
+    {
+      "method_id": "G02",
+      "source_deltas": [
+        {
+          "old_heading": "总路线",
+          "new_heading": "总路线",
+          "before_sha256": "0cc0b1a8811ce26426fdc6424a572eca95c892aef717683db814e0a75d158a17",
+          "after_sha256": "340c814b04b615cb44633ba2b6a14690e30c7e99ed824be9cb25d160a93667cd"
+        }
+      ],
+      "review": "一看二思保原名；反身回查不靠人称重复；why/how不按是否发生定词；非谓语按成分定主人，完成不定式不一律禁作后置修饰，逗号不独自定doing。",
+      "version_before": "1.2.0",
+      "version_after": "1.2.0"
+    },
+    {
+      "method_id": "G03",
+      "source_deltas": [],
+      "review": "一看二思保原名；反身回查不靠人称重复；why/how不按是否发生定词；非谓语按成分定主人，完成不定式不一律禁作后置修饰，逗号不独自定doing。",
+      "version_before": "1.2.0",
+      "version_after": "1.2.0"
+    },
+    {
+      "method_id": "G04",
+      "source_deltas": [
+        {
+          "old_heading": "代词",
+          "new_heading": "代词",
+          "before_sha256": "b07c207759190d01e2e17f36531203bb6e749349b3ccb68384ae569222173a8d",
+          "after_sha256": "37685c9e90d6af39d63c1f9d9759125b1594e41b1635fe38994fd4d5f456a87c"
+        }
+      ],
+      "review": "一看二思保原名；反身回查不靠人称重复；why/how不按是否发生定词；非谓语按成分定主人，完成不定式不一律禁作后置修饰，逗号不独自定doing。",
+      "version_before": "1.2.0",
+      "version_after": "1.2.0"
+    },
+    {
+      "method_id": "G05",
+      "source_deltas": [],
+      "review": "一看二思保原名；反身回查不靠人称重复；why/how不按是否发生定词；非谓语按成分定主人，完成不定式不一律禁作后置修饰，逗号不独自定doing。",
+      "version_before": "1.2.0",
+      "version_after": "1.2.0"
+    },
+    {
+      "method_id": "G06",
+      "source_deltas": [
+        {
+          "old_heading": "连词、关系词与名词性从句连接词",
+          "new_heading": "连词、关系词与名词性从句连接词",
+          "before_sha256": "2e83deb672decb823bdf9e50e97b7b3de60827fc18dd059ac9a00353ffc3bc70",
+          "after_sha256": "70b2f669c3cd81614bd0c75310d1f4257d6d3f574897be337260b565fd265b8b"
+        }
+      ],
+      "review": "一看二思保原名；反身回查不靠人称重复；why/how不按是否发生定词；非谓语按成分定主人，完成不定式不一律禁作后置修饰，逗号不独自定doing。",
+      "version_before": "1.2.0",
+      "version_after": "1.2.0"
+    },
+    {
+      "method_id": "G07",
+      "source_deltas": [],
+      "review": "一看二思保原名；反身回查不靠人称重复；why/how不按是否发生定词；非谓语按成分定主人，完成不定式不一律禁作后置修饰，逗号不独自定doing。",
+      "version_before": "1.2.0",
+      "version_after": "1.2.0"
+    },
+    {
+      "method_id": "G08",
+      "source_deltas": [],
+      "review": "一看二思保原名；反身回查不靠人称重复；why/how不按是否发生定词；非谓语按成分定主人，完成不定式不一律禁作后置修饰，逗号不独自定doing。",
+      "version_before": "1.2.0",
+      "version_after": "1.2.0"
+    },
+    {
+      "method_id": "G09",
+      "source_deltas": [],
+      "review": "一看二思保原名；反身回查不靠人称重复；why/how不按是否发生定词；非谓语按成分定主人，完成不定式不一律禁作后置修饰，逗号不独自定doing。",
+      "version_before": "1.2.0",
+      "version_after": "1.2.0"
+    },
+    {
+      "method_id": "G10",
+      "source_deltas": [],
+      "review": "一看二思保原名；反身回查不靠人称重复；why/how不按是否发生定词；非谓语按成分定主人，完成不定式不一律禁作后置修饰，逗号不独自定doing。",
+      "version_before": "1.2.0",
+      "version_after": "1.2.0"
+    },
+    {
+      "method_id": "G11",
+      "source_deltas": [],
+      "review": "一看二思保原名；反身回查不靠人称重复；why/how不按是否发生定词；非谓语按成分定主人，完成不定式不一律禁作后置修饰，逗号不独自定doing。",
+      "version_before": "1.2.0",
+      "version_after": "1.2.0"
+    },
+    {
+      "method_id": "G12",
+      "source_deltas": [
+        {
+          "old_heading": "第一步：数谓语、看连接",
+          "new_heading": "第一步：数谓语、看连接",
+          "before_sha256": "2b26b51c4d37aa556124a3a2cfa0da8c29412772f2b434a80eedac746bb9b669",
+          "after_sha256": "70e487e2ece1b2bfcc6024677de3622bf40fb94d1efaefeb578cdf83656eaf1a"
+        }
+      ],
+      "review": "一看二思保原名；反身回查不靠人称重复；why/how不按是否发生定词；非谓语按成分定主人，完成不定式不一律禁作后置修饰，逗号不独自定doing。",
+      "version_before": "1.2.0",
+      "version_after": "1.2.0"
+    },
+    {
+      "method_id": "G13",
+      "source_deltas": [
+        {
+          "old_heading": "谓语：检查时态、语态、主谓一致",
+          "new_heading": "谓语：检查时态、语态、主谓一致",
+          "before_sha256": "377a24294ace85f4018f2738fb2af2da0a30706f6518d998bc3920a8eed97839",
+          "after_sha256": "64c20fa40c081da6038e0433ceccc89221f6c86ba3cf6e9ea1d558632aab6bee"
+        }
+      ],
+      "review": "一看二思保原名；反身回查不靠人称重复；why/how不按是否发生定词；非谓语按成分定主人，完成不定式不一律禁作后置修饰，逗号不独自定doing。",
+      "version_before": "1.2.0",
+      "version_after": "1.2.0"
+    },
+    {
+      "method_id": "G14",
+      "source_deltas": [
+        {
+          "old_heading": "谓语：检查时态、语态、主谓一致",
+          "new_heading": "谓语：检查时态、语态、主谓一致",
+          "before_sha256": "377a24294ace85f4018f2738fb2af2da0a30706f6518d998bc3920a8eed97839",
+          "after_sha256": "64c20fa40c081da6038e0433ceccc89221f6c86ba3cf6e9ea1d558632aab6bee"
+        }
+      ],
+      "review": "一看二思保原名；反身回查不靠人称重复；why/how不按是否发生定词；非谓语按成分定主人，完成不定式不一律禁作后置修饰，逗号不独自定doing。",
+      "version_before": "1.2.0",
+      "version_after": "1.2.0"
+    },
+    {
+      "method_id": "G15",
+      "source_deltas": [
+        {
+          "old_heading": "非谓语：作用、主被动与先后",
+          "new_heading": "非谓语：作用、主被动与先后",
+          "before_sha256": "7aadefef7ed71be1b87f0cf184c5cb4449241a30eea2d078e4ae0be818e326b1",
+          "after_sha256": "53f53a5e2c013b2f271ebd699171bd295b8edc1f36ecee9b4932d361a1c5c9b7"
+        }
+      ],
+      "review": "一看二思保原名；反身回查不靠人称重复；why/how不按是否发生定词；非谓语按成分定主人，完成不定式不一律禁作后置修饰，逗号不独自定doing。",
+      "version_before": "1.2.0",
+      "version_after": "1.2.0"
+    },
+    {
+      "method_id": "G16",
+      "source_deltas": [
+        {
+          "old_heading": "26S春 补充（非谓语动词专项）",
+          "new_heading": "26S春 补充（非谓语动词专项）",
+          "before_sha256": "cc16fced8db2b4425ab9d873533fb89cfabeecf7c2ccb0f8bff35965b5dbe3dc",
+          "after_sha256": "83cd41a072bf15b9004d7ee8656f5e8bb054e62d64b3a98c4359ccf9b82383db"
+        }
+      ],
+      "review": "一看二思保原名；反身回查不靠人称重复；why/how不按是否发生定词；非谓语按成分定主人，完成不定式不一律禁作后置修饰，逗号不独自定doing。",
+      "version_before": "1.2.0",
+      "version_after": "1.2.0"
+    },
+    {
+      "method_id": "G17",
+      "source_deltas": [
+        {
+          "old_heading": "总路线",
+          "new_heading": "总路线",
+          "before_sha256": "0cc0b1a8811ce26426fdc6424a572eca95c892aef717683db814e0a75d158a17",
+          "after_sha256": "340c814b04b615cb44633ba2b6a14690e30c7e99ed824be9cb25d160a93667cd"
+        }
+      ],
+      "review": "一看二思保原名；反身回查不靠人称重复；why/how不按是否发生定词；非谓语按成分定主人，完成不定式不一律禁作后置修饰，逗号不独自定doing。",
+      "version_before": "1.2.0",
+      "version_after": "1.2.0"
+    },
+    {
+      "method_id": "G18",
+      "source_deltas": [
+        {
+          "old_heading": "总路线",
+          "new_heading": "总路线",
+          "before_sha256": "0cc0b1a8811ce26426fdc6424a572eca95c892aef717683db814e0a75d158a17",
+          "after_sha256": "340c814b04b615cb44633ba2b6a14690e30c7e99ed824be9cb25d160a93667cd"
+        }
+      ],
+      "review": "一看二思保原名；反身回查不靠人称重复；why/how不按是否发生定词；非谓语按成分定主人，完成不定式不一律禁作后置修饰，逗号不独自定doing。",
+      "version_before": "1.2.0",
+      "version_after": "1.2.0"
+    },
+    {
+      "method_id": "G19",
+      "source_deltas": [
+        {
+          "old_heading": "总路线",
+          "new_heading": "总路线",
+          "before_sha256": "0cc0b1a8811ce26426fdc6424a572eca95c892aef717683db814e0a75d158a17",
+          "after_sha256": "340c814b04b615cb44633ba2b6a14690e30c7e99ed824be9cb25d160a93667cd"
+        }
+      ],
+      "review": "一看二思保原名；反身回查不靠人称重复；why/how不按是否发生定词；非谓语按成分定主人，完成不定式不一律禁作后置修饰，逗号不独自定doing。",
+      "version_before": "1.2.0",
+      "version_after": "1.2.0"
+    },
+    {
+      "method_id": "A01",
+      "source_deltas": [],
+      "review": "寒4五步不吞并赠课挖空版本；春5格式与结尾服从实际任务；国庆表达技巧、修改流程和构思模型分别保名，简单句可保留。",
+      "version_before": "1.2.0",
+      "version_after": "1.2.0"
+    },
+    {
+      "method_id": "A02",
+      "source_deltas": [],
+      "review": "寒4五步不吞并赠课挖空版本；春5格式与结尾服从实际任务；国庆表达技巧、修改流程和构思模型分别保名，简单句可保留。",
+      "version_before": "1.2.0",
+      "version_after": "1.2.0"
+    },
+    {
+      "method_id": "A03",
+      "source_deltas": [
+        {
+          "old_heading": "三种写作表达方法的细化",
+          "new_heading": "三种写作表达方法的细化",
+          "before_sha256": "61017c3bbc8e23403d92bdfa6b43efae11277d24f0035ab883b243e5b0f049d9",
+          "after_sha256": "88392cb6cb8331b093781debdb3d9f1b3a237d071dcd4b5f91b81d5961111a7c"
+        }
+      ],
+      "review": "寒4五步不吞并赠课挖空版本；春5格式与结尾服从实际任务；国庆表达技巧、修改流程和构思模型分别保名，简单句可保留。",
+      "version_before": "1.2.0",
+      "version_after": "1.2.0"
+    },
+    {
+      "method_id": "A04",
+      "source_deltas": [
+        {
+          "old_heading": "三种写作表达方法的细化",
+          "new_heading": "三种写作表达方法的细化",
+          "before_sha256": "61017c3bbc8e23403d92bdfa6b43efae11277d24f0035ab883b243e5b0f049d9",
+          "after_sha256": "88392cb6cb8331b093781debdb3d9f1b3a237d071dcd4b5f91b81d5961111a7c"
+        }
+      ],
+      "review": "寒4五步不吞并赠课挖空版本；春5格式与结尾服从实际任务；国庆表达技巧、修改流程和构思模型分别保名，简单句可保留。",
+      "version_before": "1.2.0",
+      "version_after": "1.2.0"
+    },
+    {
+      "method_id": "A05",
+      "source_deltas": [
+        {
+          "old_heading": "三种写作表达方法的细化",
+          "new_heading": "三种写作表达方法的细化",
+          "before_sha256": "61017c3bbc8e23403d92bdfa6b43efae11277d24f0035ab883b243e5b0f049d9",
+          "after_sha256": "88392cb6cb8331b093781debdb3d9f1b3a237d071dcd4b5f91b81d5961111a7c"
+        }
+      ],
+      "review": "寒4五步不吞并赠课挖空版本；春5格式与结尾服从实际任务；国庆表达技巧、修改流程和构思模型分别保名，简单句可保留。",
+      "version_before": "1.2.0",
+      "version_after": "1.2.0"
+    },
+    {
+      "method_id": "A06",
+      "source_deltas": [
+        {
+          "old_heading": "富兰克林写作法（寒4五步）",
+          "new_heading": "富兰克林写作法（寒4五步）",
+          "before_sha256": "cb10615dcd2d25ee40d339ec087c84f9f2f4ef30ad0469c303e2a3e64e648264",
+          "after_sha256": "eaf35bfd32a9fa8a3e4eaf3caf29a2b4f7f9c30c46fb5a06a6421619c692286d"
+        }
+      ],
+      "review": "寒4五步不吞并赠课挖空版本；春5格式与结尾服从实际任务；国庆表达技巧、修改流程和构思模型分别保名，简单句可保留。",
+      "version_before": "1.2.0",
+      "version_after": "1.2.1"
+    },
+    {
+      "method_id": "A07",
+      "source_deltas": [],
+      "review": "寒4五步不吞并赠课挖空版本；春5格式与结尾服从实际任务；国庆表达技巧、修改流程和构思模型分别保名，简单句可保留。",
+      "version_before": "1.2.0",
+      "version_after": "1.2.1"
+    },
+    {
+      "method_id": "A08",
+      "source_deltas": [
+        {
+          "old_heading": "26S春 补充",
+          "new_heading": "26S春 补充",
+          "before_sha256": "c79ac2b551a2f325dc48467a696cc2545e15b9b250c49a3191a7b352e8e8afb6",
+          "after_sha256": "2876c45edcabc7b20bd07e82ac027e4a1d930d1949d7058da1a09b142620d75a"
+        }
+      ],
+      "review": "寒4五步不吞并赠课挖空版本；春5格式与结尾服从实际任务；国庆表达技巧、修改流程和构思模型分别保名，简单句可保留。",
+      "version_before": "1.2.0",
+      "version_after": "1.2.0"
+    },
+    {
+      "method_id": "A09",
+      "source_deltas": [],
+      "review": "寒4五步不吞并赠课挖空版本；春5格式与结尾服从实际任务；国庆表达技巧、修改流程和构思模型分别保名，简单句可保留。",
+      "version_before": "1.2.0",
+      "version_after": "1.2.0"
+    },
+    {
+      "method_id": "A10",
+      "source_deltas": [],
+      "review": "寒4五步不吞并赠课挖空版本；春5格式与结尾服从实际任务；国庆表达技巧、修改流程和构思模型分别保名，简单句可保留。",
+      "version_before": "1.2.0",
+      "version_after": "1.2.0"
+    },
+    {
+      "method_id": "W01",
+      "source_deltas": [],
+      "review": "PTSD各来源槽位不混；动作面已证为描写概念而非自造公式；两简一复从与反向扩写分开；七句方案不取代十句五定，环境/升华须由当前故事支持。",
+      "version_before": "1.2.0",
+      "version_after": "1.2.0"
+    },
+    {
+      "method_id": "W02",
+      "source_deltas": [],
+      "review": "PTSD各来源槽位不混；动作面已证为描写概念而非自造公式；两简一复从与反向扩写分开；七句方案不取代十句五定，环境/升华须由当前故事支持。",
+      "version_before": "1.3.0",
+      "version_after": "1.3.0"
+    },
+    {
+      "method_id": "W03",
+      "source_deltas": [
+        {
+          "old_heading": "情节构思：PTSD 四步法",
+          "new_heading": "情节构思：PTSD 四步法",
+          "before_sha256": "39ddeddf6dfd4e5fd57e46283227a2b422fdb0b04383e05b3f18d94b49702aba",
+          "after_sha256": "dd50ee03cdc047af5be79647378aa06bf9068b8eaf6ab7ba84b7d271b656ec3d"
+        },
+        {
+          "old_heading": "26S春 补充（人与自然专项）",
+          "new_heading": "26S春 补充（人与自然专项）",
+          "before_sha256": "3c0d9b8bb290f03c2283c17fc92dc2b5d8380327ad3ed16f6a0e15b61bd1af14",
+          "after_sha256": "ed8d9c704eaf3eb4d25488a436b7bc1f583516c3eb9fc2c24d42341b162d9a87"
+        }
+      ],
+      "review": "PTSD各来源槽位不混；动作面已证为描写概念而非自造公式；两简一复从与反向扩写分开；七句方案不取代十句五定，环境/升华须由当前故事支持。",
+      "version_before": "1.2.0",
+      "version_after": "1.2.0"
+    },
+    {
+      "method_id": "W04",
+      "source_deltas": [],
+      "review": "PTSD各来源槽位不混；动作面已证为描写概念而非自造公式；两简一复从与反向扩写分开；七句方案不取代十句五定，环境/升华须由当前故事支持。",
+      "version_before": "1.2.0",
+      "version_after": "1.2.0"
+    },
+    {
+      "method_id": "W05",
+      "source_deltas": [
+        {
+          "old_heading": "动作链与动作面",
+          "new_heading": "动作链与动作面",
+          "before_sha256": "8af2fe8e464feb5a1ce59e0033cf8f04b7ad38ec66a05c9ec39c52cae743e5b8",
+          "after_sha256": "60cbe6dc95afe1873809fdff13c1bd87f4737ad01a55f512a009ffa1b712f62a"
+        }
+      ],
+      "review": "PTSD各来源槽位不混；动作面已证为描写概念而非自造公式；两简一复从与反向扩写分开；七句方案不取代十句五定，环境/升华须由当前故事支持。",
+      "version_before": "1.2.0",
+      "version_after": "1.2.1"
+    },
+    {
+      "method_id": "W06",
+      "source_deltas": [],
+      "review": "PTSD各来源槽位不混；动作面已证为描写概念而非自造公式；两简一复从与反向扩写分开；七句方案不取代十句五定，环境/升华须由当前故事支持。",
+      "version_before": "1.2.0",
+      "version_after": "1.2.0"
+    },
+    {
+      "method_id": "W07",
+      "source_deltas": [
+        {
+          "old_heading": "26S春 补充（人与自然专项）",
+          "new_heading": "26S春 补充（人与自然专项）",
+          "before_sha256": "3c0d9b8bb290f03c2283c17fc92dc2b5d8380327ad3ed16f6a0e15b61bd1af14",
+          "after_sha256": "ed8d9c704eaf3eb4d25488a436b7bc1f583516c3eb9fc2c24d42341b162d9a87"
+        }
+      ],
+      "review": "PTSD各来源槽位不混；动作面已证为描写概念而非自造公式；两简一复从与反向扩写分开；七句方案不取代十句五定，环境/升华须由当前故事支持。",
+      "version_before": "1.2.0",
+      "version_after": "1.2.0"
+    },
+    {
+      "method_id": "W08",
+      "source_deltas": [],
+      "review": "PTSD各来源槽位不混；动作面已证为描写概念而非自造公式；两简一复从与反向扩写分开；七句方案不取代十句五定，环境/升华须由当前故事支持。",
+      "version_before": "1.2.0",
+      "version_after": "1.2.0"
+    },
+    {
+      "method_id": "W09",
+      "source_deltas": [
+        {
+          "old_heading": "26S春 补充（人与自然专项）",
+          "new_heading": "26S春 补充（人与自然专项）",
+          "before_sha256": "3c0d9b8bb290f03c2283c17fc92dc2b5d8380327ad3ed16f6a0e15b61bd1af14",
+          "after_sha256": "ed8d9c704eaf3eb4d25488a436b7bc1f583516c3eb9fc2c24d42341b162d9a87"
+        }
+      ],
+      "review": "PTSD各来源槽位不混；动作面已证为描写概念而非自造公式；两简一复从与反向扩写分开；七句方案不取代十句五定，环境/升华须由当前故事支持。",
+      "version_before": "1.2.0",
+      "version_after": "1.2.0"
+    },
+    {
+      "method_id": "W10",
+      "source_deltas": [],
+      "review": "PTSD各来源槽位不混；动作面已证为描写概念而非自造公式；两简一复从与反向扩写分开；七句方案不取代十句五定，环境/升华须由当前故事支持。",
+      "version_before": "1.2.0",
+      "version_after": "1.2.0"
+    },
+    {
+      "method_id": "W11",
+      "source_deltas": [
+        {
+          "old_heading": "26S春 补充（人与自然专项）",
+          "new_heading": "26S春 补充（人与自然专项）",
+          "before_sha256": "3c0d9b8bb290f03c2283c17fc92dc2b5d8380327ad3ed16f6a0e15b61bd1af14",
+          "after_sha256": "ed8d9c704eaf3eb4d25488a436b7bc1f583516c3eb9fc2c24d42341b162d9a87"
+        }
+      ],
+      "review": "PTSD各来源槽位不混；动作面已证为描写概念而非自造公式；两简一复从与反向扩写分开；七句方案不取代十句五定，环境/升华须由当前故事支持。",
+      "version_before": "1.2.0",
+      "version_after": "1.2.0"
+    },
+    {
+      "method_id": "W12",
+      "source_deltas": [],
+      "review": "PTSD各来源槽位不混；动作面已证为描写概念而非自造公式；两简一复从与反向扩写分开；七句方案不取代十句五定，环境/升华须由当前故事支持。",
+      "version_before": "1.2.0",
+      "version_after": "1.2.0"
+    },
+    {
+      "method_id": "W13",
+      "source_deltas": [
+        {
+          "old_heading": "26S春 补充（人与自然专项）",
+          "new_heading": "26S春 补充（人与自然专项）",
+          "before_sha256": "3c0d9b8bb290f03c2283c17fc92dc2b5d8380327ad3ed16f6a0e15b61bd1af14",
+          "after_sha256": "ed8d9c704eaf3eb4d25488a436b7bc1f583516c3eb9fc2c24d42341b162d9a87"
+        }
+      ],
+      "review": "PTSD各来源槽位不混；动作面已证为描写概念而非自造公式；两简一复从与反向扩写分开；七句方案不取代十句五定，环境/升华须由当前故事支持。",
+      "version_before": "1.2.0",
+      "version_after": "1.2.0"
+    },
+    {
+      "method_id": "W14",
+      "source_deltas": [
+        {
+          "old_heading": "肌肉句与骨架句",
+          "new_heading": "肌肉句与骨架句",
+          "before_sha256": "47f7e05785ba94a07462b98e35905d95152a7d545d04b5251901b9a6a9cba59b",
+          "after_sha256": "5495fad047b907d1392d37ca8b9d100ff641a5db29463c05d902c2ab7aefbfbc"
+        },
+        {
+          "old_heading": "26S春 补充（人与自然专项）",
+          "new_heading": "26S春 补充（人与自然专项）",
+          "before_sha256": "3c0d9b8bb290f03c2283c17fc92dc2b5d8380327ad3ed16f6a0e15b61bd1af14",
+          "after_sha256": "ed8d9c704eaf3eb4d25488a436b7bc1f583516c3eb9fc2c24d42341b162d9a87"
+        }
+      ],
+      "review": "PTSD各来源槽位不混；动作面已证为描写概念而非自造公式；两简一复从与反向扩写分开；七句方案不取代十句五定，环境/升华须由当前故事支持。",
+      "version_before": "1.2.0",
+      "version_after": "1.2.0"
+    },
+    {
+      "method_id": "W15",
+      "source_deltas": [],
+      "review": "PTSD各来源槽位不混；动作面已证为描写概念而非自造公式；两简一复从与反向扩写分开；七句方案不取代十句五定，环境/升华须由当前故事支持。",
+      "version_before": "1.2.0",
+      "version_after": "1.2.0"
+    },
+    {
+      "method_id": "W16",
+      "source_deltas": [],
+      "review": "PTSD各来源槽位不混；动作面已证为描写概念而非自造公式；两简一复从与反向扩写分开；七句方案不取代十句五定，环境/升华须由当前故事支持。",
+      "version_before": "1.2.0",
+      "version_after": "1.2.0"
+    }
+  ],
+  "changed_source_methods": 28,
+  "corrected_projection_methods": [
+    "A06",
+    "A07",
+    "W05"
+  ],
+  "learner_acceptance": "pending",
+  "source_repository_modified": false,
+  "private_cases_modified": false,
+  "method_promotion_applied": false,
+  "full_regression": "not_run",
+  "scope": "source_alignment_and_bounded_editorial_corrections",
+  "status": "applied",
+  "backup_directory": "E:\\自媒体\\video-making\\local-data\\answer-alignment-20261030\\activation-backup-zwmdykgr",
+  "asset_hashes": [
+    {
+      "path": "agents/gaokao-grammar-fill.md",
+      "previous_sha256": "5cb48bcdbd01c832ee3caca78f0efb56ca08c47eb852dcd0e652f79e007df133",
+      "next_sha256": "bb2fab4cecbfb4a82fee7a07b197ae1231346db2e552c786e63cbce0b5342188"
+    },
+    {
+      "path": "agents/gaokao-objective.md",
+      "previous_sha256": "9bb166995bac11449252f8bba3a7913ffe6f8b1eb1afae0895ff58d6817f7159",
+      "next_sha256": "c6c183141a8ddb319c6c6285a116198f05f1bda5bc3185c160cd122276308c0d"
+    },
+    {
+      "path": "agents/gaokao-writing.md",
+      "previous_sha256": "18b4fcc18f1737e64563856ffb28d45a20f7f5a260142651ab350d82f881f548",
+      "next_sha256": "4cf686c5ad78616e3dbfcef5c868b8c2e2e9500fce3d3436cdd65b8ccf2dbb14"
+    },
+    {
+      "path": "evaluation/reports/current-student-entry-audit.json",
+      "previous_sha256": "c13546a733a177188d83aa619752ff182d9febf5f68e43e08633f2bf12af1c90",
+      "next_sha256": "565f6a90a55366c34d34a8c3d33852bd802758999f8b5828904ebc15597660f0"
+    },
+    {
+      "path": "gaokao-english/SKILL.md",
+      "previous_sha256": "314a110b0cf2ab78d65f6ee2ace2f01aa0899a87e83533a7dfa8c282736169b4",
+      "next_sha256": "77df82604a51859d3dbfba28afe0fb41dbd324af764ec907135f786cd7a4eb35"
+    },
+    {
+      "path": "gaokao-english/generated-contract.md",
+      "previous_sha256": "ce9f9ddc68b6884709c38bcd71dfcfa7724e02ccc260f1cfefcfd9c1ec431987",
+      "next_sha256": "165336c76d84c7a6650be8af48fb652fb88c7cc6bc378e2c857bd248ea4884d0"
+    },
+    {
+      "path": "gaokao-english/generated-course-identities.yaml",
+      "previous_sha256": "d534576b487a148d676e99a26e31133a08c9a344ad8dc780f3f77927bd1960dc",
+      "next_sha256": "26ceff0fbf99b050ccbc089710f68adf4dccb8becbb0fe37325edc3fde09710b"
+    },
+    {
+      "path": "gaokao-english/generated-methods.yaml",
+      "previous_sha256": "0e38813b4810c3ffd918b7089aeb3d65d019938362eb707c0b5d40005be5b2d5",
+      "next_sha256": "43f82cc64cb280f46eab38cb7fdcfbdcd749bc9e45737ce17eaa0fa434bdf660"
+    },
+    {
+      "path": "gaokao-english/references/cloze.md",
+      "previous_sha256": "71b985be2626234b9b2143dc9623c2d8af9c2c24599e8ff38e6cd6d8fc11551a",
+      "next_sha256": "35526eb207c196c18eecf8e731bd003f77445678a1d1680b837c10b51c8d84a8"
+    },
+    {
+      "path": "gaokao-english/references/course-evidence.md",
+      "previous_sha256": "65337a85e92dbcccd0ea9fdfb35fed0d8a271918ed178a55dbe0e71cfd14a42f",
+      "next_sha256": "0f9efb97f7cc0ab99d97e3e15e9d2318a5d7f6a2f45fab1cc08112109ec24a3c"
+    },
+    {
+      "path": "gaokao-english/references/delivery-contract.md",
+      "previous_sha256": "05f48808abf662a83b50c38b342e1db3f9ce5b84edd8fde7de387059ef0c44d2",
+      "next_sha256": "446e61e28a93e41fc01c513aef9600f041dfa3a30133909f41593810d4233453"
+    },
+    {
+      "path": "gaokao-english/references/evidence-gaps.md",
+      "previous_sha256": "32be8757443cfab39ff09b86b68def27c1f753fbb70b6d38da21ce22a4f6e222",
+      "next_sha256": "44f36aed04b2b34c4ce782fb433e69c6cef86b1ee1aab048ea6b3b596ded2518"
+    },
+    {
+      "path": "gaokao-english/references/lesson-review.md",
+      "previous_sha256": "3c7038f872900873515bac79000158c7c6e12b8f3cbe15b015ed8488f38aad88",
+      "next_sha256": "79d1d77cc6133ff4e206a13cc60b48f6be363b41868d76d6965a87728473cc04"
+    },
+    {
+      "path": "gaokao-english/references/listening.md",
+      "previous_sha256": "6056701c9b0aab1fdd2eb9b26dcb6a4c5971822d0ba0561028ac1565d59903ff",
+      "next_sha256": "add82d038144e5eb3a44701efe0871f8d5d7119b0ab438c898db5d0ee8199999"
+    },
+    {
+      "path": "gaokao-english/references/passage-lesson.md",
+      "previous_sha256": "4ac63c0197e6c6999d9b0595804d24d20836840930343bb9141c119eee4337c6",
+      "next_sha256": "a57ea66a8f274349947295ffae57da44f19d536f00c928d873828dbce70b2309"
+    },
+    {
+      "path": "gaokao-english/references/reading-comprehension.md",
+      "previous_sha256": "18511c661e24317e3870c7f569f0ea69d3072287a01868835078a369efc8a758",
+      "next_sha256": "60271f76d6372287969b29bc16ec88655264de1bdea4c1d6756e12342bc68e7e"
+    },
+    {
+      "path": "gaokao-english/references/router.md",
+      "previous_sha256": "8fc5ba29db2aba74fe2b0f2d9d6fb684a315073316990c39345967b2267fb81a",
+      "next_sha256": "9acea3bd6c11cfd60bc19c8113bc9798b8c6d7a396290fd921e16ef7594cd34c"
+    },
+    {
+      "path": "gaokao-english/references/seven-five.md",
+      "previous_sha256": "84054ec1faa121763aabd3b8856b3edda59ba996e9394d241233ca0d543c3bb3",
+      "next_sha256": "408d0ebc883f9896ff19c3968c314e4b7b1f9e0daf9ad77f55f30a619b64e5f9"
+    },
+    {
+      "path": "gaokao-grammar-fill/SKILL.md",
+      "previous_sha256": "7dd3c2439bac98aa65d42638798c360615ebab72b6709f0d82a8eea4a04d364f",
+      "next_sha256": "d5082b8db0a997ca0e705338e6a12c6f721bba0fe1ed630ad0bc2e429afadcd6"
+    },
+    {
+      "path": "gaokao-grammar-fill/generated-contract.md",
+      "previous_sha256": "ebeb3d4f99f0ec58ca74b73f12a3a2b2aa1a3e47b0b7ebf213a4933098e300c5",
+      "next_sha256": "5f979ae2cb2db37a6f285fe5ca4b53f7d96ca1a1bfdf1b61999eea261448c07d"
+    },
+    {
+      "path": "gaokao-grammar-fill/generated-course-identities.yaml",
+      "previous_sha256": "d534576b487a148d676e99a26e31133a08c9a344ad8dc780f3f77927bd1960dc",
+      "next_sha256": "26ceff0fbf99b050ccbc089710f68adf4dccb8becbb0fe37325edc3fde09710b"
+    },
+    {
+      "path": "gaokao-grammar-fill/generated-methods.yaml",
+      "previous_sha256": "af4e78d939c57936b8ea3e7e2f3b309396bbd52185a571fef2350fb46a1c0236",
+      "next_sha256": "0fb0cffda7a09b16fe306b9f35dfd50f51bc88715b401d367ef7bc1395e7f083"
+    },
+    {
+      "path": "gaokao-grammar-fill/references/course-evidence.md",
+      "previous_sha256": "feab1810a3788a2659633cc78f82fdb5d9d3ed52b9908edf9fe8f5b0ca751ae5",
+      "next_sha256": "cb084756b15d2b5a6dab0cf513cf97314c7659f1f6b6ee617026f87e3a0c6dc8"
+    },
+    {
+      "path": "gaokao-grammar-fill/references/grammar-fill.md",
+      "previous_sha256": "b1ff451d8a01ae4c799ad60b4f47132e2dec4235c5acacd03582de63ab838148",
+      "next_sha256": "a5d75a32f7eb58e0bfa14c7023d9f6dccf84e95bfa02f5c6a66c08f547530b6a"
+    },
+    {
+      "path": "gaokao-grammar-fill/references/grammar-navigation.md",
+      "previous_sha256": "6a04b914c6e9c6415e349df5a21ccb756853399cc4761f79731bdb3fb36e1c1e",
+      "next_sha256": "3c0fb7a59b496b35ab3d1713e59dc4bc95a70e2d851da4779764f1000fcbe802"
+    },
+    {
+      "path": "gaokao-grammar-fill/references/lesson-review.md",
+      "previous_sha256": "3c7038f872900873515bac79000158c7c6e12b8f3cbe15b015ed8488f38aad88",
+      "next_sha256": "79d1d77cc6133ff4e206a13cc60b48f6be363b41868d76d6965a87728473cc04"
+    },
+    {
+      "path": "gaokao-grammar-fill/references/method-application-example.md",
+      "previous_sha256": "b31cc2459f048403875a2d4c1912849c6008928e515f7ebddfea76e5c5155753",
+      "next_sha256": "a98e5db8428b8e08669399ebaf22e19c5951e04c303617a72f43ada90e8239f9"
+    },
+    {
+      "path": "gaokao-grammar-fill/references/objective-revision.md",
+      "previous_sha256": "135f45929404a3f77aa29336b2df8a1d7dd81ee3595c4d98029fbbea0a1345fa",
+      "next_sha256": "c79398344582014d7c63733721707d370684553212a25b7c143556f013290334"
+    },
+    {
+      "path": "gaokao-grammar-fill/references/passage-lesson.md",
+      "previous_sha256": "4ac63c0197e6c6999d9b0595804d24d20836840930343bb9141c119eee4337c6",
+      "next_sha256": "a57ea66a8f274349947295ffae57da44f19d536f00c928d873828dbce70b2309"
+    },
+    {
+      "path": "gaokao-objective/SKILL.md",
+      "previous_sha256": "78c65a752b57a9c7d907b2316e6ee463c23fcf1c881f572b1f464ce5753ca38d",
+      "next_sha256": "ab7aa8a4430e8a1fc438cacdcf2fd17747fe3bc88598cfe06ecfd69b31254682"
+    },
+    {
+      "path": "gaokao-objective/generated-contract.md",
+      "previous_sha256": "ce9f9ddc68b6884709c38bcd71dfcfa7724e02ccc260f1cfefcfd9c1ec431987",
+      "next_sha256": "165336c76d84c7a6650be8af48fb652fb88c7cc6bc378e2c857bd248ea4884d0"
+    },
+    {
+      "path": "gaokao-objective/generated-course-identities.yaml",
+      "previous_sha256": "d534576b487a148d676e99a26e31133a08c9a344ad8dc780f3f77927bd1960dc",
+      "next_sha256": "26ceff0fbf99b050ccbc089710f68adf4dccb8becbb0fe37325edc3fde09710b"
+    },
+    {
+      "path": "gaokao-objective/generated-methods.yaml",
+      "previous_sha256": "0e38813b4810c3ffd918b7089aeb3d65d019938362eb707c0b5d40005be5b2d5",
+      "next_sha256": "43f82cc64cb280f46eab38cb7fdcfbdcd749bc9e45737ce17eaa0fa434bdf660"
+    },
+    {
+      "path": "gaokao-objective/references/cloze.md",
+      "previous_sha256": "71b985be2626234b9b2143dc9623c2d8af9c2c24599e8ff38e6cd6d8fc11551a",
+      "next_sha256": "35526eb207c196c18eecf8e731bd003f77445678a1d1680b837c10b51c8d84a8"
+    },
+    {
+      "path": "gaokao-objective/references/course-evidence.md",
+      "previous_sha256": "65337a85e92dbcccd0ea9fdfb35fed0d8a271918ed178a55dbe0e71cfd14a42f",
+      "next_sha256": "0f9efb97f7cc0ab99d97e3e15e9d2318a5d7f6a2f45fab1cc08112109ec24a3c"
+    },
+    {
+      "path": "gaokao-objective/references/delivery-contract.md",
+      "previous_sha256": "05f48808abf662a83b50c38b342e1db3f9ce5b84edd8fde7de387059ef0c44d2",
+      "next_sha256": "446e61e28a93e41fc01c513aef9600f041dfa3a30133909f41593810d4233453"
+    },
+    {
+      "path": "gaokao-objective/references/evidence-gaps.md",
+      "previous_sha256": "32be8757443cfab39ff09b86b68def27c1f753fbb70b6d38da21ce22a4f6e222",
+      "next_sha256": "44f36aed04b2b34c4ce782fb433e69c6cef86b1ee1aab048ea6b3b596ded2518"
+    },
+    {
+      "path": "gaokao-objective/references/lesson-review.md",
+      "previous_sha256": "3c7038f872900873515bac79000158c7c6e12b8f3cbe15b015ed8488f38aad88",
+      "next_sha256": "79d1d77cc6133ff4e206a13cc60b48f6be363b41868d76d6965a87728473cc04"
+    },
+    {
+      "path": "gaokao-objective/references/listening.md",
+      "previous_sha256": "6056701c9b0aab1fdd2eb9b26dcb6a4c5971822d0ba0561028ac1565d59903ff",
+      "next_sha256": "add82d038144e5eb3a44701efe0871f8d5d7119b0ab438c898db5d0ee8199999"
+    },
+    {
+      "path": "gaokao-objective/references/passage-lesson.md",
+      "previous_sha256": "4ac63c0197e6c6999d9b0595804d24d20836840930343bb9141c119eee4337c6",
+      "next_sha256": "a57ea66a8f274349947295ffae57da44f19d536f00c928d873828dbce70b2309"
+    },
+    {
+      "path": "gaokao-objective/references/reading-comprehension.md",
+      "previous_sha256": "18511c661e24317e3870c7f569f0ea69d3072287a01868835078a369efc8a758",
+      "next_sha256": "60271f76d6372287969b29bc16ec88655264de1bdea4c1d6756e12342bc68e7e"
+    },
+    {
+      "path": "gaokao-objective/references/router.md",
+      "previous_sha256": "8fc5ba29db2aba74fe2b0f2d9d6fb684a315073316990c39345967b2267fb81a",
+      "next_sha256": "9acea3bd6c11cfd60bc19c8113bc9798b8c6d7a396290fd921e16ef7594cd34c"
+    },
+    {
+      "path": "gaokao-objective/references/seven-five.md",
+      "previous_sha256": "84054ec1faa121763aabd3b8856b3edda59ba996e9394d241233ca0d543c3bb3",
+      "next_sha256": "408d0ebc883f9896ff19c3968c314e4b7b1f9e0daf9ad77f55f30a619b64e5f9"
+    },
+    {
+      "path": "gaokao-writing/SKILL.md",
+      "previous_sha256": "8fc55fa475e68ff571f311038f602907ed2da0924e5f4418961996949e683ae3",
+      "next_sha256": "31165626252c7b79602d43bc959bbf6ccba2cc9578ab1d08f6e5f58c25f69e40"
+    },
+    {
+      "path": "gaokao-writing/generated-contract.md",
+      "previous_sha256": "fd43a55880e94ab4c7563cd2c5f8670fbd266bad504fbaf051a3752ce3914497",
+      "next_sha256": "b9556d458bdfad2a7ebc3bbadf6716c38a44e64964f9ea7b09192cd0ef45365c"
+    },
+    {
+      "path": "gaokao-writing/generated-course-identities.yaml",
+      "previous_sha256": "d534576b487a148d676e99a26e31133a08c9a344ad8dc780f3f77927bd1960dc",
+      "next_sha256": "26ceff0fbf99b050ccbc089710f68adf4dccb8becbb0fe37325edc3fde09710b"
+    },
+    {
+      "path": "gaokao-writing/generated-methods.yaml",
+      "previous_sha256": "878efe491fc3425a8a76a9892a34d5753e5d2bb1a3f09a1d24b2bfa61c196162",
+      "next_sha256": "4c883f77d15e82f9ca9bf55a29d9a43d25c4f7f30159c7ce95f6af468414dcec"
+    },
+    {
+      "path": "gaokao-writing/references/application-writing-and-correction.md",
+      "previous_sha256": "eb7cd9906c96828bc78cf2c27d66809a7abc49b2a6da10b27a9213bc3841777f",
+      "next_sha256": "47ee75d03044ff379ea39f9f31ffce7009e1d25e486f0ecfe07760b6098ad29b"
+    },
+    {
+      "path": "gaokao-writing/references/continuation-writing-and-correction.md",
+      "previous_sha256": "c3002a37b9d78a9f66366f709626791d0409cef656baf5b02f69d0626848d34f",
+      "next_sha256": "a6a6087090a36ec4138741ac6082e3ff9f1d005a67bac5b85ef527a1fbb82e80"
+    },
+    {
+      "path": "gaokao-writing/references/course-evidence.md",
+      "previous_sha256": null,
+      "next_sha256": "59d446cfd3858fba1b2789aa99260be86ede991a0dd1941499b33d43032b0151"
+    },
+    {
+      "path": "gaokao-writing/references/writing-review.md",
+      "previous_sha256": "275632a32efc71d335dfb41f304e21c62d66755b4f310f268beec98a190c226e",
+      "next_sha256": "34116498acf03c4cffe11f7de1fb4c0262859f2149944bc4b3e9479c06df0684"
+    },
+    {
+      "path": "method-registry/anti-rules.yaml",
+      "previous_sha256": "9d5a53537b289454c034a752fde3f4c5bdfec8549ccfe67a9d7cbdb3bd9d58e9",
+      "next_sha256": "72c4bba5e9a3687aa81ae47a70eebcf6af2ee8b772524d4f83ac6f28163e7500"
+    },
+    {
+      "path": "method-registry/application-writing.yaml",
+      "previous_sha256": "47184d14ee3467e9b05821ca20a8a5ddc8528e7feaedfa00f758af4a28c21622",
+      "next_sha256": "0d7cc017dc8678d806127099a92df0a7d3be50a9a4041609bcd589de59c2814c"
+    },
+    {
+      "path": "method-registry/cloze.yaml",
+      "previous_sha256": "e0dd90e44fa86c25e7e54889287c8048795a1a6f5126b01067c7449b3b47c889",
+      "next_sha256": "9f6315bd992c9fc92a4e077e4694da57e2f6478db52da6ac1f1e62b1f44d1431"
+    },
+    {
+      "path": "method-registry/continuation-writing.yaml",
+      "previous_sha256": "cf5aed62fe37f5c38ec55a343518e3a74ec1765748010909a60c2aa9aec327f5",
+      "next_sha256": "5948a2334adcfaec524dc60fb900b3fd2eea045c817dd72e62fcdac5a1beeabc"
+    },
+    {
+      "path": "method-registry/grammar-tree.yaml",
+      "previous_sha256": "f59c4d8f01b19d9dd2e193f128f834f8087bc59ed76e53fb940f4c69360bdffc",
+      "next_sha256": "e377e175f9f7d181d4fca9304ccedffe94f51ff8ea2cc0004efb01fdab77c291"
+    },
+    {
+      "path": "method-registry/grammar.yaml",
+      "previous_sha256": "b02392133fa609ab4d2c2065920042a47b0324690ad22d19662180a33ba92c3a",
+      "next_sha256": "0fb0cffda7a09b16fe306b9f35dfd50f51bc88715b401d367ef7bc1395e7f083"
+    },
+    {
+      "path": "method-registry/reading.yaml",
+      "previous_sha256": "809821a9a12e5d0cbb5c66bfd0d422978d7532a09fcf2ae74eb97b4b054a1698",
+      "next_sha256": "a16cd4d7372490c12e648be98c06c176553dfc93e5058b4b51bd35df2b73d349"
+    },
+    {
+      "path": "method-registry/registry.yaml",
+      "previous_sha256": "feb2fd2db2d031c9235e3524886238723d4ac5356ccbc155b6688a3bd787cd46",
+      "next_sha256": "51ec2d21afa5101f2fd6e0c6258479227b79389f3a827efbb82dd26279d48bb1"
+    },
+    {
+      "path": "method-registry/seven-five.yaml",
+      "previous_sha256": "535d7ac27ba8002b83fed61fbdfb59464a0d51fdca0eba157884195404d5e11a",
+      "next_sha256": "fbd7cabe137c655482045b5ac708852263893d6537f2fa74e9744d73cdd07847"
+    },
+    {
+      "path": "method-registry/source-risks.yaml",
+      "previous_sha256": "a3a9280c75c980a415ff9b3a18494ae1f28b1408d6dcfe1a76441479b709bc1f",
+      "next_sha256": "b120115faf385ec8c16282628b5117aa122b8b37193d49370448b0efe20ca6df"
+    },
+    {
+      "path": "method-registry/source-sections.yaml",
+      "previous_sha256": "379bcbf1dd3142cecb027b3d0306ed470f75f521f1ffa31f2366c1465aea1b87",
+      "next_sha256": "109f47e2e6ac573c0ad11c00a43af033a42b3acc191a10f66a6a069a356ddd09"
+    },
+    {
+      "path": "method-registry/symptom-cues.yaml",
+      "previous_sha256": "b0a5d220ef4239aa30562093fdb279f34419b47ba7fa10a9106fae58064a897b",
+      "next_sha256": "b0a5d220ef4239aa30562093fdb279f34419b47ba7fa10a9106fae58064a897b"
+    },
+    {
+      "path": "provenance/ANSWER/agents/gaokao-grammar-fill.md",
+      "previous_sha256": "1c0436e2d4fda0fe07d5e5c56161710269db4d1200c9f60c1db04ffb4f6df878",
+      "next_sha256": "1c0436e2d4fda0fe07d5e5c56161710269db4d1200c9f60c1db04ffb4f6df878"
+    },
+    {
+      "path": "provenance/ANSWER/agents/gaokao-objective.md",
+      "previous_sha256": "299428eeba7526f22dae564905b24de5d4b586bde5703b4aed518ca34721bedf",
+      "next_sha256": "299428eeba7526f22dae564905b24de5d4b586bde5703b4aed518ca34721bedf"
+    },
+    {
+      "path": "provenance/ANSWER/agents/gaokao-writing.md",
+      "previous_sha256": "de5f81ec944e59b5342c219eb9bb9c1cbf35d1994a812d59d75dd0a177a91c9e",
+      "next_sha256": "de5f81ec944e59b5342c219eb9bb9c1cbf35d1994a812d59d75dd0a177a91c9e"
+    },
+    {
+      "path": "provenance/ANSWER/gaokao-english/SKILL.md",
+      "previous_sha256": "ca9c146b6664dbd6ea076e363c6a5332b22f3968ef56396e914be01443f9cdcd",
+      "next_sha256": "acc8ae141d6de841c2c961bc6db5f8d4a77febfba405af5c121c08b11acda4e9"
+    },
+    {
+      "path": "provenance/ANSWER/gaokao-english/references/cloze.md",
+      "previous_sha256": "71b985be2626234b9b2143dc9623c2d8af9c2c24599e8ff38e6cd6d8fc11551a",
+      "next_sha256": "687760ad2bd5a6a13f6fc2a34e0225f6f26adc1035d1ea24bf4df98bd490a795"
+    },
+    {
+      "path": "provenance/ANSWER/gaokao-english/references/course-evidence.md",
+      "previous_sha256": "65337a85e92dbcccd0ea9fdfb35fed0d8a271918ed178a55dbe0e71cfd14a42f",
+      "next_sha256": "c595ab9572e33ba4724da9eeed6974b888848e7d5040b0933c73f69d4ae2702c"
+    },
+    {
+      "path": "provenance/ANSWER/gaokao-english/references/delivery-contract.md",
+      "previous_sha256": "05f48808abf662a83b50c38b342e1db3f9ce5b84edd8fde7de387059ef0c44d2",
+      "next_sha256": "05f48808abf662a83b50c38b342e1db3f9ce5b84edd8fde7de387059ef0c44d2"
+    },
+    {
+      "path": "provenance/ANSWER/gaokao-english/references/evidence-gaps.md",
+      "previous_sha256": "32be8757443cfab39ff09b86b68def27c1f753fbb70b6d38da21ce22a4f6e222",
+      "next_sha256": "75c679c8dc681e0fdd79f26938150b06aeaf483db32ab976d4f70f12fd3ef9b6"
+    },
+    {
+      "path": "provenance/ANSWER/gaokao-english/references/listening.md",
+      "previous_sha256": "6056701c9b0aab1fdd2eb9b26dcb6a4c5971822d0ba0561028ac1565d59903ff",
+      "next_sha256": "27f7e98ee1ac53093e7d10d736250673658f454baa7287b891b27a99bbf72a6a"
+    },
+    {
+      "path": "provenance/ANSWER/gaokao-english/references/reading-comprehension.md",
+      "previous_sha256": "18511c661e24317e3870c7f569f0ea69d3072287a01868835078a369efc8a758",
+      "next_sha256": "a2602e02e0684709ece9d2ce12d71d6ed08ddf31da82b381f961aee12c8a5fc0"
+    },
+    {
+      "path": "provenance/ANSWER/gaokao-english/references/router.md",
+      "previous_sha256": "8fc5ba29db2aba74fe2b0f2d9d6fb684a315073316990c39345967b2267fb81a",
+      "next_sha256": "48a81d2c3bbb92649ae292f7972173cf18309ff83c97a0edc79e4f7c3a11f58f"
+    },
+    {
+      "path": "provenance/ANSWER/gaokao-english/references/seven-five.md",
+      "previous_sha256": "84054ec1faa121763aabd3b8856b3edda59ba996e9394d241233ca0d543c3bb3",
+      "next_sha256": "a2db0f374b04f4733788b9e3819eb5c66bee64ffc8a9484f5edc6ccbefe025d9"
+    },
+    {
+      "path": "provenance/ANSWER/gaokao-grammar-fill/SKILL.md",
+      "previous_sha256": "4d7d0e26e6007efba8fb3aca0dbe3bc75b8b78d15b14757fa4a80a7e6460b048",
+      "next_sha256": "4d7d0e26e6007efba8fb3aca0dbe3bc75b8b78d15b14757fa4a80a7e6460b048"
+    },
+    {
+      "path": "provenance/ANSWER/gaokao-grammar-fill/references/course-evidence.md",
+      "previous_sha256": "feab1810a3788a2659633cc78f82fdb5d9d3ed52b9908edf9fe8f5b0ca751ae5",
+      "next_sha256": "ed119899d3302f11a2587ce93050ccfbeeb1ffd88d8a5521a193bdaf77a86102"
+    },
+    {
+      "path": "provenance/ANSWER/gaokao-grammar-fill/references/grammar-fill.md",
+      "previous_sha256": "b1ff451d8a01ae4c799ad60b4f47132e2dec4235c5acacd03582de63ab838148",
+      "next_sha256": "e007cf58c44800c3251c21e9ebae8e1191aae0988a5a14e5e2380e74cc866ef9"
+    },
+    {
+      "path": "provenance/ANSWER/gaokao-grammar-fill/references/method-application-example.md",
+      "previous_sha256": "b31cc2459f048403875a2d4c1912849c6008928e515f7ebddfea76e5c5155753",
+      "next_sha256": "b31cc2459f048403875a2d4c1912849c6008928e515f7ebddfea76e5c5155753"
+    },
+    {
+      "path": "provenance/ANSWER/gaokao-grammar-fill/references/objective-revision.md",
+      "previous_sha256": "135f45929404a3f77aa29336b2df8a1d7dd81ee3595c4d98029fbbea0a1345fa",
+      "next_sha256": "135f45929404a3f77aa29336b2df8a1d7dd81ee3595c4d98029fbbea0a1345fa"
+    },
+    {
+      "path": "provenance/ANSWER/gaokao-grammar-fill/scripts/check_lesson.py",
+      "previous_sha256": "751a00d9e663603a9478aa1f52bcfa37db909f8d705b6652c6a53931f477e7a2",
+      "next_sha256": "751a00d9e663603a9478aa1f52bcfa37db909f8d705b6652c6a53931f477e7a2"
+    },
+    {
+      "path": "provenance/ANSWER/gaokao-writing/SKILL.md",
+      "previous_sha256": "5d6f50b52b6c2e612907bf24821aacb6012330d661ccb59439b67098a8f693e3",
+      "next_sha256": "f0a2317d58a9ebbe64d37ef95c1e3f3a1a1b531fdcfdcb0aa92a1b5721cbe65f"
+    },
+    {
+      "path": "provenance/ANSWER/gaokao-writing/references/application-writing-and-correction.md",
+      "previous_sha256": "eb7cd9906c96828bc78cf2c27d66809a7abc49b2a6da10b27a9213bc3841777f",
+      "next_sha256": "826908c617bb8d186032e86013bf8e9e8834521d37c389a9455b0a241bb26526"
+    },
+    {
+      "path": "provenance/ANSWER/gaokao-writing/references/continuation-writing-and-correction.md",
+      "previous_sha256": "c3002a37b9d78a9f66366f709626791d0409cef656baf5b02f69d0626848d34f",
+      "next_sha256": "033e1fddb44bc1cc6d458befff009b887be3b4688b350cb910f7e70599f44029"
+    },
+    {
+      "path": "provenance/ANSWER/gaokao-writing/references/course-evidence.md",
+      "previous_sha256": null,
+      "next_sha256": "6d15b96265cb49f07e2b8bb6fcf6c75970e29b6af5d7525e0b0ca3142a03bbd6"
+    },
+    {
+      "path": "provenance/manifest.yaml",
+      "previous_sha256": "7bc40c73488eee2139060c31ea530e09f9f7eab9d769bc470214082c87ae25c5",
+      "next_sha256": "d0889f107235852eb39c0afea8044129b66ceb17423a7991a7572451f3fde180"
+    },
+    {
+      "path": "references/anti-rules.md",
+      "previous_sha256": "41439656e9145eb8c38f7d8d122adc6925227b35d837cfaf7c48bc93b80c3860",
+      "next_sha256": "a8a4de62f19daf873d03dbf1355271f39354c2aa10288861c47ba5b327d2e5b5"
+    },
+    {
+      "path": "references/anti-rules.yaml",
+      "previous_sha256": "07127270a3696606ca1e598488b803577055020a1b17f8ad9627f90798488c3e",
+      "next_sha256": "72c4bba5e9a3687aa81ae47a70eebcf6af2ee8b772524d4f83ac6f28163e7500"
+    },
+    {
+      "path": "references/grammar-navigation.md",
+      "previous_sha256": "6a04b914c6e9c6415e349df5a21ccb756853399cc4761f79731bdb3fb36e1c1e",
+      "next_sha256": "3c0fb7a59b496b35ab3d1713e59dc4bc95a70e2d851da4779764f1000fcbe802"
+    },
+    {
+      "path": "references/method-roles.md",
+      "previous_sha256": "6edf77f0d279ff51b03e08c3cfe8b1e42cec98d001ddb940461ee8f773367f2c",
+      "next_sha256": "5350335c8175169d8afeaf8fe5625816887359e89946dcf4a0e5672ca3549635"
+    },
+    {
+      "path": "references/student-symptoms.md",
+      "previous_sha256": "c35396766c040d855c9ad595d513bd049ec385f45b1e4d0f16703323c2ef8c80",
+      "next_sha256": "7db839d9535b08c4c903d44900fffac5417d5213f6718e5d5a17761e31f20b98"
+    },
+    {
+      "path": "references/student-symptoms.yaml",
+      "previous_sha256": "5e51e6836e8ceb2ef5d44745f64904f77918ae7d6727accf74d89a1f08671b58",
+      "next_sha256": "b187161b4cacd1f34e9ad9f2d1dacec40ee1e7ebb1c3ae2415aea2a62e2103c4"
+    },
+    {
+      "path": "student-guides/A01-作文五检.md",
+      "previous_sha256": "4b010ab234bdcc9e6cb201104897a491681618e9b0f6aeb322ef080228fe554a",
+      "next_sha256": "ad4bd4daa792a255ddaaff597476d882d5be75778cd44e5e6fe0015e36080c21"
+    },
+    {
+      "path": "student-guides/A02-六步成稿.md",
+      "previous_sha256": "e77c3432d2f76cafd592ff389f2671f5d82d99391390992cf57f0778ba4d89ca",
+      "next_sha256": "957611ff071263022e7c13fac1381e4c0182cc1905d2f1c7f4c441718cd7173b"
+    },
+    {
+      "path": "student-guides/A03-三步造句.md",
+      "previous_sha256": "6bc2ae78eb7c0f5f04c4677fe5895e3ce66e9f573fdd083e0504193c0e58ec03",
+      "next_sha256": "05e49bc056115c31f5a6b3e6ea1f236f2f8baf79caeaf7b958b7ee7961bd8994"
+    },
+    {
+      "path": "student-guides/A04-句块拼接.md",
+      "previous_sha256": "3c470d0d19218a3d3023ef88ba15aaf7cd17b1b33628c93ae00476f43f66189d",
+      "next_sha256": "149b4b032965764786b49419d9f4fa39efb20a55095ee7856b890a63c0e30d29"
+    },
+    {
+      "path": "student-guides/A05-长句重组.md",
+      "previous_sha256": "15522d088d6eada177562be8a7623e709d3b0ef1cbaa36936c0062fd7462e7c0",
+      "next_sha256": "b83d33d195476ce8da21d04e082feb5f029fc77b7840d8fb0738af27bd251b29"
+    },
+    {
+      "path": "student-guides/A06-对照仿写.md",
+      "previous_sha256": "6fb113329419568d1360c3bb8023022254199d9e7afd99979c5cac222a28cae5",
+      "next_sha256": "4c1e9e381ec327634b4c8100f2ad47dcc403e7d9807cb434899b4fd14c694673"
+    },
+    {
+      "path": "student-guides/A07-长句搭积木.md",
+      "previous_sha256": "287ff49854f628390e1e4509633f2e8abc4a687956ff800692692c8638373637",
+      "next_sha256": "d878c639890c8a6e9b2a7153ee8519d7fd7ca58806f811a0b6be2931afaae16e"
+    },
+    {
+      "path": "student-guides/A08-文体骨架.md",
+      "previous_sha256": "d16fbb60a5cc7e9b2199bc55438c1826160754fe832f0ac5b275b7f3eb5660f0",
+      "next_sha256": "fbe44bce0e437d25b734485934e22033e58b21610e97aed730f5462c6e84f6f5"
+    },
+    {
+      "path": "student-guides/A09-应用文评分.md",
+      "previous_sha256": "9aee6f0d82a77873bfc5be1a746c657282c19cb8346ea80df39f0e7946edb95f",
+      "next_sha256": "7824c8e2f2f30781ebe45da7dbf5f7d4cd2ae3d5b2c067c0a68f78add2955295"
+    },
+    {
+      "path": "student-guides/A10-读背仿与训练阶段.md",
+      "previous_sha256": "bdebf90ec4d5dbd34d976a2939edfd927accc322dc9e9fe37f00627e0645debf",
+      "next_sha256": "e0e64e884e8419ed2c385b22b6f01a83c55f1c6f81b24d4b774c1156b809bb1e"
+    },
+    {
+      "path": "student-guides/C01-语篇线索链.md",
+      "previous_sha256": "e66db6aab71ad8f8e8e41ff4fb856277fa3986ab044a60d978280170e3f1104e",
+      "next_sha256": "c84390ebd076690771f8330291e144a4b399139caacfd04d8b28018dd7536b59"
+    },
+    {
+      "path": "student-guides/C02-前后夹击.md",
+      "previous_sha256": "ae0e1bfa84c1d2748407396c50e13b681ec27eeffe8449ebaf76d4bbec7dc166",
+      "next_sha256": "11f563e09706e991c24b26648c4536191f1b1d48860e34c23dd64ad8fcbb9182"
+    },
+    {
+      "path": "student-guides/C03-首句定调.md",
+      "previous_sha256": "6b80a584d25b47c1ce1437a227dcf3e9c89c95e995e3319a93eb2c2b2f5cd5fc",
+      "next_sha256": "1a380f7059fa195756ed781e5ef791b59e167b20e2457b5e76fbeccebf3011e9"
+    },
+    {
+      "path": "student-guides/C04-词性导航.md",
+      "previous_sha256": "9359541fcc4a1786b3ff35b67eee1993b51d0ac5dbe66c76c0e140812c3f5e28",
+      "next_sha256": "2cf9cc5c0fd81d66d6003ca97803e3c76b0728bd45ff4711b5a2e7cd818b8ced"
+    },
+    {
+      "path": "student-guides/C05-近义落地.md",
+      "previous_sha256": "81f356eee05d49ba84fc0337ff85462c9eacf68dbe393809eb0aaebc761bc61a",
+      "next_sha256": "fcdc91ed3da0a1e3712ddd00124123d09f240867f84545c11aef1cbe2c42c847"
+    },
+    {
+      "path": "student-guides/C06-时间线复原.md",
+      "previous_sha256": "5259c40605041ee5bb5f5fb57328659ad71fe915c1c2db54761c25d34a0f6d7f",
+      "next_sha256": "b1c6b57882b9b1147f0e2df9a5e6a37ea890ccc7e57f67dea6f7b30a43a9d8c2"
+    },
+    {
+      "path": "student-guides/C07-名词回声.md",
+      "previous_sha256": "dcc10ad192ee89df9fe6deb2c16dd7905d9cbb4597698db8c7d4ed6d536d3075",
+      "next_sha256": "de8befdab710383e6db58c100dd1e155daf0d051e5c876a09f1ba9945fa403b5"
+    },
+    {
+      "path": "student-guides/C08-结果反推.md",
+      "previous_sha256": "55f1cadebb3a9cc98c70059ace019640f61be6f54579f15e59f65d2f89cd7b44",
+      "next_sha256": "04858d8271b53af859a6ec81ba51fbec6408af63659b3bff3f2770e902f0caaa"
+    },
+    {
+      "path": "student-guides/C09-动作串联.md",
+      "previous_sha256": "0516ab483921d5083fc61fc3f267d40bbbc622e057e0671594b9b554827148b0",
+      "next_sha256": "5ab20be7e1107041f5e0bdaa4d2769f5ce97850a726eba5851f5b4b099dc006b"
+    },
+    {
+      "path": "student-guides/F01-选项三分.md",
+      "previous_sha256": "5949c15b397315db099976ce06968217438ba11c0950b5041ccfb3dca98981ac",
+      "next_sha256": "0cc89e1778095ffb4b7c53623c4e30d0a54c53c65386bc96a8af5e3c85d2aa4f"
+    },
+    {
+      "path": "student-guides/F02-句型分组.md",
+      "previous_sha256": "d2a48a832c75187013550430ba4530e3285510d5d2d557ef4e6622b010173ab7",
+      "next_sha256": "48dfc09dce27fbb04afcc37f027ec0be774b9efa7d7ac1bda034457de4db4c92"
+    },
+    {
+      "path": "student-guides/F03-主角分组.md",
+      "previous_sha256": "f59a91b318c80006f21025d0f55c0013b7f61baf96b09135f6b81b60530a6c7f",
+      "next_sha256": "376cecd74e1a4a9991af876d8f1f10e580b2a2d013494c757383c2f9c36b6f06"
+    },
+    {
+      "path": "student-guides/F04-时间分组.md",
+      "previous_sha256": "7f6a780ab42953645bc6e6c96ab143cc72125819efbb3e6914bd0cdf78b11f9c",
+      "next_sha256": "961b890b3212d38bda4d37d874b86cf41c6378de0b95c629ad2d1cb021e33902"
+    },
+    {
+      "path": "student-guides/F05-段首统领.md",
+      "previous_sha256": "f2acd108bfedc7dd88e1dcefbfbaaf4b3556366528ae0e0b2573ebb469ce0d6c",
+      "next_sha256": "329be118ac2f894a623f4a7826e5be7afe4261afd045590a27f9c6b302b79e3d"
+    },
+    {
+      "path": "student-guides/F06-前后呼应.md",
+      "previous_sha256": "8c5e0d9866af82c005e6cb2147eee3452dcd98ef96cc9475fa9b615416c02eee",
+      "next_sha256": "d6ba92a2b0f759360a710f5ded5beb2f5537ae4a9323f08be18e56490951d871"
+    },
+    {
+      "path": "student-guides/F07-关系拼接.md",
+      "previous_sha256": "9e4fad0e24badbc8d2a388434d03acfad7737444a0c1a6f6dc15607f05026dc3",
+      "next_sha256": "d84e195ac591f6c6cd52fad475314e1f9f4f975f339710b1aec99fcd38465fe1"
+    },
+    {
+      "path": "student-guides/F08-情绪同向.md",
+      "previous_sha256": "012b8b01b456362a478581c1562f4bf893baafc9ee1dde33d536c30a08d75636",
+      "next_sha256": "d4d2847fd9676d6dd74b620ac1a10c8b4139a4b0693bd457aa8904322c2d5cca"
+    },
+    {
+      "path": "student-guides/F09-半句补全.md",
+      "previous_sha256": "645e2fefc6a38de9cf1f30b07e571111df344c2204fa614ec357c18497aa87e2",
+      "next_sha256": "b9682998b83c99af8123bcfe4bb1b2863f45b9ed629fd4d41f2e7c2815794154"
+    },
+    {
+      "path": "student-guides/F10-末轮反查.md",
+      "previous_sha256": "551f9b3221aea62736355c08807b7d3a51b11d0de100a126465ca5a96b48e12c",
+      "next_sha256": "c79da6cd9e982ef87e0e1522a7a58b82b6966d963699b7b57401434765670616"
+    },
+    {
+      "path": "student-guides/F11-正文闭环.md",
+      "previous_sha256": "350862c47c0011d9f1581ab33eb645b417d84ccb9850e7d7691f15e2482d1878",
+      "next_sha256": "d8b908665b407d8b1139d90ad889c9a09d191530333674d1879e650e9d8dd594"
+    },
+    {
+      "path": "student-guides/G01-先判空位.md",
+      "previous_sha256": "0de69f316ad49d5c0b0ea3407c2b9c9d9ce020a96577e75d341ef8287f589889",
+      "next_sha256": "b0b73cb42dd4ed965f2331a1561e7134baa5e2fa2bbb262b27166b4750768d64"
+    },
+    {
+      "path": "student-guides/G02-双路分流.md",
+      "previous_sha256": "5f1d9338d1945d8fc47f7f26e87f7c123e06b219362d9dc98740a4839103b82f",
+      "next_sha256": "b50bf1f7ee9081876092d13a0397fda73f99dfa3ed26f2510c704de73b1840bb"
+    },
+    {
+      "path": "student-guides/G03-限定词落位.md",
+      "previous_sha256": "a130198c3035459d68a876dae29fa391eb9c79cff1b4f095836a29e93dd75b56",
+      "next_sha256": "6d69ff8b6d4fb1e50b8b86e788f1e08f3c6f538474643b20349f1cc610c0ab34"
+    },
+    {
+      "path": "student-guides/G04-指代落位.md",
+      "previous_sha256": "179e2e60e03ea254347de1575f7b595a2b2c2a31b76a97ecc471bc62a763bbe6",
+      "next_sha256": "14118017016be525726d97b57c8418e277b1bc5c6232b2f0fc75817c83458106"
+    },
+    {
+      "path": "student-guides/G05-介词看场景.md",
+      "previous_sha256": "57743decffa5705b547a636f39f80c21fe17c3897920a98150b51fa0a3143db3",
+      "next_sha256": "f521a3a232e08426b9f0287a4dddabc6c30117613c7429b3b5208e1b2261213c"
+    },
+    {
+      "path": "student-guides/G06-从句找缺口.md",
+      "previous_sha256": "7447fa1b829fe02733f0369e6ced6f177e0d2c1591a775b44fe5e947cd4f4b11",
+      "next_sha256": "6599f78ad5ad80bd1cbdbb675ef7e4f4dda27a2c9e7f8982bd19eb5a7344fb31"
+    },
+    {
+      "path": "student-guides/G07-句间搭桥.md",
+      "previous_sha256": "5a403bd1f1eec1758515a16687ca886ae879211c39c60f143f948eec95418b40",
+      "next_sha256": "b1339a8e875d0162306286b15181939fa4d68ded412c4db6eac57585275dda43"
+    },
+    {
+      "path": "student-guides/G08-词性落位.md",
+      "previous_sha256": "112a61c20a712a257d0c5613c25c200e5423749df4b2edc7d8cb3a9f56d83859",
+      "next_sha256": "087b62a978c45464d53ca13c927060d501221ad5ffe2dc58c550fb6fd87fb11e"
+    },
+    {
+      "path": "student-guides/G09-名词节点.md",
+      "previous_sha256": "a0b0e7f952391fdd8266bc9fb69ea13b6fe9216f982a37a95eadf1942a585b02",
+      "next_sha256": "7055f6cba7b607c1d5c4dbdb977764c05659c8a69c7a19e0423f306cb222874d"
+    },
+    {
+      "path": "student-guides/G10-形副节点.md",
+      "previous_sha256": "a40f095885a1d1faf239207a1ed4e934bd4f16f57256c1c0fb082d42eea8e2ea",
+      "next_sha256": "76162bd80bc57e2a51b99225dbf7e5ae88e38c53cc5ca95f110f7e6103484fcb"
+    },
+    {
+      "path": "student-guides/G11-数词节点.md",
+      "previous_sha256": "0076de560d952e411dc3f4a0e271be325aab98cf57963b72799fdc15b948136c",
+      "next_sha256": "6b025e697eca8f875044b77932bb0397f0b4615308dfbc5daa4618956b88f0ab"
+    },
+    {
+      "path": "student-guides/G12-动词二分.md",
+      "previous_sha256": "51e5e532b334458a97dc7c21ceeb35e1b6f203afff7df94d326004410dacf091",
+      "next_sha256": "d9e9bde68e0722ee3b01805064c2c70ea601b5942898d2ce52cf04bf76c51704"
+    },
+    {
+      "path": "student-guides/G13-时态三查.md",
+      "previous_sha256": "2191689ce3d4c232f803a6abb3bdc3f7eb757a74fb70c58ecd52af5f098b8e71",
+      "next_sha256": "8552751b1a394a4780214aceb97f6e3a606838c42bef93fe6872435ac389cd17"
+    },
+    {
+      "path": "student-guides/G14-找真主语.md",
+      "previous_sha256": "548b9465ac004d3fc3f7e4f311d1918e8c5c6fa25d015b6724e0bf5bdd1b2af8",
+      "next_sha256": "3c4ccac701f3fdbc71548c4da0690928febe340ec088c69f9e700881d9bc0f6b"
+    },
+    {
+      "path": "student-guides/G15-非谓语三轴.md",
+      "previous_sha256": "aacab7af535002d35a98a25bf3da94d226a6d45506f1bfce03f1220b06071935",
+      "next_sha256": "ee4cb634dd95e7c7b94bcc9cd068dab24311c2a48275d35c7f2f529a08835576"
+    },
+    {
+      "path": "student-guides/G16-找动作主人.md",
+      "previous_sha256": "2987f0dba0882cafc448c90034b937e8a37d996801c9cf042379adc2d84caa41",
+      "next_sha256": "ae80c0339779fe6a297370b4621f986558c97e81d19e5d8d7e01f4dd6058a97f"
+    },
+    {
+      "path": "student-guides/G17-长句脱壳.md",
+      "previous_sha256": "0f0f26b82c069d7d41893dc415089e1e8b38e267a628593fb069170e562389d8",
+      "next_sha256": "d343522c2d4f6b9d99ff2c0b964fd7eb906b18f29c8c5b2367fcec25de235735"
+    },
+    {
+      "path": "student-guides/G18-考点重复反查.md",
+      "previous_sha256": "51e7fe73876a6e4ebb7b0b4b1fe899457d84b7cf273056abbd16b9fecb90d921",
+      "next_sha256": "c1174bb541b5019be1ab904d79f6c818f4729f6b2806346a49442fb20540d54d"
+    },
+    {
+      "path": "student-guides/G19-变形次数反查.md",
+      "previous_sha256": "2e8e051d110e93f83d6635800947bb0a6213527d1ee4eb41655df4e2c2929f73",
+      "next_sha256": "7a8e8927e9d0f31c510afe23a01b9921dfff41555e120467980876894b8e6b31"
+    },
+    {
+      "path": "student-guides/R01-选项加戏.md",
+      "previous_sha256": "24c8f9c2c6ac92f5891b7f11c1119ab75aa995615ac0673421804f34e0422725",
+      "next_sha256": "4dcae494e3e28ec312342b8c198771818c3dda6477adfa69a260b5e19f7f2b2e"
+    },
+    {
+      "path": "student-guides/R02-谁干的陷阱.md",
+      "previous_sha256": "78d9ad3d353fb9bdb9329473a25cc433e480791c8605294ce26cf104a739aa86",
+      "next_sha256": "3f95e69fda76887e3bfbb63489939a33d5d9b97a408001fe66335da98a85eb77"
+    },
+    {
+      "path": "student-guides/R03-换词不换义.md",
+      "previous_sha256": "8014934e9e8b737d388d5f86acad0669367dc0941ec1dfb74351ba338bd702d2",
+      "next_sha256": "92f6f6a6590df585e02af36bec13ff9988867d7bbb4d72dee32cabcbaab3d459"
+    },
+    {
+      "path": "student-guides/R04-比较别偷换.md",
+      "previous_sha256": "eb44efec0ec3ef4eb45614ab095d6e95bbba5e459c7398c74500c7906574f1ed",
+      "next_sha256": "0e337142207130e60f52061a16ddd0e933c63cb776bfebd23dfa028e0a315167"
+    },
+    {
+      "path": "student-guides/R05-因果别选反.md",
+      "previous_sha256": "a47acb52510ea1e9f5dbbbfae1f8e0dbd2fc29f92fb540d5f700fbbf49e69952",
+      "next_sha256": "58198a4ae7ce901516189e24c4c3983f7289eed1dcb74c322a9f8ba2958b7c46"
+    },
+    {
+      "path": "student-guides/R06-主旨缺块.md",
+      "previous_sha256": "48e4fd9eb4647f74446dc110b247561804ebcd9e63c3336ef4a7add142e22fe7",
+      "next_sha256": "ba2f53bea1fa97c8cf46b0e9485e1343e7358e0d1dda670fc604b1833a81f5fb"
+    },
+    {
+      "path": "student-guides/R07-并列打包.md",
+      "previous_sha256": "1d2fabad52c9324ea96ac1a7240dd22fdb3a5d6bb16fbdc9c610926f22ad85e1",
+      "next_sha256": "e38c4e9ab120280186789d9c37ecedffaa6e2dbfc1d2893a7f23e3e609e5559c"
+    },
+    {
+      "path": "student-guides/R08-例子只作证.md",
+      "previous_sha256": "efb30f2044765f4e55bb8e69938c1841bcb840ddef9a3720d8563738f79d8339",
+      "next_sha256": "837ecfab4d81203751826acf24793f4cc46caad8b744ebf4a662eedcb4c1e29b"
+    },
+    {
+      "path": "student-guides/R09-三步压文.md",
+      "previous_sha256": "ea381fbf9dd9e2de6554d6d7fbab350cf289c956ae17d6f480eb3ea2a5c7a80d",
+      "next_sha256": "bba95ecd6d4a7f7346501eb5c57d0c4effc5c70394bd991b174ae0856118b6f7"
+    },
+    {
+      "path": "student-guides/R10-代词回填.md",
+      "previous_sha256": "9115704dbf56b9cd48a35621496e0daf22d74a9c332e798a0fe174e2cfe510f6",
+      "next_sha256": "9d567a6d6a4be2efa8ef1b30255bc39a5673351570d7079dd4b9d59f74c72185"
+    },
+    {
+      "path": "student-guides/R11-长句拆骨.md",
+      "previous_sha256": "a5cbddcab3b7e6d2a429c7dbb76597e63eff58f9ce5e8a550006cf1e1a4359cb",
+      "next_sha256": "3c02ec8cf5143eeb3c0ea26b264aba12c2d33a4f5d4773d7def8e7a908cc3a92"
+    },
+    {
+      "path": "student-guides/R12-关键词追踪.md",
+      "previous_sha256": "9a522d64f49a3c2e4ce40ec2992ece0a562b95793d1346f469045513006fe2b4",
+      "next_sha256": "0ba88a6ddbf958d59133e59941afbc56071fb4c6bbde56ec67d6b4d9a9695b96"
+    },
+    {
+      "path": "student-guides/R13-名词追踪.md",
+      "previous_sha256": "a019f0d9a8d08e3a8e9f44e2f31255d99b394be832043eaa08fe0cc6fed72589",
+      "next_sha256": "222963b4b52ff146dcd0a9c3f113011b676153381d086347d8b2d766e4796375"
+    },
+    {
+      "path": "student-guides/R14-顺序锁区.md",
+      "previous_sha256": "14920d06589d15a585a8bd80ca1547c3456e238eda3d88c1d6ac7f7f49ed0e7f",
+      "next_sha256": "67b945bd41c2845e90c305012d3ef58972ac7f4aa21b81a07fcdfee4a3ef6e16"
+    },
+    {
+      "path": "student-guides/R15-动词定关系.md",
+      "previous_sha256": "f9d672adcfe8894468cd375db5d9732c8ef7fd418783805b9531003b442799a0",
+      "next_sha256": "32e360579e05acb074be89465cdea0e45c3c1082c9d9c32395c40b15a3feeb47"
+    },
+    {
+      "path": "student-guides/R16-主题锁定.md",
+      "previous_sha256": "a4aea3b17cc70c3c9e8e34f0ac16e00b9ea809d028a007875cff8075df5f3307",
+      "next_sha256": "aa6e9dd4ed873c1cf515779f9d2b6ca32deacd29c9343e21f111a5ae7e51da8f"
+    },
+    {
+      "path": "student-guides/R17-前后补证.md",
+      "previous_sha256": "59b72c4e24f12a63aa45df56d7337a2ece558c37192121dccf023862d88c8de2",
+      "next_sha256": "70d9b2f41efb84a02ec3d00cf07791664b72d096991354cbeb9f5df1bc028dd6"
+    },
+    {
+      "path": "student-guides/W01-五步锁剧情.md",
+      "previous_sha256": "940d3d8d77e10aca1908c3a82d4ba572ab6f7fb423ade65807966fd1ae65fbc8",
+      "next_sha256": "8e75992b359d79c44745ec768006b978aa54f42afaf982622729ed9b29b3007b"
+    },
+    {
+      "path": "student-guides/W02-十句五锚.md",
+      "previous_sha256": "0a915df7c3b9309c0a6ade6c76cd837c027eac8bbc7c54194ba63f46e346c86f",
+      "next_sha256": "78c9950bfe69801d39c43ea847a51448267cbd1f134ae5f0507838cdea65fa64"
+    },
+    {
+      "path": "student-guides/W03-剧情四格.md",
+      "previous_sha256": "b5ab56480cfcd184ed7cadb0363159cd410c467aa634339364f9ba16b9055c88",
+      "next_sha256": "21d8f71e9d4ae45106df510fc0622126384cb965abf05a76833f6e810618d4e6"
+    },
+    {
+      "path": "student-guides/W04-首句找缺口.md",
+      "previous_sha256": "b9b5d51d6415ac5feb454de0693bb4fac373506435369ac3103e57ef6185a1fc",
+      "next_sha256": "c8ce66f69cecc69262db384358a75bdf86d070d186c98aeb846d32c5ef38ea0d"
+    },
+    {
+      "path": "student-guides/W05-动作拆链.md",
+      "previous_sha256": "ee1bb6486417d528a8b4013aff56bf2b6592ce8b48e6d3a04a4a49d49771c1be",
+      "next_sha256": "cda8eba60d6d9cffedb2a13966feb36e91b47ae8bb08af0ee0620a68ad0de8ae"
+    },
+    {
+      "path": "student-guides/W06-三点锁题.md",
+      "previous_sha256": "79aa8b737e1c635929c698b5b28ae3801a277ee077a1ce8d03ea48b741a4f361",
+      "next_sha256": "7fe9407b57840d46ba0b4e4ff9e1010d99e8546e5dc2374010c1a3971dcfa6f8"
+    },
+    {
+      "path": "student-guides/W07-伏笔回扣.md",
+      "previous_sha256": "9ab7c9dcae853a9e43302a9f0eb7149d3f67bdea49149c5c726b05dcc1d6c472",
+      "next_sha256": "6fa2f824a34de2054720b01cf6f4c6326b83e9c1935f51be57e1021f0e91d136"
+    },
+    {
+      "path": "student-guides/W08-因果三连.md",
+      "previous_sha256": "22345caf008d78262122409413ef0eedc7643c26c4382c6f6165793d6552c97c",
+      "next_sha256": "694f571e563717f9a8eab15c8e99d29dac88adf895381fd95e6b23c39974cbba"
+    },
+    {
+      "path": "student-guides/W09-细节三镜.md",
+      "previous_sha256": "4a5a579b61cc2715377d99811027fe2c132477a185d174c888358aa9b3f7401b",
+      "next_sha256": "2049a2167336fe7ff9984b044824ba3c533afdba7ab3348359bf00dc66d9914c"
+    },
+    {
+      "path": "student-guides/W10-无痕衔接.md",
+      "previous_sha256": "c2b747c96929a51c28217c147fd516520aa26eeb65df9ed4e07237550053ebec",
+      "next_sha256": "e0cfd275609ee32afc2a9d5fd99341e970f86441cc42ec74e110ec5fe8b1ab3a"
+    },
+    {
+      "path": "student-guides/W11-小转折.md",
+      "previous_sha256": "1e892e4edbdcb7aab0b289b577106d75a87b79cb2f9e4d05fa17606c464062c2",
+      "next_sha256": "a8470dba7ea4e08121c914c3c1ad588a38b7afec0c89d2bc6952d6f7f71bde1c"
+    },
+    {
+      "path": "student-guides/W12-精准换词.md",
+      "previous_sha256": "a71bb646bc9830cf4b17337cbd9805adf0a66b2e0ad4415b66dbadb7e0efdd37",
+      "next_sha256": "bb4ccf6147f892836e30888f41ae25178093b1987d27ca22d9115b4f504e608d"
+    },
+    {
+      "path": "student-guides/W13-结尾回扣.md",
+      "previous_sha256": "c2ff7b7a6df675b582cb970538ad2b98428456af73fc886c8765a2a10d190d84",
+      "next_sha256": "3d36729d27c9e20a19730547cd52d9aede124699dabd9550e557648299e23bc3"
+    },
+    {
+      "path": "student-guides/W14-骨架句与肌肉句.md",
+      "previous_sha256": "c8a775d4281b6cf02f0f20f850d80888c5a5f768908cfefb8cab6def04122c5e",
+      "next_sha256": "dd1903c0ee143ac1daa98caa39b70770119df58ade5a30fec2963dfa52aed523"
+    },
+    {
+      "path": "student-guides/W15-续写评分.md",
+      "previous_sha256": "6b003d1197c1e3ba105b60366e6f360c74d0d75f18d02e0e13f822139a715b0c",
+      "next_sha256": "83b369e2fe266fb1fcc9898393b4d6bdec922e8191377e8abfae5f6ecf1cc993"
+    },
+    {
+      "path": "student-guides/W16-五档训练升级.md",
+      "previous_sha256": "7b7b70d88693feee19bea1b965da6ebfd2973edb4b64d6ccc247c99c528f9b64",
+      "next_sha256": "f7dc576a87970c23ec553facc96366358883b4b78961b90fa321f17711fcc6a3"
+    }
+  ]
+}

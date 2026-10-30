@@ -1,0 +1,138 @@
+method_id: W04
+brand_name: 首句找缺口
+source_name: gap 读法与首句规则
+aliases:
+- gap 读法与首句规则
+question_type: 读后续写
+method_type: method
+role: locator
+primary_role: locator
+secondary_roles: []
+output_type: locate
+student_symptoms:
+- 两段开头语对人物或行动有约束
+trigger_cues:
+- 两段首句的状态、人物或任务留下需要回原文取证的缺口。
+core_action: 圈首句已明示的人事物、状态、时地和任务，带状态变化的问题回原文，再标段间确有必要的过程。
+decision_rule: 产出取证位置和待补缺口；核首句元素与续文的实际必要联系，不让每个人物或名词固定占一句。
+verification: 产出取证位置和待补缺口；核首句元素与续文的实际必要联系，不让每个人物或名词固定占一句。 缺首句或前提不足停完整反推；可省过渡不强加，已衔接不重述下一段进行中事件，不凭名词补唯一剧情。
+stop_rule: 缺首句或前提不足停完整反推；可省过渡不强加，已衔接不重述下一段进行中事件，不凭名词补唯一剧情。
+common_wrong_instinct: 看见首句名词就想写到它，却没查这个人为什么会这样行动。
+failure_cases:
+- 看见首句名词就想写到它，却没查这个人为什么会这样行动。
+- 缺首句或前提不足停完整反推；可省过渡不强加，已衔接不重述下一段进行中事件，不凭名词补唯一剧情。
+counterexamples:
+- 首句说人物已到场，只限制上一段须合理通往到场，不证明必须发生某次事故；重复提及名词也不等于相关任务已完成。此为条件示意，不是真题。
+transfer_pattern: 换首句仍取人物任务约束并回文定位，桥接内容随新状态变。
+memory_line: 圈首句已明示的人事物、状态、时地和任务，带状态变化的问题回原文，再标段间确有必要的过程。
+anti_rule: 首句约束 ≠ 唯一剧情。
+visual_formula: '两首句：人物 / 状态动作 / 任务
+
+  ↓ 回原文找约束
+
+  原文末尾 → 首句1 … 段末 → 首句2'
+challenge_prompt: 先别编情节，只圈两首句名词和任务，再写第一段末必须达到的状态。
+source_references:
+- repository: https://github.com/rockpunkgod/ANSWER.git
+  path: gaokao-writing/references/continuation-writing-and-correction.md
+  heading: gap 读法与首句规则
+  commit: 1c388a0596b13935ae7c6a1af00834915a8efa33
+section_ids:
+- 637ac5c60b37baf7
+- a9f982dcfec817d9
+- 7b4c299267a685c2
+can_follow: []
+usually_before: []
+usually_after: []
+conflicts_with: []
+cannot_replace:
+- 完整题面验证
+levels:
+  L1: 圈开头语的名词和任务，回文找人物与矛盾，再反推段间需要补的动作
+  L2: 圈两首句的名词、状态动作与任务，回原文找相应人物矛盾，再写原文末尾到第一首句、第一段末到第二首句的待补环节；产物是取证位置和缺口。
+  L3: 首句只给约束，不证明唯一剧情；回文找不到任务前提或人物动机就暂留，不凭名词造事件。缺任一首句不能做完整段间反推。
+  L4: 换首句仍取人物任务约束并回文定位，桥接内容随新状态变。
+compact:
+  line: 圈首句已明示的人事物、状态、时地和任务，带状态变化的问题回原文，再标段间确有必要的过程。
+  boundary: 缺首句或前提不足停完整反推；可省过渡不强加，已衔接不重述下一段进行中事件，不凭名词补唯一剧情。
+  10s: 圈首句已明示的人事物、状态、时地和任务，带状态变化的问题回原文，再标段间确有必要的过程。 产出取证位置和待补缺口；核首句元素与续文的实际必要联系，不让每个人物或名词固定占一句。
+  30s: 两段首句的状态、人物或任务留下需要回原文取证的缺口。 圈首句已明示的人事物、状态、时地和任务，带状态变化的问题回原文，再标段间确有必要的过程。 缺首句或前提不足停完整反推；可省过渡不强加，已衔接不重述下一段进行中事件，不凭名词补唯一剧情。
+  90s: 两段首句的状态、人物或任务留下需要回原文取证的缺口。 手上先做：圈首句已明示的人事物、状态、时地和任务，带状态变化的问题回原文，再标段间确有必要的过程。
+    做完得到：产出取证位置和待补缺口；核首句元素与续文的实际必要联系，不让每个人物或名词固定占一句。 停止：缺首句或前提不足停完整反推；可省过渡不强加，已衔接不重述下一段进行中事件，不凭名词补唯一剧情。
+    反例（边界示意，非真题）：首句说人物已到场，只限制上一段须合理通往到场，不证明必须发生某次事故；重复提及名词也不等于相关任务已完成。此为条件示意，不是真题。
+    挑战：先别编情节，只圈两首句名词和任务，再写第一段末必须达到的状态。
+full:
+  summary: 圈首句已明示的人事物、状态、时地和任务，带状态变化的问题回原文，再标段间确有必要的过程。 产出取证位置和待补缺口；核首句元素与续文的实际必要联系，不让每个人物或名词固定占一句。
+  source_boundary: 缺首句或前提不足停完整反推；可省过渡不强加，已衔接不重述下一段进行中事件，不凭名词补唯一剧情。
+  boundaries:
+  - 缺首句或前提不足停完整反推；可省过渡不强加，已衔接不重述下一段进行中事件，不凭名词补唯一剧情。
+  - 首句说人物已到场，只限制上一段须合理通往到场，不证明必须发生某次事故；重复提及名词也不等于相关任务已完成。此为条件示意，不是真题。
+  section_ids:
+  - 637ac5c60b37baf7
+  - a9f982dcfec817d9
+  - 7b4c299267a685c2
+cases:
+  canonical: cases/continuation-writing/W04/canonical/case.yaml
+four_step_card:
+  start: 两段首句的状态、人物或任务留下需要回原文取证的缺口。
+  first_cut: 圈首句已明示的人事物、状态、时地和任务，带状态变化的问题回原文，再标段间确有必要的过程。
+  judge: 产出取证位置和待补缺口；核首句元素与续文的实际必要联系，不让每个人物或名词固定占一句。
+  stop: 缺首句或前提不足停完整反推；可省过渡不强加，已衔接不重述下一段进行中事件，不凭名词补唯一剧情。
+practicality_gate:
+  status: design_complete_empirical_pending
+  trigger: 两段首句的状态、人物或任务留下需要回原文取证的缺口。
+  action: 圈首句已明示的人事物、状态、时地和任务，带状态变化的问题回原文，再标段间确有必要的过程。
+  output: locate；产出取证位置和待补缺口；核首句元素与续文的实际必要联系，不让每个人物或名词固定占一句。
+  stop: 缺首句或前提不足停完整反推；可省过渡不强加，已衔接不重述下一段进行中事件，不凭名词补唯一剧情。
+  transfer: 换首句仍取人物任务约束并回文定位，桥接内容随新状态变。
+  efficiency: 缩小首轮回读目标，减少无关剧情发散；能否节时需对照。
+  misuse_cost: 未经实测；看见首句名词就想写到它，却没查这个人为什么会这样行动。会导致误判；须先核触发、执行Stop，不允许辅助产物越级定案。
+first_use_test:
+  status: designed_not_run
+  trigger_success: null
+  action_success: null
+  evidence_success: null
+  stop_rule_success: null
+  no_answer_backfit: null
+  failure_type: null
+  final_result: pending_real_student_test
+evaluation:
+  baseline: 普通逐项核题面
+  primary_benefit_hypothesis: 缩小首轮回读目标，减少无关剧情发散；能否节时需对照。
+  trigger_precision: null
+  trigger_recall: null
+  resolution_rate: null
+  standalone_rate: null
+  assist_rate: null
+  false_trigger_rate: null
+  transfer_rate: null
+  boundary_accuracy: null
+  time_complexity_gain: null
+usefulness_level: Useful
+status: candidate
+maturity_status: candidate
+practical_value: Useful
+version: 1.2.0
+change_reason: ANSWER 1c388a0596b13935ae7c6a1af00834915a8efa33 增量来源同步；保留既有动作与版本，旧证据不自动获得新来源准入。
+affected_cases:
+- cases/continuation-writing/W04/canonical/case.yaml
+regression_result: pending_current_epoch_semantic_and_student_acceptance
+student_ready: false
+entry_copy: 两段首句的状态、人物或任务留下需要回原文取证的缺口。 手上先做：圈首句已明示的人事物、状态、时地和任务，带状态变化的问题回原文，再标段间确有必要的过程。
+  做完得到：产出取证位置和待补缺口；核首句元素与续文的实际必要联系，不让每个人物或名词固定占一句。 停止：缺首句或前提不足停完整反推；可省过渡不强加，已衔接不重述下一段进行中事件，不凭名词补唯一剧情。
+static_design_review:
+  status: source_rebound_semantic_reacceptance_pending
+  source_section_ids:
+  - 637ac5c60b37baf7
+  - a9f982dcfec817d9
+  - 7b4c299267a685c2
+  participant_validation: pending_real_participant_validation
+  example_scope: schematic source boundary, not a verified exam
+source_alignment:
+  commit: 1c388a0596b13935ae7c6a1af00834915a8efa33
+  state: live_source_bound
+  source_content_changed: false
+  correction_profile_applied: true
+  authored_first_contact_draft: false
+  new_course_branches: preserved_in_full_contract_not_automatically_aliased
+  acceptance: unchanged_method_sections; added_source_contracts_preserved; learner/release_pending

@@ -29,15 +29,27 @@ class QuestionAnalyzer:
             validate_schema('question-input',q)
             material_fields = ('question_id','question_type','stem','passage','options',
                                'given_word','student_text','continuation_starters',
-                               'original_images','student_symptoms')
+                               'original_images','student_symptoms','required_image_evidence')
             for field in material_fields:
                 if (field in q)!=(field in original) or q.get(field)!=original.get(field):
                     raise ValueError('Review provider cannot replace original question material: '+field)
         matches = match_methods(q,self.registry)
+        source_only_image='required_image_evidence' in q and 'question_verification_review' not in q
+        if 'required_image_evidence' in q:
+            if q['question_type'] not in {'阅读理解','七选五','完形填空'} or not q.get('options'):
+                raise ValueError('Source image obligations require an objective option question')
+            if not source_only_image and q['question_verification_review']['schema_version']!='1.1.0':
+                raise ValueError('Source image obligations require terminal review 1.1.0; cannot downgrade to text')
+            if source_only_image:
+                from .image_evidence import image_manifest
+                from video_contracts.objective_images import validate_source_image_obligations
+                validate_source_image_obligations(q,image_manifest(q))
         chain = compose(q,matches,self.registry)
         graph = EvidenceGraph()
         known_candidates = set(q.get('options',{})) | {x['candidate'] for x in q.get('relations',[])}
         scope = {'material_sha256': material_fingerprint(q)}
+        if 'required_image_evidence' in q:
+            scope['required_image_evidence'] = deepcopy(q['required_image_evidence'])
         if known_candidates:
             scope['candidate_ids'] = sorted(known_candidates)
         graph.node('question_signal',q['stem'] or '空题干；只允许结构路由',**scope)
@@ -157,9 +169,12 @@ class QuestionAnalyzer:
             result['answer_verification']['closed']=False
             result['limitations'].append('候选关系核查未决或与已有保留冲突；不沿用先前答案。')
         if 'question_verification_review' in q:
-            result['schema_version']='1.8.0'
+            result['schema_version']='1.9.0' if q['question_verification_review']['schema_version']=='1.1.0' else '1.8.0'
             verification=verify_question(q,result,self.registry,graph)
             apply_question_verification(result,verification)
+        elif source_only_image:
+            result['status']='needs_evidence' if complete else 'incomplete_input'
+            result['limitations'].append('来源图像义务已保留；尚无整题图证审阅，仅扫描原题，不据此闭合答案。')
         result['writing_feedback']=writing_feedback(q,self.registry,graph,trigger_nodes)
         result['evidence_graph']=graph.result(q)
         result['lesson_feedback']=lesson_feedback(q,result,self.registry,graph,trigger_nodes,relation_nodes)

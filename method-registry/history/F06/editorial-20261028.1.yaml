@@ -1,0 +1,132 @@
+method_id: F06
+brand_name: 前后呼应
+source_name: 对应词法
+aliases:
+- 对应词法
+question_type: 七选五
+method_type: method
+role: verifier
+primary_role: verifier
+secondary_roles: []
+output_type: verify
+student_symptoms:
+- 候选与上下句有对象或词义复现
+trigger_cues:
+- 候选与正文有可确认词语、指代或整句内容呼应，而非只是同一主题。
+core_action: 圈呼应表达并写它承接哪个对象、事件或整句内容，回填两侧；需要时由空后代词反查候选提供的前提。
+decision_rule: 产出实际呼应的核验；同词多项局部接通时比空前条件、空后结果与全段任务，不数重词定案。
+verification: 产出实际呼应的核验；同词多项局部接通时比空前条件、空后结果与全段任务，不数重词定案。 无明确呼应不命名本法；形式it不强找名词，latter要有真实成对对象；前提未引出不提前放，段界连下段起句核。
+stop_rule: 无明确呼应不命名本法；形式it不强找名词，latter要有真实成对对象；前提未引出不提前放，段界连下段起句核。
+common_wrong_instinct: 每找到一个重复词就增加信心，却没有说明它到底承接谁或哪件事。
+failure_cases:
+- 每找到一个重复词就增加信心，却没有说明它到底承接谁或哪件事。
+- 无明确呼应不命名本法；形式it不强找名词，latter要有真实成对对象；前提未引出不提前放，段界连下段起句核。
+counterexamples:
+- 两个候选都重复同一个主题词，但其中一项的动作不能承接空前条件；重词再多也不证明闭环。
+transfer_pattern: 换文章仍核同指或同义的实际对象及前后联系，不迁移固定对应词对。
+memory_line: 圈呼应表达并写它承接哪个对象、事件或整句内容，回填两侧；需要时由空后代词反查候选提供的前提。
+anti_rule: 重复词 ≠ 内容接通。
+visual_formula: "呼应词 → 哪个对象/事件/整件事？\n         ↓ 放回两侧\n空前条件 + 候选完整断言 + 空后结果\n→ 呼应核验（verify）；同词不定案"
+challenge_prompt: 不选答案，只连一对呼应表达，写明它们对应哪个对象或事件，再标还需核的前后联系。
+source_references:
+- repository: https://github.com/rockpunkgod/ANSWER.git
+  path: gaokao-english/references/seven-five.md
+  heading: 对应词法
+  commit: 1c388a0596b13935ae7c6a1af00834915a8efa33
+section_ids: &id001
+- 92ec24e9e7003cba
+can_follow: []
+usually_before: []
+usually_after: []
+conflicts_with: []
+cannot_replace:
+- 完整题面验证
+levels:
+  L1: 圈两边对应对象与动作，标同指或同义关系，再回填核上下句和段落任务
+  L2: 圈明确复现、近义或指代，写清连接的对象、事件或整句内容，再回填核空前条件、空后结果和段落任务；输出呼应核验，不靠重词数量定案。
+  L3: 只是同主题或翻译通却没有明确呼应时不命名本法；同词多项都能接时比完整断言。形式it、概括名词或latter必须按实际内容还原，不能强找最近名词。
+  L4: 换文章仍核同指或同义的实际对象及前后联系，不迁移固定对应词对。
+compact:
+  line: 圈呼应表达并写它承接哪个对象、事件或整句内容，回填两侧；需要时由空后代词反查候选提供的前提。
+  boundary: 无明确呼应不命名本法；形式it不强找名词，latter要有真实成对对象；前提未引出不提前放，段界连下段起句核。
+  10s: 看到同词就想选？连出两处呼应并写清指什么，再放回两侧；重词不等于答案。
+  30s: 看到同词就想选？先把候选和正文疑似呼应的两个表达连线，写它们具体指哪件事。例如，两个候选都提同一词，但只有一个动作接住空前条件。没有具体呼应不硬套；同词多项仍要比完整关系。
+  90s: 看到同词就想选？圈呼应表达并写它承接哪个对象、事件或整句内容，回填两侧；需要时由空后代词反查候选提供的前提。这一步得到的只是核验已有候选或稿件，不替代独立证据。判断时，产出实际呼应的核验；同词多项局部接通时比空前条件、空后结果与全段任务，不数重词定案。什么时候停，无明确呼应不命名本法；形式it不强找名词，latter要有真实成对对象；前提未引出不提前放，段界连下段起句核。反例示意，两个候选都重复同一个主题词，但其中一项的动作不能承接空前条件；重词再多也不证明闭环。换题仍检查当前题面的对象和关系，不搬上一题结论。挑战，不选答案，只连一对呼应表达，写明它们对应哪个对象或事件，再标还需核的前后联系。
+full:
+  summary: 圈呼应表达并写它承接哪个对象、事件或整句内容，回填两侧；需要时由空后代词反查候选提供的前提。 产出实际呼应的核验；同词多项局部接通时比空前条件、空后结果与全段任务，不数重词定案。
+  source_boundary: 无明确呼应不命名本法；形式it不强找名词，latter要有真实成对对象；前提未引出不提前放，段界连下段起句核。
+  boundaries:
+  - 无明确呼应不命名本法；形式it不强找名词，latter要有真实成对对象；前提未引出不提前放，段界连下段起句核。
+  - 两个候选都重复同一个主题词，但其中一项的动作不能承接空前条件；重词再多也不证明闭环。
+  section_ids:
+  - 92ec24e9e7003cba
+  beginner_support:
+    first_micro_action: 先把候选和正文疑似呼应的两个表达连线，写它们具体指哪件事。
+    prerequisite: 先分清一句是否说完整，再找句中实际谈谁。真谓语就是承担本句时间的动词；-ed或-ing词尾本身不能证明它是谓语。
+    if_stuck: 先记录暂定分组或一侧真实内容；关系不清回正文或暂留，不靠占用、组小或剩余定案。
+    example: 两个候选都提同一词，但只有一个动作接住空前条件。
+    example_scope: 关系/结构示意，非完整试题，不计真题或已验案例。
+    micro_action_is_not_completion: 完成第一小步不等于完整方法成功；继续完成四步卡的判断与停止核验。
+    short_stop: 没有具体呼应不硬套；同词多项仍要比完整关系。
+  presentation_revision: 2026-10-28.1
+cases:
+  canonical: cases/seven-five/F06/canonical/case.yaml
+four_step_card:
+  start: 候选与正文有可确认词语、指代或整句内容呼应，而非只是同一主题。
+  first_cut: 圈呼应表达并写它承接哪个对象、事件或整句内容，回填两侧；需要时由空后代词反查候选提供的前提。
+  judge: 产出实际呼应的核验；同词多项局部接通时比空前条件、空后结果与全段任务，不数重词定案。
+  stop: 无明确呼应不命名本法；形式it不强找名词，latter要有真实成对对象；前提未引出不提前放，段界连下段起句核。
+practicality_gate:
+  status: design_complete_empirical_pending
+  trigger: 候选与正文有可确认词语、指代或整句内容呼应，而非只是同一主题。
+  action: 圈呼应表达并写它承接哪个对象、事件或整句内容，回填两侧；需要时由空后代词反查候选提供的前提。
+  output: verify；产出实际呼应的核验；同词多项局部接通时比空前条件、空后结果与全段任务，不数重词定案。
+  stop: 无明确呼应不命名本法；形式it不强找名词，latter要有真实成对对象；前提未引出不提前放，段界连下段起句核。
+  transfer: 换文章仍核同指或同义的实际对象及前后联系，不迁移固定对应词对。
+  efficiency: 把找词变为对象/事件连线，可减少无效罗列并暴露指代缺口；效率未测。
+  misuse_cost: 未经实测；每找到一个重复词就增加信心，却没有说明它到底承接谁或哪件事。会导致误判；须先核触发、执行Stop，不允许辅助产物越级定案。
+first_use_test:
+  status: designed_not_run
+  trigger_success: null
+  action_success: null
+  evidence_success: null
+  stop_rule_success: null
+  no_answer_backfit: null
+  failure_type: null
+  final_result: pending_real_student_test
+evaluation:
+  baseline: 普通逐项核题面
+  primary_benefit_hypothesis: 把找词变为对象/事件连线，可减少无效罗列并暴露指代缺口；效率未测。
+  trigger_precision: null
+  trigger_recall: null
+  resolution_rate: null
+  standalone_rate: null
+  assist_rate: null
+  false_trigger_rate: null
+  transfer_rate: null
+  boundary_accuracy: null
+  time_complexity_gain: null
+usefulness_level: Useful
+status: candidate
+maturity_status: candidate
+practical_value: Useful
+version: 1.2.0
+change_reason: ANSWER 1c388a0596b13935ae7c6a1af00834915a8efa33 增量来源同步；保留既有动作与版本，旧证据不自动获得新来源准入。
+affected_cases:
+- cases/seven-five/F06/canonical/case.yaml
+regression_result: pending_current_epoch_semantic_and_student_acceptance
+student_ready: false
+entry_copy: 看到同词就想选？先把候选和正文疑似呼应的两个表达连线，写它们具体指哪件事。这一步得到的只是核验已有候选或稿件，不替代独立证据。如果卡住，先记录暂定分组或一侧真实内容；关系不清回正文或暂留，不靠占用、组小或剩余定案。
+static_design_review:
+  status: source_bound_editorial_review
+  source_section_ids: *id001
+  participant_validation: pending_real_participant_validation
+  example_scope: 2026-10-28基础入口表达修订；保留原判据/Stop/课程绑定与语义版本，微动作和关系示意不是完整真题或真人实测。
+source_alignment:
+  commit: 1c388a0596b13935ae7c6a1af00834915a8efa33
+  state: live_source_bound
+  source_content_changed: false
+  correction_profile_applied: true
+  authored_first_contact_draft: true
+  new_course_branches: preserved_in_full_contract_not_automatically_aliased
+  acceptance: unchanged_method_sections; added_source_contracts_preserved; learner/release_pending

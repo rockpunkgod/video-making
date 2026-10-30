@@ -1,0 +1,140 @@
+method_id: R14
+brand_name: 顺序锁区
+source_name: 题文同序
+aliases:
+- 题文同序
+question_type: 阅读理解
+method_type: sub_action
+role: locator
+primary_role: locator
+secondary_roles: []
+output_type: locate
+student_symptoms:
+- 文章组织与题目顺序实际相符
+trigger_cues:
+- 已定位题的出处与实际文章推进同序，能帮助缩小当前搜索区间。
+core_action: 标相邻已定位题的真实出处，暂估当前题可能区间，再以当前题对象和动作回文确认。
+decision_rule: 只产出暂定搜索范围；题文同序是积极阅读的定位子动作，不合并为顺藤摸瓜。
+verification: 只产出暂定搜索范围；题文同序是积极阅读的定位子动作，不合并为顺藤摸瓜。 插叙、回叙、跨段综合、共享出处或证据落区间外时取消限制；不切死一题一段，定位不等于已答对。
+stop_rule: 插叙、回叙、跨段综合、共享出处或证据落区间外时取消限制；不切死一题一段，定位不等于已答对。
+common_wrong_instinct: 认定每题只占一段，按题号把原文切死，区间外证据一律不看。
+failure_cases:
+- 认定每题只占一段，按题号把原文切死，区间外证据一律不看。
+- 插叙、回叙、跨段综合、共享出处或证据落区间外时取消限制；不切死一题一段，定位不等于已答对。
+counterexamples:
+- 文章在中间回叙早先事件，当前题出处可能越过相邻题区域；必须取消机械锁区。
+transfer_pattern: 不同叙事仍先检验实际顺序，仅迁移区间假设与解锁动作，不迁移段号。
+memory_line: 标相邻已定位题的真实出处，暂估当前题可能区间，再以当前题对象和动作回文确认。
+anti_rule: 题号顺序 ≠ 固定段号。
+visual_formula: '相邻已定位出处 → 暂定搜索区间
+
+  当前证据符合顺序？
+
+  是 → 定位；否 → 取消区间
+
+  区间 ≠ 答案'
+challenge_prompt: 不做当前题，只用相邻已定位出处画暂定搜索区，再指出什么题面信号会让你取消它。
+source_references:
+- repository: https://github.com/rockpunkgod/ANSWER.git
+  path: gaokao-english/references/reading-comprehension.md
+  heading: 按题型任务分流，不按文体硬套
+  commit: 1c388a0596b13935ae7c6a1af00834915a8efa33
+- repository: https://github.com/rockpunkgod/ANSWER.git
+  path: gaokao-english/references/reading-comprehension.md
+  heading: 跳读定位
+  commit: 1c388a0596b13935ae7c6a1af00834915a8efa33
+section_ids:
+- 3104f706064bf305
+- 688367aeb67f68ad
+can_follow: []
+usually_before: []
+usually_after: []
+conflicts_with: []
+cannot_replace:
+- 完整题面验证
+levels:
+  L1: 标相邻已定位题的出处，作为当前题查找区间，发现倒叙或偏离就取消区间
+  L2: 将相邻已核定位题的出处作为搜索假设，只在当前题证据落入且顺序确实相符时保留区间；不由区间推出答案。
+  L3: 插叙、回叙、跨段综合、猜词共享出处或当前证据落区间外时取消顺序限制，回全篇定位；已定位不得等同已答对。
+  L4: 不同叙事仍先检验实际顺序，仅迁移区间假设与解锁动作，不迁移段号。
+compact:
+  line: 标相邻已定位题的真实出处，暂估当前题可能区间，再以当前题对象和动作回文确认。
+  boundary: 插叙、回叙、跨段综合、共享出处或证据落区间外时取消限制；不切死一题一段，定位不等于已答对。
+  10s: 标相邻已定位题的真实出处，暂估当前题可能区间，再以当前题对象和动作回文确认。 只产出暂定搜索范围；题文同序是积极阅读的定位子动作，不合并为顺藤摸瓜。
+  30s: 已定位题的出处与实际文章推进同序，能帮助缩小当前搜索区间。 标相邻已定位题的真实出处，暂估当前题可能区间，再以当前题对象和动作回文确认。 插叙、回叙、跨段综合、共享出处或证据落区间外时取消限制；不切死一题一段，定位不等于已答对。
+  90s: 已定位题的出处与实际文章推进同序，能帮助缩小当前搜索区间。 手上先做：标相邻已定位题的真实出处，暂估当前题可能区间，再以当前题对象和动作回文确认。 做完得到：只产出暂定搜索范围；题文同序是积极阅读的定位子动作，不合并为顺藤摸瓜。
+    停止：插叙、回叙、跨段综合、共享出处或证据落区间外时取消限制；不切死一题一段，定位不等于已答对。 反例（边界示意，非真题）：文章在中间回叙早先事件，当前题出处可能越过相邻题区域；必须取消机械锁区。
+    挑战：不做当前题，只用相邻已定位出处画暂定搜索区，再指出什么题面信号会让你取消它。
+full:
+  summary: 标相邻已定位题的真实出处，暂估当前题可能区间，再以当前题对象和动作回文确认。 只产出暂定搜索范围；题文同序是积极阅读的定位子动作，不合并为顺藤摸瓜。
+  source_boundary: 插叙、回叙、跨段综合、共享出处或证据落区间外时取消限制；不切死一题一段，定位不等于已答对。
+  boundaries:
+  - 插叙、回叙、跨段综合、共享出处或证据落区间外时取消限制；不切死一题一段，定位不等于已答对。
+  - 文章在中间回叙早先事件，当前题出处可能越过相邻题区域；必须取消机械锁区。
+  section_ids:
+  - 3104f706064bf305
+  - 688367aeb67f68ad
+cases:
+  canonical: cases/reading/R14/canonical/case.yaml
+four_step_card:
+  start: 已定位题的出处与实际文章推进同序，能帮助缩小当前搜索区间。
+  first_cut: 标相邻已定位题的真实出处，暂估当前题可能区间，再以当前题对象和动作回文确认。
+  judge: 只产出暂定搜索范围；题文同序是积极阅读的定位子动作，不合并为顺藤摸瓜。
+  stop: 插叙、回叙、跨段综合、共享出处或证据落区间外时取消限制；不切死一题一段，定位不等于已答对。
+practicality_gate:
+  status: design_complete_empirical_pending
+  trigger: 已定位题的出处与实际文章推进同序，能帮助缩小当前搜索区间。
+  action: 标相邻已定位题的真实出处，暂估当前题可能区间，再以当前题对象和动作回文确认。
+  output: locate；只产出暂定搜索范围；题文同序是积极阅读的定位子动作，不合并为顺藤摸瓜。
+  stop: 插叙、回叙、跨段综合、共享出处或证据落区间外时取消限制；不切死一题一段，定位不等于已答对。
+  transfer: 不同叙事仍先检验实际顺序，仅迁移区间假设与解锁动作，不迁移段号。
+  efficiency: 顺序相符时缩短定位范围；发现偏离及时解锁，避免省阅读导致漏证。
+  misuse_cost: 未经实测；认定每题只占一段，按题号把原文切死，区间外证据一律不看。会导致误判，必须先核触发并执行上述Stop，不允许从辅助产物越级定案。
+first_use_test:
+  status: designed_not_run
+  trigger_success: null
+  action_success: null
+  evidence_success: null
+  stop_rule_success: null
+  no_answer_backfit: null
+  failure_type: null
+  final_result: pending_real_student_test
+evaluation:
+  baseline: 普通逐项核题面
+  primary_benefit_hypothesis: 顺序相符时缩短定位范围；发现偏离及时解锁，避免省阅读导致漏证。
+  trigger_precision: null
+  trigger_recall: null
+  resolution_rate: null
+  standalone_rate: null
+  assist_rate: null
+  false_trigger_rate: null
+  transfer_rate: null
+  boundary_accuracy: null
+  time_complexity_gain: null
+usefulness_level: Useful
+status: candidate
+maturity_status: candidate
+practical_value: Useful
+version: 1.2.0
+change_reason: ANSWER 1c388a0596b13935ae7c6a1af00834915a8efa33 增量来源同步；保留既有动作与版本，旧证据不自动获得新来源准入。
+affected_cases:
+- cases/reading/R14/canonical/case.yaml
+regression_result: pending_current_epoch_semantic_and_student_acceptance
+student_ready: false
+entry_copy: 已定位题的出处与实际文章推进同序，能帮助缩小当前搜索区间。 手上先做：标相邻已定位题的真实出处，暂估当前题可能区间，再以当前题对象和动作回文确认。
+  做完得到：只产出暂定搜索范围；题文同序是积极阅读的定位子动作，不合并为顺藤摸瓜。 停止：插叙、回叙、跨段综合、共享出处或证据落区间外时取消限制；不切死一题一段，定位不等于已答对。
+static_design_review:
+  status: source_rebound_semantic_reacceptance_pending
+  source_section_ids:
+  - 3104f706064bf305
+  - 688367aeb67f68ad
+  participant_validation: pending_real_participant_validation
+  example_scope: counterexample is a schematic source boundary, not a verified exam
+source_alignment:
+  commit: 1c388a0596b13935ae7c6a1af00834915a8efa33
+  state: live_source_bound
+  source_content_changed: false
+  correction_profile_applied: true
+  authored_first_contact_draft: false
+  new_course_branches: preserved_in_full_contract_not_automatically_aliased
+  acceptance: unchanged_method_sections; added_source_contracts_preserved; learner/release_pending

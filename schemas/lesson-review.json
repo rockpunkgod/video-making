@@ -6,7 +6,8 @@
     "schema_version": {
       "enum": [
         "1.0.0",
-        "1.1.0"
+        "1.1.0",
+        "1.2.0"
       ]
     },
     "question_type": {
@@ -174,6 +175,28 @@
                 },
                 "minItems": 1,
                 "uniqueItems": true
+              },
+              "image_evidence": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "candidate": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "region_index": {
+                      "type": "integer",
+                      "minimum": 0
+                    }
+                  },
+                  "required": [
+                    "candidate",
+                    "region_index"
+                  ],
+                  "additionalProperties": false
+                },
+                "minItems": 1
               }
             },
             "required": [
@@ -200,5 +223,32 @@
     "source_section_ids",
     "segments"
   ],
-  "additionalProperties": false
+  "additionalProperties": false,
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "schema_version": {
+            "enum": [
+              "1.0.0",
+              "1.1.0"
+            ]
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "segments": {
+            "items": {
+              "not": {
+                "required": [
+                  "image_evidence"
+                ]
+              }
+            }
+          }
+        }
+      }
+    }
+  ]
 }

@@ -1,0 +1,127 @@
+method_id: C06
+brand_name: 时间线复原
+source_name: 逻辑与时间要看真实内容
+aliases:
+- 逻辑与时间要看真实内容
+question_type: 完形填空
+method_type: sub_action
+role: interpreter
+primary_role: interpreter
+secondary_roles: []
+output_type: interpret
+student_symptoms:
+- 空位依赖事件先后或时间间隔
+trigger_cues:
+- 空位依赖事件先后或时间间隔
+core_action: 写两件事发生时间及间隔，再标先后或因果，不省略题面时间条件
+decision_rule: 写两件事各自何时发生、明确间隔及先后，再独立核是否存在因果；产出真实时间线，不能以连续发生补造原因或时长变化。
+verification: 写两件事发生时间及间隔，再标先后或因果，不省略题面时间条件。写两件事各自何时发生、明确间隔及先后，再独立核是否存在因果；产出真实时间线，不能以连续发生补造原因或时长变化。
+  事件时间或间隔未给就标未知；先后不证明因果，身份或状态改变不证明时长改变。额外时间要求无据时停止初判。
+stop_rule: 事件时间或间隔未给就标未知；先后不证明因果，身份或状态改变不证明时长改变。额外时间要求无据时停止初判。
+common_wrong_instinct: 看到事件接着发生，就默认前者导致后者；或把身份变化理解成经历时间更长。
+failure_cases:
+- 看到事件接着发生，就默认前者导致后者；或把身份变化理解成经历时间更长。
+- 事件时间或间隔未给就标未知；先后不证明因果，身份或状态改变不证明时长改变。额外时间要求无据时停止初判。
+counterexamples:
+- 题面只给身份变化，没有交代时长变了；不能把身份差异补成经历时长差异。
+transfer_pattern: 新材料仍列事件阶段和明确间隔，不迁移同一时间词的固定答案或补出的时长。
+memory_line: 写两件事发生时间及间隔，再标先后或因果，不省略题面时间条件
+anti_rule: 先后 ≠ 因果。
+visual_formula: "事件A：时间/阶段\n      ↓ 已给间隔？\n事件B：时间/阶段\n→ 时间线（interpret）\n因果需另有据；未知间隔不补"
+challenge_prompt: 先不选，标两件事发生的时间和间隔；未说明的填未知，再区分哪条箭头只有先后、哪条真有因果依据。
+source_references:
+- repository: https://github.com/rockpunkgod/ANSWER.git
+  path: gaokao-english/references/cloze.md
+  heading: 逻辑与时间要看真实内容
+  commit: 1c388a0596b13935ae7c6a1af00834915a8efa33
+section_ids:
+- 7abd608ebd73dbe2
+can_follow: []
+usually_before: []
+usually_after: []
+conflicts_with: []
+cannot_replace:
+- 完整题面验证
+levels:
+  L1: 写两件事发生时间及间隔，再标先后或因果，不省略题面时间条件
+  L2: 写两件事各自何时发生、明确间隔及先后，再独立核是否存在因果；产出真实时间线，不能以连续发生补造原因或时长变化。
+  L3: 事件时间或间隔未给就标未知；先后不证明因果，身份或状态改变不证明时长改变。额外时间要求无据时停止初判。
+  L4: 新材料仍列事件阶段和明确间隔，不迁移同一时间词的固定答案或补出的时长。
+compact:
+  10s: 时间关系绕晕？写两件事何时发生和已给间隔，只还原时间线；先后不等于因果，未给时长别补。
+  30s: 空位依赖先后或时间间隔时，列两件事的发生阶段，把明确间隔保留下来。关系示意：身份变了，不代表经历时长变了。先后与因果分开核；未给时间写未知，本步只还原关系，不凭连续动作选。
+  90s: 空位依赖事件先后或时间间隔时，先确认：空位依赖事件先后或时间间隔。第一刀：写两件事发生时间及间隔，再标先后或因果，不省略题面时间条件。产物 interpret：写两件事各自何时发生、明确间隔及先后，再独立核是否存在因果；产出真实时间线，不能以连续发生补造原因或时长变化。
+    停止：事件时间或间隔未给就标未知；先后不证明因果，身份或状态改变不证明时长改变。额外时间要求无据时停止初判。 反例（关系示意，不是真题）：题面只给身份变化，没有交代时长变了；不能把身份差异补成经历时长差异。
+    迁移：新材料仍列事件阶段和明确间隔，不迁移同一时间词的固定答案或补出的时长。 挑战：先不选，标两件事发生的时间和间隔；未说明的填未知，再区分哪条箭头只有先后、哪条真有因果依据。
+full:
+  summary: 写两件事发生时间及间隔，再标先后或因果，不省略题面时间条件 写两件事各自何时发生、明确间隔及先后，再独立核是否存在因果；产出真实时间线，不能以连续发生补造原因或时长变化。
+  source_boundary: 事件时间或间隔未给就标未知；先后不证明因果，身份或状态改变不证明时长改变。额外时间要求无据时停止初判。
+  boundaries:
+  - 事件时间或间隔未给就标未知；先后不证明因果，身份或状态改变不证明时长改变。额外时间要求无据时停止初判。
+  - 题面只给身份变化，没有交代时长变了；不能把身份差异补成经历时长差异。
+  section_ids:
+  - 7abd608ebd73dbe2
+cases:
+  canonical: cases/cloze/C06/canonical/case.yaml
+four_step_card:
+  start: 空位依赖事件先后或时间间隔
+  first_cut: 写两件事发生时间及间隔，再标先后或因果，不省略题面时间条件
+  judge: 写两件事各自何时发生、明确间隔及先后，再独立核是否存在因果；产出真实时间线，不能以连续发生补造原因或时长变化。
+  stop: 事件时间或间隔未给就标未知；先后不证明因果，身份或状态改变不证明时长改变。额外时间要求无据时停止初判。
+practicality_gate:
+  status: design_complete_empirical_pending
+  trigger: 空位依赖事件先后或时间间隔
+  action: 写两件事发生时间及间隔，再标先后或因果，不省略题面时间条件
+  output: interpret；写两件事各自何时发生、明确间隔及先后，再独立核是否存在因果；产出真实时间线，不能以连续发生补造原因或时长变化。
+  stop: 事件时间或间隔未给就标未知；先后不证明因果，身份或状态改变不证明时长改变。额外时间要求无据时停止初判。
+  transfer: 新材料仍列事件阶段和明确间隔，不迁移同一时间词的固定答案或补出的时长。
+  efficiency: 避免省略时间条件或补造因果，主要改善关系准确性；不保证更快。
+  misuse_cost: 未经实测；看到事件接着发生，就默认前者导致后者；或把身份变化理解成经历时间更长。会导致误判；须先核触发、执行Stop，不允许辅助产物越级定案。
+first_use_test:
+  status: designed_not_run
+  trigger_success: null
+  action_success: null
+  evidence_success: null
+  stop_rule_success: null
+  no_answer_backfit: null
+  failure_type: null
+  final_result: pending_real_student_test
+evaluation:
+  baseline: 普通逐项核题面
+  primary_benefit_hypothesis: 避免省略时间条件或补造因果，主要改善关系准确性；不保证更快。
+  trigger_precision: null
+  trigger_recall: null
+  resolution_rate: null
+  standalone_rate: null
+  assist_rate: null
+  false_trigger_rate: null
+  transfer_rate: null
+  boundary_accuracy: null
+  time_complexity_gain: null
+usefulness_level: Useful
+status: candidate
+maturity_status: candidate
+practical_value: Useful
+version: 1.2.0
+change_reason: ANSWER 1c388a0596b13935ae7c6a1af00834915a8efa33 增量来源同步；保留既有动作与版本，旧证据不自动获得新来源准入。
+affected_cases:
+- cases/cloze/C06/canonical/case.yaml
+regression_result: pending_current_epoch_semantic_and_student_acceptance
+student_ready: false
+entry_copy: 空位依赖事件先后或时间间隔时，第一眼先找：空位依赖事件先后或时间间隔。手上先做：写两件事发生时间及间隔，再标先后或因果，不省略题面时间条件。做完得到
+  interpret，不是通用答案。写两件事各自何时发生、明确间隔及先后，再独立核是否存在因果；产出真实时间线，不能以连续发生补造原因或时长变化。 什么时候停：事件时间或间隔未给就标未知；先后不证明因果，身份或状态改变不证明时长改变。额外时间要求无据时停止初判。
+  换题仍这样做：新材料仍列事件阶段和明确间隔，不迁移同一时间词的固定答案或补出的时长。
+static_design_review:
+  status: source_rebound_semantic_reacceptance_pending
+  source_section_ids:
+  - 7abd608ebd73dbe2
+  participant_validation: pending_real_participant_validation
+  example_scope: schematic source boundary, not a verified exam
+source_alignment:
+  commit: 1c388a0596b13935ae7c6a1af00834915a8efa33
+  state: live_source_bound
+  source_content_changed: false
+  correction_profile_applied: false
+  authored_first_contact_draft: false
+  new_course_branches: preserved_in_full_contract_not_automatically_aliased
+  acceptance: unchanged_method_sections; added_source_contracts_preserved; learner/release_pending

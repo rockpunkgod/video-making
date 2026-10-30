@@ -1,0 +1,137 @@
+method_id: F08
+brand_name: 情绪同向
+source_name: 褒贬一致
+aliases:
+- 褒贬一致
+question_type: 七选五
+method_type: sub_action
+role: reducer
+primary_role: reducer
+secondary_roles: []
+output_type: reduce
+student_symptoms:
+- 同一对象有可确认的评价方向
+trigger_cues:
+- 同一对象有可确认的评价方向
+core_action: 圈评价词及它评价的对象，比较候选评价维度，不因同为积极词就定案
+decision_rule: 先读完整命题与否定范围，圈评价对象和实际功能；同维同向只形成优先候选，继续比处境、措施与句间任务。
+verification: 圈评价词及它评价的对象，比较候选评价维度，不因同为积极词就定案。先读完整命题与否定范围，圈评价对象和实际功能；同维同向只形成优先候选，继续比处境、措施与句间任务。
+  中性句不强分褒贬；负面处境可能引出改善，否定形式可能表达肯定。方向相同仍不能定案，更不能靠另一空占用来证明。
+stop_rule: 中性句不强分褒贬；负面处境可能引出改善，否定形式可能表达肯定。方向相同仍不能定案，更不能靠另一空占用来证明。
+common_wrong_instinct: 把困难词一律归负面、帮助词一律归正面，以为同方向就能填。
+failure_cases:
+- 把困难词一律归负面、帮助词一律归正面，以为同方向就能填。
+- 中性句不强分褒贬；负面处境可能引出改善，否定形式可能表达肯定。方向相同仍不能定案，更不能靠另一空占用来证明。
+counterexamples:
+- 候选描述困难是为了提出帮助，并非否定对象价值；只按负面词分组会把功能分错。
+transfer_pattern: 新材料仍读完整评价和否定范围，不沿用积极词必选或负面词必排。
+memory_line: 圈评价词及它评价的对象，比较候选评价维度，不因同为积极词就定案
+anti_rule: 同褒贬 ≠ 同功能。
+visual_formula: '完整命题 + 否定范围
+
+  → 评价谁？陈述困难 / 帮助 / 评价结果？
+
+  → 同维优先组（reduce）
+
+  中性不分；同向仍核内容'
+challenge_prompt: 先不填，圈评价对象和否定范围，给候选标陈述困难、提出帮助或评价结果；中性项注明不分褒贬。
+source_references:
+- repository: https://github.com/rockpunkgod/ANSWER.git
+  path: gaokao-english/references/seven-five.md
+  heading: 褒贬一致
+  commit: 1c388a0596b13935ae7c6a1af00834915a8efa33
+section_ids: &id001
+- 109b61973bdf9497
+can_follow: []
+usually_before: []
+usually_after: []
+conflicts_with: []
+cannot_replace:
+- 完整题面验证
+levels:
+  L1: 圈评价词及它评价的对象，比较候选评价维度，不因同为积极词就定案
+  L2: 先读完整命题与否定范围，圈评价对象和实际功能；同维同向只形成优先候选，继续比处境、措施与句间任务。
+  L3: 中性句不强分褒贬；负面处境可能引出改善，否定形式可能表达肯定。方向相同仍不能定案，更不能靠另一空占用来证明。
+  L4: 新材料仍读完整评价和否定范围，不沿用积极词必选或负面词必排。
+compact:
+  10s: 褒贬词让你想直接选？圈评价谁和否定范围，只暂分方向；同向不算答案。
+  30s: 褒贬词让你想直接选？先圈评价谁及否定到哪里，中性句先不贴好坏标签。例如，说困难可能是为了给帮助，不是在否定对象价值。中性不强分，方向相同仍要比具体措施和功能。
+  90s: 褒贬词让你想直接选？圈评价词及它评价的对象，比较候选评价维度，不因同为积极词就定案这一步得到的只是缩小接下来要核的范围，不直接得答案。判断时，先读完整命题与否定范围，圈评价对象和实际功能；同维同向只形成优先候选，继续比处境、措施与句间任务。什么时候停，中性句不强分褒贬；负面处境可能引出改善，否定形式可能表达肯定。方向相同仍不能定案，更不能靠另一空占用来证明。反例示意，候选描述困难是为了提出帮助，并非否定对象价值；只按负面词分组会把功能分错。换题仍检查当前题面的对象和关系，不搬上一题结论。挑战，先不填，圈评价对象和否定范围，给候选标陈述困难、提出帮助或评价结果；中性项注明不分褒贬。
+full:
+  summary: 圈评价词及它评价的对象，比较候选评价维度，不因同为积极词就定案 先读完整命题与否定范围，圈评价对象和实际功能；同维同向只形成优先候选，继续比处境、措施与句间任务。
+  source_boundary: 中性句不强分褒贬；负面处境可能引出改善，否定形式可能表达肯定。方向相同仍不能定案，更不能靠另一空占用来证明。
+  boundaries:
+  - 中性句不强分褒贬；负面处境可能引出改善，否定形式可能表达肯定。方向相同仍不能定案，更不能靠另一空占用来证明。
+  - 候选描述困难是为了提出帮助，并非否定对象价值；只按负面词分组会把功能分错。
+  section_ids:
+  - 109b61973bdf9497
+  beginner_support:
+    first_micro_action: 先圈评价谁及否定到哪里，中性句先不贴好坏标签。
+    prerequisite: 先分清一句是否说完整，再找句中实际谈谁。真谓语就是承担本句时间的动词；-ed或-ing词尾本身不能证明它是谓语。
+    if_stuck: 先记录暂定分组或一侧真实内容；关系不清回正文或暂留，不靠占用、组小或剩余定案。
+    example: 说困难可能是为了给帮助，不是在否定对象价值。
+    example_scope: 关系/结构示意，非完整试题，不计真题或已验案例。
+    micro_action_is_not_completion: 完成第一小步不等于完整方法成功；继续完成四步卡的判断与停止核验。
+    short_stop: 中性不强分，方向相同仍要比具体措施和功能。
+  presentation_revision: 2026-10-28.1
+cases:
+  canonical: cases/seven-five/F08/canonical/case.yaml
+four_step_card:
+  start: 同一对象有可确认的评价方向
+  first_cut: 圈评价词及它评价的对象，比较候选评价维度，不因同为积极词就定案
+  judge: 先读完整命题与否定范围，圈评价对象和实际功能；同维同向只形成优先候选，继续比处境、措施与句间任务。
+  stop: 中性句不强分褒贬；负面处境可能引出改善，否定形式可能表达肯定。方向相同仍不能定案，更不能靠另一空占用来证明。
+practicality_gate:
+  status: design_complete_empirical_pending
+  trigger: 同一对象有可确认的评价方向
+  action: 圈评价词及它评价的对象，比较候选评价维度，不因同为积极词就定案
+  output: reduce；先读完整命题与否定范围，圈评价对象和实际功能；同维同向只形成优先候选，继续比处境、措施与句间任务。
+  stop: 中性句不强分褒贬；负面处境可能引出改善，否定形式可能表达肯定。方向相同仍不能定案，更不能靠另一空占用来证明。
+  transfer: 新材料仍读完整评价和否定范围，不沿用积极词必选或负面词必排。
+  efficiency: 减少凭单词情绪误排，并在实际评价差异下减少优先候选；效果未测。
+  misuse_cost: 未经实测；把困难词一律归负面、帮助词一律归正面，以为同方向就能填。会导致误判；须先核触发、执行Stop，不允许辅助产物越级定案。
+first_use_test:
+  status: designed_not_run
+  trigger_success: null
+  action_success: null
+  evidence_success: null
+  stop_rule_success: null
+  no_answer_backfit: null
+  failure_type: null
+  final_result: pending_real_student_test
+evaluation:
+  baseline: 普通逐项核题面
+  primary_benefit_hypothesis: 减少凭单词情绪误排，并在实际评价差异下减少优先候选；效果未测。
+  trigger_precision: null
+  trigger_recall: null
+  resolution_rate: null
+  standalone_rate: null
+  assist_rate: null
+  false_trigger_rate: null
+  transfer_rate: null
+  boundary_accuracy: null
+  time_complexity_gain: null
+usefulness_level: Useful
+status: candidate
+maturity_status: candidate
+practical_value: Useful
+version: 1.2.0
+change_reason: ANSWER 1c388a0596b13935ae7c6a1af00834915a8efa33 增量来源同步；保留既有动作与版本，旧证据不自动获得新来源准入。
+affected_cases:
+- cases/seven-five/F08/canonical/case.yaml
+regression_result: pending_current_epoch_semantic_and_student_acceptance
+student_ready: false
+entry_copy: 褒贬词让你想直接选？先圈评价谁及否定到哪里，中性句先不贴好坏标签。这一步得到的只是缩小接下来要核的范围，不直接得答案。如果卡住，先记录暂定分组或一侧真实内容；关系不清回正文或暂留，不靠占用、组小或剩余定案。
+static_design_review:
+  status: source_bound_editorial_review
+  source_section_ids: *id001
+  participant_validation: pending_real_participant_validation
+  example_scope: 2026-10-28基础入口表达修订；保留原判据/Stop/课程绑定与语义版本，微动作和关系示意不是完整真题或真人实测。
+source_alignment:
+  commit: 1c388a0596b13935ae7c6a1af00834915a8efa33
+  state: live_source_bound
+  source_content_changed: false
+  correction_profile_applied: false
+  authored_first_contact_draft: true
+  new_course_branches: preserved_in_full_contract_not_automatically_aliased
+  acceptance: unchanged_method_sections; added_source_contracts_preserved; learner/release_pending

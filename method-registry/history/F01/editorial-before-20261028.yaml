@@ -1,0 +1,207 @@
+method_id: F01
+brand_name: 选项三分
+source_name: 结构一致 + 主语一致 + 时态一致
+aliases:
+- 三一致初筛
+- 先分组再拼回去
+question_type: 七选五
+role: reducer
+primary_role: reducer
+secondary_roles: []
+output_type: reduce
+student_symptoms:
+- 七个选项感觉都能放，拿到每个空都从 A–G 凭语感试填。
+- 知道结构、主体或时态有用，却容易命中一项就直接定答案。
+trigger_cues:
+- 整篇七选五开头或单题开始，需要先识别选项间实际可见的结构、主角与真谓语时间差异。
+core_action: 在选项区按句型、实际主角、真谓语时间各标一次组并说清字母；无区分度如实标记，随后按突破口回正文。
+decision_rule: 只产出优先候选组；放回正文核对象、动作、两侧关系和段落任务，内容证据才定案。
+verification: 只产出优先候选组；放回正文核对象、动作、两侧关系和段落任务，内容证据才定案。 无区别不编组；发现漏纳、指代或谓语初筛错误可在当前比较纠正，不重演完整三分；不据组小、占用或剩一项选。
+stop_rule: 无区别不编组；发现漏纳、指代或谓语初筛错误可在当前比较纠正，不重演完整三分；不据组小、占用或剩一项选。
+common_wrong_instinct: 拿到一个空就在七个选项里凭语感试填，或看到同主语、同时态、同句型就直接选。
+failure_cases:
+- 拿到一个空就在七个选项里凭语感试填，或看到同主语、同时态、同句型就直接选。
+- 无区别不编组；发现漏纳、指代或谓语初筛错误可在当前比较纠正，不重演完整三分；不据组小、占用或剩一项选。
+counterexamples:
+- 两个选项都是祈使句且行动者相同，但一项针对的对象与本段任务不符；同组不等于同时成立。
+- 段中出现过去时事件，但当前空转向一般感悟；不能因最近动词是过去时就只留过去时组。
+transfer_pattern: 适用于任何七选五选项区的一次性初筛，不依赖文章题材。
+memory_line: 在选项区按句型、实际主角、真谓语时间各标一次组并说清字母；无区分度如实标记，随后按突破口回正文。
+anti_rule: 分组 ≠ 答案。
+visual_formula: "A–G 选项\n  ├─ 句型组\n  ├─ 主角组     → 优先候选\n  └─ 时间组\n               \
+  \    ↓\n           拼回空前+空后\n                   ↓\n              内容才定案"
+challenge_prompt: 不填任何空，按句型、主角和真谓语时间的实际差异各分一次A–G，并说清字母；若某一维没有区别，就说明无区分度，不编组。
+source_references:
+- repository: https://github.com/rockpunkgod/ANSWER.git
+  path: gaokao-english/references/seven-five.md
+  heading: 结构一致
+  commit: 1c388a0596b13935ae7c6a1af00834915a8efa33
+- repository: https://github.com/rockpunkgod/ANSWER.git
+  path: gaokao-english/references/seven-five.md
+  heading: 主语一致
+  commit: 1c388a0596b13935ae7c6a1af00834915a8efa33
+- repository: https://github.com/rockpunkgod/ANSWER.git
+  path: gaokao-english/references/seven-five.md
+  heading: 时态一致
+  commit: 1c388a0596b13935ae7c6a1af00834915a8efa33
+- repository: https://github.com/rockpunkgod/ANSWER.git
+  path: gaokao-english/references/course-evidence.md
+  heading: 结构一致
+  commit: 1c388a0596b13935ae7c6a1af00834915a8efa33
+- repository: https://github.com/rockpunkgod/ANSWER.git
+  path: gaokao-english/references/course-evidence.md
+  heading: 七选五主语一致
+  commit: 1c388a0596b13935ae7c6a1af00834915a8efa33
+- repository: https://github.com/rockpunkgod/ANSWER.git
+  path: gaokao-english/references/course-evidence.md
+  heading: 七选五时态一致
+  commit: 1c388a0596b13935ae7c6a1af00834915a8efa33
+- repository: https://github.com/rockpunkgod/ANSWER.git
+  path: gaokao-grammar-fill/references/course-evidence.md
+  heading: 七选五
+  commit: 1c388a0596b13935ae7c6a1af00834915a8efa33
+can_follow: []
+usually_before:
+- 总起句做题法
+- 对应词法
+- 逻辑关系法
+- 褒贬一致
+usually_after: []
+conflicts_with: []
+cannot_replace:
+- 空前空后内容核对
+- 段落任务判断
+- 最终回填验证
+levels:
+  L1: 只识别明显完整句、半句、小标题或祈使句。
+  L2: 加入语法主语、核心话题、代词与省略行动者分组。
+  L3: 识别真谓语和局部时间线，不被非谓语词形误导。
+  L4: 在三维重叠或无区分度时，正确转入主体、动作、对象、前后关系和段落任务。
+compact:
+  line: 在选项区按句型、实际主角、真谓语时间各标一次组并说清字母；无区分度如实标记，随后按突破口回正文。
+  boundary: 无区别不编组；发现漏纳、指代或谓语初筛错误可在当前比较纠正，不重演完整三分；不据组小、占用或剩一项选。
+  10s: 七项乱试？先按句型、主角、时间分组并说字母，再回正文。分组不定案。
+  30s: 七选五开始别逐项乱填。扫A–G，按完整句型、实际主角和真谓语时间各分一次，说清字母；没有差异的维度如实跳过。比如同为祈使句仍可能讲不同对象，须回空前空后比内容。发现初筛错误可更正，不重演分组；内容不闭合就暂留。
+  90s: 整篇开头统一三分一次，单题在该题开头做；结构、主角或真谓语时间有差异才形成有用组。第一刀先在选项区标实际组别并说清A–G字母，无区分度不编组，再按突破口回正文核对象、动作、两侧关系和段落任务。只得优先候选组，不直接得答案。反例：过去事件之后转为一般感悟，不能只留过去时项；同组两项也可能只一项接通内容。新证据纠正初筛时在当前比较说明，不再展示完整分组。换题仍由新选项分组，不搬旧组。挑战：先不填空，按实际差异分A–G；若某一维没有区别，就说明无区分度，再指出待正文核的关系。
+full:
+  summary: 在选项区按句型、实际主角、真谓语时间各标一次组并说清字母；无区分度如实标记，随后按突破口回正文。 只产出优先候选组；放回正文核对象、动作、两侧关系和段落任务，内容证据才定案。
+  source_boundary: 无区别不编组；发现漏纳、指代或谓语初筛错误可在当前比较纠正，不重演完整三分；不据组小、占用或剩一项选。
+  boundaries:
+  - 无区别不编组；发现漏纳、指代或谓语初筛错误可在当前比较纠正，不重演完整三分；不据组小、占用或剩一项选。
+  - 两个选项都是祈使句且行动者相同，但一项针对的对象与本段任务不符；同组不等于同时成立。
+  - 段中出现过去时事件，但当前空转向一般感悟；不能因最近动词是过去时就只留过去时组。
+  section_ids:
+  - a8f0c4ae44ae61ff
+  - 4b7e8e63d5d6c442
+  - 94c1255b4334ece4
+cases:
+  canonical: cases/F01/canonical/case.yaml
+  counterexample: cases/F01/counterexamples/case.yaml
+  boundary: cases/F01/boundary/case.yaml
+  transfer: cases/F01/transfer/case.yaml
+  hard: cases/F01/hard/case.yaml
+four_step_card:
+  start: 整篇七选五开头或单题开始，需要先识别选项间实际可见的结构、主角与真谓语时间差异。
+  first_cut: 先在A–G选项区标结构、主角、真谓语时间的暂定字母组，不填空。
+  judge: 只产出优先候选组；放回正文核对象、动作、两侧关系和段落任务，内容证据才定案。
+  stop: 无区别不编组；发现漏纳、指代或谓语初筛错误可在当前比较纠正，不重演完整三分；不据组小、占用或剩一项选。
+practicality_gate:
+  status: design_complete_empirical_pending
+  trigger: 整篇七选五开头或单题开始，需要先识别选项间实际可见的结构、主角与真谓语时间差异。
+  action: 在选项区按句型、实际主角、真谓语时间各标一次组并说清字母；无区分度如实标记，随后按突破口回正文。
+  output: reduce；只产出优先候选组；放回正文核对象、动作、两侧关系和段落任务，内容证据才定案。
+  stop: 无区别不编组；发现漏纳、指代或谓语初筛错误可在当前比较纠正，不重演完整三分；不据组小、占用或剩一项选。
+  transfer: 适用于任何七选五选项区的一次性初筛，不依赖文章题材。
+  efficiency: 目标是减少每空从七项重新试填的比较量；是否显著提速待盲测。
+  misuse_cost: high；将 reduce 当 decide 会直接误选，所以首次版反复显示分组不定案。
+first_use_test:
+  status: designed_not_run
+  trigger_success: null
+  action_success: null
+  evidence_success: null
+  stop_rule_success: null
+  no_answer_backfit: null
+  final_result: pending_real_student_test
+  failure_type: null
+evaluation:
+  baseline: 阅读完整正文与A–G，按上下文和句间关系常规试填、排除并回填核验；不提供三分口令，不要求每空重复七项或只凭语感。记录学生普通做法的实际步骤。
+  trigger_precision: null
+  trigger_recall: null
+  resolution_rate: null
+  standalone_rate: null
+  assist_rate: null
+  false_trigger_rate: null
+  transfer_rate: null
+  time_complexity_gain: null
+  primary_benefit_hypothesis: 减少候选比较数量和无效试填，但不承担定案。
+  boundary_accuracy: null
+usefulness_level: Useful
+status: candidate
+version: 1.2.0
+section_ids:
+- a8f0c4ae44ae61ff
+- 4b7e8e63d5d6c442
+- 94c1255b4334ece4
+method_type: method
+maturity_status: candidate
+practical_value: Useful
+change_reason: ANSWER 1c388a0596b13935ae7c6a1af00834915a8efa33 增量来源同步；保留既有动作与版本，旧证据不自动获得新来源准入。
+  前瞻Baseline按正常作答对照定义，不改历史观察或条件标签。
+affected_cases:
+- cases/F01/canonical/case.yaml
+- cases/F01/counterexamples/case.yaml
+- cases/F01/boundary/case.yaml
+- cases/F01/transfer/case.yaml
+- cases/F01/hard/case.yaml
+regression_result: pending_bounded_candidate_application_regression_and_real_participant_validation
+role_correctness:
+  declared_primary_role: reducer
+  observed_actual_role: null
+  role_match: null
+  overclaim_detected: null
+  notes: pending_real_participant_validation
+short_version_safety:
+- version: 10s
+  false_trigger_rate: null
+  boundary_accuracy: null
+  role_overclaim_rate: null
+  stop_rule_failure_rate: null
+  safe_for_release: untested
+- version: 30s
+  false_trigger_rate: null
+  boundary_accuracy: null
+  role_overclaim_rate: null
+  stop_rule_failure_rate: null
+  safe_for_release: untested
+- version: 90s
+  false_trigger_rate: null
+  boundary_accuracy: null
+  role_overclaim_rate: null
+  stop_rule_failure_rate: null
+  safe_for_release: untested
+entry_copy: '七项乱试？先按句型、主角、时间分组并说字母，再回正文。分组不定案。
+
+
+  整篇开头统一三分一次，单题在该题开头做；结构、主角或真谓语时间有差异才形成有用组。第一刀先在选项区标实际组别并说清A–G字母，无区分度不编组，再按突破口回正文核对象、动作、两侧关系和段落任务。只得优先候选组，不直接得答案。反例：过去事件之后转为一般感悟，不能只留过去时项；同组两项也可能只一项接通内容。新证据纠正初筛时在当前比较说明，不再展示完整分组。换题仍由新选项分组，不搬旧组。挑战：先不填空，按实际差异分A–G；若某一维没有区别，就说明无区分度，再指出待正文核的关系。'
+student_ready: false
+source_alignment:
+  commit: 1c388a0596b13935ae7c6a1af00834915a8efa33
+  state: live_source_bound
+  source_content_changed: false
+  correction_profile_applied: true
+  authored_first_contact_draft: true
+  new_course_branches: preserved_in_full_contract_not_automatically_aliased
+  acceptance: unchanged_method_sections; added_source_contracts_preserved; learner/release_pending
+student_entry_revision:
+  revision_id: F01-conditional-challenge-v1
+  previous_snapshot: provenance/student-entry-revisions/F01-1.2.0-before-conditional-challenge.json
+  scope: unfrozen student entry correction; core trigger/action/decision/stop/role
+    unchanged
+static_design_review:
+  status: source_bound_editorial_review
+  source_section_ids:
+  - a8f0c4ae44ae61ff
+  - 4b7e8e63d5d6c442
+  - 94c1255b4334ece4
+  participant_validation: pending_real_participant_validation
+  example_scope: 独立AI静态来源与完整卡/guide一致性复核；有界修订候选待实际哈希复审及回归，不认证真题Case、独立短版安全、计时、学生或发布。

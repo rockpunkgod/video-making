@@ -48,23 +48,23 @@ methods:
   - repository: https://github.com/rockpunkgod/ANSWER.git
     path: gaokao-grammar-fill/references/grammar-fill.md
     heading: 总路线
-    commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
+    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
   - repository: https://github.com/rockpunkgod/ANSWER.git
     path: gaokao-grammar-fill/references/grammar-fill.md
     heading: 无提示词
-    commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
+    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
   - repository: https://github.com/rockpunkgod/ANSWER.git
     path: gaokao-grammar-fill/references/grammar-fill.md
     heading: 有提示词
-    commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
+    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
   - repository: https://github.com/rockpunkgod/ANSWER.git
     path: gaokao-grammar-fill/references/grammar-fill.md
     heading: 需要动词形式：先判谓语还是非谓语
-    commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
+    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
   - repository: https://github.com/rockpunkgod/ANSWER.git
     path: gaokao-grammar-fill/references/course-evidence.md
     heading: 语法填空
-    commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
+    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
   can_follow:
   - 意群划分
   - 劫匪插葱
@@ -87,9 +87,11 @@ methods:
   compact:
     line: 先问有没有提示词，再问这个位置要什么；确认要动词才分谓语和非谓语。
     boundary: 决策树负责选对分支，具体答案仍须在分支节点中用句法、搭配和句意定案。
-    10s: 看到空先别变词。先标有无提示词，再问位置要什么；确认要动词，才分谓语与非谓语。
-    30s: 括号里的词先别变。标有无提示词，再圈未填句里决定空位功能的限定、修饰、连接或主干。比如environmental ___ (protect)需要名词中心，不因提示词是动词就走动词路。无提示词进功能词；到节点后停总路线，用该节点句法、搭配与句意求证。
-    90s: 任何语法空开始时先在未填句取证。先标有无提示词，再圈分句主干、标点及空前后的支配或修饰关系：无提示词去功能词节点，有提示词先判名、形、副、代、数或动；确认需动词才分谓语/非谓语。产物只是知识节点，不是答案。反例：提示protect但位置要名词；介词后需要名词性成分也不必一律派生名词，doing可有相应功能。句法功能不明先补完整句，到节点就改用具体规则，再回填核搭配与句意。换题仍判新位置，不背提示词变形套路。挑战：不填词，只标有无提示词、空位功能、决定它的词与下一节点。
+    10s: 看到空先别变词。标有无提示，再圈位置需要什么；这里只定路线，不填答案。
+    30s: 看到空先别变词。先只标本空有没有括号提示词，再在未填句圈决定它功能的词，不开始变形。没有提示词去功能词路线；有提示词先判位置需要什么，确认要动词才分谓语与非谓语。例如，environmental
+      ___ (protect)要核名词中心，不能见protect就走动词路线。功能不明先补完整句；到节点后改用具体规则。
+    90s: 看到空先别变词。圈出空后的括号提示词（若有），再圈空前后支配或修饰词，在未填句上标明空位成分；确认需要动词才分谓语/非谓语。这一步得到的只是下一知识节点；到节点后用具体句法、搭配和句意求证，不是词形答案。判断时，无提示词进功能词路线；有提示词先确定需要的词性/成分；只在已确认需要动词形式时才进谓语/非谓语分支。什么时候停，空位功能或必要句子未确认时先停；到达知识节点即停止总路线，改用节点句法、搭配与句意核验，不把路由当答案。反例示意，`environmental
+      ___ (protect)` 的提示词是动词，但空位需要被形容词修饰的名词中心，应走名词节点而非非谓语节点。换题仍检查当前题面的对象和关系，不搬上一题结论。挑战，先不填词，只判断这个空有无提示词、在句中需要什么成分或词性，并说出下一个决策树节点。
   full:
     summary: 圈出空后的括号提示词（若有），再圈空前后支配或修饰词，在未填句上标明空位成分；确认需要动词才分谓语/非谓语。 无提示词进功能词路线；有提示词先确定需要的词性/成分；只在已确认需要动词形式时才进谓语/非谓语分支。
     decision_tree:
@@ -119,27 +121,37 @@ methods:
     - '`environmental ___ (protect)` 的提示词是动词，但空位需要被形容词修饰的名词中心，应走名词节点而非非谓语节点。'
     - 介词后虽是名词性位置，但课程例 `After spending...` 说明 doing 可作名词性成分，不能见介词就一律派生名词。
     source_boundary: 空位功能或必要句子未确认时先停；到达知识节点即停止总路线，改用节点句法、搭配与句意核验，不把路由当答案。
-    section_ids:
+    section_ids: &id001
     - 341ae7535f7d9ce7
     - 3527a85c4fe668d9
     - 781c4478d621bf5c
     - 8c050016facc6479
-    - 98a55752856ca984
-    - 92af20a0997f0b48
-    - bdec04e2ce032b40
-    - 9b496b1572cdf49b
-    - 32c08d6c85a150ea
-    - a166ae34f9256ee9
-    - ab95cd79ca0709e2
-    - 9b610bdb9f63227e
-    - a26dc83760c12ebb
-    - 28cb2fee202458a5
-    - 5131f97d0dc78441
-    - a0bcc74f05b00671
-    - f77de6ec724f8e88
-    - 7c16410a7f1b8e4f
-    - 62e443a0a04865bf
-    - 7ae166ccec059b00
+    - dfb1dccd2a7f06e2
+    - 0c267d2ed379a98a
+    - c78012aeef62d5b9
+    - 1bc229eecb92ae3c
+    - ccfc09a472cb85a6
+    - be5c8b287ffa3745
+    - ab42f9a3682492c6
+    - 3cc12c22579257d5
+    - b2282a270b8de478
+    - 8f7ca9480b5113bc
+    - 01b66e853d507205
+    - c6ee3d2de761c2d8
+    - 68c5400be79ea170
+    - 5d83575e1d881f91
+    - c0416230d2a90924
+    - 86faf5c280abdc74
+    beginner_support:
+      first_micro_action: 先只标本空有没有括号提示词，再在未填句圈决定它功能的词，不开始变形。
+      prerequisite: 先把空保留不填，圈本句动作和对应的人或物。主语是谁或什么，谓语是这句的完整动作或状态；分不清先核完整句。
+      if_stuck: 先标有无提示和空位所在结构；成分/词义不清停在节点前，不从答案倒贴功能。
+      example: environmental ___ (protect)要核名词中心，不能见protect就走动词路线。
+      example_scope: 关系/结构示意，非完整试题，不计真题或已验案例。
+      micro_action_is_not_completion: 完成第一小步不等于完整方法成功；继续完成四步卡的判断与停止核验。
+      short_stop: 功能不明先补完整句；到节点后改用具体规则。
+    presentation_revision: 2026-10-28.2
+    source_update_note: 一看二思保原名；反身回查不靠人称重复；why/how不按是否发生定词；非谓语按成分定主人，完成不定式不一律禁作后置修饰，逗号不独自定doing。
   cases:
     canonical: cases/G01/canonical/case.yaml
     counterexample: cases/G01/counterexamples/case.yaml
@@ -170,7 +182,7 @@ methods:
     final_result: pending_real_student_test
     failure_type: null
   evaluation:
-    baseline: 看到提示词后罗列可能词形，或无提示词时回忆全部功能词
+    baseline: 阅读未填句及必要语境，调用学生已有语法、搭配和句意知识常规填空并回填核验；不提供品牌路线提示，不要求先枚举全部词形或功能词。记录普通做法的实际步骤。
     trigger_precision: null
     trigger_recall: null
     resolution_rate: null
@@ -184,38 +196,18 @@ methods:
   usefulness_level: Useful
   status: candidate
   version: 1.2.0
-  section_ids:
-  - 341ae7535f7d9ce7
-  - 3527a85c4fe668d9
-  - 781c4478d621bf5c
-  - 8c050016facc6479
-  - 98a55752856ca984
-  - 92af20a0997f0b48
-  - bdec04e2ce032b40
-  - 9b496b1572cdf49b
-  - 32c08d6c85a150ea
-  - a166ae34f9256ee9
-  - ab95cd79ca0709e2
-  - 9b610bdb9f63227e
-  - a26dc83760c12ebb
-  - 28cb2fee202458a5
-  - 5131f97d0dc78441
-  - a0bcc74f05b00671
-  - f77de6ec724f8e88
-  - 7c16410a7f1b8e4f
-  - 62e443a0a04865bf
-  - 7ae166ccec059b00
+  section_ids: *id001
   method_type: framework
   maturity_status: candidate
   practical_value: Useful
-  change_reason: ANSWER 61bc9c3e15004639cb442c20e7946ca9631f14ce 来源重绑定；旧证据仅按归档版本复核，新规则与传播入口仍待重新验收。
+  change_reason: ANSWER 70db6d6 显式来源差异复核；保留品牌动作和基础入口，异文分源，旧Case不自动获新纪元准入。
   affected_cases:
   - cases/G01/canonical/case.yaml
   - cases/G01/counterexamples/case.yaml
   - cases/G01/boundary/case.yaml
   - cases/G01/transfer/case.yaml
   - cases/G01/hard/case.yaml
-  regression_result: pending_current_epoch_semantic_and_student_acceptance
+  regression_result: pending_bounded_candidate_application_regression_and_real_participant_validation
   role_correctness:
     declared_primary_role: framework
     observed_actual_role: null
@@ -241,17 +233,21 @@ methods:
     role_overclaim_rate: null
     stop_rule_failure_rate: null
     safe_for_release: untested
-  entry_copy: 任何语法空开始时先在未填句取证。先标有无提示词，再圈分句主干、标点及空前后的支配或修饰关系：无提示词去功能词节点，有提示词先判名、形、副、代、数或动；确认需动词才分谓语/非谓语。产物只是知识节点，不是答案。反例：提示protect但位置要名词；介词后需要名词性成分也不必一律派生名词，doing可有相应功能。句法功能不明先补完整句，到节点就改用具体规则，再回填核搭配与句意。换题仍判新位置，不背提示词变形套路。挑战：不填词，只标有无提示词、空位功能、决定它的词与下一节点。
+  entry_copy: 看到空先别变词。先只标本空有没有括号提示词，再在未填句圈决定它功能的词，不开始变形。没有提示词去功能词路线；有提示词先判位置需要什么，确认要动词才分谓语与非谓语。这一步得到的只是下一知识节点；到节点后用具体句法、搭配和句意求证，不是词形答案。如果卡住，先标有无提示和空位所在结构；成分/词义不清停在节点前，不从答案倒贴功能。
   student_ready: false
   source_alignment:
-    commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
+    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
     state: live_source_bound
-    source_content_changed: false
+    source_content_changed: true
     correction_profile_applied: false
     authored_first_contact_draft: true
     new_course_branches: preserved_in_full_contract_not_automatically_aliased
-    acceptance: source_alignment_only; semantic/learner/release acceptance remains
-      pending
+    acceptance: 2026-10-30 explicit source delta review; learner/blind/release pending
+  static_design_review:
+    status: source_bound_editorial_review
+    source_section_ids: *id001
+    participant_validation: pending_real_participant_validation
+    example_scope: 2026-10-28基础入口表达修订；保留原判据/Stop/课程绑定与语义版本，微动作和关系示意不是完整真题或真人实测。
 - method_id: G02
   brand_name: 双路分流
   source_name: 总路线
@@ -293,8 +289,8 @@ methods:
   - repository: https://github.com/rockpunkgod/ANSWER.git
     path: gaokao-grammar-fill/references/grammar-fill.md
     heading: 总路线
-    commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
-  section_ids: &id001
+    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+  section_ids: &id002
   - 781c4478d621bf5c
   can_follow: []
   usually_before: []
@@ -308,19 +304,26 @@ methods:
     L3: 提示词是否存在、未填句主干或分句边界不清时停在确认节点；无提示词不能锁死为四类，还可能是句间连接副词。
     L4: 换空仍先确认提示信息和实际位置，不迁移上一题词类。
   compact:
-    10s: 一看到空就猜词？先标有无提示词，再圈空位成分；只分路，无提示也可能需连接副词。
-    30s: 开始一个空时，只标有无提示词，再回未填句确认它的功能。结构示意：两句都完整，空位可能连接句意，不只四类功能词。主干不清就停确认；有提示也不能按原词性填答案。
-    90s: 开始处理语法空位时，先确认：开始处理语法空位。第一刀：只标有/无提示词，再回完整句确认位置功能，不先改提示词。产物 interpret：只产出有提示词或无提示词的分路标记；两路都要先核未填句空位功能，不由括号词性或中文意思确定答案。
-      停止：提示词是否存在、未填句主干或分句边界不清时停在确认节点；无提示词不能锁死为四类，还可能是句间连接副词。 反例（关系示意，不是真题）：无提示词空连接两个完整句意，可能需连接副词；不能因不在四类清单就排除。
-      迁移：换空仍先确认提示信息和实际位置，不迁移上一题词类。 挑战：先不填，给每空标有/无提示词，再圈空位所处成分；未确认的停在节点。
+    10s: 看到提示词就想变？先标有提示或无提示，再核位置；分路不是答案。
+    30s: 看到提示词就想变？先在空旁标有提示或无提示，不先按提示词原词性选路。例如，两句结构都完整，空位也可能需要连接副词。无提示不锁死四类；未确认功能不开始变形。
+    90s: 看到提示词就想变？只标有/无提示词，再回完整句确认位置功能，不先改提示词。这一步得到的是待核框架或计划，不是答案或分数。判断时，只产出有提示词或无提示词的分路标记；两路都要先核未填句空位功能，不由括号词性或中文意思确定答案。什么时候停，提示词是否存在、未填句主干或分句边界不清时停在确认节点；无提示词不能锁死为四类，还可能是句间连接副词。反例示意，无提示词空连接两个完整句意，可能需连接副词；不能因不在四类清单就排除。换题仍检查当前题面的对象和关系，不搬上一题结论。挑战，先不填，给每空标有/无提示词，再圈空位所处成分；未确认的停在节点。
   full:
     summary: 只标有/无提示词，再回完整句确认位置功能，不先改提示词 只产出有提示词或无提示词的分路标记；两路都要先核未填句空位功能，不由括号词性或中文意思确定答案。
     source_boundary: 提示词是否存在、未填句主干或分句边界不清时停在确认节点；无提示词不能锁死为四类，还可能是句间连接副词。
     boundaries:
     - 提示词是否存在、未填句主干或分句边界不清时停在确认节点；无提示词不能锁死为四类，还可能是句间连接副词。
     - 无提示词空连接两个完整句意，可能需连接副词；不能因不在四类清单就排除。
-    section_ids:
-    - 781c4478d621bf5c
+    section_ids: *id002
+    beginner_support:
+      first_micro_action: 先在空旁标有提示或无提示，不先按提示词原词性选路。
+      prerequisite: 先把空保留不填，圈本句动作和对应的人或物。主语是谁或什么，谓语是这句的完整动作或状态；分不清先核完整句。
+      if_stuck: 先标有无提示和空位所在结构；成分/词义不清停在节点前，不从答案倒贴功能。
+      example: 两句结构都完整，空位也可能需要连接副词。
+      example_scope: 关系/结构示意，非完整试题，不计真题或已验案例。
+      micro_action_is_not_completion: 完成第一小步不等于完整方法成功；继续完成四步卡的判断与停止核验。
+      short_stop: 无提示不锁死四类；未确认功能不开始变形。
+    presentation_revision: 2026-10-28.2
+    source_update_note: 一看二思保原名；反身回查不靠人称重复；why/how不按是否发生定词；非谓语按成分定主人，完成不定式不一律禁作后置修饰，逗号不独自定doing。
   cases:
     canonical: cases/grammar/G02/canonical/case.yaml
   four_step_card:
@@ -363,27 +366,25 @@ methods:
   maturity_status: candidate
   practical_value: Useful
   version: 1.2.0
-  change_reason: ANSWER 61bc9c3e15004639cb442c20e7946ca9631f14ce 来源重绑定；旧证据仅按归档版本复核，新规则与传播入口仍待重新验收。
+  change_reason: ANSWER 70db6d6 显式来源差异复核；保留品牌动作和基础入口，异文分源，旧Case不自动获新纪元准入。
   affected_cases:
   - cases/grammar/G02/canonical/case.yaml
   regression_result: pending_current_epoch_semantic_and_student_acceptance
-  student_ready: true
-  entry_copy: 开始处理语法空位时，第一眼先找：开始处理语法空位。手上先做：只标有/无提示词，再回完整句确认位置功能，不先改提示词。做完得到 interpret，不是通用答案。只产出有提示词或无提示词的分路标记；两路都要先核未填句空位功能，不由括号词性或中文意思确定答案。
-    什么时候停：提示词是否存在、未填句主干或分句边界不清时停在确认节点；无提示词不能锁死为四类，还可能是句间连接副词。 换题仍这样做：换空仍先确认提示信息和实际位置，不迁移上一题词类。
+  student_ready: false
+  entry_copy: 看到提示词就想变？先在空旁标有提示或无提示，不先按提示词原词性选路。这一步得到的是待核框架或计划，不是答案或分数。如果卡住，先标有无提示和空位所在结构；成分/词义不清停在节点前，不从答案倒贴功能。
   static_design_review:
-    status: source_rebound_semantic_reacceptance_pending
-    source_section_ids: *id001
+    status: source_bound_editorial_review
+    source_section_ids: *id002
     participant_validation: pending_real_participant_validation
-    example_scope: schematic source boundary, not a verified exam
+    example_scope: 2026-10-28基础入口表达修订；保留原判据/Stop/课程绑定与语义版本，微动作和关系示意不是完整真题或真人实测。
   source_alignment:
-    commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
+    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
     state: live_source_bound
-    source_content_changed: false
+    source_content_changed: true
     correction_profile_applied: false
-    authored_first_contact_draft: false
+    authored_first_contact_draft: true
     new_course_branches: preserved_in_full_contract_not_automatically_aliased
-    acceptance: source_alignment_only; semantic/learner/release acceptance remains
-      pending
+    acceptance: 2026-10-30 explicit source delta review; learner/blind/release pending
 - method_id: G03
   brand_name: 限定词落位
   source_name: 冠词
@@ -425,9 +426,9 @@ methods:
   - repository: https://github.com/rockpunkgod/ANSWER.git
     path: gaokao-grammar-fill/references/grammar-fill.md
     heading: 冠词
-    commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
-  section_ids: &id002
-  - 98a55752856ca984
+    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+  section_ids: &id003
+  - dfb1dccd2a7f06e2
   can_follow: []
   usually_before: []
   usually_after: []
@@ -440,19 +441,26 @@ methods:
     L3: 已有其他限定、中心名词未确认或所指是否唯一不清时停；of修饰或定语从句不能自动证明the，a/an按读音而非字母。
     L4: 换题仍先核名词形态和所指，不迁移后置修饰必特指的口诀。
   compact:
-    10s: 冠词犹豫？圈名词中心，标可数、单复和所指；后接修饰不等于the，a/an看读音。
-    30s: 已确认空是冠词位置时，圈中心名词、已有限定，核可数和单复，再找特指泛指证据。结构示意：后接of仍须核所指是否唯一。读音定a/an；已有其他限定或所指不明就停，不见修饰就填the。
-    90s: 名词前缺限定且确认为冠词路线时，先确认：名词前缺限定且确认为冠词路线。第一刀：圈中心名词、单复数和已有修饰，回语境核特指泛指再定冠词。产物 decide：确认名词中心、可数性和单复数，再核特指泛指、读音及具体结构；仅在冠词位置和所指关系均有据时确定a/an/the或相应零冠词结构。
-      停止：已有其他限定、中心名词未确认或所指是否唯一不清时停；of修饰或定语从句不能自动证明the，a/an按读音而非字母。 反例（关系示意，不是真题）：名词有后置修饰，却仍在泛指某一个；不能单靠后面的修饰认定所指唯一。
-      迁移：换题仍先核名词形态和所指，不迁移后置修饰必特指的口诀。 挑战：先不填冠词，圈中心名词，标可数性、单复数及特指/泛指的题面证据。
+    10s: 冠词犹豫？圈名词中心，核数和所指；有后置修饰不自动填the。
+    30s: 冠词犹豫？先圈空后名词中心和已有限定；未确认冠词位置就不选冠词。例如，后接of不等于所指唯一，仍须核特指泛指。已有其他限定或所指不清先停，a/an看读音。
+    90s: 冠词犹豫？圈中心名词、单复数和已有修饰，回语境核特指泛指再定冠词。这一步得到的是当前候选的保留、排除或待定判断；不能由剩余项自动定案。判断时，确认名词中心、可数性和单复数，再核特指泛指、读音及具体结构；仅在冠词位置和所指关系均有据时确定a/an/the或相应零冠词结构。什么时候停，已有其他限定、中心名词未确认或所指是否唯一不清时停；of修饰或定语从句不能自动证明the，a/an按读音而非字母。反例示意，名词有后置修饰，却仍在泛指某一个；不能单靠后面的修饰认定所指唯一。换题仍检查当前题面的对象和关系，不搬上一题结论。挑战，先不填冠词，圈中心名词，标可数性、单复数及特指/泛指的题面证据。
   full:
     summary: 圈中心名词、单复数和已有修饰，回语境核特指泛指再定冠词 确认名词中心、可数性和单复数，再核特指泛指、读音及具体结构；仅在冠词位置和所指关系均有据时确定a/an/the或相应零冠词结构。
     source_boundary: 已有其他限定、中心名词未确认或所指是否唯一不清时停；of修饰或定语从句不能自动证明the，a/an按读音而非字母。
     boundaries:
     - 已有其他限定、中心名词未确认或所指是否唯一不清时停；of修饰或定语从句不能自动证明the，a/an按读音而非字母。
     - 名词有后置修饰，却仍在泛指某一个；不能单靠后面的修饰认定所指唯一。
-    section_ids:
-    - 98a55752856ca984
+    section_ids: *id003
+    beginner_support:
+      first_micro_action: 先圈空后名词中心和已有限定；未确认冠词位置就不选冠词。
+      prerequisite: 先把空保留不填，圈本句动作和对应的人或物。主语是谁或什么，谓语是这句的完整动作或状态；分不清先核完整句。
+      if_stuck: 先标有无提示和空位所在结构；成分/词义不清停在节点前，不从答案倒贴功能。
+      example: 后接of不等于所指唯一，仍须核特指泛指。
+      example_scope: 关系/结构示意，非完整试题，不计真题或已验案例。
+      micro_action_is_not_completion: 完成第一小步不等于完整方法成功；继续完成四步卡的判断与停止核验。
+      short_stop: 已有其他限定或所指不清先停，a/an看读音。
+    presentation_revision: 2026-10-28.2
+    source_update_note: 一看二思保原名；反身回查不靠人称重复；why/how不按是否发生定词；非谓语按成分定主人，完成不定式不一律禁作后置修饰，逗号不独自定doing。
   cases:
     canonical: cases/grammar/G03/canonical/case.yaml
   four_step_card:
@@ -495,28 +503,25 @@ methods:
   maturity_status: candidate
   practical_value: Useful
   version: 1.2.0
-  change_reason: ANSWER 61bc9c3e15004639cb442c20e7946ca9631f14ce 来源重绑定；旧证据仅按归档版本复核，新规则与传播入口仍待重新验收。
+  change_reason: ANSWER 70db6d6 显式来源差异复核；保留品牌动作和基础入口，异文分源，旧Case不自动获新纪元准入。
   affected_cases:
   - cases/grammar/G03/canonical/case.yaml
   regression_result: pending_current_epoch_semantic_and_student_acceptance
-  student_ready: true
-  entry_copy: 名词前缺限定且确认为冠词路线时，第一眼先找：名词前缺限定且确认为冠词路线。手上先做：圈中心名词、单复数和已有修饰，回语境核特指泛指再定冠词。做完得到
-    decide，不是通用答案。确认名词中心、可数性和单复数，再核特指泛指、读音及具体结构；仅在冠词位置和所指关系均有据时确定a/an/the或相应零冠词结构。
-    什么时候停：已有其他限定、中心名词未确认或所指是否唯一不清时停；of修饰或定语从句不能自动证明the，a/an按读音而非字母。 换题仍这样做：换题仍先核名词形态和所指，不迁移后置修饰必特指的口诀。
+  student_ready: false
+  entry_copy: 冠词犹豫？先圈空后名词中心和已有限定；未确认冠词位置就不选冠词。这一步得到的是当前候选的保留、排除或待定判断；不能由剩余项自动定案。如果卡住，先标有无提示和空位所在结构；成分/词义不清停在节点前，不从答案倒贴功能。
   static_design_review:
-    status: source_rebound_semantic_reacceptance_pending
-    source_section_ids: *id002
+    status: source_bound_editorial_review
+    source_section_ids: *id003
     participant_validation: pending_real_participant_validation
-    example_scope: schematic source boundary, not a verified exam
+    example_scope: 2026-10-28基础入口表达修订；保留原判据/Stop/课程绑定与语义版本，微动作和关系示意不是完整真题或真人实测。
   source_alignment:
-    commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
+    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
     state: live_source_bound
     source_content_changed: false
     correction_profile_applied: false
-    authored_first_contact_draft: false
+    authored_first_contact_draft: true
     new_course_branches: preserved_in_full_contract_not_automatically_aliased
-    acceptance: source_alignment_only; semantic/learner/release acceptance remains
-      pending
+    acceptance: 2026-10-30 explicit source delta review; learner/blind/release pending
 - method_id: G04
   brand_name: 指代落位
   source_name: 代词
@@ -558,9 +563,9 @@ methods:
   - repository: https://github.com/rockpunkgod/ANSWER.git
     path: gaokao-grammar-fill/references/grammar-fill.md
     heading: 代词
-    commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
-  section_ids: &id003
-  - 92af20a0997f0b48
+    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+  section_ids: &id004
+  - 0c267d2ed379a98a
   can_follow: []
   usually_before: []
   usually_after: []
@@ -573,19 +578,27 @@ methods:
     L3: 代词所指或省略内容不清先停回指；介词后不必然宾格，it可能是形式主/宾语，反身需动作回到主体或具体结构支持。
     L4: 新句仍回指并确认成分和省略，不迁移介词对应某格的固定口令。
   compact:
-    10s: 代词怎么变？先回指，再标空位功能和空后名词；介词后不一律宾格，省略内容不清就停。
-    30s: 代词或所有格位置，先圈所指，标人称数格及空后名词。课程片段in ___ (I)省略memory，用独立物主路线而非见in就宾格。所指、省略或真实主宾语不清就停，再核具体结构。
-    90s: 空位需要代词或所有格功能时，先确认：空位需要代词或所有格功能。第一刀：标空位作主语/宾语/限定/反身功能，回指实际对象再用节点规则。产物 decide：先还原所指，再标空作主语、宾语、限定、独立名词成分或反身功能，核人称数格与实际搭配；缺成分和所指均闭合才定形式。
-      停止：代词所指或省略内容不清先停回指；介词后不必然宾格，it可能是形式主/宾语，反身需动作回到主体或具体结构支持。 反例（关系示意，不是真题）：课程in
-      ___ (I)省略memory，需要独立物主mine；不能只因in就在该处填me。 迁移：新句仍回指并确认成分和省略，不迁移介词对应某格的固定口令。 挑战：先不变提示代词，只圈所指对象，标空后有没有名词及是否存在省略，再写空位功能。
+    10s: 代词怎么变？先找指谁，再标这个位置的作用；介词后不一律宾格。
+    30s: 代词怎么变？先圈代词实际指谁或什么，再看这个位置要它承担什么成分。例如，名词省略时可能需要独立物主形式，不能只按前面的介词选。所指或省略不清就停，形式it不硬找实体所指。
+    90s: 代词怎么变？标空位作主语/宾语/限定/反身功能，回指实际对象再用节点规则。这一步得到的是当前候选的保留、排除或待定判断；不能由剩余项自动定案。判断时，先还原所指，再标空作主语、宾语、限定、独立名词成分或反身功能，核人称数格与实际搭配；缺成分和所指均闭合才定形式。什么时候停，代词所指或省略内容不清先停回指；介词后不必然宾格，it可能是形式主/宾语，反身需动作回到主体或具体结构支持。反例示意，课程in
+      ___ (I)省略memory，需要独立物主mine；不能只因in就在该处填me。换题仍检查当前题面的对象和关系，不搬上一题结论。挑战，先不变提示代词，只圈所指对象，标空后有没有名词及是否存在省略，再写空位功能。
   full:
     summary: 标空位作主语/宾语/限定/反身功能，回指实际对象再用节点规则 先还原所指，再标空作主语、宾语、限定、独立名词成分或反身功能，核人称数格与实际搭配；缺成分和所指均闭合才定形式。
     source_boundary: 代词所指或省略内容不清先停回指；介词后不必然宾格，it可能是形式主/宾语，反身需动作回到主体或具体结构支持。
     boundaries:
     - 代词所指或省略内容不清先停回指；介词后不必然宾格，it可能是形式主/宾语，反身需动作回到主体或具体结构支持。
     - 课程in ___ (I)省略memory，需要独立物主mine；不能只因in就在该处填me。
-    section_ids:
-    - 92af20a0997f0b48
+    section_ids: *id004
+    beginner_support:
+      first_micro_action: 先圈代词实际指谁或什么，再看这个位置要它承担什么成分。
+      prerequisite: 先把空保留不填，圈本句动作和对应的人或物。主语是谁或什么，谓语是这句的完整动作或状态；分不清先核完整句。
+      if_stuck: 先标有无提示和空位所在结构；成分/词义不清停在节点前，不从答案倒贴功能。
+      example: 名词省略时可能需要独立物主形式，不能只按前面的介词选。
+      example_scope: 关系/结构示意，非完整试题，不计真题或已验案例。
+      micro_action_is_not_completion: 完成第一小步不等于完整方法成功；继续完成四步卡的判断与停止核验。
+      short_stop: 所指或省略不清就停，形式it不硬找实体所指。
+    presentation_revision: 2026-10-28.2
+    source_update_note: 一看二思保原名；反身回查不靠人称重复；why/how不按是否发生定词；非谓语按成分定主人，完成不定式不一律禁作后置修饰，逗号不独自定doing。
   cases:
     canonical: cases/grammar/G04/canonical/case.yaml
   four_step_card:
@@ -628,28 +641,25 @@ methods:
   maturity_status: candidate
   practical_value: Useful
   version: 1.2.0
-  change_reason: ANSWER 61bc9c3e15004639cb442c20e7946ca9631f14ce 来源重绑定；旧证据仅按归档版本复核，新规则与传播入口仍待重新验收。
+  change_reason: ANSWER 70db6d6 显式来源差异复核；保留品牌动作和基础入口，异文分源，旧Case不自动获新纪元准入。
   affected_cases:
   - cases/grammar/G04/canonical/case.yaml
   regression_result: pending_current_epoch_semantic_and_student_acceptance
-  student_ready: true
-  entry_copy: 空位需要代词或所有格功能时，第一眼先找：空位需要代词或所有格功能。手上先做：标空位作主语/宾语/限定/反身功能，回指实际对象再用节点规则。做完得到
-    decide，不是通用答案。先还原所指，再标空作主语、宾语、限定、独立名词成分或反身功能，核人称数格与实际搭配；缺成分和所指均闭合才定形式。 什么时候停：代词所指或省略内容不清先停回指；介词后不必然宾格，it可能是形式主/宾语，反身需动作回到主体或具体结构支持。
-    换题仍这样做：新句仍回指并确认成分和省略，不迁移介词对应某格的固定口令。
+  student_ready: false
+  entry_copy: 代词怎么变？先圈代词实际指谁或什么，再看这个位置要它承担什么成分。这一步得到的是当前候选的保留、排除或待定判断；不能由剩余项自动定案。如果卡住，先标有无提示和空位所在结构；成分/词义不清停在节点前，不从答案倒贴功能。
   static_design_review:
-    status: source_rebound_semantic_reacceptance_pending
-    source_section_ids: *id003
+    status: source_bound_editorial_review
+    source_section_ids: *id004
     participant_validation: pending_real_participant_validation
-    example_scope: schematic source boundary, not a verified exam
+    example_scope: 2026-10-28基础入口表达修订；保留原判据/Stop/课程绑定与语义版本，微动作和关系示意不是完整真题或真人实测。
   source_alignment:
-    commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
+    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
     state: live_source_bound
-    source_content_changed: false
+    source_content_changed: true
     correction_profile_applied: false
-    authored_first_contact_draft: false
+    authored_first_contact_draft: true
     new_course_branches: preserved_in_full_contract_not_automatically_aliased
-    acceptance: source_alignment_only; semantic/learner/release acceptance remains
-      pending
+    acceptance: 2026-10-30 explicit source delta review; learner/blind/release pending
 - method_id: G05
   brand_name: 介词看场景
   source_name: 介词
@@ -691,9 +701,9 @@ methods:
   - repository: https://github.com/rockpunkgod/ANSWER.git
     path: gaokao-grammar-fill/references/grammar-fill.md
     heading: 介词
-    commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
-  section_ids: &id004
-  - bdec04e2ce032b40
+    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+  section_ids: &id005
+  - c78012aeef62d5b9
   can_follow: []
   usually_before: []
   usually_after: []
@@ -706,19 +716,26 @@ methods:
     L3: 搭配未知或场景关系不能确认时暂停；多于两个对象不自动among，数量增加了与增加到须分开，不能把宽泛方向口诀作唯一依据。
     L4: 换场景仍核支配结构与实际联系，不迁移人数或中文词的唯一对应。
   compact:
-    10s: 介词总凭感觉？圈动作和后面的中心词，先查搭配再判场景关系；对象多不自动among，未知搭配停。
-    30s: 确定需要介词后，圈支配动作与后面中心内容，核搭配和时空工具关系。关系示意：increase by是差量，to是达到量。多于两者也需看是否逐一关系；搭配或场景不明就停，别用单词清单直接填。
-    90s: 空位已判需要介词时，先确认：空位已判需要介词。第一刀：圈介词后的中心词及所属动作，核场景关系或固定搭配，陌生搭配不猜。产物 decide：圈介词后的中心内容及所属动作，先核已知搭配，再核时空、工具方式或实际关系；具体结构和句意支持后才选介词。
-      停止：搭配未知或场景关系不能确认时暂停；多于两个对象不自动among，数量增加了与增加到须分开，不能把宽泛方向口诀作唯一依据。 反例（关系示意，不是真题）：对象多于两个但题面逐一明确相互关系，可需between路线；只数对象不能选介词。
-      迁移：换场景仍核支配结构与实际联系，不迁移人数或中文词的唯一对应。 挑战：先不填介词，圈它后面的中心词与支配动作，写题面要表达哪种关系，而不是只数对象。
+    10s: 介词总凭感觉？圈动作和后面中心词，核搭配与关系；未知搭配先停。
+    30s: 介词总凭感觉？先圈空后中心内容及支配它的动作；搭配不认识就标未知。例如，增加了多少与增加到多少，关系不同，by和to不能混用。对象多不自动among，中文意思不能唯一决定介词。
+    90s: 介词总凭感觉？圈介词后的中心词及所属动作，核场景关系或固定搭配，陌生搭配不猜。这一步得到的是当前候选的保留、排除或待定判断；不能由剩余项自动定案。判断时，圈介词后的中心内容及所属动作，先核已知搭配，再核时空、工具方式或实际关系；具体结构和句意支持后才选介词。什么时候停，搭配未知或场景关系不能确认时暂停；多于两个对象不自动among，数量增加了与增加到须分开，不能把宽泛方向口诀作唯一依据。反例示意，对象多于两个但题面逐一明确相互关系，可需between路线；只数对象不能选介词。换题仍检查当前题面的对象和关系，不搬上一题结论。挑战，先不填介词，圈它后面的中心词与支配动作，写题面要表达哪种关系，而不是只数对象。
   full:
     summary: 圈介词后的中心词及所属动作，核场景关系或固定搭配，陌生搭配不猜 圈介词后的中心内容及所属动作，先核已知搭配，再核时空、工具方式或实际关系；具体结构和句意支持后才选介词。
     source_boundary: 搭配未知或场景关系不能确认时暂停；多于两个对象不自动among，数量增加了与增加到须分开，不能把宽泛方向口诀作唯一依据。
     boundaries:
     - 搭配未知或场景关系不能确认时暂停；多于两个对象不自动among，数量增加了与增加到须分开，不能把宽泛方向口诀作唯一依据。
     - 对象多于两个但题面逐一明确相互关系，可需between路线；只数对象不能选介词。
-    section_ids:
-    - bdec04e2ce032b40
+    section_ids: *id005
+    beginner_support:
+      first_micro_action: 先圈空后中心内容及支配它的动作；搭配不认识就标未知。
+      prerequisite: 先把空保留不填，圈本句动作和对应的人或物。主语是谁或什么，谓语是这句的完整动作或状态；分不清先核完整句。
+      if_stuck: 先标有无提示和空位所在结构；成分/词义不清停在节点前，不从答案倒贴功能。
+      example: 增加了多少与增加到多少，关系不同，by和to不能混用。
+      example_scope: 关系/结构示意，非完整试题，不计真题或已验案例。
+      micro_action_is_not_completion: 完成第一小步不等于完整方法成功；继续完成四步卡的判断与停止核验。
+      short_stop: 对象多不自动among，中文意思不能唯一决定介词。
+    presentation_revision: 2026-10-28.2
+    source_update_note: 一看二思保原名；反身回查不靠人称重复；why/how不按是否发生定词；非谓语按成分定主人，完成不定式不一律禁作后置修饰，逗号不独自定doing。
   cases:
     canonical: cases/grammar/G05/canonical/case.yaml
   four_step_card:
@@ -761,27 +778,25 @@ methods:
   maturity_status: candidate
   practical_value: Useful
   version: 1.2.0
-  change_reason: ANSWER 61bc9c3e15004639cb442c20e7946ca9631f14ce 来源重绑定；旧证据仅按归档版本复核，新规则与传播入口仍待重新验收。
+  change_reason: ANSWER 70db6d6 显式来源差异复核；保留品牌动作和基础入口，异文分源，旧Case不自动获新纪元准入。
   affected_cases:
   - cases/grammar/G05/canonical/case.yaml
   regression_result: pending_current_epoch_semantic_and_student_acceptance
-  student_ready: true
-  entry_copy: 空位已判需要介词时，第一眼先找：空位已判需要介词。手上先做：圈介词后的中心词及所属动作，核场景关系或固定搭配，陌生搭配不猜。做完得到 decide，不是通用答案。圈介词后的中心内容及所属动作，先核已知搭配，再核时空、工具方式或实际关系；具体结构和句意支持后才选介词。
-    什么时候停：搭配未知或场景关系不能确认时暂停；多于两个对象不自动among，数量增加了与增加到须分开，不能把宽泛方向口诀作唯一依据。 换题仍这样做：换场景仍核支配结构与实际联系，不迁移人数或中文词的唯一对应。
+  student_ready: false
+  entry_copy: 介词总凭感觉？先圈空后中心内容及支配它的动作；搭配不认识就标未知。这一步得到的是当前候选的保留、排除或待定判断；不能由剩余项自动定案。如果卡住，先标有无提示和空位所在结构；成分/词义不清停在节点前，不从答案倒贴功能。
   static_design_review:
-    status: source_rebound_semantic_reacceptance_pending
-    source_section_ids: *id004
+    status: source_bound_editorial_review
+    source_section_ids: *id005
     participant_validation: pending_real_participant_validation
-    example_scope: schematic source boundary, not a verified exam
+    example_scope: 2026-10-28基础入口表达修订；保留原判据/Stop/课程绑定与语义版本，微动作和关系示意不是完整真题或真人实测。
   source_alignment:
-    commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
+    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
     state: live_source_bound
     source_content_changed: false
     correction_profile_applied: false
-    authored_first_contact_draft: false
+    authored_first_contact_draft: true
     new_course_branches: preserved_in_full_contract_not_automatically_aliased
-    acceptance: source_alignment_only; semantic/learner/release acceptance remains
-      pending
+    acceptance: 2026-10-30 explicit source delta review; learner/blind/release pending
 - method_id: G06
   brand_name: 从句找缺口
   source_name: 连词、关系词与名词性从句连接词
@@ -823,9 +838,9 @@ methods:
   - repository: https://github.com/rockpunkgod/ANSWER.git
     path: gaokao-grammar-fill/references/grammar-fill.md
     heading: 连词、关系词与名词性从句连接词
-    commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
-  section_ids: &id005
-  - 9b496b1572cdf49b
+    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+  section_ids: &id006
+  - 1bc229eecb92ae3c
   can_follow: []
   usually_before: []
   usually_after: []
@@ -838,20 +853,26 @@ methods:
     L3: 只知先行词是地点、时间或原因不能定where/when/why；从句类型、缺口或实际搭配不明就停。结构完整仍要核语义，不用发生/未发生一条口诀决定why/how。
     L4: 新从句仍先分范围、标成分缺口和联系，不迁移先行词词类到固定连接词。
   compact:
-    10s: 从句连接词不会？圈两侧谓语，划从句并标缺口；地点词不自动where，类型或缺口不清就停。
-    30s: 空处连接分句时，先圈两侧谓语，判并列、从属或从句缺成分。结构示意：地点先行词的从句若缺宾语，不能只按地点选where。名词性从句还核语义；类型、缺口或搭配不明先停，不见完整句就填that。
-    90s: 句间连接位置且可能是从句时，先确认：句间连接位置且可能是从句。第一刀：分别圈两侧谓语，核从句是否缺主语、宾语、表语或状语，再判连接功能。产物 decide：先划两侧分句与谓语，判连接类型；定语从句找先行词并标主宾定状缺口，名词性从句标承担成分及所缺内容，再核连接形式。
-      停止：只知先行词是地点、时间或原因不能定where/when/why；从句类型、缺口或实际搭配不明就停。结构完整仍要核语义，不用发生/未发生一条口诀决定why/how。
-      反例（关系示意，不是真题）：先行词表示地点，但从句缺的不是地点状语而是主语或宾语；不能仅凭地点名词选关系副词。 迁移：新从句仍先分范围、标成分缺口和联系，不迁移先行词词类到固定连接词。
-      挑战：先不填连接词，分别圈两侧谓语，划从句范围，标它缺主语、宾语、定语、状语还是只缺语义联系。
+    10s: 从句词不会选？划分句、标缺口，再核连接作用；地点词不自动配where。
+    30s: 从句词不会选？先圈空两侧已确认的谓语，再划分句，不见地点名词就填where。例如，地点名词后的从句若缺宾语，不能只因地点就用where。类型、缺口或语义不清先停，不见完整句就填that。
+    90s: 从句词不会选？分别圈两侧谓语，核从句是否缺主语、宾语、表语或状语，再判连接功能。这一步得到的是当前候选的保留、排除或待定判断；不能由剩余项自动定案。判断时，先划两侧分句与谓语，判连接类型；定语从句找先行词并标主宾定状缺口，名词性从句标承担成分及所缺内容，再核连接形式。什么时候停，只知先行词是地点、时间或原因不能定where/when/why；从句类型、缺口或实际搭配不明就停。结构完整仍要核语义，不用发生/未发生一条口诀决定why/how。反例示意，先行词表示地点，但从句缺的不是地点状语而是主语或宾语；不能仅凭地点名词选关系副词。换题仍检查当前题面的对象和关系，不搬上一题结论。挑战，先不填连接词，分别圈两侧谓语，划从句范围，标它缺主语、宾语、定语、状语还是只缺语义联系。
   full:
     summary: 分别圈两侧谓语，核从句是否缺主语、宾语、表语或状语，再判连接功能 先划两侧分句与谓语，判连接类型；定语从句找先行词并标主宾定状缺口，名词性从句标承担成分及所缺内容，再核连接形式。
     source_boundary: 只知先行词是地点、时间或原因不能定where/when/why；从句类型、缺口或实际搭配不明就停。结构完整仍要核语义，不用发生/未发生一条口诀决定why/how。
     boundaries:
     - 只知先行词是地点、时间或原因不能定where/when/why；从句类型、缺口或实际搭配不明就停。结构完整仍要核语义，不用发生/未发生一条口诀决定why/how。
     - 先行词表示地点，但从句缺的不是地点状语而是主语或宾语；不能仅凭地点名词选关系副词。
-    section_ids:
-    - 9b496b1572cdf49b
+    section_ids: *id006
+    beginner_support:
+      first_micro_action: 先圈空两侧已确认的谓语，再划分句，不见地点名词就填where。
+      prerequisite: 先把空保留不填，圈本句动作和对应的人或物。主语是谁或什么，谓语是这句的完整动作或状态；分不清先核完整句。
+      if_stuck: 先标有无提示和空位所在结构；成分/词义不清停在节点前，不从答案倒贴功能。
+      example: 地点名词后的从句若缺宾语，不能只因地点就用where。
+      example_scope: 关系/结构示意，非完整试题，不计真题或已验案例。
+      micro_action_is_not_completion: 完成第一小步不等于完整方法成功；继续完成四步卡的判断与停止核验。
+      short_stop: 类型、缺口或语义不清先停，不见完整句就填that。
+    presentation_revision: 2026-10-28.2
+    source_update_note: 一看二思保原名；反身回查不靠人称重复；why/how不按是否发生定词；非谓语按成分定主人，完成不定式不一律禁作后置修饰，逗号不独自定doing。
   cases:
     canonical: cases/grammar/G06/canonical/case.yaml
   four_step_card:
@@ -894,28 +915,25 @@ methods:
   maturity_status: candidate
   practical_value: Useful
   version: 1.2.0
-  change_reason: ANSWER 61bc9c3e15004639cb442c20e7946ca9631f14ce 来源重绑定；旧证据仅按归档版本复核，新规则与传播入口仍待重新验收。
+  change_reason: ANSWER 70db6d6 显式来源差异复核；保留品牌动作和基础入口，异文分源，旧Case不自动获新纪元准入。
   affected_cases:
   - cases/grammar/G06/canonical/case.yaml
   regression_result: pending_current_epoch_semantic_and_student_acceptance
-  student_ready: true
-  entry_copy: 句间连接位置且可能是从句时，第一眼先找：句间连接位置且可能是从句。手上先做：分别圈两侧谓语，核从句是否缺主语、宾语、表语或状语，再判连接功能。做完得到
-    decide，不是通用答案。先划两侧分句与谓语，判连接类型；定语从句找先行词并标主宾定状缺口，名词性从句标承担成分及所缺内容，再核连接形式。 什么时候停：只知先行词是地点、时间或原因不能定where/when/why；从句类型、缺口或实际搭配不明就停。结构完整仍要核语义，不用发生/未发生一条口诀决定why/how。
-    换题仍这样做：新从句仍先分范围、标成分缺口和联系，不迁移先行词词类到固定连接词。
+  student_ready: false
+  entry_copy: 从句词不会选？先圈空两侧已确认的谓语，再划分句，不见地点名词就填where。这一步得到的是当前候选的保留、排除或待定判断；不能由剩余项自动定案。如果卡住，先标有无提示和空位所在结构；成分/词义不清停在节点前，不从答案倒贴功能。
   static_design_review:
-    status: source_rebound_semantic_reacceptance_pending
-    source_section_ids: *id005
+    status: source_bound_editorial_review
+    source_section_ids: *id006
     participant_validation: pending_real_participant_validation
-    example_scope: schematic source boundary, not a verified exam
+    example_scope: 2026-10-28基础入口表达修订；保留原判据/Stop/课程绑定与语义版本，微动作和关系示意不是完整真题或真人实测。
   source_alignment:
-    commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
+    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
     state: live_source_bound
-    source_content_changed: false
+    source_content_changed: true
     correction_profile_applied: false
-    authored_first_contact_draft: false
+    authored_first_contact_draft: true
     new_course_branches: preserved_in_full_contract_not_automatically_aliased
-    acceptance: source_alignment_only; semantic/learner/release acceptance remains
-      pending
+    acceptance: 2026-10-30 explicit source delta review; learner/blind/release pending
 - method_id: G07
   brand_name: 句间搭桥
   source_name: 句间逻辑衔接
@@ -957,9 +975,9 @@ methods:
   - repository: https://github.com/rockpunkgod/ANSWER.git
     path: gaokao-grammar-fill/references/grammar-fill.md
     heading: 句间逻辑衔接
-    commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
-  section_ids: &id006
-  - 32c08d6c85a150ea
+    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+  section_ids: &id007
+  - ccfc09a472cb85a6
   can_follow: []
   usually_before: []
   usually_after: []
@@ -972,20 +990,26 @@ methods:
     L3: 标点或中文转折不能独立定词；句子成分未完整先回从句节点。However等功能须按本句说明，不能把所有逻辑词称为并列连词。
     L4: 换句仍核完整命题、实际关系和词的功能，不迁移逗号或中文翻译口诀。
   compact:
-    10s: 两句之间不会填？写两侧完整意思，核关系、功能和标点；逗号不决定词，结构不完整先回从句。
-    30s: 两侧结构完整、空位连接句意时，分别写内容，标转折补充或因果，再核词的句法与标点。课程However在相应句中是连接副词，不能一概叫并列连词。结构未完整或实际关系不清就停，不凭逗号定词。
-    90s: 两个结构完整的句子缺逻辑连接时，先确认：两个结构完整的句子缺逻辑连接。第一刀：写两侧完整意思，标实际转折/因果/并列等关系，不由单个提示词定案。产物
-      decide：写前后两个完整命题，标实际转折、补充或因果，再同时核连接功能、语法与标点；各项相符才确定逻辑词。 停止：标点或中文转折不能独立定词；句子成分未完整先回从句节点。However等功能须按本句说明，不能把所有逻辑词称为并列连词。
-      反例（关系示意，不是真题）：同样表达转折的候选在本句词类与连接功能不同；不能只看翻译同义忽略句法。 迁移：换句仍核完整命题、实际关系和词的功能，不迁移逗号或中文翻译口诀。
-      挑战：先不填，写两侧各说什么，标实际关系，并说明空是句间衔接还是从句连接位置。
+    10s: 两句之间不会填？写两侧意思，再核关系、词类和标点；逗号不决定词。
+    30s: 两句之间不会填？先确认两侧句子各自是否完整，再各写一句大意。例如，都译作转折，连接词与连接副词在句中功能仍不同。句子成分不完整先回从句判断，不能只凭中文转折选词。
+    90s: 两句之间不会填？写两侧完整意思，标实际转折/因果/并列等关系，不由单个提示词定案。这一步得到的是当前候选的保留、排除或待定判断；不能由剩余项自动定案。判断时，写前后两个完整命题，标实际转折、补充或因果，再同时核连接功能、语法与标点；各项相符才确定逻辑词。什么时候停，标点或中文转折不能独立定词；句子成分未完整先回从句节点。However等功能须按本句说明，不能把所有逻辑词称为并列连词。反例示意，同样表达转折的候选在本句词类与连接功能不同；不能只看翻译同义忽略句法。换题仍检查当前题面的对象和关系，不搬上一题结论。挑战，先不填，写两侧各说什么，标实际关系，并说明空是句间衔接还是从句连接位置。
   full:
     summary: 写两侧完整意思，标实际转折/因果/并列等关系，不由单个提示词定案 写前后两个完整命题，标实际转折、补充或因果，再同时核连接功能、语法与标点；各项相符才确定逻辑词。
     source_boundary: 标点或中文转折不能独立定词；句子成分未完整先回从句节点。However等功能须按本句说明，不能把所有逻辑词称为并列连词。
     boundaries:
     - 标点或中文转折不能独立定词；句子成分未完整先回从句节点。However等功能须按本句说明，不能把所有逻辑词称为并列连词。
     - 同样表达转折的候选在本句词类与连接功能不同；不能只看翻译同义忽略句法。
-    section_ids:
-    - 32c08d6c85a150ea
+    section_ids: *id007
+    beginner_support:
+      first_micro_action: 先确认两侧句子各自是否完整，再各写一句大意。
+      prerequisite: 先把空保留不填，圈本句动作和对应的人或物。主语是谁或什么，谓语是这句的完整动作或状态；分不清先核完整句。
+      if_stuck: 先标有无提示和空位所在结构；成分/词义不清停在节点前，不从答案倒贴功能。
+      example: 都译作转折，连接词与连接副词在句中功能仍不同。
+      example_scope: 关系/结构示意，非完整试题，不计真题或已验案例。
+      micro_action_is_not_completion: 完成第一小步不等于完整方法成功；继续完成四步卡的判断与停止核验。
+      short_stop: 句子成分不完整先回从句判断，不能只凭中文转折选词。
+    presentation_revision: 2026-10-28.2
+    source_update_note: 一看二思保原名；反身回查不靠人称重复；why/how不按是否发生定词；非谓语按成分定主人，完成不定式不一律禁作后置修饰，逗号不独自定doing。
   cases:
     canonical: cases/grammar/G07/canonical/case.yaml
   four_step_card:
@@ -1028,28 +1052,25 @@ methods:
   maturity_status: candidate
   practical_value: Useful
   version: 1.2.0
-  change_reason: ANSWER 61bc9c3e15004639cb442c20e7946ca9631f14ce 来源重绑定；旧证据仅按归档版本复核，新规则与传播入口仍待重新验收。
+  change_reason: ANSWER 70db6d6 显式来源差异复核；保留品牌动作和基础入口，异文分源，旧Case不自动获新纪元准入。
   affected_cases:
   - cases/grammar/G07/canonical/case.yaml
   regression_result: pending_current_epoch_semantic_and_student_acceptance
-  student_ready: true
-  entry_copy: 两个结构完整的句子缺逻辑连接时，第一眼先找：两个结构完整的句子缺逻辑连接。手上先做：写两侧完整意思，标实际转折/因果/并列等关系，不由单个提示词定案。做完得到
-    decide，不是通用答案。写前后两个完整命题，标实际转折、补充或因果，再同时核连接功能、语法与标点；各项相符才确定逻辑词。 什么时候停：标点或中文转折不能独立定词；句子成分未完整先回从句节点。However等功能须按本句说明，不能把所有逻辑词称为并列连词。
-    换题仍这样做：换句仍核完整命题、实际关系和词的功能，不迁移逗号或中文翻译口诀。
+  student_ready: false
+  entry_copy: 两句之间不会填？先确认两侧句子各自是否完整，再各写一句大意。这一步得到的是当前候选的保留、排除或待定判断；不能由剩余项自动定案。如果卡住，先标有无提示和空位所在结构；成分/词义不清停在节点前，不从答案倒贴功能。
   static_design_review:
-    status: source_rebound_semantic_reacceptance_pending
-    source_section_ids: *id006
+    status: source_bound_editorial_review
+    source_section_ids: *id007
     participant_validation: pending_real_participant_validation
-    example_scope: schematic source boundary, not a verified exam
+    example_scope: 2026-10-28基础入口表达修订；保留原判据/Stop/课程绑定与语义版本，微动作和关系示意不是完整真题或真人实测。
   source_alignment:
-    commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
+    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
     state: live_source_bound
     source_content_changed: false
     correction_profile_applied: false
-    authored_first_contact_draft: false
+    authored_first_contact_draft: true
     new_course_branches: preserved_in_full_contract_not_automatically_aliased
-    acceptance: source_alignment_only; semantic/learner/release acceptance remains
-      pending
+    acceptance: 2026-10-30 explicit source delta review; learner/blind/release pending
 - method_id: G08
   brand_name: 词性落位
   source_name: 有提示词
@@ -1091,9 +1112,9 @@ methods:
   - repository: https://github.com/rockpunkgod/ANSWER.git
     path: gaokao-grammar-fill/references/grammar-fill.md
     heading: 有提示词
-    commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
-  section_ids: &id007
-  - a166ae34f9256ee9
+    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+  section_ids: &id008
+  - be5c8b287ffa3745
   can_follow: []
   usually_before: []
   usually_after: []
@@ -1106,20 +1127,27 @@ methods:
     L3: 提示词原词性不证明答案词性；分句主干不清先拆句，名词性位置还要区分派生名词与动名词，不能见动词提示就走非谓语。
     L4: 新提示词仍按空位结构分词类，不迁移原词性或上题派生方向。
   compact:
-    10s: 有提示不知道变什么？圈空位支配修饰，先标需要哪类词；只分词类，不按提示原词性填。
-    30s: 有提示词但空位功能未定时，圈未填句中的支配与修饰结构，标名形副代数动。课程environmental ___ (protect)走名词中心，不是见protect就非谓语。主干不清先拆句；本步只缩类别，下一节点才定词形。
-    90s: 有提示词但不确定空位需要什么时，先确认：有提示词但不确定空位需要什么。第一刀：圈空位前后修饰与支配结构，标名/形/副/代/数/动功能，再进对应分支。产物
-      reduce：在未填句圈支配或修饰结构，标空需名、形、副、代、数或动功能；只缩到待核词类，确认需要动词才进动词二分。 停止：提示词原词性不证明答案词性；分句主干不清先拆句，名词性位置还要区分派生名词与动名词，不能见动词提示就走非谓语。
-      反例（关系示意，不是真题）：课程environmental ___ (protect)需要名词中心；动词提示不证明此空需要动词形式。 迁移：新提示词仍按空位结构分词类，不迁移原词性或上题派生方向。
-      挑战：先不变形，只圈支配或修饰空位的词，在空旁标所需词类及下一个节点。
+    10s: 提示词不知道怎么变？圈空位支配和修饰关系，先定词类；原词性不是答案词性。
+    30s: 提示词不知道怎么变？先圈空前后一个真正支配或修饰它的结构，标需要的功能，不按提示原词性变形。例如，动词protect可在相应结构中派生成名词，不先走非谓语。主干不清先拆句，名词性位置也可能容纳动名词。
+    90s: 提示词不知道怎么变？圈空位前后修饰与支配结构，标名/形/副/代/数/动功能，再进对应分支。这一步得到的是优先核查的范围，不直接得答案。判断时，在未填句圈支配或修饰结构，标空需名、形、副、代、数或动功能；只缩到待核词类，确认需要动词才进动词二分。什么时候停，提示词原词性不证明答案词性；分句主干不清先拆句，名词性位置还要区分派生名词与动名词，不能见动词提示就走非谓语。反例示意，课程environmental
+      ___ (protect)需要名词中心；动词提示不证明此空需要动词形式。换题仍检查当前题面的对象和关系，不搬上一题结论。挑战，先不变形，只圈支配或修饰空位的词，在空旁标所需词类及下一个节点。
   full:
     summary: 圈空位前后修饰与支配结构，标名/形/副/代/数/动功能，再进对应分支 在未填句圈支配或修饰结构，标空需名、形、副、代、数或动功能；只缩到待核词类，确认需要动词才进动词二分。
     source_boundary: 提示词原词性不证明答案词性；分句主干不清先拆句，名词性位置还要区分派生名词与动名词，不能见动词提示就走非谓语。
     boundaries:
     - 提示词原词性不证明答案词性；分句主干不清先拆句，名词性位置还要区分派生名词与动名词，不能见动词提示就走非谓语。
     - 课程environmental ___ (protect)需要名词中心；动词提示不证明此空需要动词形式。
-    section_ids:
-    - a166ae34f9256ee9
+    section_ids: *id008
+    beginner_support:
+      first_micro_action: 先圈空前后一个真正支配或修饰它的结构，标需要的功能，不按提示原词性变形。
+      prerequisite: 先把空保留不填，圈本句动作和对应的人或物。主语是谁或什么，谓语是这句的完整动作或状态；分不清先核完整句。
+      if_stuck: 先标有无提示和空位所在结构；成分/词义不清停在节点前，不从答案倒贴功能。
+      example: 动词protect可在相应结构中派生成名词，不先走非谓语。
+      example_scope: 关系/结构示意，非完整试题，不计真题或已验案例。
+      micro_action_is_not_completion: 完成第一小步不等于完整方法成功；继续完成四步卡的判断与停止核验。
+      short_stop: 主干不清先拆句，名词性位置也可能容纳动名词。
+    presentation_revision: 2026-10-28.2
+    source_update_note: 一看二思保原名；反身回查不靠人称重复；why/how不按是否发生定词；非谓语按成分定主人，完成不定式不一律禁作后置修饰，逗号不独自定doing。
   cases:
     canonical: cases/grammar/G08/canonical/case.yaml
   four_step_card:
@@ -1162,28 +1190,25 @@ methods:
   maturity_status: candidate
   practical_value: Useful
   version: 1.2.0
-  change_reason: ANSWER 61bc9c3e15004639cb442c20e7946ca9631f14ce 来源重绑定；旧证据仅按归档版本复核，新规则与传播入口仍待重新验收。
+  change_reason: ANSWER 70db6d6 显式来源差异复核；保留品牌动作和基础入口，异文分源，旧Case不自动获新纪元准入。
   affected_cases:
   - cases/grammar/G08/canonical/case.yaml
   regression_result: pending_current_epoch_semantic_and_student_acceptance
-  student_ready: true
-  entry_copy: 有提示词但不确定空位需要什么时，第一眼先找：有提示词但不确定空位需要什么。手上先做：圈空位前后修饰与支配结构，标名/形/副/代/数/动功能，再进对应分支。做完得到
-    reduce，不是通用答案。在未填句圈支配或修饰结构，标空需名、形、副、代、数或动功能；只缩到待核词类，确认需要动词才进动词二分。 什么时候停：提示词原词性不证明答案词性；分句主干不清先拆句，名词性位置还要区分派生名词与动名词，不能见动词提示就走非谓语。
-    换题仍这样做：新提示词仍按空位结构分词类，不迁移原词性或上题派生方向。
+  student_ready: false
+  entry_copy: 提示词不知道怎么变？先圈空前后一个真正支配或修饰它的结构，标需要的功能，不按提示原词性变形。这一步得到的是优先核查的范围，不直接得答案。如果卡住，先标有无提示和空位所在结构；成分/词义不清停在节点前，不从答案倒贴功能。
   static_design_review:
-    status: source_rebound_semantic_reacceptance_pending
-    source_section_ids: *id007
+    status: source_bound_editorial_review
+    source_section_ids: *id008
     participant_validation: pending_real_participant_validation
-    example_scope: schematic source boundary, not a verified exam
+    example_scope: 2026-10-28基础入口表达修订；保留原判据/Stop/课程绑定与语义版本，微动作和关系示意不是完整真题或真人实测。
   source_alignment:
-    commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
+    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
     state: live_source_bound
     source_content_changed: false
     correction_profile_applied: false
-    authored_first_contact_draft: false
+    authored_first_contact_draft: true
     new_course_branches: preserved_in_full_contract_not_automatically_aliased
-    acceptance: source_alignment_only; semantic/learner/release acceptance remains
-      pending
+    acceptance: 2026-10-30 explicit source delta review; learner/blind/release pending
 - method_id: G09
   brand_name: 名词节点
   source_name: 名词及所有格
@@ -1225,9 +1250,9 @@ methods:
   - repository: https://github.com/rockpunkgod/ANSWER.git
     path: gaokao-grammar-fill/references/grammar-fill.md
     heading: 名词及所有格
-    commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
-  section_ids: &id008
-  - ab95cd79ca0709e2
+    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+  section_ids: &id009
+  - ab42f9a3682492c6
   can_follow: []
   usually_before: []
   usually_after: []
@@ -1240,20 +1265,27 @@ methods:
     L3: 名词性功能不排除所有doing；介词后不一律派生名词，也不一律doing。名词修饰另一名词可能仍保留名词，结构搭配未核就停。
     L4: 新名词空仍核实际结构、数与所属，不迁移介词后唯一词形的假设。
   compact:
-    10s: 名词空不知怎么变？先核派生还是动名词结构，再看数和所属；名词性位置不能排所有doing。
-    30s: 已确认名词性位置时，核具体修饰与搭配，再查限定数量、谓语和所属。课程environmental protection与After spending的结构不同，不能用这里要名词排所有doing。搭配不明就停，名词作定语也不必改形容词。
-    90s: 空位已确认需名词或所有格时，先确认：空位已确认需名词或所有格。第一刀：圈限定、数量和所有关系，核派生、单复数或所有格，不见提示动词就进动词路线。产物
-      decide：在名词性位置核派生名词/动名词的具体结构，再按限定、数量、谓语和句意核单复数或所属；名词中心和搭配相符后定形。 停止：名词性功能不排除所有doing；介词后不一律派生名词，也不一律doing。名词修饰另一名词可能仍保留名词，结构搭配未核就停。
-      反例（关系示意，不是真题）：课程After spending...说明介词后可有动名词；不能把所有介词后提示动词都派生成名词。 迁移：新名词空仍核实际结构、数与所属，不迁移介词后唯一词形的假设。
-      挑战：先不填，在空旁画名词中心或动名词结构，标限定、数量和所属线索，指出排另一形式所缺的结构依据。
+    10s: 名词空不知怎么变？先核结构，再查数和所属；名词性位置不排所有doing。
+    30s: 名词空不知怎么变？先圈决定名词位置的限定或修饰，先不排除所有doing形式。例如，environmental protection与After spending的结构不同。介词后不一律派生名词或doing，搭配不明先停。
+    90s: 名词空不知怎么变？圈限定、数量和所有关系，核派生、单复数或所有格，不见提示动词就进动词路线。这一步得到的是当前候选的保留、排除或待定判断；不能由剩余项自动定案。判断时，在名词性位置核派生名词/动名词的具体结构，再按限定、数量、谓语和句意核单复数或所属；名词中心和搭配相符后定形。什么时候停，名词性功能不排除所有doing；介词后不一律派生名词，也不一律doing。名词修饰另一名词可能仍保留名词，结构搭配未核就停。反例示意，课程After
+      spending...说明介词后可有动名词；不能把所有介词后提示动词都派生成名词。换题仍检查当前题面的对象和关系，不搬上一题结论。挑战，先不填，在空旁画名词中心或动名词结构，标限定、数量和所属线索，指出排另一形式所缺的结构依据。
   full:
     summary: 圈限定、数量和所有关系，核派生、单复数或所有格，不见提示动词就进动词路线 在名词性位置核派生名词/动名词的具体结构，再按限定、数量、谓语和句意核单复数或所属；名词中心和搭配相符后定形。
     source_boundary: 名词性功能不排除所有doing；介词后不一律派生名词，也不一律doing。名词修饰另一名词可能仍保留名词，结构搭配未核就停。
     boundaries:
     - 名词性功能不排除所有doing；介词后不一律派生名词，也不一律doing。名词修饰另一名词可能仍保留名词，结构搭配未核就停。
     - 课程After spending...说明介词后可有动名词；不能把所有介词后提示动词都派生成名词。
-    section_ids:
-    - ab95cd79ca0709e2
+    section_ids: *id009
+    beginner_support:
+      first_micro_action: 先圈决定名词位置的限定或修饰，先不排除所有doing形式。
+      prerequisite: 先把空保留不填，圈本句动作和对应的人或物。主语是谁或什么，谓语是这句的完整动作或状态；分不清先核完整句。
+      if_stuck: 先标有无提示和空位所在结构；成分/词义不清停在节点前，不从答案倒贴功能。
+      example: environmental protection与After spending的结构不同。
+      example_scope: 关系/结构示意，非完整试题，不计真题或已验案例。
+      micro_action_is_not_completion: 完成第一小步不等于完整方法成功；继续完成四步卡的判断与停止核验。
+      short_stop: 介词后不一律派生名词或doing，搭配不明先停。
+    presentation_revision: 2026-10-28.2
+    source_update_note: 一看二思保原名；反身回查不靠人称重复；why/how不按是否发生定词；非谓语按成分定主人，完成不定式不一律禁作后置修饰，逗号不独自定doing。
   cases:
     canonical: cases/grammar/G09/canonical/case.yaml
   four_step_card:
@@ -1296,28 +1328,25 @@ methods:
   maturity_status: candidate
   practical_value: Useful
   version: 1.2.0
-  change_reason: ANSWER 61bc9c3e15004639cb442c20e7946ca9631f14ce 来源重绑定；旧证据仅按归档版本复核，新规则与传播入口仍待重新验收。
+  change_reason: ANSWER 70db6d6 显式来源差异复核；保留品牌动作和基础入口，异文分源，旧Case不自动获新纪元准入。
   affected_cases:
   - cases/grammar/G09/canonical/case.yaml
   regression_result: pending_current_epoch_semantic_and_student_acceptance
-  student_ready: true
-  entry_copy: 空位已确认需名词或所有格时，第一眼先找：空位已确认需名词或所有格。手上先做：圈限定、数量和所有关系，核派生、单复数或所有格，不见提示动词就进动词路线。做完得到
-    decide，不是通用答案。在名词性位置核派生名词/动名词的具体结构，再按限定、数量、谓语和句意核单复数或所属；名词中心和搭配相符后定形。 什么时候停：名词性功能不排除所有doing；介词后不一律派生名词，也不一律doing。名词修饰另一名词可能仍保留名词，结构搭配未核就停。
-    换题仍这样做：新名词空仍核实际结构、数与所属，不迁移介词后唯一词形的假设。
+  student_ready: false
+  entry_copy: 名词空不知怎么变？先圈决定名词位置的限定或修饰，先不排除所有doing形式。这一步得到的是当前候选的保留、排除或待定判断；不能由剩余项自动定案。如果卡住，先标有无提示和空位所在结构；成分/词义不清停在节点前，不从答案倒贴功能。
   static_design_review:
-    status: source_rebound_semantic_reacceptance_pending
-    source_section_ids: *id008
+    status: source_bound_editorial_review
+    source_section_ids: *id009
     participant_validation: pending_real_participant_validation
-    example_scope: schematic source boundary, not a verified exam
+    example_scope: 2026-10-28基础入口表达修订；保留原判据/Stop/课程绑定与语义版本，微动作和关系示意不是完整真题或真人实测。
   source_alignment:
-    commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
+    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
     state: live_source_bound
     source_content_changed: false
     correction_profile_applied: false
-    authored_first_contact_draft: false
+    authored_first_contact_draft: true
     new_course_branches: preserved_in_full_contract_not_automatically_aliased
-    acceptance: source_alignment_only; semantic/learner/release acceptance remains
-      pending
+    acceptance: 2026-10-30 explicit source delta review; learner/blind/release pending
 - method_id: G10
   brand_name: 形副节点
   source_name: 形容词、副词与比较等级
@@ -1359,9 +1388,9 @@ methods:
   - repository: https://github.com/rockpunkgod/ANSWER.git
     path: gaokao-grammar-fill/references/grammar-fill.md
     heading: 形容词、副词与比较等级
-    commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
-  section_ids: &id009
-  - 9b610bdb9f63227e
+    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+  section_ids: &id010
+  - 3cc12c22579257d5
   can_follow: []
   usually_before: []
   usually_after: []
@@ -1374,19 +1403,26 @@ methods:
     L3: 修饰名词不能忽略名词作定语的分支；没有等级差异不强造比较级，-ing/-ed形容词须按对象和状态而非人/物标签机械分。
     L4: 新句仍核修饰对象、状态和比较范围，不迁移固定词尾或中文程度。
   compact:
-    10s: 形副和等级看乱？圈修饰谁，再核实际比较；人/物不决定-ed/-ing，无等级差异别造比较级。
-    30s: 确定作修饰或表语时，先圈被修饰对象，判形或副，再找真实比较范围。语义示意：-ed/-ing看对象实际状态，不是人/物口诀。没等级差异就停比较分支，搭配或含义不明先回核，再按节点拼写。
-    90s: 空位确定作修饰或表语时，先确认：空位确定作修饰或表语。第一刀：圈被修饰词和比较结构，判形/副及级别，不机械加比较级。产物 decide：圈被修饰词或表语位置，判形容词/副词，再核对象含义与真实比较范围；等级与拼写必须符合本句支持的形式。
-      停止：修饰名词不能忽略名词作定语的分支；没有等级差异不强造比较级，-ing/-ed形容词须按对象和状态而非人/物标签机械分。 反例（关系示意，不是真题）：对象虽是事物也可能处于某种被动或感受状态；不能只按人/物标签选择-ed/-ing形容词。
-      迁移：新句仍核修饰对象、状态和比较范围，不迁移固定词尾或中文程度。 挑战：先不变词，圈被修饰对象，标形或副，再给比较等级找明确范围依据。
+    10s: 形副和等级看乱？先圈修饰谁，再核真实比较；不按人或物机械选-ed/-ing。
+    30s: 形副和等级看乱？先圈它修饰谁或作谁的表语，比较等级随后按实际证据核。例如，修饰名词也可能用另一个名词，不能一律改形容词。无等级差异不造比较级，状态与搭配不明先核。
+    90s: 形副和等级看乱？圈被修饰词和比较结构，判形/副及级别，不机械加比较级。这一步得到的是当前候选的保留、排除或待定判断；不能由剩余项自动定案。判断时，圈被修饰词或表语位置，判形容词/副词，再核对象含义与真实比较范围；等级与拼写必须符合本句支持的形式。什么时候停，修饰名词不能忽略名词作定语的分支；没有等级差异不强造比较级，-ing/-ed形容词须按对象和状态而非人/物标签机械分。反例示意，对象虽是事物也可能处于某种被动或感受状态；不能只按人/物标签选择-ed/-ing形容词。换题仍检查当前题面的对象和关系，不搬上一题结论。挑战，先不变词，圈被修饰对象，标形或副，再给比较等级找明确范围依据。
   full:
     summary: 圈被修饰词和比较结构，判形/副及级别，不机械加比较级 圈被修饰词或表语位置，判形容词/副词，再核对象含义与真实比较范围；等级与拼写必须符合本句支持的形式。
     source_boundary: 修饰名词不能忽略名词作定语的分支；没有等级差异不强造比较级，-ing/-ed形容词须按对象和状态而非人/物标签机械分。
     boundaries:
     - 修饰名词不能忽略名词作定语的分支；没有等级差异不强造比较级，-ing/-ed形容词须按对象和状态而非人/物标签机械分。
     - 对象虽是事物也可能处于某种被动或感受状态；不能只按人/物标签选择-ed/-ing形容词。
-    section_ids:
-    - 9b610bdb9f63227e
+    section_ids: *id010
+    beginner_support:
+      first_micro_action: 先圈它修饰谁或作谁的表语，比较等级随后按实际证据核。
+      prerequisite: 先把空保留不填，圈本句动作和对应的人或物。主语是谁或什么，谓语是这句的完整动作或状态；分不清先核完整句。
+      if_stuck: 先标有无提示和空位所在结构；成分/词义不清停在节点前，不从答案倒贴功能。
+      example: 修饰名词也可能用另一个名词，不能一律改形容词。
+      example_scope: 关系/结构示意，非完整试题，不计真题或已验案例。
+      micro_action_is_not_completion: 完成第一小步不等于完整方法成功；继续完成四步卡的判断与停止核验。
+      short_stop: 无等级差异不造比较级，状态与搭配不明先核。
+    presentation_revision: 2026-10-28.2
+    source_update_note: 一看二思保原名；反身回查不靠人称重复；why/how不按是否发生定词；非谓语按成分定主人，完成不定式不一律禁作后置修饰，逗号不独自定doing。
   cases:
     canonical: cases/grammar/G10/canonical/case.yaml
   four_step_card:
@@ -1429,27 +1465,25 @@ methods:
   maturity_status: candidate
   practical_value: Useful
   version: 1.2.0
-  change_reason: ANSWER 61bc9c3e15004639cb442c20e7946ca9631f14ce 来源重绑定；旧证据仅按归档版本复核，新规则与传播入口仍待重新验收。
+  change_reason: ANSWER 70db6d6 显式来源差异复核；保留品牌动作和基础入口，异文分源，旧Case不自动获新纪元准入。
   affected_cases:
   - cases/grammar/G10/canonical/case.yaml
   regression_result: pending_current_epoch_semantic_and_student_acceptance
-  student_ready: true
-  entry_copy: 空位确定作修饰或表语时，第一眼先找：空位确定作修饰或表语。手上先做：圈被修饰词和比较结构，判形/副及级别，不机械加比较级。做完得到 decide，不是通用答案。圈被修饰词或表语位置，判形容词/副词，再核对象含义与真实比较范围；等级与拼写必须符合本句支持的形式。
-    什么时候停：修饰名词不能忽略名词作定语的分支；没有等级差异不强造比较级，-ing/-ed形容词须按对象和状态而非人/物标签机械分。 换题仍这样做：新句仍核修饰对象、状态和比较范围，不迁移固定词尾或中文程度。
+  student_ready: false
+  entry_copy: 形副和等级看乱？先圈它修饰谁或作谁的表语，比较等级随后按实际证据核。这一步得到的是当前候选的保留、排除或待定判断；不能由剩余项自动定案。如果卡住，先标有无提示和空位所在结构；成分/词义不清停在节点前，不从答案倒贴功能。
   static_design_review:
-    status: source_rebound_semantic_reacceptance_pending
-    source_section_ids: *id009
+    status: source_bound_editorial_review
+    source_section_ids: *id010
     participant_validation: pending_real_participant_validation
-    example_scope: schematic source boundary, not a verified exam
+    example_scope: 2026-10-28基础入口表达修订；保留原判据/Stop/课程绑定与语义版本，微动作和关系示意不是完整真题或真人实测。
   source_alignment:
-    commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
+    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
     state: live_source_bound
     source_content_changed: false
     correction_profile_applied: false
-    authored_first_contact_draft: false
+    authored_first_contact_draft: true
     new_course_branches: preserved_in_full_contract_not_automatically_aliased
-    acceptance: source_alignment_only; semantic/learner/release acceptance remains
-      pending
+    acceptance: 2026-10-30 explicit source delta review; learner/blind/release pending
 - method_id: G11
   brand_name: 数词节点
   source_name: 数词
@@ -1491,9 +1525,9 @@ methods:
   - repository: https://github.com/rockpunkgod/ANSWER.git
     path: gaokao-grammar-fill/references/grammar-fill.md
     heading: 数词
-    commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
-  section_ids: &id010
-  - a26dc83760c12ebb
+    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+  section_ids: &id011
+  - b2282a270b8de478
   can_follow: []
   usually_before: []
   usually_after: []
@@ -1506,19 +1540,26 @@ methods:
     L3: 只看到一个数字提示不能确定功能；排序线索和数量所指不清就停，不把中文数字或冠词单独当序数证明。
     L4: 换数字仍先判位置功能和所指数量，不迁移原数字到固定序数形式。
   compact:
-    10s: 数词不会变？先标数多少还是第几，再核限定和名词；数字本身不决定序数，功能不清就停。
-    30s: 数词空先圈数量或顺序证据，再核限定词和名词单复数。功能示意：同一数字可表示多少，也可表示第几。只见数字或the都不够；数量、序号所指不清就停，回本句决定形式。
-    90s: 空位已确定需要数量或顺序时，先确认：空位已确定需要数量或顺序。第一刀：圈数量/次序线索，按节点规则处理基数、序数或词形。产物 decide：圈表示数量还是顺序的证据，连同限定词和名词单复数判基数、序数、倍数或分数表达；各项一致才定数词形式。
-      停止：只看到一个数字提示不能确定功能；排序线索和数量所指不清就停，不把中文数字或冠词单独当序数证明。 反例（关系示意，不是真题）：同一数字可表达数量或次序，所需形式不同；提示数字自身不能证明序数路线。
-      迁移：换数字仍先判位置功能和所指数量，不迁移原数字到固定序数形式。 挑战：先不写数词，只给空标数量、次序、倍数或分数功能，再圈相应题面证据。
+    10s: 数词怎么变？先判数多少还是第几，再核结构；数字本身不决定序数。
+    30s: 数词怎么变？先圈数量或次序的证据，写数多少还是第几。例如，同一数字在不同位置可表示数量或次序。所指或功能不清先停，the也不能单独证明序数。
+    90s: 数词怎么变？圈数量/次序线索，按节点规则处理基数、序数或词形。这一步得到的是当前候选的保留、排除或待定判断；不能由剩余项自动定案。判断时，圈表示数量还是顺序的证据，连同限定词和名词单复数判基数、序数、倍数或分数表达；各项一致才定数词形式。什么时候停，只看到一个数字提示不能确定功能；排序线索和数量所指不清就停，不把中文数字或冠词单独当序数证明。反例示意，同一数字可表达数量或次序，所需形式不同；提示数字自身不能证明序数路线。换题仍检查当前题面的对象和关系，不搬上一题结论。挑战，先不写数词，只给空标数量、次序、倍数或分数功能，再圈相应题面证据。
   full:
     summary: 圈数量/次序线索，按节点规则处理基数、序数或词形 圈表示数量还是顺序的证据，连同限定词和名词单复数判基数、序数、倍数或分数表达；各项一致才定数词形式。
     source_boundary: 只看到一个数字提示不能确定功能；排序线索和数量所指不清就停，不把中文数字或冠词单独当序数证明。
     boundaries:
     - 只看到一个数字提示不能确定功能；排序线索和数量所指不清就停，不把中文数字或冠词单独当序数证明。
     - 同一数字可表达数量或次序，所需形式不同；提示数字自身不能证明序数路线。
-    section_ids:
-    - a26dc83760c12ebb
+    section_ids: *id011
+    beginner_support:
+      first_micro_action: 先圈数量或次序的证据，写数多少还是第几。
+      prerequisite: 先把空保留不填，圈本句动作和对应的人或物。主语是谁或什么，谓语是这句的完整动作或状态；分不清先核完整句。
+      if_stuck: 先标有无提示和空位所在结构；成分/词义不清停在节点前，不从答案倒贴功能。
+      example: 同一数字在不同位置可表示数量或次序。
+      example_scope: 关系/结构示意，非完整试题，不计真题或已验案例。
+      micro_action_is_not_completion: 完成第一小步不等于完整方法成功；继续完成四步卡的判断与停止核验。
+      short_stop: 所指或功能不清先停，the也不能单独证明序数。
+    presentation_revision: 2026-10-28.2
+    source_update_note: 一看二思保原名；反身回查不靠人称重复；why/how不按是否发生定词；非谓语按成分定主人，完成不定式不一律禁作后置修饰，逗号不独自定doing。
   cases:
     canonical: cases/grammar/G11/canonical/case.yaml
   four_step_card:
@@ -1561,28 +1602,25 @@ methods:
   maturity_status: candidate
   practical_value: Useful
   version: 1.2.0
-  change_reason: ANSWER 61bc9c3e15004639cb442c20e7946ca9631f14ce 来源重绑定；旧证据仅按归档版本复核，新规则与传播入口仍待重新验收。
+  change_reason: ANSWER 70db6d6 显式来源差异复核；保留品牌动作和基础入口，异文分源，旧Case不自动获新纪元准入。
   affected_cases:
   - cases/grammar/G11/canonical/case.yaml
   regression_result: pending_current_epoch_semantic_and_student_acceptance
-  student_ready: true
-  entry_copy: 空位已确定需要数量或顺序时，第一眼先找：空位已确定需要数量或顺序。手上先做：圈数量/次序线索，按节点规则处理基数、序数或词形。做完得到
-    decide，不是通用答案。圈表示数量还是顺序的证据，连同限定词和名词单复数判基数、序数、倍数或分数表达；各项一致才定数词形式。 什么时候停：只看到一个数字提示不能确定功能；排序线索和数量所指不清就停，不把中文数字或冠词单独当序数证明。
-    换题仍这样做：换数字仍先判位置功能和所指数量，不迁移原数字到固定序数形式。
+  student_ready: false
+  entry_copy: 数词怎么变？先圈数量或次序的证据，写数多少还是第几。这一步得到的是当前候选的保留、排除或待定判断；不能由剩余项自动定案。如果卡住，先标有无提示和空位所在结构；成分/词义不清停在节点前，不从答案倒贴功能。
   static_design_review:
-    status: source_rebound_semantic_reacceptance_pending
-    source_section_ids: *id010
+    status: source_bound_editorial_review
+    source_section_ids: *id011
     participant_validation: pending_real_participant_validation
-    example_scope: schematic source boundary, not a verified exam
+    example_scope: 2026-10-28基础入口表达修订；保留原判据/Stop/课程绑定与语义版本，微动作和关系示意不是完整真题或真人实测。
   source_alignment:
-    commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
+    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
     state: live_source_bound
     source_content_changed: false
     correction_profile_applied: false
-    authored_first_contact_draft: false
+    authored_first_contact_draft: true
     new_course_branches: preserved_in_full_contract_not_automatically_aliased
-    acceptance: source_alignment_only; semantic/learner/release acceptance remains
-      pending
+    acceptance: 2026-10-30 explicit source delta review; learner/blind/release pending
 - method_id: G12
   brand_name: 动词二分
   source_name: 第一步：数谓语、看连接
@@ -1628,9 +1666,9 @@ methods:
   - repository: https://github.com/rockpunkgod/ANSWER.git
     path: gaokao-grammar-fill/references/grammar-fill.md
     heading: 第一步：数谓语、看连接
-    commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
-  section_ids: &id011
-  - 5131f97d0dc78441
+    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+  section_ids: &id012
+  - 01b66e853d507205
   can_follow: []
   usually_before: []
   usually_after: []
@@ -1643,19 +1681,26 @@ methods:
     L3: 未判空位功能先停；总句有谓语不等于本分句不需谓语，并列谓语或另起从句须另核。不能只数全句动词或按词尾二分。
     L4: 新长句仍先确认动词功能，再按分句边界和连接判路线，不迁移总动词数量口诀。
   compact:
-    10s: 谓语非谓语分不清？先确认要动词，再划本分句数谓语看连接；全句有动词不证明本空非谓语。
-    30s: 空已确定需动词形式时，划所在分句，圈已有限定动词和连接手段，判本空是否承担谓语。结构示意：主句有谓语，从句仍可能要自己的谓语。边界不清就停；只分路线，不能按全句动词数或be口诀填形。
-    90s: 空位已确认需要动词形式时，先确认：空位已确认需要动词形式。第一刀：圈句内已有谓语与连接词，核空位是否承担谓语，再分谓语/非谓语。产物 reduce：只在确认需要动词形式后划分分句，圈已有限定动词和连接手段，核空是否承担本分句谓语；产出谓语/非谓语路线，不直接定具体词形。
-      停止：未判空位功能先停；总句有谓语不等于本分句不需谓语，并列谓语或另起从句须另核。不能只数全句动词或按词尾二分。 反例（关系示意，不是真题）：主句已有谓语，但空属于另一个有连接手段的分句；不能凭主句谓语把此空排进非谓语。
-      迁移：新长句仍先确认动词功能，再按分句边界和连接判路线，不迁移总动词数量口诀。 挑战：先不填动词，划本空所在分句，圈该分句已有限定动词与连接词，再标谓语或非谓语路线。
+    10s: 谓语非谓语分不清？确认要动词后先划本分句；全句有动词不证明本空非谓语。
+    30s: 谓语非谓语分不清？确认需要动词后，先框本空所在分句，不先数全句所有动词。随后圈本分句已有谓语和连接手段，再定谓语或非谓语路线，不定最终形式。例如，主句已有谓语，从句仍可能需要自己的谓语。未判空位功能或分句边界先停，不只数全句动词。
+    90s: 谓语非谓语分不清？圈句内已有谓语与连接词，核空位是否承担谓语，再分谓语/非谓语。这一步得到的是优先核查的范围，不直接得答案。判断时，只在确认需要动词形式后划分分句，圈已有限定动词和连接手段，核空是否承担本分句谓语；产出谓语/非谓语路线，不直接定具体词形。什么时候停，未判空位功能先停；总句有谓语不等于本分句不需谓语，并列谓语或另起从句须另核。不能只数全句动词或按词尾二分。反例示意，主句已有谓语，但空属于另一个有连接手段的分句；不能凭主句谓语把此空排进非谓语。换题仍检查当前题面的对象和关系，不搬上一题结论。挑战，先不填动词，划本空所在分句，圈该分句已有限定动词与连接词，再标谓语或非谓语路线。
   full:
     summary: 圈句内已有谓语与连接词，核空位是否承担谓语，再分谓语/非谓语 只在确认需要动词形式后划分分句，圈已有限定动词和连接手段，核空是否承担本分句谓语；产出谓语/非谓语路线，不直接定具体词形。
     source_boundary: 未判空位功能先停；总句有谓语不等于本分句不需谓语，并列谓语或另起从句须另核。不能只数全句动词或按词尾二分。
     boundaries:
     - 未判空位功能先停；总句有谓语不等于本分句不需谓语，并列谓语或另起从句须另核。不能只数全句动词或按词尾二分。
     - 主句已有谓语，但空属于另一个有连接手段的分句；不能凭主句谓语把此空排进非谓语。
-    section_ids:
-    - 5131f97d0dc78441
+    section_ids: *id012
+    beginner_support:
+      first_micro_action: 确认需要动词后，先框本空所在分句，不先数全句所有动词。
+      prerequisite: 先把空保留不填，圈本句动作和对应的人或物。主语是谁或什么，谓语是这句的完整动作或状态；分不清先核完整句。
+      if_stuck: 先标有无提示和空位所在结构；成分/词义不清停在节点前，不从答案倒贴功能。
+      example: 主句已有谓语，从句仍可能需要自己的谓语。
+      example_scope: 关系/结构示意，非完整试题，不计真题或已验案例。
+      micro_action_is_not_completion: 完成第一小步不等于完整方法成功；继续完成四步卡的判断与停止核验。
+      short_stop: 未判空位功能或分句边界先停，不只数全句动词。
+    presentation_revision: 2026-10-28.2
+    source_update_note: 一看二思保原名；反身回查不靠人称重复；why/how不按是否发生定词；非谓语按成分定主人，完成不定式不一律禁作后置修饰，逗号不独自定doing。
   cases:
     canonical: cases/grammar/G12/canonical/case.yaml
   four_step_card:
@@ -1698,28 +1743,25 @@ methods:
   maturity_status: candidate
   practical_value: Useful
   version: 1.2.0
-  change_reason: ANSWER 61bc9c3e15004639cb442c20e7946ca9631f14ce 来源重绑定；旧证据仅按归档版本复核，新规则与传播入口仍待重新验收。
+  change_reason: ANSWER 70db6d6 显式来源差异复核；保留品牌动作和基础入口，异文分源，旧Case不自动获新纪元准入。
   affected_cases:
   - cases/grammar/G12/canonical/case.yaml
   regression_result: pending_current_epoch_semantic_and_student_acceptance
-  student_ready: true
-  entry_copy: 空位已确认需要动词形式时，第一眼先找：空位已确认需要动词形式。手上先做：圈句内已有谓语与连接词，核空位是否承担谓语，再分谓语/非谓语。做完得到
-    reduce，不是通用答案。只在确认需要动词形式后划分分句，圈已有限定动词和连接手段，核空是否承担本分句谓语；产出谓语/非谓语路线，不直接定具体词形。 什么时候停：未判空位功能先停；总句有谓语不等于本分句不需谓语，并列谓语或另起从句须另核。不能只数全句动词或按词尾二分。
-    换题仍这样做：新长句仍先确认动词功能，再按分句边界和连接判路线，不迁移总动词数量口诀。
+  student_ready: false
+  entry_copy: 谓语非谓语分不清？确认需要动词后，先框本空所在分句，不先数全句所有动词。随后圈本分句已有谓语和连接手段，再定谓语或非谓语路线，不定最终形式。这一步得到的是优先核查的范围，不直接得答案。如果卡住，先标有无提示和空位所在结构；成分/词义不清停在节点前，不从答案倒贴功能。
   static_design_review:
-    status: source_rebound_semantic_reacceptance_pending
-    source_section_ids: *id011
+    status: source_bound_editorial_review
+    source_section_ids: *id012
     participant_validation: pending_real_participant_validation
-    example_scope: schematic source boundary, not a verified exam
+    example_scope: 2026-10-28基础入口表达修订；保留原判据/Stop/课程绑定与语义版本，微动作和关系示意不是完整真题或真人实测。
   source_alignment:
-    commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
+    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
     state: live_source_bound
-    source_content_changed: false
+    source_content_changed: true
     correction_profile_applied: false
-    authored_first_contact_draft: false
+    authored_first_contact_draft: true
     new_course_branches: preserved_in_full_contract_not_automatically_aliased
-    acceptance: source_alignment_only; semantic/learner/release acceptance remains
-      pending
+    acceptance: 2026-10-30 explicit source delta review; learner/blind/release pending
 - method_id: G13
   brand_name: 时态三查
   source_name: 时态判定三步法
@@ -1764,9 +1806,9 @@ methods:
   - repository: https://github.com/rockpunkgod/ANSWER.git
     path: gaokao-grammar-fill/references/grammar-fill.md
     heading: 谓语：检查时态、语态、主谓一致
-    commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
-  section_ids: &id012
-  - a0bcc74f05b00671
+    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+  section_ids: &id013
+  - c6ee3d2de761c2d8
   can_follow: []
   usually_before: []
   usually_after: []
@@ -1779,19 +1821,26 @@ methods:
     L3: 单个since/by等只提示，不免上下文参照核对；主语角色、状态性分词或时间参照不明就停，不执行有be/无be快速二分口诀。
     L4: 新句仍以实际时间参照、动作角色和真主语定形，不迁移同一时间词的固定答案。
   compact:
-    10s: 谓语时态犹豫？查时间、主被动和复合时态参照，再核真主语；时间词不独立定案，be口诀停用。
-    30s: 已判谓语时，按课程三步查时间线索、主被动和复合时态参照，再核真主语的数。关系示意：状态性过去分词不能仅凭be认成一次被动动作。参照或角色不明就停，since/by等只提示，不替整句核对。
-    90s: 空位是谓语且需判时态时，先确认：空位是谓语且需判时态。第一刀：圈明确时间、上下文事件先后和句内语态，再与真主语核数。产物 decide：谓语位置按课程时态判定三步法核时间线索、主被动、复合时态参照，并与真正主语核数；时间、语态和一致共同支持后定谓语形式。
-      停止：单个since/by等只提示，不免上下文参照核对；主语角色、状态性分词或时间参照不明就停，不执行有be/无be快速二分口诀。 反例（关系示意，不是真题）：过去分词可表示状态，看到be不能跳过句法作用与动作关系，直接按一次被动动作解释。
-      迁移：新句仍以实际时间参照、动作角色和真主语定形，不迁移同一时间词的固定答案。 挑战：先不变动词，只圈时间线索、主语和动作关系，再写复合时态的参照事件；没有参照就标缺口。
+    10s: 谓语形式犹豫？核时间、主被动与参照，再查真主语；时间词不独立定案。
+    30s: 谓语形式犹豫？确认谓语后，先圈明确时间和事件参照；语态、一致随后核，三项不省。例如，since或by只提供线索，仍须核事件参照和真实语态。角色或时间参照不明先停，不用有be无be口诀选形。
+    90s: 谓语形式犹豫？圈明确时间、上下文事件先后和句内语态，再与真主语核数。这一步得到的是当前候选的保留、排除或待定判断；不能由剩余项自动定案。判断时，谓语位置按课程时态判定三步法核时间线索、主被动、复合时态参照，并与真正主语核数；时间、语态和一致共同支持后定谓语形式。什么时候停，单个since/by等只提示，不免上下文参照核对；主语角色、状态性分词或时间参照不明就停，不执行有be/无be快速二分口诀。反例示意，过去分词可表示状态，看到be不能跳过句法作用与动作关系，直接按一次被动动作解释。换题仍检查当前题面的对象和关系，不搬上一题结论。挑战，先不变动词，只圈时间线索、主语和动作关系，再写复合时态的参照事件；没有参照就标缺口。
   full:
     summary: 圈明确时间、上下文事件先后和句内语态，再与真主语核数 谓语位置按课程时态判定三步法核时间线索、主被动、复合时态参照，并与真正主语核数；时间、语态和一致共同支持后定谓语形式。
     source_boundary: 单个since/by等只提示，不免上下文参照核对；主语角色、状态性分词或时间参照不明就停，不执行有be/无be快速二分口诀。
     boundaries:
     - 单个since/by等只提示，不免上下文参照核对；主语角色、状态性分词或时间参照不明就停，不执行有be/无be快速二分口诀。
     - 过去分词可表示状态，看到be不能跳过句法作用与动作关系，直接按一次被动动作解释。
-    section_ids:
-    - a0bcc74f05b00671
+    section_ids: *id013
+    beginner_support:
+      first_micro_action: 确认谓语后，先圈明确时间和事件参照；语态、一致随后核，三项不省。
+      prerequisite: 先把空保留不填，圈本句动作和对应的人或物。主语是谁或什么，谓语是这句的完整动作或状态；分不清先核完整句。
+      if_stuck: 先标有无提示和空位所在结构；成分/词义不清停在节点前，不从答案倒贴功能。
+      example: since或by只提供线索，仍须核事件参照和真实语态。
+      example_scope: 关系/结构示意，非完整试题，不计真题或已验案例。
+      micro_action_is_not_completion: 完成第一小步不等于完整方法成功；继续完成四步卡的判断与停止核验。
+      short_stop: 角色或时间参照不明先停，不用有be无be口诀选形。
+    presentation_revision: 2026-10-28.2
+    source_update_note: 一看二思保原名；反身回查不靠人称重复；why/how不按是否发生定词；非谓语按成分定主人，完成不定式不一律禁作后置修饰，逗号不独自定doing。
   cases:
     canonical: cases/grammar/G13/canonical/case.yaml
   four_step_card:
@@ -1834,27 +1883,25 @@ methods:
   maturity_status: candidate
   practical_value: Useful
   version: 1.2.0
-  change_reason: ANSWER 61bc9c3e15004639cb442c20e7946ca9631f14ce 来源重绑定；旧证据仅按归档版本复核，新规则与传播入口仍待重新验收。
+  change_reason: ANSWER 70db6d6 显式来源差异复核；保留品牌动作和基础入口，异文分源，旧Case不自动获新纪元准入。
   affected_cases:
   - cases/grammar/G13/canonical/case.yaml
   regression_result: pending_current_epoch_semantic_and_student_acceptance
-  student_ready: true
-  entry_copy: 空位是谓语且需判时态时，第一眼先找：空位是谓语且需判时态。手上先做：圈明确时间、上下文事件先后和句内语态，再与真主语核数。做完得到 decide，不是通用答案。谓语位置按课程时态判定三步法核时间线索、主被动、复合时态参照，并与真正主语核数；时间、语态和一致共同支持后定谓语形式。
-    什么时候停：单个since/by等只提示，不免上下文参照核对；主语角色、状态性分词或时间参照不明就停，不执行有be/无be快速二分口诀。 换题仍这样做：新句仍以实际时间参照、动作角色和真主语定形，不迁移同一时间词的固定答案。
+  student_ready: false
+  entry_copy: 谓语形式犹豫？确认谓语后，先圈明确时间和事件参照；语态、一致随后核，三项不省。这一步得到的是当前候选的保留、排除或待定判断；不能由剩余项自动定案。如果卡住，先标有无提示和空位所在结构；成分/词义不清停在节点前，不从答案倒贴功能。
   static_design_review:
-    status: source_rebound_semantic_reacceptance_pending
-    source_section_ids: *id012
+    status: source_bound_editorial_review
+    source_section_ids: *id013
     participant_validation: pending_real_participant_validation
-    example_scope: schematic source boundary, not a verified exam
+    example_scope: 2026-10-28基础入口表达修订；保留原判据/Stop/课程绑定与语义版本，微动作和关系示意不是完整真题或真人实测。
   source_alignment:
-    commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
+    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
     state: live_source_bound
-    source_content_changed: false
+    source_content_changed: true
     correction_profile_applied: false
-    authored_first_contact_draft: false
+    authored_first_contact_draft: true
     new_course_branches: preserved_in_full_contract_not_automatically_aliased
-    acceptance: source_alignment_only; semantic/learner/release acceptance remains
-      pending
+    acceptance: 2026-10-30 explicit source delta review; learner/blind/release pending
 - method_id: G14
   brand_name: 找真主语
   source_name: 谓语：检查时态、语态、主谓一致
@@ -1890,9 +1937,9 @@ methods:
   - repository: https://github.com/rockpunkgod/ANSWER.git
     path: gaokao-grammar-fill/references/grammar-fill.md
     heading: 谓语：检查时态、语态、主谓一致
-    commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
-  section_ids: &id013
-  - a0bcc74f05b00671
+    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+  section_ids: &id014
+  - c6ee3d2de761c2d8
   can_follow: []
   usually_before: []
   usually_after: []
@@ -1905,19 +1952,26 @@ methods:
     L3: 最近名词不一定主语，集合或数量结构须回完整节点；状态性过去分词与被动动作需另核，不能执行有be/无be口诀。
     L4: 换句仍找中心及真实连接结构，不迁移最近名词的数或特殊结构无条件口诀。
   compact:
-    10s: 主谓一致拿不准？划开修饰圈真主语，再核结构一致；最近名词不算主语，本步不定时态。
-    30s: 主谓被修饰隔开时，划开插入与短语，圈真主语中心，再核并列、伴随或从句一致对象。结构示意：旁边复数修饰不改变单数中心。中心或特殊结构不明就停；只核一致，不以be口诀定语态或最终形。
-    90s: 主谓间有修饰造成数判断混乱时，先确认：主谓间有修饰造成数判断混乱。第一刀：划开插入和修饰，圈真正主语中心词，核谓语一致，保留否定条件。产物 verify：划开插入和修饰后圈主语中心，并核并列/伴随结构或从句的实际一致对象；输出主谓一致核验，不自行定时态或最终词形。
-      停止：最近名词不一定主语，集合或数量结构须回完整节点；状态性过去分词与被动动作需另核，不能执行有be/无be口诀。 反例（关系示意，不是真题）：主谓之间有复数修饰名词，但真正主语中心为单数；不能由最近复数名词改谓语数。
-      迁移：换句仍找中心及真实连接结构，不迁移最近名词的数或特殊结构无条件口诀。 挑战：先不填谓语，划开主谓之间修饰，圈真主语中心，标它与谓语的一致关系。
+    10s: 主谓一致拿不准？划开修饰圈真主语；最近名词不一定是中心，本步不定时态。
+    30s: 主谓一致拿不准？先划开主语旁的修饰，圈真正的主语中心，不默认最近名词。例如，主语旁有复数修饰，也不能忽略真正的单数中心。特殊数量或集合结构须另核，不能只按距离选主语。
+    90s: 主谓一致拿不准？划开插入和修饰，圈真正主语中心词，核谓语一致，保留否定条件。这一步得到的是对已有候选或稿件的核验，不替代独立证据。判断时，划开插入和修饰后圈主语中心，并核并列/伴随结构或从句的实际一致对象；输出主谓一致核验，不自行定时态或最终词形。什么时候停，最近名词不一定主语，集合或数量结构须回完整节点；状态性过去分词与被动动作需另核，不能执行有be/无be口诀。反例示意，主谓之间有复数修饰名词，但真正主语中心为单数；不能由最近复数名词改谓语数。换题仍检查当前题面的对象和关系，不搬上一题结论。挑战，先不填谓语，划开主谓之间修饰，圈真主语中心，标它与谓语的一致关系。
   full:
     summary: 划开插入和修饰，圈真正主语中心词，核谓语一致，保留否定条件 划开插入和修饰后圈主语中心，并核并列/伴随结构或从句的实际一致对象；输出主谓一致核验，不自行定时态或最终词形。
     source_boundary: 最近名词不一定主语，集合或数量结构须回完整节点；状态性过去分词与被动动作需另核，不能执行有be/无be口诀。
     boundaries:
     - 最近名词不一定主语，集合或数量结构须回完整节点；状态性过去分词与被动动作需另核，不能执行有be/无be口诀。
     - 主谓之间有复数修饰名词，但真正主语中心为单数；不能由最近复数名词改谓语数。
-    section_ids:
-    - a0bcc74f05b00671
+    section_ids: *id014
+    beginner_support:
+      first_micro_action: 先划开主语旁的修饰，圈真正的主语中心，不默认最近名词。
+      prerequisite: 先把空保留不填，圈本句动作和对应的人或物。主语是谁或什么，谓语是这句的完整动作或状态；分不清先核完整句。
+      if_stuck: 先标有无提示和空位所在结构；成分/词义不清停在节点前，不从答案倒贴功能。
+      example: 主语旁有复数修饰，也不能忽略真正的单数中心。
+      example_scope: 关系/结构示意，非完整试题，不计真题或已验案例。
+      micro_action_is_not_completion: 完成第一小步不等于完整方法成功；继续完成四步卡的判断与停止核验。
+      short_stop: 特殊数量或集合结构须另核，不能只按距离选主语。
+    presentation_revision: 2026-10-28.2
+    source_update_note: 一看二思保原名；反身回查不靠人称重复；why/how不按是否发生定词；非谓语按成分定主人，完成不定式不一律禁作后置修饰，逗号不独自定doing。
   cases:
     canonical: cases/grammar/G14/canonical/case.yaml
   four_step_card:
@@ -1960,28 +2014,25 @@ methods:
   maturity_status: candidate
   practical_value: Useful
   version: 1.2.0
-  change_reason: ANSWER 61bc9c3e15004639cb442c20e7946ca9631f14ce 来源重绑定；旧证据仅按归档版本复核，新规则与传播入口仍待重新验收。
+  change_reason: ANSWER 70db6d6 显式来源差异复核；保留品牌动作和基础入口，异文分源，旧Case不自动获新纪元准入。
   affected_cases:
   - cases/grammar/G14/canonical/case.yaml
   regression_result: pending_current_epoch_semantic_and_student_acceptance
-  student_ready: true
-  entry_copy: 主谓间有修饰造成数判断混乱时，第一眼先找：主谓间有修饰造成数判断混乱。手上先做：划开插入和修饰，圈真正主语中心词，核谓语一致，保留否定条件。做完得到
-    verify，不是通用答案。划开插入和修饰后圈主语中心，并核并列/伴随结构或从句的实际一致对象；输出主谓一致核验，不自行定时态或最终词形。 什么时候停：最近名词不一定主语，集合或数量结构须回完整节点；状态性过去分词与被动动作需另核，不能执行有be/无be口诀。
-    换题仍这样做：换句仍找中心及真实连接结构，不迁移最近名词的数或特殊结构无条件口诀。
+  student_ready: false
+  entry_copy: 主谓一致拿不准？先划开主语旁的修饰，圈真正的主语中心，不默认最近名词。这一步得到的是对已有候选或稿件的核验，不替代独立证据。如果卡住，先标有无提示和空位所在结构；成分/词义不清停在节点前，不从答案倒贴功能。
   static_design_review:
-    status: source_rebound_semantic_reacceptance_pending
-    source_section_ids: *id013
+    status: source_bound_editorial_review
+    source_section_ids: *id014
     participant_validation: pending_real_participant_validation
-    example_scope: schematic source boundary, not a verified exam
+    example_scope: 2026-10-28基础入口表达修订；保留原判据/Stop/课程绑定与语义版本，微动作和关系示意不是完整真题或真人实测。
   source_alignment:
-    commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
+    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
     state: live_source_bound
-    source_content_changed: false
+    source_content_changed: true
     correction_profile_applied: false
-    authored_first_contact_draft: false
+    authored_first_contact_draft: true
     new_course_branches: preserved_in_full_contract_not_automatically_aliased
-    acceptance: source_alignment_only; semantic/learner/release acceptance remains
-      pending
+    acceptance: 2026-10-30 explicit source delta review; learner/blind/release pending
 - method_id: G15
   brand_name: 非谓语三轴
   source_name: 非谓语：作用、主被动与先后
@@ -2027,9 +2078,9 @@ methods:
   - repository: https://github.com/rockpunkgod/ANSWER.git
     path: gaokao-grammar-fill/references/grammar-fill.md
     heading: 非谓语：作用、主被动与先后
-    commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
-  section_ids: &id014
-  - f77de6ec724f8e88
+    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+  section_ids: &id015
+  - 68c5400be79ea170
   can_follow: []
   usually_before: []
   usually_after: []
@@ -2042,19 +2093,26 @@ methods:
     L3: 介词、逗号或一个词尾不能替三轴；逻辑主语或搭配不明就停。形式表示相对关系，不套绝对现在/过去，也不将课程简化清单当无条件判据。
     L4: 换动作仍核结构、动作主人与相对时间，不迁移逗号或形式到绝对时态。
   compact:
-    10s: 非谓语只会猜词尾？列作用、逻辑主语主被动、相对谓语先后三轴；逗号不决定doing，缺轴就停。
-    30s: 已判非谓语后，先标作用或固定结构，再圈逻辑主语核主被动，最后与谓语比先后。结构示意：有逗号也不能直接doing，需看谁执行或承受动作。非谓语时间是相对谓语；一轴不明就停，不机械套清单。
-    90s: 空位已确认非谓语时，先确认：空位已确认非谓语。第一刀：标句法作用、逻辑主语与动作的主被动、同谓语的先后关系，再选择形式。产物 decide：非谓语位置先定作用或固定结构，再核逻辑主语与主被动，最后以本句谓语为参照核先后；三轴互相支持后选合法形式并回填。
-      停止：介词、逗号或一个词尾不能替三轴；逻辑主语或搭配不明就停。形式表示相对关系，不套绝对现在/过去，也不将课程简化清单当无条件判据。 反例（关系示意，不是真题）：有逗号仍须核主被动与句法作用；只凭逗号无法决定doing、done或目的不定式路线。
-      迁移：换动作仍核结构、动作主人与相对时间，不迁移逗号或形式到绝对时态。 挑战：先不选形式，给空写三栏：句法作用、谁发出/承受动作、相对谓语的时间；缺哪栏就标缺口。
+    10s: 非谓语只会猜词尾？依次核作用、谁做和相对时间；逗号不决定doing。
+    30s: 非谓语只会猜词尾？确认非谓语后，先标它在本句的作用或已知固定结构，另外两轴随后核。随后核逻辑主语与主被动，再以谓语为参照核先后；三轴不省略。例如，有逗号仍可能需不同非谓语形式，要核句法和主被动。一轴不明先停，相对时间不套绝对现在或过去。
+    90s: 非谓语只会猜词尾？标句法作用、逻辑主语与动作的主被动、同谓语的先后关系，再选择形式。这一步得到的是当前候选的保留、排除或待定判断；不能由剩余项自动定案。判断时，非谓语位置先定作用或固定结构，再核逻辑主语与主被动，最后以本句谓语为参照核先后；三轴互相支持后选合法形式并回填。什么时候停，介词、逗号或一个词尾不能替三轴；逻辑主语或搭配不明就停。形式表示相对关系，不套绝对现在/过去，也不将课程简化清单当无条件判据。反例示意，有逗号仍须核主被动与句法作用；只凭逗号无法决定doing、done或目的不定式路线。换题仍检查当前题面的对象和关系，不搬上一题结论。挑战，先不选形式，给空写三栏：句法作用、谁发出/承受动作、相对谓语的时间；缺哪栏就标缺口。
   full:
     summary: 标句法作用、逻辑主语与动作的主被动、同谓语的先后关系，再选择形式 非谓语位置先定作用或固定结构，再核逻辑主语与主被动，最后以本句谓语为参照核先后；三轴互相支持后选合法形式并回填。
     source_boundary: 介词、逗号或一个词尾不能替三轴；逻辑主语或搭配不明就停。形式表示相对关系，不套绝对现在/过去，也不将课程简化清单当无条件判据。
     boundaries:
     - 介词、逗号或一个词尾不能替三轴；逻辑主语或搭配不明就停。形式表示相对关系，不套绝对现在/过去，也不将课程简化清单当无条件判据。
     - 有逗号仍须核主被动与句法作用；只凭逗号无法决定doing、done或目的不定式路线。
-    section_ids:
-    - f77de6ec724f8e88
+    section_ids: *id015
+    beginner_support:
+      first_micro_action: 确认非谓语后，先标它在本句的作用或已知固定结构，另外两轴随后核。
+      prerequisite: 先把空保留不填，圈本句动作和对应的人或物。主语是谁或什么，谓语是这句的完整动作或状态；分不清先核完整句。
+      if_stuck: 先标有无提示和空位所在结构；成分/词义不清停在节点前，不从答案倒贴功能。
+      example: 有逗号仍可能需不同非谓语形式，要核句法和主被动。
+      example_scope: 关系/结构示意，非完整试题，不计真题或已验案例。
+      micro_action_is_not_completion: 完成第一小步不等于完整方法成功；继续完成四步卡的判断与停止核验。
+      short_stop: 一轴不明先停，相对时间不套绝对现在或过去。
+    presentation_revision: 2026-10-28.2
+    source_update_note: 一看二思保原名；反身回查不靠人称重复；why/how不按是否发生定词；非谓语按成分定主人，完成不定式不一律禁作后置修饰，逗号不独自定doing。
   cases:
     canonical: cases/grammar/G15/canonical/case.yaml
   four_step_card:
@@ -2097,28 +2155,25 @@ methods:
   maturity_status: candidate
   practical_value: Useful
   version: 1.2.0
-  change_reason: ANSWER 61bc9c3e15004639cb442c20e7946ca9631f14ce 来源重绑定；旧证据仅按归档版本复核，新规则与传播入口仍待重新验收。
+  change_reason: ANSWER 70db6d6 显式来源差异复核；保留品牌动作和基础入口，异文分源，旧Case不自动获新纪元准入。
   affected_cases:
   - cases/grammar/G15/canonical/case.yaml
   regression_result: pending_current_epoch_semantic_and_student_acceptance
-  student_ready: true
-  entry_copy: 空位已确认非谓语时，第一眼先找：空位已确认非谓语。手上先做：标句法作用、逻辑主语与动作的主被动、同谓语的先后关系，再选择形式。做完得到
-    decide，不是通用答案。非谓语位置先定作用或固定结构，再核逻辑主语与主被动，最后以本句谓语为参照核先后；三轴互相支持后选合法形式并回填。 什么时候停：介词、逗号或一个词尾不能替三轴；逻辑主语或搭配不明就停。形式表示相对关系，不套绝对现在/过去，也不将课程简化清单当无条件判据。
-    换题仍这样做：换动作仍核结构、动作主人与相对时间，不迁移逗号或形式到绝对时态。
+  student_ready: false
+  entry_copy: 非谓语只会猜词尾？确认非谓语后，先标它在本句的作用或已知固定结构，另外两轴随后核。随后核逻辑主语与主被动，再以谓语为参照核先后；三轴不省略。这一步得到的是当前候选的保留、排除或待定判断；不能由剩余项自动定案。如果卡住，先标有无提示和空位所在结构；成分/词义不清停在节点前，不从答案倒贴功能。
   static_design_review:
-    status: source_rebound_semantic_reacceptance_pending
-    source_section_ids: *id014
+    status: source_bound_editorial_review
+    source_section_ids: *id015
     participant_validation: pending_real_participant_validation
-    example_scope: schematic source boundary, not a verified exam
+    example_scope: 2026-10-28基础入口表达修订；保留原判据/Stop/课程绑定与语义版本，微动作和关系示意不是完整真题或真人实测。
   source_alignment:
-    commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
+    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
     state: live_source_bound
-    source_content_changed: false
+    source_content_changed: true
     correction_profile_applied: false
-    authored_first_contact_draft: false
+    authored_first_contact_draft: true
     new_course_branches: preserved_in_full_contract_not_automatically_aliased
-    acceptance: source_alignment_only; semantic/learner/release acceptance remains
-      pending
+    acceptance: 2026-10-30 explicit source delta review; learner/blind/release pending
 - method_id: G16
   brand_name: 找动作主人
   source_name: 26S春 补充（非谓语动词专项）
@@ -2162,9 +2217,9 @@ methods:
   - repository: https://github.com/rockpunkgod/ANSWER.git
     path: gaokao-grammar-fill/references/grammar-fill.md
     heading: 26S春 补充（非谓语动词专项）
-    commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
-  section_ids: &id015
-  - 7c16410a7f1b8e4f
+    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+  section_ids: &id016
+  - 5d83575e1d881f91
   can_follow: []
   usually_before: []
   usually_after: []
@@ -2177,19 +2232,26 @@ methods:
     L3: 最近名词不独立证明动作主人；状语非谓语与主句主体不一致时停，检查是否有明确独立结构，不能补造未出现的主人。
     L4: 新句仍先判成分再配动作主人，不迁移最近对象或固定主语位置。
   compact:
-    10s: 非谓语主人找不准？先标定语、状语或宾补，再按成分圈主人；最近名词不算证明，归属不明就停。
-    30s: 非谓语归属不明时，先标成分：定语回所修饰名词，状语回主句主体，宾补回前面宾语，再核主被动。结构示意：最近名词可能只是修饰枝叶。归属冲突就停查是否有独立结构，不能自己补主人。
-    90s: 非谓语动作归属尚不明确时，先确认：非谓语动作归属尚不明确。第一刀：圈非谓语的逻辑主语，再核谁执行或承受动作，不只看最近名词。产物 verify：先标非谓语作定语、状语还是宾补，再按本句成分圈所修饰名词、主句主体或前面宾语，核谁执行/承受动作；输出逻辑主语核验。
-      停止：最近名词不独立证明动作主人；状语非谓语与主句主体不一致时停，检查是否有明确独立结构，不能补造未出现的主人。 反例（关系示意，不是真题）：非谓语作状语，旁边的名词不是主句主体；不能仅按距离指定主人，必须回结构核归属。
-      迁移：新句仍先判成分再配动作主人，不迁移最近对象或固定主语位置。 挑战：先不变非谓语，标它作何成分，圈逻辑主语并用箭头标谁执行或承受动作。
+    10s: 动作主人找不准？先标非谓语作什么成分，再圈谁执行或承受；最近名词不是证明。
+    30s: 动作主人找不准？先标非谓语修饰哪一成分，再圈对应动作主人，不只找最近名词。例如，作状语的非谓语，主人不一定是旁边修饰短语中的名词。归属冲突先查独立结构，不自己补一个主人。
+    90s: 动作主人找不准？圈非谓语的逻辑主语，再核谁执行或承受动作，不只看最近名词。这一步得到的是对已有候选或稿件的核验，不替代独立证据。判断时，先标非谓语作定语、状语还是宾补，再按本句成分圈所修饰名词、主句主体或前面宾语，核谁执行/承受动作；输出逻辑主语核验。什么时候停，最近名词不独立证明动作主人；状语非谓语与主句主体不一致时停，检查是否有明确独立结构，不能补造未出现的主人。反例示意，非谓语作状语，旁边的名词不是主句主体；不能仅按距离指定主人，必须回结构核归属。换题仍检查当前题面的对象和关系，不搬上一题结论。挑战，先不变非谓语，标它作何成分，圈逻辑主语并用箭头标谁执行或承受动作。
   full:
     summary: 圈非谓语的逻辑主语，再核谁执行或承受动作，不只看最近名词 先标非谓语作定语、状语还是宾补，再按本句成分圈所修饰名词、主句主体或前面宾语，核谁执行/承受动作；输出逻辑主语核验。
     source_boundary: 最近名词不独立证明动作主人；状语非谓语与主句主体不一致时停，检查是否有明确独立结构，不能补造未出现的主人。
     boundaries:
     - 最近名词不独立证明动作主人；状语非谓语与主句主体不一致时停，检查是否有明确独立结构，不能补造未出现的主人。
     - 非谓语作状语，旁边的名词不是主句主体；不能仅按距离指定主人，必须回结构核归属。
-    section_ids:
-    - 7c16410a7f1b8e4f
+    section_ids: *id016
+    beginner_support:
+      first_micro_action: 先标非谓语修饰哪一成分，再圈对应动作主人，不只找最近名词。
+      prerequisite: 先把空保留不填，圈本句动作和对应的人或物。主语是谁或什么，谓语是这句的完整动作或状态；分不清先核完整句。
+      if_stuck: 先标有无提示和空位所在结构；成分/词义不清停在节点前，不从答案倒贴功能。
+      example: 作状语的非谓语，主人不一定是旁边修饰短语中的名词。
+      example_scope: 关系/结构示意，非完整试题，不计真题或已验案例。
+      micro_action_is_not_completion: 完成第一小步不等于完整方法成功；继续完成四步卡的判断与停止核验。
+      short_stop: 归属冲突先查独立结构，不自己补一个主人。
+    presentation_revision: 2026-10-28.2
+    source_update_note: 一看二思保原名；反身回查不靠人称重复；why/how不按是否发生定词；非谓语按成分定主人，完成不定式不一律禁作后置修饰，逗号不独自定doing。
   cases:
     canonical: cases/grammar/G16/canonical/case.yaml
   four_step_card:
@@ -2232,28 +2294,25 @@ methods:
   maturity_status: candidate
   practical_value: Useful
   version: 1.2.0
-  change_reason: ANSWER 61bc9c3e15004639cb442c20e7946ca9631f14ce 来源重绑定；旧证据仅按归档版本复核，新规则与传播入口仍待重新验收。
+  change_reason: ANSWER 70db6d6 显式来源差异复核；保留品牌动作和基础入口，异文分源，旧Case不自动获新纪元准入。
   affected_cases:
   - cases/grammar/G16/canonical/case.yaml
   regression_result: pending_current_epoch_semantic_and_student_acceptance
-  student_ready: true
-  entry_copy: 非谓语动作归属尚不明确时，第一眼先找：非谓语动作归属尚不明确。手上先做：圈非谓语的逻辑主语，再核谁执行或承受动作，不只看最近名词。做完得到
-    verify，不是通用答案。先标非谓语作定语、状语还是宾补，再按本句成分圈所修饰名词、主句主体或前面宾语，核谁执行/承受动作；输出逻辑主语核验。 什么时候停：最近名词不独立证明动作主人；状语非谓语与主句主体不一致时停，检查是否有明确独立结构，不能补造未出现的主人。
-    换题仍这样做：新句仍先判成分再配动作主人，不迁移最近对象或固定主语位置。
+  student_ready: false
+  entry_copy: 动作主人找不准？先标非谓语修饰哪一成分，再圈对应动作主人，不只找最近名词。这一步得到的是对已有候选或稿件的核验，不替代独立证据。如果卡住，先标有无提示和空位所在结构；成分/词义不清停在节点前，不从答案倒贴功能。
   static_design_review:
-    status: source_rebound_semantic_reacceptance_pending
-    source_section_ids: *id015
+    status: source_bound_editorial_review
+    source_section_ids: *id016
     participant_validation: pending_real_participant_validation
-    example_scope: schematic source boundary, not a verified exam
+    example_scope: 2026-10-28基础入口表达修订；保留原判据/Stop/课程绑定与语义版本，微动作和关系示意不是完整真题或真人实测。
   source_alignment:
-    commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
+    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
     state: live_source_bound
-    source_content_changed: false
+    source_content_changed: true
     correction_profile_applied: false
-    authored_first_contact_draft: false
+    authored_first_contact_draft: true
     new_course_branches: preserved_in_full_contract_not_automatically_aliased
-    acceptance: source_alignment_only; semantic/learner/release acceptance remains
-      pending
+    acceptance: 2026-10-30 explicit source delta review; learner/blind/release pending
 - method_id: G17
   brand_name: 长句脱壳
   source_name: 总路线
@@ -2295,8 +2354,8 @@ methods:
   - repository: https://github.com/rockpunkgod/ANSWER.git
     path: gaokao-grammar-fill/references/grammar-fill.md
     heading: 总路线
-    commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
-  section_ids: &id016
+    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+  section_ids: &id017
   - 781c4478d621bf5c
   can_follow: []
   usually_before: []
@@ -2310,20 +2369,26 @@ methods:
     L3: 只暂划不永久删；空可能就在从句或短语内，必须恢复其分句边界。主干不足判空功能时停，不从填后词形倒贴成分。
     L4: 换长句仍在未填句划主干和空位范围，不迁移删除清单或填后句法。
   compact:
-    10s: 长句找不出空位？圈主干和空在哪，暂划修饰再恢复关键结构；空在从句就不能删，先判成分。
-    30s: 长句修饰挡住空位时，圈主干谓语和主体，暂划枝叶并标空实际在哪个分句。结构示意：空在从句中，必须恢复该从句与连接。保留否定、条件及支配；骨架不足就停，不先填后倒贴成分。
-    90s: 长句修饰妨碍识别空位成分时，先确认：长句修饰妨碍识别空位成分。第一刀：圈主干谓语和对应主语，暂划介词短语、非谓语、插入语和从句，再恢复决定空位的修饰、否定与条件。产物
-      interpret：圈主干谓语与对应主体，暂划介词短语、非谓语、插入和从句，再恢复决定空位的修饰、否定与条件；产出未填句成分骨架。 停止：只暂划不永久删；空可能就在从句或短语内，必须恢复其分句边界。主干不足判空功能时停，不从填后词形倒贴成分。
-      反例（关系示意，不是真题）：空位实际在被暂划的从句中；只看主句无法判它成分，须恢复从句与连接。 迁移：换长句仍在未填句划主干和空位范围，不迁移删除清单或填后句法。
-      挑战：先不填，圈未填句主干和空位，划分句范围，再恢复一处决定空位功能的修饰或连接。
+    10s: 长句找不出空位？先圈主干和空在哪，再恢复关键结构；暂划不是删除。
+    30s: 长句找不出空位？先标空到底在主句还是某个从句或短语内，再暂划其他修饰。例如，空实际在从句里，删掉从句就看不出空位功能。主干不足先恢复相关从句，不先填后倒贴成分。
+    90s: 长句找不出空位？圈主干谓语和对应主语，暂划介词短语、非谓语、插入语和从句，再恢复决定空位的修饰、否定与条件。这一步得到的是对当前关系或表达的解释，还要核完整题目。判断时，圈主干谓语与对应主体，暂划介词短语、非谓语、插入和从句，再恢复决定空位的修饰、否定与条件；产出未填句成分骨架。什么时候停，只暂划不永久删；空可能就在从句或短语内，必须恢复其分句边界。主干不足判空功能时停，不从填后词形倒贴成分。反例示意，空位实际在被暂划的从句中；只看主句无法判它成分，须恢复从句与连接。换题仍检查当前题面的对象和关系，不搬上一题结论。挑战，先不填，圈未填句主干和空位，划分句范围，再恢复一处决定空位功能的修饰或连接。
   full:
     summary: 圈主干谓语和对应主语，暂划介词短语、非谓语、插入语和从句，再恢复决定空位的修饰、否定与条件 圈主干谓语与对应主体，暂划介词短语、非谓语、插入和从句，再恢复决定空位的修饰、否定与条件；产出未填句成分骨架。
     source_boundary: 只暂划不永久删；空可能就在从句或短语内，必须恢复其分句边界。主干不足判空功能时停，不从填后词形倒贴成分。
     boundaries:
     - 只暂划不永久删；空可能就在从句或短语内，必须恢复其分句边界。主干不足判空功能时停，不从填后词形倒贴成分。
     - 空位实际在被暂划的从句中；只看主句无法判它成分，须恢复从句与连接。
-    section_ids:
-    - 781c4478d621bf5c
+    section_ids: *id017
+    beginner_support:
+      first_micro_action: 先标空到底在主句还是某个从句或短语内，再暂划其他修饰。
+      prerequisite: 先把空保留不填，圈本句动作和对应的人或物。主语是谁或什么，谓语是这句的完整动作或状态；分不清先核完整句。
+      if_stuck: 先标有无提示和空位所在结构；成分/词义不清停在节点前，不从答案倒贴功能。
+      example: 空实际在从句里，删掉从句就看不出空位功能。
+      example_scope: 关系/结构示意，非完整试题，不计真题或已验案例。
+      micro_action_is_not_completion: 完成第一小步不等于完整方法成功；继续完成四步卡的判断与停止核验。
+      short_stop: 主干不足先恢复相关从句，不先填后倒贴成分。
+    presentation_revision: 2026-10-28.2
+    source_update_note: 一看二思保原名；反身回查不靠人称重复；why/how不按是否发生定词；非谓语按成分定主人，完成不定式不一律禁作后置修饰，逗号不独自定doing。
   cases:
     canonical: cases/grammar/G17/canonical/case.yaml
   four_step_card:
@@ -2366,28 +2431,25 @@ methods:
   maturity_status: candidate
   practical_value: Useful
   version: 1.2.0
-  change_reason: ANSWER 61bc9c3e15004639cb442c20e7946ca9631f14ce 来源重绑定；旧证据仅按归档版本复核，新规则与传播入口仍待重新验收。
+  change_reason: ANSWER 70db6d6 显式来源差异复核；保留品牌动作和基础入口，异文分源，旧Case不自动获新纪元准入。
   affected_cases:
   - cases/grammar/G17/canonical/case.yaml
   regression_result: pending_current_epoch_semantic_and_student_acceptance
-  student_ready: true
-  entry_copy: 长句修饰妨碍识别空位成分时，第一眼先找：长句修饰妨碍识别空位成分。手上先做：圈主干谓语和对应主语，暂划介词短语、非谓语、插入语和从句，再恢复决定空位的修饰、否定与条件。做完得到
-    interpret，不是通用答案。圈主干谓语与对应主体，暂划介词短语、非谓语、插入和从句，再恢复决定空位的修饰、否定与条件；产出未填句成分骨架。 什么时候停：只暂划不永久删；空可能就在从句或短语内，必须恢复其分句边界。主干不足判空功能时停，不从填后词形倒贴成分。
-    换题仍这样做：换长句仍在未填句划主干和空位范围，不迁移删除清单或填后句法。
+  student_ready: false
+  entry_copy: 长句找不出空位？先标空到底在主句还是某个从句或短语内，再暂划其他修饰。这一步得到的是对当前关系或表达的解释，还要核完整题目。如果卡住，先标有无提示和空位所在结构；成分/词义不清停在节点前，不从答案倒贴功能。
   static_design_review:
-    status: source_rebound_semantic_reacceptance_pending
-    source_section_ids: *id016
+    status: source_bound_editorial_review
+    source_section_ids: *id017
     participant_validation: pending_real_participant_validation
-    example_scope: schematic source boundary, not a verified exam
+    example_scope: 2026-10-28基础入口表达修订；保留原判据/Stop/课程绑定与语义版本，微动作和关系示意不是完整真题或真人实测。
   source_alignment:
-    commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
+    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
     state: live_source_bound
-    source_content_changed: false
+    source_content_changed: true
     correction_profile_applied: false
-    authored_first_contact_draft: false
+    authored_first_contact_draft: true
     new_course_branches: preserved_in_full_contract_not_automatically_aliased
-    acceptance: source_alignment_only; semantic/learner/release acceptance remains
-      pending
+    acceptance: 2026-10-30 explicit source delta review; learner/blind/release pending
 - method_id: G18
   brand_name: 考点重复反查
   source_name: 总路线
@@ -2429,8 +2491,8 @@ methods:
   - repository: https://github.com/rockpunkgod/ANSWER.git
     path: gaokao-grammar-fill/references/grammar-fill.md
     heading: 总路线
-    commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
-  section_ids: &id017
+    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+  section_ids: &id018
   - 781c4478d621bf5c
   can_follow: []
   usually_before: []
@@ -2444,19 +2506,26 @@ methods:
     L3: 一般不重复不是禁止重复；未核当前空独立证据前不得改词，不能为了凑分布把两个已成立结构拆成不同考点。
     L4: 换语篇仍让分布提示服从每空独立证据，不迁移考点只能出现一次的约束。
   compact:
-    10s: 做完发现考点重复？只圈出来返回各空查证据；一般不重复不等于禁止重复，别为分布改答案。
-    30s: 全篇完成后，列各空实际考点，遇重复只作纠偏提示。边界示意：两个空都被独立结构支持时，不能为凑分布改其中一个。返回本句核句法语义与搭配；本步只核验，不凭已用考点报答案。
-    90s: 整篇完成后核对考点分布时，先确认：整篇完成后核对考点分布。第一刀：列每空实际考点，发现重复只触发回查，不能推翻该空独立句法语义证据。产物 verify：整篇完成后列每空实际考点，疑似重复只触发返回各空核独立句法、语义和搭配；输出复查信号，不推翻已充分支持的答案。
-      停止：一般不重复不是禁止重复；未核当前空独立证据前不得改词，不能为了凑分布把两个已成立结构拆成不同考点。 反例（关系示意，不是真题）：两个空的独立结构均支持相同考点；分布经验不能凭空否定其中一个。
-      迁移：换语篇仍让分布提示服从每空独立证据，不迁移考点只能出现一次的约束。 挑战：不改任何词，只给全篇各空写实际考点，圈疑似重复，并指定要回查的独立结构证据。
+    10s: 做完发现考点重复？只圈出并回查各空证据；一般不重复不等于禁止重复。
+    30s: 做完发现考点重复？全篇完成后只圈疑似重复考点，返回本空查结构，不直接改词。例如，两个空都获独立结构支持，不能为凑分布改一个。重复只触发核验，不能推翻本句充分证据。
+    90s: 做完发现考点重复？列每空实际考点，发现重复只触发回查，不能推翻该空独立句法语义证据。这一步得到的是对已有候选或稿件的核验，不替代独立证据。判断时，整篇完成后列每空实际考点，疑似重复只触发返回各空核独立句法、语义和搭配；输出复查信号，不推翻已充分支持的答案。什么时候停，一般不重复不是禁止重复；未核当前空独立证据前不得改词，不能为了凑分布把两个已成立结构拆成不同考点。反例示意，两个空的独立结构均支持相同考点；分布经验不能凭空否定其中一个。换题仍检查当前题面的对象和关系，不搬上一题结论。挑战，不改任何词，只给全篇各空写实际考点，圈疑似重复，并指定要回查的独立结构证据。
   full:
     summary: 列每空实际考点，发现重复只触发回查，不能推翻该空独立句法语义证据 整篇完成后列每空实际考点，疑似重复只触发返回各空核独立句法、语义和搭配；输出复查信号，不推翻已充分支持的答案。
     source_boundary: 一般不重复不是禁止重复；未核当前空独立证据前不得改词，不能为了凑分布把两个已成立结构拆成不同考点。
     boundaries:
     - 一般不重复不是禁止重复；未核当前空独立证据前不得改词，不能为了凑分布把两个已成立结构拆成不同考点。
     - 两个空的独立结构均支持相同考点；分布经验不能凭空否定其中一个。
-    section_ids:
-    - 781c4478d621bf5c
+    section_ids: *id018
+    beginner_support:
+      first_micro_action: 全篇完成后只圈疑似重复考点，返回本空查结构，不直接改词。
+      prerequisite: 先把空保留不填，圈本句动作和对应的人或物。主语是谁或什么，谓语是这句的完整动作或状态；分不清先核完整句。
+      if_stuck: 先标有无提示和空位所在结构；成分/词义不清停在节点前，不从答案倒贴功能。
+      example: 两个空都获独立结构支持，不能为凑分布改一个。
+      example_scope: 关系/结构示意，非完整试题，不计真题或已验案例。
+      micro_action_is_not_completion: 完成第一小步不等于完整方法成功；继续完成四步卡的判断与停止核验。
+      short_stop: 重复只触发核验，不能推翻本句充分证据。
+    presentation_revision: 2026-10-28.2
+    source_update_note: 一看二思保原名；反身回查不靠人称重复；why/how不按是否发生定词；非谓语按成分定主人，完成不定式不一律禁作后置修饰，逗号不独自定doing。
   cases:
     canonical: cases/grammar/G18/canonical/case.yaml
   four_step_card:
@@ -2499,28 +2568,25 @@ methods:
   maturity_status: candidate
   practical_value: Useful
   version: 1.2.0
-  change_reason: ANSWER 61bc9c3e15004639cb442c20e7946ca9631f14ce 来源重绑定；旧证据仅按归档版本复核，新规则与传播入口仍待重新验收。
+  change_reason: ANSWER 70db6d6 显式来源差异复核；保留品牌动作和基础入口，异文分源，旧Case不自动获新纪元准入。
   affected_cases:
   - cases/grammar/G18/canonical/case.yaml
   regression_result: pending_current_epoch_semantic_and_student_acceptance
-  student_ready: true
-  entry_copy: 整篇完成后核对考点分布时，第一眼先找：整篇完成后核对考点分布。手上先做：列每空实际考点，发现重复只触发回查，不能推翻该空独立句法语义证据。做完得到
-    verify，不是通用答案。整篇完成后列每空实际考点，疑似重复只触发返回各空核独立句法、语义和搭配；输出复查信号，不推翻已充分支持的答案。 什么时候停：一般不重复不是禁止重复；未核当前空独立证据前不得改词，不能为了凑分布把两个已成立结构拆成不同考点。
-    换题仍这样做：换语篇仍让分布提示服从每空独立证据，不迁移考点只能出现一次的约束。
+  student_ready: false
+  entry_copy: 做完发现考点重复？全篇完成后只圈疑似重复考点，返回本空查结构，不直接改词。这一步得到的是对已有候选或稿件的核验，不替代独立证据。如果卡住，先标有无提示和空位所在结构；成分/词义不清停在节点前，不从答案倒贴功能。
   static_design_review:
-    status: source_rebound_semantic_reacceptance_pending
-    source_section_ids: *id017
+    status: source_bound_editorial_review
+    source_section_ids: *id018
     participant_validation: pending_real_participant_validation
-    example_scope: schematic source boundary, not a verified exam
+    example_scope: 2026-10-28基础入口表达修订；保留原判据/Stop/课程绑定与语义版本，微动作和关系示意不是完整真题或真人实测。
   source_alignment:
-    commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
+    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
     state: live_source_bound
-    source_content_changed: false
+    source_content_changed: true
     correction_profile_applied: false
-    authored_first_contact_draft: false
+    authored_first_contact_draft: true
     new_course_branches: preserved_in_full_contract_not_automatically_aliased
-    acceptance: source_alignment_only; semantic/learner/release acceptance remains
-      pending
+    acceptance: 2026-10-30 explicit source delta review; learner/blind/release pending
 - method_id: G19
   brand_name: 变形次数反查
   source_name: 总路线
@@ -2562,8 +2628,8 @@ methods:
   - repository: https://github.com/rockpunkgod/ANSWER.git
     path: gaokao-grammar-fill/references/grammar-fill.md
     heading: 总路线
-    commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
-  section_ids: &id018
+    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+  section_ids: &id019
   - 781c4478d621bf5c
   can_follow: []
   usually_before: []
@@ -2577,20 +2643,26 @@ methods:
     L3: 一般一次不排除本句支持的更复杂形式；提示词原词性也可能与答案相同。结构未核前不因次数撤销原答案或强制换词类。
     L4: 新提示词仍让变形路线服从本句成分与搭配，不迁移次数上限或必须换词性。
   compact:
-    10s: 觉得变形次数不对？写提示词到答案的路线，回查空位结构；次数只是提示，不能据它改词形。
-    30s: 初变形后，对照原词和实际空位成分，记录派生与形态路线。边界示意：名词变复数仍同词类，不必强制转换词性。一般一次仅作复查提示；本句支持的形式不能因次数撤销，结构未核就停。
-    90s: 提示词初变形后需要复核时，先确认：提示词初变形后需要复核。第一刀：对照原提示词与空位成分记录变形路线，一般一次只是回查提示，不凭次数选答案。产物
-      verify：对照原提示词与空位成分记实际变形路线；异常只触发回查派生、形态与搭配，不能按变形次数决定词形。 停止：一般一次不排除本句支持的更复杂形式；提示词原词性也可能与答案相同。结构未核前不因次数撤销原答案或强制换词类。
-      反例（关系示意，不是真题）：提示词和答案可能同词类而只需单复数或时态等形态变化；不能强迫所有提示词转换词性。 迁移：新提示词仍让变形路线服从本句成分与搭配，不迁移次数上限或必须换词性。
-      挑战：先不改答案，只对照提示词和已填形式写变形路线，再标该路线依赖哪处结构证据。
+    10s: 觉得变形次数不对？写原词到拟填词的路线，再回查结构；次数不决定词形。
+    30s: 觉得变形次数不对？先并排写提示词与拟填形式，再标变形路线，不按次数判错。例如，名词变复数仍是名词，不必强换词类。一般一次只是提示，不因次数撤销有据词形。
+    90s: 觉得变形次数不对？对照原提示词与空位成分记录变形路线，一般一次只是回查提示，不凭次数选答案。这一步得到的是对已有候选或稿件的核验，不替代独立证据。判断时，对照原提示词与空位成分记实际变形路线；异常只触发回查派生、形态与搭配，不能按变形次数决定词形。什么时候停，一般一次不排除本句支持的更复杂形式；提示词原词性也可能与答案相同。结构未核前不因次数撤销原答案或强制换词类。反例示意，提示词和答案可能同词类而只需单复数或时态等形态变化；不能强迫所有提示词转换词性。换题仍检查当前题面的对象和关系，不搬上一题结论。挑战，先不改答案，只对照提示词和已填形式写变形路线，再标该路线依赖哪处结构证据。
   full:
     summary: 对照原提示词与空位成分记录变形路线，一般一次只是回查提示，不凭次数选答案 对照原提示词与空位成分记实际变形路线；异常只触发回查派生、形态与搭配，不能按变形次数决定词形。
     source_boundary: 一般一次不排除本句支持的更复杂形式；提示词原词性也可能与答案相同。结构未核前不因次数撤销原答案或强制换词类。
     boundaries:
     - 一般一次不排除本句支持的更复杂形式；提示词原词性也可能与答案相同。结构未核前不因次数撤销原答案或强制换词类。
     - 提示词和答案可能同词类而只需单复数或时态等形态变化；不能强迫所有提示词转换词性。
-    section_ids:
-    - 781c4478d621bf5c
+    section_ids: *id019
+    beginner_support:
+      first_micro_action: 先并排写提示词与拟填形式，再标变形路线，不按次数判错。
+      prerequisite: 先把空保留不填，圈本句动作和对应的人或物。主语是谁或什么，谓语是这句的完整动作或状态；分不清先核完整句。
+      if_stuck: 先标有无提示和空位所在结构；成分/词义不清停在节点前，不从答案倒贴功能。
+      example: 名词变复数仍是名词，不必强换词类。
+      example_scope: 关系/结构示意，非完整试题，不计真题或已验案例。
+      micro_action_is_not_completion: 完成第一小步不等于完整方法成功；继续完成四步卡的判断与停止核验。
+      short_stop: 一般一次只是提示，不因次数撤销有据词形。
+    presentation_revision: 2026-10-28.2
+    source_update_note: 一看二思保原名；反身回查不靠人称重复；why/how不按是否发生定词；非谓语按成分定主人，完成不定式不一律禁作后置修饰，逗号不独自定doing。
   cases:
     canonical: cases/grammar/G19/canonical/case.yaml
   four_step_card:
@@ -2633,25 +2705,22 @@ methods:
   maturity_status: candidate
   practical_value: Useful
   version: 1.2.0
-  change_reason: ANSWER 61bc9c3e15004639cb442c20e7946ca9631f14ce 来源重绑定；旧证据仅按归档版本复核，新规则与传播入口仍待重新验收。
+  change_reason: ANSWER 70db6d6 显式来源差异复核；保留品牌动作和基础入口，异文分源，旧Case不自动获新纪元准入。
   affected_cases:
   - cases/grammar/G19/canonical/case.yaml
   regression_result: pending_current_epoch_semantic_and_student_acceptance
-  student_ready: true
-  entry_copy: 提示词初变形后需要复核时，第一眼先找：提示词初变形后需要复核。手上先做：对照原提示词与空位成分记录变形路线，一般一次只是回查提示，不凭次数选答案。做完得到
-    verify，不是通用答案。对照原提示词与空位成分记实际变形路线；异常只触发回查派生、形态与搭配，不能按变形次数决定词形。 什么时候停：一般一次不排除本句支持的更复杂形式；提示词原词性也可能与答案相同。结构未核前不因次数撤销原答案或强制换词类。
-    换题仍这样做：新提示词仍让变形路线服从本句成分与搭配，不迁移次数上限或必须换词性。
+  student_ready: false
+  entry_copy: 觉得变形次数不对？先并排写提示词与拟填形式，再标变形路线，不按次数判错。这一步得到的是对已有候选或稿件的核验，不替代独立证据。如果卡住，先标有无提示和空位所在结构；成分/词义不清停在节点前，不从答案倒贴功能。
   static_design_review:
-    status: source_rebound_semantic_reacceptance_pending
-    source_section_ids: *id018
+    status: source_bound_editorial_review
+    source_section_ids: *id019
     participant_validation: pending_real_participant_validation
-    example_scope: schematic source boundary, not a verified exam
+    example_scope: 2026-10-28基础入口表达修订；保留原判据/Stop/课程绑定与语义版本，微动作和关系示意不是完整真题或真人实测。
   source_alignment:
-    commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
+    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
     state: live_source_bound
-    source_content_changed: false
+    source_content_changed: true
     correction_profile_applied: false
-    authored_first_contact_draft: false
+    authored_first_contact_draft: true
     new_course_branches: preserved_in_full_contract_not_automatically_aliased
-    acceptance: source_alignment_only; semantic/learner/release acceptance remains
-      pending
+    acceptance: 2026-10-30 explicit source delta review; learner/blind/release pending

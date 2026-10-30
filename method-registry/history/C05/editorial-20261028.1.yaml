@@ -1,0 +1,132 @@
+method_id: C05
+brand_name: 近义落地
+source_name: 近义项要落到具体语义
+aliases:
+- 近义项要落到具体语义
+question_type: 完形填空
+method_type: sub_action
+role: interpreter
+primary_role: interpreter
+secondary_roles: []
+output_type: interpret
+student_symptoms:
+- 多个候选译义相近或评价同向
+trigger_cues:
+- 多个候选译义相近或评价同向
+core_action: 并列写出各项具体状态、程度或功能，回原文对象核差异，词义未知就停
+decision_rule: 并列写出各候选具体状态、程度、功能或惯用要求，再核当前对象实际处境；输出候选词义差异，不把中文近义或褒贬同向当等值。
+verification: 并列写出各项具体状态、程度或功能，回原文对象核差异，词义未知就停。并列写出各候选具体状态、程度、功能或惯用要求，再核当前对象实际处境；输出候选词义差异，不把中文近义或褒贬同向当等值。
+  词义或搭配不能确认时说明缺口并暂停，不能凭主旨或中文翻译强选；情感投入与客观状态要分开。
+stop_rule: 词义或搭配不能确认时说明缺口并暂停，不能凭主旨或中文翻译强选；情感投入与客观状态要分开。
+common_wrong_instinct: 几个词中文都译得差不多，就选最贴主题或最积极的一个。
+failure_cases:
+- 几个词中文都译得差不多，就选最贴主题或最积极的一个。
+- 词义或搭配不能确认时说明缺口并暂停，不能凭主旨或中文翻译强选；情感投入与客观状态要分开。
+counterexamples:
+- 两个积极评价词，一个指情感投入、一个指客观状态；当前题面只支持其中一类，不能因同为积极词混用。
+transfer_pattern: 换题材仍逐项写具体含义与使用条件，不沿用近义词中文标签或同向主题。
+memory_line: 并列写出各项具体状态、程度或功能，回原文对象核差异，词义未知就停
+anti_rule: 中文近义 ≠ 语境等值。
+visual_formula: "候选1：状态/程度/功能/搭配要求\n候选2：状态/程度/功能/搭配要求\n            ↓ 当前对象处境\n词义差异卡（interpret）\n\
+  词义/搭配不明 → 停"
+challenge_prompt: 不选答案，只把两个近义项的具体差异写出来，再圈原文能约束该差异的对象或状态。
+source_references:
+- repository: https://github.com/rockpunkgod/ANSWER.git
+  path: gaokao-english/references/cloze.md
+  heading: 近义项要落到具体语义
+  commit: 1c388a0596b13935ae7c6a1af00834915a8efa33
+section_ids: &id001
+- 87987576b5e8284b
+can_follow: []
+usually_before: []
+usually_after: []
+conflicts_with: []
+cannot_replace:
+- 完整题面验证
+levels:
+  L1: 并列写出各项具体状态、程度或功能，回原文对象核差异，词义未知就停
+  L2: 并列写出各候选具体状态、程度、功能或惯用要求，再核当前对象实际处境；输出候选词义差异，不把中文近义或褒贬同向当等值。
+  L3: 词义或搭配不能确认时说明缺口并暂停，不能凭主旨或中文翻译强选；情感投入与客观状态要分开。
+  L4: 换题材仍逐项写具体含义与使用条件，不沿用近义词中文标签或同向主题。
+compact:
+  10s: 近义项总犹豫？写各项具体状态、程度或功能，配当前对象；中文近义不算等值。
+  30s: 近义项总犹豫？先写两个近义项在这里各自要求的具体意思，不确定词义先留缺口。例如，情感投入不等于客观状态，两种积极评价也可能不同。词义或搭配不明先留缺口，不凭主旨强选。
+  90s: 近义项总犹豫？并列写出各项具体状态、程度或功能，回原文对象核差异，词义未知就停这一步得到的是把当前关系或表达解释清楚，还要核完整题目。判断时，并列写出各候选具体状态、程度、功能或惯用要求，再核当前对象实际处境；输出候选词义差异，不把中文近义或褒贬同向当等值。什么时候停，词义或搭配不能确认时说明缺口并暂停，不能凭主旨或中文翻译强选；情感投入与客观状态要分开。反例示意，两个积极评价词，一个指情感投入、一个指客观状态；当前题面只支持其中一类，不能因同为积极词混用。换题仍检查当前题面的对象和关系，不搬上一题结论。挑战，不选答案，只把两个近义项的具体差异写出来，再圈原文能约束该差异的对象或状态。
+full:
+  summary: 并列写出各项具体状态、程度或功能，回原文对象核差异，词义未知就停 并列写出各候选具体状态、程度、功能或惯用要求，再核当前对象实际处境；输出候选词义差异，不把中文近义或褒贬同向当等值。
+  source_boundary: 词义或搭配不能确认时说明缺口并暂停，不能凭主旨或中文翻译强选；情感投入与客观状态要分开。
+  boundaries:
+  - 词义或搭配不能确认时说明缺口并暂停，不能凭主旨或中文翻译强选；情感投入与客观状态要分开。
+  - 两个积极评价词，一个指情感投入、一个指客观状态；当前题面只支持其中一类，不能因同为积极词混用。
+  section_ids:
+  - 87987576b5e8284b
+  beginner_support:
+    first_micro_action: 先写两个近义项在这里各自要求的具体意思，不确定词义先留缺口。
+    prerequisite: 先读出本空两侧谁在做什么，区分题面已说与自己猜的内容；决定候选的词义不明就先标出来。
+    if_stuck: 只记录已找到的提示；词义或桥接缺证据时暂留，找到独立提示后返回，不以猜空互证。
+    example: 情感投入不等于客观状态，两种积极评价也可能不同。
+    example_scope: 关系/结构示意，非完整试题，不计真题或已验案例。
+    micro_action_is_not_completion: 完成第一小步不等于完整方法成功；继续完成四步卡的判断与停止核验。
+    short_stop: 词义或搭配不明先留缺口，不凭主旨强选。
+  presentation_revision: 2026-10-28.1
+cases:
+  canonical: cases/cloze/C05/canonical/case.yaml
+four_step_card:
+  start: 多个候选译义相近或评价同向
+  first_cut: 并列写出各项具体状态、程度或功能，回原文对象核差异，词义未知就停
+  judge: 并列写出各候选具体状态、程度、功能或惯用要求，再核当前对象实际处境；输出候选词义差异，不把中文近义或褒贬同向当等值。
+  stop: 词义或搭配不能确认时说明缺口并暂停，不能凭主旨或中文翻译强选；情感投入与客观状态要分开。
+practicality_gate:
+  status: design_complete_empirical_pending
+  trigger: 多个候选译义相近或评价同向
+  action: 并列写出各项具体状态、程度或功能，回原文对象核差异，词义未知就停
+  output: interpret；并列写出各候选具体状态、程度、功能或惯用要求，再核当前对象实际处境；输出候选词义差异，不把中文近义或褒贬同向当等值。
+  stop: 词义或搭配不能确认时说明缺口并暂停，不能凭主旨或中文翻译强选；情感投入与客观状态要分开。
+  transfer: 换题材仍逐项写具体含义与使用条件，不沿用近义词中文标签或同向主题。
+  efficiency: 把模糊译义变成可核的区别，主要降低犹豫与误用；未知词义时不承诺解决。
+  misuse_cost: 未经实测；几个词中文都译得差不多，就选最贴主题或最积极的一个。会导致误判；须先核触发、执行Stop，不允许辅助产物越级定案。
+first_use_test:
+  status: designed_not_run
+  trigger_success: null
+  action_success: null
+  evidence_success: null
+  stop_rule_success: null
+  no_answer_backfit: null
+  failure_type: null
+  final_result: pending_real_student_test
+evaluation:
+  baseline: 普通逐项核题面
+  primary_benefit_hypothesis: 把模糊译义变成可核的区别，主要降低犹豫与误用；未知词义时不承诺解决。
+  trigger_precision: null
+  trigger_recall: null
+  resolution_rate: null
+  standalone_rate: null
+  assist_rate: null
+  false_trigger_rate: null
+  transfer_rate: null
+  boundary_accuracy: null
+  time_complexity_gain: null
+usefulness_level: Useful
+status: candidate
+maturity_status: candidate
+practical_value: Useful
+version: 1.2.0
+change_reason: ANSWER 1c388a0596b13935ae7c6a1af00834915a8efa33 增量来源同步；保留既有动作与版本，旧证据不自动获得新来源准入。
+affected_cases:
+- cases/cloze/C05/canonical/case.yaml
+regression_result: pending_current_epoch_semantic_and_student_acceptance
+student_ready: false
+entry_copy: 近义项总犹豫？先写两个近义项在这里各自要求的具体意思，不确定词义先留缺口。这一步得到的是把当前关系或表达解释清楚，还要核完整题目。如果卡住，只记录已找到的提示；词义或桥接缺证据时暂留，找到独立提示后返回，不以猜空互证。
+static_design_review:
+  status: source_bound_editorial_review
+  source_section_ids: *id001
+  participant_validation: pending_real_participant_validation
+  example_scope: 2026-10-28基础入口表达修订；保留原判据/Stop/课程绑定与语义版本，微动作和关系示意不是完整真题或真人实测。
+source_alignment:
+  commit: 1c388a0596b13935ae7c6a1af00834915a8efa33
+  state: live_source_bound
+  source_content_changed: false
+  correction_profile_applied: false
+  authored_first_contact_draft: true
+  new_course_branches: preserved_in_full_contract_not_automatically_aliased
+  acceptance: unchanged_method_sections; added_source_contracts_preserved; learner/release_pending

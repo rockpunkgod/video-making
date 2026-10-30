@@ -1,0 +1,21 @@
+case_id: C06-canonical
+method_id: C06
+question_type: 完形填空
+source:
+  repository: https://github.com/rockpunkgod/ANSWER.git
+  commit: b04ebc26d7fa096404111a0bb12f6c77cc8525b9
+  path: gaokao-english/references/cloze.md
+  heading: 逻辑与时间要看真实内容
+question: null
+answer: null
+trigger: 空位依赖事件先后或时间间隔
+evidence: []
+method_role: interpreter
+expected_action: 写两件事发生时间及间隔，再标先后或因果，不省略题面时间条件
+expected_output: interpret
+stop_rule: 事件时间或间隔未给就标未知；先后不证明因果，身份或状态改变不证明时长改变。额外时间要求无据时停止初判。
+case_type: canonical
+status: evidence_gap
+notes: 源方法可核；尚未逐题核验案例，不可当成功样例
+method_version: 1.1.0
+source_commit: b04ebc26d7fa096404111a0bb12f6c77cc8525b9

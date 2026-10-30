@@ -1,0 +1,127 @@
+method_id: R16
+brand_name: 主题锁定
+source_name: mainly题与主旨大意
+aliases:
+- mainly题与主旨大意
+question_type: 阅读理解
+method_type: framework
+role: framework
+primary_role: framework
+secondary_roles: []
+output_type: interpret
+student_symptoms:
+- 题干问全文或指定段主旨
+trigger_cues:
+- 题干问全文或段落主要内容、中心论点、主题或主要讨论对象。
+core_action: 先圈所问全文/段落范围，扫候选共同对象并去同求异，带不同判断回该范围核贯穿内容及覆盖。
+decision_rule: 产出对象—完整判断框架供候选核查；选项倒推和妖项助攻只是待验预期，正文实际内容才支持概括。
+verification: 产出对象—完整判断框架供候选核查；选项倒推和妖项助攻只是待验预期，正文实际内容才支持概括。 局部事实、泛推理或人物品质不套主旨；不并为中心思想；共同词、较宽范围、动态词形或剩余项不定案，段意清楚不机械压全文。
+stop_rule: 局部事实、泛推理或人物品质不套主旨；不并为中心思想；共同词、较宽范围、动态词形或剩余项不定案，段意清楚不机械压全文。
+common_wrong_instinct: 不分问段落还是全文，看到选项都有同一个名词就选最抽象或范围最大的项。
+failure_cases:
+- 不分问段落还是全文，看到选项都有同一个名词就选最抽象或范围最大的项。
+- 局部事实、泛推理或人物品质不套主旨；不并为中心思想；共同词、较宽范围、动态词形或剩余项不定案，段意清楚不机械压全文。
+counterexamples:
+- 题干只问一段主要内容，候选概括全文但没有概括该段任务；不能因更广或更抽象而保留为该段主旨。
+transfer_pattern: 换文章仍先确定所问范围，再提取对象与不同判断，不固定首尾阅读清单。
+memory_line: 先圈所问全文/段落范围，扫候选共同对象并去同求异，带不同判断回该范围核贯穿内容及覆盖。
+anti_rule: 主题词 ≠ 完整主题。
+visual_formula: "题干范围：全文 / 指定段\n共同对象 + 不同判断\n      ↓ 回该范围核贯穿内容\n对象—判断框架（不是答案）"
+challenge_prompt: 不选答案，圈题干问全文还是单段，再划掉候选共同对象，仅写各项剩下的不同判断。
+source_references:
+- repository: https://github.com/rockpunkgod/ANSWER.git
+  path: gaokao-english/references/reading-comprehension.md
+  heading: mainly题与主旨大意
+  commit: 1c388a0596b13935ae7c6a1af00834915a8efa33
+section_ids:
+- 208c9f4b0e5b95f6
+can_follow: []
+usually_before: []
+usually_after: []
+conflicts_with: []
+cannot_replace:
+- 完整题面验证
+levels:
+  L1: 先圈全文/段落范围，再写对象与核心判断，回各关键段检查覆盖
+  L2: 先确认全文/单段任务范围，去掉候选共同对象后比较不同判断，在该范围核贯穿内容，产出对象—判断框架供后续候选核验。
+  L3: 段落主题已清时不机械压全文；局部事实、一般推断或人物品质题不直接套主旨。共同词、抽象程度和首尾结构不独立证明概括。
+  L4: 换文章仍先确定所问范围，再提取对象与不同判断，不固定首尾阅读清单。
+compact:
+  line: 先圈所问全文/段落范围，扫候选共同对象并去同求异，带不同判断回该范围核贯穿内容及覆盖。
+  boundary: 局部事实、泛推理或人物品质不套主旨；不并为中心思想；共同词、较宽范围、动态词形或剩余项不定案，段意清楚不机械压全文。
+  10s: 先圈所问全文/段落范围，扫候选共同对象并去同求异，带不同判断回该范围核贯穿内容及覆盖。 产出对象—完整判断框架供候选核查；选项倒推和妖项助攻只是待验预期，正文实际内容才支持概括。
+  30s: 题干问全文或段落主要内容、中心论点、主题或主要讨论对象。 先圈所问全文/段落范围，扫候选共同对象并去同求异，带不同判断回该范围核贯穿内容及覆盖。 局部事实、泛推理或人物品质不套主旨；不并为中心思想；共同词、较宽范围、动态词形或剩余项不定案，段意清楚不机械压全文。
+  90s: 题干问全文或段落主要内容、中心论点、主题或主要讨论对象。 手上先做：先圈所问全文/段落范围，扫候选共同对象并去同求异，带不同判断回该范围核贯穿内容及覆盖。
+    做完得到：产出对象—完整判断框架供候选核查；选项倒推和妖项助攻只是待验预期，正文实际内容才支持概括。 停止：局部事实、泛推理或人物品质不套主旨；不并为中心思想；共同词、较宽范围、动态词形或剩余项不定案，段意清楚不机械压全文。
+    反例（边界示意，非真题）：题干只问一段主要内容，候选概括全文但没有概括该段任务；不能因更广或更抽象而保留为该段主旨。 挑战：不选答案，圈题干问全文还是单段，再划掉候选共同对象，仅写各项剩下的不同判断。
+full:
+  summary: 先圈所问全文/段落范围，扫候选共同对象并去同求异，带不同判断回该范围核贯穿内容及覆盖。 产出对象—完整判断框架供候选核查；选项倒推和妖项助攻只是待验预期，正文实际内容才支持概括。
+  source_boundary: 局部事实、泛推理或人物品质不套主旨；不并为中心思想；共同词、较宽范围、动态词形或剩余项不定案，段意清楚不机械压全文。
+  boundaries:
+  - 局部事实、泛推理或人物品质不套主旨；不并为中心思想；共同词、较宽范围、动态词形或剩余项不定案，段意清楚不机械压全文。
+  - 题干只问一段主要内容，候选概括全文但没有概括该段任务；不能因更广或更抽象而保留为该段主旨。
+  section_ids:
+  - 208c9f4b0e5b95f6
+cases:
+  canonical: cases/reading/R16/canonical/case.yaml
+four_step_card:
+  start: 题干问全文或段落主要内容、中心论点、主题或主要讨论对象。
+  first_cut: 先圈所问全文/段落范围，扫候选共同对象并去同求异，带不同判断回该范围核贯穿内容及覆盖。
+  judge: 产出对象—完整判断框架供候选核查；选项倒推和妖项助攻只是待验预期，正文实际内容才支持概括。
+  stop: 局部事实、泛推理或人物品质不套主旨；不并为中心思想；共同词、较宽范围、动态词形或剩余项不定案，段意清楚不机械压全文。
+practicality_gate:
+  status: design_complete_empirical_pending
+  trigger: 题干问全文或段落主要内容、中心论点、主题或主要讨论对象。
+  action: 先圈所问全文/段落范围，扫候选共同对象并去同求异，带不同判断回该范围核贯穿内容及覆盖。
+  output: interpret；产出对象—完整判断框架供候选核查；选项倒推和妖项助攻只是待验预期，正文实际内容才支持概括。
+  stop: 局部事实、泛推理或人物品质不套主旨；不并为中心思想；共同词、较宽范围、动态词形或剩余项不定案，段意清楚不机械压全文。
+  transfer: 换文章仍先确定所问范围，再提取对象与不同判断，不固定首尾阅读清单。
+  efficiency: 先固定范围并去同求异，预期减少在共同主题词上的无效比较；效率未测。
+  misuse_cost: 未经实测；不分问段落还是全文，看到选项都有同一个名词就选最抽象或范围最大的项。会导致误判，必须先核触发并执行上述Stop，不允许从辅助产物越级定案。
+first_use_test:
+  status: designed_not_run
+  trigger_success: null
+  action_success: null
+  evidence_success: null
+  stop_rule_success: null
+  no_answer_backfit: null
+  failure_type: null
+  final_result: pending_real_student_test
+evaluation:
+  baseline: 普通逐项核题面
+  primary_benefit_hypothesis: 先固定范围并去同求异，预期减少在共同主题词上的无效比较；效率未测。
+  trigger_precision: null
+  trigger_recall: null
+  resolution_rate: null
+  standalone_rate: null
+  assist_rate: null
+  false_trigger_rate: null
+  transfer_rate: null
+  boundary_accuracy: null
+  time_complexity_gain: null
+usefulness_level: Useful
+status: candidate
+maturity_status: candidate
+practical_value: Useful
+version: 1.2.0
+change_reason: ANSWER 1c388a0596b13935ae7c6a1af00834915a8efa33 增量来源同步；保留既有动作与版本，旧证据不自动获得新来源准入。
+affected_cases:
+- cases/reading/R16/canonical/case.yaml
+regression_result: pending_current_epoch_semantic_and_student_acceptance
+student_ready: false
+entry_copy: 题干问全文或段落主要内容、中心论点、主题或主要讨论对象。 手上先做：先圈所问全文/段落范围，扫候选共同对象并去同求异，带不同判断回该范围核贯穿内容及覆盖。
+  做完得到：产出对象—完整判断框架供候选核查；选项倒推和妖项助攻只是待验预期，正文实际内容才支持概括。 停止：局部事实、泛推理或人物品质不套主旨；不并为中心思想；共同词、较宽范围、动态词形或剩余项不定案，段意清楚不机械压全文。
+static_design_review:
+  status: source_rebound_semantic_reacceptance_pending
+  source_section_ids:
+  - 208c9f4b0e5b95f6
+  participant_validation: pending_real_participant_validation
+  example_scope: counterexample is a schematic source boundary, not a verified exam
+source_alignment:
+  commit: 1c388a0596b13935ae7c6a1af00834915a8efa33
+  state: live_source_bound
+  source_content_changed: false
+  correction_profile_applied: true
+  authored_first_contact_draft: false
+  new_course_branches: preserved_in_full_contract_not_automatically_aliased
+  acceptance: unchanged_method_sections; added_source_contracts_preserved; learner/release_pending

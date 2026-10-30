@@ -1,0 +1,143 @@
+method_id: W03
+brand_name: 剧情四格
+source_name: 情节构思：PTSD 四步法
+aliases:
+- 情节构思：PTSD 四步法
+question_type: 读后续写
+method_type: framework
+role: framework
+primary_role: framework
+secondary_roles: []
+output_type: interpret
+student_symptoms:
+- 已读原文首句需要整理情节
+trigger_cues:
+- 原文及两段首句齐备，需要按一个明确来源版本整理已知与未知情节槽。
+core_action: 先注明版本：寒8板书P目的/T方式/S苦难/D结局；同课表格P需求/T方法/S困难/D结局；逐槽填首句已知与原文约束。
+decision_rule: 产出该版本的已知/未知情节槽；寒14需求/波折/方案/结局及其分析表另留，旧高二PPT也不混用。
+verification: 产出该版本的已知/未知情节槽；寒14需求/波折/方案/结局及其分析表另留，旧高二PPT也不混用。 未注明版本先停；未知槽留空，不凭口诀补事故或救场者；Needs/Difficulties/Solutions/Denouement不是PTSD英文展开。
+stop_rule: 未注明版本先停；未知槽留空，不凭口诀补事故或救场者；Needs/Difficulties/Solutions/Denouement不是PTSD英文展开。
+common_wrong_instinct: 四格写满就以为剧情有逻辑，困难和行动其实是互相编出来的。
+failure_cases:
+- 四格写满就以为剧情有逻辑，困难和行动其实是互相编出来的。
+- 未注明版本先停；未知槽留空，不凭口诀补事故或救场者；Needs/Difficulties/Solutions/Denouement不是PTSD英文展开。
+counterexamples:
+- 把寒8的T方式与寒14的T波折当同一职责，或把分析表四个英文词当PTSD展开，都不能混用；填满也不证明情节有依据。
+transfer_pattern: 换故事仍选清来源版本，再由新原文和两首句约束本版槽位，不迁移旧题困难或解决者。
+memory_line: 先说用哪版，再填已知，未知先留空。
+anti_rule: 格子满 ≠ 情节真。
+visual_formula: '先选来源版本（不混定义）
+
+  寒8板书：目的 | 方式 | 苦难 | 结局
+
+  同课表格：需求 | 方法 | 困难 | 结局
+
+  寒14、旧PPT：各自另列
+
+  每格↔首句/原文；未知→留空'
+challenge_prompt: 先注明一个来源版本，不写故事；逐槽标两首句已知与原文约束，未知处留空，并指出另一版哪两个槽不能混用。
+source_references:
+- repository: https://github.com/rockpunkgod/ANSWER.git
+  path: gaokao-writing/references/continuation-writing-and-correction.md
+  heading: 情节构思：PTSD 四步法
+  commit: 1c388a0596b13935ae7c6a1af00834915a8efa33
+section_ids:
+- 486a5ba8d06a5eb7
+- a9f982dcfec817d9
+- 6570e8d5c4fff00d
+can_follow: []
+usually_before: []
+usually_after: []
+conflicts_with: []
+cannot_replace:
+- 完整题面验证
+levels:
+  L1: 只选需求→困难→行动→结局这一套四格，每格填原文约束，不混用另一版字母定义
+  L2: 只用需求/目标—困难—行动/方法—结果四格，每格写本题具体内容并核原文与首句限制；空格暴露待补因果，不自动生成新困难。
+  L3: 两版PTSD字母定义不可混用；缺原文约束先停，未铺垫的困难或解决者不能靠填表成立。结果应顺承故事，独立升华句不强制。
+  L4: 换主人公仍用同一四格，具体目标和障碍由新文约束。
+compact:
+  line: 先注明版本：寒8板书P目的/T方式/S苦难/D结局；同课表格P需求/T方法/S困难/D结局；逐槽填首句已知与原文约束。
+  boundary: 未注明版本先停；未知槽留空，不凭口诀补事故或救场者；Needs/Difficulties/Solutions/Denouement不是PTSD英文展开。
+  10s: 先注明版本：寒8板书P目的/T方式/S苦难/D结局；同课表格P需求/T方法/S困难/D结局；逐槽填首句已知与原文约束。 产出该版本的已知/未知情节槽；寒14需求/波折/方案/结局及其分析表另留，旧高二PPT也不混用。
+  30s: 原文及两段首句齐备，需要按一个明确来源版本整理已知与未知情节槽。 先注明版本：寒8板书P目的/T方式/S苦难/D结局；同课表格P需求/T方法/S困难/D结局；逐槽填首句已知与原文约束。
+    未注明版本先停；未知槽留空，不凭口诀补事故或救场者；Needs/Difficulties/Solutions/Denouement不是PTSD英文展开。
+  90s: 原文及两段首句齐备，需要按一个明确来源版本整理已知与未知情节槽。 手上先做：先注明版本：寒8板书P目的/T方式/S苦难/D结局；同课表格P需求/T方法/S困难/D结局；逐槽填首句已知与原文约束。
+    做完得到：产出该版本的已知/未知情节槽；寒14需求/波折/方案/结局及其分析表另留，旧高二PPT也不混用。 停止：未注明版本先停；未知槽留空，不凭口诀补事故或救场者；Needs/Difficulties/Solutions/Denouement不是PTSD英文展开。
+    反例（边界示意，非真题）：把寒8的T方式与寒14的T波折当同一职责，或把分析表四个英文词当PTSD展开，都不能混用；填满也不证明情节有依据。 挑战：先注明一个来源版本，不写故事；逐槽标两首句已知与原文约束，未知处留空，并指出另一版哪两个槽不能混用。
+full:
+  summary: 先注明版本：寒8板书P目的/T方式/S苦难/D结局；同课表格P需求/T方法/S困难/D结局；逐槽填首句已知与原文约束。 产出该版本的已知/未知情节槽；寒14需求/波折/方案/结局及其分析表另留，旧高二PPT也不混用。
+  source_boundary: 未注明版本先停；未知槽留空，不凭口诀补事故或救场者；Needs/Difficulties/Solutions/Denouement不是PTSD英文展开。
+  boundaries:
+  - 未注明版本先停；未知槽留空，不凭口诀补事故或救场者；Needs/Difficulties/Solutions/Denouement不是PTSD英文展开。
+  - 把寒8的T方式与寒14的T波折当同一职责，或把分析表四个英文词当PTSD展开，都不能混用；填满也不证明情节有依据。
+  section_ids:
+  - 486a5ba8d06a5eb7
+  - a9f982dcfec817d9
+  - 6570e8d5c4fff00d
+cases:
+  canonical: cases/continuation-writing/W03/canonical/case.yaml
+four_step_card:
+  start: 原文及两段首句齐备，需要按一个明确来源版本整理已知与未知情节槽。
+  first_cut: 先注明版本：寒8板书P目的/T方式/S苦难/D结局；同课表格P需求/T方法/S困难/D结局；逐槽填首句已知与原文约束。
+  judge: 产出该版本的已知/未知情节槽；寒14需求/波折/方案/结局及其分析表另留，旧高二PPT也不混用。
+  stop: 未注明版本先停；未知槽留空，不凭口诀补事故或救场者；Needs/Difficulties/Solutions/Denouement不是PTSD英文展开。
+practicality_gate:
+  status: design_complete_empirical_pending
+  trigger: 原文及两段首句齐备，需要按一个明确来源版本整理已知与未知情节槽。
+  action: 先注明版本：寒8板书P目的/T方式/S苦难/D结局；同课表格P需求/T方法/S困难/D结局；逐槽填首句已知与原文约束。
+  output: interpret；产出该版本的已知/未知情节槽；寒14需求/波折/方案/结局及其分析表另留，旧高二PPT也不混用。
+  stop: 未注明版本先停；未知槽留空，不凭口诀补事故或救场者；Needs/Difficulties/Solutions/Denouement不是PTSD英文展开。
+  transfer: 换故事仍选清来源版本，再由新原文和两首句约束本版槽位，不迁移旧题困难或解决者。
+  efficiency: 用固定四项降低构思同时处理的负担，价值在因果暴露而非自动答案。
+  misuse_cost: 未经实测；四格写满就以为剧情有逻辑，困难和行动其实是互相编出来的。会导致误判；须先核触发、执行Stop，不允许辅助产物越级定案。
+first_use_test:
+  status: designed_not_run
+  trigger_success: null
+  action_success: null
+  evidence_success: null
+  stop_rule_success: null
+  no_answer_backfit: null
+  failure_type: null
+  final_result: pending_real_student_test
+evaluation:
+  baseline: 普通逐项核题面
+  primary_benefit_hypothesis: 用固定四项降低构思同时处理的负担，价值在因果暴露而非自动答案。
+  trigger_precision: null
+  trigger_recall: null
+  resolution_rate: null
+  standalone_rate: null
+  assist_rate: null
+  false_trigger_rate: null
+  transfer_rate: null
+  boundary_accuracy: null
+  time_complexity_gain: null
+usefulness_level: Useful
+status: candidate
+maturity_status: candidate
+practical_value: Useful
+version: 1.2.0
+change_reason: ANSWER 1c388a0596b13935ae7c6a1af00834915a8efa33 增量来源同步；保留既有动作与版本，旧证据不自动获得新来源准入。
+affected_cases:
+- cases/continuation-writing/W03/canonical/case.yaml
+regression_result: pending_current_epoch_semantic_and_student_acceptance
+student_ready: false
+source_alias: PTSD
+entry_copy: 原文及两段首句齐备，需要按一个明确来源版本整理已知与未知情节槽。 手上先做：先注明版本：寒8板书P目的/T方式/S苦难/D结局；同课表格P需求/T方法/S困难/D结局；逐槽填首句已知与原文约束。
+  做完得到：产出该版本的已知/未知情节槽；寒14需求/波折/方案/结局及其分析表另留，旧高二PPT也不混用。 停止：未注明版本先停；未知槽留空，不凭口诀补事故或救场者；Needs/Difficulties/Solutions/Denouement不是PTSD英文展开。
+static_design_review:
+  status: source_rebound_semantic_reacceptance_pending
+  source_section_ids:
+  - 486a5ba8d06a5eb7
+  - a9f982dcfec817d9
+  - 6570e8d5c4fff00d
+  participant_validation: pending_real_participant_validation
+  example_scope: schematic source boundary, not a verified exam
+source_alignment:
+  commit: 1c388a0596b13935ae7c6a1af00834915a8efa33
+  state: live_source_bound
+  source_content_changed: false
+  correction_profile_applied: true
+  authored_first_contact_draft: false
+  new_course_branches: preserved_in_full_contract_not_automatically_aliased
+  acceptance: unchanged_method_sections; added_source_contracts_preserved; learner/release_pending

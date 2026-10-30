@@ -1,0 +1,127 @@
+method_id: G14
+brand_name: 找真主语
+source_name: 谓语：检查时态、语态、主谓一致
+aliases:
+- 谓语：检查时态、语态、主谓一致
+question_type: 语法填空
+method_type: sub_action
+role: verifier
+primary_role: verifier
+secondary_roles: []
+output_type: verify
+student_symptoms:
+- 主谓间有修饰造成数判断混乱
+trigger_cues:
+- 主谓间有修饰造成数判断混乱
+core_action: 划开插入和修饰，圈真正主语中心词，核谓语一致，保留否定条件
+decision_rule: 划开插入和修饰后圈主语中心，并核并列/伴随结构或从句的实际一致对象；输出主谓一致核验，不自行定时态或最终词形。
+verification: 划开插入和修饰，圈真正主语中心词，核谓语一致，保留否定条件。划开插入和修饰后圈主语中心，并核并列/伴随结构或从句的实际一致对象；输出主谓一致核验，不自行定时态或最终词形。
+  最近名词不一定主语，集合或数量结构须回完整节点；状态性过去分词与被动动作需另核，不能执行有be/无be口诀。
+stop_rule: 最近名词不一定主语，集合或数量结构须回完整节点；状态性过去分词与被动动作需另核，不能执行有be/无be口诀。
+common_wrong_instinct: 用离动词最近的名词定单复数，忽略真正主语与伴随结构。
+failure_cases:
+- 用离动词最近的名词定单复数，忽略真正主语与伴随结构。
+- 最近名词不一定主语，集合或数量结构须回完整节点；状态性过去分词与被动动作需另核，不能执行有be/无be口诀。
+counterexamples:
+- 主谓之间有复数修饰名词，但真正主语中心为单数；不能由最近复数名词改谓语数。
+transfer_pattern: 换句仍找中心及真实连接结构，不迁移最近名词的数或特殊结构无条件口诀。
+memory_line: 划开插入和修饰，圈真正主语中心词，核谓语一致，保留否定条件
+anti_rule: 最近名词 ≠ 真主语。
+visual_formula: "主体中心 [修饰/插入] 谓语\n     ↑ 圈真主语\n核并列/伴随/从句一致对象\n→ 一致核验（verify）；不定时态"
+challenge_prompt: 先不填谓语，划开主谓之间修饰，圈真主语中心，标它与谓语的一致关系。
+source_references:
+- repository: https://github.com/rockpunkgod/ANSWER.git
+  path: gaokao-grammar-fill/references/grammar-fill.md
+  heading: 谓语：检查时态、语态、主谓一致
+  commit: 1c388a0596b13935ae7c6a1af00834915a8efa33
+section_ids:
+- a0bcc74f05b00671
+can_follow: []
+usually_before: []
+usually_after: []
+conflicts_with: []
+cannot_replace:
+- 完整题面验证
+levels:
+  L1: 划开插入和修饰，圈真正主语中心词，核谓语一致，保留否定条件
+  L2: 划开插入和修饰后圈主语中心，并核并列/伴随结构或从句的实际一致对象；输出主谓一致核验，不自行定时态或最终词形。
+  L3: 最近名词不一定主语，集合或数量结构须回完整节点；状态性过去分词与被动动作需另核，不能执行有be/无be口诀。
+  L4: 换句仍找中心及真实连接结构，不迁移最近名词的数或特殊结构无条件口诀。
+compact:
+  10s: 主谓一致拿不准？划开修饰圈真主语，再核结构一致；最近名词不算主语，本步不定时态。
+  30s: 主谓被修饰隔开时，划开插入与短语，圈真主语中心，再核并列、伴随或从句一致对象。结构示意：旁边复数修饰不改变单数中心。中心或特殊结构不明就停；只核一致，不以be口诀定语态或最终形。
+  90s: 主谓间有修饰造成数判断混乱时，先确认：主谓间有修饰造成数判断混乱。第一刀：划开插入和修饰，圈真正主语中心词，核谓语一致，保留否定条件。产物 verify：划开插入和修饰后圈主语中心，并核并列/伴随结构或从句的实际一致对象；输出主谓一致核验，不自行定时态或最终词形。
+    停止：最近名词不一定主语，集合或数量结构须回完整节点；状态性过去分词与被动动作需另核，不能执行有be/无be口诀。 反例（关系示意，不是真题）：主谓之间有复数修饰名词，但真正主语中心为单数；不能由最近复数名词改谓语数。
+    迁移：换句仍找中心及真实连接结构，不迁移最近名词的数或特殊结构无条件口诀。 挑战：先不填谓语，划开主谓之间修饰，圈真主语中心，标它与谓语的一致关系。
+full:
+  summary: 划开插入和修饰，圈真正主语中心词，核谓语一致，保留否定条件 划开插入和修饰后圈主语中心，并核并列/伴随结构或从句的实际一致对象；输出主谓一致核验，不自行定时态或最终词形。
+  source_boundary: 最近名词不一定主语，集合或数量结构须回完整节点；状态性过去分词与被动动作需另核，不能执行有be/无be口诀。
+  boundaries:
+  - 最近名词不一定主语，集合或数量结构须回完整节点；状态性过去分词与被动动作需另核，不能执行有be/无be口诀。
+  - 主谓之间有复数修饰名词，但真正主语中心为单数；不能由最近复数名词改谓语数。
+  section_ids:
+  - a0bcc74f05b00671
+cases:
+  canonical: cases/grammar/G14/canonical/case.yaml
+four_step_card:
+  start: 主谓间有修饰造成数判断混乱
+  first_cut: 划开插入和修饰，圈真正主语中心词，核谓语一致，保留否定条件
+  judge: 划开插入和修饰后圈主语中心，并核并列/伴随结构或从句的实际一致对象；输出主谓一致核验，不自行定时态或最终词形。
+  stop: 最近名词不一定主语，集合或数量结构须回完整节点；状态性过去分词与被动动作需另核，不能执行有be/无be口诀。
+practicality_gate:
+  status: design_complete_empirical_pending
+  trigger: 主谓间有修饰造成数判断混乱
+  action: 划开插入和修饰，圈真正主语中心词，核谓语一致，保留否定条件
+  output: verify；划开插入和修饰后圈主语中心，并核并列/伴随结构或从句的实际一致对象；输出主谓一致核验，不自行定时态或最终词形。
+  stop: 最近名词不一定主语，集合或数量结构须回完整节点；状态性过去分词与被动动作需另核，不能执行有be/无be口诀。
+  transfer: 换句仍找中心及真实连接结构，不迁移最近名词的数或特殊结构无条件口诀。
+  efficiency: 显式找中心主语，减少近距离名词诱导；价值是准确核验，效率未测。
+  misuse_cost: 未经实测；用离动词最近的名词定单复数，忽略真正主语与伴随结构。会导致误判；须先核触发、执行Stop，不允许辅助产物越级定案。
+first_use_test:
+  status: designed_not_run
+  trigger_success: null
+  action_success: null
+  evidence_success: null
+  stop_rule_success: null
+  no_answer_backfit: null
+  failure_type: null
+  final_result: pending_real_student_test
+evaluation:
+  baseline: 普通逐项核题面
+  primary_benefit_hypothesis: 显式找中心主语，减少近距离名词诱导；价值是准确核验，效率未测。
+  trigger_precision: null
+  trigger_recall: null
+  resolution_rate: null
+  standalone_rate: null
+  assist_rate: null
+  false_trigger_rate: null
+  transfer_rate: null
+  boundary_accuracy: null
+  time_complexity_gain: null
+usefulness_level: Useful
+status: candidate
+maturity_status: candidate
+practical_value: Useful
+version: 1.2.0
+change_reason: ANSWER 1c388a0596b13935ae7c6a1af00834915a8efa33 增量来源同步；保留既有动作与版本，旧证据不自动获得新来源准入。
+affected_cases:
+- cases/grammar/G14/canonical/case.yaml
+regression_result: pending_current_epoch_semantic_and_student_acceptance
+student_ready: false
+entry_copy: 主谓间有修饰造成数判断混乱时，第一眼先找：主谓间有修饰造成数判断混乱。手上先做：划开插入和修饰，圈真正主语中心词，核谓语一致，保留否定条件。做完得到
+  verify，不是通用答案。划开插入和修饰后圈主语中心，并核并列/伴随结构或从句的实际一致对象；输出主谓一致核验，不自行定时态或最终词形。 什么时候停：最近名词不一定主语，集合或数量结构须回完整节点；状态性过去分词与被动动作需另核，不能执行有be/无be口诀。
+  换题仍这样做：换句仍找中心及真实连接结构，不迁移最近名词的数或特殊结构无条件口诀。
+static_design_review:
+  status: source_rebound_semantic_reacceptance_pending
+  source_section_ids:
+  - a0bcc74f05b00671
+  participant_validation: pending_real_participant_validation
+  example_scope: schematic source boundary, not a verified exam
+source_alignment:
+  commit: 1c388a0596b13935ae7c6a1af00834915a8efa33
+  state: live_source_bound
+  source_content_changed: false
+  correction_profile_applied: false
+  authored_first_contact_draft: false
+  new_course_branches: preserved_in_full_contract_not_automatically_aliased
+  acceptance: unchanged_method_sections; added_source_contracts_preserved; learner/release_pending

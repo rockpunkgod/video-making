@@ -1,0 +1,137 @@
+method_id: G11
+brand_name: 数词节点
+source_name: 数词
+aliases:
+- 数词
+question_type: 语法填空
+method_type: internal_rule
+role: decider
+primary_role: decider
+secondary_roles: []
+output_type: decide
+student_symptoms:
+- 空位已确定需要数量或顺序
+trigger_cues:
+- 空位已确定需要数量或顺序
+core_action: 圈数量/次序线索，按节点规则处理基数、序数或词形
+decision_rule: 圈表示数量还是顺序的证据，连同限定词和名词单复数判基数、序数、倍数或分数表达；各项一致才定数词形式。
+verification: 圈数量/次序线索，按节点规则处理基数、序数或词形。圈表示数量还是顺序的证据，连同限定词和名词单复数判基数、序数、倍数或分数表达；各项一致才定数词形式。
+  只看到一个数字提示不能确定功能；排序线索和数量所指不清就停，不把中文数字或冠词单独当序数证明。
+stop_rule: 只看到一个数字提示不能确定功能；排序线索和数量所指不清就停，不把中文数字或冠词单独当序数证明。
+common_wrong_instinct: 提示是数字就照原样填，或看到the就直接变序数，不核是在数多少还是排第几。
+failure_cases:
+- 提示是数字就照原样填，或看到the就直接变序数，不核是在数多少还是排第几。
+- 只看到一个数字提示不能确定功能；排序线索和数量所指不清就停，不把中文数字或冠词单独当序数证明。
+counterexamples:
+- 同一数字可表达数量或次序，所需形式不同；提示数字自身不能证明序数路线。
+transfer_pattern: 换数字仍先判位置功能和所指数量，不迁移原数字到固定序数形式。
+memory_line: 圈数量/次序线索，按节点规则处理基数、序数或词形
+anti_rule: 数字相同 ≠ 数词功能相同。
+visual_formula: '数字提示 → 数多少 / 第几 / 倍数 / 分数？
+
+  ↓ 限定 + 名词单复数
+
+  → 数词形式（decide）
+
+  功能未知 → 停'
+challenge_prompt: 先不写数词，只给空标数量、次序、倍数或分数功能，再圈相应题面证据。
+source_references:
+- repository: https://github.com/rockpunkgod/ANSWER.git
+  path: gaokao-grammar-fill/references/grammar-fill.md
+  heading: 数词
+  commit: 1c388a0596b13935ae7c6a1af00834915a8efa33
+section_ids: &id001
+- a26dc83760c12ebb
+can_follow: []
+usually_before: []
+usually_after: []
+conflicts_with: []
+cannot_replace:
+- 完整题面验证
+levels:
+  L1: 圈数量/次序线索，按节点规则处理基数、序数或词形
+  L2: 圈表示数量还是顺序的证据，连同限定词和名词单复数判基数、序数、倍数或分数表达；各项一致才定数词形式。
+  L3: 只看到一个数字提示不能确定功能；排序线索和数量所指不清就停，不把中文数字或冠词单独当序数证明。
+  L4: 换数字仍先判位置功能和所指数量，不迁移原数字到固定序数形式。
+compact:
+  10s: 数词怎么变？先判数多少还是第几，再核结构；数字本身不决定序数。
+  30s: 数词怎么变？先圈数量或次序的证据，写数多少还是第几。例如，同一数字在不同位置可表示数量或次序。所指或功能不清先停，the也不能单独证明序数。
+  90s: 数词怎么变？圈数量/次序线索，按节点规则处理基数、序数或词形这一步得到的只判断当前证据能支持或排除什么，不能由剩余项自动定案。判断时，圈表示数量还是顺序的证据，连同限定词和名词单复数判基数、序数、倍数或分数表达；各项一致才定数词形式。什么时候停，只看到一个数字提示不能确定功能；排序线索和数量所指不清就停，不把中文数字或冠词单独当序数证明。反例示意，同一数字可表达数量或次序，所需形式不同；提示数字自身不能证明序数路线。换题仍检查当前题面的对象和关系，不搬上一题结论。挑战，先不写数词，只给空标数量、次序、倍数或分数功能，再圈相应题面证据。
+full:
+  summary: 圈数量/次序线索，按节点规则处理基数、序数或词形 圈表示数量还是顺序的证据，连同限定词和名词单复数判基数、序数、倍数或分数表达；各项一致才定数词形式。
+  source_boundary: 只看到一个数字提示不能确定功能；排序线索和数量所指不清就停，不把中文数字或冠词单独当序数证明。
+  boundaries:
+  - 只看到一个数字提示不能确定功能；排序线索和数量所指不清就停，不把中文数字或冠词单独当序数证明。
+  - 同一数字可表达数量或次序，所需形式不同；提示数字自身不能证明序数路线。
+  section_ids:
+  - a26dc83760c12ebb
+  beginner_support:
+    first_micro_action: 先圈数量或次序的证据，写数多少还是第几。
+    prerequisite: 先把空保留不填，圈本句动作和对应的人或物。主语是谁或什么，谓语是这句的完整动作或状态；分不清先核完整句。
+    if_stuck: 先标有无提示和空位所在结构；成分/词义不清停在节点前，不从答案倒贴功能。
+    example: 同一数字在不同位置可表示数量或次序。
+    example_scope: 关系/结构示意，非完整试题，不计真题或已验案例。
+    micro_action_is_not_completion: 完成第一小步不等于完整方法成功；继续完成四步卡的判断与停止核验。
+    short_stop: 所指或功能不清先停，the也不能单独证明序数。
+  presentation_revision: 2026-10-28.1
+cases:
+  canonical: cases/grammar/G11/canonical/case.yaml
+four_step_card:
+  start: 空位已确定需要数量或顺序
+  first_cut: 圈数量/次序线索，按节点规则处理基数、序数或词形
+  judge: 圈表示数量还是顺序的证据，连同限定词和名词单复数判基数、序数、倍数或分数表达；各项一致才定数词形式。
+  stop: 只看到一个数字提示不能确定功能；排序线索和数量所指不清就停，不把中文数字或冠词单独当序数证明。
+practicality_gate:
+  status: design_complete_empirical_pending
+  trigger: 空位已确定需要数量或顺序
+  action: 圈数量/次序线索，按节点规则处理基数、序数或词形
+  output: decide；圈表示数量还是顺序的证据，连同限定词和名词单复数判基数、序数、倍数或分数表达；各项一致才定数词形式。
+  stop: 只看到一个数字提示不能确定功能；排序线索和数量所指不清就停，不把中文数字或冠词单独当序数证明。
+  transfer: 换数字仍先判位置功能和所指数量，不迁移原数字到固定序数形式。
+  efficiency: 明确数量与排序功能，主要减少按提示数字机械变形；效率未测。
+  misuse_cost: 未经实测；提示是数字就照原样填，或看到the就直接变序数，不核是在数多少还是排第几。会导致误判；须先核触发、执行Stop，不允许辅助产物越级定案。
+first_use_test:
+  status: designed_not_run
+  trigger_success: null
+  action_success: null
+  evidence_success: null
+  stop_rule_success: null
+  no_answer_backfit: null
+  failure_type: null
+  final_result: pending_real_student_test
+evaluation:
+  baseline: 普通逐项核题面
+  primary_benefit_hypothesis: 明确数量与排序功能，主要减少按提示数字机械变形；效率未测。
+  trigger_precision: null
+  trigger_recall: null
+  resolution_rate: null
+  standalone_rate: null
+  assist_rate: null
+  false_trigger_rate: null
+  transfer_rate: null
+  boundary_accuracy: null
+  time_complexity_gain: null
+usefulness_level: Useful
+status: candidate
+maturity_status: candidate
+practical_value: Useful
+version: 1.2.0
+change_reason: ANSWER 1c388a0596b13935ae7c6a1af00834915a8efa33 增量来源同步；保留既有动作与版本，旧证据不自动获得新来源准入。
+affected_cases:
+- cases/grammar/G11/canonical/case.yaml
+regression_result: pending_current_epoch_semantic_and_student_acceptance
+student_ready: false
+entry_copy: 数词怎么变？先圈数量或次序的证据，写数多少还是第几。这一步得到的只判断当前证据能支持或排除什么，不能由剩余项自动定案。如果卡住，先标有无提示和空位所在结构；成分/词义不清停在节点前，不从答案倒贴功能。
+static_design_review:
+  status: source_bound_editorial_review
+  source_section_ids: *id001
+  participant_validation: pending_real_participant_validation
+  example_scope: 2026-10-28基础入口表达修订；保留原判据/Stop/课程绑定与语义版本，微动作和关系示意不是完整真题或真人实测。
+source_alignment:
+  commit: 1c388a0596b13935ae7c6a1af00834915a8efa33
+  state: live_source_bound
+  source_content_changed: false
+  correction_profile_applied: false
+  authored_first_contact_draft: true
+  new_course_branches: preserved_in_full_contract_not_automatically_aliased
+  acceptance: unchanged_method_sections; added_source_contracts_preserved; learner/release_pending

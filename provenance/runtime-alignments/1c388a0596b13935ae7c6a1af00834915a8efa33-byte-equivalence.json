@@ -1,0 +1,471 @@
+{
+  "scope": "read_only independent source-byte equivalence; no semantic, learner, release or media acceptance",
+  "source_commit": "1c388a0596b13935ae7c6a1af00834915a8efa33",
+  "reference_head": "1c388a0596b13935ae7c6a1af00834915a8efa33",
+  "reference_origin": "https://github.com/rockpunkgod/ANSWER.git",
+  "reference_clean": true,
+  "reference_core_autocrlf": "true",
+  "verification_source": "local pinned clean checkout plus Git object database via git show; no fresh network fetch",
+  "newline_policy": "Captured source SHA hashes exact CRLF clean-checkout bytes. Git blob SHA hashes original Git object content. Equality after CRLF to LF conversion is reported separately and never equated to raw byte identity.",
+  "files": [
+    {
+      "path": "README.md",
+      "checkout_sha256": "287cdf81faa98ba1a0be4979ae2c6892f258d5cd1f0dc3992e76e529c9f87642",
+      "captured_sha256": "287cdf81faa98ba1a0be4979ae2c6892f258d5cd1f0dc3992e76e529c9f87642",
+      "git_blob_sha256": "5ee6d0d9b7b3b1a78ad493c0c1da1307db31f68856b77eb86a9d2d51aeeb94b6",
+      "capture_equals_checkout": true,
+      "capture_equals_git_blob": false,
+      "only_CRLF_to_LF_equals_git": true
+    },
+    {
+      "path": "agents/gaokao-grammar-fill.md",
+      "checkout_sha256": "1c0436e2d4fda0fe07d5e5c56161710269db4d1200c9f60c1db04ffb4f6df878",
+      "captured_sha256": "1c0436e2d4fda0fe07d5e5c56161710269db4d1200c9f60c1db04ffb4f6df878",
+      "git_blob_sha256": "dfc94c1aafe6105d7286ba6524720b1485837e5571b77ed14775e65ae0f3fb90",
+      "capture_equals_checkout": true,
+      "capture_equals_git_blob": false,
+      "only_CRLF_to_LF_equals_git": true
+    },
+    {
+      "path": "agents/gaokao-objective.md",
+      "checkout_sha256": "299428eeba7526f22dae564905b24de5d4b586bde5703b4aed518ca34721bedf",
+      "captured_sha256": "299428eeba7526f22dae564905b24de5d4b586bde5703b4aed518ca34721bedf",
+      "git_blob_sha256": "2b06dcb5bcdb34aaab327c78cab330a6e1e1228b4d5381b4870124382f7f0868",
+      "capture_equals_checkout": true,
+      "capture_equals_git_blob": false,
+      "only_CRLF_to_LF_equals_git": true
+    },
+    {
+      "path": "agents/gaokao-writing.md",
+      "checkout_sha256": "de5f81ec944e59b5342c219eb9bb9c1cbf35d1994a812d59d75dd0a177a91c9e",
+      "captured_sha256": "de5f81ec944e59b5342c219eb9bb9c1cbf35d1994a812d59d75dd0a177a91c9e",
+      "git_blob_sha256": "f451efe37990ee03f22473cb3c44f8ed5d5bd679515cd43cf7f7970f18c7bf96",
+      "capture_equals_checkout": true,
+      "capture_equals_git_blob": false,
+      "only_CRLF_to_LF_equals_git": true
+    },
+    {
+      "path": "course-audits/2026-10-13/COURSE_TERMINOLOGY.md",
+      "checkout_sha256": "960dce68a8ae2e1618a9cef1dbed3c7f90b7e853b0b5fef542cd813ea9d90838",
+      "captured_sha256": "960dce68a8ae2e1618a9cef1dbed3c7f90b7e853b0b5fef542cd813ea9d90838",
+      "git_blob_sha256": "0d6723a0a739e1c7c03d3a7c3b2523cf36820ede035079f705ae00bc7182ec6d",
+      "capture_equals_checkout": true,
+      "capture_equals_git_blob": false,
+      "only_CRLF_to_LF_equals_git": true
+    },
+    {
+      "path": "course-audits/2026-10-13/README.md",
+      "checkout_sha256": "7282f80a6648181b6d0a77bb3753b2135f8fda3586c120070f4f558c8984423b",
+      "captured_sha256": "7282f80a6648181b6d0a77bb3753b2135f8fda3586c120070f4f558c8984423b",
+      "git_blob_sha256": "21c445946166bfae4f29eb6bbc5169fe0ecb71a791a88dc91866ca26f0db9e8e",
+      "capture_equals_checkout": true,
+      "capture_equals_git_blob": false,
+      "only_CRLF_to_LF_equals_git": true
+    },
+    {
+      "path": "course-audits/2026-10-13/acceptance.md",
+      "checkout_sha256": "2a1ccd0782d071c5e8903af1b6d3bca9ca339d9f67e3f9b1f3ee7abe58ecb283",
+      "captured_sha256": "2a1ccd0782d071c5e8903af1b6d3bca9ca339d9f67e3f9b1f3ee7abe58ecb283",
+      "git_blob_sha256": "42df276721f21bec8a19f7e02cec11f962c9117e2a21b95796a76a23e7eb6133",
+      "capture_equals_checkout": true,
+      "capture_equals_git_blob": false,
+      "only_CRLF_to_LF_equals_git": true
+    },
+    {
+      "path": "course-audits/2026-10-13/application-terms.md",
+      "checkout_sha256": "3cfa72845bdf812dc057967f717b3c19df2736135b2b2633c39a9b0b845fa3e3",
+      "captured_sha256": "3cfa72845bdf812dc057967f717b3c19df2736135b2b2633c39a9b0b845fa3e3",
+      "git_blob_sha256": "2eee255fefa660fe8f0d4c2776e785c8172682af70bf495e47f6844819160430",
+      "capture_equals_checkout": true,
+      "capture_equals_git_blob": false,
+      "only_CRLF_to_LF_equals_git": true
+    },
+    {
+      "path": "course-audits/2026-10-13/application/APPLICATION_BOUNDARY_REVIEW.md",
+      "checkout_sha256": "9cd1ec869b5ee698cb1cea64dc022bffc28627af9b0e8c416f4f464daa62fb4a",
+      "captured_sha256": "9cd1ec869b5ee698cb1cea64dc022bffc28627af9b0e8c416f4f464daa62fb4a",
+      "git_blob_sha256": "e61698f3465d21301bb3612ff721e9740aa6ff8b55f3897a25af2fe07b89c60a",
+      "capture_equals_checkout": true,
+      "capture_equals_git_blob": false,
+      "only_CRLF_to_LF_equals_git": true
+    },
+    {
+      "path": "course-audits/2026-10-13/application/MEDIA_TERM_SCAN.md",
+      "checkout_sha256": "4dc7017867f751bc9437390590bec80fa4a06ea0962621e8a4aaabe26eea988f",
+      "captured_sha256": "4dc7017867f751bc9437390590bec80fa4a06ea0962621e8a4aaabe26eea988f",
+      "git_blob_sha256": "96c56406add13b88840c260b8837f7294f626f355fcbf3a8188f0d0afc4ae7ae",
+      "capture_equals_checkout": true,
+      "capture_equals_git_blob": false,
+      "only_CRLF_to_LF_equals_git": true
+    },
+    {
+      "path": "course-audits/2026-10-13/application/SOURCES_APPLICATION.md",
+      "checkout_sha256": "ac1167fe4b1310e76ea0806e8414dd0faeba30d6675350e733078401c4becaaf",
+      "captured_sha256": "ac1167fe4b1310e76ea0806e8414dd0faeba30d6675350e733078401c4becaaf",
+      "git_blob_sha256": "77012e4318eaed1e9dbb49dfd7f77d9d55bd94e8a9aeac3423b39e992adb546a",
+      "capture_equals_checkout": true,
+      "capture_equals_git_blob": false,
+      "only_CRLF_to_LF_equals_git": true
+    },
+    {
+      "path": "course-audits/2026-10-13/application/TERMINOLOGY_APPLICATION.md",
+      "checkout_sha256": "c336aeeae3260b15869b6ea6ae25c22e469faf678e6c725bb4a1d61ad40a300f",
+      "captured_sha256": "c336aeeae3260b15869b6ea6ae25c22e469faf678e6c725bb4a1d61ad40a300f",
+      "git_blob_sha256": "bdfd1ce23c810e66da8eb77e4d2f0c47259f02ee1236717542ce0492fb9feabf",
+      "capture_equals_checkout": true,
+      "capture_equals_git_blob": false,
+      "only_CRLF_to_LF_equals_git": true
+    },
+    {
+      "path": "course-audits/2026-10-13/cloze-terms.md",
+      "checkout_sha256": "db8b016d1c6e851c9c8ba68872100c7032a4b6df3b2fbbd026e3bec9aae5fe87",
+      "captured_sha256": "db8b016d1c6e851c9c8ba68872100c7032a4b6df3b2fbbd026e3bec9aae5fe87",
+      "git_blob_sha256": "e42d7771f2b261e326ddfe6bb1b426a80abc2e1aeed847f0a803b5c82a50247c",
+      "capture_equals_checkout": true,
+      "capture_equals_git_blob": false,
+      "only_CRLF_to_LF_equals_git": true
+    },
+    {
+      "path": "course-audits/2026-10-13/cloze/coverage.md",
+      "checkout_sha256": "bfee93b5fde06f5a787428e0d236790117c1aabdb187d5f745df41ef4f59a30b",
+      "captured_sha256": "bfee93b5fde06f5a787428e0d236790117c1aabdb187d5f745df41ef4f59a30b",
+      "git_blob_sha256": "f870e96a233cc3587c847ef32684229975d6b9af795311166ee4f2192fb98e17",
+      "capture_equals_checkout": true,
+      "capture_equals_git_blob": false,
+      "only_CRLF_to_LF_equals_git": true
+    },
+    {
+      "path": "course-audits/2026-10-13/continuation-terms.md",
+      "checkout_sha256": "0408a6c3f388b0316067f00bd35880eef8a576c9ec409fb7ecf1d23aaf6de336",
+      "captured_sha256": "0408a6c3f388b0316067f00bd35880eef8a576c9ec409fb7ecf1d23aaf6de336",
+      "git_blob_sha256": "6df8b72d607b3ab149a4c6bd11d37160367dff05786738b31bd97075e4ba42c2",
+      "capture_equals_checkout": true,
+      "capture_equals_git_blob": false,
+      "only_CRLF_to_LF_equals_git": true
+    },
+    {
+      "path": "course-audits/2026-10-13/continuation/CONTINUATION_BOUNDARY_REVIEW.md",
+      "checkout_sha256": "4837c533e85fa757f3793046b4394fc01af1560fc9a42f24d49dbb412e62bb36",
+      "captured_sha256": "4837c533e85fa757f3793046b4394fc01af1560fc9a42f24d49dbb412e62bb36",
+      "git_blob_sha256": "8c3e8f209457d15b0ad5a1667ca37669b8d92f8144be2e2b17910add56af0b11",
+      "capture_equals_checkout": true,
+      "capture_equals_git_blob": false,
+      "only_CRLF_to_LF_equals_git": true
+    },
+    {
+      "path": "course-audits/2026-10-13/continuation/CONTINUATION_BOUNDARY_SOURCE_STATUS.md",
+      "checkout_sha256": "36bf7343cd3e4d6516ce300691836430d53824fbb67597012e58867fb5bcb477",
+      "captured_sha256": "36bf7343cd3e4d6516ce300691836430d53824fbb67597012e58867fb5bcb477",
+      "git_blob_sha256": "9d95c9d441da471391358edddafe9b3dfc4ed973eea37bd53c3ee95a17f329df",
+      "capture_equals_checkout": true,
+      "capture_equals_git_blob": false,
+      "only_CRLF_to_LF_equals_git": true
+    },
+    {
+      "path": "course-audits/2026-10-13/continuation/SOURCE_INDEX.md",
+      "checkout_sha256": "8ed46755b52d13c84059ca0c4c513d3a508b4b4703a1dd0cfc0849625aeb4b8c",
+      "captured_sha256": "8ed46755b52d13c84059ca0c4c513d3a508b4b4703a1dd0cfc0849625aeb4b8c",
+      "git_blob_sha256": "45ee5a5f6fbe2ac106b3bc487478b6fba227f8fd3e897c7a5439ce980c3c8aa2",
+      "capture_equals_checkout": true,
+      "capture_equals_git_blob": false,
+      "only_CRLF_to_LF_equals_git": true
+    },
+    {
+      "path": "course-audits/2026-10-13/continuation/TERMINOLOGY_CONTINUATION.md",
+      "checkout_sha256": "8e55ed130400ab695b99a616790ac884a2e69cd8676357403a63893caf793c33",
+      "captured_sha256": "8e55ed130400ab695b99a616790ac884a2e69cd8676357403a63893caf793c33",
+      "git_blob_sha256": "00d0443d3a679560958d0e8ca24d8fa37d299855145d00574616575697b528b6",
+      "capture_equals_checkout": true,
+      "capture_equals_git_blob": false,
+      "only_CRLF_to_LF_equals_git": true
+    },
+    {
+      "path": "course-audits/2026-10-13/coverage.md",
+      "checkout_sha256": "408325eafef2d860300dd89867fa98f28f7abab6a0a7e80c7a9a19bfd99131e5",
+      "captured_sha256": "408325eafef2d860300dd89867fa98f28f7abab6a0a7e80c7a9a19bfd99131e5",
+      "git_blob_sha256": "27f438dad49e8ba81155764e098e9bd9784884ac97fbe31bbe6e151518b0e615",
+      "capture_equals_checkout": true,
+      "capture_equals_git_blob": false,
+      "only_CRLF_to_LF_equals_git": true
+    },
+    {
+      "path": "course-audits/2026-10-13/objective/TERMINOLOGY_OBJECTIVE.md",
+      "checkout_sha256": "5af7aa8c3c973a7376f6f61fdf8d88a0aa4f1f90a6e486d6d917d90d02112665",
+      "captured_sha256": "5af7aa8c3c973a7376f6f61fdf8d88a0aa4f1f90a6e486d6d917d90d02112665",
+      "git_blob_sha256": "22b642945c539266ba570bf4ca3bae365a1ed9bb4e0dc88e0e1d991dae0e7b63",
+      "capture_equals_checkout": true,
+      "capture_equals_git_blob": false,
+      "only_CRLF_to_LF_equals_git": true
+    },
+    {
+      "path": "course-audits/2026-10-13/objective/reading/AUTUMN03_METHOD_REVIEW.md",
+      "checkout_sha256": "b850b621933332c5935e87ec0b8faa52022f6d7c31fe4426be05f99218b3efa9",
+      "captured_sha256": "b850b621933332c5935e87ec0b8faa52022f6d7c31fe4426be05f99218b3efa9",
+      "git_blob_sha256": "129050a3eba44e01dc8697fe0ba44f1b200f3b0a6f04e939cbc5066218006d3c",
+      "capture_equals_checkout": true,
+      "capture_equals_git_blob": false,
+      "only_CRLF_to_LF_equals_git": true
+    },
+    {
+      "path": "course-audits/2026-10-13/objective/reading/CD_GIFT_METHOD_REVIEW.md",
+      "checkout_sha256": "7e81cec5befe0381fc3f607f8342965be6ac4e2610ab2bf5aed3ec42110d4d36",
+      "captured_sha256": "7e81cec5befe0381fc3f607f8342965be6ac4e2610ab2bf5aed3ec42110d4d36",
+      "git_blob_sha256": "507e2953ffacfad5f0e1d5b7bdc2762f54734226c05eb2f4a9e52b527c145d2e",
+      "capture_equals_checkout": true,
+      "capture_equals_git_blob": false,
+      "only_CRLF_to_LF_equals_git": true
+    },
+    {
+      "path": "course-audits/2026-10-13/reading-terms.md",
+      "checkout_sha256": "e287b02ed215b7d9467896b55971a70a060fde20d768c523d3a9019cfb5a037c",
+      "captured_sha256": "e287b02ed215b7d9467896b55971a70a060fde20d768c523d3a9019cfb5a037c",
+      "git_blob_sha256": "218c941c6ba9330efd92cad142985d96459c18473e67e9ba945d165783c58603",
+      "capture_equals_checkout": true,
+      "capture_equals_git_blob": false,
+      "only_CRLF_to_LF_equals_git": true
+    },
+    {
+      "path": "course-audits/2026-10-13/reading/coverage.md",
+      "checkout_sha256": "dbf8beb364801228cf403fbcbf9c9295790956bb889bf5d04324405b3dfeb4a4",
+      "captured_sha256": "dbf8beb364801228cf403fbcbf9c9295790956bb889bf5d04324405b3dfeb4a4",
+      "git_blob_sha256": "e1e2dfa0814c951dd202243bebfb0d1286e22aa12b750b3f9e7c8ba5d83825af",
+      "capture_equals_checkout": true,
+      "capture_equals_git_blob": false,
+      "only_CRLF_to_LF_equals_git": true
+    },
+    {
+      "path": "course-audits/2026-10-13/release/RELEASE.md",
+      "checkout_sha256": "c29a2d69bb3cad62aa4ceb9ec333837e39e8d298e4e33ebf8f2cdc5bd381f2b3",
+      "captured_sha256": "c29a2d69bb3cad62aa4ceb9ec333837e39e8d298e4e33ebf8f2cdc5bd381f2b3",
+      "git_blob_sha256": "997f2c2d9f38ab1c24437e3215f86d70cf5b130f8222ccdae2bcf52d5a1e1a16",
+      "capture_equals_checkout": true,
+      "capture_equals_git_blob": false,
+      "only_CRLF_to_LF_equals_git": true
+    },
+    {
+      "path": "course-audits/2026-10-13/release/behavior-acceptance.md",
+      "checkout_sha256": "d7165e5a9d82b0f4922728ed33916bdf7c645e5d4bb646a0cd453555e9955b9b",
+      "captured_sha256": "d7165e5a9d82b0f4922728ed33916bdf7c645e5d4bb646a0cd453555e9955b9b",
+      "git_blob_sha256": "fb5cec1d74750f334ca2159e13b4a72054529f4600b210febc0248f844a43737",
+      "capture_equals_checkout": true,
+      "capture_equals_git_blob": false,
+      "only_CRLF_to_LF_equals_git": true
+    },
+    {
+      "path": "course-audits/2026-10-13/release/objective-release.md",
+      "checkout_sha256": "451e2765e5649ddbb8bfe762b90290c629dd71b1fa4ed305b81c3fb7e9c1a665",
+      "captured_sha256": "451e2765e5649ddbb8bfe762b90290c629dd71b1fa4ed305b81c3fb7e9c1a665",
+      "git_blob_sha256": "4df3f211a51e60372cf12c77ea20bc3c1525e71ed5bd90ad8493b172e37bc35c",
+      "capture_equals_checkout": true,
+      "capture_equals_git_blob": false,
+      "only_CRLF_to_LF_equals_git": true
+    },
+    {
+      "path": "course-audits/2026-10-13/release/writing-release.md",
+      "checkout_sha256": "5a2577dc927f92f74299d5fca63c4fd9b6d447b121a278afcdbd433565a54de1",
+      "captured_sha256": "5a2577dc927f92f74299d5fca63c4fd9b6d447b121a278afcdbd433565a54de1",
+      "git_blob_sha256": "ae7a0e65404420dadbc543a6b66458337c34fcb5ed326a7ff9dc4a1852c48240",
+      "capture_equals_checkout": true,
+      "capture_equals_git_blob": false,
+      "only_CRLF_to_LF_equals_git": true
+    },
+    {
+      "path": "course-audits/2026-10-13/seven-five-terms.md",
+      "checkout_sha256": "bc9de277178a9a600a4dca837dba1827022a40c48c75caea24910ac59a1ae8c8",
+      "captured_sha256": "bc9de277178a9a600a4dca837dba1827022a40c48c75caea24910ac59a1ae8c8",
+      "git_blob_sha256": "328b753d5eb26406c4c7bcee6b4d9a89c71ae65545c3c7c216f5eed3cc59956f",
+      "capture_equals_checkout": true,
+      "capture_equals_git_blob": false,
+      "only_CRLF_to_LF_equals_git": true
+    },
+    {
+      "path": "course-audits/2026-10-13/seven/FINAL_STATUS.md",
+      "checkout_sha256": "f7e4fb0e6155939c8009546404dc97e427e4d1859a67ad9f60a7c1c6800367fb",
+      "captured_sha256": "f7e4fb0e6155939c8009546404dc97e427e4d1859a67ad9f60a7c1c6800367fb",
+      "git_blob_sha256": "4996d4339c5f45c584af1c1e11a6b00b915d82f577596034feff57544a662306",
+      "capture_equals_checkout": true,
+      "capture_equals_git_blob": false,
+      "only_CRLF_to_LF_equals_git": true
+    },
+    {
+      "path": "course-audits/2026-10-13/seven/coverage.md",
+      "checkout_sha256": "63b06e9f7fd9efb0a125ebc386883faf7e3c9fea91a84363d08efcccb2f197fc",
+      "captured_sha256": "63b06e9f7fd9efb0a125ebc386883faf7e3c9fea91a84363d08efcccb2f197fc",
+      "git_blob_sha256": "9bcda4c2abc206ba6f6f4e4737e43a88048f6043a9a5dd2645429174db7f3e9e",
+      "capture_equals_checkout": true,
+      "capture_equals_git_blob": false,
+      "only_CRLF_to_LF_equals_git": true
+    },
+    {
+      "path": "gaokao-english/SKILL.md",
+      "checkout_sha256": "ca9c146b6664dbd6ea076e363c6a5332b22f3968ef56396e914be01443f9cdcd",
+      "captured_sha256": "ca9c146b6664dbd6ea076e363c6a5332b22f3968ef56396e914be01443f9cdcd",
+      "git_blob_sha256": "53d7132157d1f5ca6b8d3541c1d4b5b1fb50280d7fee0b9881c90368304ba381",
+      "capture_equals_checkout": true,
+      "capture_equals_git_blob": false,
+      "only_CRLF_to_LF_equals_git": true
+    },
+    {
+      "path": "gaokao-english/references/cloze.md",
+      "checkout_sha256": "71b985be2626234b9b2143dc9623c2d8af9c2c24599e8ff38e6cd6d8fc11551a",
+      "captured_sha256": "71b985be2626234b9b2143dc9623c2d8af9c2c24599e8ff38e6cd6d8fc11551a",
+      "git_blob_sha256": "34087538fa4419db94a21c17473cd8b4b6cc24b167e37ed5edf31db0ab15ee16",
+      "capture_equals_checkout": true,
+      "capture_equals_git_blob": false,
+      "only_CRLF_to_LF_equals_git": true
+    },
+    {
+      "path": "gaokao-english/references/course-evidence.md",
+      "checkout_sha256": "65337a85e92dbcccd0ea9fdfb35fed0d8a271918ed178a55dbe0e71cfd14a42f",
+      "captured_sha256": "65337a85e92dbcccd0ea9fdfb35fed0d8a271918ed178a55dbe0e71cfd14a42f",
+      "git_blob_sha256": "818b859e99ca1be15a89bf704f94b7dc3282a0e1d84aaaafe3626824e66e6c61",
+      "capture_equals_checkout": true,
+      "capture_equals_git_blob": false,
+      "only_CRLF_to_LF_equals_git": true
+    },
+    {
+      "path": "gaokao-english/references/delivery-contract.md",
+      "checkout_sha256": "05f48808abf662a83b50c38b342e1db3f9ce5b84edd8fde7de387059ef0c44d2",
+      "captured_sha256": "05f48808abf662a83b50c38b342e1db3f9ce5b84edd8fde7de387059ef0c44d2",
+      "git_blob_sha256": "446e61e28a93e41fc01c513aef9600f041dfa3a30133909f41593810d4233453",
+      "capture_equals_checkout": true,
+      "capture_equals_git_blob": false,
+      "only_CRLF_to_LF_equals_git": true
+    },
+    {
+      "path": "gaokao-english/references/evidence-gaps.md",
+      "checkout_sha256": "32be8757443cfab39ff09b86b68def27c1f753fbb70b6d38da21ce22a4f6e222",
+      "captured_sha256": "32be8757443cfab39ff09b86b68def27c1f753fbb70b6d38da21ce22a4f6e222",
+      "git_blob_sha256": "408147799cc67c5ae5dc757c41ab77f80627ec7a1aa7fd0a98ce33ca9fd79f13",
+      "capture_equals_checkout": true,
+      "capture_equals_git_blob": false,
+      "only_CRLF_to_LF_equals_git": true
+    },
+    {
+      "path": "gaokao-english/references/listening.md",
+      "checkout_sha256": "6056701c9b0aab1fdd2eb9b26dcb6a4c5971822d0ba0561028ac1565d59903ff",
+      "captured_sha256": "6056701c9b0aab1fdd2eb9b26dcb6a4c5971822d0ba0561028ac1565d59903ff",
+      "git_blob_sha256": "f5aaa08c446acf8bd11e1acd10baeabe42b02466a268cc8a777df1c4c69f1d36",
+      "capture_equals_checkout": true,
+      "capture_equals_git_blob": false,
+      "only_CRLF_to_LF_equals_git": true
+    },
+    {
+      "path": "gaokao-english/references/reading-comprehension.md",
+      "checkout_sha256": "18511c661e24317e3870c7f569f0ea69d3072287a01868835078a369efc8a758",
+      "captured_sha256": "18511c661e24317e3870c7f569f0ea69d3072287a01868835078a369efc8a758",
+      "git_blob_sha256": "fece3a5f5b820006d7d597321bffa97e7a1e16d54501ebb805e548b9e21a9189",
+      "capture_equals_checkout": true,
+      "capture_equals_git_blob": false,
+      "only_CRLF_to_LF_equals_git": true
+    },
+    {
+      "path": "gaokao-english/references/router.md",
+      "checkout_sha256": "8fc5ba29db2aba74fe2b0f2d9d6fb684a315073316990c39345967b2267fb81a",
+      "captured_sha256": "8fc5ba29db2aba74fe2b0f2d9d6fb684a315073316990c39345967b2267fb81a",
+      "git_blob_sha256": "bc979ce8c992dfc0831dbb4455bb5baf1315918b24dbc74115dce91265c2ca75",
+      "capture_equals_checkout": true,
+      "capture_equals_git_blob": false,
+      "only_CRLF_to_LF_equals_git": true
+    },
+    {
+      "path": "gaokao-english/references/seven-five.md",
+      "checkout_sha256": "84054ec1faa121763aabd3b8856b3edda59ba996e9394d241233ca0d543c3bb3",
+      "captured_sha256": "84054ec1faa121763aabd3b8856b3edda59ba996e9394d241233ca0d543c3bb3",
+      "git_blob_sha256": "0c7a3c04fc6c474f7f895f070f49d34f1ae80cf059cd794fdeffc153fdd27b73",
+      "capture_equals_checkout": true,
+      "capture_equals_git_blob": false,
+      "only_CRLF_to_LF_equals_git": true
+    },
+    {
+      "path": "gaokao-grammar-fill/SKILL.md",
+      "checkout_sha256": "4d7d0e26e6007efba8fb3aca0dbe3bc75b8b78d15b14757fa4a80a7e6460b048",
+      "captured_sha256": "4d7d0e26e6007efba8fb3aca0dbe3bc75b8b78d15b14757fa4a80a7e6460b048",
+      "git_blob_sha256": "e198a1fb628240912ae1e08e3b5e64804de03f00d91e656c64d9e58a451960b1",
+      "capture_equals_checkout": true,
+      "capture_equals_git_blob": false,
+      "only_CRLF_to_LF_equals_git": true
+    },
+    {
+      "path": "gaokao-grammar-fill/references/course-evidence.md",
+      "checkout_sha256": "feab1810a3788a2659633cc78f82fdb5d9d3ed52b9908edf9fe8f5b0ca751ae5",
+      "captured_sha256": "feab1810a3788a2659633cc78f82fdb5d9d3ed52b9908edf9fe8f5b0ca751ae5",
+      "git_blob_sha256": "0892998bbb1dc59f2d420fcfb16573d4d81c5907041dfe4d14bfb7900b72c954",
+      "capture_equals_checkout": true,
+      "capture_equals_git_blob": false,
+      "only_CRLF_to_LF_equals_git": true
+    },
+    {
+      "path": "gaokao-grammar-fill/references/grammar-fill.md",
+      "checkout_sha256": "b1ff451d8a01ae4c799ad60b4f47132e2dec4235c5acacd03582de63ab838148",
+      "captured_sha256": "b1ff451d8a01ae4c799ad60b4f47132e2dec4235c5acacd03582de63ab838148",
+      "git_blob_sha256": "ad2629ded0feaa1f0aa2ee297698fdb388e2016cc84e5a1e8b947db3b7f8b0de",
+      "capture_equals_checkout": true,
+      "capture_equals_git_blob": false,
+      "only_CRLF_to_LF_equals_git": true
+    },
+    {
+      "path": "gaokao-grammar-fill/references/method-application-example.md",
+      "checkout_sha256": "b31cc2459f048403875a2d4c1912849c6008928e515f7ebddfea76e5c5155753",
+      "captured_sha256": "b31cc2459f048403875a2d4c1912849c6008928e515f7ebddfea76e5c5155753",
+      "git_blob_sha256": "a98e5db8428b8e08669399ebaf22e19c5951e04c303617a72f43ada90e8239f9",
+      "capture_equals_checkout": true,
+      "capture_equals_git_blob": false,
+      "only_CRLF_to_LF_equals_git": true
+    },
+    {
+      "path": "gaokao-grammar-fill/references/objective-revision.md",
+      "checkout_sha256": "135f45929404a3f77aa29336b2df8a1d7dd81ee3595c4d98029fbbea0a1345fa",
+      "captured_sha256": "135f45929404a3f77aa29336b2df8a1d7dd81ee3595c4d98029fbbea0a1345fa",
+      "git_blob_sha256": "c79398344582014d7c63733721707d370684553212a25b7c143556f013290334",
+      "capture_equals_checkout": true,
+      "capture_equals_git_blob": false,
+      "only_CRLF_to_LF_equals_git": true
+    },
+    {
+      "path": "gaokao-grammar-fill/scripts/check_lesson.py",
+      "checkout_sha256": "751a00d9e663603a9478aa1f52bcfa37db909f8d705b6652c6a53931f477e7a2",
+      "captured_sha256": "751a00d9e663603a9478aa1f52bcfa37db909f8d705b6652c6a53931f477e7a2",
+      "git_blob_sha256": "58322af6d1b794bb9bb862a2da0b800d777e225bac4b70cbd1e0130dded6323f",
+      "capture_equals_checkout": true,
+      "capture_equals_git_blob": false,
+      "only_CRLF_to_LF_equals_git": true
+    },
+    {
+      "path": "gaokao-writing/SKILL.md",
+      "checkout_sha256": "5d6f50b52b6c2e612907bf24821aacb6012330d661ccb59439b67098a8f693e3",
+      "captured_sha256": "5d6f50b52b6c2e612907bf24821aacb6012330d661ccb59439b67098a8f693e3",
+      "git_blob_sha256": "bdef89db78f842fb21aa8aeae85e1b90a1f64ab4e27a3efd57ceba758c0fe6db",
+      "capture_equals_checkout": true,
+      "capture_equals_git_blob": false,
+      "only_CRLF_to_LF_equals_git": true
+    },
+    {
+      "path": "gaokao-writing/references/application-writing-and-correction.md",
+      "checkout_sha256": "eb7cd9906c96828bc78cf2c27d66809a7abc49b2a6da10b27a9213bc3841777f",
+      "captured_sha256": "eb7cd9906c96828bc78cf2c27d66809a7abc49b2a6da10b27a9213bc3841777f",
+      "git_blob_sha256": "6a0dcb4379507db78766e38d9a6487dc5e43297ebd812dabf0bfa0c18d5d7880",
+      "capture_equals_checkout": true,
+      "capture_equals_git_blob": false,
+      "only_CRLF_to_LF_equals_git": true
+    },
+    {
+      "path": "gaokao-writing/references/continuation-writing-and-correction.md",
+      "checkout_sha256": "c3002a37b9d78a9f66366f709626791d0409cef656baf5b02f69d0626848d34f",
+      "captured_sha256": "c3002a37b9d78a9f66366f709626791d0409cef656baf5b02f69d0626848d34f",
+      "git_blob_sha256": "57dd0ad62f3ee2bd6a83f0568943de77a391a4e3386537fbf718d34c98e39a35",
+      "capture_equals_checkout": true,
+      "capture_equals_git_blob": false,
+      "only_CRLF_to_LF_equals_git": true
+    },
+    {
+      "path": "kaiming-english-qa/SKILL.md",
+      "checkout_sha256": "2181999bca008b2aed46a24029be4308cf03d11fc44a0ffbb20cb4c0a2dffe08",
+      "captured_sha256": "2181999bca008b2aed46a24029be4308cf03d11fc44a0ffbb20cb4c0a2dffe08",
+      "git_blob_sha256": "8fa7f5999daaf68190ef6e15722e9c8ff8758b8d83842e8866f2a58a70fca61f",
+      "capture_equals_checkout": true,
+      "capture_equals_git_blob": false,
+      "only_CRLF_to_LF_equals_git": true
+    }
+  ]
+}

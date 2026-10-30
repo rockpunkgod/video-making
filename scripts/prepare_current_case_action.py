@@ -11,7 +11,7 @@ from core.registry import Registry
 from core.analyzer import QuestionAnalyzer
 from core.real_cases import (private_root, private_file, artifact, material,
                              digest, json_digest, load_catalog, _runtime_contexts,
-                             validate_request)
+                             _validate_request)
 from scripts.ingest_exam_sources import freeze_json
 
 
@@ -30,7 +30,8 @@ def prepare(dataset, prior_request, current_question, output):
         raise ValueError('Use one existing registered Case; do not create duplicate source questions')
     context = _runtime_contexts(root).get((prior_request, request_ref['sha256']))
     previous = context['registry'] if context else registry
-    _, frozen, _ = validate_request(root, request, previous)
+    # Read only the already registered historical packet; this cannot admit a Case.
+    _, frozen, _ = _validate_request(root, request, previous, _catalog_replay=True)
     _, question_raw = private_file(root, current_question)
     question = json.loads(question_raw)
     if material(question) != material(frozen):
@@ -81,6 +82,7 @@ def prepare(dataset, prior_request, current_question, output):
     pending = {key: value for key, value in request.items()
                if key not in {'action', 'case_review', 'method_version', 'case_id'}}
     pending.update(method_version=method['version'], action=action_ref,
+                   source_commit=action['source_commit'],
                    case_id=prior_cases[0]['case_id']+'-current-'+method['version'].replace('.', '-'))
     freeze_json(destination/'pending-request.json', pending)
     provenance = {

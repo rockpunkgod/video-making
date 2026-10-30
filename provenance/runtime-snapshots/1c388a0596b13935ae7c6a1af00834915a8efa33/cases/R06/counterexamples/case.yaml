@@ -1,0 +1,23 @@
+method_id: R06
+case_type: counterexample
+status: evidence_gap
+objective: 防止把覆盖词多或范围大当主旨正确。
+prompt_excerpt: null
+documented_pattern: 候选覆盖 A+B+C 的表面词汇，但把原文的对比、因果或变化关系改错。
+expected_action: 覆盖齐全后继续核块间关系。
+pass_condition: 不因范围大就保留。
+gap: 需要包含完整错关系候选的课程题面。
+source_reference: ANSWER@b04ebc26:gaokao-english/references/reading-comprehension.md#主旨缺失
+case_id: R06-counterexample
+question_type: 阅读理解
+source: ANSWER@b04ebc26:gaokao-english/references/reading-comprehension.md#主旨缺失
+question: null
+answer: null
+trigger: 题干问全文主旨、写作目的或最佳标题。
+evidence: []
+method_role: decider
+expected_output: decide
+stop_rule: 范围大，不等于主旨对。
+notes: 需要包含完整错关系候选的课程题面。
+method_version: 1.1.0
+source_commit: b04ebc26d7fa096404111a0bb12f6c77cc8525b9

@@ -18,7 +18,7 @@ sections:
 
 
       '
-    commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
+    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
   c98fba12d89dd23c:
     path: agents/gaokao-grammar-fill.md
     heading: 先读技能
@@ -40,7 +40,7 @@ sections:
 
 
       '
-    commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
+    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
   2a5baa50a9c9e43e:
     path: agents/gaokao-grammar-fill.md
     heading: 管什么
@@ -53,7 +53,7 @@ sections:
 
 
       '
-    commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
+    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
   f64f82266259083f:
     path: agents/gaokao-grammar-fill.md
     heading: 不管什么
@@ -69,7 +69,7 @@ sections:
 
 
       '
-    commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
+    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
   177171bdc8b261a9:
     path: agents/gaokao-grammar-fill.md
     heading: 怎么做
@@ -84,7 +84,7 @@ sections:
       交付是给学生看的一条消息，不是报告或讲义。遇到未覆盖、证据不足或题面不可辨认时停下并说明缺口。
 
       '
-    commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
+    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
   5851f11ae7406b87:
     path: agents/gaokao-objective.md
     heading: 入口契约
@@ -104,7 +104,7 @@ sections:
 
 
       '
-    commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
+    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
   a86e6b0f5dc8de10:
     path: agents/gaokao-objective.md
     heading: 先读技能
@@ -131,7 +131,7 @@ sections:
 
 
       '
-    commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
+    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
   3f82efdd6dae76a9:
     path: agents/gaokao-objective.md
     heading: 管什么
@@ -144,7 +144,7 @@ sections:
 
 
       '
-    commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
+    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
   9a47076f6c54e58d:
     path: agents/gaokao-objective.md
     heading: 不管什么
@@ -165,7 +165,7 @@ sections:
 
 
       '
-    commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
+    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
   28611358fa225063:
     path: agents/gaokao-objective.md
     heading: 怎么做
@@ -177,7 +177,7 @@ sections:
       方法只来自课程已核验的证据，不自创同名方法，不把知识清单当步骤讲。交付是给学生看的一条消息，不是报告、讲义或审计。遇到未覆盖、证据不足、课程版本冲突或题面不可辨认时停下并说明缺口，不硬凑完整思维链，也不用常识补课。
 
       '
-    commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
+    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
   351473748dd33050:
     path: agents/gaokao-writing.md
     heading: 入口契约
@@ -197,7 +197,7 @@ sections:
 
 
       '
-    commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
+    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
   e09c874be1f20f95:
     path: agents/gaokao-writing.md
     heading: 先读技能
@@ -217,7 +217,7 @@ sections:
 
 
       '
-    commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
+    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
   53b1d7e0d792d72d:
     path: agents/gaokao-writing.md
     heading: 管什么
@@ -230,7 +230,7 @@ sections:
 
 
       '
-    commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
+    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
   8b904c44bcf66e49:
     path: agents/gaokao-writing.md
     heading: 不管什么
@@ -243,7 +243,7 @@ sections:
 
 
       '
-    commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
+    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
   885fb13b1c9e6681:
     path: agents/gaokao-writing.md
     heading: 怎么做
@@ -261,7 +261,7 @@ sections:
       不虚构学生原稿，不虚构批改分数。缺题目、原文、段首句或学生全文时，只处理现有信息能支持的部分，并明确哪些评分维度暂时无法判断。学生的作文里没出现两段段首句是正常的，不算缺项。
 
       '
-    commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
+    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
   3f36ea92a4769ee5:
     path: gaokao-english/references/cloze.md
     heading: 完形填空
@@ -280,7 +280,7 @@ sections:
 
 
       '
-    commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
+    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
   9b9a8cf18e4a40a5:
     path: gaokao-english/references/cloze.md
     heading: 三读法的职责说明
@@ -296,13 +296,16 @@ sections:
 
 
       '
-    commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
+    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
   c84135f2763c6806:
     path: gaokao-english/references/cloze.md
-    heading: 语篇行文结构的已核验操作（内容说明，非新增方法名）
+    heading: 行文结构（结构认识与已核操作）
     line_start: 15
-    line_end: 29
-    content: '## 语篇行文结构的已核验操作（内容说明，非新增方法名）
+    line_end: 31
+    content: '## 行文结构（结构认识与已核操作）
+
+
+      课程明确使用“行文结构”原称，关注题材、总分／总分总等实际展开、前后呼应及上下文提示。它是结构认识与查证入口，不自造“行文结构法”或强制唯一题序；“完形语篇的行文结构”题名另保留，不与“完形语篇逻辑破译”系列标题混同。以下是已核操作。
 
 
       触发：当前空需要借助全文框架、语境词义、逻辑关系或固定搭配判断，而非一句孤立语法即可解决。
@@ -327,12 +330,12 @@ sections:
 
 
       '
-    commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
-  6d62ce662281b613:
+    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+  6fc15a844228ee2d:
     path: gaokao-english/references/cloze.md
     heading: 角色渗透法的受限视角检查
-    line_start: 30
-    line_end: 35
+    line_start: 32
+    line_end: 37
     content: '## 角色渗透法的受限视角检查
 
 
@@ -343,12 +346,12 @@ sections:
 
 
       '
-    commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
-  b50b911407b9faa9:
+    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+  7ff85814d7d04b1a:
     path: gaokao-english/references/cloze.md
     heading: 瞻前顾后法
-    line_start: 36
-    line_end: 45
+    line_start: 38
+    line_end: 47
     content: '## 瞻前顾后法
 
 
@@ -365,12 +368,12 @@ sections:
 
 
       '
-    commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
-  a68178b2feeba3e5:
+    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+  eeb778a0755fcf31:
     path: gaokao-english/references/cloze.md
     heading: 必须保留的判断分支
-    line_start: 46
-    line_end: 49
+    line_start: 48
+    line_end: 51
     content: '## 必须保留的判断分支
 
 
@@ -378,12 +381,12 @@ sections:
 
 
       '
-    commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
-  b0b1e691060b321a:
+    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+  32023d73e6038aee:
     path: gaokao-english/references/cloze.md
     heading: 词性只引导找线索
-    line_start: 50
-    line_end: 55
+    line_start: 52
+    line_end: 57
     content: '### 词性只引导找线索
 
 
@@ -394,12 +397,12 @@ sections:
 
 
       '
-    commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
-  e36a0eb111d26684:
+    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+  34f5824201e3e44b:
     path: gaokao-english/references/cloze.md
     heading: 形容词、副词的褒贬只辅助缩小
-    line_start: 56
-    line_end: 65
+    line_start: 58
+    line_end: 67
     content: '### 形容词、副词的褒贬只辅助缩小
 
 
@@ -416,12 +419,12 @@ sections:
 
 
       '
-    commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
-  87987576b5e8284b:
+    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+  98c2c157b45f185a:
     path: gaokao-english/references/cloze.md
     heading: 近义项要落到具体语义
-    line_start: 66
-    line_end: 69
+    line_start: 68
+    line_end: 71
     content: '### 近义项要落到具体语义
 
 
@@ -429,12 +432,12 @@ sections:
 
 
       '
-    commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
-  d88f9abb9bd35bdc:
+    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+  772acbd30c02f393:
     path: gaokao-english/references/cloze.md
     heading: 大词／大小原则的受限候选比较
-    line_start: 70
-    line_end: 75
+    line_start: 72
+    line_end: 77
     content: '### 大词／大小原则的受限候选比较
 
 
@@ -445,12 +448,12 @@ sections:
 
 
       '
-    commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
-  7abd608ebd73dbe2:
+    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+  7f0f15f40c83b385:
     path: gaokao-english/references/cloze.md
     heading: 逻辑与时间要看真实内容
-    line_start: 76
-    line_end: 79
+    line_start: 78
+    line_end: 81
     content: '### 逻辑与时间要看真实内容
 
 
@@ -458,12 +461,12 @@ sections:
 
 
       '
-    commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
-  89415a44acd8248e:
+    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+  91f59a59fd1b5610:
     path: gaokao-english/references/cloze.md
     heading: 名词复现只是线索
-    line_start: 80
-    line_end: 87
+    line_start: 82
+    line_end: 89
     content: '### 名词复现只是线索
 
 
@@ -477,12 +480,12 @@ sections:
 
 
       '
-    commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
-  b7ce29d974576463:
+    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+  f7cd71358324b06d:
     path: gaokao-english/references/cloze.md
     heading: 评价、结果与动作链
-    line_start: 88
-    line_end: 91
+    line_start: 90
+    line_end: 93
     content: '### 评价、结果与动作链
 
 
@@ -490,12 +493,56 @@ sections:
 
 
       '
-    commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
-  cfadf921b2f43458:
+    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+  dfbd9f0fd4676ae2:
+    path: gaokao-english/references/cloze.md
+    heading: 已核课程分支与称呼
+    line_start: 94
+    line_end: 113
+    content: '## 已核课程分支与称呼
+
+
+      本节补名称与已有职责的对应，不改变本模块作答顺序或新增整题算法；同名阅读、七选五规则不借用。
+
+
+      - 完形语篇的行文结构：内容框架名称，对应本模块首句粗框架、逐空核证据和整体核查，不自造行文结构法。
+
+      - 原词复现：以同词回查当前空的对象、事件和句意，重复可能是干扰，不能直接选。
+
+      - 复现原则：词汇呼应分支的原称，先找呼应，再核当前完整关系，名称单列。
+
+      - 同义复现：以已知同义关系回查语境，仍核对象和具体义。
+
+      - 近义复现：以可确认的近义表达查线索，近义不表示当前语境可任意替换。
+
+      - 反义复现：先核真实对照维度和两侧完整内容，再比较候选；and也能连反向处境，不能强定方向。
+
+      - 大词原则：保留此完整原名，受限动作见大词／大小原则小节；具体提示不足仍须核泛项正向依据。
+
+      - 动作流：按真实行动及参与者核先后、因果和当前空关系，不能补出未述情节。
+
+      - 结构对应：核实际平行结构与内容的对应，同句式或and不保证同词义或同褒贬。
+
+      - 泛比较：本题型的程度／评价词义说明，比较当前对象的具体程度，不套阅读比较级规则或极端词优先。
+
+      - 劫匪插葱：本题型结构口诀，识主干与修饰；不同讲次对是否需要使用有差异，按需识结构，不删除影响答案的否定、条件和范围。
+
+      - 只看主语谓语：结构与主干的框架说法，不授权只剩主谓后作答，必要宾语、修饰及关系仍保留。
+
+      - 首句完整定主题：课堂策略原称，首句形成主题假设，再以正文实际展开核证；首句总完整与通常不设空口径及首句设空例并存，有缺口时不补写首句，不预编情节，结尾也不自动是唯一主旨。
+
+      - 首句完整定主题，相同词性定答案：课堂组合口诀，前半只给粗框架，后半只引导寻找同词性或相同修饰作用的证据，非词性相同就选。两部分按实际空位分别起作用，不变成强制两步整题法。
+
+      - 无信息靠主题／无信靠主题：分来源保留的回查提示，局部暂无线索时回全文主线查相关证据，主题只指方向，不能无证定案或借相邻未解空互证。
+
+
+      '
+    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+  f8c0708ce4836af6:
     path: gaokao-english/references/cloze.md
     heading: 整篇与现场输出
-    line_start: 92
-    line_end: 95
+    line_start: 114
+    line_end: 117
     content: '## 整篇与现场输出
 
 
@@ -503,19 +550,19 @@ sections:
 
 
       '
-    commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
-  48afc7631dc06200:
+    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+  2d82e474b7062b0e:
     path: gaokao-english/references/cloze.md
     heading: 定案与输出
-    line_start: 96
-    line_end: 98
+    line_start: 118
+    line_end: 120
     content: '## 定案与输出
 
 
       每题自然点明实际使用的已证方法或具体操作、真正区分候选的题面关系和选出或排除结论。运用行文结构时直接说本题先看首句、核哪处呼应，不报课程系列名称，也不自创“行文结构法”。只排除一项不能据剩余项自动定案。整篇完成后的全文通读是内部定案核对。若近处证据不够，说明具体缺口或暂留方向；若关键题面、词义或搭配仍缺失，停止推断。不要穷举无关选项，也不要把每个单空讲成全文复述。
 
       '
-    commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
+    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
   a031e140a0b5ce5c:
     path: gaokao-english/references/course-evidence.md
     heading: 课程证据索引
@@ -530,12 +577,55 @@ sections:
 
 
       '
-    commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
+    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
   7ec495478da54d72:
     path: gaokao-english/references/course-evidence.md
-    heading: 做题顺序的处理
+    heading: 2026-10-30五课程增量验收与旧缺口更新
     line_start: 5
-    line_end: 10
+    line_end: 22
+    content: '## 2026-10-30五课程增量验收与旧缺口更新
+
+
+      独立底稿根`E:/新建文件夹/course-distillation-20261030`，入口FINAL_REVIEW、ROOT_ACCEPTANCE、ACCEPTED_NAMES及三板块逐源表。本次只把已验动作和边界增量写入正式模块，不迁原题、字母、固定词对、口误或强保证。原音为本地机器稿结合原帧／讲义，非人工逐字听写；旧证身份分整视频SHA、完整代表音窗SHA、抽样音画对应，不把后两者抬成整个视频一致。下列更新覆盖历史同项的全面待核状态，未覆盖的真实缺口继续保留。
+
+
+      - 阅读主客一致：春01三代表分别核意愿／行为、观察／假设、施受角色；第一批OBJECTIVE_REVIEW第七节与第五批OBJECTIVE_BATCH5的1500–2100、2700–3300补窗闭合后两分支。给与受是语义角色，不限语法被动；will必实现、缺原词即排等强说法不运行。
+
+      - 阅读时态一致：春04独立原定义900秒帧，0–900及900–1500原音和1150帧支持两代表；核实际时间及事实状态，不与动静或七选五同名合并。within与after不机械同义。
+
+      - 阅读主语一致：第四批春07 60秒定义帧及0–1900原音两代表；首例900秒先选后975–1022纠正的课堂推进完整保留，不能用旧红字当最终选择。主体与动作同核、正确项仍需正向支持。
+
+      - 阅读动静一致：第五批春10 60秒定义帧、0–3100五原音窗及1050/1850/2820原帧有四有界代表，比较变化／状态和具体属性。have an
+      increase等完整表达也能表变化，不机械词表分类；旧标题动态分支、受限持续语义与本定义分源保留。
+
+      - 阅读大词原则：第一批秋03 6508–6805补得先回文核具体限制、后点名原则的链。声画包含字母冲突以及完整断言并无真实包含的张力留档，不扩大为主题相关或范围大就选。三化入口沿用先题干／主旨选项→有效首尾→中间段首。
+
+      - 阅读语言冰山理论／阅读理解基本流程／两首一尾定主题：第三批期末规划900–1500原音及1189.5／1400帧。前者是解释框架，后两者为原栏目及先主题后逐题的来源；代表仅有界，不与三化或积极阅读合名，不覆盖既定用户题序。
+
+      - 七选五单复一致：第一批秋08 7161–7317与8016.9帧，保独立原名及一致性检查身份，不硬筛单复同形。总起句做题法春03讲义及0–1500原音两简例补概括性、引领性和三一致→考点→回文入口，不称所有后文已逐项听核。第四批春05
+      60秒原帧与0–1750原音三代表补逻辑判断内容关联独立原名及逻辑／内容双核；春04／05为同堂转码抽样对应，不倍增代表。
+
+      - 完形：第三批寒14下篇三材料补瞻前顾后、独立线索返回及未解空不可互证；第四批春08补行文结构／首句完整定主题。other/OTHER_REVIEW春02
+      1530–2130明确首句完整定主题，相同词性定答案，3300–3780补无信息靠主题／无信靠主题的回查职责，末空未收束不冒称完整定答。各名称保留身份，不恢复强制空号或遍数。
+
+      - 听力：other/OTHER_REVIEW暑02 4500–6540原音及6400帧补倍速精听法、影子跟读法；秋季听力3300–3900、4200–4800、6300–6900补挖空听、连读练习、盲听训练及角色、完整关系核对代表。other/batch2/OTHER_BATCH2_REVIEW寒13
+      7964.5原屏解题三步与900–1440／3300–3940等代表，明确练习／精听条件，不套考试无限回放。第四批other春09 900–1009原音、1231.912帧证因病转低保五关系助记，7802.112帧及课尾原音证三项分层训练，125+为对象不是速题法。训练、助记、答题职责分别登记，不借七选五同名顺序。
+
+
+      春02原音暂识“比数绝重大”的口诀仍未完整核准字形及余项展开，只确证“比”对应比较级先核查，不能由谐音补字造固定扫描清单。旧听力“无任何可调用方法”、阅读时态未独立确证及主客施受无代表等全面否定，现由本节和运行模块更新；未核强口径不借增量激活。
+
+
+      春12密卷原件`E:/开明致学/（课上讲义）第12讲 考前押题密卷（一）（26S春）.docx.docx`于本次直接只读原DOCX XML，段号P58极速定位逻辑、P96图表题极速逻辑（不是摘要所简写的图表题逻辑）、P289主旨定位法、P425
+      mention 题模板，另有定位逻辑、主旨定位、例子→证明观点、定位专家观点等逐题小标题。四首一句绝杀口诀在P129/247/365/462，分别是各篇后总结。均按题解标签／助记身份登记，未取得课堂原音确认独立算法；共同要求一定在统一说明区、主旨必看末段、科学文目的必报发现等不运行，原题字词不迁入通则。可对应已验定位、结构覆盖及例子作用的职责已写入阅读模块，不能因为不激活新法而漏其名称。当前F春课程未发现对应密卷授课媒体，不用另一同号春12自然作文代证。
+
+
+      '
+    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+  aa6e8feddfc0eaac:
+    path: gaokao-english/references/course-evidence.md
+    heading: 做题顺序的处理
+    line_start: 23
+    line_end: 28
     content: '## 做题顺序的处理
 
 
@@ -547,12 +637,12 @@ sections:
 
 
       '
-    commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
-  75c52cd237e7480d:
+    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+  57bc90ecca1e951c:
     path: gaokao-english/references/course-evidence.md
     heading: 方法名与批注的核查
-    line_start: 11
-    line_end: 18
+    line_start: 29
+    line_end: 36
     content: '## 方法名与批注的核查
 
 
@@ -566,12 +656,12 @@ sections:
 
 
       '
-    commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
-  c6f399e526486b63:
+    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+  35e6d04cdc4ceb2f:
     path: gaokao-english/references/course-evidence.md
     heading: 已激活
-    line_start: 19
-    line_end: 36
+    line_start: 37
+    line_end: 54
     content: '## 已激活
 
 
@@ -600,12 +690,12 @@ sections:
 
 
       '
-    commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
-  35e6d04cdc4ceb2f:
+    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+  860b5bbe2df2085b:
     path: gaokao-english/references/course-evidence.md
     heading: 主客一致
-    line_start: 37
-    line_end: 42
+    line_start: 55
+    line_end: 60
     content: '### 主客一致
 
 
@@ -616,12 +706,12 @@ sections:
 
 
       '
-    commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
-  18262f8b7db4ddf7:
+    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+  1f050bb93702e098:
     path: gaokao-english/references/course-evidence.md
     heading: 结构一致
-    line_start: 43
-    line_end: 48
+    line_start: 61
+    line_end: 66
     content: '### 结构一致
 
 
@@ -632,12 +722,12 @@ sections:
 
 
       '
-    commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
-  9d741ef70ea09176:
+    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+  aa20d9d9be2213e4:
     path: gaokao-english/references/course-evidence.md
     heading: 七选五总起句做题法
-    line_start: 49
-    line_end: 54
+    line_start: 67
+    line_end: 72
     content: '### 七选五总起句做题法
 
 
@@ -648,12 +738,12 @@ sections:
 
 
       '
-    commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
-  860b5bbe2df2085b:
+    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+  d2c3eb62ea050619:
     path: gaokao-english/references/course-evidence.md
     heading: 七选五对应词法与逻辑关系法
-    line_start: 55
-    line_end: 70
+    line_start: 73
+    line_end: 88
     content: '### 七选五对应词法与逻辑关系法
 
 
@@ -679,12 +769,12 @@ sections:
 
 
       '
-    commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
-  b57c209b70019de8:
+    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+  e3f636734c5727c3:
     path: gaokao-english/references/course-evidence.md
     heading: 七选五主语一致
-    line_start: 71
-    line_end: 78
+    line_start: 89
+    line_end: 96
     content: '### 七选五主语一致
 
 
@@ -698,12 +788,12 @@ sections:
 
 
       '
-    commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
-  b4b422cc855762b2:
+    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+  ef003fa21873a03e:
     path: gaokao-english/references/course-evidence.md
     heading: 七选五时态一致
-    line_start: 79
-    line_end: 84
+    line_start: 97
+    line_end: 102
     content: '### 七选五时态一致
 
 
@@ -714,12 +804,12 @@ sections:
 
 
       '
-    commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
-  58713f64ab46adaf:
+    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+  2da19d47c8eb83f3:
     path: gaokao-english/references/course-evidence.md
     heading: 七选五褒贬一致
-    line_start: 85
-    line_end: 94
+    line_start: 103
+    line_end: 112
     content: '### 七选五褒贬一致
 
 
@@ -736,12 +826,12 @@ sections:
 
 
       '
-    commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
-  ef111c8fd0e9c236:
+    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+  f9c747789c161779:
     path: gaokao-english/references/course-evidence.md
     heading: 完形语篇行文结构（课程内容）
-    line_start: 95
-    line_end: 100
+    line_start: 113
+    line_end: 118
     content: '### 完形语篇行文结构（课程内容）
 
 
@@ -752,12 +842,12 @@ sections:
 
 
       '
-    commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
-  4db7447eaaf264cc:
+    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+  46072a2745cacb12:
     path: gaokao-english/references/course-evidence.md
     heading: 瞻前顾后法
-    line_start: 101
-    line_end: 126
+    line_start: 119
+    line_end: 144
     content: '### 瞻前顾后法
 
 
@@ -798,12 +888,12 @@ sections:
 
 
       '
-    commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
-  5a5e4921c70dc55f:
+    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+  7388610c2a759513:
     path: gaokao-english/references/course-evidence.md
     heading: 代词指代
-    line_start: 127
-    line_end: 134
+    line_start: 145
+    line_end: 152
     content: '### 代词指代
 
 
@@ -817,12 +907,12 @@ sections:
 
 
       '
-    commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
-  a4bee061e846d217:
+    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+  ce1fe2c36a4b9324:
     path: gaokao-english/references/course-evidence.md
     heading: 其他已激活阅读方法
-    line_start: 135
-    line_end: 168
+    line_start: 153
+    line_end: 186
     content: '### 其他已激活阅读方法
 
 
@@ -878,12 +968,12 @@ sections:
 
 
       '
-    commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
-  cc516252298ae88c:
+    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+  123bbb66fb3fb832:
     path: gaokao-english/references/course-evidence.md
     heading: 语法与应用文的局部证据
-    line_start: 169
-    line_end: 172
+    line_start: 187
+    line_end: 190
     content: '### 语法与应用文的局部证据
 
 
@@ -891,12 +981,12 @@ sections:
 
 
       '
-    commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
-  86930d8a2a7f39be:
+    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+  40ca73dfd00d773d:
     path: gaokao-english/references/course-evidence.md
     heading: 暂停使用
-    line_start: 173
-    line_end: 178
+    line_start: 191
+    line_end: 196
     content: '## 暂停使用
 
 
@@ -907,22 +997,22 @@ sections:
 
 
       '
-    commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
-  19e3c2370970eef9:
+    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+  035a88351e7077e3:
     path: gaokao-english/references/course-evidence.md
     heading: 例题复核补充
-    line_start: 179
-    line_end: 180
+    line_start: 197
+    line_end: 198
     content: '## 例题复核补充
 
 
       '
-    commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
-  95e167fd153d4f81:
+    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+  8301eabc728d3498:
     path: gaokao-english/references/course-evidence.md
     heading: 例子非答案的局部操作复核
-    line_start: 181
-    line_end: 186
+    line_start: 199
+    line_end: 204
     content: '### 例子非答案的局部操作复核
 
 
@@ -934,22 +1024,22 @@ sections:
 
 
       '
-    commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
-  123bbb66fb3fb832:
+    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+  1501f9a11f3fd6d9:
     path: gaokao-english/references/course-evidence.md
     heading: 证据门禁
-    line_start: 187
-    line_end: 188
+    line_start: 205
+    line_end: 206
     content: '## 证据门禁
 
 
       '
-    commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
-  2359e8a1e618fa13:
+    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+  601f1207d1502f5f:
     path: gaokao-english/references/course-evidence.md
     heading: 2026-10-11全面核查补记
-    line_start: 189
-    line_end: 210
+    line_start: 207
+    line_end: 228
     content: '### 2026-10-11全面核查补记
 
 
@@ -982,20 +1072,20 @@ sections:
       完形暑假第8讲扫描PDF P2同时有“没有提示则选大词”“没有提示不能选择”，P4有“先空着看后文/无信靠主题”，局部与全文提示含义未定；P2“一般不超过前后两句”不是绝对上限，不删除必要远查。春季第7讲与扫描P2的“劫匪插葱/只看主语谓语”和暑假第10讲P10的不需要并存；春季第2讲首句总完整与寒假第3讲通常不设空及历史可能设空并存，不静默统一。阅读旧品质/推断通则缺课程定义，隔离待核。
 
 
-      其他：旧DOC文件名中的阅读时态一致，正文仅有HLE文章与题目批注，不足以证明独立时态方法。7.20原PDF P1确有听力时间计算、显性线索与核心信息局部说明，因此更正“课程没有听力方法”，但当前
-      Skill 听力仍未激活。嵌入媒体及原音画未补齐的限制继续保留。
+      其他（本段为当时核查状态）：旧DOC文件名中的阅读时态一致，正文仅有HLE文章与题目批注，当时不足以证明独立时态方法；2026-10-30已另据春04独立定义和两代表激活阅读时态一致。7.20原PDF
+      P1确有听力时间计算、显性线索与核心信息局部说明，当时听力尚未激活；现已按本文件2026-10-30登记补听力受限职责及训练，不沿用全面未激活结论，7.20本身仍不冒称完成原音全链。未补齐的嵌入媒体及其他原音画限制继续保留。
 
 
       VIDEO_506197D7A2F4本轮接完94分钟至132分43秒课尾本地ASR，并与95至132分钟逐分钟及132分42秒共39张原帧局部对齐。98:53–101:49解释核心动作对应后仍核附加参与者、候选代词还原后再比主体；101:49–106:46解释单方数值不足、比较时间阶段不可偷换，教师同时保留该题推断不严谨的疑问，不能以倾向答案替代完整证明。121:05–124:48说明题干已明示共同对象时，候选未复写不等于缺失，还需回文比较动作及修饰关系；教师先漏看后自纠的过程单独保留，不把首次未找到作为不存在。新增三条MEDIUM，只解释既有方法，不发布原题对象、词对或答案；全课连续转写到尾仍非直接逐字听核或全方法验收。
 
 
       '
-    commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
-  ee200351a914ab2f:
+    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+  9038d4c2892bf2df:
     path: gaokao-english/references/course-evidence.md
     heading: 2026-10-11新视频与功能分类补验收
-    line_start: 211
-    line_end: 228
+    line_start: 229
+    line_end: 246
     content: '### 2026-10-11新视频与功能分类补验收
 
 
@@ -1026,12 +1116,12 @@ sections:
 
 
       '
-    commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
-  9038d4c2892bf2df:
+    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+  a07a5543525bba63:
     path: gaokao-english/references/course-evidence.md
     heading: 2026-10-11第二轮七选五：来源补强，不新增运行法
-    line_start: 229
-    line_end: 242
+    line_start: 247
+    line_end: 260
     content: '### 2026-10-11第二轮七选五：来源补强，不新增运行法
 
 
@@ -1058,12 +1148,12 @@ sections:
 
 
       '
-    commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
-  889abf19490bd67f:
+    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+  a5d8303cb4490fae:
     path: gaokao-english/references/course-evidence.md
     heading: 2026-10-11第二轮完形：限定归属反证与评价边界
-    line_start: 243
-    line_end: 254
+    line_start: 261
+    line_end: 272
     content: '### 2026-10-11第二轮完形：限定归属反证与评价边界
 
 
@@ -1086,12 +1176,12 @@ sections:
 
 
       '
-    commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
-  fe059d3dcaa40591:
+    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+  e9f2c2e3b0861ff6:
     path: gaokao-english/references/course-evidence.md
     heading: 2026-10-11第二轮阅读：局部正向支持与未证桥接
-    line_start: 255
-    line_end: 266
+    line_start: 273
+    line_end: 284
     content: '### 2026-10-11第二轮阅读：局部正向支持与未证桥接
 
 
@@ -1113,12 +1203,12 @@ sections:
 
 
       '
-    commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
-  90bd8664c9c17065:
+    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+  9eddb818be96603c:
     path: gaokao-english/references/course-evidence.md
     heading: 2026-10-11第二轮新增视频库存
-    line_start: 267
-    line_end: 272
+    line_start: 285
+    line_end: 290
     content: '### 2026-10-11第二轮新增视频库存
 
 
@@ -1132,12 +1222,12 @@ sections:
 
 
       '
-    commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
-  e9f2c2e3b0861ff6:
+    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+  d0fc903030d1ff4e:
     path: gaokao-english/references/course-evidence.md
     heading: 2026-10-11固定清单补记：积极阅读两分支与记叙主旨四法
-    line_start: 273
-    line_end: 282
+    line_start: 291
+    line_end: 300
     content: '### 2026-10-11固定清单补记：积极阅读两分支与记叙主旨四法
 
 
@@ -1155,12 +1245,12 @@ sections:
 
 
       '
-    commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
-  013a2be357fe4734:
+    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+  025ef7df5c8698b9:
     path: gaokao-english/references/course-evidence.md
     heading: 2026-10-11—12固定清单补记：完形余下七项
-    line_start: 283
-    line_end: 290
+    line_start: 301
+    line_end: 308
     content: '### 2026-10-11—12固定清单补记：完形余下七项
 
 
@@ -1176,12 +1266,12 @@ sections:
 
 
       '
-    commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
-  d0fc903030d1ff4e:
+    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+  5fd0bc66be176739:
     path: gaokao-english/references/course-evidence.md
     heading: 2026-10-12固定清单补记：阅读余下五项
-    line_start: 291
-    line_end: 302
+    line_start: 309
+    line_end: 320
     content: '### 2026-10-12固定清单补记：阅读余下五项
 
 
@@ -1203,12 +1293,12 @@ sections:
 
 
       '
-    commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
-  1be7a34fc76277b2:
+    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+  457404b85d405400:
     path: gaokao-english/references/course-evidence.md
     heading: 2026-10-12新秋季第12讲续核：妖项助攻受限动作补全
-    line_start: 303
-    line_end: 312
+    line_start: 321
+    line_end: 330
     content: '### 2026-10-12新秋季第12讲续核：妖项助攻受限动作补全
 
 
@@ -1226,12 +1316,12 @@ sections:
 
 
       '
-    commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
-  e3f39174e0c30408:
+    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+  6a6afcb2c438cdd2:
     path: gaokao-english/references/course-evidence.md
     heading: 2026-10-12综合07续核：阅读褒贬一致比较判据
-    line_start: 313
-    line_end: 322
+    line_start: 331
+    line_end: 340
     content: '### 2026-10-12综合07续核：阅读褒贬一致比较判据
 
 
@@ -1250,12 +1340,12 @@ sections:
 
 
       '
-    commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
-  d644c93354cd1aa1:
+    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+  eb75174b2a028651:
     path: gaokao-english/references/course-evidence.md
     heading: 2026-10-12赠课记叙11续核：动静一致标题分支
-    line_start: 323
-    line_end: 332
+    line_start: 341
+    line_end: 350
     content: '### 2026-10-12赠课记叙11续核：动静一致标题分支
 
 
@@ -1273,12 +1363,12 @@ sections:
 
 
       '
-    commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
-  ef1571bc04077f63:
+    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+  c2f26b95058c8112:
     path: gaokao-english/references/course-evidence.md
     heading: 2026-10-12记叙主旨三项受限操作交叉验收
-    line_start: 333
-    line_end: 344
+    line_start: 351
+    line_end: 362
     content: '### 2026-10-12记叙主旨三项受限操作交叉验收
 
 
@@ -1298,12 +1388,12 @@ sections:
 
 
       '
-    commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
-  d05a43e6073e925a:
+    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+  3c4a38ffe983ff60:
     path: gaokao-english/references/course-evidence.md
     heading: 2026-10-12积极阅读重复定主旨跨课受限验收
-    line_start: 345
-    line_end: 358
+    line_start: 363
+    line_end: 376
     content: '### 2026-10-12积极阅读重复定主旨跨课受限验收
 
 
@@ -1330,12 +1420,12 @@ sections:
 
 
       '
-    commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
-  299a4f7b2a9d6df1:
+    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+  0880e820f624db60:
     path: gaokao-english/references/course-evidence.md
     heading: 2026-10-12完形固定清单受限职责与检查重审
-    line_start: 359
-    line_end: 374
+    line_start: 377
+    line_end: 392
     content: '### 2026-10-12完形固定清单受限职责与检查重审
 
 
@@ -1368,12 +1458,12 @@ sections:
 
 
       '
-    commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
-  0a5a008c7cf78c02:
+    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+  218f4c3284851759:
     path: gaokao-english/references/course-evidence.md
     heading: 2026-10-12核心名词法受限主题对象观察
-    line_start: 375
-    line_end: 384
+    line_start: 393
+    line_end: 402
     content: '### 2026-10-12核心名词法受限主题对象观察
 
 
@@ -1393,12 +1483,12 @@ sections:
 
 
       '
-    commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
-  7940782c8a3f2be1:
+    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+  1c8c910c3610c010:
     path: gaokao-english/references/course-evidence.md
     heading: 2026-10-12褒贬定态度：受限作者评价观察
-    line_start: 385
-    line_end: 396
+    line_start: 403
+    line_end: 414
     content: '### 2026-10-12褒贬定态度：受限作者评价观察
 
 
@@ -1424,12 +1514,12 @@ sections:
 
 
       '
-    commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
-  6b1c32d346466d49:
+    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+  cf69e288f2d4e0a7:
     path: gaokao-english/references/course-evidence.md
     heading: 2026-10-12因果所问节点与持续性缺口澄清
-    line_start: 397
-    line_end: 408
+    line_start: 415
+    line_end: 426
     content: '### 2026-10-12因果所问节点与持续性缺口澄清
 
 
@@ -1451,12 +1541,12 @@ sections:
 
 
       '
-    commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
-  f0743c4c416e288e:
+    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+  71d1e0d95cf80e41:
     path: gaokao-english/references/course-evidence.md
     heading: 2026-10-12核心名词原定义：撤销额外扫描门槛
-    line_start: 409
-    line_end: 416
+    line_start: 427
+    line_end: 434
     content: '### 2026-10-12核心名词原定义：撤销额外扫描门槛
 
 
@@ -1471,12 +1561,12 @@ sections:
 
 
       '
-    commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
-  762f7e11944cb278:
+    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+  d7917528895dd179:
     path: gaokao-english/references/course-evidence.md
     heading: 2026-10-12持续性原定义：撤销额外时间线／时长门槛
-    line_start: 417
-    line_end: 422
+    line_start: 435
+    line_end: 440
     content: '### 2026-10-12持续性原定义：撤销额外时间线／时长门槛
 
 
@@ -1489,12 +1579,12 @@ sections:
 
 
       '
-    commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
-  069ec7c7a4576eee:
+    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+  72549691f8671f7d:
     path: gaokao-english/references/course-evidence.md
     heading: 2026-10-12首段三个观察入口：同一框架／全文覆盖检查
-    line_start: 423
-    line_end: 434
+    line_start: 441
+    line_end: 452
     content: '### 2026-10-12首段三个观察入口：同一框架／全文覆盖检查
 
 
@@ -1515,12 +1605,12 @@ sections:
 
 
       '
-    commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
-  d7917528895dd179:
+    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+  6de3c1d1bba88fd5:
     path: gaokao-english/references/course-evidence.md
     heading: 完形作答顺序约束撤销（2026-10-12）
-    line_start: 435
-    line_end: 438
+    line_start: 453
+    line_end: 456
     content: '## 完形作答顺序约束撤销（2026-10-12）
 
 
@@ -1528,12 +1618,12 @@ sections:
 
 
       '
-    commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
-  87ca1f72bc3b5810:
+    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+  19ff82bd0dfbdba9:
     path: gaokao-english/references/course-evidence.md
     heading: 2026-10-13三题型有界新视频补证
-    line_start: 439
-    line_end: 444
+    line_start: 457
+    line_end: 462
     content: '## 2026-10-13三题型有界新视频补证
 
 
@@ -1546,12 +1636,12 @@ sections:
 
 
       '
-    commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
-  4af3040f1448d7bf:
+    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+  2b24130f4f868c55:
     path: gaokao-english/references/course-evidence.md
     heading: 阅读：候选差异先行的可选作者评价入口
-    line_start: 445
-    line_end: 452
+    line_start: 463
+    line_end: 470
     content: '### 阅读：候选差异先行的可选作者评价入口
 
 
@@ -1567,12 +1657,12 @@ sections:
 
 
       '
-    commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
-  6de3c1d1bba88fd5:
+    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+  851af78e7cdbccc5:
     path: gaokao-english/references/course-evidence.md
     heading: 完形：既有检查与大小比较的首次视频补证
-    line_start: 453
-    line_end: 458
+    line_start: 471
+    line_end: 476
     content: '### 完形：既有检查与大小比较的首次视频补证
 
 
@@ -1588,12 +1678,12 @@ sections:
 
 
       '
-    commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
-  3033b2032ca5e3b4:
+    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+  69a7f6a5f8608dca:
     path: gaokao-english/references/course-evidence.md
     heading: 七选五：一致纠错与较窄指示表达反查
-    line_start: 459
-    line_end: 468
+    line_start: 477
+    line_end: 486
     content: '### 七选五：一致纠错与较窄指示表达反查
 
 
@@ -1614,12 +1704,12 @@ sections:
 
 
       '
-    commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
-  d5d1fcea6c7bfdc4:
+    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+  e4ec195ef1b44b1f:
     path: gaokao-english/references/course-evidence.md
     heading: 2026-10-13全部当前方法边界审计
-    line_start: 469
-    line_end: 474
+    line_start: 487
+    line_end: 492
     content: '## 2026-10-13全部当前方法边界审计
 
 
@@ -1630,12 +1720,12 @@ sections:
 
 
       '
-    commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
-  50c9485a2f831838:
+    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+  58d0513abbc50790:
     path: gaokao-english/references/course-evidence.md
     heading: 2026-10-13寒假综合训练三有界增量来源补证
-    line_start: 475
-    line_end: 484
+    line_start: 493
+    line_end: 502
     content: '## 2026-10-13寒假综合训练三有界增量来源补证
 
 
@@ -1654,12 +1744,47 @@ sections:
 
 
       '
-    commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
-  d94f7f287f386c23:
+    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+  8069dcd019f278ea:
+    path: gaokao-english/references/course-evidence.md
+    heading: 2026-10-18已核名称与职责遗漏补入
+    line_start: 503
+    line_end: 508
+    content: '## 2026-10-18已核名称与职责遗漏补入
+
+
+      本次只复用先前蒸馏，不新增视频、ASR、帧或样本数。以本仓库`course-audits/2026-10-13/reading-terms.md`、`seven-five-terms.md`、`cloze-terms.md`及`objective/TERMINOLOGY_OBJECTIVE.md`对照正式模块，补充遗漏名称与受限职责。暑7
+      PDF1–2页及原音215.9–294.3秒支持题干永远对三职责和273–290秒例外，PDF4页及1271–1329秒支持一一对应／连连看；暑12原音344–365秒定义最短逻辑／逻辑最近不是物理距离；暑15原音1242–1269秒明确图片定位法也叫构图定位法。上述定义及代表边界已登记于本地`E:/新建文件夹/video-distillation-remaining-20261013/reading/SUMMER_METHOD_REVIEW.md`，本次读取并复用既验报告，不称重新亲听或重新查看所有原帧。
+
+
+      9.15讲义P25–26的首位呼应法原写法与用户首尾呼应法便称分别说明；暑9扫描PDF第4页／寒6 P127支持词义两项职责，秋15 P3–8支持负负得正的有限解释，其余诊断、观察框架、训练和材料名称按术语报告身份保留，不登记为独立算法。七选五10.27
+      P21–22独立代词名称及已有对应词／主体子动作、其他现场用语按既验职责补入口，保留一般／一定口径差异，不新增第八法。完形复现与其他分支沿用本文件既有原件／音画索引，不把术语表中较新单例回链声明替代已验的受限状态。具体改动与未激活项目见本仓库`course-audits/2026-10-18/omission-review.md`。
+
+
+      '
+    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+  0f01aba7559b6809:
+    path: gaokao-english/references/course-evidence.md
+    heading: 2026-10-18阅读大词原则与大小原则的受限激活
+    line_start: 509
+    line_end: 514
+    content: '## 2026-10-18阅读大词原则与大小原则的受限激活
+
+
+      本次复用先前课程核查，不计新增音画或独立例题。原`E:/开明致学/【课上讲义】第7讲 阅读(26S暑假).pdf.pdf`第1–2页有独立说明；暑7源`READING_ALL_FB28C9E6DE7F`原音机器稿300.1–440.7秒解释语义包含及其与并列删除的联系。暑7
+      noise例1050–1350秒支持包含比较，但课堂未完整展开impact，不把只见meaning即选迁为规则。寒9直播源`READING_ALL_9AA94AA41289`原音2830–2891秒另明确大小只比较候选差异，正文只支持小内容时选小；寒8源`85702242B3A3`180–780秒窗中，338秒提出求证、370–406秒核多个分面，支持较宽概括须回文验证。名称分别见本仓库`course-audits/2026-10-13/reading-terms.md`，定义与代表边界详本地`E:/新建文件夹/video-distillation-remaining-20261013/reading/SUMMER_METHOD_REVIEW.md`及`G:/gaokao-english-remaining-20261013/reading/COMPOSITE_METHOD_REVIEW.md`。
+
+
+      本次只将真实包含竞争中的范围比较写入阅读运行模块：先关注确能涵盖具体候选的较宽概括，再按所问范围核正文；正文只支持具体方面则选对应小项。主旨、细节均可按实际竞争触发，不新增文体专属入口。大词原则、大小原则分别保留名称，与并列删除及完形同名方法分开；包含即选、无证猜大及99%必选等强口径继续不运行。赠04原例的猜选身份及旧有局部证据缺口继续保留，不用该猜选例代替本次定义和回文依据。
+
+
+      '
+    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+  e3d77b27dd5a5582:
     path: gaokao-english/references/course-evidence.md
     heading: 2026-10-13阅读课程原名与有限入口增量
-    line_start: 485
-    line_end: 491
+    line_start: 515
+    line_end: 521
     content: '## 2026-10-13阅读课程原名与有限入口增量
 
 
@@ -1673,7 +1798,7 @@ sections:
       Franklin同篇两题分别支持认知因果解释的方向初筛后核真实心理关系、词义方向初筛后用语境区分具体义。同篇多题不倍增独立材料。此三入口只受限调用“褒贬一致”名称，不与积极阅读“褒贬定态度”合并，不泛化为所有作者态度、细节或猜词题；方向和排剩项均不定案。未人耳逐字复听、未验同向细义及复杂来源。详`E:/新建文件夹/video-distillation-remaining-20261013/reading/AUTUMN03_METHOD_REVIEW.md`与root在`acceptance.md`的亲核记录。原题故事、候选字母、固定词对及强说法不迁运行。
 
       '
-    commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
+    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
   dba42e053595968b:
     path: gaokao-english/references/delivery-contract.md
     heading: 学生交付合同
@@ -1686,7 +1811,7 @@ sections:
 
 
       '
-    commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
+    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
   c67e427be2476907:
     path: gaokao-english/references/delivery-contract.md
     heading: 交付内容
@@ -1717,7 +1842,7 @@ sections:
 
 
       '
-    commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
+    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
   d9227fd018e5a452:
     path: gaokao-english/references/delivery-contract.md
     heading: 交付形态
@@ -1739,7 +1864,7 @@ sections:
 
 
       '
-    commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
+    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
   80097a5ebb7614ba:
     path: gaokao-english/references/delivery-contract.md
     heading: 不写什么
@@ -1770,7 +1895,7 @@ sections:
 
 
       '
-    commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
+    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
   e58abd179eadaaff:
     path: gaokao-english/references/delivery-contract.md
     heading: 做题顺序
@@ -1798,7 +1923,7 @@ sections:
 
 
       '
-    commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
+    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
   11abdbce4afa6504:
     path: gaokao-english/references/delivery-contract.md
     heading: 范围
@@ -1816,17 +1941,33 @@ sections:
       学生点名用某个方法做某道题时，交付稿必须真的用那个方法，按它自己的步骤走，不用同模块别的办法顶替。指定方法与题型对不上时，先说明它属于哪个题型、为什么在这里用不了，再问是换题还是换方法。
 
       '
-    commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
+    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
   3bd4b067610ebee7:
     path: gaokao-english/references/evidence-gaps.md
     heading: 方法验收缺口
     line_start: 1
-    line_end: 16
+    line_end: 4
     content: '# 方法验收缺口
 
 
-      阅读、七选五、完形只执行各自模块已经激活的方法及操作，不代表这些题型的完整课程流程全部验收。听力已有材料和局部讲解，但名称、步骤、触发、边界、例题及验证链尚未完成运行验收。语法填空与应用文、读后续写转到各自独立
+      阅读、七选五、完形只执行各自模块已经激活的方法及操作，不代表这些题型的完整课程流程全部验收。听力已补解题三步的练习／精听职责、关系助记和训练原名，按listening模块的条件调用，不代表全听力课程全部验收。语法填空与应用文、读后续写转到各自独立
       Skill，不由本 Skill 的局部规则代替。
+
+
+      '
+    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+  f8614c9f83b299fd:
+    path: gaokao-english/references/evidence-gaps.md
+    heading: 2026-10-30已补与仍缺的边界
+    line_start: 5
+    line_end: 22
+    content: '## 2026-10-30已补与仍缺的边界
+
+
+      阅读时态一致已有独立定义和两代表，主语一致已有定义和两代表，动静一致已有独立定义和四代表，主客一致的意愿／事实、观察／假设及施受方向已补三代表；各按阅读独立小节调用，不再用历史待核整体阻断。旧持续动作／时间限定的强扩展仍不因新增变化／状态定义而全部解禁。七选五单复一致保独立原名及一致性检查身份，逻辑判断内容关联已有定义与三代表，均不增开头分组维度。完形寒14下篇三材料补回找链，春08补结构认识，春02补组合口诀及无信靠主题职责；相邻未解空仍不可互证，不强制遍数。听力解题、训练与黑话的受限状态见listening模块和课程索引本日登记。下文同项早期全面待核或名称否定均为历史，真实未核强版本继续保留。
+
+
+      春02机器识词“比数绝重大”暂存原音异文，除“比”对应比较级优先核查外，余字、完整展开及固定操作未核清，不凭谐音生成口诀或扫描清单。期末两首一尾只限已证定义与局部实施，不声称全体文体流程验收；语言冰山理论按解释框架，不要求补成算法。
 
 
       当前状态按对应模块实际已验分支及本文件后续对同一事项的更新判断；早期待核是当时记录，不能据此整体停用已证职责、辅助或判据。真实未核扩展仍按具体缺口保留，日期较新不自动消除不同课程版本的冲突。
@@ -1848,12 +1989,12 @@ sections:
 
 
       '
-    commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
-  0e7f5a3c0c7ea0d2:
+    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+  478febeb0d9b0b7a:
     path: gaokao-english/references/evidence-gaps.md
     heading: 有课程说明、尚未独立激活
-    line_start: 17
-    line_end: 60
+    line_start: 23
+    line_end: 66
     content: '## 有课程说明、尚未独立激活
 
 
@@ -1924,12 +2065,12 @@ sections:
 
 
       '
-    commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
-  5c6d8f5eefdf31b0:
+    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+  301d4546461bafc3:
     path: gaokao-english/references/evidence-gaps.md
     heading: 2026-10-13新视频局部状态
-    line_start: 61
-    line_end: 70
+    line_start: 67
+    line_end: 76
     content: '## 2026-10-13新视频局部状态
 
 
@@ -1946,44 +2087,107 @@ sections:
 
 
       '
-    commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
-  2c28f2c3c7be0789:
+    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+  e6ad51e5fc6b692b:
+    path: gaokao-english/references/evidence-gaps.md
+    heading: 2026-10-18已验遗漏补入后的状态
+    line_start: 77
+    line_end: 80
+    content: '## 2026-10-18已验遗漏补入后的状态
+
+
+      阅读大词原则、大小原则的真实包含竞争受限动作，以及题干永远对、连连看、一一对应、最短逻辑、逻辑最近、图片定位法、构图定位法的已有辅助职责，现已补入阅读模块，可按各自条件解释或使用；前文关于单个例子猜选、部分链条未收束的登记不作为全面拒绝这些已证动作的门槛。两项词义原职责也已补名，不表示一般猜词全部验收。七选五代词指代法仅补独立名称和已验子动作入口，未扩第八法或无条件名词硬筛；完形仅补原词／同义／近义／反义复现等已有职责名称，不恢复固定遍数。结构词做题法、动作面等原先缺完整定义的项目未借本次名词补全激活。此前局部缺口、强口径冲突与历史来源限度继续保留。
+
+
+      '
+    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+  df3c873a982012c8:
     path: gaokao-english/references/evidence-gaps.md
     heading: 冲突与不足继续保留
-    line_start: 71
-    line_end: 73
+    line_start: 81
+    line_end: 83
     content: '## 冲突与不足继续保留
 
 
       阅读的过度推测就近要求、记叙文细节小节中的三化法，与既有已验收范围尚未统一。七选五总起位置只是通常线索，非典型位置的完整例证仍不足；转折不必然褒贬完全相反，指代也不必然指向具体名词。完形的大词与无提示不得选择、局部查找距离、长句只看主谓及首句是否总不设空，保留不同讲次口径，不补造统一规则。原始例题的局部字母/连接词错配不作为新方法定义。
 
       '
-    commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
+    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
   325a7bd6bf58f7b4:
     path: gaokao-english/references/listening.md
     heading: 听力
     line_start: 1
-    line_end: 6
+    line_end: 4
     content: '# 听力
 
 
-      课程已有听力讲义及局部讲解，不能说课程没有提供听力方法。当前 Skill 尚未完成足以激活方法的时间戳转写、教师讲解对齐及步骤边界验收，**当前没有可调用的课程方法**。
-
-
-      不因此改用通用听力技巧，也不根据文件名或题型常识生成课程流程。学生问听力方法时，说明当前 Skill 尚未完成这一块的方法验收，不把未激活说成课程不存在，也不硬凑步骤。
+      本模块支持已核课程“解题三步”的练习／精听职责及下列训练、助记原名。已验为有界代表，不是全听力课程、所有考试题型的完整算法验收；不可继续以“没有可调用方法”整体拒绝，也不把训练流程套成正式考试的重听流程。
 
 
       '
-    commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
-  e68cdb2a99505da8:
+    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+  f89c4de15bbb7206:
+    path: gaokao-english/references/listening.md
+    heading: 解题三步（寒13练习／精听来源）
+    line_start: 5
+    line_end: 10
+    content: '## 解题三步（寒13练习／精听来源）
+
+
+      先检索题目、画重点并简要理解其含义；第一遍重点锁答案出处和可能考点，不急于定案；再仔细比对文本与选项，尽可能核清另两项哪里不成立。第二步“不先确定”属于本课可回放精听条件，正式一遍制短对话须在实际播放次数内作答，不能要求等不存在的第二遍。
+
+
+      实际核对要落到同一人物及其动作、对象、时间、条件和真实诉求，听见相同词不代表完整选项成立；近义改写也不因缺原词排除。说话人、被提及者和替别人办事者分开，否定作用于完整动作关系，愿望、现象与原因分开核。排掉两项仍须给所选项的正向录音依据。没有音频或可靠原文时说明缺口，不假装已听见；课程没有独立命名的这些操作只说明实际内容，不自创技巧名或借阅读同名法。
+
+
+      '
+    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+  86c1990eec01c1e5:
+    path: gaokao-english/references/listening.md
+    heading: 因病转低保（听力助记）
+    line_start: 11
+    line_end: 14
+    content: '## 因病转低保（听力助记）
+
+
+      本课原字为因病转低保，记因果、并列、转折、递进、包含五类关系。预看选项的名词、动作、方向及限定，形成待听差异，再以原音完整关系核证；不是五步固定顺序，不凭only、褒贬或转折词猜答案，不借七选五同名的顺序。
+
+
+      '
+    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+  869be7b2f8b887db:
+    path: gaokao-english/references/listening.md
+    heading: 训练原名分别保留
+    line_start: 15
+    line_end: 24
+    content: '## 训练原名分别保留
+
+
+      - 挖空听：反复听当前句、补实际听到的词并核对，服务听辨，不是考试无限重放权限。
+
+      - 连读练习：跟原音练当前句的连读、弱读与完整发音，再逐步加速，不从机器转写臆造细微音标。
+
+      - 盲听：本课不看题先记信息，再看题答；这是训练条件，不能强制正式考试放弃预读。
+
+      - 倍速精听法：据听辨情况调整速度、反复核难句，具体倍速不固定成所有学生门槛。
+
+      - 影子跟读法：尽量贴原音跟读。暑02原课分0.8–1倍看文本、1倍脱稿、1–1.5倍脱稿三个递进阶段，跟上且发音完整再脱稿／提速，非只做三遍，每阶段可多练；不是选项判据。
+
+
+      春09“听力训练第一步／第二步／第三步”是另一来源的分层安排，名称及职责保留，不并入寒13解题三步。第一步面向125+还想练习者，三遍依次为不看题选项记人和动作、看题盲听记可能答案、看题看选项核答案；第二步向错6个以上者建议错题分句精听，原课每段不超5秒、反复5–10次以内；第三步影子跟读，最高要求脱稿跟音。分数、时长和遍数为本课建议，非所有人统一考场步骤或提分保证。
+
+
+      '
+    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+  c9ce6f9a17cf5049:
     path: gaokao-english/references/listening.md
     heading: 交付与其他题型一致
-    line_start: 7
-    line_end: 19
+    line_start: 25
+    line_end: 37
     content: '## 交付与其他题型一致
 
 
-      听力方法虽然尚未激活，交付形态仍按 `delivery-contract.md` 的同一套要求，不另立规矩：
+      听力交付形态按 `delivery-contract.md` 的同一套要求：
 
 
       - 一条给单个学生的微信答疑消息，开头只称呼一次「同学」，语气自然、直接。
@@ -2004,19 +2208,19 @@ sections:
 
 
       '
-    commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
-  f40f1d6a694e1187:
+    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+  9af4b5ea25f1e846:
     path: gaokao-english/references/listening.md
     heading: 边界
-    line_start: 20
-    line_end: 22
+    line_start: 38
+    line_end: 40
     content: '## 边界
 
 
-      有方法可讲时按课程证据补进来，没有就停在这里。只解释课程已经给出的内容，不补造解法，也不把别题型的方法搬过来。
+      学生问解题时只调用当前条件能执行的已验职责，问训练时说明训练对象和进阶条件，问黑话时解释实际记什么。只讲已核范围，未覆盖情形说明具体缺口，不补造流程，不把别题型同名方法搬过来。来源见`course-evidence.md`的2026-10-30增量登记。
 
       '
-    commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
+    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
   bc6a0fa4b4a4e881:
     path: gaokao-english/references/reading-comprehension.md
     heading: 阅读理解
@@ -2025,7 +2229,7 @@ sections:
     content: '# 阅读理解
 
 
-      当前激活课程原名“主客一致”“同源替换”“比较级谨慎选”“过度推测”“因果选果”“并列删除”“例子非答案”“三化法”“代词指代”和“逻辑简化”。课程原始材料另有“跳读定位”“跳读法”“积极阅读法”“名词定出处”“题文同序”“动词定逻辑”和“mainly题／主旨大意题”的直接证据。“定位阅读法”见应用文阅读课程题名，“顺藤摸瓜”“左顾右盼”“中心思想”见8.7记叙阅读讲义独立标题；各名称保留原身份，不因名称存在就激活未验的完整算法。
+      当前激活课程原名“主客一致”“主语一致”“时态一致”“动静一致”“同源替换”“比较级谨慎选”“过度推测”“因果选果”“并列删除”“例子非答案”“三化法”“代词指代”和“逻辑简化”。主语、时态、动静分别核主体对象、实际时间和变化／状态，不合名，不借七选五或完形同名操作。课程原始材料另有“跳读定位”“跳读法”“积极阅读法”“名词定出处”“题文同序”“动词定逻辑”和“mainly题／主旨大意题”的直接证据。“定位阅读法”见应用文阅读课程题名，“顺藤摸瓜”“左顾右盼”“中心思想”见8.7记叙阅读讲义独立标题；各名称保留原身份，不因名称存在就激活未验的完整算法。
 
 
       阅读中的课程原名“褒贬一致”已核验为可调用的标题/段意候选比较判据；秋03另支持对象评价／内容判断、认知因果解释和词义方向筛选三个有限入口，按下方小节分别触发，不是独立完成整题的算法。积极阅读中的“褒贬定态度”另有受限作者评价观察；两者不互为别名或互借验收。
@@ -2042,7 +2246,7 @@ sections:
 
 
       '
-    commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
+    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
   3104f706064bf305:
     path: gaokao-english/references/reading-comprehension.md
     heading: 按题型任务分流，不按文体硬套
@@ -2064,7 +2268,7 @@ sections:
 
 
       '
-    commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
+    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
   fb9c5ef35a2a5763:
     path: gaokao-english/references/reading-comprehension.md
     heading: 阅读方法适用边界
@@ -2089,12 +2293,38 @@ sections:
 
 
       '
-    commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
+    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
   62bc5695cd2a4f6a:
     path: gaokao-english/references/reading-comprehension.md
-    heading: 积极阅读法：重复定主旨
+    heading: 语言冰山理论（解释框架）
     line_start: 35
+    line_end: 38
+    content: '## 语言冰山理论（解释框架）
+
+
+      期末复习规划课用此原名解释表面语义背后的主题、态度、逻辑和关系。它是理解与学习的解释框架，不是候选判据或整题算法；冰山比例是教学比喻，不能据此忽略具体语义、否定及范围。
+
+
+      '
+    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+  6666ada9f1f24eb8:
+    path: gaokao-english/references/reading-comprehension.md
+    heading: 阅读理解基本流程／两首一尾定主题（期末规划来源）
+    line_start: 39
     line_end: 42
+    content: '## 阅读理解基本流程／两首一尾定主题（期末规划来源）
+
+
+      两个原称分别保留。该课“阅读理解基本流程”先用“两首一尾定主题”，再逐题找答案；两首一尾指首段、各段首句、尾段尾句，观察原词或可确认的同畴／近义重复形成待验主题，再以实际展开和所问范围核证。重复词不是相加就必得主题，线索不足时补读正文，不补造框架。本来源不与三化法、重复定主旨合名，不覆盖默认阅读题序或三化先题干／主旨选项的入口；学生明确点名该来源时说明该课次序与现行三化的区别，不静默拼成唯一顺序。当前只验定义和局部实施，不宣称全部文体的专属完整流程已验。
+
+
+      '
+    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+  51abc279c205bbc6:
+    path: gaokao-english/references/reading-comprehension.md
+    heading: 积极阅读法：重复定主旨
+    line_start: 43
+    line_end: 50
     content: '## 积极阅读法：重复定主旨
 
 
@@ -2108,12 +2338,12 @@ sections:
 
 
       '
-    commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
-  51abc279c205bbc6:
+    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+  92a4734fcac611ba:
     path: gaokao-english/references/reading-comprehension.md
     heading: 积极阅读法：褒贬定态度（受限作者评价观察）
-    line_start: 43
-    line_end: 52
+    line_start: 51
+    line_end: 60
     content: '## 积极阅读法：褒贬定态度（受限作者评价观察）
 
 
@@ -2130,12 +2360,12 @@ sections:
 
 
       '
-    commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
-  42764a07fdb4e572:
+    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+  2df8d7cb399706c1:
     path: gaokao-english/references/reading-comprehension.md
     heading: 记叙文全文主旨／标题的受限操作
-    line_start: 53
-    line_end: 68
+    line_start: 61
+    line_end: 76
     content: '## 记叙文全文主旨／标题的受限操作
 
 
@@ -2161,12 +2391,147 @@ sections:
 
 
       '
-    commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
-  fce5dc9189e1137b:
+    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+  664edd91ce02db49:
+    path: gaokao-english/references/reading-comprehension.md
+    heading: 题干永远对
+    line_start: 77
+    line_end: 80
+    content: '## 题干永远对
+
+
+      课程独立命名的辅助说明，有三项已核职责：由题干预判信息分布、形成主题或展开假设、检查候选与题干所给信息的矛盾。当前任务需要这些线索时，先读题干及实际相关候选，形成待验位置或内容预期，再回所问正文核对象、动作、范围和完整关系；正文与预期不符时修正预期。原课另明确正文转折、后文否定前说的例外，题干中的引述、设问或待判断内容不能一概当无条件事实。名称不是仅凭题干定案的许可，不改变题序或三化法入口。
+
+
+      '
+    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+  d0cb09bd78e4a1b8:
+    path: gaokao-english/references/reading-comprehension.md
+    heading: 连连看
+    line_start: 81
+    line_end: 84
+    content: '## 连连看
+
+
+      课程原称，对应辅助。定位到相关正文后，将竞争候选的对象、完整动作或关系、修饰与范围逐一对回原文；对应不足时补读必要上下文。相同词语、对应词数量或表面句式不能单独定案，近义改写须按完整含义比较。本操作可承接同源替换等定位结果，不把两者合并为同一个方法名称。
+
+
+      '
+    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+  a6b1431f7317c26e:
+    path: gaokao-english/references/reading-comprehension.md
+    heading: 一一对应
+    line_start: 85
+    line_end: 88
+    content: '## 一一对应
+
+
+      讲义原称，核候选与正文对象、关系和范围的真实对应，按当前候选差异作检查；不能要求绝对逐字匹配。本名称与连连看的对应职责有关联，仍分别登记，不另造整题流程。
+
+
+      '
+    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+  02a80cacb51437c7:
+    path: gaokao-english/references/reading-comprehension.md
+    heading: 最短逻辑
+    line_start: 89
+    line_end: 92
+    content: '## 最短逻辑
+
+
+      课程口头定义的逻辑辅助。当前候选需要从已述动作或关系得出判断时，核它是否直接接住正文、是否额外补了正文未述的前提或中间事件。无需额外假设的关系仍须回答题干并有正向支持，不按字数、物理词距或推理步数直接选排。
+
+
+      '
+    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+  843dd486cecb5511:
+    path: gaokao-english/references/reading-comprehension.md
+    heading: 逻辑最近
+    line_start: 93
+    line_end: 96
+    content: '## 逻辑最近
+
+
+      课程口头称呼，指逻辑关系接得上，不是位置最近。只在当前完整关系和新增前提上核查；附近不足可扩看正文，与最短逻辑关联但名称单列，不设最近句必为证据的规则。
+
+
+      '
+    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+  22bee43d8dd55e1e:
+    path: gaokao-english/references/reading-comprehension.md
+    heading: 已核课程称呼的补充入口
+    line_start: 97
+    line_end: 121
+    content: '## 已核课程称呼的补充入口
+
+
+      以下逐名保留身份。问到某个称呼时解释其已证职责；普通做题只点明实际用到的名称，不为展示清单堆方法。
+
+
+      - 比较级谨慎选择：讲义表述，调用比较级谨慎选小节的已核比较动作，不另增规则。
+
+      - 例子非主旨：课堂原则说法，限主旨／观点候选只复述例子、未概括其支持观点时检查；直接考例中事实不排。与例子非答案功能相关，不宣称全版本严格互为别名。
+
+      - 首位呼应法：9.15讲义原写法，原件同时写尾端；已核操作是记叙文全文主旨／标题中的首尾信息整合及全文验证。上文首尾呼应法是用户便称，未见教师勘误，不静默改原名或增加适用题型。
+
+      - 代词先还原：课堂职责说法，进入代词指代小节还原实体、状态、行为或概念后核完整关系。
+
+      - 无中生有：诊断候选无据新增的具体内容，非原词不等于无依据。
+
+      - 偷换概念：诊断候选换了哪个对象、属性或关系，近义表达不能仅因词不同判偷换。
+
+      - 绝对化：核候选是否扩大肯否、程度或范围，only、rarely等形式只提示回文核查。
+
+      - 负负得正：课程说明兼记忆表达；按两个否定或相反表达各自作用的完整关系理解后比较候选，不把任意负词相消、否定即褒义或原课的可能说法升为必然。
+
+      - 倒三角形结构：说明文首段、段首的篇章观察线索，不保证每篇都按此展开，仍核全文。
+
+      - 标题三性：概括性、简洁性、新颖性的标题观察框架，先核主题和真实覆盖，不以新颖或华丽替代准确性。
+
+      - 题目倒推：应用文阅读训练中的定位及内容预期职责，预测须回正文验证，不由题目补正文事实。
+
+      - 标题判断主旨：以当前大小标题形成待验主题或信息块预期，再核所问正文。
+
+      - 定位能力：应用文阅读训练职责，用有区分度的数字、大写等线索定位，不固定每题标志清单。
+
+      - 框架能力：应用文阅读训练职责，识别真实信息块组织，不凭题名增造算法。
+
+      - 主旨能力：应用文阅读训练职责，核当前主题和概括覆盖，不替代文本支持。
+
+      - 结构词做题法：已确认单例操作名称，独立定义及跨例边界不足；可解释该例的结构词入口，不激活新算法，and／also不直接定答案。
+
+      - 费曼学习法：学习与解释理解的辅助名称，不是阅读选项判据。
+
+      - 六分钟阅读法：系列／时效训练目标，不规定新题六分钟硬限或不读正文。
+
+      - 做标记、留痕迹：保留定位线索的训练说法，不增加学生稿固定格式。
+
+      - 题感：熟练度及初步判断经验的训练说法，不能替代回文求证。
+
+
+      '
+    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+  b1e4f5435d11268b:
+    path: gaokao-english/references/reading-comprehension.md
+    heading: 春12密卷逐题解析中的称呼
+    line_start: 122
+    line_end: 127
+    content: '### 春12密卷逐题解析中的称呼
+
+
+      原讲义中的极速定位逻辑、定位逻辑、图表题极速逻辑、主旨定位、主旨定位法、例子→证明观点、定位专家观点、mention 题模板均位于逐题解析的小标题，不因含“法／模板”就注册独立教师算法。问到时分别说明已核职责：由所问范围定位、核图表对象与真实数字比较、核话题及实际结构、回被提及内容与上下文查其论证作用、区分专家观点与作者立场。实际执行仍进入本模块已验定位、mainly或例子作用等相应小节；没有匹配的已验动作则说明缺口，不自补定义。
+
+
+      原文四首分别题为A篇“共同要求题”一句绝杀口诀、B篇记叙文一句绝杀口诀、C/D篇说明文一句绝杀口诀、D篇顶级说明文一句绝杀口诀，是对应篇后助记汇总，不是“四句一句绝杀”一套新方法。不能推广为共同要求必在统一说明区、记叙主旨只看末段、说明文必为成因影响对策、科学文必报发现或技术必局限；只按当前题文真实信息区、完整内容和覆盖查证。该讲义只证文本身份与局部职责，未有对应课堂原音全链，不冒称老师已逐字口述这些标题。
+
+
+      '
+    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+  33abd2c12caeb924:
     path: gaokao-english/references/reading-comprehension.md
     heading: 主客一致
-    line_start: 69
-    line_end: 76
+    line_start: 128
+    line_end: 135
     content: '## 主客一致
 
 
@@ -2176,16 +2541,58 @@ sections:
       快判：并排保留完整谓语，按题面实际出现的差异选择检查维度，不强制串行。比较人物是希望、打算或看法，还是事实已经成立；或比较谁发出动作、动作指向谁，核同一主体和对象，不把另一主体的属性移接过来。候选有明显肯否对立时可先缩小，再核被肯定或否定的具体动作、对象和状态。题干问实际或直接结果时，只认已经发生的对应事实。
 
 
-      边界：愿望目标不等于已实现，能力不等于意愿，相同肯否也可能说不同内容。只有确认偷换才可排除；一致只通过这一项检查，不能自行扩写题面没有的施受关系。
+      边界：愿望目标不等于已实现，能力不等于意愿，观察结果不能直接冒充研究者原先的假设；相同肯否也可能说不同内容。施与／接受比较的是实际语义角色，不要求两句出现被动语态形式。只有确认偷换才可排除；一致只通过这一项检查，不能自行扩写题面没有的施受关系。will等将来表达不自动保证事件必然实现。
 
 
       '
-    commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
-  664edd91ce02db49:
+    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+  41b33e6a9323a75a:
+    path: gaokao-english/references/reading-comprehension.md
+    heading: 主语一致
+    line_start: 136
+    line_end: 139
+    content: '## 主语一致
+
+
+      阅读独立原名。触发：候选动作或结果相近，但承担该动作、属性或结果的主体／对象可能不同。按题干锁定信息区，再把候选名词或代词指向的对象与原句对齐，核谁对谁做什么、谁具有何种状态及其限制；主体被换才可据此排除。相同主体仍须核动作和修饰，不能只凭主体相同选定，也不能以其他项错代替正确项的正向支持。这里是阅读候选比较，不做七选五开头分组，不与主客一致合名。
+
+
+      '
+    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+  f6aafd9b322ace13:
+    path: gaokao-english/references/reading-comprehension.md
+    heading: 时态一致
+    line_start: 140
+    line_end: 143
+    content: '## 时态一致
+
+
+      阅读独立原名。触发：候选与原文可能混淆时间关系或事实状态。回所问句及必要上下文，核说话／担忧的现在与其内容所指的未来、已经发生与计划／可能、此前状态与后来变化，再比较候选的实际时间意义及对象。题干、原文、选项不要求动词形式机械同形；相同将来标记或过去词形不能独自定案。涉及恢复时，还要核恢复的是原水平、状态还是回到某地点，不能由相同表面表达抹去对象差异；区间内和某时之后也不自动同义。本名不并入动静一致，不借七选五时间分组。
+
+
+      '
+    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+  69ab8d1d136714c5:
+    path: gaokao-english/references/reading-comprehension.md
+    heading: 动静一致
+    line_start: 144
+    line_end: 149
+    content: '## 动静一致
+
+
+      阅读独立原名。触发：候选竞争在变化过程、变化方向与状态／结果之间。定位所问对象，比较完整谓语及修饰所描述的变化还是状态，再核改变的具体属性、双方、方向、时间和范围；同为变化仍可能改变不同属性，不能只看动态词选定。动词是课堂强调的入口，名词或整句也能表达变化，不能把have等词列成永远静态的硬词表，也不能只因名词短语就说没有变化。候选正向语义支持仍须闭合。
+
+
+      标题任务中的动态核心事件／静态泛话题比较另见mainly题小节；同对象阶段及持续含义另见逻辑简化中的受限检查，分别保留来源，不将三者强拼同一流程。本名与时态一致、主语一致、主客一致分开。
+
+
+      '
+    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+  bfe663258883ee1a:
     path: gaokao-english/references/reading-comprehension.md
     heading: 同源替换
-    line_start: 77
-    line_end: 84
+    line_start: 150
+    line_end: 157
     content: '## 同源替换
 
 
@@ -2199,12 +2606,12 @@ sections:
 
 
       '
-    commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
-  a6b1431f7317c26e:
+    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+  a4190726b27dfa11:
     path: gaokao-english/references/reading-comprehension.md
     heading: 褒贬一致（阅读已验受限比较判据）
-    line_start: 85
-    line_end: 94
+    line_start: 158
+    line_end: 167
     content: '## 褒贬一致（阅读已验受限比较判据）
 
 
@@ -2221,12 +2628,12 @@ sections:
 
 
       '
-    commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
-  4311f90fc985aca0:
+    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+  12cbf7072ca95fcb:
     path: gaokao-english/references/reading-comprehension.md
     heading: 比较级谨慎选
-    line_start: 95
-    line_end: 102
+    line_start: 168
+    line_end: 175
     content: '## 比较级谨慎选
 
 
@@ -2240,12 +2647,12 @@ sections:
 
 
       '
-    commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
-  dfb7dd8dc0c2e8a1:
+    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+  079728b2a0305ff9:
     path: gaokao-english/references/reading-comprehension.md
     heading: 过度推测
-    line_start: 103
-    line_end: 110
+    line_start: 176
+    line_end: 183
     content: '## 过度推测
 
 
@@ -2259,12 +2666,12 @@ sections:
 
 
       '
-    commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
-  4b5123ae9f96cae3:
+    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+  9e0e613aa0ea84c8:
     path: gaokao-english/references/reading-comprehension.md
     heading: 画蛇添足（判项诊断用语）
-    line_start: 111
-    line_end: 116
+    line_start: 184
+    line_end: 189
     content: '### 画蛇添足（判项诊断用语）
 
 
@@ -2275,12 +2682,12 @@ sections:
 
 
       '
-    commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
-  c26359463dd942f3:
+    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+  c94cc356316596b9:
     path: gaokao-english/references/reading-comprehension.md
     heading: 因果选果
-    line_start: 117
-    line_end: 126
+    line_start: 190
+    line_end: 199
     content: '## 因果选果
 
 
@@ -2297,12 +2704,12 @@ sections:
 
 
       '
-    commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
-  233f304ca6cf0622:
+    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+  040991117a2ad80e:
     path: gaokao-english/references/reading-comprehension.md
     heading: 并列删除
-    line_start: 127
-    line_end: 134
+    line_start: 200
+    line_end: 207
     content: '## 并列删除
 
 
@@ -2316,12 +2723,44 @@ sections:
 
 
       '
-    commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
-  ba96ebddcc797633:
+    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+  18e597fd8b3fc0ef:
+    path: gaokao-english/references/reading-comprehension.md
+    heading: 大词原则
+    line_start: 208
+    line_end: 215
+    content: '## 大词原则
+
+
+      课程原名，已核验为语义范围比较的辅助方法。触发：当前竞争选项之间有可确认的语义包含关系。大词指概括范围较宽、能涵盖其他候选内容的表达，不指词长、生僻或抽象程度；比较的是候选的完整含义，不能只看某个名词。仅仅主题相关或用词看似更宽泛，还不能证明完整断言互相包含；未确认包含时不点名调用本法，按实际新增范围等差异回文核查。
+
+
+      快判：先看哪些候选是具体方面，哪个较宽概括确实涵盖这些方面，优先关注该较宽候选，再回题干所问范围核正文实际展开。正文支持多个方面且较宽候选准确统领这些内容时，可据覆盖关系选定；正文只支持其中一个具体方面时，选对应的小项。较宽候选额外带出的对象、动作、范围、否定或条件同样须有正文支持，涵盖了一个正确细节不等于完整成立。
+
+
+      边界：不只用于主旨题，细节题出现真实语义包含竞争时也可核正文支持哪一层范围；不是细节题包含项优先，也不是大项必选。题干只问局部时不拿全文其他方面撑大范围。没有真实包含关系时不用，证据仍不能区分时继续回文，不靠大小或剩余项定案。不借完形先查具体提示、再看主旨和泛项的顺序，不改变阅读题序或三化法入口；与并列删除分别保留各自触发条件。现场讲解点明大词原则，接当前选项的包含关系与原文覆盖证据，再给结论。
+
+
+      '
+    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+  c8ad2d31eb97cc9e:
+    path: gaokao-english/references/reading-comprehension.md
+    heading: 大小原则
+    line_start: 216
+    line_end: 219
+    content: '## 大小原则
+
+
+      另保留此课程原名；已核验的职责同样是比较实际竞争项的语义范围，按上节的包含关系、所问范围及正文支持核查。名称单独登记，不另造一套步骤，也不因字面大小建立所有题先大或先小的固定偏好。
+
+
+      '
+    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+  e90601120d085c34:
     path: gaokao-english/references/reading-comprehension.md
     heading: 例子非答案
-    line_start: 135
-    line_end: 142
+    line_start: 220
+    line_end: 227
     content: '## 例子非答案
 
 
@@ -2335,12 +2774,12 @@ sections:
 
 
       '
-    commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
-  25287b93945fdb97:
+    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+  a2ef5fb5d00f213c:
     path: gaokao-english/references/reading-comprehension.md
     heading: 三化法
-    line_start: 143
-    line_end: 150
+    line_start: 228
+    line_end: 235
     content: '## 三化法
 
 
@@ -2354,12 +2793,12 @@ sections:
 
 
       '
-    commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
-  624926b4c68413ff:
+    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+  688367aeb67f68ad:
     path: gaokao-english/references/reading-comprehension.md
     heading: 代词指代
-    line_start: 151
-    line_end: 160
+    line_start: 236
+    line_end: 245
     content: '## 代词指代
 
 
@@ -2376,19 +2815,19 @@ sections:
 
 
       '
-    commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
-  0b966000686151d0:
+    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+  4ce3be7428bf040a:
     path: gaokao-english/references/reading-comprehension.md
     heading: 逻辑简化
-    line_start: 161
-    line_end: 170
+    line_start: 246
+    line_end: 255
     content: '## 逻辑简化
 
 
       触发：复杂句、复杂段落或选项关系需要先看清主干、态度或结构，或当前候选确有下述已核的同对象阶段差异／受限持续含义差异需要核对。
 
 
-      快判：课程“三问法”检查主旨、态度褒贬和结构，但按题干调用相关观察，不要求局部题三问齐做。长句难读时先找谓语，再划分介词短语、非谓语、插入语和从句并结合词组理解。问过程时核同一对象的动作是否真实连接；课程“动静一致”在此核同一对象在题干所问时间或阶段上的一致性，区分当前状态、未来目标及动作前后；候选在动作含义上有是否持续的差异时，可核持续或维持含义是否符合原句动作内容与必要上下文，再核完整候选。该语义检查不要求先整理时间线或比较时长，不凭时态形式、单个持续词或时长自行选排；具体语义无法确认时停止该检查。其他持续动作／时间限定情境的适用范围及强判据仍待核。
+      快判：课程“三问法”检查主旨、态度褒贬和结构，但按题干调用相关观察，不要求局部题三问齐做。长句难读时先找谓语，再划分介词短语、非谓语、插入语和从句并结合词组理解。问过程时核同一对象的动作是否真实连接；旧课程“动静一致”的阶段检查可区分当前状态、未来目标及动作前后，春季独立动静定义与已验变化／状态比较见上方专节，不再将该名称只限于本段。候选在动作含义上有是否持续的差异时，可核持续或维持含义是否符合原句动作内容与必要上下文，再核完整候选。该语义检查不要求先整理时间线或比较时长，不凭时态形式、单个持续词或时长自行选排；具体语义无法确认时停止该检查。其他持续动作／时间限定情境的适用范围及强判据仍待核。
 
 
       比较句要还原省略动作，并保留平均、约数、程度、时间和条件。简化后把核心关系与题干、候选对齐，再回原句确认没有丢失否定、转折、条件、比较或因果。
@@ -2398,12 +2837,12 @@ sections:
 
 
       '
-    commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
-  96cc5a4160017a66:
+    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+  06b6f9a37ad961cf:
     path: gaokao-english/references/reading-comprehension.md
     heading: 分句结构法（原名；逻辑简化中的受限结构动作）
-    line_start: 171
-    line_end: 174
+    line_start: 256
+    line_end: 259
     content: '### 分句结构法（原名；逻辑简化中的受限结构动作）
 
 
@@ -2411,12 +2850,12 @@ sections:
 
 
       '
-    commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
-  b13df776506333ef:
+    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+  10e87696426f53ff:
     path: gaokao-english/references/reading-comprehension.md
     heading: 定位阅读法（应用文阅读课程题名）
-    line_start: 175
-    line_end: 178
+    line_start: 260
+    line_end: 263
     content: '## 定位阅读法（应用文阅读课程题名）
 
 
@@ -2424,12 +2863,12 @@ sections:
 
 
       '
-    commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
-  7adfe6c470337e82:
+    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+  f8e5e07efbaef15c:
     path: gaokao-english/references/reading-comprehension.md
     heading: 跳读定位
-    line_start: 179
-    line_end: 188
+    line_start: 264
+    line_end: 273
     content: '## 跳读定位
 
 
@@ -2446,12 +2885,12 @@ sections:
 
 
       '
-    commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
-  a027c2d052029633:
+    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+  eb2dde17353334a2:
     path: gaokao-english/references/reading-comprehension.md
     heading: 顺藤摸瓜（记叙文细节的原命名）
-    line_start: 189
-    line_end: 196
+    line_start: 274
+    line_end: 281
     content: '## 顺藤摸瓜（记叙文细节的原命名）
 
 
@@ -2465,12 +2904,38 @@ sections:
 
 
       '
-    commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
-  166547db3ce40a58:
+    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+  208c9f4b0e5b95f6:
+    path: gaokao-english/references/reading-comprehension.md
+    heading: 图片定位法
+    line_start: 282
+    line_end: 285
+    content: '## 图片定位法
+
+
+      暑15原口述的定位辅助名称。候选核心物象有助记忆时，可用与这些词直接相关的画面组织待查线索，再回文找出处并核完整含义；无有效物象不强行联想。画面不是正文事实，不能补人物心理、情节或因果，也不由记住同词直接定案。
+
+
+      '
+    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+  576eb54f2c3bfdc7:
+    path: gaokao-english/references/reading-comprehension.md
+    heading: 构图定位法
+    line_start: 286
+    line_end: 289
+    content: '## 构图定位法
+
+
+      暑15口述明确说图片定位法也叫构图定位法，两名分别保留。职责是用直接相关物象辅助找回信息，仍须以原文对象、动作、范围核竞争候选；不据该次别名关系合并图片记忆法所有版本。
+
+
+      '
+    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+  971cf92b88f0faae:
     path: gaokao-english/references/reading-comprehension.md
     heading: 图片记忆法（阅读定位辅助技巧）
-    line_start: 197
-    line_end: 204
+    line_start: 290
+    line_end: 297
     content: '## 图片记忆法（阅读定位辅助技巧）
 
 
@@ -2484,12 +2949,12 @@ sections:
 
 
       '
-    commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
-  67ea7893cf903d1d:
+    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+  a14863318da211da:
     path: gaokao-english/references/reading-comprehension.md
     heading: 左顾右盼（记叙文细节的原命名）
-    line_start: 205
-    line_end: 212
+    line_start: 298
+    line_end: 305
     content: '## 左顾右盼（记叙文细节的原命名）
 
 
@@ -2503,12 +2968,12 @@ sections:
 
 
       '
-    commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
-  898ba9cee25eb121:
+    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+  942fe5d2a5076af8:
     path: gaokao-english/references/reading-comprehension.md
     heading: 中心思想（8.7讲义原名，强版本未激活）
-    line_start: 213
-    line_end: 216
+    line_start: 306
+    line_end: 309
     content: '## 中心思想（8.7讲义原名，强版本未激活）
 
 
@@ -2516,12 +2981,12 @@ sections:
 
 
       '
-    commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
-  fd49a052453f33e0:
+    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+  16b214507547840e:
     path: gaokao-english/references/reading-comprehension.md
     heading: mainly题与主旨大意
-    line_start: 217
-    line_end: 230
+    line_start: 310
+    line_end: 323
     content: '## mainly题与主旨大意
 
 
@@ -2544,12 +3009,33 @@ sections:
 
 
       '
-    commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
-  e933e3962625a3b3:
+    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+  1d72b1be2930f832:
+    path: gaokao-english/references/reading-comprehension.md
+    heading: 词义题的两项原职责
+    line_start: 324
+    line_end: 332
+    content: '## 词义题的两项原职责
+
+
+      暑9原讲义独立列下面两步；这是词义题的原职责说明，不另造新方法名。
+
+
+      1. 确定对标词（相同词性）：先核目标词的语法位置及可比较表达，寻找同词性或对应结构的实际内容，词性只缩小查找范围。
+
+      2. 确定逻辑提示词（连词或介词）：核提示词连接的完整内容及真实关系，结合所指和必要前后文比较候选具体义；附近不足继续扩看。
+
+
+      方向、同词性、孤立连接词或生活常识均不能独自定词义。与左顾右盼已验词义语境入口或其他已验阅读辅助联用时，各自说明实际作用；这两步不替代阅读题序或扩充有限指示解释分支的定义。
+
+
+      '
+    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+  9e43c9513dfe2c89:
     path: gaokao-english/references/reading-comprehension.md
     heading: 现场与整篇输出
-    line_start: 231
-    line_end: 234
+    line_start: 333
+    line_end: 336
     content: '## 现场与整篇输出
 
 
@@ -2557,28 +3043,37 @@ sections:
 
 
       '
-    commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
-  57aafc0f10b3364a:
+    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+  a87bd40f54a580d9:
     path: gaokao-english/references/reading-comprehension.md
     heading: 输出
-    line_start: 235
-    line_end: 237
+    line_start: 337
+    line_end: 339
     content: '## 输出
 
 
       每题写本题实际使用的课程原名、决定性原文关系和选出或排除结论。多个方法联用时只说明各自实际作用。一个方法只完成定位或排除时，仍须用题面正向证据核答案，不能据剩余项自动选。证据不足时指出具体缺口并停止。
 
       '
-    commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
+    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
   12557f9aa3b76711:
     path: gaokao-english/references/router.md
     heading: 请求路由
     line_start: 1
-    line_end: 27
+    line_end: 33
     content: '# 请求路由
 
 
+      阅读方法问答或真实语义包含竞争，可进入阅读模块“大词原则”或“大小原则”各自小节。比较候选完整含义的涵盖关系，再核题干所问范围内的正文支持；主旨与细节均可触发，不据范围较大直接选，不借完形同名方法的提示查找顺序。
+
+
+      阅读点名题干永远对、连连看、一一对应、最短逻辑、逻辑最近、图片定位法或构图定位法时，进入阅读模块对应小节解释或执行已验辅助职责；其他课堂称呼先查该模块补充入口。七选五点名代词指代法或代词指代时，进入七选五原名与已验子动作小节，不以名称未列七法就否认课程原名，也不新增整题法。完形复现等分支原称进入完形模块补充称呼；两类作文仍分别进入写作技能各自模块。
+
+
       先按题面结构识别题型，再读对应模块。标题、年级、课程文件名和答案字母都不是路由依据。
+
+
+      阅读点名主语一致、时态一致、动静一致时各进阅读独立小节，不借七选五同名分组；语言冰山理论按解释框架回答，两首一尾定主题与阅读理解基本流程按期末来源解释，不能覆盖默认三化顺序。七选五单复一致进入其指代／概括检查，逻辑判断内容关联进入其逻辑与内容双核小节，不增加第四维开头分组。听力解题、训练、助记请求进入listening模块各自小节，正式播放次数与练习回放条件分清。
 
 
       完整文章后有 A 到 D 选择题，进入阅读理解。正文含五个空并提供 A 到 G 七个候选句，进入七选五。短文中有连续空位且每空配四个词项，进入完形。听力材料读本目录的
@@ -2620,7 +3115,7 @@ sections:
       学生点名的是判项标签、篇章主题词、记忆比喻或系列名称时，按该名称在对应题型中实际承担的功能路由。先把它说明为具体的对象、关系、范围或定位检查；已有已核验动作就解释该动作，未验收动作才说明缺口。主旨缺失继续表示候选没有覆盖所问核心内容，进入相应主旨覆盖核对，不因课程另有专门说明页而重新注册独立算法。图像辅助定位和范围核验分别处理，不因相邻讲授就合并为一个方法。
 
       '
-    commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
+    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
   d7565655970548ff:
     path: gaokao-english/references/seven-five.md
     heading: 七选五
@@ -2636,7 +3131,7 @@ sections:
 
 
       '
-    commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
+    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
   1f0cf16c1e5de56a:
     path: gaokao-english/references/seven-five.md
     heading: 共同行为
@@ -2657,7 +3152,7 @@ sections:
 
 
       '
-    commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
+    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
   1fcc9966ce085922:
     path: gaokao-english/references/seven-five.md
     heading: 总起句做题法
@@ -2677,7 +3172,7 @@ sections:
 
 
       '
-    commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
+    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
   a8f0c4ae44ae61ff:
     path: gaokao-english/references/seven-five.md
     heading: 结构一致
@@ -2704,7 +3199,7 @@ sections:
 
 
       '
-    commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
+    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
   92ec24e9e7003cba:
     path: gaokao-english/references/seven-five.md
     heading: 对应词法
@@ -2738,12 +3233,87 @@ sections:
 
 
       '
-    commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
+    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
   7c0a77869754a1dc:
     path: gaokao-english/references/seven-five.md
-    heading: 主语一致
+    heading: 代词指代法（原名与已验子动作）
     line_start: 51
+    line_end: 54
+    content: '## 代词指代法（原名与已验子动作）
+
+
+      10.27讲义有独立名称和定义，不能说课程没有代词指代法。本次补名称入口，仍按对应词法及主语一致中已验的指代子动作运行，不新增第八套整题法或改变开头三一致。候选含代词、空后正文含代词是两个入口，分别还原所承接的实体、整件事或概括内容，并核数、语义角色和两侧关系；形式it先核真正被评价内容，不强找名词。
+
+
+      '
+    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+  6e41e9833fc37759:
+    path: gaokao-english/references/seven-five.md
+    heading: 代词指代（七选五原称）
+    line_start: 55
+    line_end: 58
+    content: '## 代词指代（七选五原称）
+
+
+      保留本题型原称，按上节已验指代职责解释，不借阅读的同名方法。课程一般／尤其复数与一定含名词项的强口径差异保留，不硬规定候选一定有名词；独立名称存在不表示全部强版本验收。
+
+
+      '
+    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+  479d1d79bc48fdf8:
+    path: gaokao-english/references/seven-five.md
+    heading: 已核课堂用语
+    line_start: 59
     line_end: 60
+    content: '## 已核课堂用语
+
+
+      '
+    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+  4a9de82ef9741f92:
+    path: gaokao-english/references/seven-five.md
+    heading: 单复一致
+    line_start: 61
+    line_end: 64
+    content: '### 单复一致
+
+
+      本题型独立原名，身份为指代／概括对象的一致性检查。候选与正文在单复数上形成真实差异时，先还原具体所指与概括范围，再核数及两侧内容；单复形式只缩小范围。复数事物可由单数概括性名词承接，是否成立看它实际概括的是哪一组内容，不能机械同形。它不增加开头第四维分组，也不新增整题流程；名称不能因动作已包含在对应词和主体核对中而删除。
+
+
+      '
+    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+  3a67ea5d2919e50c:
+    path: gaokao-english/references/seven-five.md
+    heading: 逻辑判断内容关联
+    line_start: 65
+    line_end: 75
+    content: '### 逻辑判断内容关联
+
+
+      七选五课程独立原名及功能说明。对应的已验操作为分析选项、浏览结构、回原文用逻辑与内容双核：先照既定三一致一次分组，再带实际区别找突破口，比较连接关系及它连接的具体主体、动作与范围。逻辑通顺但内容不接、内容相关但关系相反，都不能定案。本名与逻辑关系法分别保留，不因操作相关就合名，也不据题名新增另一套固定整题顺序。
+
+
+      - 话题一致：主体／核心话题延续的功能说法，按主语一致小节核真实对象与动作，不只看语法主语。
+
+      - 小词突破：查核入口说法，从有区分度的候选线索找容易验证的空，再回正文；少数组或小词本身不定案。
+
+      - 大胆假设、小心求证：课堂求证表达，先形成暂定候选，再按具体内容确认或改选，占项和排剩不能代替证据。
+
+      - 积极跳读法：赠25口头操作名，按当前所需内容线索跳读查关联；不借阅读专门版本的前提或另造七选五整题流程。
+
+      - 框架：覆盖辅助说法，核概括表达实际管辖的内容范围，不以概括性直接选。
+
+      - 包含：覆盖辅助说法，核当前候选是否真实承接全部所需内容，不借阅读大词原则或据范围大定案。
+
+
+      '
+    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+  be3f1c1eb7c11ee7:
+    path: gaokao-english/references/seven-five.md
+    heading: 主语一致
+    line_start: 76
+    line_end: 85
     content: '## 主语一致
 
 
@@ -2760,12 +3330,12 @@ sections:
 
 
       '
-    commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
-  4a9de82ef9741f92:
+    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+  13b2d5c88710b11a:
     path: gaokao-english/references/seven-five.md
     heading: 时态一致
-    line_start: 61
-    line_end: 70
+    line_start: 86
+    line_end: 95
     content: '## 时态一致
 
 
@@ -2782,12 +3352,12 @@ sections:
 
 
       '
-    commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
-  03214bbc4e91eae2:
+    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+  d815465ca190a14f:
     path: gaokao-english/references/seven-five.md
     heading: 逻辑关系法
-    line_start: 71
-    line_end: 83
+    line_start: 96
+    line_end: 108
     content: '## 逻辑关系法
 
 
@@ -2810,12 +3380,12 @@ sections:
 
 
       '
-    commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
-  3d13a787824e210c:
+    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+  a3ba542eeb862762:
     path: gaokao-english/references/seven-five.md
     heading: 褒贬一致
-    line_start: 84
-    line_end: 91
+    line_start: 109
+    line_end: 116
     content: '## 褒贬一致
 
 
@@ -2829,12 +3399,12 @@ sections:
 
 
       '
-    commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
-  282e1aff555d0c22:
+    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+  bc08120bdb403da0:
     path: gaokao-english/references/seven-five.md
     heading: 整篇与现场输出
-    line_start: 92
-    line_end: 95
+    line_start: 117
+    line_end: 120
     content: '## 整篇与现场输出
 
 
@@ -2842,12 +3412,12 @@ sections:
 
 
       '
-    commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
-  d815465ca190a14f:
+    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+  c8a128adb1c07e71:
     path: gaokao-english/references/seven-five.md
     heading: 定案与输出
-    line_start: 96
-    line_end: 102
+    line_start: 121
+    line_end: 127
     content: '## 定案与输出
 
 
@@ -2860,7 +3430,7 @@ sections:
       只排除一项不能据剩余项自动定案。若多个候选仍通过，说明具体缺口并暂留。整篇完成后按课程“排除项分析”回查未选候选的内容承接与断言范围；仍难排时返回可能对应的已填位置。此核对必须执行，但不要求向学生逐项展示全部分组和排除过程。
 
       '
-    commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
+    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
   132f42a2b5680a23:
     path: gaokao-english/SKILL.md
     heading: 入口契约
@@ -2870,9 +3440,8 @@ sections:
 
       name: gaokao-english
 
-      description: 高考英语客观题答疑。识别阅读理解、七选五、完形填空三类请求，只使用本 Skill 中已经由课程原始材料核验并激活的方法，从题面证据一步步把题做给学生看；这三类的方法问答也由本
-      Skill 答。分析类方法先点明再展示动作，固定判据类技巧直接点明。遇到未覆盖、证据不足、课程版本冲突或题面不可辨认时停止推断并说明缺口。语法填空走 gaokao-grammar-fill，应用文与读后续写走
-      gaokao-writing。
+      description: 高考英语阅读理解、七选五、完形填空及已核听力职责与训练答疑。只使用本 Skill 中由课程原始材料核验的方法，从当前题面证据现场讲题；方法问答保留课程原名及适用边界。分析类方法先点明再展示动作，固定判据类技巧直接点明。未覆盖、证据不足、版本冲突或材料不清时说明具体缺口。语法填空走
+      gaokao-grammar-fill，应用文与读后续写走 gaokao-writing。
 
       ---
 
@@ -2881,7 +3450,7 @@ sections:
 
 
       '
-    commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
+    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
   21afe640717014fd:
     path: gaokao-english/SKILL.md
     heading: 不可越过的边界
@@ -2912,7 +3481,7 @@ sections:
 
 
       '
-    commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
+    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
   1c5f3aeedb4c1b8d:
     path: gaokao-english/SKILL.md
     heading: 每次都要执行
@@ -2944,7 +3513,7 @@ sections:
 
 
       '
-    commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
+    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
   5d9c40d606617073:
     path: gaokao-english/SKILL.md
     heading: 决策顺序
@@ -2976,13 +3545,22 @@ sections:
 
 
       '
-    commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
+    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
   51cc8242fc35fd50:
     path: gaokao-english/SKILL.md
     heading: 当前激活范围
     line_start: 55
-    line_end: 66
+    line_end: 72
     content: '## 当前激活范围
+
+
+      阅读“大词原则”“大小原则”分别保留原名，已激活为真实语义包含竞争中的范围比较辅助，具体触发与动作见阅读模块各自小节；主旨及细节均可按所问范围核查，不以范围较大单独定案，也不借完形同名规则。
+
+
+      阅读新增独立原名主语一致、时态一致、动静一致，分别核对应主体、时间与事实状态、变化／状态及具体属性；按阅读模块独立小节调用，不合名，也不借七选五三一致分组。主客一致另保意愿／事实和施受方向。语言冰山理论是解释框架，阅读理解基本流程与两首一尾定主题保期末课来源，不覆盖既定题序或三化入口。七选五单复一致是独立原称的一致性检查，逻辑判断内容关联是已核逻辑、内容双核原名，不增加开头分组维度或另造整题顺序。完形行文结构、首句完整定主题、组合口诀及无信靠主题等分别按结构认识、策略及回查提示处理，详各模块。
+
+
+      阅读另补题干永远对、连连看、一一对应、最短逻辑、逻辑最近、图片定位法、构图定位法的已验辅助职责，按阅读模块各自入口使用；词义题两项原职责及其他课堂称呼也见该模块。七选五代词指代法的独立名称按对应词／主体中已验子动作解释，不新增第八运行法；完形复现等原称按完形模块的已验分支调用。名称补全不等于所有强口径激活，方法、诊断、口诀、训练和材料标题仍分清身份。
 
 
       - 阅读理解：已激活原名为主客一致、同源替换、比较级谨慎选、过度推测、因果选果、并列删除、例子非答案、三化法、代词指代和逻辑简化；课程材料另支持跳读定位、积极阅读法中的名词定出处、题文同序、动词定逻辑以及mainly题的主旨大意操作。阅读褒贬一致已验为标题/段意及对象评价、认知因果、词义方向三类有限候选的比较判据，须按阅读模块各自触发并回文核完整含义，不是独立整题算法；积极阅读中的褒贬定态度另有受限作者评价观察，两者分列。主旨类任务的三化入口按课程现场顺序执行：先读题干和主旨题选项形成假设，再看有效首尾段，最后看中间段首句；重复词缺失时跳过重复词观察，但不跳过首尾与段首核验。定位阅读法是应用文阅读课程题名，顺藤摸瓜、左顾右盼、中心思想是8.7讲义原名；名称各自保留，已验动作和未验强版本按阅读模块分开处理。阅读按题面任务分流，不按文体硬套方法；最终都须回原文确认。
@@ -2997,26 +3575,26 @@ sections:
 
       - 完形填空：已核验的语篇行文结构操作与瞻前顾后法。“完形语篇逻辑破译”是课程系列名称，不作为独立方法报给学生。首句建立整篇粗框架；单空以当前对象、关系和前后提示快速缩小，必要时暂留后找，再回填验证。三读法可解释原阅读／作答职责，不强制映射作答遍数；角色渗透法可受限核视角、行动与感受归属；同根复现作为已知派生词线索，大词／大小原则作为宽泛与具体属性比较。主被动、主语与褒贬一致只明确现有检查功能，不新增三套算法；触发与边界见完形模块，线索或排除不独自定案。
 
-      - 听力：已有课程材料与局部讲解，但当前 Skill 尚未完成方法验收，未激活可执行方法，见`references/listening.md`。
+      - 听力：支持解题三步的练习／精听职责，因病转低保的关系助记，以及挖空听、连读练习、盲听、倍速精听法、影子跟读法等训练原名和春09分层安排；正式一遍制不套重听流程，不宣称全部听力算法已验，见`references/listening.md`。
 
 
       语法填空走`gaokao-grammar-fill`，应用文与读后续写走`gaokao-writing`，都不在本 Skill 范围内。其余未激活方法按证据缺口处理。
 
 
       '
-    commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
-  8433667152bf1c86:
+    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+  a8d7403ddb76e31d:
     path: gaokao-english/SKILL.md
     heading: 失败保护
-    line_start: 67
-    line_end: 69
+    line_start: 73
+    line_end: 75
     content: '## 失败保护
 
 
       题面不足，指出缺少哪一处。课程证据不足，说明现有课程资料不能支持该方法判断。只能确认部分链条时只交付可确认部分，不用常识补齐。
 
       '
-    commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
+    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
   1edd110b396bf0e6:
     path: gaokao-grammar-fill/references/course-evidence.md
     heading: 客观题课程取证入口
@@ -3029,7 +3607,7 @@ sections:
 
 
       '
-    commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
+    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
   2ebcaabbdf63dfdf:
     path: gaokao-grammar-fill/references/course-evidence.md
     heading: 如何使用新问答包
@@ -3050,13 +3628,51 @@ sections:
 
 
       '
-    commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
+    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
   d34293cc5d3ad544:
     path: gaokao-grammar-fill/references/course-evidence.md
     heading: 语法填空
     line_start: 13
-    line_end: 20
+    line_end: 14
     content: '## 语法填空
+
+
+      '
+    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+  fc5f913741544fa4:
+    path: gaokao-grammar-fill/references/course-evidence.md
+    heading: 2026-10-30 音画与讲义复核增量
+    line_start: 15
+    line_end: 36
+    content: '### 2026-10-30 音画与讲义复核增量
+
+
+      以下是五批有界复核后进入本模块的原名与边界，不表示每部课逐分钟通审，也不把原题答案带入新题。声证为原音本地机器转写，结合清楚原帧与讲义确认，不称人工逐字听写。
+
+
+      - 秋季第2讲：150、840秒原帧确认**有提示词——一看二思解题法**，职责为先看所给词类，再思变化和用法；749–858、936–1100秒原音及对应题面核分句边界、时间参照与客观描述，不将整篇已有谓语或邻句过去时覆盖所有嵌套分句。
+
+      - 暑假第3讲上：179–191秒原音明确**介冠联**为介词、冠词、连词简称；200–241、473–478秒说明先无提示词。194–442秒的考点不重复、词形只变一次等是往年观察而非考试硬配额；同人称再现也不能脱离支配关系直接判反身代词。第一批其他短课存在不同现场推进，单独保留来源，不用来改本模块现行整篇顺序。
+
+      - 暑假第18讲答疑：4004.2秒清楚原帧写找谓语、不好找先**劫匪插葱**、再判断所在空考点；3700–4250秒原音核到略结构只为当前层级，做从句内部空要恢复该从句。春季非谓视频2720–2748秒再证同一职责。另源机器稿的同音异字不据此静默改写原稿。
+
+      - 春季第10讲语填DOCX及11页PDF实页5（印页196）明确原程序标题**非谓语动词解题步骤**：逻辑主语及主被动，再看与谓语动作关系；定语、状语、宾补分别找逻辑主语，不自造“二步法”或与内部三轴整理合名。**吾看两厅三室一感觉**按该课动词清单助记保名，不作为新算法。
+
+      - 对应春季视频文件序号11、原课第10讲：2650秒原帧确认**To do VS doing（填doing的三原则）**；2450–2760、3100–3460、4800–5150秒原音及5042.670秒原帧完成三组代表。先判非谓语，再比较目的与伴随／状态／自然结果；3393–3399秒明说一例只占两条，5131–5135秒明确不能只见逗号就秒。保原三项，收紧为取舍线索，不要求全部齐全。
+
+      - 同份春季讲义“所有完成形式不能作定语”为过强全称，运行模块已勘误：不得据此排除适当后置不定式中的完成形式；普通完成分词定语与完成不定式分开。视频4869–4948秒的实际先发生而不用完成式也只支持不机械强加完成式，不能推出没
+      before/after 就永禁完成式。
+
+      - 寒假第17讲谓语课：264–511秒区分完成谓语与非谓语外形，1477–1565秒提示 by 可表差额，7353–7738秒核倒装真正主语及一致。7567–7614秒口述与7626.975秒原帧同时出现误把前置宾语当主语、把倒装后主语误作定从而配复数的错误，当前已核窗未纠正；保留为隔离勘误，不作为正确例证或迁入规则。7315–7343秒将整个主语从句称就近也不推广成凡
+      whether...or 都就近。
+
+      - 同课补核3240–3550秒原音及3270秒新原帧，补闭旧稿3244秒后截断：3244–3262秒所说“三步”实际是找时间提示、判主被动、再核过去完成参照；原屏**备考建议**分**时态判定三步法**、**被动语态公式**、**高频陷阱**三个栏目。后两者分别是结构知识与易错清单，不注册“备考三步法”，不与动词三步或非谓程序合名。原音误识的
+      done、be 及单复数词形以清楚题面和上下文为准，不照错拼输出。
+
+      - **费曼学习法**名称另有8.7讲义 `4481343df15e` 第3页清楚原字，原件重渲核对。寒假第13听力课尾8041–8047秒在语填答疑中明确用该名指梳理错题、强化知识点；寒17原稿3218–3223秒提合书再过知识，机器识“非卖学习法”，3222秒原帧没有同名字形。分别保留来源和raw异字，不谎称该帧直接证名；运行模块只登记学习复盘辅助用途，不借阅读同名补出完整步骤，也不升为语填答案算法。
+
+
+      复核资料归档名为 `course-distillation-20261030`；逐源层级在 `other/OTHER_REVIEW.md`、`other/batch2/OTHER_BATCH2_REVIEW.md`、`batch3/other/OTHER_BATCH3_REVIEW.md`、`batch4/other/OTHER_BATCH4_REVIEW.md`、`batch5/other/OTHER_BATCH5_REVIEW.md`。正式模块已包含可用边界，不依赖这些外置审计资料才能讲题。
 
 
       - 7.11《语填无提示词（上）》，`0957ffbfe1d4`，PDF第6页：例题含 `its (it)`、`mine (I)`、`themselves
@@ -3075,12 +3691,12 @@ sections:
 
 
       '
-    commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
-  f429179030c536c1:
+    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+  58aa1dfc76e6526f:
     path: gaokao-grammar-fill/references/course-evidence.md
     heading: 七选五
-    line_start: 21
-    line_end: 28
+    line_start: 37
+    line_end: 44
     content: '## 七选五
 
 
@@ -3098,12 +3714,12 @@ sections:
 
 
       '
-    commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
-  164a3136aee1978f:
+    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+  60738ac3695eb379:
     path: gaokao-grammar-fill/references/course-evidence.md
     heading: 完形填空
-    line_start: 29
-    line_end: 33
+    line_start: 45
+    line_end: 49
     content: '## 完形填空
 
 
@@ -3113,12 +3729,12 @@ sections:
 
 
       '
-    commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
-  40887326db774bc1:
+    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+  94359d4ecca635fc:
     path: gaokao-grammar-fill/references/course-evidence.md
     heading: 阅读理解
-    line_start: 34
-    line_end: 40
+    line_start: 50
+    line_end: 56
     content: '## 阅读理解
 
 
@@ -3132,12 +3748,12 @@ sections:
 
 
       '
-    commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
-  e611ca9dbd40e48b:
+    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+  8500fbcafb0ac8de:
     path: gaokao-grammar-fill/references/course-evidence.md
     heading: 26S 系列（2026-09-17 新入）
-    line_start: 41
-    line_end: 82
+    line_start: 57
+    line_end: 98
     content: '## 26S 系列（2026-09-17 新入）
 
 
@@ -3228,12 +3844,12 @@ sections:
 
 
       '
-    commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
-  0fa2f5f4cd836d09:
+    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+  6a5b39d9989c2544:
     path: gaokao-grammar-fill/references/course-evidence.md
     heading: 26S春 系列（同批新入）
-    line_start: 83
-    line_end: 105
+    line_start: 99
+    line_end: 121
     content: '## 26S春 系列（同批新入）
 
 
@@ -3258,8 +3874,8 @@ sections:
 
       - 第7讲 完形（26S春），`b1d3ceadab24`：题材与文体规律、考查方式三分类、熟词生义三步法、选项设计公平性、完形总流程、“大而空”的升华段、就近逻辑、固定搭配先立后破。
 
-      - 第10讲 语法填空（26S春），`00247efaa8d9`：**非谓语动词专项**。填 doing 三原则、完成形式不能作定语、省 to 不定式作宾补的动词、非谓语完整形式清单、非谓语没有绝对时态、状语位三分口径、逻辑主语按成分定、独立主格、只接不定式与只接动名词的动词清单、含义随
-      to do 与 doing 改变的动词。该件标题“非谓语动词做副词/形容词/名词”按正文举例应为状语/定语/主语宾语，属笔误。
+      - 第10讲 语法填空（26S春），`00247efaa8d9`：**非谓语动词专项**。填 doing 三原则、非谓语动词解题步骤、省 to 不定式作宾补的动词、非谓语完整形式清单、非谓语没有绝对时态、状语位三分口径、逻辑主语按成分定、独立主格、只接不定式与只接动名词的动词清单、含义随
+      to do 与 doing 改变的动词。原件“完成形式不能作定语”已按上方复核收紧，不能当全称规则。该件标题“非谓语动词做副词/形容词/名词”按正文举例应为状语/定语/主语宾语，属笔误。
 
       - 第11讲 读后续写（26S春），`cc6d7863e51f`：**人与自然专项**。三分型与四步框架、情绪词汇分级、三类万能句式的位置约束（只用于五句非功能句，环境句不能放结尾）、升华句三模板（强调句）、万能句式三步套用法、四条总纲、规定动作式伏笔清单、鸟的动作描写词表。
 
@@ -3283,7 +3899,7 @@ sections:
       以上是关键方法及边界核对，不代表 78 份旧讲义或 61 份 26S 讲义每字或所有答案已无误审校。课件其他例题仍按原题取证。
 
       '
-    commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
+    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
   341ae7535f7d9ce7:
     path: gaokao-grammar-fill/references/grammar-fill.md
     heading: 语法填空：按空位结构分路
@@ -3293,7 +3909,7 @@ sections:
 
 
       '
-    commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
+    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
   3527a85c4fe668d9:
     path: gaokao-grammar-fill/references/grammar-fill.md
     heading: 使用边界
@@ -3312,7 +3928,7 @@ sections:
 
 
       '
-    commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
+    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
   781c4478d621bf5c:
     path: gaokao-grammar-fill/references/grammar-fill.md
     heading: 总路线
@@ -3321,13 +3937,13 @@ sections:
     content: '## 总路线
 
 
-      1. 先用意群划分句子；长句用“劫匪插葱”暂时拿掉介词短语、非谓语、插入语和从句，抓主干。
+      1. 先用意群划分句子；长句用“劫匪插葱”暂时拿掉介词短语、非谓语、插入语和从句，抓当前层级的主干。它是结构助记黑话，不是额外的整题算法；做被暂略结构内部的空，或判断时态、逻辑主语、指代和语义时，必须取回相关成分，不能把从句永久删掉。
 
       2. 问：“这个空有没有给提示词？”
 
       3. **无提示词**：优先检查冠词、介词、代词、并列连词/从属连接词/关系词；句法已完整、空位连接前后句意时，还要检查连接副词，不能把可能答案锁死为四类。
 
-      4. **有提示词**：先确定空位成分，再决定是否需要词性转换，或名词、代词、形容词、副词、数词、动词的形态变化。提示词的原词性不等于答案词性。
+      4. **有提示词**：课程原名为**有提示词——一看二思解题法**，先看给的是什么词，再思变化和用法。落实时确定空位成分，再决定是否需要词性转换，或名词、代词、形容词、副词、数词、动词的形态变化。提示词的原词性不等于答案词性，不把这两项职责另拆成自造固定步骤。
 
       5. **确认空位需要动词形式后**，才分谓语与非谓语。`environmental ___ (protect)` 需要名词 `protection`，不是非谓语；`the
       ___ (develop) of...` 需要 `development`。名词性位置也可能容纳动名词，要依据结构、搭配与意思区分，不能见介词就一律填
@@ -3343,29 +3959,32 @@ sections:
       整篇不必先通读全文，带着考点做题即可。两条全卷自检：
 
 
-      一是**同一个考点一般不重复考查**——谓语通常考两个不同时态或同一时态的不同语态，非谓语考 to do/-ing/-ed 中的一到三个，名词考动词变名词或单数变复数，形容词考变副词或比较等级，介词、冠词、代词在同一语篇一般只考一次。做完用它反查有没有重复，作为纠偏手段。
+      一是**同一个考点一般不重复考查**——这是课程基于往年题目的经验自检，不能当作题目配额。可用它提醒回查，却不能因某类已经考过，就排除当前有句法与语义支持的答案，也不能据此强制不同空采用不同非谓语形式。
 
 
-      二是**括号内所给单词一般只变形一次**——考查副词就给形容词，考查名词就给动词或形容词，考查形容词就给名词或动词，考查名词复数就给名词单数。括号里的词性几乎不是答案词性。
+      二是**括号内所给单词一般只变形一次**——同属经验提醒，不替代空位结构。可能是词性转换，也可能只变数、格、时态或语态，还可能保持原形；不能为满足一次变化而排除结构上成立的答案。
 
 
       '
-    commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
+    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
   8c050016facc6479:
     path: gaokao-grammar-fill/references/grammar-fill.md
     heading: 无提示词
     line_start: 27
-    line_end: 28
+    line_end: 30
     content: '## 无提示词
 
 
+      课程简称**介冠联**指介词、冠词、连词的考点分流，是清单黑话，不是独立算法或答案配额；仍须按实际空位检查代词、连接副词等可能性。先做无提示词后有提示词的现行整篇顺序保持不变，不拿同名口诀替代逐空取证。
+
+
       '
-    commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
-  98a55752856ca984:
+    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+  dfb1dccd2a7f06e2:
     path: gaokao-grammar-fill/references/grammar-fill.md
     heading: 冠词
-    line_start: 29
-    line_end: 40
+    line_start: 31
+    line_end: 42
     content: '### 冠词
 
 
@@ -3388,12 +4007,12 @@ sections:
 
 
       '
-    commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
-  92af20a0997f0b48:
+    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+  0c267d2ed379a98a:
     path: gaokao-grammar-fill/references/grammar-fill.md
     heading: 代词
-    line_start: 41
-    line_end: 54
+    line_start: 43
+    line_end: 56
     content: '### 代词
 
 
@@ -3408,7 +4027,7 @@ sections:
       - 动词或介词后作宾语：宾格。
 
       - 动作返回主语或固定搭配：反身代词，如 `apply/behave/devote/enjoy/help/seat/teach oneself`、`come
-      to oneself`、`by/for oneself`。另一条判据是前面已经出现过这个代词时，可考虑反身代词。
+      to oneself`、`by/for oneself`。前面已出现同一人称只是回查线索，须核同句支配与实际角色，不能按全文重复人称直接选反身代词。
 
       - `it`：可能回指前文名词，也可能作形式主语或形式宾语；必须指出真实指代或真正主语/宾语。
 
@@ -3421,12 +4040,12 @@ sections:
 
 
       '
-    commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
-  bdec04e2ce032b40:
+    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+  c78012aeef62d5b9:
     path: gaokao-grammar-fill/references/grammar-fill.md
     heading: 介词
-    line_start: 55
-    line_end: 69
+    line_start: 57
+    line_end: 71
     content: '### 介词
 
 
@@ -3456,31 +4075,34 @@ sections:
 
 
       '
-    commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
-  9b496b1572cdf49b:
+    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+  1bc229eecb92ae3c:
     path: gaokao-grammar-fill/references/grammar-fill.md
     heading: 连词、关系词与名词性从句连接词
-    line_start: 70
-    line_end: 86
+    line_start: 72
+    line_end: 89
     content: "### 连词、关系词与名词性从句连接词\n\n先看空两侧是否各有完整主谓，再判断需要并列连接、从属连接，还是从句内部缺少成分。\n\n\
       1. **并列或状语从句**：依据并列、转折、因果、条件、时间、让步等逻辑选择；不能只看中文翻译。两个固定句型：`It is + 时间段 + since\
       \ + 一般过去时`；`It will be + 时间段 + before + 一般现在时`。\n2. **定语从句**：先找先行词，再看从句缺主语、宾语、定语还是状语。\n\
       \   - 人作主语/宾语：`who/whom`；物：`which`；限制性从句及特殊情形可用 `that`；所属关系：`whose + 名词`。\n\
       \   - `that` 优先的常见情形：先行词是不定代词，或被 `the only/very/last/same`、序数词、最高级、`all/any/every/few/little/no/some`\
-      \ 等修饰。\n   - 时间状语：`when = on/in/during which`；地点或抽象情境状语：`where = in/at/on/under\
-      \ which`；原因状语：`why = for which`。要检查介词与先行词的实际搭配，如 `the day on which`。\n   - 非限制性从句可见\
-      \ `as is expected/reported/known...` 等固定结构。\n   - `as` 另有四类用法：介词“作为”（as a student）；连词“正如”；“当……的时候”；“因为”。表“正如”只能用\
-      \ `as`，`like` 是介词、不能作连词。\n   - 让步倒装：`as` 必须倒装（Try as she might...、Poor as he\
-      \ is...），`though` 通常不倒装（Though she might try...、Though he is poor...）。\n3. **名词性从句**：先确认从句作主语、宾语、表语还是同位语，再看从句是否缺成分或缺语义。\n\
+      \ 等修饰。\n   - 课堂“没有逗号优先 that”只是受限省错建议，不是无逗号一律 that；先核具体关系及从句所缺成分。`such...as`\
+      \ 的关系结构与 `such...that` 的结果结构不能只凭 such 或教师局部判项混为一类。\n   - 时间状语：`when = on/in/during\
+      \ which`；地点或抽象情境状语：`where = in/at/on/under which`；原因状语：`why = for which`。要检查介词与先行词的实际搭配，如\
+      \ `the day on which`。\n   - 非限制性从句可见 `as is expected/reported/known...` 等固定结构。\n\
+      \   - `as` 另有四类用法：介词“作为”（as a student）；连词“正如”；“当……的时候”；“因为”。表“正如”只能用 `as`，`like`\
+      \ 是介词、不能作连词。\n   - 让步倒装：`as` 必须倒装（Try as she might...、Poor as he is...），`though`\
+      \ 通常不倒装（Though she might try...、Though he is poor...）。\n3. **名词性从句**：先确认从句作主语、宾语、表语还是同位语，再看从句是否缺成分或缺语义。\n\
       \   - 缺主/宾/表语可考虑 `what/who` 等；结构完整但缺地点、选择或事实连接可考虑 `where/whether/if/that`。\n\
-      \   - 宾语从句不缺成分时：`why` 指已经发生，`how` 指尚未达成，`that` 未提及过程。\n   - 从句需要合法连接手段；宾语从句中的\
-      \ `that` 在允许时可以省略，不能机械说“每个从句空里都必须填连词”。\n\n"
-    commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
-  32c08d6c85a150ea:
+      \   - 宾语从句不缺主宾时，课程局部口径先检查 `why`、再 `how`、再 `that`；分别核原因、方式／过程、陈述事实的实际需要。这不是封闭选词表，不能以事件已经发生或尚未达成独立定词，`how`\
+      \ 也可说明已发生事情的过程。\n   - 从句需要合法连接手段；宾语从句中的 `that` 在允许时可以省略，不能机械说“每个从句空里都必须填连词”。\n\
+      \n"
+    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+  ccfc09a472cb85a6:
     path: gaokao-grammar-fill/references/grammar-fill.md
     heading: 句间逻辑衔接
-    line_start: 87
-    line_end: 90
+    line_start: 90
+    line_end: 93
     content: '### 句间逻辑衔接
 
 
@@ -3490,12 +4112,12 @@ sections:
 
 
       '
-    commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
-  a166ae34f9256ee9:
+    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+  be5c8b287ffa3745:
     path: gaokao-grammar-fill/references/grammar-fill.md
     heading: 有提示词
-    line_start: 91
-    line_end: 94
+    line_start: 94
+    line_end: 97
     content: '## 有提示词
 
 
@@ -3503,12 +4125,12 @@ sections:
 
 
       '
-    commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
-  ab95cd79ca0709e2:
+    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+  ab42f9a3682492c6:
     path: gaokao-grammar-fill/references/grammar-fill.md
     heading: 名词及所有格
-    line_start: 95
-    line_end: 103
+    line_start: 98
+    line_end: 106
     content: '### 名词及所有格
 
 
@@ -3528,12 +4150,12 @@ sections:
 
 
       '
-    commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
-  9b610bdb9f63227e:
+    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+  3cc12c22579257d5:
     path: gaokao-grammar-fill/references/grammar-fill.md
     heading: 形容词、副词与比较等级
-    line_start: 104
-    line_end: 113
+    line_start: 107
+    line_end: 116
     content: '### 形容词、副词与比较等级
 
 
@@ -3553,12 +4175,12 @@ sections:
 
 
       '
-    commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
-  a26dc83760c12ebb:
+    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+  b2282a270b8de478:
     path: gaokao-grammar-fill/references/grammar-fill.md
     heading: 数词
-    line_start: 114
-    line_end: 117
+    line_start: 117
+    line_end: 120
     content: '### 数词
 
 
@@ -3566,22 +4188,22 @@ sections:
 
 
       '
-    commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
-  28cb2fee202458a5:
+    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+  8f7ca9480b5113bc:
     path: gaokao-grammar-fill/references/grammar-fill.md
     heading: 需要动词形式：先判谓语还是非谓语
-    line_start: 118
-    line_end: 119
+    line_start: 121
+    line_end: 122
     content: '## 需要动词形式：先判谓语还是非谓语
 
 
       '
-    commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
-  5131f97d0dc78441:
+    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+  01b66e853d507205:
     path: gaokao-grammar-fill/references/grammar-fill.md
     heading: 第一步：数谓语、看连接
-    line_start: 120
-    line_end: 125
+    line_start: 123
+    line_end: 129
     content: '### 第一步：数谓语、看连接
 
 
@@ -3591,46 +4213,53 @@ sections:
 
       - 并列谓语、定语从句或状语从句会改变数量，必须先划清分句边界。
 
+      - 并列只找同一层级；介词短语内部的 and 不自动并列外层谓语，and 后出现新主语须重新核分句。邻句过去时也不要求所有嵌套从句和客观描述统一用过去时。
+
 
       '
-    commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
-  a0bcc74f05b00671:
+    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+  c6ee3d2de761c2d8:
     path: gaokao-grammar-fill/references/grammar-fill.md
     heading: 谓语：检查时态、语态、主谓一致
-    line_start: 126
-    line_end: 144
+    line_start: 130
+    line_end: 152
     content: "### 谓语：检查时态、语态、主谓一致\n\n三个项目都要核对。课程把时态判定定名为**时态判定三步法**并按此顺序走：①找时间状语或上下文时间线索\
-      \ ②分析主被动关系 ③结合复合时态逻辑（如过去完成时需要“过去的过去”作参照）。本模块按讲义顺序组织：时态、语态、主谓一致。\n\n1. **时态**：找明确时间状语，再看上下文叙事时间和并列谓语。`since`\
-      \ 常提示现在完成时；`by + 过去时间` 常提示过去完成时；`when + 一般过去时` 的背景动作可能用过去进行时；时间/条件状语从句表达将来时常用一般现在时。\n\
-      2. **语态**：主语是动作发出者还是承受者；被动结构为 `be + done`，`be` 承担时态与人称变化。\n3. **主谓一致**：按真正主语判断。`the\
-      \ number of + 复数名词` 用单数，`a number of + 复数名词` 用复数；定语从句谓语与先行词所指一致；并列谓语还要与前文时态呼应。\n\
-      \   - 两条术语：**就近原则**——`neither...nor`、`either...or`、`not only...but also` 与最近的主语一致；**就远原则**——`as\
-      \ well as`、`along with`、`rather than`、`together with` 与前面的主语一致。\n   - 其他细则：**单复同型**（cattle、sheep）；**集合名词**（The\
-      \ team are driving...）；`Many a + 单数`；`one half of the population are`；`every\
-      \ possible means is`；`the only one of the students who is`；`two thirds of the\
-      \ population live`；`a great deal of time is taken up`。\n\n不能被动或常用主动表被动的边界：\n\
-      \n- 通常不用被动：`lack, suit, have, cost, fit, remain`；`belong to, take part in, suffer\
-      \ from, date back to, happen/take place/occur, come up/out, break out, run out`。\n\
-      - 主动形式可表被动性质：`read/write/sell/wash/clean/cook/cut... + well/easily/badly`；`smell/taste/feel/look/sound/prove\
-      \ + 形容词`；某些 `open/close/lock/move/keep` 与 `won't/can't/hardly` 等搭配。\n- `be addicted/seated/hidden/lost/drunk/dressed/devoted/based/located`\
-      \ 多表示状态，不能仅因出现过去分词就误判为一次被动动作。\n- 过去分词的快速二分：有 `be` 的是谓语被动，没有 `be` 的是非谓语。\n- 虚拟语气：`otherwise`\
-      \ 后接 `would have arrived` 这类结构提示对过去的虚拟，按虚拟语气处理。\n- 延续性动词与短暂性动词的时态差异：`live` 可延续，`die`\
-      \ 是短暂动作，不能与同一时间状语混用。\n\n"
-    commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
-  f77de6ec724f8e88:
+      \ ②分析主被动关系 ③结合复合时态逻辑（如过去完成时需要“过去的过去”作参照）。本模块按讲义顺序组织：时态、语态、主谓一致。\n\n寒假谓语课**备考建议**页另列**被动语态公式**与**高频陷阱**：前者是一般时\
+      \ be + done、完成时 have/has/had been + done 的结构知识，后者提醒不及物动词的被动限制及延续／短暂动作的时态差异。现场说的“三步”紧接时间提示、主被动、过去完成参照，与上方时态判定相对应；不把三个页面栏目再造为独立的“备考三步法”。\n\
+      \n1. **时态**：找明确时间状语，再看上下文叙事时间和并列谓语。`since` 常提示现在完成时；`by + 过去时间` 常提示过去完成时；`when\
+      \ + 一般过去时` 的背景动作可能用过去进行时；时间/条件状语从句表达将来时常用一般现在时。\n2. **语态**：主语是动作发出者还是承受者；被动结构为\
+      \ `be + done`，`be` 承担时态与人称变化。\n   - `by` 须先核其在本句是否引施事，也可能表示差额、截止点等；不见 by 就直接判被动。“及物无宾”也须先核义项、宾语省略、从句和倒装，不能独立作为必被动判据。\n\
+      3. **主谓一致**：按真正主语判断。`the number of + 复数名词` 用单数，`a number of + 复数名词` 用复数；定语从句谓语与先行词所指一致；并列谓语还要与前文时态呼应。\n\
+      \   - 倒装须先还原主语与动作关系，不能按句首或最近名词配数，也不能把倒装后的主语和分词误删成定语从句。整个主语从句与连词连接两个名词主语是不同结构，不因出现\
+      \ `whether...or` 就套就近原则。\n   - 两条术语：**就近原则**——`neither...nor`、`either...or`、`not\
+      \ only...but also` 与最近的主语一致；**就远原则**——`as well as`、`along with`、`rather than`、`together\
+      \ with` 与前面的主语一致。\n   - 其他细则：**单复同型**（cattle、sheep）；**集合名词**（The team are driving...）；`Many\
+      \ a + 单数`；`one half of the population are`；`every possible means is`；`the only\
+      \ one of the students who is`；`two thirds of the population live`；`a great deal\
+      \ of time is taken up`。\n\n不能被动或常用主动表被动的边界：\n\n- 通常不用被动：`lack, suit, have, cost,\
+      \ fit, remain`；`belong to, take part in, suffer from, date back to, happen/take\
+      \ place/occur, come up/out, break out, run out`。\n- 主动形式可表被动性质：`read/write/sell/wash/clean/cook/cut...\
+      \ + well/easily/badly`；`smell/taste/feel/look/sound/prove + 形容词`；某些 `open/close/lock/move/keep`\
+      \ 与 `won't/can't/hardly` 等搭配。\n- `be addicted/seated/hidden/lost/drunk/dressed/devoted/based/located`\
+      \ 多表示状态，不能仅因出现过去分词就误判为一次被动动作。\n- 过去分词须回到限定动词与分句边界判断：`be + done` 可能是谓语，也可能是 `being\
+      \ done/to be done` 等非谓语结构的一部分；没有 `be` 也可能属于 `have/has/had + done` 的完成谓语。不能用有无\
+      \ `be` 机械二分。\n- 虚拟语气：`otherwise` 后接 `would have arrived` 这类结构提示对过去的虚拟，按虚拟语气处理。\n\
+      - 延续性动词与短暂性动词的时态差异：`live` 可延续，`die` 是短暂动作，不能与同一时间状语混用。\n\n"
+    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+  68c5400be79ea170:
     path: gaokao-grammar-fill/references/grammar-fill.md
     heading: 非谓语：作用、主被动与先后
-    line_start: 145
-    line_end: 166
+    line_start: 153
+    line_end: 174
     content: '### 非谓语：作用、主被动与先后
 
 
-      结合三条轴判断；先落实句法作用，主被动与时间关系相互验证，不冒称讲义规定了固定三步名称：
+      先落实句法作用或固定搭配，再按课程原题为**非谓语动词解题步骤**的程序，判断逻辑主语及主被动，再判断与谓语动作的关系。下列三条轴是操作整理，不另命名为“三步法”，也不替换原程序名：
 
 
       1. **句法作用或固定结构**：作目的、主宾表定状补中的哪一种，或是否受介词/固定搭配支配。
 
-      2. **逻辑主语与主被动**：非谓语动作由谁发出；分词作状语一般与主句主语一致，不一致时可能需要独立主格，避免悬垂分词。
+      2. **逻辑主语与主被动**：非谓语动作由谁发出。作定语看修饰的名词或代词，作宾补看前面的宾语，普通分词状语通常看主句主语；独立主格等结构须另核自己的主语，不能把所有非谓语都接到主句主语上。
 
       3. **与谓语的时间关系**：`to do` 常表目的或将来；`doing` 常表主动、同时/进行、伴随或自然结果；`done` 常表被动或完成；明显先于谓语可用
       `having done/having been done`。
@@ -3669,24 +4298,34 @@ sections:
 
 
       '
-    commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
-  7c16410a7f1b8e4f:
+    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+  5d83575e1d881f91:
     path: gaokao-grammar-fill/references/grammar-fill.md
     heading: 26S春 补充（非谓语动词专项）
-    line_start: 167
-    line_end: 192
+    line_start: 175
+    line_end: 204
     content: '### 26S春 补充（非谓语动词专项）
 
 
-      **填 doing 的三原则**（to do 与 doing 的取舍）：①有逗号 ②无意识 ③非唯一（目的通常有唯一性）。
+      **To do VS doing（填doing的三原则）**：原三项是①有逗号 ②无意识 ③非唯一（目的一般是唯一性）。这是已确认需要非谓语、在当前结构中比较
+      to do 与 doing 时的受限取舍口径，不替代谓非、成分、固定搭配和主被动判断；明确的定语或宾补先按自身结构处理。
 
 
-      **完成形式不能作定语**：所有非谓语动词的完成形式都不能作定语，如 to have done、to have been done、to have been
-      doing、having done、having been done。
+      现场先问当前动作是在交代目的，还是伴随、状态或自然结果，再据本句关系选形式。三项是辨别线索，不要求全部齐全；有人有意识做事也能用 doing。逗号可配
+      to do，不能见逗号秒选 doing；“非唯一”须有当前句子在展开工作内容或伴随状态的依据，不能凭现实中总有其他目的排除目的不定式。目的短语与状态动作可以处在不同层级，不把某个词、for
+      或是否有逗号变成通用选形开关。
+
+
+      **“完成形式不能作定语”的勘误边界**：原讲义有这一全称说法，但不能推广为所有非谓语完成形式一律禁止。完成分词 having done/having
+      been done 不用于这里讨论的普通后置分词定语；完成不定式则可在适当结构中作后置修饰，须按具体结构和时间关系判断。动作在现实中先发生，也不自动强制完成式；不能把没有
+      before/after 或明确时间点当作禁止完成式的充分理由。
 
 
       **省 to 不定式作宾补的动词**：五看（see、watch、notice、observe、look at）、两听（hear、listen to）、三使（make、let、have）、一感觉（feel）。三式分工：see
       sb. do sth. 看到某人做了某事；see sb. doing sth. 看到某人正在做某事；see sb./sth. done 看到某人或某物被怎样。
+
+
+      **吾看两厅三室一感觉**是这份动词清单的谐音助记黑话，单独保留称呼，不升为另一解题法。清单不等于遇到这些词只能填 do；须核当前义项、主动或被动结构及宾补表达的是完整动作、进行动作还是受动关系。
 
 
       **非谓语的完整形式清单**：不定式六式（to do、to be done、to be doing、to have done、to have been
@@ -3702,7 +4341,7 @@ sections:
       **逻辑主语按成分定**：作定语时是它所修饰的名词或代词；作状语时是句子主语；作宾补时是它前面的宾语。
 
 
-      **独立主格**：非谓语的主语与谓语主语一致；不一致时保留该主语，即独立主格。
+      **独立主格**：普通分词状语通常与主句共用主语；动作另有自己的逻辑主语且结构需要时，保留该主语形成独立主格。定语、宾补等本来按各自成分确定逻辑主语，不因它们不同于主句主语就一律改为独立主格。
 
 
       **只接不定式作宾语的动词**：want、would like、wish、help、hope、learn、manage、offer、plan、afford、agree、arrange、ask、beg、care、choose、decide、demand、determine、expect、fear、prepare、pretend、promise、refuse。
@@ -3719,12 +4358,12 @@ sections:
 
 
       '
-    commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
-  62e443a0a04865bf:
+    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+  c0416230d2a90924:
     path: gaokao-grammar-fill/references/grammar-fill.md
     heading: 口播讲解组织
-    line_start: 193
-    line_end: 216
+    line_start: 205
+    line_end: 228
     content: '## 口播讲解组织
 
 
@@ -3764,12 +4403,12 @@ sections:
 
 
       '
-    commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
-  7ae166ccec059b00:
+    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+  86faf5c280abdc74:
     path: gaokao-grammar-fill/references/grammar-fill.md
     heading: 学生直接问方法时
-    line_start: 217
-    line_end: 249
+    line_start: 229
+    line_end: 269
     content: '## 学生直接问方法时
 
 
@@ -3782,7 +4421,13 @@ sections:
       **有无提示词双路**（《总路线》）：①拿到空先问这一句有没有给提示词 ②没给就走冠词、介词、连词、代词；给了就先定空位需要什么成分 ③整篇先做无提示词的空，再回头做有提示词的空。说清第③条是本题型特有的整篇次序。
 
 
+      **有提示词——一看二思解题法**（《总路线》第4条）：先看所给词类，再思变化和用法；落到当前空位所需成分，不因给动词就跳过派生词检查。**介冠联**（《无提示词》开头）只解释考点分流简称，不补造三步算法或固定配额。
+
+
       **删除法**（《总路线》第 1 条）：①拿掉不定式、介词短语、从句、插入语 ②抓主干 ③恢复决定答案的部分。学生用课程里的叫法时要认，讲具体的题时不念。
+
+
+      **劫匪插葱**（《总路线》第1条）：认作课程结构助记黑话，解释介词短语、非谓语、插入语、从句的暂略职责，并说明做内部空和取证时要恢复。不把机器同音转写另立为新名。
 
 
       **冠词**（《无提示词》冠词节）：①确认空后是不是以单数可数名词为中心 ②判断特指还是泛指 ③按读音判 a/an，按共知、已提、被限定、序数最高级判
@@ -3813,6 +4458,10 @@ sections:
       **非谓语的三条轴**（《非谓语：作用、主被动与先后》）：①句法作用或固定结构 ②逻辑主语与主被动 ③与谓语的时间关系。
 
 
+      **非谓语动词解题步骤**（《非谓语：作用、主被动与先后》）：先由句法作用找到逻辑主语、判主被动，再核与谓语动作的关系；与内部三轴整理分清原名身份。**To
+      do VS doing（填doing的三原则）**（《26S春 补充》）：已判非谓语后比较目的、伴随／状态或自然结果，用原三项辅助，不以逗号单独定形，也不要求三项全部齐全。**吾看两厅三室一感觉**（同节）按省to宾补动词清单的谐音助记解释，不设另一整题流程。
+
+
       **名词与所有格**（《名词及所有格》）：①判断要名词还是动名词 ②按谓语、限定词和语义定单复数 ③按共有或各有加所有格 ④对上常见名词后缀。
 
 
@@ -3824,8 +4473,11 @@ sections:
 
       如果某条方法或语法点在本模块正文里找不到成形的步骤，就照实说课程资料里没有写到这一步，不自己编一套流程补上。
 
+
+      **费曼学习法**在本课程语填相关答疑中用于学习复盘：合上材料回顾已学知识，梳理错题所暴露的知识点并强化理解。它是学习／解释理解的辅助称呼，不是逐空选形判据，不插入正式做题顺序；本次证据未给完整独立训练程序，不用通用经验补成固定几步。
+
       '
-    commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
+    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
   3934b1d58e0b7dc0:
     path: gaokao-grammar-fill/references/method-application-example.md
     heading: 指定方法审稿：对照示例
@@ -3841,7 +4493,7 @@ sections:
 
 
       '
-    commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
+    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
   ea272b956f2e9a79:
     path: gaokao-grammar-fill/references/method-application-example.md
     heading: 怎么用
@@ -3863,7 +4515,7 @@ sections:
 
 
       '
-    commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
+    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
   3e1813ead09ffb6f:
     path: gaokao-grammar-fill/references/method-application-example.md
     heading: 示例：要求“用内容一致法做这道七选五”
@@ -3879,7 +4531,7 @@ sections:
 
 
       '
-    commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
+    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
   3cd8bc24d32bb3d8:
     path: gaokao-grammar-fill/references/method-application-example.md
     heading: 合格稿：每一步都找得到
@@ -3912,7 +4564,7 @@ sections:
 
 
       '
-    commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
+    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
   cbc963337e20aa30:
     path: gaokao-grammar-fill/references/method-application-example.md
     heading: 不合格的四种样子
@@ -3945,7 +4597,7 @@ sections:
 
 
       '
-    commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
+    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
   40102ff7b0bc308c:
     path: gaokao-grammar-fill/references/method-application-example.md
     heading: 换成别的题型照样这样过
@@ -3965,7 +4617,7 @@ sections:
 
 
       '
-    commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
+    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
   3be260507385565f:
     path: gaokao-grammar-fill/references/method-application-example.md
     heading: 拿不准时怎么办
@@ -3980,7 +4632,7 @@ sections:
       分不清某一步算不算写了，按这个标准判。把这一句单独拿出来，别人能不能照着做出同样的判断。不能，就是没写。
 
       '
-    commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
+    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
   580440d3ee0d668c:
     path: gaokao-grammar-fill/references/objective-revision.md
     heading: 客观题：先取得源文定位，再写一份现场讲解
@@ -3993,7 +4645,7 @@ sections:
 
 
       '
-    commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
+    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
   fb822c17e0ba991d:
     path: gaokao-grammar-fill/references/objective-revision.md
     heading: 先读原题定位卡
@@ -4019,7 +4671,7 @@ sections:
 
 
       '
-    commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
+    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
   aecfce9e0c003782:
     path: gaokao-grammar-fill/references/objective-revision.md
     heading: 按原句写，少用凭记忆的标签
@@ -4037,7 +4689,7 @@ sections:
 
 
       '
-    commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
+    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
   dbea3527501817f6:
     path: gaokao-grammar-fill/references/objective-revision.md
     heading: 用同一模型完成内部修稿
@@ -4060,7 +4712,7 @@ sections:
       最终通读的是“同学，先看这里……用这个方法找对应……所以……”的连续讲解。删掉修稿过程，不删分组、方法、关键原词、关系、必要排除和验证。生词只在影响判断处用真实构词或上下文推义，题序与展示范围服从各模块。
 
       '
-    commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
+    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
   43472d57eed22562:
     path: gaokao-grammar-fill/SKILL.md
     heading: 入口契约
@@ -4089,7 +4741,7 @@ sections:
 
 
       '
-    commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
+    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
   607046a254969df0:
     path: gaokao-grammar-fill/SKILL.md
     heading: 思考逻辑和交付稿逻辑是两件事
@@ -4117,7 +4769,7 @@ sections:
 
 
       '
-    commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
+    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
   ae8377afbda6e427:
     path: gaokao-grammar-fill/SKILL.md
     heading: 判题型
@@ -4136,7 +4788,7 @@ sections:
 
 
       '
-    commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
+    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
   65048a6a4a9c54f6:
     path: gaokao-grammar-fill/SKILL.md
     heading: 做题顺序
@@ -4152,7 +4804,7 @@ sections:
 
 
       '
-    commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
+    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
   b1c7bd5e4b689a36:
     path: gaokao-grammar-fill/SKILL.md
     heading: 现场做给他看
@@ -4200,7 +4852,7 @@ sections:
 
 
       '
-    commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
+    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
   5fc74f39a2f34577:
     path: gaokao-grammar-fill/SKILL.md
     heading: 交付形态：微信答疑消息
@@ -4246,7 +4898,7 @@ sections:
 
 
       '
-    commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
+    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
   4f648e7a078872ff:
     path: gaokao-grammar-fill/SKILL.md
     heading: 设问引导（必要时）
@@ -4272,7 +4924,7 @@ sections:
 
 
       '
-    commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
+    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
   da2a19b412b19c6c:
     path: gaokao-grammar-fill/SKILL.md
     heading: 篇内次序与整篇交付
@@ -4294,7 +4946,7 @@ sections:
 
 
       '
-    commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
+    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
   036782dad459fbf7:
     path: gaokao-grammar-fill/SKILL.md
     heading: 学生只问一处时
@@ -4313,7 +4965,7 @@ sections:
 
 
       '
-    commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
+    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
   a8cda951596ef2b1:
     path: gaokao-grammar-fill/SKILL.md
     heading: 事先给了答案时
@@ -4335,7 +4987,7 @@ sections:
 
 
       '
-    commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
+    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
   3ace47431cb656a5:
     path: gaokao-grammar-fill/SKILL.md
     heading: 被问方法时
@@ -4364,7 +5016,7 @@ sections:
 
 
       '
-    commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
+    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
   78522bb74ddab087:
     path: gaokao-grammar-fill/SKILL.md
     heading: 生词与长句
@@ -4386,7 +5038,7 @@ sections:
 
 
       '
-    commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
+    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
   86864c68b9e45f36:
     path: gaokao-grammar-fill/SKILL.md
     heading: 内部工具阶段
@@ -4400,7 +5052,7 @@ sections:
 
 
       '
-    commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
+    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
   b5084c9b6615500e:
     path: gaokao-grammar-fill/SKILL.md
     heading: 交付稿验收
@@ -4440,7 +5092,7 @@ sections:
 
 
       '
-    commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
+    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
   63a1b5b2efc60251:
     path: gaokao-grammar-fill/SKILL.md
     heading: 讲解范围与逐题内容
@@ -4466,7 +5118,7 @@ sections:
 
 
       '
-    commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
+    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
   62925f3b17a57fb3:
     path: gaokao-grammar-fill/SKILL.md
     heading: 参考文件
@@ -4487,7 +5139,7 @@ sections:
       - [scripts/check_lesson.py](scripts/check_lesson.py) — 定位卡与修稿检查脚本
 
       '
-    commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
+    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
   1e21cad527d5a92a:
     path: gaokao-writing/references/application-writing-and-correction.md
     heading: 应用文写作与批改
@@ -4500,7 +5152,7 @@ sections:
 
 
       '
-    commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
+    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
   f8cfb194a81aad6e:
     path: gaokao-writing/references/application-writing-and-correction.md
     heading: 使用边界
@@ -4519,7 +5171,7 @@ sections:
 
 
       '
-    commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
+    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
   254fa3adfb42db4e:
     path: gaokao-writing/references/application-writing-and-correction.md
     heading: 15 分评分规范
@@ -4559,7 +5211,7 @@ sections:
 
 
       '
-    commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
+    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
   ed19bd45d6bc3762:
     path: gaokao-writing/references/application-writing-and-correction.md
     heading: 书写评价边界
@@ -4580,7 +5232,7 @@ sections:
 
 
       '
-    commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
+    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
   dac147e9a947370c:
     path: gaokao-writing/references/application-writing-and-correction.md
     heading: 批改顺序：先五审法
@@ -4607,7 +5259,7 @@ sections:
 
 
       '
-    commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
+    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
   e8d15f7e5681b5de:
     path: gaokao-writing/references/application-writing-and-correction.md
     heading: 开明致学写作方法
@@ -4617,7 +5269,7 @@ sections:
 
 
       '
-    commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
+    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
   0a6f5b5594a41dd6:
     path: gaokao-writing/references/application-writing-and-correction.md
     heading: 应用文写作六步训练法通用梳理框架
@@ -4640,7 +5292,7 @@ sections:
 
 
       '
-    commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
+    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
   15e18423e3364f72:
     path: gaokao-writing/references/application-writing-and-correction.md
     heading: 三种写作表达方法
@@ -4657,25 +5309,67 @@ sections:
 
 
       '
-    commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
+    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
   1b1197e2fa02ee07:
     path: gaokao-writing/references/application-writing-and-correction.md
     heading: 富兰克林写作法（寒4五步）
     line_start: 68
-    line_end: 71
+    line_end: 73
     content: '### 富兰克林写作法（寒4五步）
 
 
       课后训练先简化中文（原句已简单可直接译）→译成英文→对照范文→记录并背诵自己缺的词或句式；想进一步提高时，可选用 AI 升级词和句型。这是寒4原课五步，末步为可选进阶。挖空法是另一项独立的填空、对照、纠错训练；不能将旧整理的六步循环称为本课原定义。批改交付只挑最能解决当前问题的句子示范。
 
 
+      同名的赠44、赠47、暑13及国庆来源另有挖空或中文提示回忆、对照错漏的训练版本；按所问来源说明，不把这些形式强塞进寒4五步，也不因使用同名就删除其训练身份。赠44还明称**富兰克林作文法**，操作为看中文补英文缺口→对照原英文、重点记错漏→熟读后重新遮空填写→再对照补缺；**刻意训练**是该循环的训练称呼。与范文不同但正确的表达不能仅因不一样而判错，原例语言错误不复制为目标句。
+
+
       '
-    commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
-  cfc5531cda2a9b91:
+    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+  87d83728b9fb3fb4:
+    path: gaokao-writing/references/application-writing-and-correction.md
+    heading: 句子写作思路
+    line_start: 74
+    line_end: 77
+    content: '### 句子写作思路
+
+
+      原讲义五项句子组织提示：确认动词→谓语／非谓语（从句）→主动／被动→句型→描述成分。表达内容已明确而需组织或检查句子时，按这些依赖处理当前句；词义、施受及修饰必须符合当前语境。这不是另一套五定法，也不替换三种写作表达方法或强制每句升级复杂结构。
+
+
+      '
+    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+  3451e36adc7973a9:
+    path: gaokao-writing/references/application-writing-and-correction.md
+    heading: 个人--家庭--学校--社会
+    line_start: 78
+    line_end: 81
+    content: '### 个人--家庭--学校--社会
+
+
+      赠48原板书的开放要点构思提示。题目没有明确具体要点、需要想事件意义或自己能做什么时，可从这些实际相关层面寻找内容，再按题目目的筛选；题面具体要点优先。不是固定每题三点／四点，也不要求逐层各写一段；写三圈仅机器暂识、名称未核，不据此造方法。
+
+
+      '
+    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+  3f39d3b03e8baef0:
+    path: gaokao-writing/references/application-writing-and-correction.md
+    heading: 总分总的呼应
+    line_start: 82
+    line_end: 85
+    content: '### 总分总的呼应
+
+
+      赠45感谢信的课堂结构称呼，开头感谢、主体说明相关帮助与影响、末尾再次致谢，核首尾是否回应同一交际目的。按当前感谢任务使用，不作所有书信的统一骨架或新增评分项。
+
+
+      '
+    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+  e690e665e166ac99:
     path: gaokao-writing/references/application-writing-and-correction.md
     heading: 常见文体骨架
-    line_start: 72
-    line_end: 81
+    line_start: 86
+    line_end: 95
     content: '## 常见文体骨架
 
 
@@ -4695,12 +5389,12 @@ sections:
 
 
       '
-    commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
-  3f39d3b03e8baef0:
+    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+  a3a39e51c18207af:
     path: gaokao-writing/references/application-writing-and-correction.md
     heading: 细节与升级原则
-    line_start: 82
-    line_end: 88
+    line_start: 96
+    line_end: 102
     content: '## 细节与升级原则
 
 
@@ -4714,12 +5408,12 @@ sections:
 
 
       '
-    commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
-  2d36adb5b123fa87:
+    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+  c31cd0177f939008:
     path: gaokao-writing/references/application-writing-and-correction.md
     heading: 应用文批改反馈话术
-    line_start: 89
-    line_end: 92
+    line_start: 103
+    line_end: 106
     content: '## 应用文批改反馈话术
 
 
@@ -4727,12 +5421,12 @@ sections:
 
 
       '
-    commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
-  7bda0d9e17f08b79:
+    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+  7bbad7d7bf3dfeba:
     path: gaokao-writing/references/application-writing-and-correction.md
     heading: 话术节奏
-    line_start: 93
-    line_end: 100
+    line_start: 107
+    line_end: 114
     content: '### 话术节奏
 
 
@@ -4748,12 +5442,12 @@ sections:
 
 
       '
-    commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
-  fbc76f83977fbb27:
+    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+  ddd0b9d6b762a100:
     path: gaokao-writing/references/application-writing-and-correction.md
     heading: 各环节可用话术
-    line_start: 101
-    line_end: 149
+    line_start: 115
+    line_end: 163
     content: '### 各环节可用话术
 
 
@@ -4837,12 +5531,12 @@ sections:
 
 
       '
-    commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
-  1ee5694c5ea58bbf:
+    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+  96e4d1b7fdd327bb:
     path: gaokao-writing/references/application-writing-and-correction.md
     heading: 话术使用禁忌
-    line_start: 150
-    line_end: 157
+    line_start: 164
+    line_end: 171
     content: '### 话术使用禁忌
 
 
@@ -4858,12 +5552,12 @@ sections:
 
 
       '
-    commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
-  ecc5107aaf9d178a:
+    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+  539d67ec2bc377ec:
     path: gaokao-writing/references/application-writing-and-correction.md
     heading: 26S 讲义新增内容
-    line_start: 158
-    line_end: 161
+    line_start: 172
+    line_end: 175
     content: '## 26S 讲义新增内容
 
 
@@ -4871,12 +5565,12 @@ sections:
 
 
       '
-    commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
-  c827be84f7798683:
+    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+  8cc4571377b8183a:
     path: gaokao-writing/references/application-writing-and-correction.md
     heading: 复习路径与分数锚定
-    line_start: 162
-    line_end: 169
+    line_start: 176
+    line_end: 183
     content: '### 复习路径与分数锚定
 
 
@@ -4890,12 +5584,12 @@ sections:
 
 
       '
-    commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
-  e39a3629fdfb5284:
+    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+  27cf55e8f2cf7c93:
     path: gaokao-writing/references/application-writing-and-correction.md
     heading: 五审法的审核维度表
-    line_start: 170
-    line_end: 175
+    line_start: 184
+    line_end: 189
     content: '### 五审法的审核维度表
 
 
@@ -4906,12 +5600,12 @@ sections:
 
 
       '
-    commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
-  8cc4571377b8183a:
+    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+  674a33a24f97831a:
     path: gaokao-writing/references/application-writing-and-correction.md
     heading: 三种写作表达方法的细化
-    line_start: 176
-    line_end: 183
+    line_start: 190
+    line_end: 199
     content: '### 三种写作表达方法的细化
 
 
@@ -4921,17 +5615,20 @@ sections:
       复杂句式模块法：先有准确的主干简单句，再把相关动作各写成简单句，按真实逻辑用从句、非谓语、连接词或介词短语粘连。寒4徒步例中的“两简一复从”是主干之后加两个相关简单句再合成复杂表达的扩句训练，不是整篇句数或从句配额。
 
 
+      两简一复从的国庆来源另存：第1讲以当前只有两句为由说用不上，第2讲却用此名指两句信息合并。两处名称使用范围有张力，不能统一成两句必可或必不可。讲当前句子时保主句谓语，按实际关系把另一信息作修饰或从句；被问该原名时说明来源，不借续写寒14定义消除应用文异文。
+
+
       长句翻译重构法：语义解构（拆语义单元，识别核心信息与修饰信息）；语序重组（按英文主体、动作、场景组织）；细节校准（时态、词性、单复数）；风格统一（按逻辑优化衔接）。课程提到的
       110／120 是当时能力或分数目标下的粗略训练分流，不能写成整篇词数阈值；看信息复杂度和学生表达能力选法。连续口述重构及另一独立完整例尚未核，不宣称新题已全面验收。
 
 
       '
-    commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
-  27cf55e8f2cf7c93:
+    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+  1c2d18c01623f09f:
     path: gaokao-writing/references/application-writing-and-correction.md
     heading: 富兰克林写作法（五步）
-    line_start: 184
-    line_end: 187
+    line_start: 200
+    line_end: 203
     content: '### 富兰克林写作法（五步）
 
 
@@ -4939,12 +5636,12 @@ sections:
 
 
       '
-    commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
-  4dde2ad49f107ae2:
+    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+  826bddb7694b0a21:
     path: gaokao-writing/references/application-writing-and-correction.md
     heading: 反向劫匪插葱
-    line_start: 188
-    line_end: 191
+    line_start: 204
+    line_end: 207
     content: '### 反向劫匪插葱
 
 
@@ -4952,12 +5649,12 @@ sections:
 
 
       '
-    commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
-  2e057c9f98c9de93:
+    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+  7022e0285ab88322:
     path: gaokao-writing/references/application-writing-and-correction.md
     heading: 三类高频书信的模板结构
-    line_start: 192
-    line_end: 197
+    line_start: 208
+    line_end: 213
     content: '### 三类高频书信的模板结构
 
 
@@ -4970,12 +5667,12 @@ sections:
 
 
       '
-    commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
-  25ab2251aaba4712:
+    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+  106f75b81b28e301:
     path: gaokao-writing/references/application-writing-and-correction.md
     heading: 写人类（人物介绍）文体方法
-    line_start: 198
-    line_end: 213
+    line_start: 214
+    line_end: 229
     content: '### 写人类（人物介绍）文体方法
 
 
@@ -5004,12 +5701,12 @@ sections:
 
 
       '
-    commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
-  106f75b81b28e301:
+    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+  a79d6eef78245bd4:
     path: gaokao-writing/references/application-writing-and-correction.md
     heading: 投稿类的身份与时态定调
-    line_start: 214
-    line_end: 217
+    line_start: 230
+    line_end: 233
     content: '### 投稿类的身份与时态定调
 
 
@@ -5017,12 +5714,12 @@ sections:
 
 
       '
-    commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
-  1f36be2f364e0637:
+    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+  48bd60cb771e7ad0:
     path: gaokao-writing/references/application-writing-and-correction.md
     heading: 活动类的三段式与散点技巧
-    line_start: 218
-    line_end: 231
+    line_start: 234
+    line_end: 247
     content: '### 活动类的三段式与散点技巧
 
 
@@ -5047,12 +5744,12 @@ sections:
 
 
       '
-    commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
-  fe11106b31ff1364:
+    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+  bbf310a6ee245b95:
     path: gaokao-writing/references/application-writing-and-correction.md
     heading: 写作误区与提分技巧
-    line_start: 232
-    line_end: 239
+    line_start: 248
+    line_end: 255
     content: '### 写作误区与提分技巧
 
 
@@ -5069,23 +5766,77 @@ sections:
 
 
       '
-    commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
-  e68392b5352c1bc7:
+    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+  037a6e97d44a42b0:
     path: gaokao-writing/references/application-writing-and-correction.md
     heading: 26S春 补充
-    line_start: 240
-    line_end: 253
+    line_start: 256
+    line_end: 265
     content: '### 26S春 补充
 
 
-      **三段话格式**（针对已给标题或首尾句的演讲稿、发言稿）：①补全文章的中文剩余内容（除明确的考点信息），作背景 ②具体要点 ③套路结尾，最好有点升华。题目已给的标题、首句、尾句**保留格式抄原文**。
+      **三段话格式**（春5演讲示范）：①补全除题面明确考点外仍需交代的背景或主题 ②完成具体要点 ③按交际目的收束，最好扣主题。给几个要点就完成几个，不移用其他题的三理由配额；已给标题、首尾如何抄写按题目要求，不以该示范统一规定。
 
 
-      **演讲稿套路结尾模板**：I would appreciate it if you could take my invitation/advice into
-      consideration...，宾语与目的按题目主题替换。
+      **保留格式抄原文**：春5现场口诀，保所练句型骨架，取题面或标题核心词，再按交际目的换词和补连接。不是逐字照抄整句，也不只指抄给定首尾。原邀请结尾被移入演讲时，教师明确称为适配演示、并非很合适的演讲结尾，要求改变邀请用词；不能把邀请模板推荐为所有演讲的标准结尾。
 
 
-      **中文→词汇→句型的草稿表**：先定要表达的中文，再找英文词汇，最后选合适句型。表格的列序与标注步号不同，以步号为准；“三联草稿表”为整理便称。原讲义列出的文体和句型配对只是示例，不是所有演讲、发言或介绍文的固定句型要求。
+      **背结构，改小词**：春5主讲义与回放轴的独立口诀。保符合文体的结构，按当前对象、活动、时态和目的改词；与上一口诀职责有关，原名仍各自保留。
+
+
+      **中文→词汇→句型的草稿表**：按春5现场先用中文简记内容，再列将用词汇，最后放入合适句型，不写完整英文草稿。表格空间列序是中文、句型、词汇，步号却为1、3、2；回放轴摘要也写中文→句型→词汇，与现场有差异。这里沿用现场和表头步号，不宣称所有来源一致；“三联草稿表”为整理便称。文体与句型配对只是示例，不是每题固定要求。
+
+
+      '
+    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+  0fb8642fc0fb3859:
+    path: gaokao-writing/references/application-writing-and-correction.md
+    heading: 国庆应用文：修改流程与表达训练
+    line_start: 266
+    line_end: 281
+    content: '### 国庆应用文：修改流程与表达训练
+
+
+      **应用文写作的五步法**：用于修改与批改，原五块为审题与时态核查→结构与要点梳理→衔接与细节优化→语言与句式升级→最终检查清单。现场会按当前问题往返检查；先核身份、目的、要点，再补真实细节与逻辑、改语言、复查常错。它与五审法、六步训练法各自保名，不改成全部应用文唯一写作顺序。
+
+
+      五个编号表达技巧各自使用，不合并为旧三种写作表达方法：
+
+
+      - **换词，简单词变成高级词**：对已准确的内容，按语义、搭配和语体选择更具体或多样的词；不把课堂词对视为恒等替换，不要求常用词全换。
+
+      - **加词，丰富语意，增加形副**：给对象或动作补题意允许且相关的修饰，让信息具体；不按形副数量评分，不凭空增加属性。
+
+      - **换主语，告别以人开头的大白话**：同一信息可改以事件、物品或概念为主语，并重建谓语和逻辑归属；不禁用人称主语，不把主观意愿改成客观事实。
+
+      - **单句变成复合句**：按完整命题之间的真实关系组合句子，保主句与修饰归属；原表也列with／without结构，保原题名，但不把所有这类结构判成含从句的复合句。
+
+      - **单一句式变为多句式**：已有内容成立时，按需要用名词化、介词短语、省略或非谓语等减少重复；保原义、逻辑主语和时间关系，不堆句型。
+
+
+      **形容词叠加**：赠46表达训练原名，可用两个语义相容的形容词描写同一对象；按当前对象和搭配选词，不设每句双形容词配额，也不沿用同帧误标的语态判断。
+
+
+      思辨题三个构思模型分别保名：**问题-分析-建议模型**用于解释问题并给针对性建议；**现象-利弊-总结模型**用于评价现象，不强制利弊均等；**观点-论据-论证模型**是国庆视频完整原名，讲义末字写作**观点-论据-论证模**，用相关支持说明观点，不把无据统计当事实。现场讲先陈述问题、现象或观点，主体作相应分析，末尾建议或总结；这是该思辨课的组织口径，不强加到活动执行类，也不从名称补每段句数。三个名称与职责已证，但独立完整实施证不足，不把同一篇范文计作三篇、也不声称已核三套逐题完整算法。
+
+
+      '
+    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+  df4cea9abfa81119:
+    path: gaokao-writing/references/application-writing-and-correction.md
+    heading: 春5文体模板与修辞建议
+    line_start: 282
+    line_end: 295
+    content: '### 春5文体模板与修辞建议
+
+
+      课名演讲不限制其全部内容为演讲。按当前任务分别选原栏目：**发言稿模板**（引主题、内容、感想祝福）、**建议信模板**（背景与建议、分项建议、希望）、**投稿征文模板**（目的、情况、总结）、**报道模板**（事件、经过、简评）、**人物介绍类模板**（引人物、描述、评价）、**邀请信模板**（邀请、安排与意义、期待回复）、**求助信模板**（表意、原因、希望）、**申请信模板**（意图、优势、期望）、**告知信**（即将发生的事或回复询问）。这些是文体模板目录，不是一套演讲算法；题面要点与交际对象优先。自我介绍在对方需要知道身份时简要交代，不把投稿示例泛化为所有投稿禁止介绍身份。
+
+
+      **先声夺人开头句**、**引人入胜篇中句**、**画龙点睛结尾句**分别是各文体的功能位置栏目，依所选文体完成引入、展开与收束，不把栏目名当跨文体无条件套句法。
+
+
+      演讲中的**排比句式**、**比喻手法**、**反问技巧**、**把握语言节奏**、**丰富词汇表达**分别为修辞和语言建议。并行结构需有真实并列内容，比喻、反问、停顿与长短变化服务当前主题和语气，用词受准确性、搭配和语体约束，不要求五项齐全。
 
 
       **基础范文到升级范文的三段式**：优化原因固定四条，覆盖词汇替换、句式升级、逻辑衔接词、字数精简、立意升华五个维度。
@@ -5099,12 +5850,64 @@ sections:
 
 
       '
-    commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
-  24003f38b1c3222a:
+    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+  fc664e8d7ec2b8a7:
+    path: gaokao-writing/references/application-writing-and-correction.md
+    heading: 补充课程名称与材料身份
+    line_start: 296
+    line_end: 319
+    content: '## 补充课程名称与材料身份
+
+
+      以下逐名说明已有职责；整理简称、材料栏目和例题示范不升级为课程独立算法。
+
+
+      - 劫匪插葱 反向进行：原口诀表述，已有模块拆组／拼贴职责见反向劫匪插葱小节；不凭字面拆造顺序。
+
+      - 读-背-仿（三步走）：原训练表述，对应本模块熟读英文、记中文大意、富兰克林仿写的职责，不是临场必走三遍。
+
+      - 核心要素：人物介绍原栏目，含身份、成就、品质、社会影响；国籍如适用才写，内容依题选择，不强制四段。
+
+      - 品质+事例：人物主体段的一种可选构思逻辑，与时间轴择适合者使用，不强制两套都做或固定三品质。
+
+      - 句式多样化：人物课的句式素材栏目，按内容选择定语从句、分词结构、强调句，不要求三种齐全。
+
+      - 好作文三步：课程检查／训练标题，内容是审题格式与考点、内容语言丰富度与细节、卷面训练；不压成唯一严格程序或美观评分项。
+
+      - 蓝色标注：暑13该讲扩充语料的材料约定，熟读积累但不要求背诵；绿色是该讲重点词汇短语的背用要求。颜色含义不跨材料泛化，陌生题按语境选用，不据颜色扣分。
+
+      - 应用文写作前三步骤：历史人物投稿例的审题示范，具体动作见投稿小节；不能泛化为全部投稿禁止自我介绍或一律过去时。
+
+      - 报道“一般结构”：原文体框架，时间地点目的参与者→经过→评价或感悟，按当前报道任务用，不套邀请结构。
+
+      - 活动三段式：整理简称，对应活动课原名三段式，不冒充另一套课程原名。
+
+      - 三种句子生成法：整理者总称，对应的课程总称是三种写作表达方法，不另增第四种方法。
+
+      - 人物四件套：整理者对核心要素的便称，未核为课程逐字原名。
+
+      - 句式多样化三件套：整理者称呼，相关三类素材已核，组合名称未核为原名。
+
+      - 要点—句型—词汇三联草稿表：整理名称，实际原表操作仍是中文→词汇→句型，不按便称或表列空间顺序倒置。
+
+      - 初阶：填空训练（强化重点句型）：赠课原训练栏目，读熟后遮词、回忆、核错，基础不足先熟读；不是新题现场作答算法。
+
+      - 刻意仿写：赠课训练栏目，保实际语义关系与可迁结构、按新对象和任务改写，不复刻原例人物事实。
+
+      - 扩展能力：国庆的课程组织栏目，涉及五大话题与九大句型／九大句式；不是新解题法。成员未完整核齐，不自行补齐目录，数量不作单篇配额。
+
+      - 升级复杂句：国庆单句表达训练称呼，按实际原因、建议、目的或结果组织复杂表达，不把所有合句都强冠两简一复从。
+
+      - 功能句式、升华句、部分金句：课程对不同素材的背用要求；国庆偏重点背功能与错漏，赠49另要求整篇背熟，分来源保留训练差异，不变为每篇必须逐项使用。
+
+
+      '
+    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+  4c3b55d00760d42d:
     path: gaokao-writing/references/application-writing-and-correction.md
     heading: 批改交付格式
-    line_start: 254
-    line_end: 268
+    line_start: 320
+    line_end: 334
     content: '## 批改交付格式
 
 
@@ -5132,7 +5935,7 @@ sections:
       语气口语化、具体、鼓励式，但不能虚构优点或淡化会影响分数的关键问题。
 
       '
-    commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
+    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
   596de3e74bdb9393:
     path: gaokao-writing/references/continuation-writing-and-correction.md
     heading: 读后续写写作与批改
@@ -5145,7 +5948,7 @@ sections:
 
 
       '
-    commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
+    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
   7b4c299267a685c2:
     path: gaokao-writing/references/continuation-writing-and-correction.md
     heading: 使用边界
@@ -5167,7 +5970,7 @@ sections:
 
 
       '
-    commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
+    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
   d2dc77b78b7ce906:
     path: gaokao-writing/references/continuation-writing-and-correction.md
     heading: 25 分评分规范
@@ -5213,7 +6016,7 @@ sections:
 
 
       '
-    commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
+    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
   09015032f4ec758b:
     path: gaokao-writing/references/continuation-writing-and-correction.md
     heading: 书写评价边界
@@ -5234,7 +6037,7 @@ sections:
 
 
       '
-    commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
+    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
   a9f982dcfec817d9:
     path: gaokao-writing/references/continuation-writing-and-correction.md
     heading: 先框架后语言
@@ -5264,7 +6067,7 @@ sections:
 
 
       '
-    commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
+    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
   40089c4aea5930c9:
     path: gaokao-writing/references/continuation-writing-and-correction.md
     heading: 开明致学五步法：跳定思提润
@@ -5274,7 +6077,7 @@ sections:
 
 
       '
-    commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
+    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
   1136f0ec086fab00:
     path: gaokao-writing/references/continuation-writing-and-correction.md
     heading: 一 跳：跳读文章，弄清线索
@@ -5293,7 +6096,7 @@ sections:
 
 
       '
-    commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
+    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
   1b0ba42794bd8a00:
     path: gaokao-writing/references/continuation-writing-and-correction.md
     heading: 二 定：确定冲突，锁定主题
@@ -5310,7 +6113,7 @@ sections:
 
 
       '
-    commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
+    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
   7a74f41a6546aa31:
     path: gaokao-writing/references/continuation-writing-and-correction.md
     heading: 三 思：整体构思，提取素材
@@ -5329,7 +6132,7 @@ sections:
 
 
       '
-    commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
+    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
   9b52c2a999ab29a2:
     path: gaokao-writing/references/continuation-writing-and-correction.md
     heading: 四 提：完成提纲，定词定句
@@ -5346,7 +6149,7 @@ sections:
 
 
       '
-    commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
+    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
   0cf979fcaa4e9965:
     path: gaokao-writing/references/continuation-writing-and-correction.md
     heading: 五 润：检查主题回应，润色修改
@@ -5363,7 +6166,7 @@ sections:
 
 
       '
-    commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
+    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
   c7b254c23e9755d1:
     path: gaokao-writing/references/continuation-writing-and-correction.md
     heading: 十句五定法
@@ -5402,7 +6205,7 @@ sections:
 
 
       '
-    commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
+    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
   5391fbc041ed3f90:
     path: gaokao-writing/references/continuation-writing-and-correction.md
     heading: 人物和细节描写
@@ -5425,7 +6228,7 @@ sections:
 
 
       '
-    commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
+    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
   adfb5204585068af:
     path: gaokao-writing/references/continuation-writing-and-correction.md
     heading: 读后续写批改反馈话术
@@ -5438,7 +6241,7 @@ sections:
 
 
       '
-    commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
+    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
   360e306d3d73b96f:
     path: gaokao-writing/references/continuation-writing-and-correction.md
     heading: 话术节奏
@@ -5459,7 +6262,7 @@ sections:
 
 
       '
-    commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
+    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
   96d2d454f0e5f45a:
     path: gaokao-writing/references/continuation-writing-and-correction.md
     heading: 各环节可用话术
@@ -5554,7 +6357,7 @@ sections:
 
 
       '
-    commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
+    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
   7f766995677fdd63:
     path: gaokao-writing/references/continuation-writing-and-correction.md
     heading: 话术使用禁忌
@@ -5577,7 +6380,7 @@ sections:
 
 
       '
-    commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
+    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
   60d2d16996c30d2f:
     path: gaokao-writing/references/continuation-writing-and-correction.md
     heading: 26S 讲义新增内容
@@ -5590,18 +6393,21 @@ sections:
 
 
       '
-    commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
+    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
   486a5ba8d06a5eb7:
     path: gaokao-writing/references/continuation-writing-and-correction.md
     heading: 情节构思：PTSD 四步法
     line_start: 198
-    line_end: 205
+    line_end: 207
     content: '### 情节构思：PTSD 四步法
 
 
       寒8板书的 PTSD 为 P 目的、T 方式、S 苦难、D 结局；同课表格写 P 需求、T 方法、S 困难、D 结局。先据两段首句列已知与未知槽，再回原文核人物关系、目的、矛盾和沟通方式；未知处先留空，不凭口诀补故事。寒14简明槽位另写
       P 需求、T 波折、S 方法或解决方案、D 结局，T/S 职责不同。寒14另有标题“PTSD四步法”的本题分析表，列 Needs、Difficulties、Solutions、Denouement；四词不是
       PTSD 字母的英文展开。用时说明来源版本，不混成一套。
+
+
+      寒8修书与寒14两篇现场已补槽位实施证据。先首句提出的问题只是待证候选，回文可以推翻人物身份、冲突或主题初猜；未知槽保持未知，不为了填表补故事。主题可兼有人与自我和人与社会侧重，不强迫二选一。两段规划补必要桥梁，已有衔接不重复；回扣关键线索不等于原文每个物件、背景或救援渠道都必须重写。第二段若出现新的实际触发，可以有新的焦虑，不把避免重复误写为禁止同类情绪。
 
 
       **四点串剧情（旧高二 PPT）**：原名独立登记，内容为 Purpose 需求、Twist 波折、Struggle 行动、Denouement 结果感悟。
@@ -5611,12 +6417,12 @@ sections:
 
 
       '
-    commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
-  5b24cfdf7bb17710:
+    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+  c982394b7e7a8b3e:
     path: gaokao-writing/references/continuation-writing-and-correction.md
     heading: 解题四步骤
-    line_start: 206
-    line_end: 209
+    line_start: 208
+    line_end: 211
     content: '### 解题四步骤
 
 
@@ -5624,12 +6430,12 @@ sections:
 
 
       '
-    commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
-  9e5bf18f26299bd7:
+    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+  9f6e7874c0eef6ae:
     path: gaokao-writing/references/continuation-writing-and-correction.md
     heading: 八个技巧（情节节奏模板）
-    line_start: 210
-    line_end: 213
+    line_start: 212
+    line_end: 215
     content: '### 八个技巧（情节节奏模板）
 
 
@@ -5637,12 +6443,12 @@ sections:
 
 
       '
-    commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
-  45b51237476e0ec8:
+    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+  3251f3f539ab88d7:
     path: gaokao-writing/references/continuation-writing-and-correction.md
     heading: 三条基本规律
-    line_start: 214
-    line_end: 217
+    line_start: 216
+    line_end: 219
     content: '### 三条基本规律
 
 
@@ -5650,25 +6456,28 @@ sections:
 
 
       '
-    commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
-  d5afd98a942355b0:
+    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+  ee46919f768fcf3f:
     path: gaokao-writing/references/continuation-writing-and-correction.md
     heading: 三重匹配
-    line_start: 218
-    line_end: 221
+    line_start: 220
+    line_end: 225
     content: '### 三重匹配
 
 
       寒14原组合标题为“三重匹配+双重升华”，其中“三重匹配”核本材料情节、情感、风格与原文是否统一。标题称“三重”，后文另列主题锚定等四点，异文照留。不能把该题的“危机升级→转机→解除”当所有续写的固定剧情。
 
 
+      寒14现场另以主题、情节、情感风格三块口述；与讲义拆分颗粒度不同，各自保留，不因口述没逐项展开双重升华就否认讲义定义。
+
+
       '
-    commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
-  2a5625a219ad5be1:
+    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+  8df5f0f660b2453c:
     path: gaokao-writing/references/continuation-writing-and-correction.md
     heading: 双重升华
-    line_start: 222
-    line_end: 225
+    line_start: 226
+    line_end: 229
     content: '### 双重升华
 
 
@@ -5676,12 +6485,12 @@ sections:
 
 
       '
-    commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
-  8df5f0f660b2453c:
+    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+  8816ae76b6da19d9:
     path: gaokao-writing/references/continuation-writing-and-correction.md
     heading: 四步精准续写
-    line_start: 226
-    line_end: 229
+    line_start: 230
+    line_end: 233
     content: '### 四步精准续写
 
 
@@ -5689,12 +6498,12 @@ sections:
 
 
       '
-    commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
-  8816ae76b6da19d9:
+    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+  637ac5c60b37baf7:
     path: gaokao-writing/references/continuation-writing-and-correction.md
     heading: 黄金法则（内部记忆）
-    line_start: 230
-    line_end: 233
+    line_start: 234
+    line_end: 237
     content: '### 黄金法则（内部记忆）
 
 
@@ -5702,12 +6511,12 @@ sections:
 
 
       '
-    commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
-  637ac5c60b37baf7:
+    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+  866388dfa1b014b3:
     path: gaokao-writing/references/continuation-writing-and-correction.md
     heading: gap 读法与首句规则
-    line_start: 234
-    line_end: 237
+    line_start: 238
+    line_end: 241
     content: '### gap 读法与首句规则
 
 
@@ -5715,16 +6524,16 @@ sections:
 
 
       '
-    commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
-  866388dfa1b014b3:
+    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+  314387087cce4dda:
     path: gaokao-writing/references/continuation-writing-and-correction.md
     heading: 动作链与动作面
-    line_start: 238
-    line_end: 247
+    line_start: 242
+    line_end: 253
     content: '### 动作链与动作面
 
 
-      动作链：当前动作太笼统时，拆出真实相连的小动作，保持人物、时间顺序和因果，再按语境补状态。已有两个微型拆解示范；不能为凑动作数添加无根据的能力或情节。动作面在秋16被点名，但独立组成定义仍缺，不能补成“动作＋心理＋环境”或宣布为已成熟的独立流程。
+      动作链：当前动作太笼统时，拆出真实相关的小动作，保持人物、时间顺序和因果，再按语境补状态；不能为凑动作数添加无根据的能力或情节。动作面在秋16原讲义中与动作链并列，是使动作饱满、生动、有画面感的描写思路概念；原名与身份已认定，没有单列组成公式，不自造“动作＋心理＋环境”算法。
 
 
       Skill 1：主语 + 动作 A + and + 动作 B（两个并列动词）。例：They jumped into the car and drove
@@ -5735,16 +6544,19 @@ sections:
       knelt down and held her son into her arms tightly.
 
 
+      Skill 2已有原讲义定义及两项独立微练习证据，身份是局部三动作句式训练。“方法二用法总结”原栏目写使用3个并列的动词，同样按局部训练理解；不将其另立为整篇第二套算法，也不要求所有并列项都表示短暂、先后发生的动作。迁相关动作组织，不迁原例的跪下、手机等具体情节或范句搭配。
+
+
       “动作最多分解三个、名词最好两个”是该课练习配比，不是全体句子的语法上限或评分标准。
 
 
       '
-    commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
-  0601c0f1de7a4b8f:
+    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+  65f20f86dc7c5210:
     path: gaokao-writing/references/continuation-writing-and-correction.md
     heading: 五档升级路径（训练用）
-    line_start: 248
-    line_end: 259
+    line_start: 254
+    line_end: 265
     content: '### 五档升级路径（训练用）
 
 
@@ -5766,12 +6578,12 @@ sections:
 
 
       '
-    commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
-  3c0a4de4ecbf9d90:
+    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+  4b1d65a04c19b519:
     path: gaokao-writing/references/continuation-writing-and-correction.md
     heading: 第五档作文标准与句子框架
-    line_start: 260
-    line_end: 265
+    line_start: 266
+    line_end: 271
     content: '### 第五档作文标准与句子框架
 
 
@@ -5782,25 +6594,28 @@ sections:
 
 
       '
-    commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
-  4b1d65a04c19b519:
+    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+  625feff688a4d50a:
     path: gaokao-writing/references/continuation-writing-and-correction.md
     heading: 肌肉句与骨架句
-    line_start: 266
-    line_end: 269
+    line_start: 272
+    line_end: 277
     content: '### 肌肉句与骨架句
 
 
       凡是冲突、重点扩写句都在**不定**的句子中展开，称为**肌肉句**，用来冲击高分；凡是**确定句**都是功能句，称为**骨架句**，确保文章逻辑一致、不偏题。不定句位的写法是“会啥写啥、言之成理”，写有把握的内容，展示背诵素材功力。
 
 
+      **秀肌肉**是寒14展示已有词句素材的课堂黑话，前提是当前句位和情节容许展开；不另设整题程序，不以素材挤掉必要桥梁，不由比喻新增句数要求。
+
+
       '
-    commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
-  53b6119250e17706:
+    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+  27662f3285730b79:
     path: gaokao-writing/references/continuation-writing-and-correction.md
     heading: 主题三大类的定义
-    line_start: 270
-    line_end: 273
+    line_start: 278
+    line_end: 281
     content: '### 主题三大类的定义
 
 
@@ -5808,12 +6623,12 @@ sections:
 
 
       '
-    commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
-  01e63cdd038968e7:
+    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+  5f3815b7a4645e0d:
     path: gaokao-writing/references/continuation-writing-and-correction.md
     heading: 十句五定法的功能表
-    line_start: 274
-    line_end: 277
+    line_start: 282
+    line_end: 285
     content: '### 十句五定法的功能表
 
 
@@ -5822,12 +6637,12 @@ sections:
 
 
       '
-    commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
-  27662f3285730b79:
+    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+  fc2eb7086313fb80:
     path: gaokao-writing/references/continuation-writing-and-correction.md
     heading: 素材与考点
-    line_start: 278
-    line_end: 283
+    line_start: 286
+    line_end: 291
     content: '### 素材与考点
 
 
@@ -5839,12 +6654,12 @@ sections:
 
 
       '
-    commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
-  341cf680de7695a4:
+    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+  ae0dbc7cf4fb601b:
     path: gaokao-writing/references/continuation-writing-and-correction.md
     heading: 五步成文法
-    line_start: 284
-    line_end: 287
+    line_start: 292
+    line_end: 295
     content: '### 五步成文法
 
 
@@ -5854,12 +6669,12 @@ sections:
 
 
       '
-    commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
-  857e1d373e70a863:
+    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+  578c5dd3258d2512:
     path: gaokao-writing/references/continuation-writing-and-correction.md
     heading: 跳定思提润
-    line_start: 288
-    line_end: 291
+    line_start: 296
+    line_end: 299
     content: '### 跳定思提润
 
 
@@ -5867,12 +6682,12 @@ sections:
 
 
       '
-    commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
-  ae0dbc7cf4fb601b:
+    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+  330d7718cd30f5a1:
     path: gaokao-writing/references/continuation-writing-and-correction.md
     heading: 读后续写五字原则
-    line_start: 292
-    line_end: 297
+    line_start: 300
+    line_end: 305
     content: '### 读后续写五字原则
 
 
@@ -5883,25 +6698,66 @@ sections:
 
 
       '
-    commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
-  34be354e21253a0e:
+    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+  e5ccef0dea97bb04:
     path: gaokao-writing/references/continuation-writing-and-correction.md
     heading: 反向劫匪插葱
-    line_start: 298
-    line_end: 301
+    line_start: 306
+    line_end: 309
     content: '### 反向劫匪插葱
 
 
-      寒8讲义在此名旁括注被动语态和无灵主语；寒14用于复用原文高分结构并升级句式词汇。完整拆字定义未核，不把“简化中文→简单句翻译→优化升级”的旧整理三段式称作本法原定义，也不借应用文同名工具补定义。续写另有“两简一复从”名称引用，组合单位未核，不借应用文填充。
+      寒8讲义在此名旁括注被动语态和无灵主语；寒14现场明确区别：已有一个简单句，再补相关修饰、扩写表达，用反向劫匪插葱；把两个简单句的信息拼成复杂表达，称两简一复从。保主干、语义和修饰归属，不按黑话逐字生造步骤，不借应用文同名版本统一组成。
 
 
       '
-    commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
-  6570e8d5c4fff00d:
+    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+  4c2cf34943f5bede:
+    path: gaokao-writing/references/continuation-writing-and-correction.md
+    heading: 句子升华三部曲
+    line_start: 310
+    line_end: 313
+    content: '### 句子升华三部曲
+
+
+      寒14的单句训练原名：中文简化→简单英文翻译→优化升级。升级可按实际内容选句式、介词短语、非谓语、从句或更准确的词；基础表达准确时可不换词，修饰也可不加。它不是整篇主题升华，不是反向劫匪插葱的统一定义，不要求每句用完所有升级手段。
+
+
+      '
+    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+  52eee323a135cfc4:
+    path: gaokao-writing/references/continuation-writing-and-correction.md
+    heading: 国庆续写的独立入口与提纲方案
+    line_start: 314
+    line_end: 327
+    content: '### 国庆续写的独立入口与提纲方案
+
+
+      **读后续写写作步骤**：原画四栏目为精读原文梳理3W1H→分析段首句搭框架→优化语言→检查修正。口头也称五步成文法，但本页和现场逐项为四块，不补造第五步；与旧先两首句再回原文的入口分来源保留。现场把常错检查前移至写前、写时避免，不据“不好改”禁止写后纠错。
+
+
+      **3W1H**：本页Who人物、What事件断点、Where场景、How情感与态度。不补When、Why冒充本表成员；当前故事的实际时间和因果仍须核对。
+
+
+      **关键词串联法**：草稿简记核心人物、动作、结果和每段概要，再记拟用句式与词汇，核能否接通原文和两段首句；不逐字誊完整英文草稿，不照搬例题剧情。
+
+
+      国庆拔高续写的五项技巧分别保名：**找六大要素**，找原文支持的5W1H，不强求全找齐；**按时空理情节**，按实际时空变化串情节，不凭时间词造因果；**定情感基调**，以行为、语言和描写判断情绪，允许有依据的变化；**理人物关系**，复杂时画关系图，不按身份读心；**析矛盾冲突**，核目标与阻碍，围绕主线合理收束，不造事故凑冲突。
+
+
+      **读后续写“七句成段”**是功能句位方案。第一段承接→反应发展→冲突→所思所说所做→推进→问题未解→接第二首句；第二段承接→发展→高潮→促解决→解决→人物反应→呼应或点题。第4讲现场明确复杂句可合并，常见每段4–5句，并压成“四句话版本”：承接发展、矛盾、解决行动、接下段，是否已解决按两首句限制。职责保留，不强制每篇十四句或第一段必须失败；末句可用动作含蓄点题。它不取代十句五定，也不与之拼成唯一句数流程。
+
+
+      **读后续写“跳定思提润”五步解析与创作**是国庆原解析标题，依两首句观察与待证预判、冲突主题、全局构思素材、提纲语言、润色组织；与本模块旧口诀有职责关联，保各自来源，不把四栏目或七句方案静默改成同一版本。
+
+
+      '
+    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+  5e20d2f7b2a66be1:
     path: gaokao-writing/references/continuation-writing-and-correction.md
     heading: 26S春 补充（人与自然专项）
-    line_start: 302
-    line_end: 333
+    line_start: 328
+    line_end: 359
     content: '### 26S春 补充（人与自然专项）
 
 
@@ -5916,22 +6772,22 @@ sections:
       with grief。正面——淡定自信 poised，治愈温暖 gracious、sanguine，愉悦欣喜 exhilarated、ecstatic。
 
 
-      **心情万能句式**：春11的情绪描写素材标签，按当前人物和情绪填槽；该课建议放在可展开句位，不因“万能”而逐题照搬。
+      **心情万能句式**：春11的情绪描写素材标签，视频明确用于该十句框架的非功能句位，按当前人物、动作和情绪换词，不能挤掉承接职责或因“万能”新增无据危险。
 
 
-      **动作万能句式**：春11的动作描写素材标签，按人物能力和困境选用；该课建议放在可展开句位，不强制凑满五句。
+      **动作万能句式**：春11应对困境、整理思绪并寻求出路的表达素材，用于该框架非功能句位；限人物确在应对问题，按能力、时态与场景选用，不代替任意动作、不强制凑满五句。
 
 
-      **环境万能句式**：春11的环境描写素材标签，按场景选用。该课说“一般放在第一段或第二段第三句、不放结尾”，限这组模板的位置建议，不是所有环境描写的禁令。
+      **环境万能句式**：春11可选环境表达素材。已有必要情节后有需要才补，按实际地点、时间、天气改词；该课说一般放在第一段或第二段第三句、不放结尾且不占开头功能句，限这组模板的位置建议，不是所有环境描写的禁令。视频森林题粘贴校园／走廊而未改是错配，不作适用证据。
 
 
       **成长升华句**：春11的成长主题结尾素材，按故事需要选用。
 
 
-      **帮助升华句**：春11的帮助主题结尾素材，按故事需要选用。
+      **帮助升华句**：春11的帮助／互助主题结尾素材。原DOCX有完整表达，以互相尊重、真诚理解联系心与心为主干，再延展其精神纽带作用；限当前故事实际支持这些关系时选用，不把所有救助都改成互相理解。视频本课同名位置空白，老师明确说下课后补，故有原件成句证据，不声称视频已现场生成。
 
 
-      **自然升华句**：春11的自然主题结尾素材，按故事需要选用。三类原例中有强调句，不推出所有题必须写独立升华句或只能用强调句。
+      **自然升华句**：春11对应环保或保护自然生命、资源的结尾素材。新增现场链是先选责任与同理心，再按本题改保护对象，说明人与自然联系，最后接生态平衡的意义；只在当前行动支持这些含义时用。不能把自然观察、寻亲回忆等自然场景一律归成环保救援，也不强行塞生态平衡。三类原例中有强调句，不推出所有题必须写独立升华句或只能用强调句。六个原名分别保留，前三表达描写、后三结尾，不合成六个整题算法。
 
 
       **素材套用练习**：春11有背熟句子→找相关对象并确定情绪→按当前情境使用的三步操作；“万能句式三步套用法”为旧整理名，完整课程原名未核。对象可以是自己，不预设反派，也不机械照搬不合语境的句子。
@@ -5953,12 +6809,102 @@ sections:
 
 
       '
-    commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
-  6becc4fe5c2a969b:
+    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+  aea1b702a1cd36de:
+    path: gaokao-writing/references/continuation-writing-and-correction.md
+    heading: 补充原名与版本入口
+    line_start: 360
+    line_end: 403
+    content: '## 补充原名与版本入口
+
+
+      以下是已核名称或职责的遗漏补记，按来源分别解释。来源标签不是新增方法名；训练材料不自动变为陌生题固定步骤。
+
+
+      - 三化法：10.4续写讲义的原名线索提示，观察首尾段、段首句、强逻辑句以提取故事线索；本模块跳读中已有相应动作。与客观题阅读三化分板块，不移入阅读的重复词三项或主旨题入口，不只读谓语而丢掉必要信息。
+
+      - 先读两个首句，带着猜测去读文章：原操作表述，按两首句的人物、状态、时地形成待证问题，再回原文补过程；猜测不当事实。
+
+      - gap：寒14构思黑话，指两首句状态之间需交代的过程信息，没有已核字母展开。
+
+      - 文章gap：原讲义表述，指上述过程空缺，不把任何差异都称冲突。
+
+      - 找到gap：原操作称呼，找过程空缺并联同主旨回文，不另增整题方法。
+
+      - gap读法：旧整理简称，原操作有证，完整名称未核为课程原名。
+
+      - 所有名词必须提：旧整理省略限定的说法，原句实际限两个首句中的名词；按必要联系与任务衔接理解，不能扩成全文所有名词都要写。
+
+      - 人物都需要设计：口述语义表述，思考首句人物的行动与关联；原画面另写任务，均保留，不强制所有人物出场。
+
+      - 十句行文法：旧高二PPT归档的句位提纲原名，用句位安排需求、波折、行动、衔接和结局；与十句五定有关联但未证严格命名等同，不借此改寒8／寒14编号或强制十句。当前原PPT未复定位，只复用已验旧渲染。
+
+      - 十句行全文：旧PPT页内原字，保留材料标题身份，不静默改名为十句行文法或十句五定法。
+
+      - 不定的句子：寒14原职责表述，在可展开位置写冲突、细节与适用素材，对应本模块肌肉句说明，不能另开无关支线。
+
+      - 标准三段式：旧整理总称，指简化中文、简单句翻译、优化升级三动作；不是已核反向口诀定义。
+
+      - 四步完成“精准续写”：寒14本材料分析安排的原表述，具体动作见四步精准续写小节；不覆盖寒8四步骤或五步成文法。
+
+      - 四个步骤：寒8原讲义流程，通读六要素→研读首句／PTSD→回扣细节→润色誊写，对应本模块解题四步骤；来源与寒14四步分开。
+
+      - 读后续写基本规律及解题要领：寒8原栏目，三项内容见三条基本规律，不新增独立判断算法。
+
+      - 三原则：上述三条的计数简称，不与三要素锁定法混用。
+
+      - 人与环境：暑16原主题分类表述，含自然灾害、意外事件、社会压力，原课允许主题混合；与寒14人与自然有关联但不是无差异的同一分类。
+
+      - 人与自然三类：春11专项分类称呼，三项内容见人与自然三分型，不改成PTSD展开。
+
+      - 因果逻辑链搭建：秋16训练原名，按真实因为A→所以B→最终C梳理，与本模块因果逻辑链内容有关，不凭公式造因果。
+
+      - 进阶句式3选1：秋16原训练名称，内容见进阶句式三选一，不作所有题句型配额。
+
+      - 五档次升级版本（从基础到高阶）：秋16原材料总标题，五档升级路径为整理便称；单句训练与整篇分档不拼成官方评分表。
+
+      - 金句80个：素材积累安排，不是单篇句数要求。
+
+      - 升华10句：结尾素材积累安排，不要求每篇十句升华。
+
+      - 10句式+100高分词：素材安排，数字不成为作文使用配额。
+
+      - 三大话题模板：模板分类／教学安排，按当前故事选择；不能只背模板或借此共用两作文流程。
+
+      - 环境句位置：春11该组模板的位置建议，见环境万能句式，不扩大为所有环境描写的绝对禁令。
+
+
+      寒第10次讲义“读后续写十大仿写句式”的十类素材逐名保留如下，属于素材类别，不激活十套算法；完整陌生题逐类适用边界仍未验，也不以类别标题保证所有原例语法正确或都在句首。
+
+
+      - 仿写句式一：无灵主语开头。
+
+      - 仿写句式二：倒装句、强调句开头。
+
+      - 仿写句式三：对话或独白开头。
+
+      - 仿写句式四：介词短语开头。
+
+      - 仿写句式五：独立主格/with复合结构开头。
+
+      - 仿写句式六：形容词/副词开头。
+
+      - 仿写句式七：环境描写开头。
+
+      - 仿写句式八：非谓语动词开头。
+
+      - 仿写句式九：动作链。
+
+      - 仿写句式十：主题升华。
+
+
+      '
+    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+  8a92195b0de077f2:
     path: gaokao-writing/references/continuation-writing-and-correction.md
     heading: 批改交付格式
-    line_start: 334
-    line_end: 349
+    line_start: 404
+    line_end: 419
     content: '## 批改交付格式
 
 
@@ -5988,12 +6934,12 @@ sections:
       语气口语化、具体、鼓励式，但不能虚构优点，也不能用“高级句型”掩盖情节偏离或逻辑断层。
 
       '
-    commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
+    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
   d49944ab3441bc54:
     path: gaokao-writing/SKILL.md
     heading: 入口契约
     line_start: 1
-    line_end: 11
+    line_end: 13
     content: '---
 
       name: gaokao-writing
@@ -6010,16 +6956,20 @@ sections:
       按开明致学课程的写法与评分规范带学生写作、批改作文。不自创同名方法，不把知识清单或整理标题当成固定步骤。
 
 
+      课程原名按应用文、读后续写及来源版本分别使用，不合并同名的不同定义。口诀解释其实际操作，思路概念、局部训练、文体模板和表达素材按各自职责使用，不因有名称就升级为整题算法。来源差异、已核范围和勘误见
+      [references/course-evidence.md](references/course-evidence.md)，追问出处或遇到版本冲突时读取。
+
+
       应用文与读后续写是两个独立模块，各自的评分、结构诊断和反馈格式不通用。
 
 
       '
-    commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
-  52f60aee56dc2f7e:
+    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+  01663392daf23939:
     path: gaokao-writing/SKILL.md
     heading: 只管写作与批改
-    line_start: 12
-    line_end: 19
+    line_start: 14
+    line_end: 21
     content: '## 只管写作与批改
 
 
@@ -6033,12 +6983,12 @@ sections:
 
 
       '
-    commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
-  c44d8625ed323d07:
+    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+  af255d18e493d10d:
     path: gaokao-writing/SKILL.md
     heading: 交付形态：微信答疑消息
-    line_start: 20
-    line_end: 30
+    line_start: 22
+    line_end: 32
     content: '## 交付形态：微信答疑消息
 
 
@@ -6058,12 +7008,12 @@ sections:
 
 
       '
-    commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
-  c7154ff3faa440bf:
+    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+  433b463c97fe38e9:
     path: gaokao-writing/SKILL.md
     heading: 批改顺序
-    line_start: 31
-    line_end: 38
+    line_start: 33
+    line_end: 40
     content: '## 批改顺序
 
 
@@ -6077,12 +7027,12 @@ sections:
 
 
       '
-    commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
-  351318940f795786:
+    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+  443d998d7bf5b2d4:
     path: gaokao-writing/SKILL.md
     heading: 两个独立模块
-    line_start: 39
-    line_end: 48
+    line_start: 41
+    line_end: 50
     content: '## 两个独立模块
 
 
@@ -6102,7 +7052,146 @@ sections:
       学生只是问某个写作方法（比如十句五定法怎么用、五审法审什么）时，按对应模块里的说法答，用课程原名，不换成通用说法，也不顺手把整类作文讲一遍。
 
       '
-    commit: 61bc9c3e15004639cb442c20e7946ca9631f14ce
+    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+  917548f904ab74e9:
+    path: gaokao-writing/references/course-evidence.md
+    heading: 写作课程依据与版本边界
+    line_start: 1
+    line_end: 6
+    content: '# 写作课程依据与版本边界
+
+
+      本页用于追查来源、名称身份和冲突；实际写作与批改读对应模块。2026-10-30增量核查依据原讲义、原音本地机器转写和清楚原帧。机器稿不是人工逐字听写；声画冲突结合语境，以清楚画面为准。通常按每方法2–3代表与合格旧证复用核边界，不称所有视频逐分钟全审。原题字母、人物、剧情、固定词对不作为新题规则。
+
+
+      本机核查根目录为 `E:/新建文件夹/course-distillation-20261030`。以下相对证据路径均从该目录起；模块已包含执行所需定义，不要求使用者具备本机课程路径。
+
+
+      '
+    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+  657c6e23c128e4de:
+    path: gaokao-writing/references/course-evidence.md
+    heading: 应用文
+    line_start: 7
+    line_end: 22
+    content: '## 应用文
+
+
+      |原名或职责|正式归宿与证据|
+
+      |---|---|
+
+      |五审法、三种写作表达方法、句子写作思路、个人--家庭--学校--社会、总分总的呼应|原模块保留；寒4入口补证见batch3/writing/WRITING_BOUNDARY_REVIEW，1140–1440；对应原件与旧合格证继续复用。|
+
+      |应用文写作的五步法|模块国庆修改流程：五块具体动作与五审分开；writing/CAMP_METHOD_DISTILLATION，01 PDF实页2–7；CAMP_REMAINING_VIDEO_REVIEW，第2讲120–420、900–1620、2400–3044。完整第二篇逐块原音未核，不声称多篇全流程验证。|
+
+      |换词，简单词变成高级词；加词，丰富语意，增加形副；换主语，告别以人开头的大白话；单句变成复合句；单一句式变为多句式|模块五个编号技巧各自保名；同报告01
+      PDF实页12–17，各2–3微例；第2讲3978–4378补现场操作。两词汇／三句式分类不作配额。|
+
+      |问题-分析-建议模型；现象-利弊-总结模型；观点-论据-论证模／观点-论据-论证模型|模块按思辨任务列职责；PDF05实页5末字为模，第1视频925–983与935原帧为模型。writing/CAMP_VIDEO_REVIEW。完整独立实施证据不足时只按已证职责解释，不补固定段数或伪造代表。|
+
+      |富兰克林写作法、挖空法、初阶：填空训练（强化重点句型）、刻意仿写|模块保寒4完整五步与其他来源回忆、挖空版本；writing/WRITING_VIDEO_REVIEW赠47
+      1080–1440，SUMMER_VIDEO_REVIEW暑13 5100–5700，CAMP_VIDEO_REVIEW第1讲1289–1390；batch3/writing/WRITING_BOUNDARY_REVIEW寒4旧3834–4024。寒4末步AI升级可选。|
+
+      |两简一复从、反向劫匪插葱、劫匪插葱 反向进行|应用文模块按寒4和国庆两课分来源，续写另定义；国庆第1讲4681–4684说当前两句用不上，第2讲3073–3140却称两句合并为此法，属真实范围张力，不统一。|
+
+      |形容词叠加|模块表达训练；WRITING_VIDEO_REVIEW赠46 718–728及975原帧。相容修饰可迁，get yourself familiar
+      with误判被动隔离。|
+
+      |保留格式抄原文；背结构，改小词|模块两个口诀分别保名；batch4/writing/SPRING06_SPEECH_BOUNDARY_REVIEW，6481–6524、6605–6666；batch5/writing/NEW_WRITING_HANDOUTS_REVIEW主件及回放轴。保骨架、迁核心词、按目的改交际词，不是只抄给定首尾。|
+
+      |三段话格式、中文→词汇→句型草稿|原模块收紧；春5原音6733–6769、6848–6861及6765/6855原帧；表列1/3/2与现场同序，回放轴摘要为中文→句型→词汇，保差异，以现场操作为本模块入口。|
+
+      |九个文体模板、三个功能位置栏目、五项演讲修辞建议|模块春5文体段逐名保留；batch5/writing/NEW_WRITING_HANDOUTS_REVIEW主DOCX、空白PDF与回放轴；不是一套演讲算法。|
+
+      |扩展能力、五大话题、九大句型／九大句式、升级复杂句、功能句式／升华句／部分金句|模块按课程栏目、表达训练或素材安排保留；CAMP_VIDEO_REVIEW
+      1103–1189、1916–2037、4653–4919、6660–6760。未齐成员不补造，素材数量不变配额。|
+
+
+      '
+    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+  4e3de34282ea16b1:
+    path: gaokao-writing/references/course-evidence.md
+    heading: 读后续写
+    line_start: 23
+    line_end: 38
+    content: '## 读后续写
+
+
+      |原名或职责|正式归宿与证据|
+
+      |---|---|
+
+      |跳定思提润、先读两个首句、gap／文章gap／找到gap、三化法|原模块各自保名，非客观阅读同名法；WRITING_VIDEO_REVIEW秋11两篇补至5700，SUMMER_VIDEO_REVIEW暑16
+      2700–3720，batch3/writing/WRITING_BOUNDARY_REVIEW寒8修书6300–7052、寒14。先首句提候选，回文校正，不将初猜定事实。|
+
+      |读后续写写作步骤、3W1H、关键词串联法|模块国庆独立入口；CAMP_METHOD_DISTILLATION PDF02实页6–7、CAMP_REMAINING_VIDEO_REVIEW第3讲2400–3420、3540–3840。口称五步而画面四块，不造第五步；How为情感态度，不擅补When/Why。|
+
+      |找六大要素、按时空理情节、定情感基调、理人物关系、析矛盾冲突|模块国庆五项分别保名；PDF03实页2，第4讲60–251；六要素不强求全齐。|
+
+      |读后续写“七句成段”、读后续写“跳定思提润”五步解析与创作|模块新增不同提纲方案；PDF03实页2–3及第4讲253–740，550原帧有四句话版本；能合并，非十四句硬要求。|
+
+      |PTSD、四点串剧情、十句五定、十句行文法／十句行全文|原模块分来源保留；batch3/writing/WRITING_BOUNDARY_REVIEW寒8
+      6760/7035原帧为P目的/T方式/S苦难/D结局，寒14 6000原帧为P需求/T波折/S解决方案/D结局；编号按表与给定首句分别解释，不统一槽位和句数。|
+
+      |反向劫匪插葱、两简一复从、句子升华三部曲|模块更新已核操作；寒14 1104–1159区别单句扩写和两句合并，3834–3990及4200原帧为简化中文→简单英译→升级；不能合并成一法。|
+
+      |三重匹配、双重升华、黄金法则、四步完成“精准续写”|原模块保留各职责，补讲义与口述颗粒度差异；寒14 660–680、1167后及D06原件。根/力/魂/光是总结口诀，不是第五套强制流程。|
+
+      |肌肉句、骨架句、不定的句子、秀肌肉|模块句位概念及黑话；寒14 3550–3565、6600原帧与D06。功能位保逻辑，可展开位用相容素材，不新增句数。|
+
+      |动作链、动作面、Skill 1、Skill 2、方法二用法总结|模块动作段；batch4/writing/ACTION_TERMS_SCOPE中D04稳定paraId
+      6645F9E0、0D0297D7、5E114AE5、4247B8D5及两组微例。动作面是思路概念，无独立公式不视为缺算法；Skill 2三动作局部训练定义与两微例已证。|
+
+      |心情万能句式、动作万能句式、环境万能句式、成长升华句、帮助升华句、自然升华句|模块六名各自收紧入口；batch5/writing/SPRING12_NATURE_VIDEO_REVIEW，1842–1872、2145–2258、3480–3900、5160–5640及2258原帧。前三在非功能句位，后三结尾；环境可选且换时地天气，未改校园错配不迁规则。|
+
+      |三条基本规律、四个步骤、五步成文法、读后续写五字原则、五档次升级版本、十大仿写句式、金句80个／升华10句／10句式+100高分词等|原模块已分训练、素材、栏目或流程版本保留，未因本轮新增重复造法；对应旧讲义证据及本轮writing与batch3–5分报告复用。|
+
+
+      '
+    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+  333d30ef0c107e0c:
+    path: gaokao-writing/references/course-evidence.md
+    heading: 勘误与证据上限
+    line_start: 39
+    line_end: 44
+    content: '## 勘误与证据上限
+
+
+      国庆资料每段150与题面总150冲突，按当前题面总字数；错配的Toby／Rochelle页面不串题，视频按正题讲不等于电子件已改；海豚时序与物件错误不迁规则。Kevin讲义缩略缺桥梁而视频补了找表过程，不继续判视频漏链；弟弟等仅一种写法，不设固定人物身份。春11森林题未改校园／走廊不作环境适配范例。原例错误搭配、恒等词对、分数保证、固定句数／句型配额不进入新题规则。
+
+
+      黑话机器同音字形没有清楚原画时仅为线索，不注册新名；有名且已证概念不因无独立算法而删名。完整生成过程或代表不足如实标界，不把定义证据冒充多题实战验收。
+
+
+      '
+    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+  198aff08a2e69548:
+    path: gaokao-writing/references/course-evidence.md
+    heading: 本次正式更新时追加核查
+    line_start: 45
+    line_end: 53
+    content: '## 本次正式更新时追加核查
+
+
+      补证另存 `skill-update/writing/`，不改旧阶段完成账。春11新增5640–6120、7740–8340，赠44新增1560–2040，合计1560秒原音机器稿均全文核读；追加原帧5940、8040、赠44
+      1800已实看。
+
+
+      - 自然升华句：春11 5651–5898完整串出主题、保护对象替换、人与自然关系、生态平衡；5940原帧有成句。其强口径“写环境永远和谐”等只按环保救援语境，不扩到全部自然题。
+
+      - 帮助升华句：5940/8040原帧标题下空白，7849–7854、7902–7904、8061–8067等明确说课后再给。原课上DOCX `E:/开明致学/【课上讲义】第11讲
+      读后续写（26S春）.docx.docx` XML正文与旧D07提取独立复核，paraId 56031C86下5A54F174有完整句，以mutual
+      respect and sincere understanding为主干。原件句式存在，现场未生成不是继续无限找本课音窗的理由。
+
+      - 富兰克林作文法、刻意训练：赠44 1736–1777、1837–1886、1931–2015明确命名及回忆→核对→熟读→重填→再核错的完整循环，作为该来源训练版本纳入，不与寒4五步静默统一。
+
+      - 三思辨模型：重读国庆第1讲840–1100原机器稿，925–983明确三名、引入／主体分析／收束职责，986后转文体模板；复看PDF05实页5仅三道题面入口与模型列表，实页25是分组建议单句练习。赠44追加窗仍为首句填词与训练讲解，1800原帧虽有网课利弊建议全文，不冒称三种模型各有完整独立现场实施。
+
+      - 五大话题／九大句型／九大句式：检索本轮完整提取、原机器稿及旧原件索引，并直接复核寒4原DOCX相关段；该件前部写八大、末部写九大，仅数量与组织提示，没有在该处给完整成员清单。本轮未证完整九项，不以常见句型凑足。扩展能力保持栏目身份与已证成员，未齐不影响已证具体技巧的使用。
+
+      '
+    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
 documents:
 - path: agents/gaokao-grammar-fill.md
   sha256: 1c0436e2d4fda0fe07d5e5c56161710269db4d1200c9f60c1db04ffb4f6df878
@@ -6129,75 +7218,79 @@ documents:
   - 8b904c44bcf66e49
   - 885fb13b1c9e6681
 - path: gaokao-english/references/cloze.md
-  sha256: e2135bf6605a14adb2d99804d41be8db136ef780857a16829c207b72d6ddabb4
+  sha256: 687760ad2bd5a6a13f6fc2a34e0225f6f26adc1035d1ea24bf4df98bd490a795
   sections:
   - 3f36ea92a4769ee5
   - 9b9a8cf18e4a40a5
   - c84135f2763c6806
-  - 6d62ce662281b613
-  - b50b911407b9faa9
-  - a68178b2feeba3e5
-  - b0b1e691060b321a
-  - e36a0eb111d26684
-  - 87987576b5e8284b
-  - d88f9abb9bd35bdc
-  - 7abd608ebd73dbe2
-  - 89415a44acd8248e
-  - b7ce29d974576463
-  - cfadf921b2f43458
-  - 48afc7631dc06200
+  - 6fc15a844228ee2d
+  - 7ff85814d7d04b1a
+  - eeb778a0755fcf31
+  - 32023d73e6038aee
+  - 34f5824201e3e44b
+  - 98c2c157b45f185a
+  - 772acbd30c02f393
+  - 7f0f15f40c83b385
+  - 91f59a59fd1b5610
+  - f7cd71358324b06d
+  - dfbd9f0fd4676ae2
+  - f8c0708ce4836af6
+  - 2d82e474b7062b0e
 - path: gaokao-english/references/course-evidence.md
-  sha256: 78b7636dd168ebc701cd7eeb7f87f6a77c32e0eb1805eb86a56b2365a7e81143
+  sha256: c595ab9572e33ba4724da9eeed6974b888848e7d5040b0933c73f69d4ae2702c
   sections:
   - a031e140a0b5ce5c
   - 7ec495478da54d72
-  - 75c52cd237e7480d
-  - c6f399e526486b63
+  - aa6e8feddfc0eaac
+  - 57bc90ecca1e951c
   - 35e6d04cdc4ceb2f
-  - 18262f8b7db4ddf7
-  - 9d741ef70ea09176
   - 860b5bbe2df2085b
-  - b57c209b70019de8
-  - b4b422cc855762b2
-  - 58713f64ab46adaf
-  - ef111c8fd0e9c236
-  - 4db7447eaaf264cc
-  - 5a5e4921c70dc55f
-  - a4bee061e846d217
-  - cc516252298ae88c
-  - 86930d8a2a7f39be
-  - 19e3c2370970eef9
-  - 95e167fd153d4f81
+  - 1f050bb93702e098
+  - aa20d9d9be2213e4
+  - d2c3eb62ea050619
+  - e3f636734c5727c3
+  - ef003fa21873a03e
+  - 2da19d47c8eb83f3
+  - f9c747789c161779
+  - 46072a2745cacb12
+  - 7388610c2a759513
+  - ce1fe2c36a4b9324
   - 123bbb66fb3fb832
-  - 2359e8a1e618fa13
-  - ee200351a914ab2f
+  - 40ca73dfd00d773d
+  - 035a88351e7077e3
+  - 8301eabc728d3498
+  - 1501f9a11f3fd6d9
+  - 601f1207d1502f5f
   - 9038d4c2892bf2df
-  - 889abf19490bd67f
-  - fe059d3dcaa40591
-  - 90bd8664c9c17065
+  - a07a5543525bba63
+  - a5d8303cb4490fae
   - e9f2c2e3b0861ff6
-  - 013a2be357fe4734
+  - 9eddb818be96603c
   - d0fc903030d1ff4e
-  - 1be7a34fc76277b2
-  - e3f39174e0c30408
-  - d644c93354cd1aa1
-  - ef1571bc04077f63
-  - d05a43e6073e925a
-  - 299a4f7b2a9d6df1
-  - 0a5a008c7cf78c02
-  - 7940782c8a3f2be1
-  - 6b1c32d346466d49
-  - f0743c4c416e288e
-  - 762f7e11944cb278
-  - 069ec7c7a4576eee
+  - 025ef7df5c8698b9
+  - 5fd0bc66be176739
+  - 457404b85d405400
+  - 6a6afcb2c438cdd2
+  - eb75174b2a028651
+  - c2f26b95058c8112
+  - 3c4a38ffe983ff60
+  - 0880e820f624db60
+  - 218f4c3284851759
+  - 1c8c910c3610c010
+  - cf69e288f2d4e0a7
+  - 71d1e0d95cf80e41
   - d7917528895dd179
-  - 87ca1f72bc3b5810
-  - 4af3040f1448d7bf
+  - 72549691f8671f7d
   - 6de3c1d1bba88fd5
-  - 3033b2032ca5e3b4
-  - d5d1fcea6c7bfdc4
-  - 50c9485a2f831838
-  - d94f7f287f386c23
+  - 19ff82bd0dfbdba9
+  - 2b24130f4f868c55
+  - 851af78e7cdbccc5
+  - 69a7f6a5f8608dca
+  - e4ec195ef1b44b1f
+  - 58d0513abbc50790
+  - 8069dcd019f278ea
+  - 0f01aba7559b6809
+  - e3d77b27dd5a5582
 - path: gaokao-english/references/delivery-contract.md
   sha256: 05f48808abf662a83b50c38b342e1db3f9ce5b84edd8fde7de387059ef0c44d2
   sections:
@@ -6208,55 +7301,77 @@ documents:
   - e58abd179eadaaff
   - 11abdbce4afa6504
 - path: gaokao-english/references/evidence-gaps.md
-  sha256: e79832cdff169619469e343b2b51c6b55cfc4015896fd6c3ed4e03a3cac518cf
+  sha256: 75c679c8dc681e0fdd79f26938150b06aeaf483db32ab976d4f70f12fd3ef9b6
   sections:
   - 3bd4b067610ebee7
-  - 0e7f5a3c0c7ea0d2
-  - 5c6d8f5eefdf31b0
-  - 2c28f2c3c7be0789
+  - f8614c9f83b299fd
+  - 478febeb0d9b0b7a
+  - 301d4546461bafc3
+  - e6ad51e5fc6b692b
+  - df3c873a982012c8
 - path: gaokao-english/references/listening.md
-  sha256: 6056701c9b0aab1fdd2eb9b26dcb6a4c5971822d0ba0561028ac1565d59903ff
+  sha256: 27f7e98ee1ac53093e7d10d736250673658f454baa7287b891b27a99bbf72a6a
   sections:
   - 325a7bd6bf58f7b4
-  - e68cdb2a99505da8
-  - f40f1d6a694e1187
+  - f89c4de15bbb7206
+  - 86c1990eec01c1e5
+  - 869be7b2f8b887db
+  - c9ce6f9a17cf5049
+  - 9af4b5ea25f1e846
 - path: gaokao-english/references/reading-comprehension.md
-  sha256: d48d3f361d47fc5fdd2d02bdb969e49959b8143cd702301f72d110e51300f938
+  sha256: a2602e02e0684709ece9d2ce12d71d6ed08ddf31da82b381f961aee12c8a5fc0
   sections:
   - bc6a0fa4b4a4e881
   - 3104f706064bf305
   - fb9c5ef35a2a5763
   - 62bc5695cd2a4f6a
+  - 6666ada9f1f24eb8
   - 51abc279c205bbc6
-  - 42764a07fdb4e572
-  - fce5dc9189e1137b
+  - 92a4734fcac611ba
+  - 2df8d7cb399706c1
   - 664edd91ce02db49
+  - d0cb09bd78e4a1b8
   - a6b1431f7317c26e
-  - 4311f90fc985aca0
-  - dfb7dd8dc0c2e8a1
-  - 4b5123ae9f96cae3
-  - c26359463dd942f3
-  - 233f304ca6cf0622
-  - ba96ebddcc797633
-  - 25287b93945fdb97
-  - 624926b4c68413ff
-  - 0b966000686151d0
-  - 96cc5a4160017a66
-  - b13df776506333ef
-  - 7adfe6c470337e82
-  - a027c2d052029633
-  - 166547db3ce40a58
-  - 67ea7893cf903d1d
-  - 898ba9cee25eb121
-  - fd49a052453f33e0
-  - e933e3962625a3b3
-  - 57aafc0f10b3364a
+  - 02a80cacb51437c7
+  - 843dd486cecb5511
+  - 22bee43d8dd55e1e
+  - b1e4f5435d11268b
+  - 33abd2c12caeb924
+  - 41b33e6a9323a75a
+  - f6aafd9b322ace13
+  - 69ab8d1d136714c5
+  - bfe663258883ee1a
+  - a4190726b27dfa11
+  - 12cbf7072ca95fcb
+  - 079728b2a0305ff9
+  - 9e0e613aa0ea84c8
+  - c94cc356316596b9
+  - 040991117a2ad80e
+  - 18e597fd8b3fc0ef
+  - c8ad2d31eb97cc9e
+  - e90601120d085c34
+  - a2ef5fb5d00f213c
+  - 688367aeb67f68ad
+  - 4ce3be7428bf040a
+  - 06b6f9a37ad961cf
+  - 10e87696426f53ff
+  - f8e5e07efbaef15c
+  - eb2dde17353334a2
+  - 208c9f4b0e5b95f6
+  - 576eb54f2c3bfdc7
+  - 971cf92b88f0faae
+  - a14863318da211da
+  - 942fe5d2a5076af8
+  - 16b214507547840e
+  - 1d72b1be2930f832
+  - 9e43c9513dfe2c89
+  - a87bd40f54a580d9
 - path: gaokao-english/references/router.md
-  sha256: ac7ab78436b040f927bce2ee4a7d88e28134b399a0172433df30ce44eebf6675
+  sha256: 48a81d2c3bbb92649ae292f7972173cf18309ff83c97a0edc79e4f7c3a11f58f
   sections:
   - 12557f9aa3b76711
 - path: gaokao-english/references/seven-five.md
-  sha256: 11dfb9adb5da11cbb3059c0f420bdcdae6fbeb6b42826c1cedd7b540f08af0a1
+  sha256: a2db0f374b04f4733788b9e3819eb5c66bee64ffc8a9484f5edc6ccbefe025d9
   sections:
   - d7565655970548ff
   - 1f0cf16c1e5de56a
@@ -6264,54 +7379,60 @@ documents:
   - a8f0c4ae44ae61ff
   - 92ec24e9e7003cba
   - 7c0a77869754a1dc
+  - 6e41e9833fc37759
+  - 479d1d79bc48fdf8
   - 4a9de82ef9741f92
-  - 03214bbc4e91eae2
-  - 3d13a787824e210c
-  - 282e1aff555d0c22
+  - 3a67ea5d2919e50c
+  - be3f1c1eb7c11ee7
+  - 13b2d5c88710b11a
   - d815465ca190a14f
+  - a3ba542eeb862762
+  - bc08120bdb403da0
+  - c8a128adb1c07e71
 - path: gaokao-english/SKILL.md
-  sha256: 56868efa2404288e4ab18e64bc03dfb4d66f1a0eb058968b1ebbe3ccbee02926
+  sha256: acc8ae141d6de841c2c961bc6db5f8d4a77febfba405af5c121c08b11acda4e9
   sections:
   - 132f42a2b5680a23
   - 21afe640717014fd
   - 1c5f3aeedb4c1b8d
   - 5d9c40d606617073
   - 51cc8242fc35fd50
-  - 8433667152bf1c86
+  - a8d7403ddb76e31d
 - path: gaokao-grammar-fill/references/course-evidence.md
-  sha256: feab1810a3788a2659633cc78f82fdb5d9d3ed52b9908edf9fe8f5b0ca751ae5
+  sha256: ed119899d3302f11a2587ce93050ccfbeeb1ffd88d8a5521a193bdaf77a86102
   sections:
   - 1edd110b396bf0e6
   - 2ebcaabbdf63dfdf
   - d34293cc5d3ad544
-  - f429179030c536c1
-  - 164a3136aee1978f
-  - 40887326db774bc1
-  - e611ca9dbd40e48b
-  - 0fa2f5f4cd836d09
+  - fc5f913741544fa4
+  - 58aa1dfc76e6526f
+  - 60738ac3695eb379
+  - 94359d4ecca635fc
+  - 8500fbcafb0ac8de
+  - 6a5b39d9989c2544
 - path: gaokao-grammar-fill/references/grammar-fill.md
-  sha256: b1ff451d8a01ae4c799ad60b4f47132e2dec4235c5acacd03582de63ab838148
+  sha256: e007cf58c44800c3251c21e9ebae8e1191aae0988a5a14e5e2380e74cc866ef9
   sections:
   - 341ae7535f7d9ce7
   - 3527a85c4fe668d9
   - 781c4478d621bf5c
   - 8c050016facc6479
-  - 98a55752856ca984
-  - 92af20a0997f0b48
-  - bdec04e2ce032b40
-  - 9b496b1572cdf49b
-  - 32c08d6c85a150ea
-  - a166ae34f9256ee9
-  - ab95cd79ca0709e2
-  - 9b610bdb9f63227e
-  - a26dc83760c12ebb
-  - 28cb2fee202458a5
-  - 5131f97d0dc78441
-  - a0bcc74f05b00671
-  - f77de6ec724f8e88
-  - 7c16410a7f1b8e4f
-  - 62e443a0a04865bf
-  - 7ae166ccec059b00
+  - dfb1dccd2a7f06e2
+  - 0c267d2ed379a98a
+  - c78012aeef62d5b9
+  - 1bc229eecb92ae3c
+  - ccfc09a472cb85a6
+  - be5c8b287ffa3745
+  - ab42f9a3682492c6
+  - 3cc12c22579257d5
+  - b2282a270b8de478
+  - 8f7ca9480b5113bc
+  - 01b66e853d507205
+  - c6ee3d2de761c2d8
+  - 68c5400be79ea170
+  - 5d83575e1d881f91
+  - c0416230d2a90924
+  - 86faf5c280abdc74
 - path: gaokao-grammar-fill/references/method-application-example.md
   sha256: b31cc2459f048403875a2d4c1912849c6008928e515f7ebddfea76e5c5155753
   sections:
@@ -6349,7 +7470,7 @@ documents:
   - 63a1b5b2efc60251
   - 62925f3b17a57fb3
 - path: gaokao-writing/references/application-writing-and-correction.md
-  sha256: 3cb6331b4adf5fae7dfc1ab900eb4a2074879219aa7f907b88137e28ffa88155
+  sha256: 826908c617bb8d186032e86013bf8e9e8834521d37c389a9455b0a241bb26526
   sections:
   - 1e21cad527d5a92a
   - f8cfb194a81aad6e
@@ -6360,27 +7481,33 @@ documents:
   - 0a6f5b5594a41dd6
   - 15e18423e3364f72
   - 1b1197e2fa02ee07
-  - cfc5531cda2a9b91
+  - 87d83728b9fb3fb4
+  - 3451e36adc7973a9
   - 3f39d3b03e8baef0
-  - 2d36adb5b123fa87
-  - 7bda0d9e17f08b79
-  - fbc76f83977fbb27
-  - 1ee5694c5ea58bbf
-  - ecc5107aaf9d178a
-  - c827be84f7798683
-  - e39a3629fdfb5284
+  - e690e665e166ac99
+  - a3a39e51c18207af
+  - c31cd0177f939008
+  - 7bbad7d7bf3dfeba
+  - ddd0b9d6b762a100
+  - 96e4d1b7fdd327bb
+  - 539d67ec2bc377ec
   - 8cc4571377b8183a
   - 27cf55e8f2cf7c93
-  - 4dde2ad49f107ae2
-  - 2e057c9f98c9de93
-  - 25ab2251aaba4712
+  - 674a33a24f97831a
+  - 1c2d18c01623f09f
+  - 826bddb7694b0a21
+  - 7022e0285ab88322
   - 106f75b81b28e301
-  - 1f36be2f364e0637
-  - fe11106b31ff1364
-  - e68392b5352c1bc7
-  - 24003f38b1c3222a
+  - a79d6eef78245bd4
+  - 48bd60cb771e7ad0
+  - bbf310a6ee245b95
+  - 037a6e97d44a42b0
+  - 0fb8642fc0fb3859
+  - df4cea9abfa81119
+  - fc664e8d7ec2b8a7
+  - 4c3b55d00760d42d
 - path: gaokao-writing/references/continuation-writing-and-correction.md
-  sha256: d2a9c364d67f484ca9b752fc53f53754f2d407e45020f6043d6abaa9d97f7dc8
+  sha256: 033e1fddb44bc1cc6d458befff009b887be3b4688b350cb910f7e70599f44029
   sections:
   - 596de3e74bdb9393
   - 7b4c299267a685c2
@@ -6401,32 +7528,43 @@ documents:
   - 7f766995677fdd63
   - 60d2d16996c30d2f
   - 486a5ba8d06a5eb7
-  - 5b24cfdf7bb17710
-  - 9e5bf18f26299bd7
-  - 45b51237476e0ec8
-  - d5afd98a942355b0
-  - 2a5625a219ad5be1
+  - c982394b7e7a8b3e
+  - 9f6e7874c0eef6ae
+  - 3251f3f539ab88d7
+  - ee46919f768fcf3f
   - 8df5f0f660b2453c
   - 8816ae76b6da19d9
   - 637ac5c60b37baf7
   - 866388dfa1b014b3
-  - 0601c0f1de7a4b8f
-  - 3c0a4de4ecbf9d90
+  - 314387087cce4dda
+  - 65f20f86dc7c5210
   - 4b1d65a04c19b519
-  - 53b6119250e17706
-  - 01e63cdd038968e7
+  - 625feff688a4d50a
   - 27662f3285730b79
-  - 341cf680de7695a4
-  - 857e1d373e70a863
+  - 5f3815b7a4645e0d
+  - fc2eb7086313fb80
   - ae0dbc7cf4fb601b
-  - 34be354e21253a0e
-  - 6570e8d5c4fff00d
-  - 6becc4fe5c2a969b
+  - 578c5dd3258d2512
+  - 330d7718cd30f5a1
+  - e5ccef0dea97bb04
+  - 4c2cf34943f5bede
+  - 52eee323a135cfc4
+  - 5e20d2f7b2a66be1
+  - aea1b702a1cd36de
+  - 8a92195b0de077f2
 - path: gaokao-writing/SKILL.md
-  sha256: 5d6f50b52b6c2e612907bf24821aacb6012330d661ccb59439b67098a8f693e3
+  sha256: f0a2317d58a9ebbe64d37ef95c1e3f3a1a1b531fdcfdcb0aa92a1b5721cbe65f
   sections:
   - d49944ab3441bc54
-  - 52f60aee56dc2f7e
-  - c44d8625ed323d07
-  - c7154ff3faa440bf
-  - 351318940f795786
+  - 01663392daf23939
+  - af255d18e493d10d
+  - 433b463c97fe38e9
+  - 443d998d7bf5b2d4
+- path: gaokao-writing/references/course-evidence.md
+  sha256: 6d15b96265cb49f07e2b8bb6fcf6c75970e29b6af5d7525e0b0ca3142a03bbd6
+  sections:
+  - 917548f904ab74e9
+  - 657c6e23c128e4de
+  - 4e3de34282ea16b1
+  - 333d30ef0c107e0c
+  - 198aff08a2e69548

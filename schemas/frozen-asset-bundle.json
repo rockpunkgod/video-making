@@ -1298,6 +1298,92 @@
                           "verdict"
                         ],
                         "additionalProperties": false
+                      },
+                      {
+                        "type": "object",
+                        "properties": {
+                          "kind": {
+                            "enum": [
+                              "verification_result"
+                            ]
+                          },
+                          "scope": {
+                            "enum": [
+                              "candidate_relation_check"
+                            ]
+                          },
+                          "candidate": {
+                            "type": "string",
+                            "minLength": 1
+                          },
+                          "claim": {
+                            "type": "string",
+                            "minLength": 1
+                          },
+                          "target_execution_ids": {
+                            "type": "array",
+                            "maxItems": 0
+                          },
+                          "evidence": {
+                            "type": "array",
+                            "items": {
+                              "type": "object",
+                              "properties": {
+                                "field": {
+                                  "type": "string",
+                                  "minLength": 1
+                                },
+                                "start": {
+                                  "type": "integer",
+                                  "minimum": 0
+                                },
+                                "end": {
+                                  "type": "integer",
+                                  "minimum": 1
+                                },
+                                "quote": {
+                                  "type": "string",
+                                  "minLength": 1
+                                }
+                              },
+                              "required": [
+                                "field",
+                                "start",
+                                "end",
+                                "quote"
+                              ],
+                              "additionalProperties": false
+                            },
+                            "minItems": 1
+                          },
+                          "relation_check": {
+                            "type": "string",
+                            "minLength": 1
+                          },
+                          "backfill_check": {
+                            "type": "string",
+                            "minLength": 1
+                          },
+                          "verdict": {
+                            "enum": [
+                              "supports",
+                              "rejects",
+                              "unresolved"
+                            ]
+                          }
+                        },
+                        "required": [
+                          "kind",
+                          "scope",
+                          "candidate",
+                          "claim",
+                          "target_execution_ids",
+                          "evidence",
+                          "relation_check",
+                          "backfill_check",
+                          "verdict"
+                        ],
+                        "additionalProperties": false
                       }
                     ]
                   }
@@ -1329,7 +1415,8 @@
             "schema_version": {
               "enum": [
                 "1.0.0",
-                "1.1.0"
+                "1.1.0",
+                "1.2.0"
               ]
             },
             "question_type": {
@@ -1497,6 +1584,28 @@
                         },
                         "minItems": 1,
                         "uniqueItems": true
+                      },
+                      "image_evidence": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "candidate": {
+                              "type": "string",
+                              "minLength": 1
+                            },
+                            "region_index": {
+                              "type": "integer",
+                              "minimum": 0
+                            }
+                          },
+                          "required": [
+                            "candidate",
+                            "region_index"
+                          ],
+                          "additionalProperties": false
+                        },
+                        "minItems": 1
                       }
                     },
                     "required": [
@@ -1523,7 +1632,34 @@
             "source_section_ids",
             "segments"
           ],
-          "additionalProperties": false
+          "additionalProperties": false,
+          "allOf": [
+            {
+              "if": {
+                "properties": {
+                  "schema_version": {
+                    "enum": [
+                      "1.0.0",
+                      "1.1.0"
+                    ]
+                  }
+                }
+              },
+              "then": {
+                "properties": {
+                  "segments": {
+                    "items": {
+                      "not": {
+                        "required": [
+                          "image_evidence"
+                        ]
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          ]
         },
         "grammar_hint_review": {
           "type": "object",
@@ -1580,6 +1716,63 @@
             "review_notes": {
               "type": "string",
               "minLength": 1
+            },
+            "numeric_marker_binding": {
+              "type": "object",
+              "properties": {
+                "question_id": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "question_number": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 999
+                },
+                "target_span": {
+                  "type": "object",
+                  "properties": {
+                    "field": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "start": {
+                      "type": "integer",
+                      "minimum": 0
+                    },
+                    "end": {
+                      "type": "integer",
+                      "minimum": 1
+                    },
+                    "quote": {
+                      "type": "string",
+                      "minLength": 1
+                    }
+                  },
+                  "required": [
+                    "field",
+                    "start",
+                    "end",
+                    "quote"
+                  ],
+                  "additionalProperties": false
+                },
+                "printed_blank_confirmed": {
+                  "const": true
+                },
+                "source_review_note": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              },
+              "required": [
+                "question_id",
+                "question_number",
+                "target_span",
+                "printed_blank_confirmed",
+                "source_review_note"
+              ],
+              "additionalProperties": false
             }
           },
           "required": [
@@ -1597,7 +1790,8 @@
           "properties": {
             "schema_version": {
               "enum": [
-                "1.0.0"
+                "1.0.0",
+                "1.1.0"
               ]
             },
             "review_id": {
@@ -1724,6 +1918,43 @@
                       "rejects",
                       "unresolved"
                     ]
+                  },
+                  "image_evidence": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "image_id": {
+                          "type": "string",
+                          "minLength": 1
+                        },
+                        "sha256": {
+                          "type": "string",
+                          "pattern": "^[0-9a-f]{64}$"
+                        },
+                        "box": {
+                          "type": "array",
+                          "items": {
+                            "type": "integer",
+                            "minimum": 0
+                          },
+                          "minItems": 4,
+                          "maxItems": 4
+                        },
+                        "observed": {
+                          "type": "string",
+                          "minLength": 1
+                        }
+                      },
+                      "required": [
+                        "image_id",
+                        "sha256",
+                        "box",
+                        "observed"
+                      ],
+                      "additionalProperties": false
+                    },
+                    "minItems": 1
                   }
                 },
                 "required": [
@@ -1756,7 +1987,69 @@
             "stop_applied",
             "candidate_checks"
           ],
-          "additionalProperties": false
+          "additionalProperties": false,
+          "allOf": [
+            {
+              "if": {
+                "properties": {
+                  "schema_version": {
+                    "const": "1.0.0"
+                  }
+                }
+              },
+              "then": {
+                "properties": {
+                  "candidate_checks": {
+                    "items": {
+                      "not": {
+                        "required": [
+                          "image_evidence"
+                        ]
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          ]
+        },
+        "required_image_evidence": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "candidate": {
+                "type": "string",
+                "minLength": 1
+              },
+              "image_id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "sha256": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{64}$"
+              },
+              "box": {
+                "type": "array",
+                "items": {
+                  "type": "integer",
+                  "minimum": 0
+                },
+                "minItems": 4,
+                "maxItems": 4
+              }
+            },
+            "required": [
+              "candidate",
+              "image_id",
+              "sha256",
+              "box"
+            ],
+            "additionalProperties": false
+          },
+          "minItems": 1,
+          "uniqueItems": true
         },
         "original_images": {
           "type": "array",
@@ -2144,6 +2437,11 @@
                     "minItems": 1,
                     "uniqueItems": true
                   },
+                  "verification_scope": {
+                    "enum": [
+                      "candidate_relation_check"
+                    ]
+                  },
                   "image_ref": {
                     "type": "object",
                     "properties": {
@@ -2171,6 +2469,44 @@
                       "box"
                     ],
                     "additionalProperties": false
+                  },
+                  "required_image_evidence": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "candidate": {
+                          "type": "string",
+                          "minLength": 1
+                        },
+                        "image_id": {
+                          "type": "string",
+                          "minLength": 1
+                        },
+                        "sha256": {
+                          "type": "string",
+                          "pattern": "^[0-9a-f]{64}$"
+                        },
+                        "box": {
+                          "type": "array",
+                          "items": {
+                            "type": "integer",
+                            "minimum": 0
+                          },
+                          "minItems": 4,
+                          "maxItems": 4
+                        }
+                      },
+                      "required": [
+                        "candidate",
+                        "image_id",
+                        "sha256",
+                        "box"
+                      ],
+                      "additionalProperties": false
+                    },
+                    "minItems": 1,
+                    "uniqueItems": true
                   }
                 },
                 "required": [
@@ -3665,6 +4001,92 @@
                           "verdict"
                         ],
                         "additionalProperties": false
+                      },
+                      {
+                        "type": "object",
+                        "properties": {
+                          "kind": {
+                            "enum": [
+                              "verification_result"
+                            ]
+                          },
+                          "scope": {
+                            "enum": [
+                              "candidate_relation_check"
+                            ]
+                          },
+                          "candidate": {
+                            "type": "string",
+                            "minLength": 1
+                          },
+                          "claim": {
+                            "type": "string",
+                            "minLength": 1
+                          },
+                          "target_execution_ids": {
+                            "type": "array",
+                            "maxItems": 0
+                          },
+                          "evidence": {
+                            "type": "array",
+                            "items": {
+                              "type": "object",
+                              "properties": {
+                                "field": {
+                                  "type": "string",
+                                  "minLength": 1
+                                },
+                                "start": {
+                                  "type": "integer",
+                                  "minimum": 0
+                                },
+                                "end": {
+                                  "type": "integer",
+                                  "minimum": 1
+                                },
+                                "quote": {
+                                  "type": "string",
+                                  "minLength": 1
+                                }
+                              },
+                              "required": [
+                                "field",
+                                "start",
+                                "end",
+                                "quote"
+                              ],
+                              "additionalProperties": false
+                            },
+                            "minItems": 1
+                          },
+                          "relation_check": {
+                            "type": "string",
+                            "minLength": 1
+                          },
+                          "backfill_check": {
+                            "type": "string",
+                            "minLength": 1
+                          },
+                          "verdict": {
+                            "enum": [
+                              "supports",
+                              "rejects",
+                              "unresolved"
+                            ]
+                          }
+                        },
+                        "required": [
+                          "kind",
+                          "scope",
+                          "candidate",
+                          "claim",
+                          "target_execution_ids",
+                          "evidence",
+                          "relation_check",
+                          "backfill_check",
+                          "verdict"
+                        ],
+                        "additionalProperties": false
                       }
                     ]
                   }
@@ -3742,7 +4164,8 @@
                     "schema_version": {
                       "enum": [
                         "1.0.0",
-                        "1.1.0"
+                        "1.1.0",
+                        "1.2.0"
                       ]
                     },
                     "question_type": {
@@ -3910,6 +4333,28 @@
                                 },
                                 "minItems": 1,
                                 "uniqueItems": true
+                              },
+                              "image_evidence": {
+                                "type": "array",
+                                "items": {
+                                  "type": "object",
+                                  "properties": {
+                                    "candidate": {
+                                      "type": "string",
+                                      "minLength": 1
+                                    },
+                                    "region_index": {
+                                      "type": "integer",
+                                      "minimum": 0
+                                    }
+                                  },
+                                  "required": [
+                                    "candidate",
+                                    "region_index"
+                                  ],
+                                  "additionalProperties": false
+                                },
+                                "minItems": 1
                               }
                             },
                             "required": [
@@ -3936,7 +4381,34 @@
                     "source_section_ids",
                     "segments"
                   ],
-                  "additionalProperties": false
+                  "additionalProperties": false,
+                  "allOf": [
+                    {
+                      "if": {
+                        "properties": {
+                          "schema_version": {
+                            "enum": [
+                              "1.0.0",
+                              "1.1.0"
+                            ]
+                          }
+                        }
+                      },
+                      "then": {
+                        "properties": {
+                          "segments": {
+                            "items": {
+                              "not": {
+                                "required": [
+                                  "image_evidence"
+                                ]
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  ]
                 },
                 "scope": {
                   "enum": [
@@ -3977,6 +4449,14 @@
                           "minLength": 1
                         },
                         "minItems": 1
+                      },
+                      "image_evidence_ids": {
+                        "type": "array",
+                        "items": {
+                          "type": "string",
+                          "minLength": 1
+                        },
+                        "minItems": 0
                       }
                     },
                     "required": [
@@ -4026,7 +4506,8 @@
               "properties": {
                 "schema_version": {
                   "enum": [
-                    "1.0.0"
+                    "1.0.0",
+                    "1.1.0"
                   ]
                 },
                 "review_id": {
@@ -4153,6 +4634,43 @@
                           "rejects",
                           "unresolved"
                         ]
+                      },
+                      "image_evidence": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "image_id": {
+                              "type": "string",
+                              "minLength": 1
+                            },
+                            "sha256": {
+                              "type": "string",
+                              "pattern": "^[0-9a-f]{64}$"
+                            },
+                            "box": {
+                              "type": "array",
+                              "items": {
+                                "type": "integer",
+                                "minimum": 0
+                              },
+                              "minItems": 4,
+                              "maxItems": 4
+                            },
+                            "observed": {
+                              "type": "string",
+                              "minLength": 1
+                            }
+                          },
+                          "required": [
+                            "image_id",
+                            "sha256",
+                            "box",
+                            "observed"
+                          ],
+                          "additionalProperties": false
+                        },
+                        "minItems": 1
                       }
                     },
                     "required": [
@@ -4185,7 +4703,31 @@
                 "stop_applied",
                 "candidate_checks"
               ],
-              "additionalProperties": false
+              "additionalProperties": false,
+              "allOf": [
+                {
+                  "if": {
+                    "properties": {
+                      "schema_version": {
+                        "const": "1.0.0"
+                      }
+                    }
+                  },
+                  "then": {
+                    "properties": {
+                      "candidate_checks": {
+                        "items": {
+                          "not": {
+                            "required": [
+                              "image_evidence"
+                            ]
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              ]
             },
             "state": {
               "enum": [
@@ -4237,6 +4779,14 @@
                       "minLength": 1
                     },
                     "minItems": 1
+                  },
+                  "image_evidence_ids": {
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "minItems": 0
                   }
                 },
                 "required": [
@@ -4282,6 +4832,83 @@
               "enum": [
                 "external_whole_question_review_not_brand_method_credit"
               ]
+            },
+            "image_manifest": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "image_id": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "sha256": {
+                    "type": "string",
+                    "pattern": "^[0-9a-f]{64}$"
+                  },
+                  "mime_type": {
+                    "enum": [
+                      "image/png",
+                      "image/jpeg"
+                    ]
+                  },
+                  "width": {
+                    "type": "integer",
+                    "minimum": 1
+                  },
+                  "height": {
+                    "type": "integer",
+                    "minimum": 1
+                  }
+                },
+                "required": [
+                  "image_id",
+                  "sha256",
+                  "mime_type",
+                  "width",
+                  "height"
+                ],
+                "additionalProperties": false
+              },
+              "minItems": 0
+            },
+            "required_image_evidence": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "candidate": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "image_id": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "sha256": {
+                    "type": "string",
+                    "pattern": "^[0-9a-f]{64}$"
+                  },
+                  "box": {
+                    "type": "array",
+                    "items": {
+                      "type": "integer",
+                      "minimum": 0
+                    },
+                    "minItems": 4,
+                    "maxItems": 4
+                  }
+                },
+                "required": [
+                  "candidate",
+                  "image_id",
+                  "sha256",
+                  "box"
+                ],
+                "additionalProperties": false
+              },
+              "minItems": 1,
+              "uniqueItems": true
             }
           },
           "required": [

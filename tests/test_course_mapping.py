@@ -1,5 +1,6 @@
 """Synthetic presentation controls, not learner or method-effectiveness proof."""
 from copy import deepcopy
+import hashlib
 import unittest
 from unittest.mock import patch
 
@@ -29,15 +30,91 @@ class CourseMappingTests(unittest.TestCase):
         self.row = next(r for r in self.catalog['methods'] if r['name'] == '连连看')
         self.method, self.action = fixture(self.row)
 
-    def test_new_reference_epoch_survives_generation_without_registry_migration(self):
+    def test_current_source_definitions_are_not_duplicated_during_generation(self):
         from core.registry import Registry
         from scripts.generate_assets import build
         registry=Registry();before=deepcopy(registry.index)
         assets=build(registry)
         for row in self.catalog['methods']:
-            self.assertIn(row['definition'].rstrip(),assets[row['source']['path']])
+            source=row['source']
+            current=[s for s in registry.sources['sections'].values()
+                     if (s['path'],s['heading'])==(source['path'],source['heading'])]
+            self.assertEqual(len(current),1)
+            if current[0]['content'].rstrip()==row['definition'].rstrip():
+                self.assertIn(row['definition'].rstrip(),assets[source['path']])
+            else:
+                approved=[s for s in registry.index['reference_supersession']['sections']
+                          if (s['path'],s['heading'])==(source['path'],source['heading'])]
+                self.assertEqual(len(approved),1)
+                self.assertEqual(approved[0]['before_sha256'],hashlib.sha256(row['definition'].rstrip().encode()).hexdigest())
+                self.assertEqual(approved[0]['after_sha256'],hashlib.sha256(current[0]['content'].rstrip().encode()).hexdigest())
+            self.assertEqual(assets[row['source']['path']], registry.document(row['source']['path']))
+            self.assertNotIn('已核辅助职责参考（独立来源纪元）',assets[row['source']['path']])
+            if row['source']['path'].startswith('gaokao-english/'):
+                alias=row['source']['path'].replace('gaokao-english/','gaokao-objective/',1)
+                self.assertEqual(assets[alias],registry.document(row['source']['path']))
         self.assertEqual(registry.index,before)
-        self.assertNotEqual(registry.index['source_baseline']['commit'],self.catalog['upstream_commit'])
+        self.assertEqual(registry.index['reference_supersession']['from_commit'],self.catalog['upstream_commit'])
+        self.assertEqual(registry.index['reference_supersession']['to_commit'],registry.index['source_baseline']['commit'])
+
+    def test_distinct_reference_epoch_supplements_remain_complete(self):
+        from core.registry import Registry
+        from scripts.generate_assets import apply_reference_supplements
+        historical=Registry(snapshot_commit='61bc9c3e15004639cb442c20e7946ca9631f14ce')
+        assets={row['source']['path']:historical.document(row['source']['path'])
+                for row in self.catalog['methods']}
+        before=deepcopy(assets)
+        apply_reference_supplements(historical,assets,self.catalog)
+        for path, original in before.items():
+            self.assertTrue(assets[path].startswith(original))
+            self.assertIn('已核辅助职责参考（独立来源纪元）',assets[path])
+        for row in self.catalog['methods']:
+            self.assertIn(row['definition'].rstrip(), assets[row['source']['path']])
+
+    def test_same_epoch_different_or_missing_source_is_not_silently_omitted(self):
+        from core.registry import Registry
+        from scripts.generate_assets import apply_reference_supplements
+        # Preserve the original same-epoch guard independently of the newer
+        # reviewed cross-epoch replacement path.
+        registry=Registry(snapshot_commit=self.catalog['upstream_commit'])
+        assets={row['source']['path']:registry.document(row['source']['path'])
+                for row in self.catalog['methods']}
+        for mode in ('changed_definition','missing_source','ambiguous_source'):
+            with self.subTest(mode=mode):
+                catalog=deepcopy(self.catalog); candidate=deepcopy(registry)
+                first=catalog['methods'][0]; source=first['source']
+                sid=next(sid for sid,s in candidate.sources['sections'].items()
+                         if (s['path'],s['heading'])==(source['path'],source['heading']))
+                if mode=='changed_definition': first['definition']+='Substantive different instruction.\n'
+                elif mode=='missing_source': del candidate.sources['sections'][sid]
+                else: candidate.sources['sections']['synthetic-duplicate']=deepcopy(candidate.sources['sections'][sid])
+                with self.assertRaisesRegex(ValueError,'Same-epoch course reference differs'):
+                    apply_reference_supplements(candidate,assets,catalog)
+
+    def test_reviewed_supersession_rejects_changed_missing_or_ambiguous_current_source(self):
+        from core.registry import Registry
+        from scripts.generate_assets import apply_reference_supplements
+        registry=Registry()
+        for mode in ('changed_current','missing_current','ambiguous_current'):
+            with self.subTest(mode=mode):
+                candidate=deepcopy(registry)
+                source=self.catalog['methods'][0]['source']
+                sid=next(sid for sid,s in candidate.sources['sections'].items()
+                         if (s['path'],s['heading'])==(source['path'],source['heading']))
+                if mode=='changed_current':candidate.sources['sections'][sid]['content']+='Synthetic changed rule.\n'
+                elif mode=='missing_current':del candidate.sources['sections'][sid]
+                else:candidate.sources['sections']['synthetic-duplicate']=deepcopy(candidate.sources['sections'][sid])
+                assets={r['source']['path']:registry.document(r['source']['path']) for r in self.catalog['methods']}
+                with self.assertRaisesRegex(ValueError,'supersession content mismatch'):
+                    apply_reference_supplements(candidate,assets,self.catalog)
+
+    def test_historical_generation_keeps_its_original_source_without_supplements(self):
+        from core.registry import Registry
+        from scripts.generate_assets import build
+        historical=Registry(snapshot_commit='61bc9c3e15004639cb442c20e7946ca9631f14ce')
+        assets=build(historical)
+        path='gaokao-english/references/reading-comprehension.md'
+        self.assertEqual(assets[path],historical.document(path))
 
     def test_all_exact_identities_have_bounded_presentations_without_mutation(self):
         for row in self.catalog['methods']:

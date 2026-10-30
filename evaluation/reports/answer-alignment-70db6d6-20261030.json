@@ -1,0 +1,75 @@
+{
+  "date": "2026-10-30",
+  "scope": "pinned_source_alignment_not_full_regression_or_learner_acceptance",
+  "from_commit": "1c388a0596b13935ae7c6a1af00834915a8efa33",
+  "to_commit": "70db6d6f0423bc8da95c591ca1feda883c2865b1",
+  "methods": 82,
+  "changed_source_methods": 28,
+  "corrected_projection_methods": [
+    "A06",
+    "A07",
+    "W05"
+  ],
+  "source_files": {
+    "runtime_files_verified": 22,
+    "captured_files_verified": 52,
+    "comparison": "manifest SHA256 and pinned Git blob after CRLF/LF normalization",
+    "mismatches": 0
+  },
+  "registered_case_files_byte_compared": 106,
+  "changed_case_files": 0,
+  "tests": [
+    {
+      "command": "python -m unittest tests.test_answer_alignment_20261030 tests.test_current_student_entries tests.test_symptom_student_guidance tests.test_w02_dual_entry -q",
+      "tests": 41,
+      "seconds": 49.262,
+      "exit_code": 0
+    },
+    {
+      "command": "python -m unittest tests.test_beginner_student_entries tests.test_first_use_materials -q",
+      "tests": 59,
+      "seconds": 146.898,
+      "exit_code": 0
+    }
+  ],
+  "total_tests": 100,
+  "failures": 0,
+  "errors": 0,
+  "generated_assets": "PASS",
+  "registry_current_and_previous": "PASS",
+  "actual_course_identity_cli": "动静一致: current complete source returned; not a real-question evaluation",
+  "student_entries": {
+    "draft": 82,
+    "real_observations_added": 0,
+    "student_ready_promoted": 0
+  },
+  "source_worktrees_clean": true,
+  "source_repository_content_modified": false,
+  "original_reference_HEAD": "1c388a0596b13935ae7c6a1af00834915a8efa33",
+  "full_regression": "not_run",
+  "private_teaching_pack_rebuilt": false,
+  "semantic_review": "bounded static comparison; no real student or independent English outcome certification",
+  "preapply_validation_findings": [
+    "Stale participle risk quote rejected by unchanged Registry guard; rebound to current correction before apply.",
+    "Unsupported review status rejected by unchanged Schema; existing editorial state used before apply."
+  ],
+  "asset_sha256": {
+    "scripts/align_answer_20261030.py": "a314a75fd9d78f324543a912450fbd3954d9339701614f3d452087b971d5099b",
+    "scripts/generate_assets.py": "134e4a36e31bc87095370d1c3a2049574f2344a0ecc6643bdcc9f000092129cc",
+    "tests/test_answer_alignment_20261030.py": "7fef8cb1bbd9f25cd70fe0d2303c27e3d58984f68c1537478284497d0db2c180",
+    "tests/test_beginner_student_entries.py": "ad9482517ab754409dd22e0db48d77d9282315707b916aefad840620a4f769cb",
+    "tests/test_first_use_materials.py": "0cda73e489774c3a4ad3cd5de67c2dd22f0bfcbb4626ab4471c537095bac1e6e",
+    "tests/test_current_student_entries.py": "328a27555adb91f065f86d5e32b7a130227cf6347a1941ce2d4a9933b6b74668",
+    "tests/test_symptom_student_guidance.py": "8517349729594339e610394d89a91e8a6f1c1946cba4ff4e10427d67a9d99430",
+    "tests/test_w02_dual_entry.py": "97cdc057df25ed92ef996c7120769cbd9cf89b99c7be2ade44cbb1ab5fb4b3b0",
+    "method-registry/registry.yaml": "51ec2d21afa5101f2fd6e0c6258479227b79389f3a827efbb82dd26279d48bb1",
+    "method-registry/reading.yaml": "a16cd4d7372490c12e648be98c06c176553dfc93e5058b4b51bd35df2b73d349",
+    "method-registry/seven-five.yaml": "fbd7cabe137c655482045b5ac708852263893d6537f2fa74e9744d73cdd07847",
+    "method-registry/cloze.yaml": "9f6315bd992c9fc92a4e077e4694da57e2f6478db52da6ac1f1e62b1f44d1431",
+    "method-registry/grammar.yaml": "0fb0cffda7a09b16fe306b9f35dfd50f51bc88715b401d367ef7bc1395e7f083",
+    "method-registry/application-writing.yaml": "0d7cc017dc8678d806127099a92df0a7d3be50a9a4041609bcd589de59c2814c",
+    "method-registry/continuation-writing.yaml": "5948a2334adcfaec524dc60fb900b3fd2eea045c817dd72e62fcdac5a1beeabc",
+    "method-registry/source-risks.yaml": "b120115faf385ec8c16282628b5117aa122b8b37193d49370448b0efe20ca6df",
+    "provenance/manifest.yaml": "d0889f107235852eb39c0afea8044129b66ceb17423a7991a7572451f3fde180"
+  }
+}

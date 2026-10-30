@@ -3,8 +3,8 @@ root: entry
 scope: 导航计划，不是自动句法求解；知识节点只引用Registry方法。
 source_sections:
 - 781c4478d621bf5c
-- a166ae34f9256ee9
-- 5131f97d0dc78441
+- be5c8b287ffa3745
+- 01b66e853d507205
 preparatory_methods:
 - G17
 postcheck_methods:

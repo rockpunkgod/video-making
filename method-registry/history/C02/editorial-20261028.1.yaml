@@ -1,0 +1,138 @@
+method_id: C02
+brand_name: 前后夹击
+source_name: 瞻前顾后法
+aliases:
+- 瞻前顾后法
+question_type: 完形填空
+method_type: method
+role: verifier
+primary_role: verifier
+secondary_roles: []
+output_type: verify
+student_symptoms:
+- 空前空后证据尚未闭合
+trigger_cues:
+- 当前空要核前后提示，近处不足才需更远上下文。
+core_action: 圈两侧对象、动作、评价、时间及候选额外前提；近处够则回填，不够写缺口并向真实复现、回答、结果或评价扩。
+decision_rule: 产出线索与候选的实际联系和回填核验；多个线索一并核，不只截支持初选的一处。
+verification: 产出线索与候选的实际联系和回填核验；多个线索一并核，不只截支持初选的一处。 仍不足就暂留，找到独立提示后返回，不强制原空号；相邻待定空、已占项或先报答案不互证。
+stop_rule: 仍不足就暂留，找到独立提示后返回，不强制原空号；相邻待定空、已占项或先报答案不互证。
+common_wrong_instinct: 只看空后半句或自己猜定的相邻空，拼出一个看似合理的理由就停止找证据。
+failure_cases:
+- 只看空后半句或自己猜定的相邻空，拼出一个看似合理的理由就停止找证据。
+- 仍不足就暂留，找到独立提示后返回，不强制原空号；相邻待定空、已占项或先报答案不互证。
+counterexamples:
+- 当前空和相邻空都未确定，却各自依赖对方猜出的含义；两空互相顺口不形成独立题面证据。
+transfer_pattern: 新篇仍核两侧实际提示与候选要求，不把左右句数固定，也不借未证空位答案。
+memory_line: 圈两侧对象、动作、评价、时间及候选额外前提；近处够则回填，不够写缺口并向真实复现、回答、结果或评价扩。
+anti_rule: 相邻已填 ≠ 独立证据。
+visual_formula: "空前：谁/动作/时间\n      ↘ 候选 ↙\n空后：对象/评价/结果\n足够 → 回填核验（verify）\n不足 → 扩证/暂留；不以猜空互证"
+challenge_prompt: 先不填，圈本空前后各一条实际提示，写它们分别约束哪个对象或关系；没有就标缺口而不是借相邻答案。
+source_references:
+- repository: https://github.com/rockpunkgod/ANSWER.git
+  path: gaokao-english/references/cloze.md
+  heading: 瞻前顾后法
+  commit: 1c388a0596b13935ae7c6a1af00834915a8efa33
+- repository: https://github.com/rockpunkgod/ANSWER.git
+  path: gaokao-english/references/cloze.md
+  heading: 完形填空
+  commit: 1c388a0596b13935ae7c6a1af00834915a8efa33
+section_ids: &id001
+- b50b911407b9faa9
+- 3f36ea92a4769ee5
+can_follow: []
+usually_before: []
+usually_after: []
+conflicts_with: []
+cannot_replace:
+- 完整题面验证
+levels:
+  L1: 圈两侧谁、动作、评价和时间；近处不足再向明确复现或结果扩读，仍不足暂留
+  L2: 圈两侧对象、动作、评价与时间，逐条说明线索和候选的实际联系；近处足够则回填核验，不够记录缺口向明确复现、回答、结果或评价扩。
+  L3: 仍不足就暂留，找到独立提示后返回，不强制原空号；相邻待定空、已占项或先报答案不互证。
+  L4: 新篇仍核两侧实际提示与候选要求，不把左右句数固定，也不借未证空位答案。
+compact:
+  line: 圈两侧对象、动作、评价、时间及候选额外前提；近处够则回填，不够写缺口并向真实复现、回答、结果或评价扩。
+  boundary: 仍不足就暂留，找到独立提示后返回，不强制原空号；相邻待定空、已占项或先报答案不互证。
+  10s: 空前读通还犹豫？核两侧对象和动作，不足再扩读；猜出的邻空不能互证。
+  30s: 空前读通还犹豫？先圈本空两侧谁在做什么；不足时写缺哪条联系再扩读。例如，两个待定空互相解释，不等于有独立文本证据。线索冲突或仍缺证据先暂留，不截取只支持初选的一句。
+  90s: 空前读通还犹豫？圈两侧对象、动作、评价、时间及候选额外前提；近处够则回填，不够写缺口并向真实复现、回答、结果或评价扩。这一步得到的只是核验已有候选或稿件，不替代独立证据。判断时，产出线索与候选的实际联系和回填核验；多个线索一并核，不只截支持初选的一处。什么时候停，仍不足就暂留，找到独立提示后返回，不强制原空号；相邻待定空、已占项或先报答案不互证。反例示意，当前空和相邻空都未确定，却各自依赖对方猜出的含义；两空互相顺口不形成独立题面证据。换题仍检查当前题面的对象和关系，不搬上一题结论。挑战，先不填，圈本空前后各一条实际提示，写它们分别约束哪个对象或关系；没有就标缺口而不是借相邻答案。
+full:
+  summary: 圈两侧对象、动作、评价、时间及候选额外前提；近处够则回填，不够写缺口并向真实复现、回答、结果或评价扩。 产出线索与候选的实际联系和回填核验；多个线索一并核，不只截支持初选的一处。
+  source_boundary: 仍不足就暂留，找到独立提示后返回，不强制原空号；相邻待定空、已占项或先报答案不互证。
+  boundaries:
+  - 仍不足就暂留，找到独立提示后返回，不强制原空号；相邻待定空、已占项或先报答案不互证。
+  - 当前空和相邻空都未确定，却各自依赖对方猜出的含义；两空互相顺口不形成独立题面证据。
+  section_ids:
+  - b50b911407b9faa9
+  - 3f36ea92a4769ee5
+  beginner_support:
+    first_micro_action: 先圈本空两侧谁在做什么；不足时写缺哪条联系再扩读。
+    prerequisite: 先读出本空两侧谁在做什么，区分题面已说与自己猜的内容；决定候选的词义不明就先标出来。
+    if_stuck: 只记录已找到的提示；词义或桥接缺证据时暂留，找到独立提示后返回，不以猜空互证。
+    example: 两个待定空互相解释，不等于有独立文本证据。
+    example_scope: 关系/结构示意，非完整试题，不计真题或已验案例。
+    micro_action_is_not_completion: 完成第一小步不等于完整方法成功；继续完成四步卡的判断与停止核验。
+    short_stop: 线索冲突或仍缺证据先暂留，不截取只支持初选的一句。
+  presentation_revision: 2026-10-28.1
+cases:
+  canonical: cases/cloze/C02/canonical/case.yaml
+four_step_card:
+  start: 当前空要核前后提示，近处不足才需更远上下文。
+  first_cut: 圈两侧对象、动作、评价、时间及候选额外前提；近处够则回填，不够写缺口并向真实复现、回答、结果或评价扩。
+  judge: 产出线索与候选的实际联系和回填核验；多个线索一并核，不只截支持初选的一处。
+  stop: 仍不足就暂留，找到独立提示后返回，不强制原空号；相邻待定空、已占项或先报答案不互证。
+practicality_gate:
+  status: design_complete_empirical_pending
+  trigger: 当前空要核前后提示，近处不足才需更远上下文。
+  action: 圈两侧对象、动作、评价、时间及候选额外前提；近处够则回填，不够写缺口并向真实复现、回答、结果或评价扩。
+  output: verify；产出线索与候选的实际联系和回填核验；多个线索一并核，不只截支持初选的一处。
+  stop: 仍不足就暂留，找到独立提示后返回，不强制原空号；相邻待定空、已占项或先报答案不互证。
+  transfer: 新篇仍核两侧实际提示与候选要求，不把左右句数固定，也不借未证空位答案。
+  efficiency: 近处已够时停止无效扩读；不足时按明确关系扩证。主要改善证据可靠性，效率未测。
+  misuse_cost: 未经实测；只看空后半句或自己猜定的相邻空，拼出一个看似合理的理由就停止找证据。会导致误判；须先核触发、执行Stop，不允许辅助产物越级定案。
+first_use_test:
+  status: designed_not_run
+  trigger_success: null
+  action_success: null
+  evidence_success: null
+  stop_rule_success: null
+  no_answer_backfit: null
+  failure_type: null
+  final_result: pending_real_student_test
+evaluation:
+  baseline: 普通逐项核题面
+  primary_benefit_hypothesis: 近处已够时停止无效扩读；不足时按明确关系扩证。主要改善证据可靠性，效率未测。
+  trigger_precision: null
+  trigger_recall: null
+  resolution_rate: null
+  standalone_rate: null
+  assist_rate: null
+  false_trigger_rate: null
+  transfer_rate: null
+  boundary_accuracy: null
+  time_complexity_gain: null
+usefulness_level: Useful
+status: candidate
+maturity_status: candidate
+practical_value: Useful
+version: 1.2.1
+change_reason: ANSWER 1c388a0596b13935ae7c6a1af00834915a8efa33 增量来源同步；保留既有动作与版本，旧证据不自动获得新来源准入。
+affected_cases:
+- cases/cloze/C02/canonical/case.yaml
+regression_result: pending_current_epoch_semantic_and_student_acceptance
+student_ready: false
+entry_copy: 空前读通还犹豫？先圈本空两侧谁在做什么；不足时写缺哪条联系再扩读。这一步得到的只是核验已有候选或稿件，不替代独立证据。如果卡住，只记录已找到的提示；词义或桥接缺证据时暂留，找到独立提示后返回，不以猜空互证。
+static_design_review:
+  status: source_bound_editorial_review
+  source_section_ids: *id001
+  participant_validation: pending_real_participant_validation
+  example_scope: 2026-10-28基础入口表达修订；保留原判据/Stop/课程绑定与语义版本，微动作和关系示意不是完整真题或真人实测。
+source_alignment:
+  commit: 1c388a0596b13935ae7c6a1af00834915a8efa33
+  state: live_source_bound
+  source_content_changed: false
+  correction_profile_applied: true
+  authored_first_contact_draft: true
+  new_course_branches: preserved_in_full_contract_not_automatically_aliased
+  acceptance: unchanged_method_sections; added_source_contracts_preserved; learner/release_pending

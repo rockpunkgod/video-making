@@ -1,0 +1,128 @@
+method_id: R08
+brand_name: 例子只作证
+source_name: 例子非答案
+aliases:
+- 例子非答案
+question_type: 阅读理解
+method_type: method
+role: interpreter
+primary_role: interpreter
+secondary_roles: []
+output_type: interpret
+student_symptoms:
+- 题干问例子的作用而不是例子细节
+trigger_cues:
+- 题干问例子作用，或主旨/观点候选只复述例中细节而未概括其支持观点。
+core_action: 圈例子及必要前后观点，分别写例中发生什么与它支持哪种判断，再核候选声称的作用或覆盖。
+decision_rule: 产出例子—观点支持关系；只复述局部通常不足回答作用或主旨，抽象项也须有真实支持。
+verification: 产出例子—观点支持关系；只复述局部通常不足回答作用或主旨，抽象项也须有真实支持。 直接考例中事实不用本法排细节；作用新增无依据则撤回，段首段尾和主题词只作入口，不机械见细节必排。
+stop_rule: 直接考例中事实不用本法排细节；作用新增无依据则撤回，段首段尾和主题词只作入口，不机械见细节必排。
+common_wrong_instinct: 看到人名数字就选复述细节，或反过来无条件选最抽象的说法。
+failure_cases:
+- 看到人名数字就选复述细节，或反过来无条件选最抽象的说法。
+- 直接考例中事实不用本法排细节；作用新增无依据则撤回，段首段尾和主题词只作入口，不机械见细节必排。
+counterexamples:
+- 题干直接问研究中发生了什么，细节本身就是所问；不能用例子非答案把有据细节排掉。
+transfer_pattern: 人物、数字、引用与研究都用事实—支持观点两栏，不迁移具体例子结论。
+memory_line: 圈例子及必要前后观点，分别写例中发生什么与它支持哪种判断，再核候选声称的作用或覆盖。
+anti_rule: 更抽象 ≠ 举例作用正确。
+visual_formula: "题干：问事实？→ 核事实\n      问作用？↓\n例中发生什么 + 前后观点\n→ 例子支持哪句（核方向）"
+challenge_prompt: 先别选，写两栏：例中发生什么、作者用它支持哪句；给第二栏标前后取证位置。
+source_references:
+- repository: https://github.com/rockpunkgod/ANSWER.git
+  path: gaokao-english/references/reading-comprehension.md
+  heading: 例子非答案
+  commit: 1c388a0596b13935ae7c6a1af00834915a8efa33
+section_ids:
+- 12f527f328cd501b
+can_follow: []
+usually_before: []
+usually_after: []
+conflicts_with: []
+cannot_replace:
+- 完整题面验证
+levels:
+  L1: 圈例子前后被支持的观点，再用例子内容检验它实际支持哪句
+  L2: 分开例中事实与举例作用，按例中动作和前后评价核候选所称原因、后果、危害或重要性；产出被例子支持的观点。
+  L3: 直接问例中事实时不启动作用排除；候选更抽象却没有前后观点与例中动作支持时停止初判，不能补造作者用途。
+  L4: 人物、数字、引用与研究都用事实—支持观点两栏，不迁移具体例子结论。
+compact:
+  line: 圈例子及必要前后观点，分别写例中发生什么与它支持哪种判断，再核候选声称的作用或覆盖。
+  boundary: 直接考例中事实不用本法排细节；作用新增无依据则撤回，段首段尾和主题词只作入口，不机械见细节必排。
+  10s: 圈例子及必要前后观点，分别写例中发生什么与它支持哪种判断，再核候选声称的作用或覆盖。 产出例子—观点支持关系；只复述局部通常不足回答作用或主旨，抽象项也须有真实支持。
+  30s: 题干问例子作用，或主旨/观点候选只复述例中细节而未概括其支持观点。 圈例子及必要前后观点，分别写例中发生什么与它支持哪种判断，再核候选声称的作用或覆盖。
+    直接考例中事实不用本法排细节；作用新增无依据则撤回，段首段尾和主题词只作入口，不机械见细节必排。
+  90s: 题干问例子作用，或主旨/观点候选只复述例中细节而未概括其支持观点。 手上先做：圈例子及必要前后观点，分别写例中发生什么与它支持哪种判断，再核候选声称的作用或覆盖。
+    做完得到：产出例子—观点支持关系；只复述局部通常不足回答作用或主旨，抽象项也须有真实支持。 停止：直接考例中事实不用本法排细节；作用新增无依据则撤回，段首段尾和主题词只作入口，不机械见细节必排。
+    反例（边界示意，非真题）：题干直接问研究中发生了什么，细节本身就是所问；不能用例子非答案把有据细节排掉。 挑战：先别选，写两栏：例中发生什么、作者用它支持哪句；给第二栏标前后取证位置。
+full:
+  summary: 圈例子及必要前后观点，分别写例中发生什么与它支持哪种判断，再核候选声称的作用或覆盖。 产出例子—观点支持关系；只复述局部通常不足回答作用或主旨，抽象项也须有真实支持。
+  source_boundary: 直接考例中事实不用本法排细节；作用新增无依据则撤回，段首段尾和主题词只作入口，不机械见细节必排。
+  boundaries:
+  - 直接考例中事实不用本法排细节；作用新增无依据则撤回，段首段尾和主题词只作入口，不机械见细节必排。
+  - 题干直接问研究中发生了什么，细节本身就是所问；不能用例子非答案把有据细节排掉。
+  section_ids:
+  - 12f527f328cd501b
+cases:
+  canonical: cases/reading/R08/canonical/case.yaml
+four_step_card:
+  start: 题干问例子作用，或主旨/观点候选只复述例中细节而未概括其支持观点。
+  first_cut: 圈例子及必要前后观点，分别写例中发生什么与它支持哪种判断，再核候选声称的作用或覆盖。
+  judge: 产出例子—观点支持关系；只复述局部通常不足回答作用或主旨，抽象项也须有真实支持。
+  stop: 直接考例中事实不用本法排细节；作用新增无依据则撤回，段首段尾和主题词只作入口，不机械见细节必排。
+practicality_gate:
+  status: design_complete_empirical_pending
+  trigger: 题干问例子作用，或主旨/观点候选只复述例中细节而未概括其支持观点。
+  action: 圈例子及必要前后观点，分别写例中发生什么与它支持哪种判断，再核候选声称的作用或覆盖。
+  output: interpret；产出例子—观点支持关系；只复述局部通常不足回答作用或主旨，抽象项也须有真实支持。
+  stop: 直接考例中事实不用本法排细节；作用新增无依据则撤回，段首段尾和主题词只作入口，不机械见细节必排。
+  transfer: 人物、数字、引用与研究都用事实—支持观点两栏，不迁移具体例子结论。
+  efficiency: 把例子复述与作者用途分离，预期减少层级和方向混淆；提速未测。
+  misuse_cost: 未经实测；看到人名数字就选复述细节，或反过来无条件选最抽象的说法。会导致误判，必须先核触发并执行上述Stop，不允许从辅助产物越级定案。
+first_use_test:
+  status: designed_not_run
+  trigger_success: null
+  action_success: null
+  evidence_success: null
+  stop_rule_success: null
+  no_answer_backfit: null
+  failure_type: null
+  final_result: pending_real_student_test
+evaluation:
+  baseline: 普通逐项核题面
+  primary_benefit_hypothesis: 把例子复述与作者用途分离，预期减少层级和方向混淆；提速未测。
+  trigger_precision: null
+  trigger_recall: null
+  resolution_rate: null
+  standalone_rate: null
+  assist_rate: null
+  false_trigger_rate: null
+  transfer_rate: null
+  boundary_accuracy: null
+  time_complexity_gain: null
+usefulness_level: Useful
+status: candidate
+maturity_status: candidate
+practical_value: Useful
+version: 1.2.0
+change_reason: ANSWER 1c388a0596b13935ae7c6a1af00834915a8efa33 增量来源同步；保留既有动作与版本，旧证据不自动获得新来源准入。
+affected_cases:
+- cases/reading/R08/canonical/case.yaml
+regression_result: pending_current_epoch_semantic_and_student_acceptance
+student_ready: false
+entry_copy: 题干问例子作用，或主旨/观点候选只复述例中细节而未概括其支持观点。 手上先做：圈例子及必要前后观点，分别写例中发生什么与它支持哪种判断，再核候选声称的作用或覆盖。
+  做完得到：产出例子—观点支持关系；只复述局部通常不足回答作用或主旨，抽象项也须有真实支持。 停止：直接考例中事实不用本法排细节；作用新增无依据则撤回，段首段尾和主题词只作入口，不机械见细节必排。
+static_design_review:
+  status: source_rebound_semantic_reacceptance_pending
+  source_section_ids:
+  - 12f527f328cd501b
+  participant_validation: pending_real_participant_validation
+  example_scope: counterexample is a schematic source boundary, not a verified exam
+source_alignment:
+  commit: 1c388a0596b13935ae7c6a1af00834915a8efa33
+  state: live_source_bound
+  source_content_changed: false
+  correction_profile_applied: true
+  authored_first_contact_draft: false
+  new_course_branches: preserved_in_full_contract_not_automatically_aliased
+  acceptance: unchanged_method_sections; added_source_contracts_preserved; learner/release_pending

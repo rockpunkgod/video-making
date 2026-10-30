@@ -24,7 +24,7 @@ def method_facts(method): return {k:v for k,v in method.items() if k not in STAT
 
 def regression_snapshot(registry):
     runtime={}
-    for folder,pattern in [('core','*.py'),('answer_engine','*.py'),('renderers','*.py'),('evaluation','*.py'),('scripts','*.py'),('tests','*.py'),('schemas','*.json')]:
+    for folder,pattern in [('core','*.py'),('answer_engine','*.py'),('renderers','*.py'),('video_contracts','*.py'),('evaluation','*.py'),('scripts','*.py'),('tests','*.py'),('schemas','*.json'),('video/schemas','*.json')]:
         for path in sorted((ROOT/folder).rglob(pattern)):
             runtime[path.relative_to(ROOT).as_posix()]=hashlib.sha256(path.read_bytes()).hexdigest()
     runtime['EVALUATION_PROTOCOL.md']=hashlib.sha256((ROOT/'EVALUATION_PROTOCOL.md').read_bytes()).hexdigest()
@@ -61,6 +61,14 @@ def check_release(registry,review,applied=False,visited=None):
     stats=regression.get('after_refactor',{})
     checks['regression_matches_current_material']=all(regression.get(key)==value for key,value in regression_snapshot(registry).items())
     checks['regression_passed']=all(type(stats.get(key)) is int for key in ('tests_run','failures','errors')) and stats.get('tests_run',0)>=16 and stats.get('failures')==0 and stats.get('errors')==0 and stats.get('registry',{}).get('status')=='PASS' and stats.get('generated',{}).get('generated_assets')=='PASS' and regression.get('source_commit')==registry.index['source_baseline']['commit']
+    # New runner records include CLI failures and run stability. Preserve old
+    # report reading, but never let a declared failed current run grant release.
+    if 'engineering_status' in regression:
+        checks['regression_passed'] = (checks['regression_passed']
+            and regression['engineering_status'] == 'PASS'
+            and stats.get('material_stable') is True
+            and type(stats.get('cli_failures')) is int and stats['cli_failures'] == 0
+            and type(stats.get('cli_commands_run')) is int and stats['cli_commands_run'] > 0)
     evaluation_error=None; group=None
     try:
         result=evaluate(records,plan)

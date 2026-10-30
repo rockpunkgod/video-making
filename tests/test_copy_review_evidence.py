@@ -172,6 +172,7 @@ class CopyReviewEvidence(unittest.TestCase):
             'sha256':sha256(media/'picture.bin')})
         streams={'streams':[{'codec_type':'video','width':3840,'height':2160,'r_frame_rate':'24/1','nb_read_frames':'24'},
                              {'codec_type':'audio','codec_name':'aac','sample_rate':'48000','time_base':'1/48000'}]}
+        evidence_manifest=str(media/'review_evidence'/'manifest.json')
         # Engineering media routines are mocked: this tests only authority field
         # propagation and explicitly makes no synthetic decode/listening claim.
         with patch.object(native,'current_native',return_value=(self.author,plan,{'master_comp_id':2})), \
@@ -180,10 +181,14 @@ class CopyReviewEvidence(unittest.TestCase):
                 patch.object(native,'packet_binding',return_value='SYNTHETIC packets'), \
                 patch.object(native,'audio_packet_rows',return_value=[]), \
                 patch.object(native,'verify_prior_production',return_value={'scope':'SYNTHETIC'}), \
+                patch('ae_production.review_evidence.export_review_evidence',
+                      return_value=evidence_manifest) as export_evidence, \
                 patch.object(native.subprocess,'check_output',return_value=b'\0\0'*64), \
                 patch.object(native.subprocess,'run'):
-            native.package(self.folder,master=True)
+            result=native.package(self.folder,master=True)
         qa=read(self.folder/'MASTER_DELIVERY_QA.json')
+        export_evidence.assert_called_once_with(self.folder,qa,probe_result=streams)
+        self.assertEqual(result['review_evidence_manifest'],evidence_manifest)
         self.assertEqual(qa['independent_new_copy_review'],'USER_REVIEWED_EXACT_COPY')
         self.assertEqual(qa['human_creative_review'],'PENDING');self.assertEqual(qa['human_listening_review'],'PENDING')
         self.assertFalse(qa['public_render_ready']);self.assertEqual(qa['student_count'],0)

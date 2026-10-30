@@ -1,147 +1,185 @@
-"""Run reproducible engineering gates and write an honest final report."""
+"""Run current engineering checks into a new private, non-overwriting record.
+
+This runner never publishes or replaces docs/final-acceptance.md. Human,
+semantic and participant gates require separately reviewed evidence.
+"""
+import argparse
 from collections import Counter
+from datetime import datetime, timezone
 import json
 from pathlib import Path
 import subprocess
 import sys
 import unittest
-from core.registry import ROOT,Registry,load,validate_schema
-from core.analyzer import QuestionAnalyzer,PaperAnalyzer
-from scripts.generate_assets import generate
-from evaluation.harness import evaluate,load_records
+from uuid import uuid4
+
+from core.registry import ROOT, Registry
 from core.release import regression_snapshot
+from scripts.generate_assets import generate
+from evaluation.harness import load_records
 
-def run():
-    snapshot_before=regression_snapshot(Registry())
-    suite=unittest.defaultTestLoader.discover(str(ROOT/'tests'))
-    result=unittest.TextTestRunner(verbosity=1).run(suite)
-    if not result.wasSuccessful(): raise SystemExit('Regression failed; no PASS report generated')
-    r=Registry(); validated=r.validate(); generated=generate(check=True)
-    if snapshot_before!=regression_snapshot(r): raise RuntimeError('Regression material changed during tests; no acceptance report generated')
-    smoke=[]
-    for args in [['case-coverage'],['analyze','examples/writing-word-count.synthetic.json','--renderer','legacy-wechat'],['analyze','examples/writing-word-count.synthetic.json','--renderer','content-export'],['analyze','examples/writing-image.synthetic.json','--renderer','legacy-wechat'],['analyze','examples/writing-image.synthetic.json','--renderer','content-export'],['validate'],['lesson','examples/passage-lesson.synthetic.json','--renderer','legacy-wechat'],['lesson','examples/passage-lesson.synthetic.json','--renderer','content-export'],['analyze','examples/question-lesson-course.json','--renderer','legacy-wechat'],['analyze','examples/question-action-course.json','--renderer','content-export'],['analyze','examples/question-course.json','--renderer','student'],['analyze','examples/question-reviewed-course.json','--renderer','content-export'],['analyze','examples/writing-review.synthetic.json','--renderer','legacy-wechat'],['analyze','examples/writing-review.synthetic.json','--renderer','content-export'],['paper','examples/paper-course.json'],['evaluate','evaluation/datasets/synthetic-observations.json'],['evaluate','evaluation/datasets/real-observations.pending.json']]:
-        proc=subprocess.run([sys.executable,'-m','answer_engine',*args],cwd=ROOT,capture_output=True,encoding='utf-8')
-        if proc.returncode: raise RuntimeError(proc.stderr)
-        smoke.append({'command':'python -m answer_engine '+' '.join(args),'exit_code':proc.returncode})
-    for args in [['release-check','evaluation/release-review.example.json'],['release-bindings','evaluation/release-review.example.json']]:
-        proc=subprocess.run([sys.executable,'-m','answer_engine',*args],cwd=ROOT,capture_output=True,encoding='utf-8')
-        if proc.returncode: raise RuntimeError(proc.stderr)
-        smoke.append({'command':'python -m answer_engine '+' '.join(args),'exit_code':proc.returncode})
-    modules=Counter(m['question_type'] for m in r.methods.values())
-    categories=Counter(m['method_type'] for m in r.methods.values())
-    ready=sum(bool(m.get('student_ready')) for m in r.methods.values())
-    unfinished=len(r.methods)-ready
-    cases=[load(path) for m in r.methods.values() for path in m['cases'].values()]
-    statuses=Counter(c['status'] for c in cases)
-    coverage=r.case_coverage()
-    real=load_records(ROOT/'evaluation/datasets/real-observations.pending.json')
-    synthetic=load_records(ROOT/'evaluation/datasets/synthetic-observations.json')
-    entry_gap=f'{unfinished}项学生入口仍需逐一源绑定审阅；' if unfinished else ''
-    report={'final_status':'PARTIAL','before_refactor':{'tests_run':16,'passed':16,'head':'60ebaf4'},'after_refactor':{'tests_run':result.testsRun,'failures':len(result.failures),'errors':len(result.errors),'registry':validated,'generated':generated,'cli_smoke':smoke},'method_migration':dict(modules),'method_types':dict(categories),'case_counts':dict(statuses),'source_commit':r.index['source_baseline']['commit'],'source_repository_unchanged':'verified by read-only source git status and immutable snapshot hashes','evaluation_status':'pending_real_participant_validation','real_record_count':len(real),'synthetic_record_count':len(synthetic),'remaining_blockers':[entry_gap+'全量真实完整案例仍待核','缺完整六型盲题与旧答疑语义回归数据','没有可靠校准的自由文本语义求解后端，当前使用外部审阅接口','无真实受试者传播、First-use、Blind、效率或Signature数据']}
-    report['safety_hardening']={'option_closure':'unique own support plus reviewed elimination of every supplied rival','evidence_graph':'own method trigger, own candidate claim and current-input quote binding','spoken_symptoms':'10 requested examples tested; suggestions not semantic proof','analysis_schema_version':'1.7.0','grammar_navigation':'explicit hint branch plus reviewed trigger paths; never infer blank POS from hint spelling','writing_feedback':'external review transport with independent trigger, draft coverage, module-specific order and real withholding of unsupported sections; no automatic grading certification'}
-    report['case_coverage']=coverage
-    exam_path=ROOT/'evaluation/reports/exam-ingestion.json'
-    if exam_path.is_file():
-        exam=load(exam_path)
-        report['real_exam_ingestion']={key:exam[key] for key in ['status','source_papers','source_files',
-            'completed_blind_reveal_papers','new_question_count','host_reviewed_question_count',
-            'host_reviewed_answered_count','host_reviewed_reference_match_count',
-            'real_student_observation_count','new_registered_cases','case_review_candidate_count',
-            'post_reveal_ai_reviewed_question_count','negative_review_withheld_question_count',
-            'post_reveal_helper_action_review_count','post_reveal_chain_review_count',
-            'post_reveal_bounded_action_review_count']}
-        report['remaining_blockers'][1]='真实六型试卷已导入；全量语义、案例独立审阅和旧答疑语义回归仍缺，另有1卷源结构缺损'
-    report.update(regression_snapshot(r))
-    report['human_release_review']={'contract':'schemas/method-release.json','commands':['release-check','release-bindings'],'registry_index':'optional release_reviews method_id -> repository-relative approved artifact','scope':'explicit manual state changes only after bound real evaluation, five verified case types, current regression and human approval; identities, semantic judgement and statistical significance remain externally audited','indexed_review_count':len(r.index.get('release_reviews',{})),'applied_review_count':sum(m['maturity_status'] in {'validated','stable'} or m['practical_value']!='Useful' for m in r.methods.values())}
-    report['candidate_relation_binding']={'required':'same method_id and candidate on one reviewed relation, with own upstream claim/trigger and directly quoted source','applies_to':['decision','verification','candidate_decision action artifact'],'writing_candidate':'student_draft explicitly recorded on review relation','negative_tests':['wrong candidate relation','borrowed draft relation','claim grafted to conclusion','trigger grafted to conclusion','trigger quote substituted for relation evidence','artifact without conclusion nodes'],'scope':'structural binding of external assertions; not English semantics or scoring certification'}
-    report['paper_scan']={'schema_version':'1.1.0','legacy_output_schema':'1.0.0 still accepted','coverage_stages':['potential_question_ids','verified_trigger_question_ids','produced_question_ids','reviewed_decision_question_ids','case_candidate_question_ids'],'ranking':'own eligible case count descending then method ID; not suggestion frequency or demonstration score','gate':'closed question plus own verified trigger and own produced artifact or reviewed decision, with no stopped execution for this method','scope':'external reviewed structural scan, not legal-source, complete-paper or English-semantic certification'}
-    report['review_provider_binding']={'input_gate':'schema validation before callback and after return','immutable_fields':['question_id','question_type','stem','passage','options','given_word','student_text','continuation_starters','original_images','student_symptoms'],'snapshot':'independent deepcopy detects in-place and nested changes, additions and deletions','scope':'single question and inherited paper/passage input consistency; not a callback sandbox or semantic certification'}
-    report['student_entry_migration']={'static_ready':ready,'draft_remaining':unfinished,'meaning':'static copy completeness, not observed first-use success','ready_by_module':dict(Counter(m['question_type'] for m in r.methods.values() if m.get('student_ready')))}
-    report['evaluation_design_hardening']={'result_schema_version':'1.2.0','grouping':['method_id','method_version','dataset_id','communication_freeze_id'],'workflow':'declared study freeze / communication freeze / practicality / first-use / blind sequence, with each communication version observed; not authenticated dates','short_safety':'absolute trigger/action/evidence/transfer/stop gates plus relative boundary/role/stop deltas; bad 90s reference cannot release short versions','release':'missing workflow or absolute thresholds, any per-version correctness loss or failed blind gate blocks release and efficiency/signature review hints; no automatic Registry promotion'}
-    report['method_execution']={'schema_version':'1.7.0','typed_artifact_count':8,'scope':'external reviewed action results, not an automatic English semantic executor','dependency_gate':'earlier reviewed complete non-stopped compatible artifacts only','binding':'current input spans, role/version, named decisions and graph payload fingerprint','failed_verification':'answer and recommendation actually withheld'}
-    report['single_question_lesson']={'analysis_schema_version':'1.7.0','scope':'external reviewed spoken transport, not certified semantic or whole-passage delivery','complete_gate':'own actions, quotes, candidate relations, stop rules and closed answer','seven_five':'three reviewed F01 partitions displayed once before body','projection_binding':'text, method, trigger, candidate relation and current graph spans; unsupported full script withheld'}
-    report['whole_passage_delivery']={'schema_version':'1.0.0','scope':'declared external course order and spoken delivery, not authenticated semantic/old-host performance','order_gate':['reading task mode, not passage letter','cloze original-number first pass / observed stop / exact recovery','grammar explicit hint branch then original-number order','seven-five one shared grouping before breakthrough'],'complete_gate':'every own single-question script and closure, original material, reviewed order; no partial answer string','projection':'original input spans/order/action/text/answer-summary rechecked'}
-    report['original_image_review']={'writing_review_version':'1.1.0','analysis_schema_version':'1.7.0','formats':['image/png','image/jpeg'],'binding':'decoded supplied bytes / sha256 / pixel region / transcription hash / graph payload fingerprint','course_rules':'application one-band lowering; continuation explicit discretionary deduction','scope':'external visual assertions; original authorship, legibility, communication impact and grading not certified','negative_gate':'filename, transcription, unclear image, missing communication impact or material cannot authorize adjustment'}
-    p=ROOT/'evaluation/reports/engineering-acceptance.json'; p.parent.mkdir(parents=True,exist_ok=True)
-    report['writing_score_boundaries']={'writing_review_version':'1.2.0','analysis_version':'1.7.0','bands':'parsed from the same frozen course rubric, not a second table','word_count':'reviewed full-student-draft evidence, quoted course thresholds, supported deduction and before/after arithmetic; actual count remains external','projection':'all scores bind own current-draft / trigger / reviewed relation / verification path and score fingerprint, not only image scores','scope':'course-contract consistency, not certified English grading'}
-    p.write_text(json.dumps(report,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
-    table='\n'.join(f'| {kind} | {count} | {count} | {count} | 0 | 0 |' for kind,count in modules.items())
-    phases=[('0','PASS','源/目标基线、16项before测试'),('1','PASS','注册表、逐字源章节、标准Schema与历史快照'),('2','PASS','六样板完整结构、四步卡、三短版及显式案例缺口；不是教学成熟认证'),('3','PASS','保留两阶段协议、角色/短版/边界/失败类型、可运行Case契约'),('4','PARTIAL','六卡自动门禁通过；原宿主独立语义行为未测'),('5','PASS' if not unfinished else 'PARTIAL',f'六模块82项结构迁移与全部源契约保留；{ready}项静态入口齐备，{unfinished}项草稿；真实案例待核'),('6','PASS','症状Router和9条有源Anti-Rule'),('7','PASS','EvidenceGraph路径/跨度/循环/冲突检查，类型化Composer动作/产物衔接与刹车控制'),('8','PARTIAL','稳定单题接口、外部审阅及正确拒答；非自由题面自动语义求解器'),('9','PARTIAL','整卷结构扫描、方法/难度/证据/Demo排序可运行；无完整真实卷语义回归'),('10','PARTIAL','四Renderer与兼容Skill/脚本接入；完整旧答疑行为尚未认证'),('11','PASS','真人记录导入、统计、冻结计划及短版安全；真人数据未运行'),('12','PASS',f'{result.testsRun}项自动Regression及CLI烟测通过'),('13','PASS','README及架构/维护/评估/迁移文档'),('14','PASS','逐Gate如实验收，最终PARTIAL，不宣布工程全完成')]
-    gates=[('G1','PASS','源课程逐字快照与源工作区未改；已知规则风险明确后置'),('G2','PASS','Registry统一事实，生成资源漂移检查通过'),('G3','PASS','六个完整结构样板；教学效果待实测'),('G4','PASS' if not unfinished else 'PARTIAL',f'82项结构迁移；{ready}项静态入口，{unfinished}项草稿，真实案例缺口明示'),('G5','PASS','症状导航返回动作与Stop'),('G6','PASS','9条Anti-Rule有绑定/边界/源章节'),('G7','PARTIAL',f'{len(cases)}条登记记录，{statuses["verified_course_example"]}个可核短片段；核心方法/框架仍有{coverage["core_unregistered_slot_count"]}个类型槽未登记，不能视为案例齐全'),('G8','PARTIAL','图可生成并校验路径，语义关系仍外部审阅'),('G9','PASS','角色/版本/类型化产物/依赖可执行，未审阅或停止不续用'),('G10','PARTIAL','单题稳定Schema，决定性语义判断非自动完成'),('G11','PARTIAL','整卷接口可执行；真实完整卷回归缺数据'),('G12','PASS','Core不含交付模板，Renderer不改变答案事实'),('G13','PARTIAL','入口/脚本/契约兼容通过，完整旧题库宿主语义表现未验'),('G14','PASS',f'16 baseline保留，当前{result.testsRun}项通过'),('G15','PASS','JSON/JSONL导入、12类指标/差值、三短版安全可运行；统计显著性需审阅'),('G16','PASS','真人未测为pending_real_participant_validation；零升级虚报')]
-    md=f'''# Final Acceptance
 
-## 1. Final Status
+SMOKE_COMMANDS = (
+    ('validate',), ('case-coverage',),
+    ('analyze', 'examples/question-course.json', '--renderer', 'student'),
+    ('analyze', 'examples/question-reviewed-course.json', '--renderer', 'content-export'),
+    ('analyze', 'examples/question-action-course.json', '--renderer', 'content-export'),
+    ('analyze', 'examples/question-lesson-course.json', '--renderer', 'legacy-wechat'),
+    ('lesson', 'examples/passage-lesson.synthetic.json', '--renderer', 'legacy-wechat'),
+    ('lesson', 'examples/passage-lesson.synthetic.json', '--renderer', 'content-export'),
+    ('paper', 'examples/paper-course.json'),
+    ('evaluate', 'evaluation/datasets/synthetic-observations.json'),
+    ('evaluate', 'evaluation/datasets/real-observations.pending.json'),
+    ('release-check', 'evaluation/release-review.example.json'),
+    ('release-bindings', 'evaluation/release-review.example.json'),
+) + tuple(
+    ('analyze', example, '--renderer', renderer)
+    for example in ('examples/writing-word-count.synthetic.json',
+                    'examples/writing-image.synthetic.json',
+                    'examples/writing-review.synthetic.json')
+    for renderer in ('legacy-wechat', 'content-export')
+)
 
-PARTIAL。日期2026-10-05。成果另存video-making，ANSWER源及用户已安装Skill未修改。可运行工程核心与自动校验完成，但不宣布全部G1–G16通过或“工程全完成”。
 
-## 2. Architecture
+def new_destination(output=None):
+    private = (ROOT / 'local-data').resolve()
+    if output is None:
+        stamp = datetime.now(timezone.utc).strftime('%Y%m%dT%H%M%S%fZ')
+        target = private / 'acceptance-runs' / (stamp + '-' + uuid4().hex[:8])
+    else:
+        requested = Path(output)
+        target = (requested if requested.is_absolute() else ROOT / requested).resolve()
+    if target == private or not target.is_relative_to(private):
+        raise ValueError('Use a new output directory within local-data, not a current public entry')
+    if target.exists():
+        raise ValueError('Acceptance output already exists; preserve prior evidence')
+    target.mkdir(parents=True, exist_ok=False)
+    return target
 
-Registry（源章节+方法）→Matcher/Composer→Question/Paper Analyzer→EvidenceGraph→四Renderer；独立Evaluation导入真人观察。原Skill由生成适配接入，完整宿主答疑仍遵守原契约。
 
-## 3. Completed Phases
+def cli_smoke():
+    rows = []
+    for args in SMOKE_COMMANDS:
+        process = subprocess.run([sys.executable, '-X', 'utf8', '-m', 'answer_engine', *args],
+                                 cwd=ROOT, capture_output=True, encoding='utf-8')
+        rows.append({'command': ['python', '-m', 'answer_engine', *args],
+                     'exit_code': process.returncode,
+                     'stdout': process.stdout, 'stderr': process.stderr,
+                     'scope': 'engineering example or pending-data check, not real learner evidence'})
+    return rows
 
-| Phase | Status | 实际结果 |
-|---|---|---|
-'''+ '\n'.join(f'| {phase} | {status} | {note} |' for phase,status,note in phases)+f'''
 
-## 4. Method Migration
+def describe_registry(registry):
+    return {
+        'source_commit': registry.index['source_baseline']['commit'],
+        'method_count': len(registry.methods),
+        'method_migration': dict(Counter(m['question_type'] for m in registry.methods.values())),
+        'method_types': dict(Counter(m['method_type'] for m in registry.methods.values())),
+        'maturity_counts': dict(Counter(m['maturity_status'] for m in registry.methods.values())),
+        'practical_value_counts': dict(Counter(m['practical_value'] for m in registry.methods.values())),
+        'student_ready_count': sum(m.get('student_ready') is True for m in registry.methods.values()),
+        'source_repository_unchanged': 'not_verified_by_this_runner',
+    }
 
-| 题型 | 登记总数 | 结构迁移 | candidate | validated | stable |
-|---|---:|---:|---:|---:|---:|
-{table}
 
-共{len(r.methods)}项，全部Useful，Efficient/Signature均为0。含{dict(categories)}，不是全部核心品牌。{ready}项student_ready（静态入口齐备，不是First-use通过）；其他{unfinished}项仍为草稿。共同课程/输出/评分/版本细则完整保留，未独立品牌化。Case共{len(cases)}条：{dict(statuses)}；7条为短片段而非完整真题，缺口不算验证通过。
+def render_report(report):
+    """Render observations only; never replay a canned historical completion narrative."""
+    tests = report['after_refactor']
+    sections = [
+        '# Engineering acceptance run',
+        '\n## 1. Final Status\n\n' + report['final_status'] +
+        '。仅本次工程范围，不是全部目标完成。运行时间：' + report['started_at'],
+        '\n## 2. Architecture\n\nRegistry → Analyzer / Composer → Evidence Graph → Renderer；'
+        '本报告不以架构名称存在证明实际语义或教学效果。',
+        '\n## 3. Completed Phases\n\n本次仅重跑 Phase 12 自动工程检查。'
+        'Phase 0–11、13–14 的完整目标须逐项独立取证，不能从本次测试自动继承 PASS。',
+        '\n## 4. Method Migration\n\n当前运行来源：`' + report['source_commit'] + '`。\n\n' +
+        json.dumps({key: report[key] for key in ('method_migration', 'method_types',
+                   'maturity_counts', 'practical_value_counts', 'student_ready_count')},
+                   ensure_ascii=False, indent=2),
+        '\n## 5. Tests\n\n' + json.dumps(tests, ensure_ascii=False, indent=2) +
+        '\n\n逐项日志见 tests.log，CLI 实际输出见 cli-smoke.json。跳过不等于通过。'
+        '不引用旧报告的测试数、固定旧日期或历史宿主认可。',
+        '\n## 6. Evaluation Readiness\n\n' + report['evaluation_status'] +
+        '。本次只运行合成/待测接口，不认证学生、盲测、Baseline收益或短版安全。',
+        '\n## 7. Remaining Blockers\n\n完整源与英语语义、真实案例覆盖、整卷语义回归、'
+        '旧宿主语义兼容及真实受试阶段链须分别审阅；本工具不自动填槽或升级方法。',
+        '\n## 8. Final Acceptance\n\n仅 G14 的本次自动工程结果由下表记录；'
+        '其他 Gate 不由本工具自动认证，应以当前独立逐项审计为准。\n\n'
+        '| Gate | 本次证据状态 |\n|---|---|\n' + '\n'.join(
+            '| G' + str(i) + ' | ' +
+            (report['engineering_status'] if i == 14 else 'NOT_REASSESSED_BY_RUNNER') + ' |'
+            for i in range(1, 17)),
+    ]
+    return '\n'.join(sections) + '\n'
 
-## 5. Tests
 
-Before：16/16；After：{result.testsRun}/{result.testsRun}。覆盖baseline、全量Registry/Case/标准Schema、Analyzer证据/角色/拒答、Paper推荐门禁、Renderer事实保留、Legacy资源/脚本、Evaluation公式/空数据/重复/污染/不可伪升级。四Skill通过skill-creator quick_validate（Windows使用UTF-8模式）；editable安装通过。CLI {len(smoke)}种烟测通过，写作示例为synthetic程序输送记录，不是实际英语题或真人评分。详细机器记录：evaluation/reports/engineering-acceptance.json。未声称旧题库正确率或宿主语义回归已通过。
-
-## 6. Evaluation Readiness
-
-First-use、Blind/Baseline、10/30/90s Safety均有记录Schema及直接可运行CLI。真实记录{len(real)}条，synthetic程序记录{len(synthetic)}条；后者不是真实试题或真人效果。真人状态pending_real_participant_validation；未测null/untested，safe_for_release未伪造true，工具不自动升级。
-
-## 7. Remaining Blockers
-
-{entry_gap}全量真实完整Case；六题型完整盲题与旧答疑回归材料；可靠语义后端或独立宿主审阅；真实学生传播/First-use/Blind及冻结对照数据。现有核心可接受外部语义审阅并保留完整路径，但不能凭结构校验认证推断正确或审阅身份。
-
-## 8. Final Acceptance
-
-| Gate | Status | Evidence / limitation |
-|---|---|---|
-'''+ '\n'.join(f'| {gate} | {status} | {note} |' for gate,status,note in gates)+'\n\n传播先验收，实用性优先否决。名字、动作、证据、边界不能互相替代。没有真人数据，不升级成熟度或实用价值。\n'
-    md+='\n本轮安全增强：单项保留不能跳过未核验竞争项；answer_verification显式报告候选闭合；证据图绑定同一方法触发、同一候选主张与当前题面；附件10种口语卡点均有导航回归，导航不构成语义证明。Question Analysis Schema当前1.7.0。\n'
-    md+='\n阅读模块17项学生入口静态齐备：13个非黄金方法从1.0.0修订为1.1.0，旧稿保存在history；判据、Stop、误用、反例示意及三短版逐项区分，未修改冻结源章节。示意反例不算真实Case，所有成熟度仍为candidate。\n'
-    md+='\n七选五11项静态入口齐备：F02–F11保留旧稿后逐项完善，区分reduce/interpret/verify/decide；正文闭环不由形式、同词、时态、占用或剩余定案，示意反例不算真实Case。\n'
-    md+='\n完形保留两个核心入口与七个子动作；线索、框架与核验不自动定案，C01二阶段decider必须显式声明。整篇按当前来源策略推进，证据不足暂留，找到独立提示后返回，不额外规定题序或遍数。静态入口状态见Registry，示意反例与真人结果仍未验证。\n'
-    md+='\n语法19项静态入口齐备：18个非黄金节点保留旧稿后逐项源核，机器导航只确认有无提示词及已审阅功能；提示词原词性不决定空位词性，树不独立定案。三个语法源风险绑定原话与章节并自动校验，保留原资料、不机械执行简化口诀或全称清单。\n'
-    md+='\n应用文10项静态入口齐备：先任务、后准确句、再升级；文体/评分/课后训练保持原类型。评分材料、书写及仿写循环直接源绑定，训练字数策略不覆盖题面与评分限制。示意反例不是真实Case，不据文案升级实用等级。\n'
-    md+='\n续写16项静态入口齐备：五步法引用具体子章节，首句约束、功能支架、细节/转折与回扣逐项区分；给定首句不计学生句数、不抄正常，十句和独立升华句不作机械扣分项。PTSD只作源别名，类别与评分/训练不升格；原课程版本张力继续保留。\n'
-    md+='\n写作审阅通道：宿主完整语义意见经writing_review进入统一结构、证据图与两模块原交付顺序；逐处纠错/可选润色不设数量上限，缺原文或首句实际扣留剧情诊断、完整稿与分数。分数只为外部建议，身份、语义与改写保真未认证；原图字节/区域/转写稿指纹进入独立审阅适配，应用文降档和续写酌扣不能混用；清晰度和交际影响仍外部声明，未完成真人评分验证。程序输送测试不能替代旧题库宿主语义回归。\n'
-    md+='\n真实验收链增强：结果Schema 1.2.0按方法/版本/题组/传播冻结稿隔离，workflow核阶段顺序、传播逐版观察绑定、陌生题与跨阶段学习控制。绝对盲测门槛、独立Baseline正确性和适用试次动作/证据均逐时长检查；90s失败不作合格参照，均值不掩盖某版损害。缺链条或采集前绝对门槛不授予释放或效率审阅建议；猜中不充当方法成功。时间、身份与审阅结论仍为外部声明，程序不能认证真人数据；新增测试均为程序控制测试。\n'
-    md+='\n方法编排执行通道：action_executions传入具体动作与八类产物，execution_trace按ID消费更早已审阅、完整、未刹车的兼容产物。R09三字段骨架、候选全覆盖分组、角色/版本/独立触发、对应候选关系和语法节点路径均有运行门禁；核验不支持时实际撤回答案与整卷推荐。产物指纹与执行链/图联合校验，Renderer显示实际动作和停止原因。此为外部动作结果的运行控制，不认证自由题面语义求解、真实动作或宿主审阅身份。\n'
-    md+='\n单题口播通道：lesson_review经源合同、独立触发、实际动作、短引文、候选关系和刹车覆盖进入lesson_feedback；完整消息恢复原纯文本开场，最后由核心闭合答案汇总。七选五实际三维分组在开头展示一次，缺分组或闭合就扣留完整稿。投影重检文字/图/触发/候选/答案一致性；未认证宿主自由文字语义与整篇课程顺序，旧题库语义回归仍缺。生成技能只增加接口链接，不复制教学判据或改用户技能库。\n'
-    md+='\n整篇交付接口：lesson复用单题核心，显式保留原题号、共享原文和审阅顺序。阅读中心任务先于细节/猜词、完形按当前来源策略暂留并凭独立提示返回、语法无提示词优先及七选五一次分组先于突破说明均有工程检查；最后按原题号汇总，缺某题口播时指出该题并扣留整篇消息。接口可运行不等于真实材料完整、自由文字语义或旧宿主表现已认证；相应真实回归仍缺。\n'
-    md+='\n评分边界：定档区间直接解析冻结源评分表，无调整依据的档/分冲突不接受；词数调整需1.2.0外部审阅、完整学生稿证据、原附加规则和准确前后记账。词数与原图调整独立，纯文本评分也绑定自身图路径及载荷，四Renderer拒绝事后换分或断证。程序测试不认证计词、定档、英语评分或真人效果。\n'
-    md+='\n## 案例类型逐方法审计\n\n登记记录仍为'+str(coverage['registered_case_count'])+'条，没有为补数新建题目或占位案例。全部'+str(coverage['method_count'])+'项五类槽中'+str(coverage['unregistered_slot_count'])+'槽未登记；'+str(coverage['formal_method_count'])+'个正式method中'+str(coverage['formal_methods_with_missing_slots'])+'项共有'+str(coverage['formal_unregistered_slot_count'])+'个未登记槽。保守纳入method和framework共'+str(coverage['core_method_count'])+'项核心节点，其中'+str(coverage['core_unregistered_slot_count'])+'个槽未登记。registered + evidence_gap与unregistered + evidence_gap是两种不同缺口；已登记例子也不认证完整真题或教学效果。可运行python -m answer_engine case-coverage读取完整矩阵。\n\n| 方法 | 类型 | canonical | counterexample | boundary | transfer | hard |\n|---|---|---|---|---|---|---|\n'
-    for method in coverage['methods']:
-        if not method['core_required']: continue
-        cells=['未登记/evidence_gap' if s['registration']=='unregistered' else '已登记/'+s['evidence_status'] for s in method['slots']]
-        md+='| '+method['method_id']+' | '+method['method_type']+' | '+' | '.join(cells)+' |\n'
-    md+='\n外部审阅原题绑定：回调前后均校验输入，独立快照锁定题号、题型、原文、选项、提示词、学生稿、续写首句、原图和卡点；改值、嵌套原位修改或字段新增/删除均拒绝。审阅仍可补关系、动作、讲解及任务/难度标注，但不能清洗非法原输入或悄悄换题；整卷推荐复用该门禁。此为程序数据一致性测试，不认证英语语义或隔离Python回调。\n'
-    md+='\n整卷方法覆盖1.1.0：保留建议次数，另逐方法列出核验触发、产物、决定及案例候选题号。典型方法候选只按自身可审阅案例数排序；不能借其他方法的闭合答案或高展示分，把仅计划、仅触发或已停止的方法包装成典型用法。辅助方法产物仍无定案权；Schema兼容旧1.0.0投影。程序测试不认证完整真题卷、来源合法性、英语语义或学生效果，G11保持PARTIAL。\n'
-    md+='\n证据关系候选绑定：完成审计发现原图门禁可接受不同候选的审阅关系，现已修复。结论及candidate_decision产物要求同方法、同候选的同一条审阅关系，自身上游具备主张与独立触发，并有直接源引文；旁接主张/触发或只有触发引文不作决定关系证据。写作关系显式绑定student_draft，旧的缺标记写作结果须重新分析，原输入不变。回归覆盖四Renderer和无结论节点的产物图；这是结构修复，不把G8语义认证或其他未核要求改成PASS。\n'
-    md+='\n人工释放凭证入口：release-check与release-bindings只读检查方法/案例/原始观察/冻结计划/回归报告绑定，Registry的可选release_reviews索引指向显式人工批准记录。成熟度或实用等级不再永久无条件拒绝，但五类已核验案例、真实评估阶段链、当前代码/测试/语义Registry回归快照、人工审核及目标状态均必须通过；stable另需同版validated批准和多道迁移题，Efficient/Signature另需统计及相应人工审阅。工具不修改卡片，空模板不能批准；当前批准记录为0，82项仍Useful+candidate，不认证人、语义或显著性。\n'
-    if exam_path.is_file():
-        md+='\n真实试卷导入：12套25个Word源哈希冻结，仅公开元数据。11套517项（495道客观题、22项写作）完成结构回归、冻结机械Prediction后Reveal；2021Ⅱ原题结构缺损拒绝推补。机械客观题全部未解，不能将未猜测统计当成语义正确的safe_abstention。3道另有揭晓前AI宿主动作审阅并与第三方答案一致，不是整卷自动正确率、独立人工语义认证或真人学习效果。写作按约束审阅、不以范文Exact Match。新Case及填槽均为0，方法状态不变；G8/G11及学生研究链仍PARTIAL。详情见exam-ingestion.md及evaluation/reports/exam-ingestion.json。\n'
-        md+='\n冻结审阅重放与Case Review：3卷各47项重放原题+冻结注释，逐方法6个候选（4个有产物、2个缺typed动作）；另有3道揭晓后AI语义审阅，不冒充新盲测或人工认证。两份R01出现同词强补共同断言归因问题，R09骨架有安全改善限定措辞风险。R01/R06 boundary和R02 canonical只作建议，已批准类型/登记/填槽仍0。2025两卷解析提取v1.2修复新题号/篇章内容吞入详解，旧源/预测/解析版本全部保留。源绑定或结构闭合不认证英语语义；不修改方法以贴答案。\n'
-    if exam_path.is_file():
-        md+='\n负向语义审阅执行：withdraw_review只接受绑定原输入及冻结分析的显式撤回，不能添加答案、改题或补方法。撤回关系同步扣留其决定产物；撤回框架/定位时传递停用全部依赖消费者及其决定，重新生成图/单题/整卷结果。3道实际审阅均在新揭晓后记录扣留答案与Demo/Case推荐，原盲稿仍保留3道参考匹配事实，不算新盲预测或safe_abstention认证。所有Renderer可消费扣留后的合法Schema。\n'
-        md+='\n辅助动作审阅：另有2025Ⅰ两项真实题面动作，F01 Q36三维A–G完整分组、G01 Q59有提示词到名词性功能节点，均产生实际产物但不填写答案。单独post_reveal_action_review通道核源指纹、不可变题面、角色、执行图和四种Renderer，不以整题未闭合否定辅助动作，也不以辅助产物认证整题成功。2项AI审阅、4个产物，与原盲预测/3道匹配分开统计；独立Case/学生/Baseline仍待核，正式登记及填槽0。\n'
-    md+='\n七选五组合修正：默认F01一次分组先于解释，解释可消费已审阅分组，不从分组得答案；实际2025ⅠQ36链12个产物但六项未决，仍扣留答案。F05恢复原冻结课程首段尾分支为1.2.0，完整1.1.0历史及私有旧结果保留，当前唯一版本单独重放；角色和成熟度不升级。链的英语语义、独立Case、学生迁移与Baseline收益仍待核。用户暂停纳入新建文件夹材料，本轮不使用该补充源或模拟卷。\n'
-    md+='\n有界动作审阅：2021ⅠQ26补录R02自己的单项决定，不借未执行legacy关系或剩余项定案。原performing词义过强的混合理由实际撤回；风格/配合归属的重新审阅另存并绑定前驱SHA，仅当前快照计1，A/B/C未解且整题null。原Case Candidate与盲稿不改，新动作是独立揭晓后修订，类型建议未批准，正式Case/填槽仍0；不声称真人或独立英语认证。\n'
-    md+='\n学生首次动作投影：fallback只显示一个待核入口及Registry四步实战卡，不把计划当成已验证触发。实际停止或核验不支持时扣留后续计划提示，保留已提交证据及独立后续产物；混合produced/stopped步骤也不漏掉刹车。机器全链与完整口播/写作分支不改。四Renderer新增空计划的Registry版本、题型、职责、产物、Stop及主要动作绑定检查；程序测试不证明真实学生首用、传播或迁移成功，方法状态仍不升级。\n'
-    (ROOT/'docs/final-acceptance.md').write_text(md,encoding='utf-8')
+def run(output=None):
+    destination = new_destination(output)
+    started = datetime.now(timezone.utc)
+    registry = Registry()
+    before = regression_snapshot(registry)
+    (destination / 'snapshot-before.json').write_text(
+        json.dumps(before, ensure_ascii=False, indent=2), encoding='utf-8')
+    suite = unittest.defaultTestLoader.discover(str(ROOT / 'tests'),
+                                               top_level_dir=str(ROOT / 'tests'))
+    with (destination / 'tests.log').open('x', encoding='utf-8') as stream:
+        result = unittest.TextTestRunner(stream=stream, verbosity=2).run(suite)
+    after = regression_snapshot(Registry())
+    stable = before == after
+    validation, registry_validation, generated, smoke, validation_error = {}, {}, {}, [], None
+    if result.wasSuccessful() and stable:
+        try:
+            registry_validation = registry.validate()
+            generated = generate(check=True)
+            validation = {**registry_validation, **generated}
+            smoke = cli_smoke()
+        except (ValueError, KeyError, OSError) as error:
+            validation_error = str(error)
+    successful = (result.wasSuccessful() and stable and bool(validation) and
+                  validation_error is None and bool(smoke) and
+                  all(row['exit_code'] == 0 for row in smoke))
+    # A smoke command must not change source or tests after the initial check.
+    stable = stable and before == regression_snapshot(Registry())
+    successful = successful and stable
+    report = describe_registry(registry)
+    report.update({
+        'started_at': started.isoformat(),
+        'finished_at': datetime.now(timezone.utc).isoformat(),
+        'duration_seconds': (datetime.now(timezone.utc) - started).total_seconds(),
+        'final_status': 'PARTIAL' if successful else 'FAILED',
+        'engineering_status': 'PASS' if successful else 'FAIL',
+        'scope': 'current working tree engineering checks; not clean commit, semantic, participant or release certification',
+        'output_directory': str(destination),
+        'after_refactor': {
+            'tests_run': result.testsRun, 'failures': len(result.failures),
+            'errors': len(result.errors), 'skipped': len(result.skipped),
+            'successful': result.wasSuccessful(),
+            'skipped_tests': [{'test': str(test), 'reason': reason} for test, reason in result.skipped],
+            'material_stable': stable, 'validation': validation,
+            'registry': registry_validation, 'generated': generated,
+            'validation_error': validation_error,
+            'cli_commands_run': len(smoke),
+            'cli_failures': sum(row['exit_code'] != 0 for row in smoke),
+        },
+        'evaluation_status': 'pending_real_participant_validation',
+        'real_record_count': len(load_records(ROOT / 'evaluation/datasets/real-observations.pending.json')),
+        'case_coverage': registry.case_coverage(),
+        'current_public_reports_modified': False,
+    })
+    report.update(after)
+    for name, value in (('engineering-acceptance.json', report), ('cli-smoke.json', smoke)):
+        (destination / name).write_text(json.dumps(value, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
+    (destination / 'final-acceptance.md').write_text(render_report(report), encoding='utf-8')
     return report
 
-if __name__=='__main__':
-    value=run(); print(json.dumps({'status':value['final_status'],'tests':value['after_refactor']['tests_run'],'methods':sum(value['method_migration'].values())},ensure_ascii=False))
+
+if __name__ == '__main__':
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('--output', help='New private directory within local-data; never overwritten')
+    args = parser.parse_args()
+    value = run(args.output)
+    print(json.dumps({key: value[key] for key in
+                     ('final_status', 'engineering_status', 'output_directory', 'after_refactor')},
+                     ensure_ascii=False, indent=2))
+    sys.exit(0 if value['engineering_status'] == 'PASS' else 1)

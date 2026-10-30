@@ -15,7 +15,7 @@ def artifact_fingerprint(value):
 
 MATERIAL_FIELDS = ('question_id', 'question_type', 'stem', 'passage', 'options',
                    'given_word', 'student_text', 'continuation_starters',
-                   'original_images', 'student_symptoms')
+                   'original_images', 'student_symptoms', 'required_image_evidence')
 
 
 def material_fingerprint(question):
@@ -68,6 +68,10 @@ def validate_frozen_answer(question, analysis):
 
     check_spans(analysis)
     validate_question_verification_projection(analysis)
+    from .objective_images import validate_image_projection, validate_image_lesson
+    if question['question_type'] not in {'应用文', '读后续写'}:
+        validate_image_projection(analysis, question)
+        validate_image_lesson(analysis, question)
     validate_answer_projection(analysis)
 
 
@@ -232,13 +236,23 @@ def validate_question_verification_projection(analysis, registry=None):
     """Check projected review and proof identities before any renderer consumes it."""
     report = analysis.get('question_verification')
     if report is None:
-        if (analysis.get('schema_version')=='1.8.0' or
+        if (analysis['evidence_graph']['nodes'] or [{}])[0].get('required_image_evidence'):
+            from .objective_images import validate_image_projection
+            validate_image_projection(analysis)
+            return
+        if (analysis.get('schema_version') in {'1.8.0','1.9.0'} or
                 analysis.get('review_scope')=='external_whole_question_review' or
                 any(n['type'].startswith('question_') and n['type']!='question_signal'
                     for n in analysis['evidence_graph']['nodes'])):
             raise ValueError('Whole-question proof cannot drop its projected review')
+        if analysis['question_type'] not in {'应用文','读后续写'}:
+            from .objective_images import validate_image_projection
+            validate_image_projection(analysis)
         return
     review = report['review']
+    from .objective_images import scope_fingerprint, validate_image_projection, validate_objective_graph_shape
+    if review['schema_version']=='1.1.0':
+        validate_objective_graph_shape(analysis)
     expected_state = ('stopped' if review['stop_applied'] else 'reviewed'
                       if review['review_status'] == 'reviewed' else 'unreviewed')
     if report['state'] != expected_state or review['question_id'] != analysis['question_id'] or review['task_type'] != analysis['task_type']:
@@ -251,7 +265,7 @@ def validate_question_verification_projection(analysis, registry=None):
     scope=nodes.get(report['scope_node_id'],{})
     if (scope.get('type')!='question_scope' or scope.get('review_id')!=review['review_id']
             or scope.get('material_sha256')!=review['material_sha256']
-            or scope.get('artifact_fingerprint')!=artifact_fingerprint(review)
+            or scope.get('artifact_fingerprint')!=scope_fingerprint(report)
             or scope.get('candidate_ids')!=sorted(c['candidate'] for c in review['candidate_checks'])):
         raise ValueError('Whole-question scope, original material or review payload differs from graph')
     inputs = report['consumed_artifacts']
@@ -315,3 +329,4 @@ def validate_question_verification_projection(analysis, registry=None):
     apply_question_verification(expected, report)
     if any(expected[key] != analysis[key] for key in ('answer', 'answer_verification', 'answer_confidence', 'content_eligible', 'status')):
         raise ValueError('Whole-question answer aggregation differs from its reviewed proof')
+    validate_image_projection(analysis)

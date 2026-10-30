@@ -1,0 +1,136 @@
+method_id: G15
+brand_name: 非谓语三轴
+source_name: 非谓语：作用、主被动与先后
+aliases:
+- 非谓语：作用、主被动与先后
+question_type: 语法填空
+method_type: method
+role: decider
+primary_role: decider
+secondary_roles: []
+output_type: decide
+student_symptoms:
+- 空位已确认非谓语
+trigger_cues:
+- 空位已确认非谓语
+core_action: 标句法作用、逻辑主语与动作的主被动、同谓语的先后关系，再选择形式
+decision_rule: 非谓语位置先定作用或固定结构，再核逻辑主语与主被动，最后以本句谓语为参照核先后；三轴互相支持后选合法形式并回填。
+verification: 标句法作用、逻辑主语与动作的主被动、同谓语的先后关系，再选择形式。非谓语位置先定作用或固定结构，再核逻辑主语与主被动，最后以本句谓语为参照核先后；三轴互相支持后选合法形式并回填。
+  介词、逗号或一个词尾不能替三轴；逻辑主语或搭配不明就停。形式表示相对关系，不套绝对现在/过去，也不将课程简化清单当无条件判据。
+stop_rule: 介词、逗号或一个词尾不能替三轴；逻辑主语或搭配不明就停。形式表示相对关系，不套绝对现在/过去，也不将课程简化清单当无条件判据。
+common_wrong_instinct: 看到逗号就doing，看到过去分词就当过去时间，或者忽略逻辑主语。
+failure_cases:
+- 看到逗号就doing，看到过去分词就当过去时间，或者忽略逻辑主语。
+- 介词、逗号或一个词尾不能替三轴；逻辑主语或搭配不明就停。形式表示相对关系，不套绝对现在/过去，也不将课程简化清单当无条件判据。
+counterexamples:
+- 有逗号仍须核主被动与句法作用；只凭逗号无法决定doing、done或目的不定式路线。
+transfer_pattern: 换动作仍核结构、动作主人与相对时间，不迁移逗号或形式到绝对时态。
+memory_line: 标句法作用、逻辑主语与动作的主被动、同谓语的先后关系，再选择形式
+anti_rule: 逗号 ≠ doing答案。
+visual_formula: '已判非谓语
+
+  ↓ 作用/固定结构
+
+  ↓ 逻辑主语 × 主被动
+
+  ↓ 相对谓语先后
+
+  → 合法形式（decide）
+
+  任一轴不明 → 停'
+challenge_prompt: 先不选形式，给空写三栏：句法作用、谁发出/承受动作、相对谓语的时间；缺哪栏就标缺口。
+source_references:
+- repository: https://github.com/rockpunkgod/ANSWER.git
+  path: gaokao-grammar-fill/references/grammar-fill.md
+  heading: 非谓语：作用、主被动与先后
+  commit: 1c388a0596b13935ae7c6a1af00834915a8efa33
+section_ids:
+- f77de6ec724f8e88
+can_follow: []
+usually_before: []
+usually_after: []
+conflicts_with: []
+cannot_replace:
+- 完整题面验证
+levels:
+  L1: 标句法作用、逻辑主语与动作的主被动、同谓语的先后关系，再选择形式
+  L2: 非谓语位置先定作用或固定结构，再核逻辑主语与主被动，最后以本句谓语为参照核先后；三轴互相支持后选合法形式并回填。
+  L3: 介词、逗号或一个词尾不能替三轴；逻辑主语或搭配不明就停。形式表示相对关系，不套绝对现在/过去，也不将课程简化清单当无条件判据。
+  L4: 换动作仍核结构、动作主人与相对时间，不迁移逗号或形式到绝对时态。
+compact:
+  10s: 非谓语只会猜词尾？列作用、逻辑主语主被动、相对谓语先后三轴；逗号不决定doing，缺轴就停。
+  30s: 已判非谓语后，先标作用或固定结构，再圈逻辑主语核主被动，最后与谓语比先后。结构示意：有逗号也不能直接doing，需看谁执行或承受动作。非谓语时间是相对谓语；一轴不明就停，不机械套清单。
+  90s: 空位已确认非谓语时，先确认：空位已确认非谓语。第一刀：标句法作用、逻辑主语与动作的主被动、同谓语的先后关系，再选择形式。产物 decide：非谓语位置先定作用或固定结构，再核逻辑主语与主被动，最后以本句谓语为参照核先后；三轴互相支持后选合法形式并回填。
+    停止：介词、逗号或一个词尾不能替三轴；逻辑主语或搭配不明就停。形式表示相对关系，不套绝对现在/过去，也不将课程简化清单当无条件判据。 反例（关系示意，不是真题）：有逗号仍须核主被动与句法作用；只凭逗号无法决定doing、done或目的不定式路线。
+    迁移：换动作仍核结构、动作主人与相对时间，不迁移逗号或形式到绝对时态。 挑战：先不选形式，给空写三栏：句法作用、谁发出/承受动作、相对谓语的时间；缺哪栏就标缺口。
+full:
+  summary: 标句法作用、逻辑主语与动作的主被动、同谓语的先后关系，再选择形式 非谓语位置先定作用或固定结构，再核逻辑主语与主被动，最后以本句谓语为参照核先后；三轴互相支持后选合法形式并回填。
+  source_boundary: 介词、逗号或一个词尾不能替三轴；逻辑主语或搭配不明就停。形式表示相对关系，不套绝对现在/过去，也不将课程简化清单当无条件判据。
+  boundaries:
+  - 介词、逗号或一个词尾不能替三轴；逻辑主语或搭配不明就停。形式表示相对关系，不套绝对现在/过去，也不将课程简化清单当无条件判据。
+  - 有逗号仍须核主被动与句法作用；只凭逗号无法决定doing、done或目的不定式路线。
+  section_ids:
+  - f77de6ec724f8e88
+cases:
+  canonical: cases/grammar/G15/canonical/case.yaml
+four_step_card:
+  start: 空位已确认非谓语
+  first_cut: 标句法作用、逻辑主语与动作的主被动、同谓语的先后关系，再选择形式
+  judge: 非谓语位置先定作用或固定结构，再核逻辑主语与主被动，最后以本句谓语为参照核先后；三轴互相支持后选合法形式并回填。
+  stop: 介词、逗号或一个词尾不能替三轴；逻辑主语或搭配不明就停。形式表示相对关系，不套绝对现在/过去，也不将课程简化清单当无条件判据。
+practicality_gate:
+  status: design_complete_empirical_pending
+  trigger: 空位已确认非谓语
+  action: 标句法作用、逻辑主语与动作的主被动、同谓语的先后关系，再选择形式
+  output: decide；非谓语位置先定作用或固定结构，再核逻辑主语与主被动，最后以本句谓语为参照核先后；三轴互相支持后选合法形式并回填。
+  stop: 介词、逗号或一个词尾不能替三轴；逻辑主语或搭配不明就停。形式表示相对关系，不套绝对现在/过去，也不将课程简化清单当无条件判据。
+  transfer: 换动作仍核结构、动作主人与相对时间，不迁移逗号或形式到绝对时态。
+  efficiency: 把形式选择约束到三类具体证据，主要减少口诀误触发；不保证提速。
+  misuse_cost: 未经实测；看到逗号就doing，看到过去分词就当过去时间，或者忽略逻辑主语。会导致误判；须先核触发、执行Stop，不允许辅助产物越级定案。
+first_use_test:
+  status: designed_not_run
+  trigger_success: null
+  action_success: null
+  evidence_success: null
+  stop_rule_success: null
+  no_answer_backfit: null
+  failure_type: null
+  final_result: pending_real_student_test
+evaluation:
+  baseline: 普通逐项核题面
+  primary_benefit_hypothesis: 把形式选择约束到三类具体证据，主要减少口诀误触发；不保证提速。
+  trigger_precision: null
+  trigger_recall: null
+  resolution_rate: null
+  standalone_rate: null
+  assist_rate: null
+  false_trigger_rate: null
+  transfer_rate: null
+  boundary_accuracy: null
+  time_complexity_gain: null
+usefulness_level: Useful
+status: candidate
+maturity_status: candidate
+practical_value: Useful
+version: 1.2.0
+change_reason: ANSWER 1c388a0596b13935ae7c6a1af00834915a8efa33 增量来源同步；保留既有动作与版本，旧证据不自动获得新来源准入。
+affected_cases:
+- cases/grammar/G15/canonical/case.yaml
+regression_result: pending_current_epoch_semantic_and_student_acceptance
+student_ready: false
+entry_copy: 空位已确认非谓语时，第一眼先找：空位已确认非谓语。手上先做：标句法作用、逻辑主语与动作的主被动、同谓语的先后关系，再选择形式。做完得到 decide，不是通用答案。非谓语位置先定作用或固定结构，再核逻辑主语与主被动，最后以本句谓语为参照核先后；三轴互相支持后选合法形式并回填。
+  什么时候停：介词、逗号或一个词尾不能替三轴；逻辑主语或搭配不明就停。形式表示相对关系，不套绝对现在/过去，也不将课程简化清单当无条件判据。 换题仍这样做：换动作仍核结构、动作主人与相对时间，不迁移逗号或形式到绝对时态。
+static_design_review:
+  status: source_rebound_semantic_reacceptance_pending
+  source_section_ids:
+  - f77de6ec724f8e88
+  participant_validation: pending_real_participant_validation
+  example_scope: schematic source boundary, not a verified exam
+source_alignment:
+  commit: 1c388a0596b13935ae7c6a1af00834915a8efa33
+  state: live_source_bound
+  source_content_changed: false
+  correction_profile_applied: false
+  authored_first_contact_draft: false
+  new_course_branches: preserved_in_full_contract_not_automatically_aliased
+  acceptance: unchanged_method_sections; added_source_contracts_preserved; learner/release_pending

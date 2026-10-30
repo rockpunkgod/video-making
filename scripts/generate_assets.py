@@ -1,8 +1,47 @@
 """Generate public projections from Registry; --check rejects manual drift."""
 import argparse
+import hashlib
 import json
 import yaml
 from core.registry import ROOT, Registry, load
+
+def apply_reference_supplements(registry, assets, catalog):
+    supplements = {}
+    same_epoch = catalog['upstream_commit'] == registry.index['source_baseline']['commit']
+    for row in catalog['methods']:
+        source = row['source']; path = source['path']
+        if (source['commit'] != catalog['upstream_commit'] or path not in assets
+                or row['definition'].splitlines()[0].lstrip('# ') != source['heading']):
+            raise ValueError('Course reference supplement has an unbound source identity')
+        if same_epoch:
+            # The complete source already owns this definition. A matching title
+            # alone cannot justify dropping different or missing source content.
+            matches = [section for section in registry.sources['sections'].values()
+                       if (section['path'], section['heading'], section['commit']) ==
+                       (path, source['heading'], source['commit'])]
+            if len(matches) != 1 or matches[0]['content'].rstrip() != row['definition'].rstrip():
+                raise ValueError('Same-epoch course reference differs from complete source')
+            continue
+        supersession = registry.index.get('reference_supersession', {})
+        if (supersession.get('from_commit') == source['commit'] and
+                supersession.get('to_commit') == registry.index['source_baseline']['commit']):
+            # A reviewed migration owns these references now. Check both exact
+            # content hashes; matching a title never silently suppresses a source.
+            approved = [item for item in supersession.get('sections', [])
+                        if (item['path'], item['heading']) == (path, source['heading'])]
+            current = [s for s in registry.sources['sections'].values()
+                       if (s['path'], s['heading']) == (path, source['heading'])]
+            if len(approved) != 1 or len(current) != 1 or any([
+                    hashlib.sha256(row['definition'].rstrip().encode()).hexdigest() != approved[0]['before_sha256'],
+                    hashlib.sha256(current[0]['content'].rstrip().encode()).hexdigest() != approved[0]['after_sha256']]):
+                raise ValueError('Reviewed reference supersession content mismatch')
+            continue
+        supplements.setdefault(path, []).append(row['definition'].rstrip())
+    for path, definitions in supplements.items():
+        assets[path] += ('\n\n## 已核辅助职责参考（独立来源纪元）\n\n'
+            + '来源：ANSWER@' + catalog['upstream_commit'] + '。以下定义来自制作映射的精确来源登记；'
+            + '不改变现有 Registry 的来源纪元、方法编号或冻结题目事实，不授予旧包新方法身份。\n\n'
+            + '\n\n'.join(definitions) + '\n')
 
 def build(registry=None):
     r = registry or Registry()
@@ -17,22 +56,52 @@ def build(registry=None):
                     '旧版首次接触稿不能继续作为新版入口。当前四步动作可查询方法卡，完整边界须读本版来源；短版传播与实用性验收仍未通过。\n')
             continue
         label='学生首次接触草稿' if draft and not m.get('student_ready') else '学生首次接触版'
-        parts = [f'# {mid} {m["brand_name"]}：{label}', m['entry_copy'], '## 四步实战卡']
-        parts += [f'{i}. {label}：{m["four_step_card"][key]}' for i,(key,label) in enumerate([('start','启动'),('first_cut','第一刀'),('judge','判断'),('stop','停止')],1)]
-        parts += ['Stop Rule：'+m['stop_rule']]
+        parts = [f'# {mid} {m["brand_name"]}：{label}', m['entry_copy']]
+        support=m.get('full',{}).get('beginner_support')
+        if support:
+            parts += ['## 先做这一小步', support['first_micro_action'],
+                      '先会这些就能开始：'+support['prerequisite'],
+                      '如果卡住：'+support['if_stuck'],
+                      support['micro_action_is_not_completion'],
+                      '## 看一个动作示意', support['example'], support['example_scope']]
+        steps=[('start','启动'),('first_cut','第一刀'),('judge','判断'),('stop','停止')]
+        selected_steps=support.get('student_four_step_card',m['four_step_card']) if support else m['four_step_card']
+        parts += ['## 四步实战卡']
+        parts += [f'{i}. {label}：{selected_steps[key]}' for i,(key,label) in enumerate(steps,1)]
+        # Legacy cards can intentionally have a distinct four-step stop and
+        # top-level Stop. Neither may be lost by an optional display adapter.
+        parts += ['Stop Rule：'+(m['stop_rule'] if selected_steps is m['four_step_card'] else selected_steps['stop'])]
+        if selected_steps is not m['four_step_card']:
+            parts += ['<details>\n<summary>教师备查：完整兼容卡与版本边界</summary>\n\n'+
+                      '\n\n'.join(f'{i}. {label}：{m["four_step_card"][key]}' for i,(key,label) in enumerate(steps,1))+
+                      '\n\nStop Rule：'+m['stop_rule']+'\n\n</details>']
         for duration in ['10','30','90']:
             parts += [f'## {duration} 秒版',m['compact'][duration+'s']]
-        parts += ['## 一屏视觉式','```text\n'+m['visual_formula']+'\n```','反口诀：'+m['anti_rule'],'## 为什么容易错',m['common_wrong_instinct'],'## 反例与挑战','反例/边界示意（不等于已核验真题）：'+'；'.join(m['counterexamples']),m['challenge_prompt'],f'生成来源：Registry {mid}@{m["version"]}。student_ready仅表示静态学生入口齐备，真人验收待运行。']
+        visual=support.get('student_visual_formula',m['visual_formula']) if support else m['visual_formula']
+        counters=support.get('student_counterexamples',m['counterexamples']) if support else m['counterexamples']
+        parts += ['## 一屏视觉式','```text\n'+visual+'\n```','反口诀：'+m['anti_rule'],'## 为什么容易错',m['common_wrong_instinct'],'## 反例与挑战','反例/边界示意（不等于已核验真题）：'+'；'.join(counters),m['challenge_prompt'],f'生成来源：Registry {mid}@{m["version"]}。student_ready仅表示静态学生入口齐备，真人验收待运行。']
         if draft and not m.get('student_ready'):
             parts[-1] = f'生成来源：Registry {mid}@{m["version"]}。当前 student_ready=false，静态入口复核未完成，真人验收待运行。'
             parts += ['草稿状态：短版时长未实测，传播与实用性验收未通过；不得据此升级 validated、stable、Efficient 或 Signature。']
+        if support:
+            # Keep collection/release state inspectable without speaking
+            # Registry fields or implementation status to a first-time pupil.
+            if draft and not m.get('student_ready'):
+                metadata=' '.join(parts[-2:]); del parts[-2:]
+            else:
+                metadata=parts.pop()
+            parts += ['练习提示：先完成动作，再找证据；这些文字不代表已经通过学生实测。',
+                      '<!-- '+metadata+' 表达修订：'+m['full']['presentation_revision']+' -->']
         assets[f'student-guides/{mid}-{m["brand_name"]}.md'] = '\n\n'.join(parts)+'\n'
     symptoms = {'routes':[]}
     for m in r.methods.values():
         aliases=next((x['phrases'] for x in r.symptom_cues if x['method_id']==m['method_id']),[])
         symptoms['routes'].append({'question_type':m['question_type'],'symptoms':m['student_symptoms'],'spoken_aliases':aliases,'method_id':m['method_id'],'role':m['primary_role'],'first_action':m['core_action'],'stop_rule':m['stop_rule']})
     assets['references/student-symptoms.yaml'] = yaml.safe_dump(symptoms,allow_unicode=True,sort_keys=False)
-    assets['references/student-symptoms.md'] = '# 学生卡点导航（自动生成）\n\n'+'\n\n'.join(f'{x["question_type"]}：{x["symptoms"][0]} → {x["method_id"]}；第一刀：{x["first_action"]}；停止：{x["stop_rule"]}' for x in symptoms['routes'])+'\n'
+    assets['references/student-symptoms.md'] = '# 学生卡点导航（自动生成）\n\n'+'\n\n'.join(
+        f'{x["question_type"]}：{x["symptoms"][0]} → {x["method_id"]}；第一刀：'+
+        r.methods[x['method_id']].get('full',{}).get('beginner_support',{}).get('first_micro_action',x['first_action'])+
+        f'；停止：{x["stop_rule"]}' for x in symptoms['routes'])+'\n'
     tree=r.grammar_tree
     tree_copy='# 语法知识节点导航（自动生成）\n\n有无提示词只决定入口；空位功能必须从未填句取证。树不直接报答案。\n\n'
     tree_copy+='```text\n'+r.methods['G01']['visual_formula']+'\n```\n\n'
@@ -88,18 +157,7 @@ def build(registry=None):
     mapping_path=ROOT/'creative/method-choreography/course-method-mapping.json'
     if not r.is_historical and mapping_path.exists():
         catalog=json.loads(mapping_path.read_text(encoding='utf-8'))
-        supplements={}
-        for row in catalog['methods']:
-            source=row['source'];path=source['path']
-            if (source['commit']!=catalog['upstream_commit'] or path not in assets
-                    or row['definition'].splitlines()[0].lstrip('# ')!=source['heading']):
-                raise ValueError('Course reference supplement has an unbound source identity')
-            supplements.setdefault(path,[]).append(row['definition'].rstrip())
-        for path,definitions in supplements.items():
-            assets[path]+=('\n\n## 已核辅助职责参考（独立来源纪元）\n\n'
-                +'来源：ANSWER@'+catalog['upstream_commit']+'。以下定义来自制作映射的精确来源登记；'
-                +'不改变现有 Registry 的来源纪元、方法编号或冻结题目事实，不授予旧包新方法身份。\n\n'
-                +'\n\n'.join(definitions)+'\n')
+        apply_reference_supplements(r, assets, catalog)
     # The current structural report must advance with Registry projections,
     # while immutable historical acceptance reports remain untouched.
     from scripts.audit_student_entries import audit

@@ -69,7 +69,9 @@ class HintReviewTests(unittest.TestCase):
             {'kind':'route_selection','node_ids':['entry','hint','without_hint','clause']},
             evidence=[span])]
         result=QuestionAnalyzer(self.registry).analyze(q)
-        self.assertIn('连接/关系词',render(result,'student',self.registry))
+        self.assertEqual(result['grammar_navigation']['paths'][0][-1],'clause')
+        self.assertIn('逐步讲解还没齐',render(result,'student',self.registry))
+        self.assertNotIn('连接/关系词',render(result,'student',self.registry))
         self.assertNotIn('从句缺口',render(result,'student',self.registry))
 
     def test_supplied_word_cannot_be_overridden(self):

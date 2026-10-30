@@ -1,0 +1,133 @@
+method_id: G03
+brand_name: 限定词落位
+source_name: 冠词
+aliases:
+- 冠词
+question_type: 语法填空
+method_type: internal_rule
+role: decider
+primary_role: decider
+secondary_roles: []
+output_type: decide
+student_symptoms:
+- 名词前缺限定且确认为冠词路线
+trigger_cues:
+- 名词前缺限定且确认为冠词路线
+core_action: 圈中心名词、单复数和已有修饰，回语境核特指泛指再定冠词
+decision_rule: 确认名词中心、可数性和单复数，再核特指泛指、读音及具体结构；仅在冠词位置和所指关系均有据时确定a/an/the或相应零冠词结构。
+verification: 圈中心名词、单复数和已有修饰，回语境核特指泛指再定冠词。确认名词中心、可数性和单复数，再核特指泛指、读音及具体结构；仅在冠词位置和所指关系均有据时确定a/an/the或相应零冠词结构。
+  已有其他限定、中心名词未确认或所指是否唯一不清时停；of修饰或定语从句不能自动证明the，a/an按读音而非字母。
+stop_rule: 已有其他限定、中心名词未确认或所指是否唯一不清时停；of修饰或定语从句不能自动证明the，a/an按读音而非字母。
+common_wrong_instinct: 名词后有of或定语从句就一律填the，元音字母开头就填an。
+failure_cases:
+- 名词后有of或定语从句就一律填the，元音字母开头就填an。
+- 已有其他限定、中心名词未确认或所指是否唯一不清时停；of修饰或定语从句不能自动证明the，a/an按读音而非字母。
+counterexamples:
+- 名词有后置修饰，却仍在泛指某一个；不能单靠后面的修饰认定所指唯一。
+transfer_pattern: 换题仍先核名词形态和所指，不迁移后置修饰必特指的口诀。
+memory_line: 圈中心名词、单复数和已有修饰，回语境核特指泛指再定冠词
+anti_rule: 有后置修饰 ≠ 必填the。
+visual_formula: '名词中心 → 可数？单/复？已有限定？
+
+  ↓ 所指：特指 / 泛指
+
+  ↓ a/an核读音；the核具体所指
+
+  → 冠词决定（decide）'
+challenge_prompt: 先不填冠词，圈中心名词，标可数性、单复数及特指/泛指的题面证据。
+source_references:
+- repository: https://github.com/rockpunkgod/ANSWER.git
+  path: gaokao-grammar-fill/references/grammar-fill.md
+  heading: 冠词
+  commit: 1c388a0596b13935ae7c6a1af00834915a8efa33
+section_ids:
+- 98a55752856ca984
+can_follow: []
+usually_before: []
+usually_after: []
+conflicts_with: []
+cannot_replace:
+- 完整题面验证
+levels:
+  L1: 圈中心名词、单复数和已有修饰，回语境核特指泛指再定冠词
+  L2: 确认名词中心、可数性和单复数，再核特指泛指、读音及具体结构；仅在冠词位置和所指关系均有据时确定a/an/the或相应零冠词结构。
+  L3: 已有其他限定、中心名词未确认或所指是否唯一不清时停；of修饰或定语从句不能自动证明the，a/an按读音而非字母。
+  L4: 换题仍先核名词形态和所指，不迁移后置修饰必特指的口诀。
+compact:
+  10s: 冠词犹豫？圈名词中心，标可数、单复和所指；后接修饰不等于the，a/an看读音。
+  30s: 已确认空是冠词位置时，圈中心名词、已有限定，核可数和单复，再找特指泛指证据。结构示意：后接of仍须核所指是否唯一。读音定a/an；已有其他限定或所指不明就停，不见修饰就填the。
+  90s: 名词前缺限定且确认为冠词路线时，先确认：名词前缺限定且确认为冠词路线。第一刀：圈中心名词、单复数和已有修饰，回语境核特指泛指再定冠词。产物 decide：确认名词中心、可数性和单复数，再核特指泛指、读音及具体结构；仅在冠词位置和所指关系均有据时确定a/an/the或相应零冠词结构。
+    停止：已有其他限定、中心名词未确认或所指是否唯一不清时停；of修饰或定语从句不能自动证明the，a/an按读音而非字母。 反例（关系示意，不是真题）：名词有后置修饰，却仍在泛指某一个；不能单靠后面的修饰认定所指唯一。
+    迁移：换题仍先核名词形态和所指，不迁移后置修饰必特指的口诀。 挑战：先不填冠词，圈中心名词，标可数性、单复数及特指/泛指的题面证据。
+full:
+  summary: 圈中心名词、单复数和已有修饰，回语境核特指泛指再定冠词 确认名词中心、可数性和单复数，再核特指泛指、读音及具体结构；仅在冠词位置和所指关系均有据时确定a/an/the或相应零冠词结构。
+  source_boundary: 已有其他限定、中心名词未确认或所指是否唯一不清时停；of修饰或定语从句不能自动证明the，a/an按读音而非字母。
+  boundaries:
+  - 已有其他限定、中心名词未确认或所指是否唯一不清时停；of修饰或定语从句不能自动证明the，a/an按读音而非字母。
+  - 名词有后置修饰，却仍在泛指某一个；不能单靠后面的修饰认定所指唯一。
+  section_ids:
+  - 98a55752856ca984
+cases:
+  canonical: cases/grammar/G03/canonical/case.yaml
+four_step_card:
+  start: 名词前缺限定且确认为冠词路线
+  first_cut: 圈中心名词、单复数和已有修饰，回语境核特指泛指再定冠词
+  judge: 确认名词中心、可数性和单复数，再核特指泛指、读音及具体结构；仅在冠词位置和所指关系均有据时确定a/an/the或相应零冠词结构。
+  stop: 已有其他限定、中心名词未确认或所指是否唯一不清时停；of修饰或定语从句不能自动证明the，a/an按读音而非字母。
+practicality_gate:
+  status: design_complete_empirical_pending
+  trigger: 名词前缺限定且确认为冠词路线
+  action: 圈中心名词、单复数和已有修饰，回语境核特指泛指再定冠词
+  output: decide；确认名词中心、可数性和单复数，再核特指泛指、读音及具体结构；仅在冠词位置和所指关系均有据时确定a/an/the或相应零冠词结构。
+  stop: 已有其他限定、中心名词未确认或所指是否唯一不清时停；of修饰或定语从句不能自动证明the，a/an按读音而非字母。
+  transfer: 换题仍先核名词形态和所指，不迁移后置修饰必特指的口诀。
+  efficiency: 将零散冠词记忆聚焦到中心名词与所指，主要降低误填，效率未测。
+  misuse_cost: 未经实测；名词后有of或定语从句就一律填the，元音字母开头就填an。会导致误判；须先核触发、执行Stop，不允许辅助产物越级定案。
+first_use_test:
+  status: designed_not_run
+  trigger_success: null
+  action_success: null
+  evidence_success: null
+  stop_rule_success: null
+  no_answer_backfit: null
+  failure_type: null
+  final_result: pending_real_student_test
+evaluation:
+  baseline: 普通逐项核题面
+  primary_benefit_hypothesis: 将零散冠词记忆聚焦到中心名词与所指，主要降低误填，效率未测。
+  trigger_precision: null
+  trigger_recall: null
+  resolution_rate: null
+  standalone_rate: null
+  assist_rate: null
+  false_trigger_rate: null
+  transfer_rate: null
+  boundary_accuracy: null
+  time_complexity_gain: null
+usefulness_level: Useful
+status: candidate
+maturity_status: candidate
+practical_value: Useful
+version: 1.2.0
+change_reason: ANSWER 1c388a0596b13935ae7c6a1af00834915a8efa33 增量来源同步；保留既有动作与版本，旧证据不自动获得新来源准入。
+affected_cases:
+- cases/grammar/G03/canonical/case.yaml
+regression_result: pending_current_epoch_semantic_and_student_acceptance
+student_ready: false
+entry_copy: 名词前缺限定且确认为冠词路线时，第一眼先找：名词前缺限定且确认为冠词路线。手上先做：圈中心名词、单复数和已有修饰，回语境核特指泛指再定冠词。做完得到
+  decide，不是通用答案。确认名词中心、可数性和单复数，再核特指泛指、读音及具体结构；仅在冠词位置和所指关系均有据时确定a/an/the或相应零冠词结构。 什么时候停：已有其他限定、中心名词未确认或所指是否唯一不清时停；of修饰或定语从句不能自动证明the，a/an按读音而非字母。
+  换题仍这样做：换题仍先核名词形态和所指，不迁移后置修饰必特指的口诀。
+static_design_review:
+  status: source_rebound_semantic_reacceptance_pending
+  source_section_ids:
+  - 98a55752856ca984
+  participant_validation: pending_real_participant_validation
+  example_scope: schematic source boundary, not a verified exam
+source_alignment:
+  commit: 1c388a0596b13935ae7c6a1af00834915a8efa33
+  state: live_source_bound
+  source_content_changed: false
+  correction_profile_applied: false
+  authored_first_contact_draft: false
+  new_course_branches: preserved_in_full_contract_not_automatically_aliased
+  acceptance: unchanged_method_sections; added_source_contracts_preserved; learner/release_pending

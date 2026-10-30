@@ -1,0 +1,252 @@
+method_id: G01
+brand_name: 先判空位
+source_name: 语法填空总路线（操作整理，非课程原名）
+aliases:
+- 先判空再变词
+- 空位决策树
+question_type: 语法填空
+role: framework
+primary_role: framework
+secondary_roles: []
+output_type: reduce
+student_symptoms:
+- 看到括号里的词就立即开始变形，不知道变成哪类词。
+- 无提示词时把所有功能词一起猜，有提示词时又见动词就直接判谓语/非谓语。
+trigger_cues:
+- 任何语法填空空位开始处理时。
+- 空位旁有或没有括号提示词，且尚未确定该位置的句法成分/词性。
+core_action: 圈出空后的括号提示词（若有），再圈空前后支配或修饰词，在未填句上标明空位成分；确认需要动词才分谓语/非谓语。
+decision_rule: 无提示词进功能词路线；有提示词先确定需要的词性/成分；只在已确认需要动词形式时才进谓语/非谓语分支。
+verification: '以未填句为准，先划分分句、主干、空位和标点关系。
+
+  无提示词：按空位需要检查限定（冠词）、介词、指代、连接或句间逻辑。
+
+  有提示词：先判定名词、形容词、副词、代词、数词或动词位置，再处理派生或形态。
+
+  需要动词形式：数已有谓语并看连接；谓语核时态、语态、主谓一致，非谓语核作用、逻辑主语、主被动与先后。
+
+  填回原句，用句法、搭配与句意复核。'
+stop_rule: 空位功能或必要句子未确认时先停；到达知识节点即停止总路线，改用节点句法、搭配与句意核验，不把路由当答案。
+common_wrong_instinct: 看到括号里的词就立即变形，尤其看到动词就直接进谓语/非谓语。
+failure_cases:
+- 尚未划清分句和主干时，不能凭相邻词直接确定词性。
+- 介词后需要名词性成分，但名词与动名词仍要依结构、搭配和意思区分。
+- 决策树给出的是待核类别，不是免验证的最终词形。
+counterexamples:
+- '`environmental ___ (protect)` 的提示词是动词，但空位需要被形容词修饰的名词中心，应走名词节点而非非谓语节点。'
+- 介词后虽是名词性位置，但课程例 `After spending...` 说明 doing 可作名词性成分，不能见介词就一律派生名词。
+transfer_pattern: 每一个新语法填空都可先做有无提示词和空位功能两层判定，再进知识节点。
+memory_line: 先判空，再变词。
+anti_rule: 提示词词性 ≠ 答案词性。
+visual_formula: "空位\n  ↓ 有提示词？\n┌─ 无 → 限定 / 介词 / 指代 / 连接 / 句间逻辑\n└─ 有 → 这个位置需要什么？\n\
+  \           名 / 形 / 副 / 代 / 数 / 动\n                                     ↓\n    \
+  \                          确认要动词\n                                     ↓\n     \
+  \                           谓语 / 非谓语"
+challenge_prompt: 先不填词，只判断这个空有无提示词、在句中需要什么成分或词性，并说出下一个决策树节点。
+source_references:
+- repository: https://github.com/rockpunkgod/ANSWER.git
+  path: gaokao-grammar-fill/references/grammar-fill.md
+  heading: 总路线
+  commit: 1c388a0596b13935ae7c6a1af00834915a8efa33
+- repository: https://github.com/rockpunkgod/ANSWER.git
+  path: gaokao-grammar-fill/references/grammar-fill.md
+  heading: 无提示词
+  commit: 1c388a0596b13935ae7c6a1af00834915a8efa33
+- repository: https://github.com/rockpunkgod/ANSWER.git
+  path: gaokao-grammar-fill/references/grammar-fill.md
+  heading: 有提示词
+  commit: 1c388a0596b13935ae7c6a1af00834915a8efa33
+- repository: https://github.com/rockpunkgod/ANSWER.git
+  path: gaokao-grammar-fill/references/grammar-fill.md
+  heading: 需要动词形式：先判谓语还是非谓语
+  commit: 1c388a0596b13935ae7c6a1af00834915a8efa33
+- repository: https://github.com/rockpunkgod/ANSWER.git
+  path: gaokao-grammar-fill/references/course-evidence.md
+  heading: 语法填空
+  commit: 1c388a0596b13935ae7c6a1af00834915a8efa33
+can_follow:
+- 意群划分
+- 劫匪插葱
+usually_before:
+- 各词性形态变化
+- 谓语与非谓语判定
+- 填回复核
+usually_after:
+- 未填句主干识别
+conflicts_with: []
+cannot_replace:
+- 具体语法节点判据
+- 搭配检查
+- 句意复核
+levels:
+  L1: 只区分有提示词与无提示词。
+  L2: 无提示词进入限定、介词、指代、连接、句间逻辑节点。
+  L3: 有提示词时依空位判名、形、副、代、数、动，不被原词性牵引。
+  L4: 确认需要动词后，稳定进入谓语/非谓语并完成各自核对。
+compact:
+  line: 先问有没有提示词，再问这个位置要什么；确认要动词才分谓语和非谓语。
+  boundary: 决策树负责选对分支，具体答案仍须在分支节点中用句法、搭配和句意定案。
+  10s: 看到空先别变词。先标有无提示词，再问位置要什么；确认要动词，才分谓语与非谓语。
+  30s: 括号里的词先别变。标有无提示词，再圈未填句里决定空位功能的限定、修饰、连接或主干。比如environmental ___ (protect)需要名词中心，不因提示词是动词就走动词路。无提示词进功能词；到节点后停总路线，用该节点句法、搭配与句意求证。
+  90s: 任何语法空开始时先在未填句取证。先标有无提示词，再圈分句主干、标点及空前后的支配或修饰关系：无提示词去功能词节点，有提示词先判名、形、副、代、数或动；确认需动词才分谓语/非谓语。产物只是知识节点，不是答案。反例：提示protect但位置要名词；介词后需要名词性成分也不必一律派生名词，doing可有相应功能。句法功能不明先补完整句，到节点就改用具体规则，再回填核搭配与句意。换题仍判新位置，不背提示词变形套路。挑战：不填词，只标有无提示词、空位功能、决定它的词与下一节点。
+full:
+  summary: 圈出空后的括号提示词（若有），再圈空前后支配或修饰词，在未填句上标明空位成分；确认需要动词才分谓语/非谓语。 无提示词进功能词路线；有提示词先确定需要的词性/成分；只在已确认需要动词形式时才进谓语/非谓语分支。
+  decision_tree:
+    prompt_word:
+      false:
+        node: function_word
+        children:
+          determiner: grammar-fill.md#冠词
+          preposition: grammar-fill.md#介词
+          reference: grammar-fill.md#代词
+          connection: grammar-fill.md#连词关系词与名词性从句连接词
+          sentence_logic: grammar-fill.md#句间逻辑衔接
+      true:
+        node: required_slot
+        children:
+          noun: grammar-fill.md#名词及所有格
+          adjective_or_adverb: grammar-fill.md#形容词副词与比较等级
+          pronoun: grammar-fill.md#代词
+          numeral: grammar-fill.md#数词
+          verb:
+            gate: 只在空位已确认需要动词形式时进入
+            children:
+              predicate: grammar-fill.md#谓语检查时态语态主谓一致
+              nonfinite: grammar-fill.md#非谓语作用主被动与先后
+  boundaries:
+  - 空位功能或必要句子未确认时先停；到达知识节点即停止总路线，改用节点句法、搭配与句意核验，不把路由当答案。
+  - '`environmental ___ (protect)` 的提示词是动词，但空位需要被形容词修饰的名词中心，应走名词节点而非非谓语节点。'
+  - 介词后虽是名词性位置，但课程例 `After spending...` 说明 doing 可作名词性成分，不能见介词就一律派生名词。
+  source_boundary: 空位功能或必要句子未确认时先停；到达知识节点即停止总路线，改用节点句法、搭配与句意核验，不把路由当答案。
+  section_ids:
+  - 341ae7535f7d9ce7
+  - 3527a85c4fe668d9
+  - 781c4478d621bf5c
+  - 8c050016facc6479
+  - 98a55752856ca984
+  - 92af20a0997f0b48
+  - bdec04e2ce032b40
+  - 9b496b1572cdf49b
+  - 32c08d6c85a150ea
+  - a166ae34f9256ee9
+  - ab95cd79ca0709e2
+  - 9b610bdb9f63227e
+  - a26dc83760c12ebb
+  - 28cb2fee202458a5
+  - 5131f97d0dc78441
+  - a0bcc74f05b00671
+  - f77de6ec724f8e88
+  - 7c16410a7f1b8e4f
+  - 62e443a0a04865bf
+  - 7ae166ccec059b00
+cases:
+  canonical: cases/G01/canonical/case.yaml
+  counterexample: cases/G01/counterexamples/case.yaml
+  boundary: cases/G01/boundary/case.yaml
+  transfer: cases/G01/transfer/case.yaml
+  hard: cases/G01/hard/case.yaml
+four_step_card:
+  start: 看到一个语法填空，还没确定这个位置需要什么功能或词性。
+  first_cut: 先标有/无提示词，再在未填句中圈出决定空位功能的主干、标点、限定或连接关系。
+  judge: 无提示词进功能词节点；有提示词进空位词性节点；确认需要动词才进谓语/非谓语。
+  stop: 空位功能或必要句子未确认时先停；到达知识节点即停止总路线，改用节点句法、搭配与句意核验，不把路由当答案。
+practicality_gate:
+  status: design_complete_empirical_pending
+  trigger: 任何语法填空的第一步均可由有无括号提示词和未填句结构触发。
+  action: 标有/无提示；圈出决定空位的句法位置；沿树选一个下一节点。
+  output: reduce；把所有可能词形缩到一个语法功能/词性节点，不直接给词形。
+  stop: 空位功能或必要句子未确认时先停；到达知识节点即停止总路线，改用节点句法、搭配与句意核验，不把路由当答案。
+  transfer: 有无提示+空位功能可迁移到任何新语法填空。
+  efficiency: 减少平铺回忆冠词、介词、从句、词性、非谓语等全部知识的认知负担，把检查限定在当前分支。
+  misuse_cost: medium；分支误判会漏掉正确词性，但填回句法/句意复核可及时纠正。
+first_use_test:
+  status: designed_not_run
+  trigger_success: null
+  action_success: null
+  evidence_success: null
+  stop_rule_success: null
+  no_answer_backfit: null
+  final_result: pending_real_student_test
+  failure_type: null
+evaluation:
+  baseline: 看到提示词后罗列可能词形，或无提示词时回忆全部功能词
+  trigger_precision: null
+  trigger_recall: null
+  resolution_rate: null
+  standalone_rate: null
+  assist_rate: null
+  false_trigger_rate: null
+  transfer_rate: null
+  time_complexity_gain: null
+  primary_benefit_hypothesis: 降低分支选择的认知负担，避免提示词词性牵引和过早进入谓语/非谓语。
+  boundary_accuracy: null
+usefulness_level: Useful
+status: candidate
+version: 1.2.0
+section_ids:
+- 341ae7535f7d9ce7
+- 3527a85c4fe668d9
+- 781c4478d621bf5c
+- 8c050016facc6479
+- 98a55752856ca984
+- 92af20a0997f0b48
+- bdec04e2ce032b40
+- 9b496b1572cdf49b
+- 32c08d6c85a150ea
+- a166ae34f9256ee9
+- ab95cd79ca0709e2
+- 9b610bdb9f63227e
+- a26dc83760c12ebb
+- 28cb2fee202458a5
+- 5131f97d0dc78441
+- a0bcc74f05b00671
+- f77de6ec724f8e88
+- 7c16410a7f1b8e4f
+- 62e443a0a04865bf
+- 7ae166ccec059b00
+method_type: framework
+maturity_status: candidate
+practical_value: Useful
+change_reason: ANSWER 1c388a0596b13935ae7c6a1af00834915a8efa33 增量来源同步；保留既有动作与版本，旧证据不自动获得新来源准入。
+affected_cases:
+- cases/G01/canonical/case.yaml
+- cases/G01/counterexamples/case.yaml
+- cases/G01/boundary/case.yaml
+- cases/G01/transfer/case.yaml
+- cases/G01/hard/case.yaml
+regression_result: pending_current_epoch_semantic_and_student_acceptance
+role_correctness:
+  declared_primary_role: framework
+  observed_actual_role: null
+  role_match: null
+  overclaim_detected: null
+  notes: pending_real_participant_validation
+short_version_safety:
+- version: 10s
+  false_trigger_rate: null
+  boundary_accuracy: null
+  role_overclaim_rate: null
+  stop_rule_failure_rate: null
+  safe_for_release: untested
+- version: 30s
+  false_trigger_rate: null
+  boundary_accuracy: null
+  role_overclaim_rate: null
+  stop_rule_failure_rate: null
+  safe_for_release: untested
+- version: 90s
+  false_trigger_rate: null
+  boundary_accuracy: null
+  role_overclaim_rate: null
+  stop_rule_failure_rate: null
+  safe_for_release: untested
+entry_copy: 任何语法空开始时先在未填句取证。先标有无提示词，再圈分句主干、标点及空前后的支配或修饰关系：无提示词去功能词节点，有提示词先判名、形、副、代、数或动；确认需动词才分谓语/非谓语。产物只是知识节点，不是答案。反例：提示protect但位置要名词；介词后需要名词性成分也不必一律派生名词，doing可有相应功能。句法功能不明先补完整句，到节点就改用具体规则，再回填核搭配与句意。换题仍判新位置，不背提示词变形套路。挑战：不填词，只标有无提示词、空位功能、决定它的词与下一节点。
+student_ready: false
+source_alignment:
+  commit: 1c388a0596b13935ae7c6a1af00834915a8efa33
+  state: live_source_bound
+  source_content_changed: false
+  correction_profile_applied: false
+  authored_first_contact_draft: true
+  new_course_branches: preserved_in_full_contract_not_automatically_aliased
+  acceptance: unchanged_method_sections; added_source_contracts_preserved; learner/release_pending

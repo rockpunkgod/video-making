@@ -1,0 +1,140 @@
+method_id: W13
+brand_name: 结尾回扣
+source_name: 素材与考点
+aliases:
+- 素材与考点
+question_type: 读后续写
+method_type: method
+role: verifier
+primary_role: verifier
+secondary_roles: []
+output_type: verify
+student_symptoms:
+- 故事结局需要回应主题
+trigger_cues:
+- 结局需要核是否自然回应原文关键细节、核心矛盾或人物变化。
+core_action: 把解决结果对应回原文关键线索，指出行动或感悟怎样带出本题主题。
+decision_rule: 产出主题回应核验；素材分类与积累数量不作每篇必写的独立升华句。
+verification: 产出主题回应核验；素材分类与积累数量不作每篇必写的独立升华句。 核心矛盾未解先停喊道理；抽象主题不能换成本题内容就撤回，没独立升华句不自动降档或判重大缺失。
+stop_rule: 核心矛盾未解先停喊道理；抽象主题不能换成本题内容就撤回，没独立升华句不自动降档或判重大缺失。
+common_wrong_instinct: 结尾写一句宽泛正能量道理，就默认已经点题。
+failure_cases:
+- 结尾写一句宽泛正能量道理，就默认已经点题。
+- 核心矛盾未解先停喊道理；抽象主题不能换成本题内容就撤回，没独立升华句不自动降档或判重大缺失。
+counterexamples:
+- 结尾喊互助却正文没有帮助行动，不能靠口号完成主题；故事结果已自然表达成长，不必再塞独立升华句。此为关系示意，不是真题。
+transfer_pattern: 换故事仍从新矛盾的结果取主题，而不是换题套同一句道理。
+memory_line: 把解决结果对应回原文关键线索，指出行动或感悟怎样带出本题主题。
+anti_rule: 有道理 ≠ 回扣原文。
+visual_formula: '原文矛盾 / 关键细节 ↔ 解决结果
+
+  → 本题自然主题
+
+  动作 / 感悟均可，独立升华非必须'
+challenge_prompt: 先不写升华句，只连原文一处关键细节与结局结果，说明这一结果表达什么主题。
+source_references:
+- repository: https://github.com/rockpunkgod/ANSWER.git
+  path: gaokao-writing/references/continuation-writing-and-correction.md
+  heading: 素材与考点
+  commit: 1c388a0596b13935ae7c6a1af00834915a8efa33
+section_ids:
+- 27662f3285730b79
+- 0cf979fcaa4e9965
+- 6570e8d5c4fff00d
+- a9f982dcfec817d9
+can_follow: []
+usually_before: []
+usually_after: []
+conflicts_with: []
+cannot_replace:
+- 完整题面验证
+levels:
+  L1: 圈原文关键细节与解决结果，让结尾回扣它们；独立升华句不是必须项
+  L2: 把结局结果对应回原文关键细节与核心矛盾，注明结果怎样带出主题；主题可由动作或感悟自然呈现，不要求独立升华句。
+  L3: 核心矛盾未解决先停喊道理；主题与原文不符或抽象词不能换成本题内容时不保留。缺原文无法完整核回扣，没独立升华句不判重大缺失。
+  L4: 换故事仍从新矛盾的结果取主题，而不是换题套同一句道理。
+compact:
+  line: 把解决结果对应回原文关键线索，指出行动或感悟怎样带出本题主题。
+  boundary: 核心矛盾未解先停喊道理；抽象主题不能换成本题内容就撤回，没独立升华句不自动降档或判重大缺失。
+  10s: 把解决结果对应回原文关键线索，指出行动或感悟怎样带出本题主题。 产出主题回应核验；素材分类与积累数量不作每篇必写的独立升华句。
+  30s: 结局需要核是否自然回应原文关键细节、核心矛盾或人物变化。 把解决结果对应回原文关键线索，指出行动或感悟怎样带出本题主题。 核心矛盾未解先停喊道理；抽象主题不能换成本题内容就撤回，没独立升华句不自动降档或判重大缺失。
+  90s: 结局需要核是否自然回应原文关键细节、核心矛盾或人物变化。 手上先做：把解决结果对应回原文关键线索，指出行动或感悟怎样带出本题主题。 做完得到：产出主题回应核验；素材分类与积累数量不作每篇必写的独立升华句。
+    停止：核心矛盾未解先停喊道理；抽象主题不能换成本题内容就撤回，没独立升华句不自动降档或判重大缺失。 反例（边界示意，非真题）：结尾喊互助却正文没有帮助行动，不能靠口号完成主题；故事结果已自然表达成长，不必再塞独立升华句。此为关系示意，不是真题。
+    挑战：先不写升华句，只连原文一处关键细节与结局结果，说明这一结果表达什么主题。
+full:
+  summary: 把解决结果对应回原文关键线索，指出行动或感悟怎样带出本题主题。 产出主题回应核验；素材分类与积累数量不作每篇必写的独立升华句。
+  source_boundary: 核心矛盾未解先停喊道理；抽象主题不能换成本题内容就撤回，没独立升华句不自动降档或判重大缺失。
+  boundaries:
+  - 核心矛盾未解先停喊道理；抽象主题不能换成本题内容就撤回，没独立升华句不自动降档或判重大缺失。
+  - 结尾喊互助却正文没有帮助行动，不能靠口号完成主题；故事结果已自然表达成长，不必再塞独立升华句。此为关系示意，不是真题。
+  section_ids:
+  - 27662f3285730b79
+  - 0cf979fcaa4e9965
+  - 6570e8d5c4fff00d
+  - a9f982dcfec817d9
+cases:
+  canonical: cases/continuation-writing/W13/canonical/case.yaml
+four_step_card:
+  start: 结局需要核是否自然回应原文关键细节、核心矛盾或人物变化。
+  first_cut: 把解决结果对应回原文关键线索，指出行动或感悟怎样带出本题主题。
+  judge: 产出主题回应核验；素材分类与积累数量不作每篇必写的独立升华句。
+  stop: 核心矛盾未解先停喊道理；抽象主题不能换成本题内容就撤回，没独立升华句不自动降档或判重大缺失。
+practicality_gate:
+  status: design_complete_empirical_pending
+  trigger: 结局需要核是否自然回应原文关键细节、核心矛盾或人物变化。
+  action: 把解决结果对应回原文关键线索，指出行动或感悟怎样带出本题主题。
+  output: verify；产出主题回应核验；素材分类与积累数量不作每篇必写的独立升华句。
+  stop: 核心矛盾未解先停喊道理；抽象主题不能换成本题内容就撤回，没独立升华句不自动降档或判重大缺失。
+  transfer: 换故事仍从新矛盾的结果取主题，而不是换题套同一句道理。
+  efficiency: 使结尾核验更聚焦，减少空泛口号和冗余；不保证评分提升。
+  misuse_cost: 未经实测；结尾写一句宽泛正能量道理，就默认已经点题。会导致误判；须先核触发、执行Stop，不允许辅助产物越级定案。
+first_use_test:
+  status: designed_not_run
+  trigger_success: null
+  action_success: null
+  evidence_success: null
+  stop_rule_success: null
+  no_answer_backfit: null
+  failure_type: null
+  final_result: pending_real_student_test
+evaluation:
+  baseline: 普通逐项核题面
+  primary_benefit_hypothesis: 使结尾核验更聚焦，减少空泛口号和冗余；不保证评分提升。
+  trigger_precision: null
+  trigger_recall: null
+  resolution_rate: null
+  standalone_rate: null
+  assist_rate: null
+  false_trigger_rate: null
+  transfer_rate: null
+  boundary_accuracy: null
+  time_complexity_gain: null
+usefulness_level: Useful
+status: candidate
+maturity_status: candidate
+practical_value: Useful
+version: 1.2.0
+change_reason: ANSWER 1c388a0596b13935ae7c6a1af00834915a8efa33 增量来源同步；保留既有动作与版本，旧证据不自动获得新来源准入。
+affected_cases:
+- cases/continuation-writing/W13/canonical/case.yaml
+regression_result: pending_current_epoch_semantic_and_student_acceptance
+student_ready: false
+entry_copy: 结局需要核是否自然回应原文关键细节、核心矛盾或人物变化。 手上先做：把解决结果对应回原文关键线索，指出行动或感悟怎样带出本题主题。 做完得到：产出主题回应核验；素材分类与积累数量不作每篇必写的独立升华句。
+  停止：核心矛盾未解先停喊道理；抽象主题不能换成本题内容就撤回，没独立升华句不自动降档或判重大缺失。
+static_design_review:
+  status: source_rebound_semantic_reacceptance_pending
+  source_section_ids:
+  - 27662f3285730b79
+  - 0cf979fcaa4e9965
+  - 6570e8d5c4fff00d
+  - a9f982dcfec817d9
+  participant_validation: pending_real_participant_validation
+  example_scope: schematic source boundary, not a verified exam
+source_alignment:
+  commit: 1c388a0596b13935ae7c6a1af00834915a8efa33
+  state: live_source_bound
+  source_content_changed: false
+  correction_profile_applied: true
+  authored_first_contact_draft: false
+  new_course_branches: preserved_in_full_contract_not_automatically_aliased
+  acceptance: unchanged_method_sections; added_source_contracts_preserved; learner/release_pending

@@ -77,6 +77,9 @@ def activate(private_dataset=None):
         if not report_path.is_file(): raise ValueError('Applied epoch has no recorded activation; explicit recovery required')
         generate(check=True)
         return {'status':'already_source_aligned','source_commit':TARGET,'promotion_applied':False}
+    from scripts.plan_answer_alignment import build_plan
+    if old_commit != build_plan()['from_commit']:
+        raise ValueError('Historical alignment cannot downgrade a later source epoch')
     catalog_before=None
     if private_dataset:
         from core.real_cases import freeze_runtime_context, load_catalog

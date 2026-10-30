@@ -1,0 +1,23 @@
+method_id: G01
+case_type: canonical
+status: verified_course_example
+objective: 验证动词提示不会跳过空位词性判定。
+source_item: 2022全国高考甲卷语法填空，课程讲义 PDF 第3页。
+prompt_excerpt: in order to promote environmental ___ (protect)
+expected_action: 标有提示词；根据 environmental 修饰中心词判定需要名词；进名词派生节点。
+expected_result: protection
+pass_condition: 不进谓语/非谓语分支，能说出空位句法依据。
+source_reference: ANSWER@b04ebc26:kaiming-english-qa/references/corpus/24c4e1bcbc7f.txt#PDF第3页
+case_id: G01-canonical
+question_type: 语法填空
+source: ANSWER@b04ebc26:kaiming-english-qa/references/corpus/24c4e1bcbc7f.txt#PDF第3页
+question: in order to promote environmental ___ (protect)
+answer: protection
+trigger: 任何语法填空空位开始处理时。
+evidence: []
+method_role: framework
+expected_output: reduce
+stop_rule: 提示词是什么词性，不等于答案就是什么词性。
+notes: 尚未真人验收
+method_version: 1.1.0
+source_commit: b04ebc26d7fa096404111a0bb12f6c77cc8525b9

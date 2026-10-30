@@ -51,6 +51,66 @@ class ReleaseReviewTest(unittest.TestCase):
         self.assertEqual(r.methods,before)
         self.assertIn('not authentication',out['scope'])
 
+    def current_runner_fixture(self):
+        # These are in-memory PROGRAM-ONLY external-declaration controls, not
+        # a real runner suite, participant study, approved Case or human review.
+        r,review,rows,plan,report,memory=self.fixture()
+        report['engineering_status']='PASS'
+        report['after_refactor'].update(material_stable=True,cli_failures=0,cli_commands_run=3)
+        review['bindings']=release_bindings(r,'R01',review['inputs'])
+        return r,review,rows,plan,report,memory
+
+    def test_current_runner_pass_contract_keeps_legacy_external_review_controls(self):
+        r,review,_,_,report,_=self.current_runner_fixture()
+        before=deepcopy(r.methods)
+        out=check_release(r,review)
+        self.assertTrue(out['checks']['regression_passed'])
+        self.assertTrue(out['ready_for_manual_release'],out)
+        self.assertEqual(r.methods,before)
+        # A genuinely old-format report keeps its historical reading behavior.
+        report.pop('engineering_status')
+        for key in ('material_stable','cli_failures','cli_commands_run'):
+            report['after_refactor'].pop(key)
+        review['bindings']=release_bindings(r,'R01',review['inputs'])
+        self.assertTrue(check_release(r,review)['ready_for_manual_release'])
+
+    def test_current_runner_failed_missing_or_noninteger_fields_cannot_be_rehashed_into_pass(self):
+        r,review,_,_,report,_=self.current_runner_fixture()
+        good=deepcopy(report)
+        controls=[('engineering_status','FAIL'),('engineering_status',None),
+                  ('material_stable','MISSING'),('material_stable',False),('material_stable',1),
+                  ('cli_failures','MISSING'),('cli_failures',1),('cli_failures',False),('cli_failures','0'),
+                  ('cli_commands_run','MISSING'),('cli_commands_run',0),
+                  ('cli_commands_run',True),('cli_commands_run','3')]
+        for key,value in controls:
+            with self.subTest(key=key,value=value):
+                report.clear();report.update(deepcopy(good))
+                target=report if key=='engineering_status' else report['after_refactor']
+                if value=='MISSING':target.pop(key)
+                else:target[key]=value
+                review['bindings']=release_bindings(r,'R01',review['inputs'])
+                out=check_release(r,review)
+                self.assertTrue(out['checks']['material_bindings_match'])
+                self.assertTrue(out['checks']['regression_matches_current_material'])
+                self.assertFalse(out['checks']['regression_passed'])
+                self.assertFalse(out['ready_for_manual_release'])
+                self.assertIn('regression_passed',out['blocking_reasons'])
+
+    def test_current_runner_pass_never_replaces_real_data_and_current_case_gates(self):
+        r,review,rows,_,_,_=self.current_runner_fixture()
+        for row in rows:row['origin']='synthetic'
+        review['bindings']=release_bindings(r,'R01',review['inputs'])
+        out=check_release(r,review)
+        self.assertTrue(out['checks']['regression_passed'])
+        self.assertIn('real_evaluation_release_gate',out['blocking_reasons'])
+        for row in rows:row['origin']='real'
+        for case in r.case_inventory().values():case['source_commit']='0'*40
+        review['bindings']=release_bindings(r,'R01',review['inputs'])
+        out=check_release(r,review)
+        self.assertTrue(out['checks']['regression_passed'])
+        self.assertIn('five_verified_case_slots',out['blocking_reasons'])
+        self.assertFalse(out['ready_for_manual_release'])
+
     def test_historical_case_epoch_cannot_release_current_method(self):
         r,review,*_=self.fixture()
         for case in r.case_inventory().values(): case['source_commit']='0'*40

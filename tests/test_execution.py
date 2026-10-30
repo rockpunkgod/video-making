@@ -77,7 +77,7 @@ class ExecutionTest(unittest.TestCase):
         fresh=self.analyzer.analyze(q)
         self.assertEqual(fresh['method_chain'][0]['output_artifact_types'],['located_evidence'])
 
-    def test_student_shows_one_first_use_card_without_changing_machine_chain(self):
+    def test_student_withholds_unexecuted_lesson_without_changing_machine_chain(self):
         q={'question_id':'program-main-idea','question_type':'阅读理解',
            'task_type':'main_idea','stem':'program-only main idea task',
            'passage':'alpha beta gamma','options':{'A':'alpha','B':'beta'}}
@@ -85,27 +85,29 @@ class ExecutionTest(unittest.TestCase):
         self.assertEqual([s['method_id'] for s in out['method_chain']],['R09','R06'])
         for kind in ['student','legacy-wechat']:
             text=render(out,kind,self.r)
-            self.assertEqual(text.count('先核对一个入口：'),1)
-            for key in ['start','first_cut','judge','stop']:
-                self.assertIn(self.r.methods['R09']['four_step_card'][key],text)
+            self.assertIn('逐步讲解还没齐',text)
+            self.assertIn('现在先不报答案',text)
+            self.assertNotIn('先核对一个入口：',text)
+            self.assertNotIn(self.r.methods['R09']['brand_name'],text)
             self.assertNotIn(self.r.methods['R06']['brand_name'],text)
-            self.assertIn('不代表题面触发已经验证',text)
         for kind in ['structured','content-export']:
             self.assertEqual(json.loads(render(out,kind,self.r))['method_chain'],out['method_chain'])
         self.assertEqual(out,before)
 
-    def test_student_keeps_produced_artifacts_but_no_future_plan_after_stop(self):
+    def test_machine_keeps_produced_artifacts_but_student_stops_without_a_lesson(self):
         q=fixture(); q['action_executions']=q['action_executions'][:2]
         q['action_executions'][1].update(stop_applied=True,output=None)
         out=self.analyzer.analyze(q); before=deepcopy(out)
         for kind in ['student','legacy-wechat']:
             text=render(out,kind,self.r)
-            self.assertIn('定位到：alpha',text)
-            self.assertIn('停止原因：',text)
-            self.assertIn('不继续套后续方法',text)
+            self.assertIn('先停下来',text)
+            self.assertIn('现在先不报答案',text)
+            self.assertNotIn('定位到：alpha',text)
+            self.assertNotIn('synthetic stop observation',text)
             self.assertNotIn('先核对一个入口：',text)
             self.assertNotIn(self.r.methods['R01']['brand_name'],text)
             self.assertNotIn('下一步核验这些候选',text)
+        self.assertEqual(json.loads(render(out,'structured',self.r))['execution_trace'][0]['output']['spans'][0]['quote'],'alpha')
         self.assertEqual(out,before)
 
     def test_failed_verification_does_not_offer_pending_method(self):
@@ -114,8 +116,8 @@ class ExecutionTest(unittest.TestCase):
         q['action_executions'][-1]['output']['verdict']='unresolved'
         out=self.analyzer.analyze(q)
         text=render(out,'student',self.r)
-        self.assertIn('回填核验：尚未闭合',text)
-        self.assertIn('未通过核验的缺口',text)
+        self.assertIn('还没有通过核对',text)
+        self.assertIn('现在先不报答案',text)
         self.assertNotIn('先核对一个入口：',text)
         self.assertIsNone(out['answer'])
 
@@ -126,10 +128,11 @@ class ExecutionTest(unittest.TestCase):
         q['action_executions'].append(action('independent-expand','R17','verifier',
             {'kind':'located_evidence','spans':[span('alpha beta')]}))
         out=self.analyzer.analyze(q); text=render(out,'student',self.r)
-        self.assertIn('定位到：alpha beta',text)
-        self.assertIn('停止原因：',text)
+        self.assertIn('先停下来',text)
+        self.assertNotIn('定位到：alpha beta',text)
         self.assertNotIn('先核对一个入口：',text)
         self.assertEqual(len(out['execution_trace']),3)
+        self.assertEqual(json.loads(render(out,'structured',self.r))['execution_trace'][-1]['output']['spans'][0]['quote'],'alpha beta')
 
     def test_mixed_produced_and_stopped_step_still_blocks_future_plans(self):
         q=fixture(); q['relations']=[]
@@ -140,8 +143,9 @@ class ExecutionTest(unittest.TestCase):
         out=self.analyzer.analyze(q)
         self.assertEqual(out['method_chain'][1]['state'],'executed')
         text=render(out,'student',self.r)
-        self.assertIn('拆解结果：',text)
-        self.assertIn('停止原因：',text)
+        self.assertIn('先停下来',text)
+        self.assertNotIn('拆解结果：',text)
+        self.assertNotIn('synthetic stop observation',text)
         self.assertNotIn('先核对一个入口：',text)
 
     def test_empty_plan_cannot_change_registry_teaching_fields(self):
@@ -248,7 +252,8 @@ class ExecutionTest(unittest.TestCase):
         q=fixture(); q.update(question_type='七选五',requested_chain=['F01'],relations=[],observations=[{'method_id':'F01','evidence':[span()],'reviewed':True}])
         q['action_executions']=[action('partition','F01','reducer',{'kind':'candidate_partition','axis':'program actor grouping','groups':[{'label':'one','candidates':['A']},{'label':'two','candidates':['B']}]})]
         out=self.analyzer.analyze(q); self.assertIsNone(out['answer']); self.assertEqual(out['candidate_analysis'],[])
-        self.assertIn('分组不排除',render(out,'student',self.r))
+        self.assertIn('现在先不报答案',render(out,'student',self.r))
+        self.assertEqual(json.loads(render(out,'structured',self.r))['execution_trace'][0]['output']['kind'],'candidate_partition')
         for groups in [[{'label':'one','candidates':['A']}],[{'label':'one','candidates':['A','B','A']}],[{'label':'one','candidates':['A','C']}]]:
             bad=deepcopy(q); bad['action_executions'][0]['output']['groups']=groups
             with self.assertRaisesRegex(ValueError,'exactly once'): self.analyzer.analyze(bad)
@@ -340,7 +345,9 @@ class ExecutionTest(unittest.TestCase):
     def test_renderers_preserve_trace_and_reject_detached_payloads(self):
         out=self.analyzer.analyze(fixture()); exported=json.loads(render(out,'content-export',self.r))
         self.assertEqual(exported['export_schema_version'],'1.7.0'); self.assertEqual(exported['execution_trace'],out['execution_trace'])
-        self.assertEqual(exported['method_chain'],out['method_chain']); self.assertIn('实际动作',render(out,'student',self.r))
+        self.assertEqual(exported['method_chain'],out['method_chain'])
+        self.assertIn('逐步讲解还没齐',render(out,'student',self.r))
+        self.assertNotIn('program-only observable action',render(out,'student',self.r))
         for mutation in ['value','node','chain','state','inputs','evidence']:
             bad=deepcopy(out)
             if mutation=='value': bad['execution_trace'][1]['output']['parts'][0]['value']='detached new interpretation'

@@ -90,7 +90,7 @@ def pointer(document, path):
 
 MATERIAL_FIELDS = ('question_id', 'question_type', 'stem', 'passage', 'options',
                    'given_word', 'student_text', 'continuation_starters',
-                   'original_images', 'student_symptoms')
+                   'original_images', 'student_symptoms', 'required_image_evidence')
 
 
 def material(question):
@@ -445,6 +445,14 @@ def _validate_request(root, request, registry=None, *, _catalog_replay=False):
     method = registry.methods.get(request['method_id'])
     if method is None or method['version'] != request['method_version']:
         raise ValueError('Method identity/version mismatch')
+    def check_source_epoch(value, label):
+        # Only immutable catalog replay may read legacy envelopes without an
+        # epoch. An explicit epoch must always match the Registry being replayed.
+        if _catalog_replay and 'source_commit' not in value:
+            return
+        if value.get('source_commit') != registry.index['source_baseline']['commit']:
+            raise ValueError(label + ' ANSWER source_commit mismatch or missing')
+    check_source_epoch(request, 'Case request')
     blind = artifact(root, request['blind'])
     question = frozen_question(blind, request, root)
     exam_id = blind.get('exam_id',blind.get('paper_id'))
@@ -482,6 +490,7 @@ def _validate_request(root, request, registry=None, *, _catalog_replay=False):
     if 'blind_question_ref' in request:
         check_external_reveal(root, request, blind, reveal, matches[0])
     action = artifact(root, request['action'])
+    check_source_epoch(action, 'Own action')
     if (action.get('exam_id',action.get('paper_id')), action.get('question_id'), action.get('method_id'),
             action.get('method_version')) != (exam_id, request['question_id'],
                                             request['method_id'], request['method_version']):
@@ -508,6 +517,7 @@ def _validate_request(root, request, registry=None, *, _catalog_replay=False):
     elif not all(isinstance(x.get('output'),dict) and x['output'].get('kind') for x in own):
         raise ValueError('Own typed produced action is required')
     review = artifact(root, request['case_review'])
+    check_source_epoch(review, 'Case Review')
     _review_checks(review, method, request, blind, question)
     if 'blind_question_ref' in request:
         # Historical prediction author and current action author are separate

@@ -1,0 +1,145 @@
+method_id: C01
+brand_name: 语篇线索链
+source_name: 语篇行文结构（内部梳理框架）
+aliases:
+- 语篇行文结构（内部梳理框架）
+question_type: 完形填空
+method_type: framework
+role: framework
+primary_role: framework
+secondary_roles:
+- decider
+output_type: interpret
+student_symptoms:
+- 当前空不能由孤立语法闭合
+trigger_cues:
+- 当前空的词义、关系或搭配不能在孤立空位闭合。
+core_action: 标空位角色，圈最近对象/动作提示；最近不足才向真实复现、回答、结果或评价扩读，再回填核具体语义与联系。
+decision_rule: 产出当前空的线索路径，标已补清和仍缺的关系；内部框架不独立定案。
+verification: 产出当前空的线索路径，标已补清和仍缺的关系；内部框架不独立定案。 当前空的决定性词义或关系仍不明就暂留；找到独立提示再返回，不强制原空号、两遍或三遍。
+stop_rule: 当前空的决定性词义或关系仍不明就暂留；找到独立提示再返回，不强制原空号、两遍或三遍。
+common_wrong_instinct: 先按故事主题猜一个词，再拿后面的猜测或积极基调给它补证。
+failure_cases:
+- 先按故事主题猜一个词，再拿后面的猜测或积极基调给它补证。
+- 当前空的决定性词义或关系仍不明就暂留；找到独立提示再返回，不强制原空号、两遍或三遍。
+counterexamples:
+- 人物态度积极，但实际遭遇不顺利；不能用积极基调选描述顺利遭遇的词。
+transfer_pattern: 换题材仍先标空位角色、圈最近提示、按缺口扩证并回填，不迁移上篇主题或词对。
+memory_line: 标空位角色，圈最近对象/动作提示；最近不足才向真实复现、回答、结果或评价扩读，再回填核具体语义与联系。
+anti_rule: 主题相符 ≠ 当前空有据。
+visual_formula: '当前空：词义 / 关系 / 搭配？
+
+  ↓ 最近对象/动作提示
+
+  不足 → 复现 / 回答 / 结果 / 评价
+
+  ↓ 回填核具体词义与两侧联系
+
+  产物：线索路径（interpret）；框架不定案'
+challenge_prompt: 先不选词，只标当前空角色，圈最近线索；不足时画扩证方向，再写回填要核的那条联系。
+source_references:
+- repository: https://github.com/rockpunkgod/ANSWER.git
+  path: gaokao-english/references/cloze.md
+  heading: 语篇行文结构的已核验操作（内容说明，非新增方法名）
+  commit: 1c388a0596b13935ae7c6a1af00834915a8efa33
+- repository: https://github.com/rockpunkgod/ANSWER.git
+  path: gaokao-english/references/cloze.md
+  heading: 完形填空
+  commit: 1c388a0596b13935ae7c6a1af00834915a8efa33
+section_ids:
+- c84135f2763c6806
+- 3f36ea92a4769ee5
+can_follow: []
+usually_before: []
+usually_after: []
+conflicts_with: []
+cannot_replace:
+- 完整题面验证
+levels:
+  L1: 标当前空是词义/关系/搭配角色；找最近对象与动作线索；不足向复现、回答、结果或评价扩；回填核语义
+  L2: 产出当前空的线索路径：空位查词义、关系还是搭配，最近哪句有对象/动作提示，不足向何处扩，回填需核哪条关系；框架本身不定案。
+  L3: 当前空的决定性词义或关系仍不明就暂留；找到独立提示再返回，不强制原空号、两遍或三遍。
+  L4: 换题材仍先标空位角色、圈最近提示、按缺口扩证并回填，不迁移上篇主题或词对。
+compact:
+  line: 标空位角色，圈最近对象/动作提示；最近不足才向真实复现、回答、结果或评价扩读，再回填核具体语义与联系。
+  boundary: 当前空的决定性词义或关系仍不明就暂留；找到独立提示再返回，不强制原空号、两遍或三遍。
+  10s: 标空位角色，圈最近对象/动作提示；最近不足才向真实复现、回答、结果或评价扩读，再回填核具体语义与联系。 产出当前空的线索路径，标已补清和仍缺的关系；内部框架不独立定案。
+  30s: 当前空的词义、关系或搭配不能在孤立空位闭合。 标空位角色，圈最近对象/动作提示；最近不足才向真实复现、回答、结果或评价扩读，再回填核具体语义与联系。
+    当前空的决定性词义或关系仍不明就暂留；找到独立提示再返回，不强制原空号、两遍或三遍。
+  90s: 当前空的词义、关系或搭配不能在孤立空位闭合。 手上先做：标空位角色，圈最近对象/动作提示；最近不足才向真实复现、回答、结果或评价扩读，再回填核具体语义与联系。
+    做完得到：产出当前空的线索路径，标已补清和仍缺的关系；内部框架不独立定案。 停止：当前空的决定性词义或关系仍不明就暂留；找到独立提示再返回，不强制原空号、两遍或三遍。
+    反例（边界示意，非真题）：人物态度积极，但实际遭遇不顺利；不能用积极基调选描述顺利遭遇的词。 挑战：先不选词，只标当前空角色，圈最近线索；不足时画扩证方向，再写回填要核的那条联系。
+full:
+  summary: 标空位角色，圈最近对象/动作提示；最近不足才向真实复现、回答、结果或评价扩读，再回填核具体语义与联系。 产出当前空的线索路径，标已补清和仍缺的关系；内部框架不独立定案。
+  source_boundary: 当前空的决定性词义或关系仍不明就暂留；找到独立提示再返回，不强制原空号、两遍或三遍。
+  boundaries:
+  - 当前空的决定性词义或关系仍不明就暂留；找到独立提示再返回，不强制原空号、两遍或三遍。
+  - 人物态度积极，但实际遭遇不顺利；不能用积极基调选描述顺利遭遇的词。
+  section_ids:
+  - c84135f2763c6806
+  - 3f36ea92a4769ee5
+cases:
+  canonical: cases/cloze/C01/canonical/case.yaml
+four_step_card:
+  start: 当前空的词义、关系或搭配不能在孤立空位闭合。
+  first_cut: 在当前空旁标要查词义、关系还是搭配，再圈最近的对象或动作提示。
+  judge: 产出当前空的线索路径，标已补清和仍缺的关系；内部框架不独立定案。
+  stop: 当前空的决定性词义或关系仍不明就暂留；找到独立提示再返回，不强制原空号、两遍或三遍。
+practicality_gate:
+  status: design_complete_empirical_pending
+  trigger: 当前空的词义、关系或搭配不能在孤立空位闭合。
+  action: 标空位角色，圈最近对象/动作提示；最近不足才向真实复现、回答、结果或评价扩读，再回填核具体语义与联系。
+  output: interpret；产出当前空的线索路径，标已补清和仍缺的关系；内部框架不独立定案。
+  stop: 当前空的决定性词义或关系仍不明就暂留；找到独立提示再返回，不强制原空号、两遍或三遍。
+  transfer: 换题材仍先标空位角色、圈最近提示、按缺口扩证并回填，不迁移上篇主题或词对。
+  efficiency: 把全文理解拆为当前空的证据路径，预期减少无目标重读和凭主题猜词；效率未测。
+  misuse_cost: 未经实测；先按故事主题猜一个词，再拿后面的猜测或积极基调给它补证。会导致误判；须先核触发、执行Stop，不允许辅助产物越级定案。
+first_use_test:
+  status: designed_not_run
+  trigger_success: null
+  action_success: null
+  evidence_success: null
+  stop_rule_success: null
+  no_answer_backfit: null
+  failure_type: null
+  final_result: pending_real_student_test
+evaluation:
+  baseline: 普通逐项核题面
+  primary_benefit_hypothesis: 把全文理解拆为当前空的证据路径，预期减少无目标重读和凭主题猜词；效率未测。
+  trigger_precision: null
+  trigger_recall: null
+  resolution_rate: null
+  standalone_rate: null
+  assist_rate: null
+  false_trigger_rate: null
+  transfer_rate: null
+  boundary_accuracy: null
+  time_complexity_gain: null
+usefulness_level: Useful
+status: candidate
+maturity_status: candidate
+practical_value: Useful
+version: 1.2.1
+change_reason: ANSWER 1c388a0596b13935ae7c6a1af00834915a8efa33 增量来源同步；保留既有动作与版本，旧证据不自动获得新来源准入。
+affected_cases:
+- cases/cloze/C01/canonical/case.yaml
+regression_result: pending_current_epoch_semantic_and_student_acceptance
+student_ready: false
+secondary_role_gate: 框架产物不足以定案；只有逐项比较具体词义、当前空自身决定性关系并回填闭合后，才以显式 decider 阶段提交。
+entry_copy: 当前空的词义、关系或搭配不能在孤立空位闭合。 手上先做：标空位角色，圈最近对象/动作提示；最近不足才向真实复现、回答、结果或评价扩读，再回填核具体语义与联系。
+  做完得到：产出当前空的线索路径，标已补清和仍缺的关系；内部框架不独立定案。 停止：当前空的决定性词义或关系仍不明就暂留；找到独立提示再返回，不强制原空号、两遍或三遍。
+static_design_review:
+  status: source_rebound_semantic_reacceptance_pending
+  source_section_ids:
+  - c84135f2763c6806
+  - 3f36ea92a4769ee5
+  participant_validation: pending_real_participant_validation
+  example_scope: schematic source boundary, not a verified exam
+source_alignment:
+  commit: 1c388a0596b13935ae7c6a1af00834915a8efa33
+  state: live_source_bound
+  source_content_changed: false
+  correction_profile_applied: true
+  authored_first_contact_draft: false
+  new_course_branches: preserved_in_full_contract_not_automatically_aliased
+  acceptance: unchanged_method_sections; added_source_contracts_preserved; learner/release_pending

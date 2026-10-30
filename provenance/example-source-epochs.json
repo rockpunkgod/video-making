@@ -1,0 +1,20 @@
+{
+  "scope": "Explicit identities for editable interface examples only; not real Case, blind or learner evidence. Other examples remain unregistered until their source epoch is reviewed.",
+  "examples": {
+    "passage-lesson.synthetic.json": {
+      "source_commit": "70db6d6f0423bc8da95c591ca1feda883c2865b1",
+      "sha256": "aaa21bcc53ba251f214419852b01a0b9dbdb74a34b21458c6ae6ccfb7c393fd2"
+    },
+    "question-lesson-course.json": {
+      "source_commit": "70db6d6f0423bc8da95c591ca1feda883c2865b1",
+      "sha256": "fa01f68170d2829dd0b4f41c18c614c3a7cdb35f564a153ad69bf3609862511a",
+      "registration_basis": {
+        "repository_commit": "f04820a012105c46b19d4e98097a2d9513464845",
+        "source_commit": "61bc9c3e15004639cb442c20e7946ca9631f14ce",
+        "git_blob": "8d5a0457bfd9125c1987d099e7cf360df14f8137",
+        "original_sha256": "7ddc9416deb2bd88b326996d359692f3917591406bc54c2a2de5c8dc7d926e15",
+        "review": "Original tracked example unchanged; exact source sections and G09 version preserved; only line-offset source identity rebound."
+      }
+    }
+  }
+}

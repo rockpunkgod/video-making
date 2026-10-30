@@ -40,11 +40,17 @@ def render_symptom(question_type,symptom,registry=None):
         judge=judge.split('；',1)[0]
         start=start.split('，或',1)[0]
         output_label='核心句意或关系'
+    support=method.get('full',{}).get('beginner_support')
+    action_lines=['第一刀，'+first_cut]
+    if support:
+        action_lines=['第一刀，'+support['first_micro_action'],
+                      '继续核完整动作，'+first_cut]
     return '\n\n'.join([
         '先考虑'+method['brand_name']+'这个入口。这里只根据卡点提出建议，是否适用还要核题面。',
         '什么时候启动，'+start,
-        '第一刀，'+first_cut,
+        *action_lines,
         '这一入口负责产出'+output_label+'，'+judge,
         '什么时候停，'+card['stop'],
+        *(['如果卡住，'+support['if_stuck']] if support else []),
         '请把对应题干和原句贴出来，再核这一步是否真的触发。现在不报答案。',
     ])

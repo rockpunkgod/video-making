@@ -43,7 +43,7 @@ class CurrentCasePreparationTests(unittest.TestCase):
         catalog = {'revision': 1, 'sha256': 'f'*64, 'cases': [{'path': 'existing-case.json'}]}
         for target, result in [
             ('Registry', self.registry), ('load_catalog', catalog), ('_runtime_contexts', {}),
-            ('validate_request', (None, frozen, None))]:
+            ('_validate_request', (None, frozen, None))]:
             mock = patch('scripts.prepare_current_case_action.'+target, return_value=result)
             mock.start()
             self.addCleanup(mock.stop)
@@ -68,6 +68,8 @@ class CurrentCasePreparationTests(unittest.TestCase):
         self.assertFalse(report['registration_applied'])
         self.assertNotIn('case_review', pending)
         self.assertEqual(pending['method_version'], self.registry.methods['F01']['version'])
+        self.assertEqual(pending['source_commit'], self.registry.index['source_baseline']['commit'])
+        self.assertEqual(pending['source_commit'], action['source_commit'])
 
     def test_original_material_change_is_rejected_without_output(self):
         root, _, _ = self.packet(lambda q: q.update(passage='replaced source'))

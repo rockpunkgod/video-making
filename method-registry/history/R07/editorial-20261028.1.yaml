@@ -1,0 +1,138 @@
+method_id: R07
+brand_name: 并列打包
+source_name: 并列删除
+aliases:
+- 并列删除
+question_type: 阅读理解
+method_type: method
+role: reducer
+primary_role: reducer
+secondary_roles: []
+output_type: reduce
+student_symptoms:
+- 多个细节真实并列且题干允许归为一组
+trigger_cues:
+- 多个细节真实并列且题干允许归为一组
+core_action: 把同层并列项框成一组，核候选是否只截取组内局部
+decision_rule: 先证明同层各项共同解释什么，再对题干对象、状态与范围逐项核；所问未限定组内单项时才作为组缩小候选。
+verification: 把同层并列项框成一组，核候选是否只截取组内局部。先证明同层各项共同解释什么，再对题干对象、状态与范围逐项核；所问未限定组内单项时才作为组缩小候选。
+  and/also 只作入口；不同层级、状态阶段不同、题干只问一项时拆组。无不能回答所问的内容理由，不可共同排除。
+stop_rule: and/also 只作入口；不同层级、状态阶段不同、题干只问一项时拆组。无不能回答所问的内容理由，不可共同排除。
+common_wrong_instinct: 把出现 and 的细节都打包删除，或认为包含更多小项的候选一定更好。
+failure_cases:
+- 把出现 and 的细节都打包删除，或认为包含更多小项的候选一定更好。
+- and/also 只作入口；不同层级、状态阶段不同、题干只问一项时拆组。无不能回答所问的内容理由，不可共同排除。
+counterexamples:
+- 两项确实并列，但题干只问其中一种用途；必须拆开核，不能因属于同组就同时保留或删除。
+transfer_pattern: 更换题材仍用同层、共同任务、题干范围三项决定是否打包。
+memory_line: 把同层并列项框成一组，核候选是否只截取组内局部
+anti_rule: 并列 ≠ 一起排除。
+visual_formula: '细节1 + 细节2 → 同层？共同解释什么？
+
+  题干问整组 → 分组缩范围
+
+  题干问单项 → 拆组核
+
+  分组 ≠ 定案'
+challenge_prompt: 先不删选项，只框出真正同层的内容，写出它们共同解释什么，再标题干问整组还是其中一项。
+source_references:
+- repository: https://github.com/rockpunkgod/ANSWER.git
+  path: gaokao-english/references/reading-comprehension.md
+  heading: 并列删除
+  commit: 1c388a0596b13935ae7c6a1af00834915a8efa33
+section_ids: &id001
+- c83ea92f43b80510
+can_follow: []
+usually_before: []
+usually_after: []
+conflicts_with: []
+cannot_replace:
+- 完整题面验证
+levels:
+  L1: 把同层并列项框成一组，核候选是否只截取组内局部
+  L2: 先证明同层各项共同解释什么，再对题干对象、状态与范围逐项核；所问未限定组内单项时才作为组缩小候选。
+  L3: and/also 只作入口；不同层级、状态阶段不同、题干只问一项时拆组。无不能回答所问的内容理由，不可共同排除。
+  L4: 更换题材仍用同层、共同任务、题干范围三项决定是否打包。
+compact:
+  10s: 并列项想一起删？先框同层内容、核题干问谁；只问一项就拆开。
+  30s: 并列项想一起删？先框出疑似并列的两项，写它们共同解释的事情；尚未证同层先不打包排除。例如，同列两种用途，题干只问其中一种，不能打包排除。and不证明同层，也不能因位于转折前共同排除。
+  90s: 并列项想一起删？把同层并列项框成一组，核候选是否只截取组内局部这一步得到的只是缩小接下来要核的范围，不直接得答案。判断时，先证明同层各项共同解释什么，再对题干对象、状态与范围逐项核；所问未限定组内单项时才作为组缩小候选。什么时候停，and/also
+    只作入口；不同层级、状态阶段不同、题干只问一项时拆组。无不能回答所问的内容理由，不可共同排除。反例示意，两项确实并列，但题干只问其中一种用途；必须拆开核，不能因属于同组就同时保留或删除。换题仍检查当前题面的对象和关系，不搬上一题结论。挑战，先不删选项，只框出真正同层的内容，写出它们共同解释什么，再标题干问整组还是其中一项。
+full:
+  summary: 把同层并列项框成一组，核候选是否只截取组内局部 先证明同层各项共同解释什么，再对题干对象、状态与范围逐项核；所问未限定组内单项时才作为组缩小候选。
+  source_boundary: and/also 只作入口；不同层级、状态阶段不同、题干只问一项时拆组。无不能回答所问的内容理由，不可共同排除。
+  boundaries:
+  - and/also 只作入口；不同层级、状态阶段不同、题干只问一项时拆组。无不能回答所问的内容理由，不可共同排除。
+  - 两项确实并列，但题干只问其中一种用途；必须拆开核，不能因属于同组就同时保留或删除。
+  section_ids:
+  - c83ea92f43b80510
+  beginner_support:
+    first_micro_action: 先框出疑似并列的两项，写它们共同解释的事情；尚未证同层先不打包排除。
+    prerequisite: 先读清题干所问对象，能说明当前这句谁做什么；挡住判断的词不认识，先标出求助，不用词面相似代替句意。
+    if_stuck: 先停在已确认的词句位置；读不清决定性词义或核心关系时标缺口，不排选项。
+    example: 同列两种用途，题干只问其中一种，不能打包排除。
+    example_scope: 关系/结构示意，非完整试题，不计真题或已验案例。
+    micro_action_is_not_completion: 完成第一小步不等于完整方法成功；继续完成四步卡的判断与停止核验。
+    short_stop: and不证明同层，也不能因位于转折前共同排除。
+  presentation_revision: 2026-10-28.1
+cases:
+  canonical: cases/reading/R07/canonical/case.yaml
+four_step_card:
+  start: 多个细节真实并列且题干允许归为一组
+  first_cut: 把同层并列项框成一组，核候选是否只截取组内局部
+  judge: 先证明同层各项共同解释什么，再对题干对象、状态与范围逐项核；所问未限定组内单项时才作为组缩小候选。
+  stop: and/also 只作入口；不同层级、状态阶段不同、题干只问一项时拆组。无不能回答所问的内容理由，不可共同排除。
+practicality_gate:
+  status: design_complete_empirical_pending
+  trigger: 多个细节真实并列且题干允许归为一组
+  action: 把同层并列项框成一组，核候选是否只截取组内局部
+  output: reduce；先证明同层各项共同解释什么，再对题干对象、状态与范围逐项核；所问未限定组内单项时才作为组缩小候选。
+  stop: and/also 只作入口；不同层级、状态阶段不同、题干只问一项时拆组。无不能回答所问的内容理由，不可共同排除。
+  transfer: 更换题材仍用同层、共同任务、题干范围三项决定是否打包。
+  efficiency: 在真实同层且所问允许时减少重复查组内细节；不保证减少候选，收益待测。
+  misuse_cost: 未经实测；把出现 and 的细节都打包删除，或认为包含更多小项的候选一定更好。会导致误判，必须先核触发并执行上述Stop，不允许从辅助产物越级定案。
+first_use_test:
+  status: designed_not_run
+  trigger_success: null
+  action_success: null
+  evidence_success: null
+  stop_rule_success: null
+  no_answer_backfit: null
+  failure_type: null
+  final_result: pending_real_student_test
+evaluation:
+  baseline: 普通逐项核题面
+  primary_benefit_hypothesis: 在真实同层且所问允许时减少重复查组内细节；不保证减少候选，收益待测。
+  trigger_precision: null
+  trigger_recall: null
+  resolution_rate: null
+  standalone_rate: null
+  assist_rate: null
+  false_trigger_rate: null
+  transfer_rate: null
+  boundary_accuracy: null
+  time_complexity_gain: null
+usefulness_level: Useful
+status: candidate
+maturity_status: candidate
+practical_value: Useful
+version: 1.2.0
+change_reason: ANSWER 1c388a0596b13935ae7c6a1af00834915a8efa33 增量来源同步；保留既有动作与版本，旧证据不自动获得新来源准入。
+affected_cases:
+- cases/reading/R07/canonical/case.yaml
+regression_result: pending_current_epoch_semantic_and_student_acceptance
+student_ready: false
+entry_copy: 并列项想一起删？先框出疑似并列的两项，写它们共同解释的事情；尚未证同层先不打包排除。这一步得到的只是缩小接下来要核的范围，不直接得答案。如果卡住，先停在已确认的词句位置；读不清决定性词义或核心关系时标缺口，不排选项。
+static_design_review:
+  status: source_bound_editorial_review
+  source_section_ids: *id001
+  participant_validation: pending_real_participant_validation
+  example_scope: 2026-10-28基础入口表达修订；保留原判据/Stop/课程绑定与语义版本，微动作和关系示意不是完整真题或真人实测。
+source_alignment:
+  commit: 1c388a0596b13935ae7c6a1af00834915a8efa33
+  state: live_source_bound
+  source_content_changed: false
+  correction_profile_applied: false
+  authored_first_contact_draft: true
+  new_course_branches: preserved_in_full_contract_not_automatically_aliased
+  acceptance: unchanged_method_sections; added_source_contracts_preserved; learner/release_pending

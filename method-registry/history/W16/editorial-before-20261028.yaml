@@ -1,0 +1,134 @@
+method_id: W16
+brand_name: 五档训练升级
+source_name: 五档升级路径（训练用）
+aliases:
+- 五档升级路径（训练用）
+question_type: 读后续写
+method_type: framework
+role: framework
+primary_role: framework
+secondary_roles: []
+output_type: interpret
+student_symptoms:
+- 课后需确定下一档训练缺口
+trigger_cues:
+- 已有续写稿，需要依据真实缺口安排下一次训练。
+core_action: 按现稿先核完整和因果，再选细节衔接、合理转折或精准表达中的一项复练。
+decision_rule: 产出可执行训练任务；秋16分档训练与25分整体评分分别使用，不拼成官方逐项配额。
+verification: 产出可执行训练任务；秋16分档训练与25分整体评分分别使用，不拼成官方逐项配额。 缺现稿不精确诊断或承诺升档；基础未稳不跳华丽升级，不机械增加动作、复杂句、转折或独立升华句。
+stop_rule: 缺现稿不精确诊断或承诺升档；基础未稳不跳华丽升级，不机械增加动作、复杂句、转折或独立升华句。
+common_wrong_instinct: 把某一高分句型练完，就觉得作文已经升了一档。
+failure_cases:
+- 把某一高分句型练完，就觉得作文已经升了一档。
+- 缺现稿不精确诊断或承诺升档；基础未稳不跳华丽升级，不机械增加动作、复杂句、转折或独立升华句。
+counterexamples:
+- 高阶句式写得熟但段间缺桥，仍应先练桥接而非更多句式；合理无反转的文章也不必为训练表硬加事故。此为训练示意，不是真题。
+transfer_pattern: 换学生稿仍用该稿证据选缺口，不按背诵数量假定能力。
+memory_line: 按现稿先核完整和因果，再选细节衔接、合理转折或精准表达中的一项复练。
+anti_rule: 练完句型 ≠ 档次升级。
+visual_formula: '现稿证据 → 当前缺口
+
+  完整 → 因果准确 → 有效细节衔接
+
+  → 自然表达升级（不是得分预测）'
+challenge_prompt: 先不定分数目标，指出当前稿一处缺口，选一个下次可以重复的动作。
+source_references:
+- repository: https://github.com/rockpunkgod/ANSWER.git
+  path: gaokao-writing/references/continuation-writing-and-correction.md
+  heading: 五档升级路径（训练用）
+  commit: 1c388a0596b13935ae7c6a1af00834915a8efa33
+section_ids:
+- 0601c0f1de7a4b8f
+- 7b4c299267a685c2
+can_follow: []
+usually_before: []
+usually_after: []
+conflicts_with: []
+cannot_replace:
+- 完整题面验证
+levels:
+  L1: 按现稿证据选对应升级动作，不把训练模板直接当官方独立扣分项
+  L2: 按现稿实际缺口选下一项训练：先完整、再因果准确、再有效细节衔接、再自然转折与精准表达；产物是一个可复练动作，不是个体档次升级承诺。
+  L3: 训练路径不代替25分定档，缺当前稿不能精确诊断；基础逻辑语言未稳不跳到华丽表达。每项练习都受原文约束，不机械追加转折或升华。
+  L4: 换学生稿仍用该稿证据选缺口，不按背诵数量假定能力。
+compact:
+  line: 按现稿先核完整和因果，再选细节衔接、合理转折或精准表达中的一项复练。
+  boundary: 缺现稿不精确诊断或承诺升档；基础未稳不跳华丽升级，不机械增加动作、复杂句、转折或独立升华句。
+  10s: 按现稿先核完整和因果，再选细节衔接、合理转折或精准表达中的一项复练。 产出可执行训练任务；秋16分档训练与25分整体评分分别使用，不拼成官方逐项配额。
+  30s: 已有续写稿，需要依据真实缺口安排下一次训练。 按现稿先核完整和因果，再选细节衔接、合理转折或精准表达中的一项复练。 缺现稿不精确诊断或承诺升档；基础未稳不跳华丽升级，不机械增加动作、复杂句、转折或独立升华句。
+  90s: 已有续写稿，需要依据真实缺口安排下一次训练。 手上先做：按现稿先核完整和因果，再选细节衔接、合理转折或精准表达中的一项复练。 做完得到：产出可执行训练任务；秋16分档训练与25分整体评分分别使用，不拼成官方逐项配额。
+    停止：缺现稿不精确诊断或承诺升档；基础未稳不跳华丽升级，不机械增加动作、复杂句、转折或独立升华句。 反例（边界示意，非真题）：高阶句式写得熟但段间缺桥，仍应先练桥接而非更多句式；合理无反转的文章也不必为训练表硬加事故。此为训练示意，不是真题。
+    挑战：先不定分数目标，指出当前稿一处缺口，选一个下次可以重复的动作。
+full:
+  summary: 按现稿先核完整和因果，再选细节衔接、合理转折或精准表达中的一项复练。 产出可执行训练任务；秋16分档训练与25分整体评分分别使用，不拼成官方逐项配额。
+  source_boundary: 缺现稿不精确诊断或承诺升档；基础未稳不跳华丽升级，不机械增加动作、复杂句、转折或独立升华句。
+  boundaries:
+  - 缺现稿不精确诊断或承诺升档；基础未稳不跳华丽升级，不机械增加动作、复杂句、转折或独立升华句。
+  - 高阶句式写得熟但段间缺桥，仍应先练桥接而非更多句式；合理无反转的文章也不必为训练表硬加事故。此为训练示意，不是真题。
+  section_ids:
+  - 0601c0f1de7a4b8f
+  - 7b4c299267a685c2
+cases:
+  canonical: cases/continuation-writing/W16/canonical/case.yaml
+four_step_card:
+  start: 已有续写稿，需要依据真实缺口安排下一次训练。
+  first_cut: 按现稿先核完整和因果，再选细节衔接、合理转折或精准表达中的一项复练。
+  judge: 产出可执行训练任务；秋16分档训练与25分整体评分分别使用，不拼成官方逐项配额。
+  stop: 缺现稿不精确诊断或承诺升档；基础未稳不跳华丽升级，不机械增加动作、复杂句、转折或独立升华句。
+practicality_gate:
+  status: design_complete_empirical_pending
+  trigger: 已有续写稿，需要依据真实缺口安排下一次训练。
+  action: 按现稿先核完整和因果，再选细节衔接、合理转折或精准表达中的一项复练。
+  output: interpret；产出可执行训练任务；秋16分档训练与25分整体评分分别使用，不拼成官方逐项配额。
+  stop: 缺现稿不精确诊断或承诺升档；基础未稳不跳华丽升级，不机械增加动作、复杂句、转折或独立升华句。
+  transfer: 换学生稿仍用该稿证据选缺口，不按背诵数量假定能力。
+  efficiency: 缩小训练选择，减少基础未稳的无效升级；实际效率和成绩变化待对照。
+  misuse_cost: 未经实测；把某一高分句型练完，就觉得作文已经升了一档。会导致误判；须先核触发、执行Stop，不允许辅助产物越级定案。
+first_use_test:
+  status: designed_not_run
+  trigger_success: null
+  action_success: null
+  evidence_success: null
+  stop_rule_success: null
+  no_answer_backfit: null
+  failure_type: null
+  final_result: pending_real_student_test
+evaluation:
+  baseline: 普通逐项核题面
+  primary_benefit_hypothesis: 缩小训练选择，减少基础未稳的无效升级；实际效率和成绩变化待对照。
+  trigger_precision: null
+  trigger_recall: null
+  resolution_rate: null
+  standalone_rate: null
+  assist_rate: null
+  false_trigger_rate: null
+  transfer_rate: null
+  boundary_accuracy: null
+  time_complexity_gain: null
+usefulness_level: Useful
+status: candidate
+maturity_status: candidate
+practical_value: Useful
+version: 1.2.0
+change_reason: ANSWER 1c388a0596b13935ae7c6a1af00834915a8efa33 增量来源同步；保留既有动作与版本，旧证据不自动获得新来源准入。
+affected_cases:
+- cases/continuation-writing/W16/canonical/case.yaml
+regression_result: pending_current_epoch_semantic_and_student_acceptance
+student_ready: false
+entry_copy: 已有续写稿，需要依据真实缺口安排下一次训练。 手上先做：按现稿先核完整和因果，再选细节衔接、合理转折或精准表达中的一项复练。 做完得到：产出可执行训练任务；秋16分档训练与25分整体评分分别使用，不拼成官方逐项配额。
+  停止：缺现稿不精确诊断或承诺升档；基础未稳不跳华丽升级，不机械增加动作、复杂句、转折或独立升华句。
+static_design_review:
+  status: source_rebound_semantic_reacceptance_pending
+  source_section_ids:
+  - 0601c0f1de7a4b8f
+  - 7b4c299267a685c2
+  participant_validation: pending_real_participant_validation
+  example_scope: schematic source boundary, not a verified exam
+source_alignment:
+  commit: 1c388a0596b13935ae7c6a1af00834915a8efa33
+  state: live_source_bound
+  source_content_changed: false
+  correction_profile_applied: true
+  authored_first_contact_draft: false
+  new_course_branches: preserved_in_full_contract_not_automatically_aliased
+  acceptance: unchanged_method_sections; added_source_contracts_preserved; learner/release_pending

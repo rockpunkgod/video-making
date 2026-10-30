@@ -154,7 +154,7 @@ class RegistryTest(unittest.TestCase):
             matches = [path for path in guides if path.name.startswith(method_id + "-")]
             self.assertEqual(len(matches), 1, method_id)
             text = matches[0].read_text(encoding="utf-8")
-            for marker in ("## 四步实战卡", "## 10 秒版", "## 30 秒版", "## 90 秒版", "挑战：", "## 一屏视觉式", "反口诀："):
+            for marker in ("## 四步实战卡", "## 10 秒版", "## 30 秒版", "## 90 秒版", "## 反例与挑战", method['challenge_prompt'], "## 一屏视觉式", "反口诀："):
                 self.assertIn(marker, text, f"{method_id}: {marker}")
             first_body_line = next(line for line in text.splitlines()[1:] if line.strip())
             self.assertNotIn("是指", first_body_line)

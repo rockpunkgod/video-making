@@ -238,7 +238,10 @@ class FrozenAssetExporter:
             'decisions': [{'artifact_id': 'relation:' + str(i), 'status': 'withdrawn' if i in invalid_relations else
                            'active' if r.get('review_status') == 'reviewed' else 'blocked',
                            'cause': causes.get('relation:' + str(i))} for i, r in enumerate(relations)],
-            'evidence': [{'artifact_id': n['id'], 'status': 'active'} for n in a['evidence_graph']['nodes'] if n['type'] == 'source_evidence']}
+            'evidence': [{'artifact_id': n['id'], 'status': 'active'} for n in a['evidence_graph']['nodes']
+                         if n['type'] == 'source_evidence' or
+                         (a['question_type'] not in {'应用文','读后续写'} and
+                          n['type'] == 'image_evidence' and n.get('candidate') and n.get('review_id'))]}
 
     def status(self, request, generated_at=None):
         b = self.export(request, generated_at)

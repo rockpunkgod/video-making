@@ -1,0 +1,21 @@
+case_id: F03-canonical
+method_id: F03
+question_type: 七选五
+source:
+  repository: https://github.com/rockpunkgod/ANSWER.git
+  commit: b04ebc26d7fa096404111a0bb12f6c77cc8525b9
+  path: gaokao-english/references/seven-five.md
+  heading: 主语一致
+question: null
+answer: null
+trigger: 选项谈论的主体或代词不同
+evidence: []
+method_role: reducer
+expected_action: 圈选项主语与指代对象，按实际主体分组，正文发生话题转换时重新核对
+expected_output: reduce
+stop_rule: 同主角仍需比谁对什么做什么；正文话题切换要核当前候选，不重新机械三分。指代未还原、共享行动者但对象不同就停主体筛选。
+case_type: canonical
+status: evidence_gap
+notes: 源方法可核；尚未逐题核验案例，不可当成功样例
+method_version: 1.1.0
+source_commit: b04ebc26d7fa096404111a0bb12f6c77cc8525b9

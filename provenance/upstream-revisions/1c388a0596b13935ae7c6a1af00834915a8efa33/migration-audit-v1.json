@@ -1,0 +1,2799 @@
+{
+  "repository": "https://github.com/rockpunkgod/ANSWER.git",
+  "target_commit": "1c388a0596b13935ae7c6a1af00834915a8efa33",
+  "previous_runtime_commit": "61bc9c3e15004639cb442c20e7946ca9631f14ce",
+  "captured_at": "2026-10-24",
+  "phase": "upstream_captured_runtime_alignment_pending",
+  "counts": {
+    "captured_documents": 51,
+    "changed_baseline_documents": 9,
+    "current_methods": 82,
+    "methods_with_changed_or_missing_sections": 0
+  },
+  "methods": [
+    {
+      "method_id": "R01",
+      "version": "1.2.0",
+      "source_name": "过度推测",
+      "primary_role": "decider",
+      "method_type": "method",
+      "source_bindings": [
+        {
+          "old_section_id": "dfb7dd8dc0c2e8a1",
+          "path": "gaokao-english/references/reading-comprehension.md",
+          "heading": "过度推测",
+          "state": "unchanged_section",
+          "current_candidate_lines": [
+            [
+              148,
+              155
+            ]
+          ]
+        }
+      ],
+      "runtime_migration": "not_applied",
+      "semantic_review": "required_not_proven_by_byte_comparison"
+    },
+    {
+      "method_id": "R02",
+      "version": "1.2.0",
+      "source_name": "主客一致",
+      "primary_role": "decider",
+      "method_type": "method",
+      "source_bindings": [
+        {
+          "old_section_id": "fce5dc9189e1137b",
+          "path": "gaokao-english/references/reading-comprehension.md",
+          "heading": "主客一致",
+          "state": "unchanged_section",
+          "current_candidate_lines": [
+            [
+              114,
+              121
+            ]
+          ]
+        }
+      ],
+      "runtime_migration": "not_applied",
+      "semantic_review": "required_not_proven_by_byte_comparison"
+    },
+    {
+      "method_id": "R06",
+      "version": "1.2.0",
+      "source_name": "主旨缺失（判项诊断用语）",
+      "primary_role": "decider",
+      "method_type": "internal_rule",
+      "source_bindings": [
+        {
+          "old_section_id": "fd49a052453f33e0",
+          "path": "gaokao-english/references/reading-comprehension.md",
+          "heading": "mainly题与主旨大意",
+          "state": "unchanged_section",
+          "current_candidate_lines": [
+            [
+              282,
+              295
+            ]
+          ]
+        }
+      ],
+      "runtime_migration": "not_applied",
+      "semantic_review": "required_not_proven_by_byte_comparison"
+    },
+    {
+      "method_id": "R09",
+      "version": "1.2.0",
+      "source_name": "三化法",
+      "primary_role": "framework",
+      "method_type": "framework",
+      "source_bindings": [
+        {
+          "old_section_id": "25287b93945fdb97",
+          "path": "gaokao-english/references/reading-comprehension.md",
+          "heading": "三化法",
+          "state": "unchanged_section",
+          "current_candidate_lines": [
+            [
+              200,
+              207
+            ]
+          ]
+        }
+      ],
+      "runtime_migration": "not_applied",
+      "semantic_review": "required_not_proven_by_byte_comparison"
+    },
+    {
+      "method_id": "R03",
+      "version": "1.2.0",
+      "source_name": "同源替换",
+      "primary_role": "interpreter",
+      "method_type": "method",
+      "source_bindings": [
+        {
+          "old_section_id": "664edd91ce02db49",
+          "path": "gaokao-english/references/reading-comprehension.md",
+          "heading": "同源替换",
+          "state": "unchanged_section",
+          "current_candidate_lines": [
+            [
+              122,
+              129
+            ]
+          ]
+        }
+      ],
+      "runtime_migration": "not_applied",
+      "semantic_review": "required_not_proven_by_byte_comparison"
+    },
+    {
+      "method_id": "R04",
+      "version": "1.2.0",
+      "source_name": "比较级谨慎选",
+      "primary_role": "decider",
+      "method_type": "method",
+      "source_bindings": [
+        {
+          "old_section_id": "4311f90fc985aca0",
+          "path": "gaokao-english/references/reading-comprehension.md",
+          "heading": "比较级谨慎选",
+          "state": "unchanged_section",
+          "current_candidate_lines": [
+            [
+              140,
+              147
+            ]
+          ]
+        }
+      ],
+      "runtime_migration": "not_applied",
+      "semantic_review": "required_not_proven_by_byte_comparison"
+    },
+    {
+      "method_id": "R05",
+      "version": "1.2.0",
+      "source_name": "因果选果",
+      "primary_role": "decider",
+      "method_type": "method",
+      "source_bindings": [
+        {
+          "old_section_id": "c26359463dd942f3",
+          "path": "gaokao-english/references/reading-comprehension.md",
+          "heading": "因果选果",
+          "state": "unchanged_section",
+          "current_candidate_lines": [
+            [
+              162,
+              171
+            ]
+          ]
+        }
+      ],
+      "runtime_migration": "not_applied",
+      "semantic_review": "required_not_proven_by_byte_comparison"
+    },
+    {
+      "method_id": "R07",
+      "version": "1.2.0",
+      "source_name": "并列删除",
+      "primary_role": "reducer",
+      "method_type": "method",
+      "source_bindings": [
+        {
+          "old_section_id": "233f304ca6cf0622",
+          "path": "gaokao-english/references/reading-comprehension.md",
+          "heading": "并列删除",
+          "state": "unchanged_section",
+          "current_candidate_lines": [
+            [
+              172,
+              179
+            ]
+          ]
+        }
+      ],
+      "runtime_migration": "not_applied",
+      "semantic_review": "required_not_proven_by_byte_comparison"
+    },
+    {
+      "method_id": "R08",
+      "version": "1.2.0",
+      "source_name": "例子非答案",
+      "primary_role": "interpreter",
+      "method_type": "method",
+      "source_bindings": [
+        {
+          "old_section_id": "ba96ebddcc797633",
+          "path": "gaokao-english/references/reading-comprehension.md",
+          "heading": "例子非答案",
+          "state": "unchanged_section",
+          "current_candidate_lines": [
+            [
+              192,
+              199
+            ]
+          ]
+        }
+      ],
+      "runtime_migration": "not_applied",
+      "semantic_review": "required_not_proven_by_byte_comparison"
+    },
+    {
+      "method_id": "R10",
+      "version": "1.2.0",
+      "source_name": "代词指代",
+      "primary_role": "interpreter",
+      "method_type": "method",
+      "source_bindings": [
+        {
+          "old_section_id": "624926b4c68413ff",
+          "path": "gaokao-english/references/reading-comprehension.md",
+          "heading": "代词指代",
+          "state": "unchanged_section",
+          "current_candidate_lines": [
+            [
+              208,
+              217
+            ]
+          ]
+        }
+      ],
+      "runtime_migration": "not_applied",
+      "semantic_review": "required_not_proven_by_byte_comparison"
+    },
+    {
+      "method_id": "R11",
+      "version": "1.2.0",
+      "source_name": "逻辑简化",
+      "primary_role": "interpreter",
+      "method_type": "method",
+      "source_bindings": [
+        {
+          "old_section_id": "0b966000686151d0",
+          "path": "gaokao-english/references/reading-comprehension.md",
+          "heading": "逻辑简化",
+          "state": "unchanged_section",
+          "current_candidate_lines": [
+            [
+              218,
+              227
+            ]
+          ]
+        }
+      ],
+      "runtime_migration": "not_applied",
+      "semantic_review": "required_not_proven_by_byte_comparison"
+    },
+    {
+      "method_id": "R12",
+      "version": "1.2.0",
+      "source_name": "跳读定位",
+      "primary_role": "locator",
+      "method_type": "method",
+      "source_bindings": [
+        {
+          "old_section_id": "7adfe6c470337e82",
+          "path": "gaokao-english/references/reading-comprehension.md",
+          "heading": "跳读定位",
+          "state": "unchanged_section",
+          "current_candidate_lines": [
+            [
+              236,
+              245
+            ]
+          ]
+        }
+      ],
+      "runtime_migration": "not_applied",
+      "semantic_review": "required_not_proven_by_byte_comparison"
+    },
+    {
+      "method_id": "R13",
+      "version": "1.2.0",
+      "source_name": "名词定出处",
+      "primary_role": "locator",
+      "method_type": "sub_action",
+      "source_bindings": [
+        {
+          "old_section_id": "3104f706064bf305",
+          "path": "gaokao-english/references/reading-comprehension.md",
+          "heading": "按题型任务分流，不按文体硬套",
+          "state": "unchanged_section",
+          "current_candidate_lines": [
+            [
+              13,
+              22
+            ]
+          ]
+        },
+        {
+          "old_section_id": "7adfe6c470337e82",
+          "path": "gaokao-english/references/reading-comprehension.md",
+          "heading": "跳读定位",
+          "state": "unchanged_section",
+          "current_candidate_lines": [
+            [
+              236,
+              245
+            ]
+          ]
+        }
+      ],
+      "runtime_migration": "not_applied",
+      "semantic_review": "required_not_proven_by_byte_comparison"
+    },
+    {
+      "method_id": "R14",
+      "version": "1.2.0",
+      "source_name": "题文同序",
+      "primary_role": "locator",
+      "method_type": "sub_action",
+      "source_bindings": [
+        {
+          "old_section_id": "3104f706064bf305",
+          "path": "gaokao-english/references/reading-comprehension.md",
+          "heading": "按题型任务分流，不按文体硬套",
+          "state": "unchanged_section",
+          "current_candidate_lines": [
+            [
+              13,
+              22
+            ]
+          ]
+        },
+        {
+          "old_section_id": "7adfe6c470337e82",
+          "path": "gaokao-english/references/reading-comprehension.md",
+          "heading": "跳读定位",
+          "state": "unchanged_section",
+          "current_candidate_lines": [
+            [
+              236,
+              245
+            ]
+          ]
+        }
+      ],
+      "runtime_migration": "not_applied",
+      "semantic_review": "required_not_proven_by_byte_comparison"
+    },
+    {
+      "method_id": "R15",
+      "version": "1.2.0",
+      "source_name": "动词定逻辑",
+      "primary_role": "interpreter",
+      "method_type": "sub_action",
+      "source_bindings": [
+        {
+          "old_section_id": "3104f706064bf305",
+          "path": "gaokao-english/references/reading-comprehension.md",
+          "heading": "按题型任务分流，不按文体硬套",
+          "state": "unchanged_section",
+          "current_candidate_lines": [
+            [
+              13,
+              22
+            ]
+          ]
+        },
+        {
+          "old_section_id": "7adfe6c470337e82",
+          "path": "gaokao-english/references/reading-comprehension.md",
+          "heading": "跳读定位",
+          "state": "unchanged_section",
+          "current_candidate_lines": [
+            [
+              236,
+              245
+            ]
+          ]
+        }
+      ],
+      "runtime_migration": "not_applied",
+      "semantic_review": "required_not_proven_by_byte_comparison"
+    },
+    {
+      "method_id": "R16",
+      "version": "1.2.0",
+      "source_name": "mainly题与主旨大意",
+      "primary_role": "framework",
+      "method_type": "framework",
+      "source_bindings": [
+        {
+          "old_section_id": "fd49a052453f33e0",
+          "path": "gaokao-english/references/reading-comprehension.md",
+          "heading": "mainly题与主旨大意",
+          "state": "unchanged_section",
+          "current_candidate_lines": [
+            [
+              282,
+              295
+            ]
+          ]
+        }
+      ],
+      "runtime_migration": "not_applied",
+      "semantic_review": "required_not_proven_by_byte_comparison"
+    },
+    {
+      "method_id": "R17",
+      "version": "1.2.0",
+      "source_name": "定位后必要上下文核对（内部动作说明）",
+      "primary_role": "verifier",
+      "method_type": "verification_rule",
+      "source_bindings": [
+        {
+          "old_section_id": "fb9c5ef35a2a5763",
+          "path": "gaokao-english/references/reading-comprehension.md",
+          "heading": "阅读方法适用边界",
+          "state": "unchanged_section",
+          "current_candidate_lines": [
+            [
+              23,
+              34
+            ]
+          ]
+        },
+        {
+          "old_section_id": "664edd91ce02db49",
+          "path": "gaokao-english/references/reading-comprehension.md",
+          "heading": "同源替换",
+          "state": "unchanged_section",
+          "current_candidate_lines": [
+            [
+              122,
+              129
+            ]
+          ]
+        },
+        {
+          "old_section_id": "624926b4c68413ff",
+          "path": "gaokao-english/references/reading-comprehension.md",
+          "heading": "代词指代",
+          "state": "unchanged_section",
+          "current_candidate_lines": [
+            [
+              208,
+              217
+            ]
+          ]
+        }
+      ],
+      "runtime_migration": "not_applied",
+      "semantic_review": "required_not_proven_by_byte_comparison"
+    },
+    {
+      "method_id": "F01",
+      "version": "1.2.0",
+      "source_name": "结构一致 + 主语一致 + 时态一致",
+      "primary_role": "reducer",
+      "method_type": "method",
+      "source_bindings": [
+        {
+          "old_section_id": "a8f0c4ae44ae61ff",
+          "path": "gaokao-english/references/seven-five.md",
+          "heading": "结构一致",
+          "state": "unchanged_section",
+          "current_candidate_lines": [
+            [
+              23,
+              34
+            ]
+          ]
+        },
+        {
+          "old_section_id": "7c0a77869754a1dc",
+          "path": "gaokao-english/references/seven-five.md",
+          "heading": "主语一致",
+          "state": "unchanged_section",
+          "current_candidate_lines": [
+            [
+              69,
+              78
+            ]
+          ]
+        },
+        {
+          "old_section_id": "4a9de82ef9741f92",
+          "path": "gaokao-english/references/seven-five.md",
+          "heading": "时态一致",
+          "state": "unchanged_section",
+          "current_candidate_lines": [
+            [
+              79,
+              88
+            ]
+          ]
+        }
+      ],
+      "runtime_migration": "not_applied",
+      "semantic_review": "required_not_proven_by_byte_comparison"
+    },
+    {
+      "method_id": "F02",
+      "version": "1.2.0",
+      "source_name": "结构一致",
+      "primary_role": "reducer",
+      "method_type": "sub_action",
+      "source_bindings": [
+        {
+          "old_section_id": "a8f0c4ae44ae61ff",
+          "path": "gaokao-english/references/seven-five.md",
+          "heading": "结构一致",
+          "state": "unchanged_section",
+          "current_candidate_lines": [
+            [
+              23,
+              34
+            ]
+          ]
+        }
+      ],
+      "runtime_migration": "not_applied",
+      "semantic_review": "required_not_proven_by_byte_comparison"
+    },
+    {
+      "method_id": "F03",
+      "version": "1.2.0",
+      "source_name": "主语一致",
+      "primary_role": "reducer",
+      "method_type": "sub_action",
+      "source_bindings": [
+        {
+          "old_section_id": "7c0a77869754a1dc",
+          "path": "gaokao-english/references/seven-five.md",
+          "heading": "主语一致",
+          "state": "unchanged_section",
+          "current_candidate_lines": [
+            [
+              69,
+              78
+            ]
+          ]
+        }
+      ],
+      "runtime_migration": "not_applied",
+      "semantic_review": "required_not_proven_by_byte_comparison"
+    },
+    {
+      "method_id": "F04",
+      "version": "1.2.0",
+      "source_name": "时态一致",
+      "primary_role": "reducer",
+      "method_type": "sub_action",
+      "source_bindings": [
+        {
+          "old_section_id": "4a9de82ef9741f92",
+          "path": "gaokao-english/references/seven-five.md",
+          "heading": "时态一致",
+          "state": "unchanged_section",
+          "current_candidate_lines": [
+            [
+              79,
+              88
+            ]
+          ]
+        }
+      ],
+      "runtime_migration": "not_applied",
+      "semantic_review": "required_not_proven_by_byte_comparison"
+    },
+    {
+      "method_id": "F05",
+      "version": "1.3.0",
+      "source_name": "总起句做题法",
+      "primary_role": "interpreter",
+      "method_type": "method",
+      "source_bindings": [
+        {
+          "old_section_id": "1fcc9966ce085922",
+          "path": "gaokao-english/references/seven-five.md",
+          "heading": "总起句做题法",
+          "state": "unchanged_section",
+          "current_candidate_lines": [
+            [
+              15,
+              22
+            ]
+          ]
+        }
+      ],
+      "runtime_migration": "not_applied",
+      "semantic_review": "required_not_proven_by_byte_comparison"
+    },
+    {
+      "method_id": "F06",
+      "version": "1.2.0",
+      "source_name": "对应词法",
+      "primary_role": "verifier",
+      "method_type": "method",
+      "source_bindings": [
+        {
+          "old_section_id": "92ec24e9e7003cba",
+          "path": "gaokao-english/references/seven-five.md",
+          "heading": "对应词法",
+          "state": "unchanged_section",
+          "current_candidate_lines": [
+            [
+              35,
+              50
+            ]
+          ]
+        }
+      ],
+      "runtime_migration": "not_applied",
+      "semantic_review": "required_not_proven_by_byte_comparison"
+    },
+    {
+      "method_id": "F07",
+      "version": "1.2.0",
+      "source_name": "逻辑关系法",
+      "primary_role": "verifier",
+      "method_type": "method",
+      "source_bindings": [
+        {
+          "old_section_id": "03214bbc4e91eae2",
+          "path": "gaokao-english/references/seven-five.md",
+          "heading": "逻辑关系法",
+          "state": "unchanged_section",
+          "current_candidate_lines": [
+            [
+              89,
+              101
+            ]
+          ]
+        }
+      ],
+      "runtime_migration": "not_applied",
+      "semantic_review": "required_not_proven_by_byte_comparison"
+    },
+    {
+      "method_id": "F08",
+      "version": "1.2.0",
+      "source_name": "褒贬一致",
+      "primary_role": "reducer",
+      "method_type": "sub_action",
+      "source_bindings": [
+        {
+          "old_section_id": "3d13a787824e210c",
+          "path": "gaokao-english/references/seven-five.md",
+          "heading": "褒贬一致",
+          "state": "unchanged_section",
+          "current_candidate_lines": [
+            [
+              102,
+              109
+            ]
+          ]
+        }
+      ],
+      "runtime_migration": "not_applied",
+      "semantic_review": "required_not_proven_by_byte_comparison"
+    },
+    {
+      "method_id": "F09",
+      "version": "1.2.0",
+      "source_name": "结构一致",
+      "primary_role": "interpreter",
+      "method_type": "sub_action",
+      "source_bindings": [
+        {
+          "old_section_id": "a8f0c4ae44ae61ff",
+          "path": "gaokao-english/references/seven-five.md",
+          "heading": "结构一致",
+          "state": "unchanged_section",
+          "current_candidate_lines": [
+            [
+              23,
+              34
+            ]
+          ]
+        }
+      ],
+      "runtime_migration": "not_applied",
+      "semantic_review": "required_not_proven_by_byte_comparison"
+    },
+    {
+      "method_id": "F10",
+      "version": "1.2.0",
+      "source_name": "定案与输出",
+      "primary_role": "verifier",
+      "method_type": "verification_rule",
+      "source_bindings": [
+        {
+          "old_section_id": "d815465ca190a14f",
+          "path": "gaokao-english/references/seven-five.md",
+          "heading": "定案与输出",
+          "state": "unchanged_section",
+          "current_candidate_lines": [
+            [
+              114,
+              120
+            ]
+          ]
+        }
+      ],
+      "runtime_migration": "not_applied",
+      "semantic_review": "required_not_proven_by_byte_comparison"
+    },
+    {
+      "method_id": "F11",
+      "version": "1.2.0",
+      "source_name": "定案与输出",
+      "primary_role": "decider",
+      "method_type": "internal_rule",
+      "source_bindings": [
+        {
+          "old_section_id": "d815465ca190a14f",
+          "path": "gaokao-english/references/seven-five.md",
+          "heading": "定案与输出",
+          "state": "unchanged_section",
+          "current_candidate_lines": [
+            [
+              114,
+              120
+            ]
+          ]
+        }
+      ],
+      "runtime_migration": "not_applied",
+      "semantic_review": "required_not_proven_by_byte_comparison"
+    },
+    {
+      "method_id": "C01",
+      "version": "1.2.1",
+      "source_name": "语篇行文结构（内部梳理框架）",
+      "primary_role": "framework",
+      "method_type": "framework",
+      "source_bindings": [
+        {
+          "old_section_id": "c84135f2763c6806",
+          "path": "gaokao-english/references/cloze.md",
+          "heading": "语篇行文结构的已核验操作（内容说明，非新增方法名）",
+          "state": "unchanged_section",
+          "current_candidate_lines": [
+            [
+              15,
+              29
+            ]
+          ]
+        },
+        {
+          "old_section_id": "3f36ea92a4769ee5",
+          "path": "gaokao-english/references/cloze.md",
+          "heading": "完形填空",
+          "state": "unchanged_section",
+          "current_candidate_lines": [
+            [
+              1,
+              8
+            ]
+          ]
+        }
+      ],
+      "runtime_migration": "not_applied",
+      "semantic_review": "required_not_proven_by_byte_comparison"
+    },
+    {
+      "method_id": "C02",
+      "version": "1.2.1",
+      "source_name": "瞻前顾后法",
+      "primary_role": "verifier",
+      "method_type": "method",
+      "source_bindings": [
+        {
+          "old_section_id": "b50b911407b9faa9",
+          "path": "gaokao-english/references/cloze.md",
+          "heading": "瞻前顾后法",
+          "state": "unchanged_section",
+          "current_candidate_lines": [
+            [
+              36,
+              45
+            ]
+          ]
+        },
+        {
+          "old_section_id": "3f36ea92a4769ee5",
+          "path": "gaokao-english/references/cloze.md",
+          "heading": "完形填空",
+          "state": "unchanged_section",
+          "current_candidate_lines": [
+            [
+              1,
+              8
+            ]
+          ]
+        }
+      ],
+      "runtime_migration": "not_applied",
+      "semantic_review": "required_not_proven_by_byte_comparison"
+    },
+    {
+      "method_id": "C03",
+      "version": "1.2.0",
+      "source_name": "首句建立粗框架（语篇行文结构的子动作）",
+      "primary_role": "interpreter",
+      "method_type": "sub_action",
+      "source_bindings": [
+        {
+          "old_section_id": "c84135f2763c6806",
+          "path": "gaokao-english/references/cloze.md",
+          "heading": "语篇行文结构的已核验操作（内容说明，非新增方法名）",
+          "state": "unchanged_section",
+          "current_candidate_lines": [
+            [
+              15,
+              29
+            ]
+          ]
+        }
+      ],
+      "runtime_migration": "not_applied",
+      "semantic_review": "required_not_proven_by_byte_comparison"
+    },
+    {
+      "method_id": "C04",
+      "version": "1.2.0",
+      "source_name": "词性只引导找线索",
+      "primary_role": "locator",
+      "method_type": "sub_action",
+      "source_bindings": [
+        {
+          "old_section_id": "b0b1e691060b321a",
+          "path": "gaokao-english/references/cloze.md",
+          "heading": "词性只引导找线索",
+          "state": "unchanged_section",
+          "current_candidate_lines": [
+            [
+              50,
+              55
+            ]
+          ]
+        }
+      ],
+      "runtime_migration": "not_applied",
+      "semantic_review": "required_not_proven_by_byte_comparison"
+    },
+    {
+      "method_id": "C05",
+      "version": "1.2.0",
+      "source_name": "近义项要落到具体语义",
+      "primary_role": "interpreter",
+      "method_type": "sub_action",
+      "source_bindings": [
+        {
+          "old_section_id": "87987576b5e8284b",
+          "path": "gaokao-english/references/cloze.md",
+          "heading": "近义项要落到具体语义",
+          "state": "unchanged_section",
+          "current_candidate_lines": [
+            [
+              66,
+              69
+            ]
+          ]
+        }
+      ],
+      "runtime_migration": "not_applied",
+      "semantic_review": "required_not_proven_by_byte_comparison"
+    },
+    {
+      "method_id": "C06",
+      "version": "1.2.0",
+      "source_name": "逻辑与时间要看真实内容",
+      "primary_role": "interpreter",
+      "method_type": "sub_action",
+      "source_bindings": [
+        {
+          "old_section_id": "7abd608ebd73dbe2",
+          "path": "gaokao-english/references/cloze.md",
+          "heading": "逻辑与时间要看真实内容",
+          "state": "unchanged_section",
+          "current_candidate_lines": [
+            [
+              76,
+              79
+            ]
+          ]
+        }
+      ],
+      "runtime_migration": "not_applied",
+      "semantic_review": "required_not_proven_by_byte_comparison"
+    },
+    {
+      "method_id": "C07",
+      "version": "1.2.0",
+      "source_name": "名词复现只是线索",
+      "primary_role": "locator",
+      "method_type": "sub_action",
+      "source_bindings": [
+        {
+          "old_section_id": "89415a44acd8248e",
+          "path": "gaokao-english/references/cloze.md",
+          "heading": "名词复现只是线索",
+          "state": "unchanged_section",
+          "current_candidate_lines": [
+            [
+              80,
+              87
+            ]
+          ]
+        }
+      ],
+      "runtime_migration": "not_applied",
+      "semantic_review": "required_not_proven_by_byte_comparison"
+    },
+    {
+      "method_id": "C08",
+      "version": "1.2.0",
+      "source_name": "评价、结果与动作链",
+      "primary_role": "verifier",
+      "method_type": "sub_action",
+      "source_bindings": [
+        {
+          "old_section_id": "b7ce29d974576463",
+          "path": "gaokao-english/references/cloze.md",
+          "heading": "评价、结果与动作链",
+          "state": "unchanged_section",
+          "current_candidate_lines": [
+            [
+              88,
+              91
+            ]
+          ]
+        }
+      ],
+      "runtime_migration": "not_applied",
+      "semantic_review": "required_not_proven_by_byte_comparison"
+    },
+    {
+      "method_id": "C09",
+      "version": "1.2.0",
+      "source_name": "评价、结果与动作链",
+      "primary_role": "interpreter",
+      "method_type": "sub_action",
+      "source_bindings": [
+        {
+          "old_section_id": "b7ce29d974576463",
+          "path": "gaokao-english/references/cloze.md",
+          "heading": "评价、结果与动作链",
+          "state": "unchanged_section",
+          "current_candidate_lines": [
+            [
+              88,
+              91
+            ]
+          ]
+        }
+      ],
+      "runtime_migration": "not_applied",
+      "semantic_review": "required_not_proven_by_byte_comparison"
+    },
+    {
+      "method_id": "G01",
+      "version": "1.2.0",
+      "source_name": "语法填空总路线（操作整理，非课程原名）",
+      "primary_role": "framework",
+      "method_type": "framework",
+      "source_bindings": [
+        {
+          "old_section_id": "341ae7535f7d9ce7",
+          "path": "gaokao-grammar-fill/references/grammar-fill.md",
+          "heading": "语法填空：按空位结构分路",
+          "state": "unchanged_section",
+          "current_candidate_lines": [
+            [
+              1,
+              2
+            ]
+          ]
+        },
+        {
+          "old_section_id": "3527a85c4fe668d9",
+          "path": "gaokao-grammar-fill/references/grammar-fill.md",
+          "heading": "使用边界",
+          "state": "unchanged_section",
+          "current_candidate_lines": [
+            [
+              3,
+              9
+            ]
+          ]
+        },
+        {
+          "old_section_id": "781c4478d621bf5c",
+          "path": "gaokao-grammar-fill/references/grammar-fill.md",
+          "heading": "总路线",
+          "state": "unchanged_section",
+          "current_candidate_lines": [
+            [
+              10,
+              26
+            ]
+          ]
+        },
+        {
+          "old_section_id": "8c050016facc6479",
+          "path": "gaokao-grammar-fill/references/grammar-fill.md",
+          "heading": "无提示词",
+          "state": "unchanged_section",
+          "current_candidate_lines": [
+            [
+              27,
+              28
+            ]
+          ]
+        },
+        {
+          "old_section_id": "98a55752856ca984",
+          "path": "gaokao-grammar-fill/references/grammar-fill.md",
+          "heading": "冠词",
+          "state": "unchanged_section",
+          "current_candidate_lines": [
+            [
+              29,
+              40
+            ]
+          ]
+        },
+        {
+          "old_section_id": "92af20a0997f0b48",
+          "path": "gaokao-grammar-fill/references/grammar-fill.md",
+          "heading": "代词",
+          "state": "unchanged_section",
+          "current_candidate_lines": [
+            [
+              41,
+              54
+            ]
+          ]
+        },
+        {
+          "old_section_id": "bdec04e2ce032b40",
+          "path": "gaokao-grammar-fill/references/grammar-fill.md",
+          "heading": "介词",
+          "state": "unchanged_section",
+          "current_candidate_lines": [
+            [
+              55,
+              69
+            ]
+          ]
+        },
+        {
+          "old_section_id": "9b496b1572cdf49b",
+          "path": "gaokao-grammar-fill/references/grammar-fill.md",
+          "heading": "连词、关系词与名词性从句连接词",
+          "state": "unchanged_section",
+          "current_candidate_lines": [
+            [
+              70,
+              86
+            ]
+          ]
+        },
+        {
+          "old_section_id": "32c08d6c85a150ea",
+          "path": "gaokao-grammar-fill/references/grammar-fill.md",
+          "heading": "句间逻辑衔接",
+          "state": "unchanged_section",
+          "current_candidate_lines": [
+            [
+              87,
+              90
+            ]
+          ]
+        },
+        {
+          "old_section_id": "a166ae34f9256ee9",
+          "path": "gaokao-grammar-fill/references/grammar-fill.md",
+          "heading": "有提示词",
+          "state": "unchanged_section",
+          "current_candidate_lines": [
+            [
+              91,
+              94
+            ]
+          ]
+        },
+        {
+          "old_section_id": "ab95cd79ca0709e2",
+          "path": "gaokao-grammar-fill/references/grammar-fill.md",
+          "heading": "名词及所有格",
+          "state": "unchanged_section",
+          "current_candidate_lines": [
+            [
+              95,
+              103
+            ]
+          ]
+        },
+        {
+          "old_section_id": "9b610bdb9f63227e",
+          "path": "gaokao-grammar-fill/references/grammar-fill.md",
+          "heading": "形容词、副词与比较等级",
+          "state": "unchanged_section",
+          "current_candidate_lines": [
+            [
+              104,
+              113
+            ]
+          ]
+        },
+        {
+          "old_section_id": "a26dc83760c12ebb",
+          "path": "gaokao-grammar-fill/references/grammar-fill.md",
+          "heading": "数词",
+          "state": "unchanged_section",
+          "current_candidate_lines": [
+            [
+              114,
+              117
+            ]
+          ]
+        },
+        {
+          "old_section_id": "28cb2fee202458a5",
+          "path": "gaokao-grammar-fill/references/grammar-fill.md",
+          "heading": "需要动词形式：先判谓语还是非谓语",
+          "state": "unchanged_section",
+          "current_candidate_lines": [
+            [
+              118,
+              119
+            ]
+          ]
+        },
+        {
+          "old_section_id": "5131f97d0dc78441",
+          "path": "gaokao-grammar-fill/references/grammar-fill.md",
+          "heading": "第一步：数谓语、看连接",
+          "state": "unchanged_section",
+          "current_candidate_lines": [
+            [
+              120,
+              125
+            ]
+          ]
+        },
+        {
+          "old_section_id": "a0bcc74f05b00671",
+          "path": "gaokao-grammar-fill/references/grammar-fill.md",
+          "heading": "谓语：检查时态、语态、主谓一致",
+          "state": "unchanged_section",
+          "current_candidate_lines": [
+            [
+              126,
+              144
+            ]
+          ]
+        },
+        {
+          "old_section_id": "f77de6ec724f8e88",
+          "path": "gaokao-grammar-fill/references/grammar-fill.md",
+          "heading": "非谓语：作用、主被动与先后",
+          "state": "unchanged_section",
+          "current_candidate_lines": [
+            [
+              145,
+              166
+            ]
+          ]
+        },
+        {
+          "old_section_id": "7c16410a7f1b8e4f",
+          "path": "gaokao-grammar-fill/references/grammar-fill.md",
+          "heading": "26S春 补充（非谓语动词专项）",
+          "state": "unchanged_section",
+          "current_candidate_lines": [
+            [
+              167,
+              192
+            ]
+          ]
+        },
+        {
+          "old_section_id": "62e443a0a04865bf",
+          "path": "gaokao-grammar-fill/references/grammar-fill.md",
+          "heading": "口播讲解组织",
+          "state": "unchanged_section",
+          "current_candidate_lines": [
+            [
+              193,
+              216
+            ]
+          ]
+        },
+        {
+          "old_section_id": "7ae166ccec059b00",
+          "path": "gaokao-grammar-fill/references/grammar-fill.md",
+          "heading": "学生直接问方法时",
+          "state": "unchanged_section",
+          "current_candidate_lines": [
+            [
+              217,
+              249
+            ]
+          ]
+        }
+      ],
+      "runtime_migration": "not_applied",
+      "semantic_review": "required_not_proven_by_byte_comparison"
+    },
+    {
+      "method_id": "G02",
+      "version": "1.2.0",
+      "source_name": "总路线",
+      "primary_role": "framework",
+      "method_type": "sub_action",
+      "source_bindings": [
+        {
+          "old_section_id": "781c4478d621bf5c",
+          "path": "gaokao-grammar-fill/references/grammar-fill.md",
+          "heading": "总路线",
+          "state": "unchanged_section",
+          "current_candidate_lines": [
+            [
+              10,
+              26
+            ]
+          ]
+        }
+      ],
+      "runtime_migration": "not_applied",
+      "semantic_review": "required_not_proven_by_byte_comparison"
+    },
+    {
+      "method_id": "G03",
+      "version": "1.2.0",
+      "source_name": "冠词",
+      "primary_role": "decider",
+      "method_type": "internal_rule",
+      "source_bindings": [
+        {
+          "old_section_id": "98a55752856ca984",
+          "path": "gaokao-grammar-fill/references/grammar-fill.md",
+          "heading": "冠词",
+          "state": "unchanged_section",
+          "current_candidate_lines": [
+            [
+              29,
+              40
+            ]
+          ]
+        }
+      ],
+      "runtime_migration": "not_applied",
+      "semantic_review": "required_not_proven_by_byte_comparison"
+    },
+    {
+      "method_id": "G04",
+      "version": "1.2.0",
+      "source_name": "代词",
+      "primary_role": "decider",
+      "method_type": "internal_rule",
+      "source_bindings": [
+        {
+          "old_section_id": "92af20a0997f0b48",
+          "path": "gaokao-grammar-fill/references/grammar-fill.md",
+          "heading": "代词",
+          "state": "unchanged_section",
+          "current_candidate_lines": [
+            [
+              41,
+              54
+            ]
+          ]
+        }
+      ],
+      "runtime_migration": "not_applied",
+      "semantic_review": "required_not_proven_by_byte_comparison"
+    },
+    {
+      "method_id": "G05",
+      "version": "1.2.0",
+      "source_name": "介词",
+      "primary_role": "decider",
+      "method_type": "method",
+      "source_bindings": [
+        {
+          "old_section_id": "bdec04e2ce032b40",
+          "path": "gaokao-grammar-fill/references/grammar-fill.md",
+          "heading": "介词",
+          "state": "unchanged_section",
+          "current_candidate_lines": [
+            [
+              55,
+              69
+            ]
+          ]
+        }
+      ],
+      "runtime_migration": "not_applied",
+      "semantic_review": "required_not_proven_by_byte_comparison"
+    },
+    {
+      "method_id": "G06",
+      "version": "1.2.0",
+      "source_name": "连词、关系词与名词性从句连接词",
+      "primary_role": "decider",
+      "method_type": "method",
+      "source_bindings": [
+        {
+          "old_section_id": "9b496b1572cdf49b",
+          "path": "gaokao-grammar-fill/references/grammar-fill.md",
+          "heading": "连词、关系词与名词性从句连接词",
+          "state": "unchanged_section",
+          "current_candidate_lines": [
+            [
+              70,
+              86
+            ]
+          ]
+        }
+      ],
+      "runtime_migration": "not_applied",
+      "semantic_review": "required_not_proven_by_byte_comparison"
+    },
+    {
+      "method_id": "G07",
+      "version": "1.2.0",
+      "source_name": "句间逻辑衔接",
+      "primary_role": "decider",
+      "method_type": "method",
+      "source_bindings": [
+        {
+          "old_section_id": "32c08d6c85a150ea",
+          "path": "gaokao-grammar-fill/references/grammar-fill.md",
+          "heading": "句间逻辑衔接",
+          "state": "unchanged_section",
+          "current_candidate_lines": [
+            [
+              87,
+              90
+            ]
+          ]
+        }
+      ],
+      "runtime_migration": "not_applied",
+      "semantic_review": "required_not_proven_by_byte_comparison"
+    },
+    {
+      "method_id": "G08",
+      "version": "1.2.0",
+      "source_name": "有提示词",
+      "primary_role": "reducer",
+      "method_type": "method",
+      "source_bindings": [
+        {
+          "old_section_id": "a166ae34f9256ee9",
+          "path": "gaokao-grammar-fill/references/grammar-fill.md",
+          "heading": "有提示词",
+          "state": "unchanged_section",
+          "current_candidate_lines": [
+            [
+              91,
+              94
+            ]
+          ]
+        }
+      ],
+      "runtime_migration": "not_applied",
+      "semantic_review": "required_not_proven_by_byte_comparison"
+    },
+    {
+      "method_id": "G09",
+      "version": "1.2.0",
+      "source_name": "名词及所有格",
+      "primary_role": "decider",
+      "method_type": "internal_rule",
+      "source_bindings": [
+        {
+          "old_section_id": "ab95cd79ca0709e2",
+          "path": "gaokao-grammar-fill/references/grammar-fill.md",
+          "heading": "名词及所有格",
+          "state": "unchanged_section",
+          "current_candidate_lines": [
+            [
+              95,
+              103
+            ]
+          ]
+        }
+      ],
+      "runtime_migration": "not_applied",
+      "semantic_review": "required_not_proven_by_byte_comparison"
+    },
+    {
+      "method_id": "G10",
+      "version": "1.2.0",
+      "source_name": "形容词、副词与比较等级",
+      "primary_role": "decider",
+      "method_type": "internal_rule",
+      "source_bindings": [
+        {
+          "old_section_id": "9b610bdb9f63227e",
+          "path": "gaokao-grammar-fill/references/grammar-fill.md",
+          "heading": "形容词、副词与比较等级",
+          "state": "unchanged_section",
+          "current_candidate_lines": [
+            [
+              104,
+              113
+            ]
+          ]
+        }
+      ],
+      "runtime_migration": "not_applied",
+      "semantic_review": "required_not_proven_by_byte_comparison"
+    },
+    {
+      "method_id": "G11",
+      "version": "1.2.0",
+      "source_name": "数词",
+      "primary_role": "decider",
+      "method_type": "internal_rule",
+      "source_bindings": [
+        {
+          "old_section_id": "a26dc83760c12ebb",
+          "path": "gaokao-grammar-fill/references/grammar-fill.md",
+          "heading": "数词",
+          "state": "unchanged_section",
+          "current_candidate_lines": [
+            [
+              114,
+              117
+            ]
+          ]
+        }
+      ],
+      "runtime_migration": "not_applied",
+      "semantic_review": "required_not_proven_by_byte_comparison"
+    },
+    {
+      "method_id": "G12",
+      "version": "1.2.0",
+      "source_name": "第一步：数谓语、看连接",
+      "primary_role": "reducer",
+      "method_type": "method",
+      "source_bindings": [
+        {
+          "old_section_id": "5131f97d0dc78441",
+          "path": "gaokao-grammar-fill/references/grammar-fill.md",
+          "heading": "第一步：数谓语、看连接",
+          "state": "unchanged_section",
+          "current_candidate_lines": [
+            [
+              120,
+              125
+            ]
+          ]
+        }
+      ],
+      "runtime_migration": "not_applied",
+      "semantic_review": "required_not_proven_by_byte_comparison"
+    },
+    {
+      "method_id": "G13",
+      "version": "1.2.0",
+      "source_name": "时态判定三步法",
+      "primary_role": "decider",
+      "method_type": "sub_action",
+      "source_bindings": [
+        {
+          "old_section_id": "a0bcc74f05b00671",
+          "path": "gaokao-grammar-fill/references/grammar-fill.md",
+          "heading": "谓语：检查时态、语态、主谓一致",
+          "state": "unchanged_section",
+          "current_candidate_lines": [
+            [
+              126,
+              144
+            ]
+          ]
+        }
+      ],
+      "runtime_migration": "not_applied",
+      "semantic_review": "required_not_proven_by_byte_comparison"
+    },
+    {
+      "method_id": "G14",
+      "version": "1.2.0",
+      "source_name": "谓语：检查时态、语态、主谓一致",
+      "primary_role": "verifier",
+      "method_type": "sub_action",
+      "source_bindings": [
+        {
+          "old_section_id": "a0bcc74f05b00671",
+          "path": "gaokao-grammar-fill/references/grammar-fill.md",
+          "heading": "谓语：检查时态、语态、主谓一致",
+          "state": "unchanged_section",
+          "current_candidate_lines": [
+            [
+              126,
+              144
+            ]
+          ]
+        }
+      ],
+      "runtime_migration": "not_applied",
+      "semantic_review": "required_not_proven_by_byte_comparison"
+    },
+    {
+      "method_id": "G15",
+      "version": "1.2.0",
+      "source_name": "非谓语：作用、主被动与先后",
+      "primary_role": "decider",
+      "method_type": "method",
+      "source_bindings": [
+        {
+          "old_section_id": "f77de6ec724f8e88",
+          "path": "gaokao-grammar-fill/references/grammar-fill.md",
+          "heading": "非谓语：作用、主被动与先后",
+          "state": "unchanged_section",
+          "current_candidate_lines": [
+            [
+              145,
+              166
+            ]
+          ]
+        }
+      ],
+      "runtime_migration": "not_applied",
+      "semantic_review": "required_not_proven_by_byte_comparison"
+    },
+    {
+      "method_id": "G16",
+      "version": "1.2.0",
+      "source_name": "26S春 补充（非谓语动词专项）",
+      "primary_role": "verifier",
+      "method_type": "sub_action",
+      "source_bindings": [
+        {
+          "old_section_id": "7c16410a7f1b8e4f",
+          "path": "gaokao-grammar-fill/references/grammar-fill.md",
+          "heading": "26S春 补充（非谓语动词专项）",
+          "state": "unchanged_section",
+          "current_candidate_lines": [
+            [
+              167,
+              192
+            ]
+          ]
+        }
+      ],
+      "runtime_migration": "not_applied",
+      "semantic_review": "required_not_proven_by_byte_comparison"
+    },
+    {
+      "method_id": "G17",
+      "version": "1.2.0",
+      "source_name": "总路线",
+      "primary_role": "interpreter",
+      "method_type": "sub_action",
+      "source_bindings": [
+        {
+          "old_section_id": "781c4478d621bf5c",
+          "path": "gaokao-grammar-fill/references/grammar-fill.md",
+          "heading": "总路线",
+          "state": "unchanged_section",
+          "current_candidate_lines": [
+            [
+              10,
+              26
+            ]
+          ]
+        }
+      ],
+      "runtime_migration": "not_applied",
+      "semantic_review": "required_not_proven_by_byte_comparison"
+    },
+    {
+      "method_id": "G18",
+      "version": "1.2.0",
+      "source_name": "总路线",
+      "primary_role": "verifier",
+      "method_type": "verification_rule",
+      "source_bindings": [
+        {
+          "old_section_id": "781c4478d621bf5c",
+          "path": "gaokao-grammar-fill/references/grammar-fill.md",
+          "heading": "总路线",
+          "state": "unchanged_section",
+          "current_candidate_lines": [
+            [
+              10,
+              26
+            ]
+          ]
+        }
+      ],
+      "runtime_migration": "not_applied",
+      "semantic_review": "required_not_proven_by_byte_comparison"
+    },
+    {
+      "method_id": "G19",
+      "version": "1.2.0",
+      "source_name": "总路线",
+      "primary_role": "verifier",
+      "method_type": "verification_rule",
+      "source_bindings": [
+        {
+          "old_section_id": "781c4478d621bf5c",
+          "path": "gaokao-grammar-fill/references/grammar-fill.md",
+          "heading": "总路线",
+          "state": "unchanged_section",
+          "current_candidate_lines": [
+            [
+              10,
+              26
+            ]
+          ]
+        }
+      ],
+      "runtime_migration": "not_applied",
+      "semantic_review": "required_not_proven_by_byte_comparison"
+    },
+    {
+      "method_id": "A01",
+      "version": "1.2.0",
+      "source_name": "批改顺序：先五审法",
+      "primary_role": "framework",
+      "method_type": "framework",
+      "source_bindings": [
+        {
+          "old_section_id": "dac147e9a947370c",
+          "path": "gaokao-writing/references/application-writing-and-correction.md",
+          "heading": "批改顺序：先五审法",
+          "state": "unchanged_section",
+          "current_candidate_lines": [
+            [
+              39,
+              50
+            ]
+          ]
+        },
+        {
+          "old_section_id": "f8cfb194a81aad6e",
+          "path": "gaokao-writing/references/application-writing-and-correction.md",
+          "heading": "使用边界",
+          "state": "unchanged_section",
+          "current_candidate_lines": [
+            [
+              5,
+              11
+            ]
+          ]
+        },
+        {
+          "old_section_id": "ed19bd45d6bc3762",
+          "path": "gaokao-writing/references/application-writing-and-correction.md",
+          "heading": "书写评价边界",
+          "state": "unchanged_section",
+          "current_candidate_lines": [
+            [
+              31,
+              38
+            ]
+          ]
+        }
+      ],
+      "runtime_migration": "not_applied",
+      "semantic_review": "required_not_proven_by_byte_comparison"
+    },
+    {
+      "method_id": "A02",
+      "version": "1.2.0",
+      "source_name": "应用文写作六步训练法通用梳理框架",
+      "primary_role": "framework",
+      "method_type": "framework",
+      "source_bindings": [
+        {
+          "old_section_id": "0a6f5b5594a41dd6",
+          "path": "gaokao-writing/references/application-writing-and-correction.md",
+          "heading": "应用文写作六步训练法通用梳理框架",
+          "state": "unchanged_section",
+          "current_candidate_lines": [
+            [
+              53,
+              61
+            ]
+          ]
+        }
+      ],
+      "runtime_migration": "not_applied",
+      "semantic_review": "required_not_proven_by_byte_comparison"
+    },
+    {
+      "method_id": "A03",
+      "version": "1.2.0",
+      "source_name": "基础句式锚定法",
+      "primary_role": "interpreter",
+      "method_type": "method",
+      "source_bindings": [
+        {
+          "old_section_id": "15e18423e3364f72",
+          "path": "gaokao-writing/references/application-writing-and-correction.md",
+          "heading": "三种写作表达方法",
+          "state": "unchanged_section",
+          "current_candidate_lines": [
+            [
+              62,
+              67
+            ]
+          ]
+        },
+        {
+          "old_section_id": "8cc4571377b8183a",
+          "path": "gaokao-writing/references/application-writing-and-correction.md",
+          "heading": "三种写作表达方法的细化",
+          "state": "unchanged_section",
+          "current_candidate_lines": [
+            [
+              188,
+              195
+            ]
+          ]
+        }
+      ],
+      "runtime_migration": "not_applied",
+      "semantic_review": "required_not_proven_by_byte_comparison"
+    },
+    {
+      "method_id": "A04",
+      "version": "1.2.0",
+      "source_name": "复杂句式模块法",
+      "primary_role": "interpreter",
+      "method_type": "method",
+      "source_bindings": [
+        {
+          "old_section_id": "15e18423e3364f72",
+          "path": "gaokao-writing/references/application-writing-and-correction.md",
+          "heading": "三种写作表达方法",
+          "state": "unchanged_section",
+          "current_candidate_lines": [
+            [
+              62,
+              67
+            ]
+          ]
+        },
+        {
+          "old_section_id": "8cc4571377b8183a",
+          "path": "gaokao-writing/references/application-writing-and-correction.md",
+          "heading": "三种写作表达方法的细化",
+          "state": "unchanged_section",
+          "current_candidate_lines": [
+            [
+              188,
+              195
+            ]
+          ]
+        }
+      ],
+      "runtime_migration": "not_applied",
+      "semantic_review": "required_not_proven_by_byte_comparison"
+    },
+    {
+      "method_id": "A05",
+      "version": "1.2.0",
+      "source_name": "长句翻译重构法",
+      "primary_role": "interpreter",
+      "method_type": "method",
+      "source_bindings": [
+        {
+          "old_section_id": "15e18423e3364f72",
+          "path": "gaokao-writing/references/application-writing-and-correction.md",
+          "heading": "三种写作表达方法",
+          "state": "unchanged_section",
+          "current_candidate_lines": [
+            [
+              62,
+              67
+            ]
+          ]
+        },
+        {
+          "old_section_id": "8cc4571377b8183a",
+          "path": "gaokao-writing/references/application-writing-and-correction.md",
+          "heading": "三种写作表达方法的细化",
+          "state": "unchanged_section",
+          "current_candidate_lines": [
+            [
+              188,
+              195
+            ]
+          ]
+        }
+      ],
+      "runtime_migration": "not_applied",
+      "semantic_review": "required_not_proven_by_byte_comparison"
+    },
+    {
+      "method_id": "A06",
+      "version": "1.2.0",
+      "source_name": "富兰克林写作法（寒4五步）",
+      "primary_role": "framework",
+      "method_type": "framework",
+      "source_bindings": [
+        {
+          "old_section_id": "27cf55e8f2cf7c93",
+          "path": "gaokao-writing/references/application-writing-and-correction.md",
+          "heading": "富兰克林写作法（五步）",
+          "state": "unchanged_section",
+          "current_candidate_lines": [
+            [
+              196,
+              199
+            ]
+          ]
+        },
+        {
+          "old_section_id": "1b1197e2fa02ee07",
+          "path": "gaokao-writing/references/application-writing-and-correction.md",
+          "heading": "富兰克林写作法（寒4五步）",
+          "state": "unchanged_section",
+          "current_candidate_lines": [
+            [
+              68,
+              71
+            ]
+          ]
+        }
+      ],
+      "runtime_migration": "not_applied",
+      "semantic_review": "required_not_proven_by_byte_comparison"
+    },
+    {
+      "method_id": "A07",
+      "version": "1.2.0",
+      "source_name": "反向劫匪插葱",
+      "primary_role": "interpreter",
+      "method_type": "method",
+      "source_bindings": [
+        {
+          "old_section_id": "4dde2ad49f107ae2",
+          "path": "gaokao-writing/references/application-writing-and-correction.md",
+          "heading": "反向劫匪插葱",
+          "state": "unchanged_section",
+          "current_candidate_lines": [
+            [
+              200,
+              203
+            ]
+          ]
+        },
+        {
+          "old_section_id": "3f39d3b03e8baef0",
+          "path": "gaokao-writing/references/application-writing-and-correction.md",
+          "heading": "细节与升级原则",
+          "state": "unchanged_section",
+          "current_candidate_lines": [
+            [
+              94,
+              100
+            ]
+          ]
+        }
+      ],
+      "runtime_migration": "not_applied",
+      "semantic_review": "required_not_proven_by_byte_comparison"
+    },
+    {
+      "method_id": "A08",
+      "version": "1.2.0",
+      "source_name": "常见文体骨架",
+      "primary_role": "framework",
+      "method_type": "category",
+      "source_bindings": [
+        {
+          "old_section_id": "cfc5531cda2a9b91",
+          "path": "gaokao-writing/references/application-writing-and-correction.md",
+          "heading": "常见文体骨架",
+          "state": "unchanged_section",
+          "current_candidate_lines": [
+            [
+              84,
+              93
+            ]
+          ]
+        },
+        {
+          "old_section_id": "e68392b5352c1bc7",
+          "path": "gaokao-writing/references/application-writing-and-correction.md",
+          "heading": "26S春 补充",
+          "state": "unchanged_section",
+          "current_candidate_lines": [
+            [
+              252,
+              265
+            ]
+          ]
+        }
+      ],
+      "runtime_migration": "not_applied",
+      "semantic_review": "required_not_proven_by_byte_comparison"
+    },
+    {
+      "method_id": "A09",
+      "version": "1.2.0",
+      "source_name": "15 分评分规范",
+      "primary_role": "verifier",
+      "method_type": "internal_rule",
+      "source_bindings": [
+        {
+          "old_section_id": "254fa3adfb42db4e",
+          "path": "gaokao-writing/references/application-writing-and-correction.md",
+          "heading": "15 分评分规范",
+          "state": "unchanged_section",
+          "current_candidate_lines": [
+            [
+              12,
+              30
+            ]
+          ]
+        },
+        {
+          "old_section_id": "f8cfb194a81aad6e",
+          "path": "gaokao-writing/references/application-writing-and-correction.md",
+          "heading": "使用边界",
+          "state": "unchanged_section",
+          "current_candidate_lines": [
+            [
+              5,
+              11
+            ]
+          ]
+        },
+        {
+          "old_section_id": "ed19bd45d6bc3762",
+          "path": "gaokao-writing/references/application-writing-and-correction.md",
+          "heading": "书写评价边界",
+          "state": "unchanged_section",
+          "current_candidate_lines": [
+            [
+              31,
+              38
+            ]
+          ]
+        }
+      ],
+      "runtime_migration": "not_applied",
+      "semantic_review": "required_not_proven_by_byte_comparison"
+    },
+    {
+      "method_id": "A10",
+      "version": "1.2.0",
+      "source_name": "复习路径与分数锚定",
+      "primary_role": "framework",
+      "method_type": "framework",
+      "source_bindings": [
+        {
+          "old_section_id": "c827be84f7798683",
+          "path": "gaokao-writing/references/application-writing-and-correction.md",
+          "heading": "复习路径与分数锚定",
+          "state": "unchanged_section",
+          "current_candidate_lines": [
+            [
+              174,
+              181
+            ]
+          ]
+        },
+        {
+          "old_section_id": "0a6f5b5594a41dd6",
+          "path": "gaokao-writing/references/application-writing-and-correction.md",
+          "heading": "应用文写作六步训练法通用梳理框架",
+          "state": "unchanged_section",
+          "current_candidate_lines": [
+            [
+              53,
+              61
+            ]
+          ]
+        }
+      ],
+      "runtime_migration": "not_applied",
+      "semantic_review": "required_not_proven_by_byte_comparison"
+    },
+    {
+      "method_id": "W01",
+      "version": "1.2.0",
+      "source_name": "开明致学五步法：跳定思提润",
+      "primary_role": "framework",
+      "method_type": "framework",
+      "source_bindings": [
+        {
+          "old_section_id": "40089c4aea5930c9",
+          "path": "gaokao-writing/references/continuation-writing-and-correction.md",
+          "heading": "开明致学五步法：跳定思提润",
+          "state": "unchanged_section",
+          "current_candidate_lines": [
+            [
+              58,
+              59
+            ]
+          ]
+        },
+        {
+          "old_section_id": "1136f0ec086fab00",
+          "path": "gaokao-writing/references/continuation-writing-and-correction.md",
+          "heading": "一 跳：跳读文章，弄清线索",
+          "state": "unchanged_section",
+          "current_candidate_lines": [
+            [
+              60,
+              66
+            ]
+          ]
+        },
+        {
+          "old_section_id": "1b0ba42794bd8a00",
+          "path": "gaokao-writing/references/continuation-writing-and-correction.md",
+          "heading": "二 定：确定冲突，锁定主题",
+          "state": "unchanged_section",
+          "current_candidate_lines": [
+            [
+              67,
+              72
+            ]
+          ]
+        },
+        {
+          "old_section_id": "7a74f41a6546aa31",
+          "path": "gaokao-writing/references/continuation-writing-and-correction.md",
+          "heading": "三 思：整体构思，提取素材",
+          "state": "unchanged_section",
+          "current_candidate_lines": [
+            [
+              73,
+              79
+            ]
+          ]
+        },
+        {
+          "old_section_id": "9b52c2a999ab29a2",
+          "path": "gaokao-writing/references/continuation-writing-and-correction.md",
+          "heading": "四 提：完成提纲，定词定句",
+          "state": "unchanged_section",
+          "current_candidate_lines": [
+            [
+              80,
+              85
+            ]
+          ]
+        },
+        {
+          "old_section_id": "0cf979fcaa4e9965",
+          "path": "gaokao-writing/references/continuation-writing-and-correction.md",
+          "heading": "五 润：检查主题回应，润色修改",
+          "state": "unchanged_section",
+          "current_candidate_lines": [
+            [
+              86,
+              91
+            ]
+          ]
+        },
+        {
+          "old_section_id": "7b4c299267a685c2",
+          "path": "gaokao-writing/references/continuation-writing-and-correction.md",
+          "heading": "使用边界",
+          "state": "unchanged_section",
+          "current_candidate_lines": [
+            [
+              5,
+              12
+            ]
+          ]
+        },
+        {
+          "old_section_id": "27662f3285730b79",
+          "path": "gaokao-writing/references/continuation-writing-and-correction.md",
+          "heading": "素材与考点",
+          "state": "unchanged_section",
+          "current_candidate_lines": [
+            [
+              278,
+              283
+            ]
+          ]
+        }
+      ],
+      "runtime_migration": "not_applied",
+      "semantic_review": "required_not_proven_by_byte_comparison"
+    },
+    {
+      "method_id": "W02",
+      "version": "1.3.0",
+      "source_name": "十句五定法",
+      "primary_role": "framework",
+      "method_type": "framework",
+      "source_bindings": [
+        {
+          "old_section_id": "c7b254c23e9755d1",
+          "path": "gaokao-writing/references/continuation-writing-and-correction.md",
+          "heading": "十句五定法",
+          "state": "unchanged_section",
+          "current_candidate_lines": [
+            [
+              92,
+              111
+            ]
+          ]
+        },
+        {
+          "old_section_id": "01e63cdd038968e7",
+          "path": "gaokao-writing/references/continuation-writing-and-correction.md",
+          "heading": "十句五定法的功能表",
+          "state": "unchanged_section",
+          "current_candidate_lines": [
+            [
+              274,
+              277
+            ]
+          ]
+        },
+        {
+          "old_section_id": "7b4c299267a685c2",
+          "path": "gaokao-writing/references/continuation-writing-and-correction.md",
+          "heading": "使用边界",
+          "state": "unchanged_section",
+          "current_candidate_lines": [
+            [
+              5,
+              12
+            ]
+          ]
+        },
+        {
+          "old_section_id": "27662f3285730b79",
+          "path": "gaokao-writing/references/continuation-writing-and-correction.md",
+          "heading": "素材与考点",
+          "state": "unchanged_section",
+          "current_candidate_lines": [
+            [
+              278,
+              283
+            ]
+          ]
+        }
+      ],
+      "runtime_migration": "not_applied",
+      "semantic_review": "required_not_proven_by_byte_comparison"
+    },
+    {
+      "method_id": "W03",
+      "version": "1.2.0",
+      "source_name": "情节构思：PTSD 四步法",
+      "primary_role": "framework",
+      "method_type": "framework",
+      "source_bindings": [
+        {
+          "old_section_id": "486a5ba8d06a5eb7",
+          "path": "gaokao-writing/references/continuation-writing-and-correction.md",
+          "heading": "情节构思：PTSD 四步法",
+          "state": "unchanged_section",
+          "current_candidate_lines": [
+            [
+              198,
+              205
+            ]
+          ]
+        },
+        {
+          "old_section_id": "a9f982dcfec817d9",
+          "path": "gaokao-writing/references/continuation-writing-and-correction.md",
+          "heading": "先框架后语言",
+          "state": "unchanged_section",
+          "current_candidate_lines": [
+            [
+              44,
+              57
+            ]
+          ]
+        },
+        {
+          "old_section_id": "6570e8d5c4fff00d",
+          "path": "gaokao-writing/references/continuation-writing-and-correction.md",
+          "heading": "26S春 补充（人与自然专项）",
+          "state": "unchanged_section",
+          "current_candidate_lines": [
+            [
+              302,
+              333
+            ]
+          ]
+        }
+      ],
+      "runtime_migration": "not_applied",
+      "semantic_review": "required_not_proven_by_byte_comparison"
+    },
+    {
+      "method_id": "W04",
+      "version": "1.2.0",
+      "source_name": "gap 读法与首句规则",
+      "primary_role": "locator",
+      "method_type": "method",
+      "source_bindings": [
+        {
+          "old_section_id": "637ac5c60b37baf7",
+          "path": "gaokao-writing/references/continuation-writing-and-correction.md",
+          "heading": "gap 读法与首句规则",
+          "state": "unchanged_section",
+          "current_candidate_lines": [
+            [
+              234,
+              237
+            ]
+          ]
+        },
+        {
+          "old_section_id": "a9f982dcfec817d9",
+          "path": "gaokao-writing/references/continuation-writing-and-correction.md",
+          "heading": "先框架后语言",
+          "state": "unchanged_section",
+          "current_candidate_lines": [
+            [
+              44,
+              57
+            ]
+          ]
+        },
+        {
+          "old_section_id": "7b4c299267a685c2",
+          "path": "gaokao-writing/references/continuation-writing-and-correction.md",
+          "heading": "使用边界",
+          "state": "unchanged_section",
+          "current_candidate_lines": [
+            [
+              5,
+              12
+            ]
+          ]
+        }
+      ],
+      "runtime_migration": "not_applied",
+      "semantic_review": "required_not_proven_by_byte_comparison"
+    },
+    {
+      "method_id": "W05",
+      "version": "1.2.0",
+      "source_name": "动作链",
+      "primary_role": "interpreter",
+      "method_type": "method",
+      "source_bindings": [
+        {
+          "old_section_id": "866388dfa1b014b3",
+          "path": "gaokao-writing/references/continuation-writing-and-correction.md",
+          "heading": "动作链与动作面",
+          "state": "unchanged_section",
+          "current_candidate_lines": [
+            [
+              238,
+              247
+            ]
+          ]
+        },
+        {
+          "old_section_id": "5391fbc041ed3f90",
+          "path": "gaokao-writing/references/continuation-writing-and-correction.md",
+          "heading": "人物和细节描写",
+          "state": "unchanged_section",
+          "current_candidate_lines": [
+            [
+              112,
+              120
+            ]
+          ]
+        }
+      ],
+      "runtime_migration": "not_applied",
+      "semantic_review": "required_not_proven_by_byte_comparison"
+    },
+    {
+      "method_id": "W06",
+      "version": "1.2.0",
+      "source_name": "五档升级路径（训练用）",
+      "primary_role": "locator",
+      "method_type": "sub_action",
+      "source_bindings": [
+        {
+          "old_section_id": "0601c0f1de7a4b8f",
+          "path": "gaokao-writing/references/continuation-writing-and-correction.md",
+          "heading": "五档升级路径（训练用）",
+          "state": "unchanged_section",
+          "current_candidate_lines": [
+            [
+              248,
+              259
+            ]
+          ]
+        },
+        {
+          "old_section_id": "a9f982dcfec817d9",
+          "path": "gaokao-writing/references/continuation-writing-and-correction.md",
+          "heading": "先框架后语言",
+          "state": "unchanged_section",
+          "current_candidate_lines": [
+            [
+              44,
+              57
+            ]
+          ]
+        }
+      ],
+      "runtime_migration": "not_applied",
+      "semantic_review": "required_not_proven_by_byte_comparison"
+    },
+    {
+      "method_id": "W07",
+      "version": "1.2.0",
+      "source_name": "五档升级路径（训练用）",
+      "primary_role": "verifier",
+      "method_type": "sub_action",
+      "source_bindings": [
+        {
+          "old_section_id": "0601c0f1de7a4b8f",
+          "path": "gaokao-writing/references/continuation-writing-and-correction.md",
+          "heading": "五档升级路径（训练用）",
+          "state": "unchanged_section",
+          "current_candidate_lines": [
+            [
+              248,
+              259
+            ]
+          ]
+        },
+        {
+          "old_section_id": "6570e8d5c4fff00d",
+          "path": "gaokao-writing/references/continuation-writing-and-correction.md",
+          "heading": "26S春 补充（人与自然专项）",
+          "state": "unchanged_section",
+          "current_candidate_lines": [
+            [
+              302,
+              333
+            ]
+          ]
+        },
+        {
+          "old_section_id": "a9f982dcfec817d9",
+          "path": "gaokao-writing/references/continuation-writing-and-correction.md",
+          "heading": "先框架后语言",
+          "state": "unchanged_section",
+          "current_candidate_lines": [
+            [
+              44,
+              57
+            ]
+          ]
+        }
+      ],
+      "runtime_migration": "not_applied",
+      "semantic_review": "required_not_proven_by_byte_comparison"
+    },
+    {
+      "method_id": "W08",
+      "version": "1.2.0",
+      "source_name": "五档升级路径（训练用）",
+      "primary_role": "interpreter",
+      "method_type": "sub_action",
+      "source_bindings": [
+        {
+          "old_section_id": "0601c0f1de7a4b8f",
+          "path": "gaokao-writing/references/continuation-writing-and-correction.md",
+          "heading": "五档升级路径（训练用）",
+          "state": "unchanged_section",
+          "current_candidate_lines": [
+            [
+              248,
+              259
+            ]
+          ]
+        },
+        {
+          "old_section_id": "a9f982dcfec817d9",
+          "path": "gaokao-writing/references/continuation-writing-and-correction.md",
+          "heading": "先框架后语言",
+          "state": "unchanged_section",
+          "current_candidate_lines": [
+            [
+              44,
+              57
+            ]
+          ]
+        }
+      ],
+      "runtime_migration": "not_applied",
+      "semantic_review": "required_not_proven_by_byte_comparison"
+    },
+    {
+      "method_id": "W09",
+      "version": "1.2.0",
+      "source_name": "五档升级路径（训练用）",
+      "primary_role": "interpreter",
+      "method_type": "sub_action",
+      "source_bindings": [
+        {
+          "old_section_id": "0601c0f1de7a4b8f",
+          "path": "gaokao-writing/references/continuation-writing-and-correction.md",
+          "heading": "五档升级路径（训练用）",
+          "state": "unchanged_section",
+          "current_candidate_lines": [
+            [
+              248,
+              259
+            ]
+          ]
+        },
+        {
+          "old_section_id": "5391fbc041ed3f90",
+          "path": "gaokao-writing/references/continuation-writing-and-correction.md",
+          "heading": "人物和细节描写",
+          "state": "unchanged_section",
+          "current_candidate_lines": [
+            [
+              112,
+              120
+            ]
+          ]
+        },
+        {
+          "old_section_id": "6570e8d5c4fff00d",
+          "path": "gaokao-writing/references/continuation-writing-and-correction.md",
+          "heading": "26S春 补充（人与自然专项）",
+          "state": "unchanged_section",
+          "current_candidate_lines": [
+            [
+              302,
+              333
+            ]
+          ]
+        }
+      ],
+      "runtime_migration": "not_applied",
+      "semantic_review": "required_not_proven_by_byte_comparison"
+    },
+    {
+      "method_id": "W10",
+      "version": "1.2.0",
+      "source_name": "五档升级路径（训练用）",
+      "primary_role": "interpreter",
+      "method_type": "sub_action",
+      "source_bindings": [
+        {
+          "old_section_id": "0601c0f1de7a4b8f",
+          "path": "gaokao-writing/references/continuation-writing-and-correction.md",
+          "heading": "五档升级路径（训练用）",
+          "state": "unchanged_section",
+          "current_candidate_lines": [
+            [
+              248,
+              259
+            ]
+          ]
+        }
+      ],
+      "runtime_migration": "not_applied",
+      "semantic_review": "required_not_proven_by_byte_comparison"
+    },
+    {
+      "method_id": "W11",
+      "version": "1.2.0",
+      "source_name": "五档升级路径（训练用）",
+      "primary_role": "interpreter",
+      "method_type": "sub_action",
+      "source_bindings": [
+        {
+          "old_section_id": "0601c0f1de7a4b8f",
+          "path": "gaokao-writing/references/continuation-writing-and-correction.md",
+          "heading": "五档升级路径（训练用）",
+          "state": "unchanged_section",
+          "current_candidate_lines": [
+            [
+              248,
+              259
+            ]
+          ]
+        },
+        {
+          "old_section_id": "45b51237476e0ec8",
+          "path": "gaokao-writing/references/continuation-writing-and-correction.md",
+          "heading": "三条基本规律",
+          "state": "unchanged_section",
+          "current_candidate_lines": [
+            [
+              214,
+              217
+            ]
+          ]
+        },
+        {
+          "old_section_id": "a9f982dcfec817d9",
+          "path": "gaokao-writing/references/continuation-writing-and-correction.md",
+          "heading": "先框架后语言",
+          "state": "unchanged_section",
+          "current_candidate_lines": [
+            [
+              44,
+              57
+            ]
+          ]
+        },
+        {
+          "old_section_id": "6570e8d5c4fff00d",
+          "path": "gaokao-writing/references/continuation-writing-and-correction.md",
+          "heading": "26S春 补充（人与自然专项）",
+          "state": "unchanged_section",
+          "current_candidate_lines": [
+            [
+              302,
+              333
+            ]
+          ]
+        }
+      ],
+      "runtime_migration": "not_applied",
+      "semantic_review": "required_not_proven_by_byte_comparison"
+    },
+    {
+      "method_id": "W12",
+      "version": "1.2.0",
+      "source_name": "五档升级路径（训练用）",
+      "primary_role": "interpreter",
+      "method_type": "sub_action",
+      "source_bindings": [
+        {
+          "old_section_id": "0601c0f1de7a4b8f",
+          "path": "gaokao-writing/references/continuation-writing-and-correction.md",
+          "heading": "五档升级路径（训练用）",
+          "state": "unchanged_section",
+          "current_candidate_lines": [
+            [
+              248,
+              259
+            ]
+          ]
+        },
+        {
+          "old_section_id": "3c0a4de4ecbf9d90",
+          "path": "gaokao-writing/references/continuation-writing-and-correction.md",
+          "heading": "第五档作文标准与句子框架",
+          "state": "unchanged_section",
+          "current_candidate_lines": [
+            [
+              260,
+              265
+            ]
+          ]
+        }
+      ],
+      "runtime_migration": "not_applied",
+      "semantic_review": "required_not_proven_by_byte_comparison"
+    },
+    {
+      "method_id": "W13",
+      "version": "1.2.0",
+      "source_name": "素材与考点",
+      "primary_role": "verifier",
+      "method_type": "method",
+      "source_bindings": [
+        {
+          "old_section_id": "27662f3285730b79",
+          "path": "gaokao-writing/references/continuation-writing-and-correction.md",
+          "heading": "素材与考点",
+          "state": "unchanged_section",
+          "current_candidate_lines": [
+            [
+              278,
+              283
+            ]
+          ]
+        },
+        {
+          "old_section_id": "0cf979fcaa4e9965",
+          "path": "gaokao-writing/references/continuation-writing-and-correction.md",
+          "heading": "五 润：检查主题回应，润色修改",
+          "state": "unchanged_section",
+          "current_candidate_lines": [
+            [
+              86,
+              91
+            ]
+          ]
+        },
+        {
+          "old_section_id": "6570e8d5c4fff00d",
+          "path": "gaokao-writing/references/continuation-writing-and-correction.md",
+          "heading": "26S春 补充（人与自然专项）",
+          "state": "unchanged_section",
+          "current_candidate_lines": [
+            [
+              302,
+              333
+            ]
+          ]
+        },
+        {
+          "old_section_id": "a9f982dcfec817d9",
+          "path": "gaokao-writing/references/continuation-writing-and-correction.md",
+          "heading": "先框架后语言",
+          "state": "unchanged_section",
+          "current_candidate_lines": [
+            [
+              44,
+              57
+            ]
+          ]
+        }
+      ],
+      "runtime_migration": "not_applied",
+      "semantic_review": "required_not_proven_by_byte_comparison"
+    },
+    {
+      "method_id": "W14",
+      "version": "1.2.0",
+      "source_name": "肌肉句与骨架句",
+      "primary_role": "framework",
+      "method_type": "category",
+      "source_bindings": [
+        {
+          "old_section_id": "4b1d65a04c19b519",
+          "path": "gaokao-writing/references/continuation-writing-and-correction.md",
+          "heading": "肌肉句与骨架句",
+          "state": "unchanged_section",
+          "current_candidate_lines": [
+            [
+              266,
+              269
+            ]
+          ]
+        },
+        {
+          "old_section_id": "c7b254c23e9755d1",
+          "path": "gaokao-writing/references/continuation-writing-and-correction.md",
+          "heading": "十句五定法",
+          "state": "unchanged_section",
+          "current_candidate_lines": [
+            [
+              92,
+              111
+            ]
+          ]
+        },
+        {
+          "old_section_id": "6570e8d5c4fff00d",
+          "path": "gaokao-writing/references/continuation-writing-and-correction.md",
+          "heading": "26S春 补充（人与自然专项）",
+          "state": "unchanged_section",
+          "current_candidate_lines": [
+            [
+              302,
+              333
+            ]
+          ]
+        },
+        {
+          "old_section_id": "a9f982dcfec817d9",
+          "path": "gaokao-writing/references/continuation-writing-and-correction.md",
+          "heading": "先框架后语言",
+          "state": "unchanged_section",
+          "current_candidate_lines": [
+            [
+              44,
+              57
+            ]
+          ]
+        }
+      ],
+      "runtime_migration": "not_applied",
+      "semantic_review": "required_not_proven_by_byte_comparison"
+    },
+    {
+      "method_id": "W15",
+      "version": "1.2.0",
+      "source_name": "25 分评分规范",
+      "primary_role": "verifier",
+      "method_type": "internal_rule",
+      "source_bindings": [
+        {
+          "old_section_id": "d2dc77b78b7ce906",
+          "path": "gaokao-writing/references/continuation-writing-and-correction.md",
+          "heading": "25 分评分规范",
+          "state": "unchanged_section",
+          "current_candidate_lines": [
+            [
+              13,
+              35
+            ]
+          ]
+        },
+        {
+          "old_section_id": "7b4c299267a685c2",
+          "path": "gaokao-writing/references/continuation-writing-and-correction.md",
+          "heading": "使用边界",
+          "state": "unchanged_section",
+          "current_candidate_lines": [
+            [
+              5,
+              12
+            ]
+          ]
+        },
+        {
+          "old_section_id": "09015032f4ec758b",
+          "path": "gaokao-writing/references/continuation-writing-and-correction.md",
+          "heading": "书写评价边界",
+          "state": "unchanged_section",
+          "current_candidate_lines": [
+            [
+              36,
+              43
+            ]
+          ]
+        },
+        {
+          "old_section_id": "27662f3285730b79",
+          "path": "gaokao-writing/references/continuation-writing-and-correction.md",
+          "heading": "素材与考点",
+          "state": "unchanged_section",
+          "current_candidate_lines": [
+            [
+              278,
+              283
+            ]
+          ]
+        }
+      ],
+      "runtime_migration": "not_applied",
+      "semantic_review": "required_not_proven_by_byte_comparison"
+    },
+    {
+      "method_id": "W16",
+      "version": "1.2.0",
+      "source_name": "五档升级路径（训练用）",
+      "primary_role": "framework",
+      "method_type": "framework",
+      "source_bindings": [
+        {
+          "old_section_id": "0601c0f1de7a4b8f",
+          "path": "gaokao-writing/references/continuation-writing-and-correction.md",
+          "heading": "五档升级路径（训练用）",
+          "state": "unchanged_section",
+          "current_candidate_lines": [
+            [
+              248,
+              259
+            ]
+          ]
+        },
+        {
+          "old_section_id": "7b4c299267a685c2",
+          "path": "gaokao-writing/references/continuation-writing-and-correction.md",
+          "heading": "使用边界",
+          "state": "unchanged_section",
+          "current_candidate_lines": [
+            [
+              5,
+              12
+            ]
+          ]
+        }
+      ],
+      "runtime_migration": "not_applied",
+      "semantic_review": "required_not_proven_by_byte_comparison"
+    }
+  ],
+  "completion": false,
+  "pending": [
+    "review all six modules and delivery policies",
+    "bind current method cards and preserve distinct course names",
+    "implement historical replay and current lifecycle gates",
+    "regenerate projections and audit student entry copies",
+    "run current rules, old case and downstream frozen-artifact regressions",
+    "refresh handoff package and record final acceptance"
+  ],
+  "section_comparison_policy": "universal newlines only; no semantic or punctuation normalization"
+}
