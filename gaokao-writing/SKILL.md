@@ -14,3 +14,5 @@ description: 高考英语应用文、读后续写答疑；经注册表、证据�
 名称身份有疑问时读取 [generated-course-identities.yaml](generated-course-identities.yaml)，并回对应题型原章节；项目内可用 `python -m answer_engine course-identity 完整源标题` 查询。来源登记、程序检查或生成短稿不等于方法已通过传播、实用性或真人验收。
 
 完整写作审阅进入核心时读取 [writing-review.md](references/writing-review.md)，提交writing_review而非用客观题relations假装评分。区分确定错误与可选润色，独立15/25分规范、材料与书写边界不变；程序只检查引用/交付结构，分数仅外部建议。
+
+27届写作资料补充见 [course-update-2027.md](references/course-update-2027.md)：只在当前文体或训练需要时查对；原课程定义与15/25分规范保留，不把模板、训练配额或未开课续写内容当新判据。

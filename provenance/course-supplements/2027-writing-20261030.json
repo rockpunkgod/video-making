@@ -1,0 +1,72 @@
+{
+  "course_url": "https://www.lckmzx.com/member/study?nav=26",
+  "course": "龙坚丨2027届高三英语全年班",
+  "collected_on": "2026-10-30",
+  "source_baseline": "70db6d6f0423bc8da95c591ca1feda883c2865b1",
+  "scope": "metadata only; paid originals remain private; bounded supplement, not method promotion",
+  "files": [
+    {
+      "name": "【回放轴】第3讲 写作（27S秋）.pdf",
+      "bytes": 4974079,
+      "sha256": "4d6c74abbf9b9aeb46ad9ce839c05d70e3199426182cbaee3a729cff09103f1a",
+      "pages": 2
+    },
+    {
+      "name": "【回放轴】第8讲 应用文写作 （27S暑）.pdf",
+      "bytes": 5547459,
+      "sha256": "607060e887f805bcc2d642d5167733d629272806ef75b3cb82e29ac2ddb87f86",
+      "pages": 2
+    },
+    {
+      "name": "【空白讲义】第3讲 应用文（27S秋）.pdf",
+      "bytes": 1908084,
+      "sha256": "3998bcd51710ab7e08f88f6caab05c3b4d7792ec773599131b083ef499f1d61f",
+      "pages": 7
+    },
+    {
+      "name": "【空白讲义】第8讲 应用文（27S暑）.pdf",
+      "bytes": 1852730,
+      "sha256": "c7f327e23ded4709190e327062e175d840a8ccd2a0984328a2b7e8b175b05dd7",
+      "pages": 7
+    },
+    {
+      "name": "【课上讲义】第3讲 应用文（27S秋）.docx",
+      "bytes": 39564,
+      "sha256": "83b873a9aad002c61ccf08f96b5d6b937a8fa0975c0307f68ee00aefe9868064"
+    },
+    {
+      "name": "【课上讲义】第8讲 应用文写作（27S暑）.docx",
+      "bytes": 47186,
+      "sha256": "ef01d856053961c758923510229ac9e0c0c32e27126e33ad5f6cf12e2a26f38c"
+    },
+    {
+      "name": "【课后作业】第3讲 应用文（27S秋）.pdf",
+      "bytes": 1649801,
+      "sha256": "593512582df5546be0fa91c07345246b1a375fb2d1f93e233f10481bf6658ed1",
+      "pages": 2
+    },
+    {
+      "name": "【课后作业】第8讲 应用文（27S暑）.pdf",
+      "bytes": 1661884,
+      "sha256": "48f7c3e957041b62e26b5ad6218b792a9e6ed7a4ddf58babca584d0b68f68020",
+      "pages": 2
+    },
+    {
+      "name": "【课后作业解析】第8讲 应用文写作（27S暑）.docx",
+      "bytes": 14899,
+      "sha256": "2507ba7d4b95efe635a7d2992e9899d868558fe72b5ecb2815b19a2607c16d38"
+    }
+  ],
+  "verified_read_scope": {
+    "docx_body_documents": 3,
+    "main_docx_template_tables": 6,
+    "replay_axis_pages_visually_read": 4,
+    "blank_and_homework_pdf_ocr_verified": false,
+    "course_audio_verified": false,
+    "video_downloaded": false
+  },
+  "pending": [
+    "2027秋季第12讲读后续写，11月29日未开始"
+  ],
+  "consumer": "gaokao-writing/references/course-update-2027.md"
+}

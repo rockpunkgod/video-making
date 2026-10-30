@@ -141,6 +141,9 @@ def build(registry=None):
         if name=='gaokao-writing':
             assets[f'{name}/SKILL.md']+='\n完整写作审阅进入核心时读取 [writing-review.md](references/writing-review.md)，提交writing_review而非用客观题relations假装评分。区分确定错误与可选润色，独立15/25分规范、材料与书写边界不变；程序只检查引用/交付结构，分数仅外部建议。\n'
             assets[f'{name}/references/writing-review.md']='<!-- Generated interface guide; course facts stay in Registry. -->\n\n'+(ROOT/'docs/writing-review.md').read_text(encoding='utf-8')
+            if not r.is_historical:
+                assets[f'{name}/references/course-update-2027.md']='<!-- Generated bounded local course supplement; not an ANSWER source-epoch replacement. -->\n\n'+(ROOT/'docs/course-writing-update-2027-20261030.md').read_text(encoding='utf-8')
+                assets[f'{name}/SKILL.md']+='\n27届写作资料补充见 [course-update-2027.md](references/course-update-2027.md)：只在当前文体或训练需要时查对；原课程定义与15/25分规范保留，不把模板、训练配额或未开课续写内容当新判据。\n'
         assets[f'{name}/generated-contract.md'] = '<!-- Generated from Registry; DO NOT EDIT. -->\n\n'+front_end
         assets[f'{name}/generated-methods.yaml'] = yaml.safe_dump({'methods':[m for m in r.methods.values() if m['question_type'] in types]},allow_unicode=True,sort_keys=False)
         for doc in r.sources['documents']:

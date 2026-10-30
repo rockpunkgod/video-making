@@ -1,0 +1,73 @@
+{
+  "source_commit": "70db6d6f0423bc8da95c591ca1feda883c2865b1",
+  "date": "2026-10-30",
+  "status": "COMPATIBILITY_PASS_WITH_HISTORICAL_FORMAL_ADMISSION_HELD",
+  "scope": "Existing question input compatibility and source-only controls; not fresh independent English or learner certification",
+  "current_teaching_pack": {
+    "paper_count": 7,
+    "entries": 322,
+    "objective_lessons": 290,
+    "prewriting_guides": 13,
+    "historical_external_explanations": 19,
+    "answer_changes": 0,
+    "semantic_projection_changes": 0,
+    "student_text_changes": 0,
+    "source_only_control_answers": 0
+  },
+  "legacy_source_subsets": {
+    "source_records": 204,
+    "structural_inputs": 2466,
+    "replay_failures": 0,
+    "unreviewed_engine_answers": 0,
+    "whole_paper_English_certified": false
+  },
+  "additional_input_files": {
+    "first_batch_files": 74,
+    "executed": 44,
+    "exact_duplicates_reused": 9,
+    "wrapper_or_single_question_redirects": 20,
+    "withdrawal_not_question": 1,
+    "supplement_batch_files": 23,
+    "supplement_executed": 18,
+    "supplement_exact_duplicates_reused": 5,
+    "counts_are_not_unique_papers": true
+  },
+  "reviewed_packet_parity": {
+    "packets": 9,
+    "entries": 323,
+    "semantic_projection_changes": 0
+  },
+  "formal_historical_catalog": {
+    "records": 38,
+    "historical_validation": "PASS",
+    "current_admission_rejected": 38,
+    "automatic_reregistration": false
+  },
+  "private_pdf_skip_supplement": {
+    "status": "PASS",
+    "scope": "three frozen extraction records only",
+    "original_engineering_skip_preserved": true
+  },
+  "validation": {
+    "focused_tests": 73,
+    "failures": 0,
+    "errors": 0,
+    "generated_assets": "PASS",
+    "yuanchuang_47_API_CLI_exact_equal": true,
+    "cached_uncached_two_paper_byte_parity": "PASS"
+  },
+  "writing_supplement": {
+    "downloaded_attachments": 9,
+    "writing_lessons": 2,
+    "private_original_hashes_unchanged": true,
+    "course_video_downloaded": false,
+    "unopened_continuation_lesson_included": false
+  },
+  "new_independent_English_reviews": 0,
+  "new_cases": 0,
+  "new_blind_samples": 0,
+  "new_learner_records": 0,
+  "all_uploaded_complete": false,
+  "ANSWER_modified": false,
+  "private_receipt": "local-data/question-alignment-70db6d6-20261030/CONSOLIDATED_RECEIPT.json"
+}
