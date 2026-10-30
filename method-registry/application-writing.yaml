@@ -38,7 +38,7 @@ methods:
   - repository: https://github.com/rockpunkgod/ANSWER.git
     path: gaokao-writing/references/application-writing-and-correction.md
     heading: 批改顺序：先五审法
-    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
   section_ids: &id001
   - dac147e9a947370c
   - f8cfb194a81aad6e
@@ -74,7 +74,7 @@ methods:
       micro_action_is_not_completion: 完成第一小步不等于完整方法成功；继续完成四步卡的判断与停止核验。
       short_stop: 无题目只校语言，无全文不做整篇诊断。
     presentation_revision: 2026-10-28.2
-    source_update_note: 寒4五步不吞并赠课挖空版本；春5格式与结尾服从实际任务；国庆表达技巧、修改流程和构思模型分别保名，简单句可保留。
+    source_update_note: 27写作口诀、大小三圈与六类信件分源；综合运用小结不改名五审。三思辨模型按职责用，单句重构已补核，简单句和相关两点可保留。
   cases:
     canonical: cases/application-writing/A01/canonical/case.yaml
   four_step_card:
@@ -117,7 +117,7 @@ methods:
   maturity_status: candidate
   practical_value: Useful
   version: 1.2.0
-  change_reason: ANSWER 70db6d6 显式来源差异复核；保留品牌动作和基础入口，异文分源，旧Case不自动获新纪元准入。
+  change_reason: ANSWER 9a872ba 显式来源差异复核；旧来源归档，保基础入口与实用优先，不自动授予Case或真人准入。
   affected_cases:
   - cases/application-writing/A01/canonical/case.yaml
   regression_result: pending_current_epoch_semantic_and_student_acceptance
@@ -129,13 +129,13 @@ methods:
     participant_validation: pending_real_participant_validation
     example_scope: 2026-10-28基础入口表达修订；保留原判据/Stop/课程绑定与语义版本，微动作和关系示意不是完整真题或真人实测。
   source_alignment:
-    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
     state: live_source_bound
     source_content_changed: false
     correction_profile_applied: false
     authored_first_contact_draft: true
     new_course_branches: preserved_in_full_contract_not_automatically_aliased
-    acceptance: 2026-10-30 explicit source delta review; learner/blind/release pending
+    acceptance: explicit source delta review; learner/blind/release pending
 - method_id: A02
   brand_name: 六步成稿
   source_name: 应用文写作六步训练法通用梳理框架
@@ -172,7 +172,7 @@ methods:
   - repository: https://github.com/rockpunkgod/ANSWER.git
     path: gaokao-writing/references/application-writing-and-correction.md
     heading: 应用文写作六步训练法通用梳理框架
-    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
   section_ids: &id002
   - 0a6f5b5594a41dd6
   can_follow: []
@@ -208,7 +208,7 @@ methods:
       micro_action_is_not_completion: 完成第一小步不等于完整方法成功；继续完成四步卡的判断与停止核验。
       short_stop: 基础内容没成立先修，不强塞复杂句。
     presentation_revision: 2026-10-28.2
-    source_update_note: 寒4五步不吞并赠课挖空版本；春5格式与结尾服从实际任务；国庆表达技巧、修改流程和构思模型分别保名，简单句可保留。
+    source_update_note: 27写作口诀、大小三圈与六类信件分源；综合运用小结不改名五审。三思辨模型按职责用，单句重构已补核，简单句和相关两点可保留。
   cases:
     canonical: cases/application-writing/A02/canonical/case.yaml
   four_step_card:
@@ -251,7 +251,7 @@ methods:
   maturity_status: candidate
   practical_value: Useful
   version: 1.2.0
-  change_reason: ANSWER 70db6d6 显式来源差异复核；保留品牌动作和基础入口，异文分源，旧Case不自动获新纪元准入。
+  change_reason: ANSWER 9a872ba 显式来源差异复核；旧来源归档，保基础入口与实用优先，不自动授予Case或真人准入。
   affected_cases:
   - cases/application-writing/A02/canonical/case.yaml
   regression_result: pending_current_epoch_semantic_and_student_acceptance
@@ -263,13 +263,13 @@ methods:
     participant_validation: pending_real_participant_validation
     example_scope: 2026-10-28基础入口表达修订；保留原判据/Stop/课程绑定与语义版本，微动作和关系示意不是完整真题或真人实测。
   source_alignment:
-    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
     state: live_source_bound
     source_content_changed: false
     correction_profile_applied: true
     authored_first_contact_draft: true
     new_course_branches: preserved_in_full_contract_not_automatically_aliased
-    acceptance: 2026-10-30 explicit source delta review; learner/blind/release pending
+    acceptance: explicit source delta review; learner/blind/release pending
 - method_id: A03
   brand_name: 三步造句
   source_name: 基础句式锚定法
@@ -306,10 +306,10 @@ methods:
   - repository: https://github.com/rockpunkgod/ANSWER.git
     path: gaokao-writing/references/application-writing-and-correction.md
     heading: 三种写作表达方法
-    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
   section_ids: &id003
   - 15e18423e3364f72
-  - 674a33a24f97831a
+  - 2e057c9f98c9de93
   can_follow: []
   usually_before: []
   usually_after: []
@@ -343,7 +343,7 @@ methods:
       micro_action_is_not_completion: 完成第一小步不等于完整方法成功；继续完成四步卡的判断与停止核验。
       short_stop: 主体或动作不清先回要点，不编背景凑细节。
     presentation_revision: 2026-10-28.2
-    source_update_note: 寒4五步不吞并赠课挖空版本；春5格式与结尾服从实际任务；国庆表达技巧、修改流程和构思模型分别保名，简单句可保留。
+    source_update_note: 27写作口诀、大小三圈与六类信件分源；综合运用小结不改名五审。三思辨模型按职责用，单句重构已补核，简单句和相关两点可保留。
   cases:
     canonical: cases/application-writing/A03/canonical/case.yaml
   four_step_card:
@@ -386,7 +386,7 @@ methods:
   maturity_status: candidate
   practical_value: Useful
   version: 1.2.0
-  change_reason: ANSWER 70db6d6 显式来源差异复核；保留品牌动作和基础入口，异文分源，旧Case不自动获新纪元准入。
+  change_reason: ANSWER 9a872ba 显式来源差异复核；旧来源归档，保基础入口与实用优先，不自动授予Case或真人准入。
   affected_cases:
   - cases/application-writing/A03/canonical/case.yaml
   regression_result: pending_current_epoch_semantic_and_student_acceptance
@@ -398,13 +398,13 @@ methods:
     participant_validation: pending_real_participant_validation
     example_scope: 2026-10-28基础入口表达修订；保留原判据/Stop/课程绑定与语义版本，微动作和关系示意不是完整真题或真人实测。
   source_alignment:
-    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
     state: live_source_bound
     source_content_changed: true
     correction_profile_applied: true
     authored_first_contact_draft: true
     new_course_branches: preserved_in_full_contract_not_automatically_aliased
-    acceptance: 2026-10-30 explicit source delta review; learner/blind/release pending
+    acceptance: explicit source delta review; learner/blind/release pending
 - method_id: A04
   brand_name: 句块拼接
   source_name: 复杂句式模块法
@@ -443,10 +443,10 @@ methods:
   - repository: https://github.com/rockpunkgod/ANSWER.git
     path: gaokao-writing/references/application-writing-and-correction.md
     heading: 三种写作表达方法
-    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
   section_ids: &id004
   - 15e18423e3364f72
-  - 674a33a24f97831a
+  - 2e057c9f98c9de93
   can_follow: []
   usually_before: []
   usually_after: []
@@ -480,7 +480,7 @@ methods:
       micro_action_is_not_completion: 完成第一小步不等于完整方法成功；继续完成四步卡的判断与停止核验。
       short_stop: 基础句或关系不成立不合并，不凑从句数量。
     presentation_revision: 2026-10-28.2
-    source_update_note: 寒4五步不吞并赠课挖空版本；春5格式与结尾服从实际任务；国庆表达技巧、修改流程和构思模型分别保名，简单句可保留。
+    source_update_note: 27写作口诀、大小三圈与六类信件分源；综合运用小结不改名五审。三思辨模型按职责用，单句重构已补核，简单句和相关两点可保留。
   cases:
     canonical: cases/application-writing/A04/canonical/case.yaml
   four_step_card:
@@ -523,7 +523,7 @@ methods:
   maturity_status: candidate
   practical_value: Useful
   version: 1.2.0
-  change_reason: ANSWER 70db6d6 显式来源差异复核；保留品牌动作和基础入口，异文分源，旧Case不自动获新纪元准入。
+  change_reason: ANSWER 9a872ba 显式来源差异复核；旧来源归档，保基础入口与实用优先，不自动授予Case或真人准入。
   affected_cases:
   - cases/application-writing/A04/canonical/case.yaml
   regression_result: pending_current_epoch_semantic_and_student_acceptance
@@ -535,13 +535,13 @@ methods:
     participant_validation: pending_real_participant_validation
     example_scope: 2026-10-28基础入口表达修订；保留原判据/Stop/课程绑定与语义版本，微动作和关系示意不是完整真题或真人实测。
   source_alignment:
-    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
     state: live_source_bound
     source_content_changed: true
     correction_profile_applied: true
     authored_first_contact_draft: true
     new_course_branches: preserved_in_full_contract_not_automatically_aliased
-    acceptance: 2026-10-30 explicit source delta review; learner/blind/release pending
+    acceptance: explicit source delta review; learner/blind/release pending
 - method_id: A05
   brand_name: 长句重组
   source_name: 长句翻译重构法
@@ -559,12 +559,12 @@ methods:
   - 中文信息与修饰混杂，需要重构英文表达而非按整篇词数选法。
   core_action: 拆核心与修饰信息，按主体→核心动作→场景重组，再校时态、词性、单复数和衔接风格。
   decision_rule: 产出保留原义、对象与限制的句子；按信息复杂度与表达能力选用，不由110/120整篇词数触发。
-  verification: 产出保留原义、对象与限制的句子；按信息复杂度与表达能力选用，不由110/120整篇词数触发。 核心不清先停重排；否定、时间、数量、条件不能当枝叶删；不宣称缺连续口述或新完整例的分支已全面验收。
-  stop_rule: 核心不清先停重排；否定、时间、数量、条件不能当枝叶删；不宣称缺连续口述或新完整例的分支已全面验收。
+  verification: 产出保留原义、对象与限制的句子；按信息复杂度与表达能力选用，不由110/120整篇词数触发。 核心不清先停重排；否定、时间、数量、条件不能当枝叶删；已补核两独立单句重构；不把例题完成分词固定到新题，准确简单句可以保留。
+  stop_rule: 核心不清先停重排；否定、时间、数量、条件不能当枝叶删；已补核两独立单句重构；不把例题完成分词固定到新题，准确简单句可以保留。
   common_wrong_instinct: 照中文词序逐词翻译，或简化时把关键限制也删了。
   failure_cases:
   - 照中文词序逐词翻译，或简化时把关键限制也删了。
-  - 核心不清先停重排；否定、时间、数量、条件不能当枝叶删；不宣称缺连续口述或新完整例的分支已全面验收。
+  - 核心不清先停重排；否定、时间、数量、条件不能当枝叶删；已补核两独立单句重构；不把例题完成分词固定到新题，准确简单句可以保留。
   counterexamples:
   - 句首的条件看着像修饰，却决定动作何时成立，重组不能删除；主客体对调后语法通顺也不是正确翻译。此为关系示意，不是真题。
   transfer_pattern: 换中文内容仍先拆信息，再保限定地重排和校准。
@@ -580,10 +580,10 @@ methods:
   - repository: https://github.com/rockpunkgod/ANSWER.git
     path: gaokao-writing/references/application-writing-and-correction.md
     heading: 三种写作表达方法
-    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
   section_ids: &id005
   - 15e18423e3364f72
-  - 674a33a24f97831a
+  - 2e057c9f98c9de93
   can_follow: []
   usually_before: []
   usually_after: []
@@ -597,15 +597,15 @@ methods:
     L4: 换中文内容仍先拆信息，再保限定地重排和校准。
   compact:
     line: 拆核心与修饰信息，按主体→核心动作→场景重组，再校时态、词性、单复数和衔接风格。
-    boundary: 核心不清先停重排；否定、时间、数量、条件不能当枝叶删；不宣称缺连续口述或新完整例的分支已全面验收。
+    boundary: 核心不清先停重排；否定、时间、数量、条件不能当枝叶删；已补核两独立单句重构；不把例题完成分词固定到新题，准确简单句可以保留。
     10s: 中文信息挤成一团？先分核心和限定再重排；语序能改，原义和条件不能丢。
     30s: 中文信息挤成一团？先用中文写清这句最重要的谁做什么，否定、条件和数量另作保留标记。例如，句首条件决定动作何时成立，重组不能把它删掉。核心没清楚先停，按信息难度而非整篇词数选法。
-    90s: 中文信息挤成一团？拆核心与修饰信息，按主体→核心动作→场景重组，再校时态、词性、单复数和衔接风格。这一步得到的是对当前关系或表达的解释，还要核完整题目。判断时，产出保留原义、对象与限制的句子；按信息复杂度与表达能力选用，不由110/120整篇词数触发。什么时候停，核心不清先停重排；否定、时间、数量、条件不能当枝叶删；不宣称缺连续口述或新完整例的分支已全面验收。反例示意，句首的条件看着像修饰，却决定动作何时成立，重组不能删除；主客体对调后语法通顺也不是正确翻译。此为关系示意，不是真题。换题仍检查当前题面的对象和关系，不搬上一题结论。挑战，先不译长句，只标必须保留的核心与限定，再写英文主干的信息顺序。
+    90s: 中文信息挤成一团？拆核心与修饰信息，按主体→核心动作→场景重组，再校时态、词性、单复数和衔接风格。这一步得到的是对当前关系或表达的解释，还要核完整题目。判断时，产出保留原义、对象与限制的句子；按信息复杂度与表达能力选用，不由110/120整篇词数触发。什么时候停，核心不清先停重排；否定、时间、数量、条件不能当枝叶删；已补核两独立单句重构；不把例题完成分词固定到新题，准确简单句可以保留。反例示意，句首的条件看着像修饰，却决定动作何时成立，重组不能删除；主客体对调后语法通顺也不是正确翻译。此为关系示意，不是真题。换题仍检查当前题面的对象和关系，不搬上一题结论。挑战，先不译长句，只标必须保留的核心与限定，再写英文主干的信息顺序。
   full:
     summary: 拆核心与修饰信息，按主体→核心动作→场景重组，再校时态、词性、单复数和衔接风格。 产出保留原义、对象与限制的句子；按信息复杂度与表达能力选用，不由110/120整篇词数触发。
-    source_boundary: 核心不清先停重排；否定、时间、数量、条件不能当枝叶删；不宣称缺连续口述或新完整例的分支已全面验收。
+    source_boundary: 核心不清先停重排；否定、时间、数量、条件不能当枝叶删；已补核两独立单句重构；不把例题完成分词固定到新题，准确简单句可以保留。
     boundaries:
-    - 核心不清先停重排；否定、时间、数量、条件不能当枝叶删；不宣称缺连续口述或新完整例的分支已全面验收。
+    - 核心不清先停重排；否定、时间、数量、条件不能当枝叶删；已补核两独立单句重构；不把例题完成分词固定到新题，准确简单句可以保留。
     - 句首的条件看着像修饰，却决定动作何时成立，重组不能删除；主客体对调后语法通顺也不是正确翻译。此为关系示意，不是真题。
     section_ids: *id005
     beginner_support:
@@ -616,21 +616,21 @@ methods:
       example_scope: 关系/结构示意，非完整试题，不计真题或已验案例。
       micro_action_is_not_completion: 完成第一小步不等于完整方法成功；继续完成四步卡的判断与停止核验。
       short_stop: 核心没清楚先停，按信息难度而非整篇词数选法。
-    presentation_revision: 2026-10-28.2
-    source_update_note: 寒4五步不吞并赠课挖空版本；春5格式与结尾服从实际任务；国庆表达技巧、修改流程和构思模型分别保名，简单句可保留。
+    presentation_revision: 2026-10-30.2
+    source_update_note: 27写作口诀、大小三圈与六类信件分源；综合运用小结不改名五审。三思辨模型按职责用，单句重构已补核，简单句和相关两点可保留。
   cases:
     canonical: cases/application-writing/A05/canonical/case.yaml
   four_step_card:
     start: 中文信息与修饰混杂，需要重构英文表达而非按整篇词数选法。
     first_cut: 拆核心与修饰信息，按主体→核心动作→场景重组，再校时态、词性、单复数和衔接风格。
     judge: 产出保留原义、对象与限制的句子；按信息复杂度与表达能力选用，不由110/120整篇词数触发。
-    stop: 核心不清先停重排；否定、时间、数量、条件不能当枝叶删；不宣称缺连续口述或新完整例的分支已全面验收。
+    stop: 核心不清先停重排；否定、时间、数量、条件不能当枝叶删；已补核两独立单句重构；不把例题完成分词固定到新题，准确简单句可以保留。
   practicality_gate:
     status: design_complete_empirical_pending
     trigger: 中文信息与修饰混杂，需要重构英文表达而非按整篇词数选法。
     action: 拆核心与修饰信息，按主体→核心动作→场景重组，再校时态、词性、单复数和衔接风格。
     output: interpret；产出保留原义、对象与限制的句子；按信息复杂度与表达能力选用，不由110/120整篇词数触发。
-    stop: 核心不清先停重排；否定、时间、数量、条件不能当枝叶删；不宣称缺连续口述或新完整例的分支已全面验收。
+    stop: 核心不清先停重排；否定、时间、数量、条件不能当枝叶删；已补核两独立单句重构；不把例题完成分词固定到新题，准确简单句可以保留。
     transfer: 换中文内容仍先拆信息，再保限定地重排和校准。
     efficiency: 分开信息组织和词形校准，降低同时处理的负担，是否节时待测。
     misuse_cost: 未经实测；照中文词序逐词翻译，或简化时把关键限制也删了。会导致误判；须先核触发、执行Stop，不允许辅助产物越级定案。
@@ -659,8 +659,8 @@ methods:
   status: candidate
   maturity_status: candidate
   practical_value: Useful
-  version: 1.2.0
-  change_reason: ANSWER 70db6d6 显式来源差异复核；保留品牌动作和基础入口，异文分源，旧Case不自动获新纪元准入。
+  version: 1.2.1
+  change_reason: ANSWER 9a872ba 显式来源差异复核；旧来源归档，保基础入口与实用优先，不自动授予Case或真人准入。
   affected_cases:
   - cases/application-writing/A05/canonical/case.yaml
   regression_result: pending_current_epoch_semantic_and_student_acceptance
@@ -672,13 +672,13 @@ methods:
     participant_validation: pending_real_participant_validation
     example_scope: 2026-10-28基础入口表达修订；保留原判据/Stop/课程绑定与语义版本，微动作和关系示意不是完整真题或真人实测。
   source_alignment:
-    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
     state: live_source_bound
     source_content_changed: true
     correction_profile_applied: true
     authored_first_contact_draft: true
     new_course_branches: preserved_in_full_contract_not_automatically_aliased
-    acceptance: 2026-10-30 explicit source delta review; learner/blind/release pending
+    acceptance: explicit source delta review; learner/blind/release pending
 - method_id: A06
   brand_name: 对照仿写
   source_name: 富兰克林写作法（寒4五步）
@@ -719,9 +719,9 @@ methods:
   - repository: https://github.com/rockpunkgod/ANSWER.git
     path: gaokao-writing/references/application-writing-and-correction.md
     heading: 富兰克林写作法（五步）
-    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
   section_ids: &id006
-  - 1c2d18c01623f09f
+  - 826bddb7694b0a21
   - 1b1197e2fa02ee07
   can_follow: []
   usually_before: []
@@ -756,7 +756,7 @@ methods:
       micro_action_is_not_completion: 完成第一小步不等于完整方法成功；继续完成四步卡的判断与停止核验。
       short_stop: 范文或AI改了意思就不抄，AI升级可选。
     presentation_revision: 2026-10-30.1
-    source_update_note: 寒4五步不吞并赠课挖空版本；春5格式与结尾服从实际任务；国庆表达技巧、修改流程和构思模型分别保名，简单句可保留。
+    source_update_note: 27写作口诀、大小三圈与六类信件分源；综合运用小结不改名五审。三思辨模型按职责用，单句重构已补核，简单句和相关两点可保留。
   cases:
     canonical: cases/application-writing/A06/canonical/case.yaml
   four_step_card:
@@ -799,7 +799,7 @@ methods:
   maturity_status: candidate
   practical_value: Useful
   version: 1.2.1
-  change_reason: ANSWER 70db6d6 显式来源差异复核；保留品牌动作和基础入口，异文分源，旧Case不自动获新纪元准入。
+  change_reason: ANSWER 9a872ba 显式来源差异复核；旧来源归档，保基础入口与实用优先，不自动授予Case或真人准入。
   affected_cases:
   - cases/application-writing/A06/canonical/case.yaml
   regression_result: pending_current_epoch_semantic_and_student_acceptance
@@ -811,13 +811,13 @@ methods:
     participant_validation: pending_real_participant_validation
     example_scope: 2026-10-28基础入口表达修订；保留原判据/Stop/课程绑定与语义版本，微动作和关系示意不是完整真题或真人实测。
   source_alignment:
-    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
     state: live_source_bound
-    source_content_changed: true
+    source_content_changed: false
     correction_profile_applied: true
     authored_first_contact_draft: true
     new_course_branches: preserved_in_full_contract_not_automatically_aliased
-    acceptance: 2026-10-30 explicit source delta review; learner/blind/release pending
+    acceptance: explicit source delta review; learner/blind/release pending
 - method_id: A07
   brand_name: 长句搭积木
   source_name: 反向劫匪插葱
@@ -858,10 +858,10 @@ methods:
   - repository: https://github.com/rockpunkgod/ANSWER.git
     path: gaokao-writing/references/application-writing-and-correction.md
     heading: 反向劫匪插葱
-    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
   section_ids: &id007
-  - 826bddb7694b0a21
-  - a3a39e51c18207af
+  - 7022e0285ab88322
+  - 29cd6d21efc72a19
   can_follow: []
   usually_before: []
   usually_after: []
@@ -895,7 +895,7 @@ methods:
       micro_action_is_not_completion: 完成第一小步不等于完整方法成功；继续完成四步卡的判断与停止核验。
       short_stop: 主体或依附不成立退回独立句，不为复杂而强拼。
     presentation_revision: 2026-10-30.1
-    source_update_note: 寒4五步不吞并赠课挖空版本；春5格式与结尾服从实际任务；国庆表达技巧、修改流程和构思模型分别保名，简单句可保留。
+    source_update_note: 27写作口诀、大小三圈与六类信件分源；综合运用小结不改名五审。三思辨模型按职责用，单句重构已补核，简单句和相关两点可保留。
   cases:
     canonical: cases/application-writing/A07/canonical/case.yaml
   four_step_card:
@@ -938,7 +938,7 @@ methods:
   maturity_status: candidate
   practical_value: Useful
   version: 1.2.1
-  change_reason: ANSWER 70db6d6 显式来源差异复核；保留品牌动作和基础入口，异文分源，旧Case不自动获新纪元准入。
+  change_reason: ANSWER 9a872ba 显式来源差异复核；旧来源归档，保基础入口与实用优先，不自动授予Case或真人准入。
   affected_cases:
   - cases/application-writing/A07/canonical/case.yaml
   regression_result: pending_current_epoch_semantic_and_student_acceptance
@@ -950,13 +950,13 @@ methods:
     participant_validation: pending_real_participant_validation
     example_scope: 2026-10-28基础入口表达修订；保留原判据/Stop/课程绑定与语义版本，微动作和关系示意不是完整真题或真人实测。
   source_alignment:
-    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
     state: live_source_bound
     source_content_changed: false
     correction_profile_applied: true
     authored_first_contact_draft: true
     new_course_branches: preserved_in_full_contract_not_automatically_aliased
-    acceptance: 2026-10-30 explicit source delta review; learner/blind/release pending
+    acceptance: explicit source delta review; learner/blind/release pending
 - method_id: A08
   brand_name: 文体骨架
   source_name: 常见文体骨架
@@ -995,10 +995,10 @@ methods:
   - repository: https://github.com/rockpunkgod/ANSWER.git
     path: gaokao-writing/references/application-writing-and-correction.md
     heading: 常见文体骨架
-    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
   section_ids: &id008
-  - e690e665e166ac99
-  - 037a6e97d44a42b0
+  - b8a5f303a3cb65a5
+  - abce8d08d57b4059
   can_follow: []
   usually_before: []
   usually_after: []
@@ -1032,7 +1032,7 @@ methods:
       micro_action_is_not_completion: 完成第一小步不等于完整方法成功；继续完成四步卡的判断与停止核验。
       short_stop: 题面给了特殊格式先遵守，不强套段数或句型。
     presentation_revision: 2026-10-28.2
-    source_update_note: 寒4五步不吞并赠课挖空版本；春5格式与结尾服从实际任务；国庆表达技巧、修改流程和构思模型分别保名，简单句可保留。
+    source_update_note: 27写作口诀、大小三圈与六类信件分源；综合运用小结不改名五审。三思辨模型按职责用，单句重构已补核，简单句和相关两点可保留。
   cases:
     canonical: cases/application-writing/A08/canonical/case.yaml
   four_step_card:
@@ -1075,7 +1075,7 @@ methods:
   maturity_status: candidate
   practical_value: Useful
   version: 1.2.0
-  change_reason: ANSWER 70db6d6 显式来源差异复核；保留品牌动作和基础入口，异文分源，旧Case不自动获新纪元准入。
+  change_reason: ANSWER 9a872ba 显式来源差异复核；旧来源归档，保基础入口与实用优先，不自动授予Case或真人准入。
   affected_cases:
   - cases/application-writing/A08/canonical/case.yaml
   regression_result: pending_current_epoch_semantic_and_student_acceptance
@@ -1087,13 +1087,13 @@ methods:
     participant_validation: pending_real_participant_validation
     example_scope: 2026-10-28基础入口表达修订；保留原判据/Stop/课程绑定与语义版本，微动作和关系示意不是完整真题或真人实测。
   source_alignment:
-    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
     state: live_source_bound
-    source_content_changed: true
+    source_content_changed: false
     correction_profile_applied: true
     authored_first_contact_draft: true
     new_course_branches: preserved_in_full_contract_not_automatically_aliased
-    acceptance: 2026-10-30 explicit source delta review; learner/blind/release pending
+    acceptance: explicit source delta review; learner/blind/release pending
 - method_id: A09
   brand_name: 应用文评分
   source_name: 15 分评分规范
@@ -1133,7 +1133,7 @@ methods:
   - repository: https://github.com/rockpunkgod/ANSWER.git
     path: gaokao-writing/references/application-writing-and-correction.md
     heading: 15 分评分规范
-    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
   section_ids: &id009
   - 254fa3adfb42db4e
   - f8cfb194a81aad6e
@@ -1169,7 +1169,7 @@ methods:
       micro_action_is_not_completion: 完成第一小步不等于完整方法成功；继续完成四步卡的判断与停止核验。
       short_stop: 缺题目或全文不给完整分，限对应15分规范。
     presentation_revision: 2026-10-28.2
-    source_update_note: 寒4五步不吞并赠课挖空版本；春5格式与结尾服从实际任务；国庆表达技巧、修改流程和构思模型分别保名，简单句可保留。
+    source_update_note: 27写作口诀、大小三圈与六类信件分源；综合运用小结不改名五审。三思辨模型按职责用，单句重构已补核，简单句和相关两点可保留。
   cases:
     canonical: cases/application-writing/A09/canonical/case.yaml
   four_step_card:
@@ -1212,7 +1212,7 @@ methods:
   maturity_status: candidate
   practical_value: Useful
   version: 1.2.0
-  change_reason: ANSWER 70db6d6 显式来源差异复核；保留品牌动作和基础入口，异文分源，旧Case不自动获新纪元准入。
+  change_reason: ANSWER 9a872ba 显式来源差异复核；旧来源归档，保基础入口与实用优先，不自动授予Case或真人准入。
   affected_cases:
   - cases/application-writing/A09/canonical/case.yaml
   regression_result: pending_current_epoch_semantic_and_student_acceptance
@@ -1224,13 +1224,13 @@ methods:
     participant_validation: pending_real_participant_validation
     example_scope: 2026-10-28基础入口表达修订；保留原判据/Stop/课程绑定与语义版本，微动作和关系示意不是完整真题或真人实测。
   source_alignment:
-    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
     state: live_source_bound
     source_content_changed: false
     correction_profile_applied: false
     authored_first_contact_draft: true
     new_course_branches: preserved_in_full_contract_not_automatically_aliased
-    acceptance: 2026-10-30 explicit source delta review; learner/blind/release pending
+    acceptance: explicit source delta review; learner/blind/release pending
 - method_id: A10
   brand_name: 读背仿与训练阶段
   source_name: 复习路径与分数锚定
@@ -1269,9 +1269,9 @@ methods:
   - repository: https://github.com/rockpunkgod/ANSWER.git
     path: gaokao-writing/references/application-writing-and-correction.md
     heading: 复习路径与分数锚定
-    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
   section_ids: &id010
-  - 8cc4571377b8183a
+  - 437acb5cb81ccc4e
   - 0a6f5b5594a41dd6
   can_follow: []
   usually_before: []
@@ -1306,7 +1306,7 @@ methods:
       micro_action_is_not_completion: 完成第一小步不等于完整方法成功；继续完成四步卡的判断与停止核验。
       short_stop: 无现稿不承诺档次，训练数量不是单篇配额。
     presentation_revision: 2026-10-28.2
-    source_update_note: 寒4五步不吞并赠课挖空版本；春5格式与结尾服从实际任务；国庆表达技巧、修改流程和构思模型分别保名，简单句可保留。
+    source_update_note: 27写作口诀、大小三圈与六类信件分源；综合运用小结不改名五审。三思辨模型按职责用，单句重构已补核，简单句和相关两点可保留。
   cases:
     canonical: cases/application-writing/A10/canonical/case.yaml
   four_step_card:
@@ -1349,7 +1349,7 @@ methods:
   maturity_status: candidate
   practical_value: Useful
   version: 1.2.0
-  change_reason: ANSWER 70db6d6 显式来源差异复核；保留品牌动作和基础入口，异文分源，旧Case不自动获新纪元准入。
+  change_reason: ANSWER 9a872ba 显式来源差异复核；旧来源归档，保基础入口与实用优先，不自动授予Case或真人准入。
   affected_cases:
   - cases/application-writing/A10/canonical/case.yaml
   regression_result: pending_current_epoch_semantic_and_student_acceptance
@@ -1361,10 +1361,10 @@ methods:
     participant_validation: pending_real_participant_validation
     example_scope: 2026-10-28基础入口表达修订；保留原判据/Stop/课程绑定与语义版本，微动作和关系示意不是完整真题或真人实测。
   source_alignment:
-    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
     state: live_source_bound
     source_content_changed: false
     correction_profile_applied: true
     authored_first_contact_draft: true
     new_course_branches: preserved_in_full_contract_not_automatically_aliased
-    acceptance: 2026-10-30 explicit source delta review; learner/blind/release pending
+    acceptance: explicit source delta review; learner/blind/release pending

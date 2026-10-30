@@ -36,31 +36,31 @@ methods:
   - repository: https://github.com/rockpunkgod/ANSWER.git
     path: gaokao-english/references/seven-five.md
     heading: 结构一致
-    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
   - repository: https://github.com/rockpunkgod/ANSWER.git
     path: gaokao-english/references/seven-five.md
     heading: 主语一致
-    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
   - repository: https://github.com/rockpunkgod/ANSWER.git
     path: gaokao-english/references/seven-five.md
     heading: 时态一致
-    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
   - repository: https://github.com/rockpunkgod/ANSWER.git
     path: gaokao-english/references/course-evidence.md
     heading: 结构一致
-    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
   - repository: https://github.com/rockpunkgod/ANSWER.git
     path: gaokao-english/references/course-evidence.md
     heading: 七选五主语一致
-    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
   - repository: https://github.com/rockpunkgod/ANSWER.git
     path: gaokao-english/references/course-evidence.md
     heading: 七选五时态一致
-    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
   - repository: https://github.com/rockpunkgod/ANSWER.git
     path: gaokao-grammar-fill/references/course-evidence.md
     heading: 七选五
-    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
   can_follow: []
   usually_before:
   - 总起句做题法
@@ -93,8 +93,8 @@ methods:
     - 段中出现过去时事件，但当前空转向一般感悟；不能因最近动词是过去时就只留过去时组。
     section_ids: &id001
     - a8f0c4ae44ae61ff
-    - be3f1c1eb7c11ee7
-    - 13b2d5c88710b11a
+    - 94c1255b4334ece4
+    - b24e557dbb06cb98
     beginner_support:
       first_micro_action: 先在A-G旁标完整句、半句或祈使等真实句型，先不填空。
       prerequisite: 先分清一句是否说完整，再找句中实际谈谁。真谓语就是承担本句时间的动词；-ed或-ing词尾本身不能证明它是谓语。
@@ -104,7 +104,7 @@ methods:
       micro_action_is_not_completion: 完成第一小步不等于完整方法成功；继续完成四步卡的判断与停止核验。
       short_stop: 无区别不编组；新证据可纠错，不重演三分或靠占用选。
     presentation_revision: 2026-10-28.2
-    source_update_note: 单复一致为指代/概括检查，不增加第四分组维度；逻辑判断内容关联保独立原名，不新增整题顺序。
+    source_update_note: 总起以真实统领触发，不加非典型位置人为门槛；比较关联句只初筛，褒贬核完整断言与安抚功能，不靠另一空占用定案。
   cases:
     canonical: cases/F01/canonical/case.yaml
     counterexample: cases/F01/counterexamples/case.yaml
@@ -153,7 +153,7 @@ methods:
   method_type: method
   maturity_status: candidate
   practical_value: Useful
-  change_reason: ANSWER 70db6d6 显式来源差异复核；保留品牌动作和基础入口，异文分源，旧Case不自动获新纪元准入。
+  change_reason: ANSWER 9a872ba 显式来源差异复核；旧来源归档，保基础入口与实用优先，不自动授予Case或真人准入。
   affected_cases:
   - cases/F01/canonical/case.yaml
   - cases/F01/counterexamples/case.yaml
@@ -189,13 +189,13 @@ methods:
   entry_copy: 七项乱试？先在A-G旁标完整句、半句或祈使等真实句型，先不填空。接着核主角和真谓语时间，三维各一次，无区别也标无区分度；分完回正文。这一步得到的是优先核查的范围，不直接得答案。如果卡住，先记录暂定分组或一侧真实内容；关系不清回正文或暂留，不靠占用、组小或剩余定案。
   student_ready: false
   source_alignment:
-    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
     state: live_source_bound
-    source_content_changed: false
+    source_content_changed: true
     correction_profile_applied: true
     authored_first_contact_draft: true
     new_course_branches: preserved_in_full_contract_not_automatically_aliased
-    acceptance: 2026-10-30 explicit source delta review; learner/blind/release pending
+    acceptance: explicit source delta review; learner/blind/release pending
   student_entry_revision:
     revision_id: F01-conditional-challenge-v1
     previous_snapshot: provenance/student-entry-revisions/F01-1.2.0-before-conditional-challenge.json
@@ -247,7 +247,7 @@ methods:
   - repository: https://github.com/rockpunkgod/ANSWER.git
     path: gaokao-english/references/seven-five.md
     heading: 结构一致
-    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
   section_ids: &id002
   - a8f0c4ae44ae61ff
   can_follow: []
@@ -281,7 +281,7 @@ methods:
       micro_action_is_not_completion: 完成第一小步不等于完整方法成功；继续完成四步卡的判断与停止核验。
       short_stop: 大小写仅辅助；同句型不证明内容接通。
     presentation_revision: 2026-10-28.2
-    source_update_note: 单复一致为指代/概括检查，不增加第四分组维度；逻辑判断内容关联保独立原名，不新增整题顺序。
+    source_update_note: 总起以真实统领触发，不加非典型位置人为门槛；比较关联句只初筛，褒贬核完整断言与安抚功能，不靠另一空占用定案。
   cases:
     canonical: cases/seven-five/F02/canonical/case.yaml
   four_step_card:
@@ -324,7 +324,7 @@ methods:
   maturity_status: candidate
   practical_value: Useful
   version: 1.2.0
-  change_reason: ANSWER 70db6d6 显式来源差异复核；保留品牌动作和基础入口，异文分源，旧Case不自动获新纪元准入。
+  change_reason: ANSWER 9a872ba 显式来源差异复核；旧来源归档，保基础入口与实用优先，不自动授予Case或真人准入。
   affected_cases:
   - cases/seven-five/F02/canonical/case.yaml
   regression_result: pending_current_epoch_semantic_and_student_acceptance
@@ -336,13 +336,13 @@ methods:
     participant_validation: pending_real_participant_validation
     example_scope: 2026-10-28基础入口表达修订；保留原判据/Stop/课程绑定与语义版本，微动作和关系示意不是完整真题或真人实测。
   source_alignment:
-    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
     state: live_source_bound
-    source_content_changed: false
+    source_content_changed: true
     correction_profile_applied: false
     authored_first_contact_draft: true
     new_course_branches: preserved_in_full_contract_not_automatically_aliased
-    acceptance: 2026-10-30 explicit source delta review; learner/blind/release pending
+    acceptance: explicit source delta review; learner/blind/release pending
 - method_id: F03
   brand_name: 主角分组
   source_name: 主语一致
@@ -383,9 +383,9 @@ methods:
   - repository: https://github.com/rockpunkgod/ANSWER.git
     path: gaokao-english/references/seven-five.md
     heading: 主语一致
-    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
   section_ids: &id003
-  - be3f1c1eb7c11ee7
+  - 94c1255b4334ece4
   can_follow: []
   usually_before: []
   usually_after: []
@@ -419,7 +419,7 @@ methods:
       micro_action_is_not_completion: 完成第一小步不等于完整方法成功；继续完成四步卡的判断与停止核验。
       short_stop: 代词所指不明暂留；可更正初筛，不重复整套分组。
     presentation_revision: 2026-10-28.2
-    source_update_note: 单复一致为指代/概括检查，不增加第四分组维度；逻辑判断内容关联保独立原名，不新增整题顺序。
+    source_update_note: 总起以真实统领触发，不加非典型位置人为门槛；比较关联句只初筛，褒贬核完整断言与安抚功能，不靠另一空占用定案。
   cases:
     canonical: cases/seven-five/F03/canonical/case.yaml
   four_step_card:
@@ -462,7 +462,7 @@ methods:
   maturity_status: candidate
   practical_value: Useful
   version: 1.2.0
-  change_reason: ANSWER 70db6d6 显式来源差异复核；保留品牌动作和基础入口，异文分源，旧Case不自动获新纪元准入。
+  change_reason: ANSWER 9a872ba 显式来源差异复核；旧来源归档，保基础入口与实用优先，不自动授予Case或真人准入。
   affected_cases:
   - cases/seven-five/F03/canonical/case.yaml
   regression_result: pending_current_epoch_semantic_and_student_acceptance
@@ -474,13 +474,13 @@ methods:
     participant_validation: pending_real_participant_validation
     example_scope: 2026-10-28基础入口表达修订；保留原判据/Stop/课程绑定与语义版本，微动作和关系示意不是完整真题或真人实测。
   source_alignment:
-    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
     state: live_source_bound
     source_content_changed: false
     correction_profile_applied: true
     authored_first_contact_draft: true
     new_course_branches: preserved_in_full_contract_not_automatically_aliased
-    acceptance: 2026-10-30 explicit source delta review; learner/blind/release pending
+    acceptance: explicit source delta review; learner/blind/release pending
 - method_id: F04
   brand_name: 时间分组
   source_name: 时态一致
@@ -521,9 +521,9 @@ methods:
   - repository: https://github.com/rockpunkgod/ANSWER.git
     path: gaokao-english/references/seven-five.md
     heading: 时态一致
-    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
   section_ids: &id004
-  - 13b2d5c88710b11a
+  - b24e557dbb06cb98
   can_follow: []
   usually_before: []
   usually_after: []
@@ -557,7 +557,7 @@ methods:
       micro_action_is_not_completion: 完成第一小步不等于完整方法成功；继续完成四步卡的判断与停止核验。
       short_stop: 分词不承担句子时态；无差异如实记，不凭同组定案。
     presentation_revision: 2026-10-28.2
-    source_update_note: 单复一致为指代/概括检查，不增加第四分组维度；逻辑判断内容关联保独立原名，不新增整题顺序。
+    source_update_note: 总起以真实统领触发，不加非典型位置人为门槛；比较关联句只初筛，褒贬核完整断言与安抚功能，不靠另一空占用定案。
   cases:
     canonical: cases/seven-five/F04/canonical/case.yaml
   four_step_card:
@@ -600,7 +600,7 @@ methods:
   maturity_status: candidate
   practical_value: Useful
   version: 1.2.0
-  change_reason: ANSWER 70db6d6 显式来源差异复核；保留品牌动作和基础入口，异文分源，旧Case不自动获新纪元准入。
+  change_reason: ANSWER 9a872ba 显式来源差异复核；旧来源归档，保基础入口与实用优先，不自动授予Case或真人准入。
   affected_cases:
   - cases/seven-five/F04/canonical/case.yaml
   regression_result: pending_current_epoch_semantic_and_student_acceptance
@@ -612,13 +612,13 @@ methods:
     participant_validation: pending_real_participant_validation
     example_scope: 2026-10-28基础入口表达修订；保留原判据/Stop/课程绑定与语义版本，微动作和关系示意不是完整真题或真人实测。
   source_alignment:
-    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
     state: live_source_bound
     source_content_changed: false
     correction_profile_applied: true
     authored_first_contact_draft: true
     new_course_branches: preserved_in_full_contract_not_automatically_aliased
-    acceptance: 2026-10-30 explicit source delta review; learner/blind/release pending
+    acceptance: explicit source delta review; learner/blind/release pending
 - method_id: F05
   brand_name: 段首统领
   source_name: 总起句做题法
@@ -659,7 +659,7 @@ methods:
   - repository: https://github.com/rockpunkgod/ANSWER.git
     path: gaokao-english/references/seven-five.md
     heading: 总起句做题法
-    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
   section_ids: &id005
   - 1fcc9966ce085922
   can_follow: []
@@ -696,7 +696,7 @@ methods:
       micro_action_is_not_completion: 完成第一小步不等于完整方法成功；继续完成四步卡的判断与停止核验。
       short_stop: 段首位置和Here are不定案，局部匹配不够。
     presentation_revision: 2026-10-28.2
-    source_update_note: 单复一致为指代/概括检查，不增加第四分组维度；逻辑判断内容关联保独立原名，不新增整题顺序。
+    source_update_note: 总起以真实统领触发，不加非典型位置人为门槛；比较关联句只初筛，褒贬核完整断言与安抚功能，不靠另一空占用定案。
   cases:
     canonical: cases/seven-five/F05/canonical/case.yaml
   four_step_card:
@@ -739,7 +739,7 @@ methods:
   maturity_status: candidate
   practical_value: Useful
   version: 1.3.0
-  change_reason: ANSWER 70db6d6 显式来源差异复核；保留品牌动作和基础入口，异文分源，旧Case不自动获新纪元准入。
+  change_reason: ANSWER 9a872ba 显式来源差异复核；旧来源归档，保基础入口与实用优先，不自动授予Case或真人准入。
   affected_cases:
   - cases/seven-five/F05/canonical/case.yaml
   regression_result: pending_current_epoch_semantic_and_student_acceptance
@@ -751,13 +751,13 @@ methods:
     participant_validation: pending_real_participant_validation
     example_scope: 2026-10-28基础入口表达修订；保留原判据/Stop/课程绑定与语义版本，微动作和关系示意不是完整真题或真人实测。
   source_alignment:
-    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
     state: live_source_bound
-    source_content_changed: false
+    source_content_changed: true
     correction_profile_applied: true
     authored_first_contact_draft: true
     new_course_branches: preserved_in_full_contract_not_automatically_aliased
-    acceptance: 2026-10-30 explicit source delta review; learner/blind/release pending
+    acceptance: explicit source delta review; learner/blind/release pending
 - method_id: F06
   brand_name: 前后呼应
   source_name: 对应词法
@@ -792,9 +792,9 @@ methods:
   - repository: https://github.com/rockpunkgod/ANSWER.git
     path: gaokao-english/references/seven-five.md
     heading: 对应词法
-    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
   section_ids: &id006
-  - 92ec24e9e7003cba
+  - cc84214ff851b635
   can_follow: []
   usually_before: []
   usually_after: []
@@ -828,7 +828,7 @@ methods:
       micro_action_is_not_completion: 完成第一小步不等于完整方法成功；继续完成四步卡的判断与停止核验。
       short_stop: 没有具体呼应不硬套；同词多项仍要比完整关系。
     presentation_revision: 2026-10-28.2
-    source_update_note: 单复一致为指代/概括检查，不增加第四分组维度；逻辑判断内容关联保独立原名，不新增整题顺序。
+    source_update_note: 总起以真实统领触发，不加非典型位置人为门槛；比较关联句只初筛，褒贬核完整断言与安抚功能，不靠另一空占用定案。
   cases:
     canonical: cases/seven-five/F06/canonical/case.yaml
   four_step_card:
@@ -871,7 +871,7 @@ methods:
   maturity_status: candidate
   practical_value: Useful
   version: 1.2.0
-  change_reason: ANSWER 70db6d6 显式来源差异复核；保留品牌动作和基础入口，异文分源，旧Case不自动获新纪元准入。
+  change_reason: ANSWER 9a872ba 显式来源差异复核；旧来源归档，保基础入口与实用优先，不自动授予Case或真人准入。
   affected_cases:
   - cases/seven-five/F06/canonical/case.yaml
   regression_result: pending_current_epoch_semantic_and_student_acceptance
@@ -883,13 +883,13 @@ methods:
     participant_validation: pending_real_participant_validation
     example_scope: 2026-10-28基础入口表达修订；保留原判据/Stop/课程绑定与语义版本，微动作和关系示意不是完整真题或真人实测。
   source_alignment:
-    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
     state: live_source_bound
     source_content_changed: false
     correction_profile_applied: true
     authored_first_contact_draft: true
     new_course_branches: preserved_in_full_contract_not_automatically_aliased
-    acceptance: 2026-10-30 explicit source delta review; learner/blind/release pending
+    acceptance: explicit source delta review; learner/blind/release pending
 - method_id: F07
   brand_name: 关系拼接
   source_name: 逻辑关系法
@@ -926,9 +926,9 @@ methods:
   - repository: https://github.com/rockpunkgod/ANSWER.git
     path: gaokao-english/references/seven-five.md
     heading: 逻辑关系法
-    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
   section_ids: &id007
-  - d815465ca190a14f
+  - 4fce3a1049d74715
   can_follow: []
   usually_before: []
   usually_after: []
@@ -960,7 +960,7 @@ methods:
       micro_action_is_not_completion: 完成第一小步不等于完整方法成功；继续完成四步卡的判断与停止核验。
       short_stop: 前后任一侧冲突就停；不能只凭连接词定关系。
     presentation_revision: 2026-10-28.2
-    source_update_note: 单复一致为指代/概括检查，不增加第四分组维度；逻辑判断内容关联保独立原名，不新增整题顺序。
+    source_update_note: 总起以真实统领触发，不加非典型位置人为门槛；比较关联句只初筛，褒贬核完整断言与安抚功能，不靠另一空占用定案。
   cases:
     canonical: cases/seven-five/F07/canonical/case.yaml
   four_step_card:
@@ -1003,7 +1003,7 @@ methods:
   maturity_status: candidate
   practical_value: Useful
   version: 1.2.0
-  change_reason: ANSWER 70db6d6 显式来源差异复核；保留品牌动作和基础入口，异文分源，旧Case不自动获新纪元准入。
+  change_reason: ANSWER 9a872ba 显式来源差异复核；旧来源归档，保基础入口与实用优先，不自动授予Case或真人准入。
   affected_cases:
   - cases/seven-five/F07/canonical/case.yaml
   regression_result: pending_current_epoch_semantic_and_student_acceptance
@@ -1015,13 +1015,13 @@ methods:
     participant_validation: pending_real_participant_validation
     example_scope: 2026-10-28基础入口表达修订；保留原判据/Stop/课程绑定与语义版本，微动作和关系示意不是完整真题或真人实测。
   source_alignment:
-    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
     state: live_source_bound
     source_content_changed: false
     correction_profile_applied: false
     authored_first_contact_draft: true
     new_course_branches: preserved_in_full_contract_not_automatically_aliased
-    acceptance: 2026-10-30 explicit source delta review; learner/blind/release pending
+    acceptance: explicit source delta review; learner/blind/release pending
 - method_id: F08
   brand_name: 情绪同向
   source_name: 褒贬一致
@@ -1063,9 +1063,9 @@ methods:
   - repository: https://github.com/rockpunkgod/ANSWER.git
     path: gaokao-english/references/seven-five.md
     heading: 褒贬一致
-    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
   section_ids: &id008
-  - a3ba542eeb862762
+  - d69a141bb1ba81ef
   can_follow: []
   usually_before: []
   usually_after: []
@@ -1097,7 +1097,7 @@ methods:
       micro_action_is_not_completion: 完成第一小步不等于完整方法成功；继续完成四步卡的判断与停止核验。
       short_stop: 中性不强分，方向相同仍要比具体措施和功能。
     presentation_revision: 2026-10-28.2
-    source_update_note: 单复一致为指代/概括检查，不增加第四分组维度；逻辑判断内容关联保独立原名，不新增整题顺序。
+    source_update_note: 总起以真实统领触发，不加非典型位置人为门槛；比较关联句只初筛，褒贬核完整断言与安抚功能，不靠另一空占用定案。
   cases:
     canonical: cases/seven-five/F08/canonical/case.yaml
   four_step_card:
@@ -1140,7 +1140,7 @@ methods:
   maturity_status: candidate
   practical_value: Useful
   version: 1.2.0
-  change_reason: ANSWER 70db6d6 显式来源差异复核；保留品牌动作和基础入口，异文分源，旧Case不自动获新纪元准入。
+  change_reason: ANSWER 9a872ba 显式来源差异复核；旧来源归档，保基础入口与实用优先，不自动授予Case或真人准入。
   affected_cases:
   - cases/seven-five/F08/canonical/case.yaml
   regression_result: pending_current_epoch_semantic_and_student_acceptance
@@ -1152,13 +1152,13 @@ methods:
     participant_validation: pending_real_participant_validation
     example_scope: 2026-10-28基础入口表达修订；保留原判据/Stop/课程绑定与语义版本，微动作和关系示意不是完整真题或真人实测。
   source_alignment:
-    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
     state: live_source_bound
-    source_content_changed: false
+    source_content_changed: true
     correction_profile_applied: false
     authored_first_contact_draft: true
     new_course_branches: preserved_in_full_contract_not_automatically_aliased
-    acceptance: 2026-10-30 explicit source delta review; learner/blind/release pending
+    acceptance: explicit source delta review; learner/blind/release pending
 - method_id: F09
   brand_name: 半句补全
   source_name: 结构一致
@@ -1194,7 +1194,7 @@ methods:
   - repository: https://github.com/rockpunkgod/ANSWER.git
     path: gaokao-english/references/seven-five.md
     heading: 结构一致
-    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
   section_ids: &id009
   - a8f0c4ae44ae61ff
   can_follow: []
@@ -1228,7 +1228,7 @@ methods:
       micro_action_is_not_completion: 完成第一小步不等于完整方法成功；继续完成四步卡的判断与停止核验。
       short_stop: 大小写或句长不定案；都能补句就停结构筛选。
     presentation_revision: 2026-10-28.2
-    source_update_note: 单复一致为指代/概括检查，不增加第四分组维度；逻辑判断内容关联保独立原名，不新增整题顺序。
+    source_update_note: 总起以真实统领触发，不加非典型位置人为门槛；比较关联句只初筛，褒贬核完整断言与安抚功能，不靠另一空占用定案。
   cases:
     canonical: cases/seven-five/F09/canonical/case.yaml
   four_step_card:
@@ -1271,7 +1271,7 @@ methods:
   maturity_status: candidate
   practical_value: Useful
   version: 1.2.0
-  change_reason: ANSWER 70db6d6 显式来源差异复核；保留品牌动作和基础入口，异文分源，旧Case不自动获新纪元准入。
+  change_reason: ANSWER 9a872ba 显式来源差异复核；旧来源归档，保基础入口与实用优先，不自动授予Case或真人准入。
   affected_cases:
   - cases/seven-five/F09/canonical/case.yaml
   regression_result: pending_current_epoch_semantic_and_student_acceptance
@@ -1283,13 +1283,13 @@ methods:
     participant_validation: pending_real_participant_validation
     example_scope: 2026-10-28基础入口表达修订；保留原判据/Stop/课程绑定与语义版本，微动作和关系示意不是完整真题或真人实测。
   source_alignment:
-    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
     state: live_source_bound
-    source_content_changed: false
+    source_content_changed: true
     correction_profile_applied: false
     authored_first_contact_draft: true
     new_course_branches: preserved_in_full_contract_not_automatically_aliased
-    acceptance: 2026-10-30 explicit source delta review; learner/blind/release pending
+    acceptance: explicit source delta review; learner/blind/release pending
 - method_id: F10
   brand_name: 末轮反查
   source_name: 定案与输出
@@ -1325,9 +1325,9 @@ methods:
   - repository: https://github.com/rockpunkgod/ANSWER.git
     path: gaokao-english/references/seven-five.md
     heading: 定案与输出
-    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
   section_ids: &id010
-  - c8a128adb1c07e71
+  - 1b963395bb1e4f14
   can_follow: []
   usually_before: []
   usually_after: []
@@ -1361,7 +1361,7 @@ methods:
       micro_action_is_not_completion: 完成第一小步不等于完整方法成功；继续完成四步卡的判断与停止核验。
       short_stop: 内容仍多项成立就暂留，不能拿占用或剩余作证据。
     presentation_revision: 2026-10-28.2
-    source_update_note: 单复一致为指代/概括检查，不增加第四分组维度；逻辑判断内容关联保独立原名，不新增整题顺序。
+    source_update_note: 总起以真实统领触发，不加非典型位置人为门槛；比较关联句只初筛，褒贬核完整断言与安抚功能，不靠另一空占用定案。
   cases:
     canonical: cases/seven-five/F10/canonical/case.yaml
   four_step_card:
@@ -1404,7 +1404,7 @@ methods:
   maturity_status: candidate
   practical_value: Useful
   version: 1.2.0
-  change_reason: ANSWER 70db6d6 显式来源差异复核；保留品牌动作和基础入口，异文分源，旧Case不自动获新纪元准入。
+  change_reason: ANSWER 9a872ba 显式来源差异复核；旧来源归档，保基础入口与实用优先，不自动授予Case或真人准入。
   affected_cases:
   - cases/seven-five/F10/canonical/case.yaml
   regression_result: pending_current_epoch_semantic_and_student_acceptance
@@ -1416,13 +1416,13 @@ methods:
     participant_validation: pending_real_participant_validation
     example_scope: 2026-10-28基础入口表达修订；保留原判据/Stop/课程绑定与语义版本，微动作和关系示意不是完整真题或真人实测。
   source_alignment:
-    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
     state: live_source_bound
     source_content_changed: false
     correction_profile_applied: true
     authored_first_contact_draft: true
     new_course_branches: preserved_in_full_contract_not_automatically_aliased
-    acceptance: 2026-10-30 explicit source delta review; learner/blind/release pending
+    acceptance: explicit source delta review; learner/blind/release pending
 - method_id: F11
   brand_name: 正文闭环
   source_name: 定案与输出
@@ -1458,9 +1458,9 @@ methods:
   - repository: https://github.com/rockpunkgod/ANSWER.git
     path: gaokao-english/references/seven-five.md
     heading: 定案与输出
-    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
   section_ids: &id011
-  - c8a128adb1c07e71
+  - 1b963395bb1e4f14
   can_follow: []
   usually_before: []
   usually_after: []
@@ -1494,7 +1494,7 @@ methods:
       micro_action_is_not_completion: 完成第一小步不等于完整方法成功；继续完成四步卡的判断与停止核验。
       short_stop: 两项仍成立就留缺口，不凭更像原因或剩一项选。
     presentation_revision: 2026-10-28.2
-    source_update_note: 单复一致为指代/概括检查，不增加第四分组维度；逻辑判断内容关联保独立原名，不新增整题顺序。
+    source_update_note: 总起以真实统领触发，不加非典型位置人为门槛；比较关联句只初筛，褒贬核完整断言与安抚功能，不靠另一空占用定案。
   cases:
     canonical: cases/seven-five/F11/canonical/case.yaml
   four_step_card:
@@ -1537,7 +1537,7 @@ methods:
   maturity_status: candidate
   practical_value: Useful
   version: 1.2.0
-  change_reason: ANSWER 70db6d6 显式来源差异复核；保留品牌动作和基础入口，异文分源，旧Case不自动获新纪元准入。
+  change_reason: ANSWER 9a872ba 显式来源差异复核；旧来源归档，保基础入口与实用优先，不自动授予Case或真人准入。
   affected_cases:
   - cases/seven-five/F11/canonical/case.yaml
   regression_result: pending_current_epoch_semantic_and_student_acceptance
@@ -1549,10 +1549,10 @@ methods:
     participant_validation: pending_real_participant_validation
     example_scope: 2026-10-28基础入口表达修订；保留原判据/Stop/课程绑定与语义版本，微动作和关系示意不是完整真题或真人实测。
   source_alignment:
-    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
     state: live_source_bound
     source_content_changed: false
     correction_profile_applied: true
     authored_first_contact_draft: true
     new_course_branches: preserved_in_full_contract_not_automatically_aliased
-    acceptance: 2026-10-30 explicit source delta review; learner/blind/release pending
+    acceptance: explicit source delta review; learner/blind/release pending

@@ -42,11 +42,11 @@ methods:
   - repository: https://github.com/rockpunkgod/ANSWER.git
     path: gaokao-english/references/cloze.md
     heading: 行文结构（结构认识与已核操作）
-    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
   - repository: https://github.com/rockpunkgod/ANSWER.git
     path: gaokao-english/references/cloze.md
     heading: 完形填空
-    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
   section_ids: &id001
   - c84135f2763c6806
   - 3f36ea92a4769ee5
@@ -83,7 +83,7 @@ methods:
       micro_action_is_not_completion: 完成第一小步不等于完整方法成功；继续完成四步卡的判断与停止核验。
       short_stop: 词义或关系没闭合先留空，找到独立提示再返回。
     presentation_revision: 2026-10-28.2
-    source_update_note: 行文结构是结构认识与取证入口；首句给假设，组合口诀和无信靠主题不替代单空证据，不强制遍数。
+    source_update_note: 同根可作暂选后的独立回证，不能以初选反证词义；配平只提醒回题核证，不按字母配额改答案。
   cases:
     canonical: cases/cloze/C01/canonical/case.yaml
   four_step_card:
@@ -126,7 +126,7 @@ methods:
   maturity_status: candidate
   practical_value: Useful
   version: 1.2.1
-  change_reason: ANSWER 70db6d6 显式来源差异复核；保留品牌动作和基础入口，异文分源，旧Case不自动获新纪元准入。
+  change_reason: ANSWER 9a872ba 显式来源差异复核；旧来源归档，保基础入口与实用优先，不自动授予Case或真人准入。
   affected_cases:
   - cases/cloze/C01/canonical/case.yaml
   regression_result: pending_current_epoch_semantic_and_student_acceptance
@@ -139,13 +139,13 @@ methods:
     participant_validation: pending_real_participant_validation
     example_scope: 2026-10-28基础入口表达修订；保留原判据/Stop/课程绑定与语义版本，微动作和关系示意不是完整真题或真人实测。
   source_alignment:
-    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
     state: live_source_bound
-    source_content_changed: true
+    source_content_changed: false
     correction_profile_applied: true
     authored_first_contact_draft: true
     new_course_branches: preserved_in_full_contract_not_automatically_aliased
-    acceptance: 2026-10-30 explicit source delta review; learner/blind/release pending
+    acceptance: explicit source delta review; learner/blind/release pending
 - method_id: C02
   brand_name: 前后夹击
   source_name: 瞻前顾后法
@@ -181,11 +181,11 @@ methods:
   - repository: https://github.com/rockpunkgod/ANSWER.git
     path: gaokao-english/references/cloze.md
     heading: 瞻前顾后法
-    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
   - repository: https://github.com/rockpunkgod/ANSWER.git
     path: gaokao-english/references/cloze.md
     heading: 完形填空
-    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
   section_ids: &id002
   - 7ff85814d7d04b1a
   - 3f36ea92a4769ee5
@@ -222,7 +222,7 @@ methods:
       micro_action_is_not_completion: 完成第一小步不等于完整方法成功；继续完成四步卡的判断与停止核验。
       short_stop: 线索冲突或仍缺证据先暂留，不截取只支持初选的一句。
     presentation_revision: 2026-10-28.2
-    source_update_note: 行文结构是结构认识与取证入口；首句给假设，组合口诀和无信靠主题不替代单空证据，不强制遍数。
+    source_update_note: 同根可作暂选后的独立回证，不能以初选反证词义；配平只提醒回题核证，不按字母配额改答案。
   cases:
     canonical: cases/cloze/C02/canonical/case.yaml
   four_step_card:
@@ -265,7 +265,7 @@ methods:
   maturity_status: candidate
   practical_value: Useful
   version: 1.2.1
-  change_reason: ANSWER 70db6d6 显式来源差异复核；保留品牌动作和基础入口，异文分源，旧Case不自动获新纪元准入。
+  change_reason: ANSWER 9a872ba 显式来源差异复核；旧来源归档，保基础入口与实用优先，不自动授予Case或真人准入。
   affected_cases:
   - cases/cloze/C02/canonical/case.yaml
   regression_result: pending_current_epoch_semantic_and_student_acceptance
@@ -277,13 +277,13 @@ methods:
     participant_validation: pending_real_participant_validation
     example_scope: 2026-10-28基础入口表达修订；保留原判据/Stop/课程绑定与语义版本，微动作和关系示意不是完整真题或真人实测。
   source_alignment:
-    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
     state: live_source_bound
     source_content_changed: false
     correction_profile_applied: true
     authored_first_contact_draft: true
     new_course_branches: preserved_in_full_contract_not_automatically_aliased
-    acceptance: 2026-10-30 explicit source delta review; learner/blind/release pending
+    acceptance: explicit source delta review; learner/blind/release pending
 - method_id: C03
   brand_name: 首句定调
   source_name: 首句建立粗框架（语篇行文结构的子动作）
@@ -319,7 +319,7 @@ methods:
   - repository: https://github.com/rockpunkgod/ANSWER.git
     path: gaokao-english/references/cloze.md
     heading: 行文结构（结构认识与已核操作）
-    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
   section_ids: &id003
   - c84135f2763c6806
   can_follow: []
@@ -355,7 +355,7 @@ methods:
       micro_action_is_not_completion: 完成第一小步不等于完整方法成功；继续完成四步卡的判断与停止核验。
       short_stop: 首句没说的不编；局部已闭合不必每空重讲首句。
     presentation_revision: 2026-10-28.2
-    source_update_note: 行文结构是结构认识与取证入口；首句给假设，组合口诀和无信靠主题不替代单空证据，不强制遍数。
+    source_update_note: 同根可作暂选后的独立回证，不能以初选反证词义；配平只提醒回题核证，不按字母配额改答案。
   cases:
     canonical: cases/cloze/C03/canonical/case.yaml
   four_step_card:
@@ -398,7 +398,7 @@ methods:
   maturity_status: candidate
   practical_value: Useful
   version: 1.2.0
-  change_reason: ANSWER 70db6d6 显式来源差异复核；保留品牌动作和基础入口，异文分源，旧Case不自动获新纪元准入。
+  change_reason: ANSWER 9a872ba 显式来源差异复核；旧来源归档，保基础入口与实用优先，不自动授予Case或真人准入。
   affected_cases:
   - cases/cloze/C03/canonical/case.yaml
   regression_result: pending_current_epoch_semantic_and_student_acceptance
@@ -410,13 +410,13 @@ methods:
     participant_validation: pending_real_participant_validation
     example_scope: 2026-10-28基础入口表达修订；保留原判据/Stop/课程绑定与语义版本，微动作和关系示意不是完整真题或真人实测。
   source_alignment:
-    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
     state: live_source_bound
-    source_content_changed: true
+    source_content_changed: false
     correction_profile_applied: true
     authored_first_contact_draft: true
     new_course_branches: preserved_in_full_contract_not_automatically_aliased
-    acceptance: 2026-10-30 explicit source delta review; learner/blind/release pending
+    acceptance: explicit source delta review; learner/blind/release pending
 - method_id: C04
   brand_name: 词性导航
   source_name: 词性只引导找线索
@@ -457,7 +457,7 @@ methods:
   - repository: https://github.com/rockpunkgod/ANSWER.git
     path: gaokao-english/references/cloze.md
     heading: 词性只引导找线索
-    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
   section_ids: &id004
   - 32023d73e6038aee
   can_follow: []
@@ -493,7 +493,7 @@ methods:
       micro_action_is_not_completion: 完成第一小步不等于完整方法成功；继续完成四步卡的判断与停止核验。
       short_stop: 修饰对象、动作归属或具体词义不明先停。
     presentation_revision: 2026-10-28.2
-    source_update_note: 行文结构是结构认识与取证入口；首句给假设，组合口诀和无信靠主题不替代单空证据，不强制遍数。
+    source_update_note: 同根可作暂选后的独立回证，不能以初选反证词义；配平只提醒回题核证，不按字母配额改答案。
   cases:
     canonical: cases/cloze/C04/canonical/case.yaml
   four_step_card:
@@ -536,7 +536,7 @@ methods:
   maturity_status: candidate
   practical_value: Useful
   version: 1.2.0
-  change_reason: ANSWER 70db6d6 显式来源差异复核；保留品牌动作和基础入口，异文分源，旧Case不自动获新纪元准入。
+  change_reason: ANSWER 9a872ba 显式来源差异复核；旧来源归档，保基础入口与实用优先，不自动授予Case或真人准入。
   affected_cases:
   - cases/cloze/C04/canonical/case.yaml
   regression_result: pending_current_epoch_semantic_and_student_acceptance
@@ -548,13 +548,13 @@ methods:
     participant_validation: pending_real_participant_validation
     example_scope: 2026-10-28基础入口表达修订；保留原判据/Stop/课程绑定与语义版本，微动作和关系示意不是完整真题或真人实测。
   source_alignment:
-    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
     state: live_source_bound
     source_content_changed: false
     correction_profile_applied: true
     authored_first_contact_draft: true
     new_course_branches: preserved_in_full_contract_not_automatically_aliased
-    acceptance: 2026-10-30 explicit source delta review; learner/blind/release pending
+    acceptance: explicit source delta review; learner/blind/release pending
 - method_id: C05
   brand_name: 近义落地
   source_name: 近义项要落到具体语义
@@ -591,7 +591,7 @@ methods:
   - repository: https://github.com/rockpunkgod/ANSWER.git
     path: gaokao-english/references/cloze.md
     heading: 近义项要落到具体语义
-    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
   section_ids: &id005
   - 98c2c157b45f185a
   can_follow: []
@@ -625,7 +625,7 @@ methods:
       micro_action_is_not_completion: 完成第一小步不等于完整方法成功；继续完成四步卡的判断与停止核验。
       short_stop: 词义或搭配不明先留缺口，不凭主旨强选。
     presentation_revision: 2026-10-28.2
-    source_update_note: 行文结构是结构认识与取证入口；首句给假设，组合口诀和无信靠主题不替代单空证据，不强制遍数。
+    source_update_note: 同根可作暂选后的独立回证，不能以初选反证词义；配平只提醒回题核证，不按字母配额改答案。
   cases:
     canonical: cases/cloze/C05/canonical/case.yaml
   four_step_card:
@@ -668,7 +668,7 @@ methods:
   maturity_status: candidate
   practical_value: Useful
   version: 1.2.0
-  change_reason: ANSWER 70db6d6 显式来源差异复核；保留品牌动作和基础入口，异文分源，旧Case不自动获新纪元准入。
+  change_reason: ANSWER 9a872ba 显式来源差异复核；旧来源归档，保基础入口与实用优先，不自动授予Case或真人准入。
   affected_cases:
   - cases/cloze/C05/canonical/case.yaml
   regression_result: pending_current_epoch_semantic_and_student_acceptance
@@ -680,13 +680,13 @@ methods:
     participant_validation: pending_real_participant_validation
     example_scope: 2026-10-28基础入口表达修订；保留原判据/Stop/课程绑定与语义版本，微动作和关系示意不是完整真题或真人实测。
   source_alignment:
-    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
     state: live_source_bound
     source_content_changed: false
     correction_profile_applied: false
     authored_first_contact_draft: true
     new_course_branches: preserved_in_full_contract_not_automatically_aliased
-    acceptance: 2026-10-30 explicit source delta review; learner/blind/release pending
+    acceptance: explicit source delta review; learner/blind/release pending
 - method_id: C06
   brand_name: 时间线复原
   source_name: 逻辑与时间要看真实内容
@@ -722,7 +722,7 @@ methods:
   - repository: https://github.com/rockpunkgod/ANSWER.git
     path: gaokao-english/references/cloze.md
     heading: 逻辑与时间要看真实内容
-    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
   section_ids: &id006
   - 7f0f15f40c83b385
   can_follow: []
@@ -756,7 +756,7 @@ methods:
       micro_action_is_not_completion: 完成第一小步不等于完整方法成功；继续完成四步卡的判断与停止核验。
       short_stop: 没给时间就标未知，不补时长或原因。
     presentation_revision: 2026-10-28.2
-    source_update_note: 行文结构是结构认识与取证入口；首句给假设，组合口诀和无信靠主题不替代单空证据，不强制遍数。
+    source_update_note: 同根可作暂选后的独立回证，不能以初选反证词义；配平只提醒回题核证，不按字母配额改答案。
   cases:
     canonical: cases/cloze/C06/canonical/case.yaml
   four_step_card:
@@ -799,7 +799,7 @@ methods:
   maturity_status: candidate
   practical_value: Useful
   version: 1.2.0
-  change_reason: ANSWER 70db6d6 显式来源差异复核；保留品牌动作和基础入口，异文分源，旧Case不自动获新纪元准入。
+  change_reason: ANSWER 9a872ba 显式来源差异复核；旧来源归档，保基础入口与实用优先，不自动授予Case或真人准入。
   affected_cases:
   - cases/cloze/C06/canonical/case.yaml
   regression_result: pending_current_epoch_semantic_and_student_acceptance
@@ -811,13 +811,13 @@ methods:
     participant_validation: pending_real_participant_validation
     example_scope: 2026-10-28基础入口表达修订；保留原判据/Stop/课程绑定与语义版本，微动作和关系示意不是完整真题或真人实测。
   source_alignment:
-    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
     state: live_source_bound
     source_content_changed: false
     correction_profile_applied: false
     authored_first_contact_draft: true
     new_course_branches: preserved_in_full_contract_not_automatically_aliased
-    acceptance: 2026-10-30 explicit source delta review; learner/blind/release pending
+    acceptance: explicit source delta review; learner/blind/release pending
 - method_id: C07
   brand_name: 名词回声
   source_name: 名词复现只是线索
@@ -853,7 +853,7 @@ methods:
   - repository: https://github.com/rockpunkgod/ANSWER.git
     path: gaokao-english/references/cloze.md
     heading: 名词复现只是线索
-    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
   section_ids: &id007
   - 91f59a59fd1b5610
   can_follow: []
@@ -889,7 +889,7 @@ methods:
       micro_action_is_not_completion: 完成第一小步不等于完整方法成功；继续完成四步卡的判断与停止核验。
       short_stop: 未知词根不拆猜，同词或同后缀不能单独定案。
     presentation_revision: 2026-10-28.2
-    source_update_note: 行文结构是结构认识与取证入口；首句给假设，组合口诀和无信靠主题不替代单空证据，不强制遍数。
+    source_update_note: 同根可作暂选后的独立回证，不能以初选反证词义；配平只提醒回题核证，不按字母配额改答案。
   cases:
     canonical: cases/cloze/C07/canonical/case.yaml
   four_step_card:
@@ -932,7 +932,7 @@ methods:
   maturity_status: candidate
   practical_value: Useful
   version: 1.2.0
-  change_reason: ANSWER 70db6d6 显式来源差异复核；保留品牌动作和基础入口，异文分源，旧Case不自动获新纪元准入。
+  change_reason: ANSWER 9a872ba 显式来源差异复核；旧来源归档，保基础入口与实用优先，不自动授予Case或真人准入。
   affected_cases:
   - cases/cloze/C07/canonical/case.yaml
   regression_result: pending_current_epoch_semantic_and_student_acceptance
@@ -944,13 +944,13 @@ methods:
     participant_validation: pending_real_participant_validation
     example_scope: 2026-10-28基础入口表达修订；保留原判据/Stop/课程绑定与语义版本，微动作和关系示意不是完整真题或真人实测。
   source_alignment:
-    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
     state: live_source_bound
-    source_content_changed: false
+    source_content_changed: true
     correction_profile_applied: true
     authored_first_contact_draft: true
     new_course_branches: preserved_in_full_contract_not_automatically_aliased
-    acceptance: 2026-10-30 explicit source delta review; learner/blind/release pending
+    acceptance: explicit source delta review; learner/blind/release pending
 - method_id: C08
   brand_name: 结果反推
   source_name: 评价、结果与动作链
@@ -987,7 +987,7 @@ methods:
   - repository: https://github.com/rockpunkgod/ANSWER.git
     path: gaokao-english/references/cloze.md
     heading: 评价、结果与动作链
-    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
   section_ids: &id008
   - f7cd71358324b06d
   can_follow: []
@@ -1021,7 +1021,7 @@ methods:
       micro_action_is_not_completion: 完成第一小步不等于完整方法成功；继续完成四步卡的判断与停止核验。
       short_stop: 评价对象或桥接不清先停，不用猜定空作证据。
     presentation_revision: 2026-10-28.2
-    source_update_note: 行文结构是结构认识与取证入口；首句给假设，组合口诀和无信靠主题不替代单空证据，不强制遍数。
+    source_update_note: 同根可作暂选后的独立回证，不能以初选反证词义；配平只提醒回题核证，不按字母配额改答案。
   cases:
     canonical: cases/cloze/C08/canonical/case.yaml
   four_step_card:
@@ -1064,7 +1064,7 @@ methods:
   maturity_status: candidate
   practical_value: Useful
   version: 1.2.0
-  change_reason: ANSWER 70db6d6 显式来源差异复核；保留品牌动作和基础入口，异文分源，旧Case不自动获新纪元准入。
+  change_reason: ANSWER 9a872ba 显式来源差异复核；旧来源归档，保基础入口与实用优先，不自动授予Case或真人准入。
   affected_cases:
   - cases/cloze/C08/canonical/case.yaml
   regression_result: pending_current_epoch_semantic_and_student_acceptance
@@ -1076,13 +1076,13 @@ methods:
     participant_validation: pending_real_participant_validation
     example_scope: 2026-10-28基础入口表达修订；保留原判据/Stop/课程绑定与语义版本，微动作和关系示意不是完整真题或真人实测。
   source_alignment:
-    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
     state: live_source_bound
     source_content_changed: false
     correction_profile_applied: false
     authored_first_contact_draft: true
     new_course_branches: preserved_in_full_contract_not_automatically_aliased
-    acceptance: 2026-10-30 explicit source delta review; learner/blind/release pending
+    acceptance: explicit source delta review; learner/blind/release pending
 - method_id: C09
   brand_name: 动作串联
   source_name: 评价、结果与动作链
@@ -1124,7 +1124,7 @@ methods:
   - repository: https://github.com/rockpunkgod/ANSWER.git
     path: gaokao-english/references/cloze.md
     heading: 评价、结果与动作链
-    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
   section_ids: &id009
   - f7cd71358324b06d
   can_follow: []
@@ -1158,7 +1158,7 @@ methods:
       micro_action_is_not_completion: 完成第一小步不等于完整方法成功；继续完成四步卡的判断与停止核验。
       short_stop: 没有依据的边留空，不补动作、时长或因果。
     presentation_revision: 2026-10-28.2
-    source_update_note: 行文结构是结构认识与取证入口；首句给假设，组合口诀和无信靠主题不替代单空证据，不强制遍数。
+    source_update_note: 同根可作暂选后的独立回证，不能以初选反证词义；配平只提醒回题核证，不按字母配额改答案。
   cases:
     canonical: cases/cloze/C09/canonical/case.yaml
   four_step_card:
@@ -1201,7 +1201,7 @@ methods:
   maturity_status: candidate
   practical_value: Useful
   version: 1.2.0
-  change_reason: ANSWER 70db6d6 显式来源差异复核；保留品牌动作和基础入口，异文分源，旧Case不自动获新纪元准入。
+  change_reason: ANSWER 9a872ba 显式来源差异复核；旧来源归档，保基础入口与实用优先，不自动授予Case或真人准入。
   affected_cases:
   - cases/cloze/C09/canonical/case.yaml
   regression_result: pending_current_epoch_semantic_and_student_acceptance
@@ -1213,10 +1213,10 @@ methods:
     participant_validation: pending_real_participant_validation
     example_scope: 2026-10-28基础入口表达修订；保留原判据/Stop/课程绑定与语义版本，微动作和关系示意不是完整真题或真人实测。
   source_alignment:
-    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
     state: live_source_bound
     source_content_changed: false
     correction_profile_applied: false
     authored_first_contact_draft: true
     new_course_branches: preserved_in_full_contract_not_automatically_aliased
-    acceptance: 2026-10-30 explicit source delta review; learner/blind/release pending
+    acceptance: explicit source delta review; learner/blind/release pending

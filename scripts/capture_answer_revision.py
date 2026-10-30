@@ -86,7 +86,7 @@ def capture(source, commit, captured_at, repo_root=ROOT):
         (path.startswith(('agents/','gaokao-english/','gaokao-grammar-fill/','gaokao-writing/'))
          and Path(path).suffix in {'.md','.py','.json','.yaml','.yml'}) or
         path in {'README.md','kaiming-english-qa/SKILL.md'} or
-        (path.startswith('course-audits/2026-10-13/') and Path(path).suffix == '.md')))
+        (path.startswith('course-audits/') and Path(path).suffix == '.md')))
     if not set(expected) <= set(included):
         raise ValueError('Upstream deleted a baseline source; explicit migration review required')
     new_files = {path:private_relative(source,path).read_bytes() for path in included}

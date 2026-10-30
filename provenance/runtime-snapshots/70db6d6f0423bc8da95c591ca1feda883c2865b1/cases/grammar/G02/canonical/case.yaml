@@ -1,0 +1,21 @@
+case_id: G02-canonical
+method_id: G02
+question_type: 语法填空
+source:
+  repository: https://github.com/rockpunkgod/ANSWER.git
+  commit: b04ebc26d7fa096404111a0bb12f6c77cc8525b9
+  path: gaokao-grammar-fill/references/grammar-fill.md
+  heading: 总路线
+question: null
+answer: null
+trigger: 开始处理语法空位
+evidence: []
+method_role: framework
+expected_action: 只标有/无提示词，再回完整句确认位置功能，不先改提示词
+expected_output: interpret
+stop_rule: 提示词是否存在、未填句主干或分句边界不清时停在确认节点；无提示词不能锁死为四类，还可能是句间连接副词。
+case_type: canonical
+status: evidence_gap
+notes: 源方法可核；尚未逐题核验案例，不可当成功样例
+method_version: 1.1.0
+source_commit: b04ebc26d7fa096404111a0bb12f6c77cc8525b9

@@ -2,11 +2,16 @@
   "scope": "Explicit identities for editable interface examples only; not real Case, blind or learner evidence. Other examples remain unregistered until their source epoch is reviewed.",
   "examples": {
     "passage-lesson.synthetic.json": {
-      "source_commit": "70db6d6f0423bc8da95c591ca1feda883c2865b1",
-      "sha256": "aaa21bcc53ba251f214419852b01a0b9dbdb74a34b21458c6ae6ccfb7c393fd2"
+      "source_commit": "9a872ba0397910bd9350cff860c3b94fd061a3a8",
+      "sha256": "2cfaca2cfb7f1f50ce30aaf73ec9895b35e93e33d63da20e0a82c1f5ec4ee87e",
+      "registration_basis": {
+        "source_commit": "70db6d6f0423bc8da95c591ca1feda883c2865b1",
+        "original_sha256": "aaa21bcc53ba251f214419852b01a0b9dbdb74a34b21458c6ae6ccfb7c393fd2",
+        "review": "Synthetic interface projection, not an English exam or semantic claim. R01 action/decision/stop unchanged; full source clarification reviewed in the pinned migration. Exactly three over-inference source IDs rebound by path and heading; all synthetic content, answers and lesson order preserved."
+      }
     },
     "question-lesson-course.json": {
-      "source_commit": "70db6d6f0423bc8da95c591ca1feda883c2865b1",
+      "source_commit": "9a872ba0397910bd9350cff860c3b94fd061a3a8",
       "sha256": "fa01f68170d2829dd0b4f41c18c614c3a7cdb35f564a153ad69bf3609862511a",
       "registration_basis": {
         "repository_commit": "f04820a012105c46b19d4e98097a2d9513464845",

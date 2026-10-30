@@ -1,0 +1,22 @@
+method_id: F01
+case_type: boundary
+status: verified_course_example
+objective: 处理某一维无区分度，只能转入内容的场景。
+source_item: 2024安徽淮北一模羽绒被七选五，课程语料段12–27。
+prompt_excerpt: Follow, Dry, Confirm 等多个候选都是祈使句，句型维度对当前空不足以定案。
+expected_action: 把祈使句归为候选组，再比对象、操作阶段、空前后关系和小标题任务。
+pass_condition: 不因同句型或组内所剩项定案。
+source_reference: ANSWER@b04ebc26:kaiming-english-qa/references/corpus/ce31f1ee2a89.txt#段12-27
+case_id: F01-boundary
+question_type: 七选五
+source: ANSWER@b04ebc26:kaiming-english-qa/references/corpus/ce31f1ee2a89.txt#段12-27
+question: Follow, Dry, Confirm 等多个候选都是祈使句，句型维度对当前空不足以定案。
+answer: null
+trigger: 整篇七选五刚开始，候选之间存在可观察的句型角色、主角/核心话题或真谓语时间差异。
+evidence: []
+method_role: reducer
+expected_output: reduce
+stop_rule: 分组只缩范围，不负责定答案。
+notes: 尚未真人验收
+method_version: 1.1.0
+source_commit: b04ebc26d7fa096404111a0bb12f6c77cc8525b9

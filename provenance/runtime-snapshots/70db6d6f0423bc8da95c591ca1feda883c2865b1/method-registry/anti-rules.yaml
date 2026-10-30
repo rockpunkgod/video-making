@@ -1,0 +1,96 @@
+rules:
+- anti_rule_id: AR01
+  rule: 同词 ≠ 答案。
+  related_methods:
+  - R03
+  - F06
+  - C07
+  counterexample: 词语复现但主体或动作不一致时不能定案
+  boundary: 词语复现但主体或动作不一致时不能定案
+  source_evidence:
+  - bfe663258883ee1a
+  - 92ec24e9e7003cba
+  - 91f59a59fd1b5610
+  case_status: source_pattern_only
+- anti_rule_id: AR02
+  rule: 绝对词 ≠ 必错。
+  related_methods:
+  - R01
+  counterexample: 原文能支持绝对范围时不能因词形排除
+  boundary: 原文能支持绝对范围时不能因词形排除
+  source_evidence:
+  - 079728b2a0305ff9
+  case_status: source_pattern_only
+- anti_rule_id: AR03
+  rule: 转折后 ≠ 必选。
+  related_methods:
+  - F07
+  - C01
+  counterexample: 转折关系须由两侧完整内容成立
+  boundary: 转折关系须由两侧完整内容成立
+  source_evidence:
+  - d815465ca190a14f
+  - c84135f2763c6806
+  case_status: source_pattern_only
+- anti_rule_id: AR04
+  rule: 段首 ≠ 中心句。
+  related_methods:
+  - R09
+  - F05
+  counterexample: 首句可能只是背景，须核下文共同任务
+  boundary: 首句可能只是背景，须核下文共同任务
+  source_evidence:
+  - a2ef5fb5d00f213c
+  - 1fcc9966ce085922
+  case_status: source_pattern_only
+- anti_rule_id: AR05
+  rule: 范围最大 ≠ 主旨。
+  related_methods:
+  - R06
+  counterexample: 覆盖大却新增错误关系仍不合格
+  boundary: 覆盖大却新增错误关系仍不合格
+  source_evidence:
+  - 16b214507547840e
+  case_status: source_pattern_only
+- anti_rule_id: AR06
+  rule: 定位 ≠ 答案。
+  related_methods:
+  - R12
+  - R13
+  counterexample: 同词定位只能找到证据区域，仍须核完整断言
+  boundary: 同词定位只能找到证据区域，仍须核完整断言
+  source_evidence:
+  - f8e5e07efbaef15c
+  - 3104f706064bf305
+  case_status: source_pattern_only
+- anti_rule_id: AR07
+  rule: 分组 ≠ 定案。
+  related_methods:
+  - F01
+  counterexample: 同组多个候选仍需正文内容闭合
+  boundary: 同组多个候选仍需正文内容闭合
+  source_evidence:
+  - a8f0c4ae44ae61ff
+  - be3f1c1eb7c11ee7
+  - 13b2d5c88710b11a
+  case_status: source_pattern_only
+- anti_rule_id: AR08
+  rule: 只剩一个 ≠ 自动正确。
+  related_methods:
+  - F10
+  - R01
+  counterexample: 排除或占用不能替代剩余项自身证据
+  boundary: 排除或占用不能替代剩余项自身证据
+  source_evidence:
+  - c8a128adb1c07e71
+  - 079728b2a0305ff9
+  case_status: source_pattern_only
+- anti_rule_id: AR09
+  rule: 没原词 ≠ 没依据。
+  related_methods:
+  - R01
+  counterexample: 上下文合理间接支持B时必须停止排除
+  boundary: 上下文合理间接支持B时必须停止排除
+  source_evidence:
+  - 079728b2a0305ff9
+  case_status: source_pattern_only

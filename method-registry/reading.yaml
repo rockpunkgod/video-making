@@ -43,11 +43,11 @@ methods:
   - repository: https://github.com/rockpunkgod/ANSWER.git
     path: gaokao-english/references/reading-comprehension.md
     heading: 过度推测
-    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
   - repository: https://github.com/rockpunkgod/ANSWER.git
     path: gaokao-english/references/course-evidence.md
     heading: 其他已激活阅读方法
-    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
   can_follow:
   - 跳读定位
   - 同源替换
@@ -82,7 +82,7 @@ methods:
     - 候选虽未逐字出现，但原文事实或数量关系已对 B 构成充分间接支持，不得以加戏排除。
     - 候选含绝对词，但原文的确给出全称或必然关系，绝对词本身不构成错误。
     section_ids: &id001
-    - 079728b2a0305ff9
+    - 7b525972f9c7ba5d
     beginner_support:
       first_micro_action: 先在原文和候选里划出确实说同一件事的那一段，再圈候选额外多说的词。
       prerequisite: 先读清题干所问对象，能说明当前这句谁做什么；挡住判断的词不认识，先标出求助，不用词面相似代替句意。
@@ -92,7 +92,7 @@ methods:
       micro_action_is_not_completion: 完成第一小步不等于完整方法成功；继续完成四步卡的判断与停止核验。
       short_stop: A没核实先不拆；B有支持不能排，排一项不证明另一项。
     presentation_revision: 2026-10-28.2
-    source_update_note: 主客一致补观察/假设与语义施受边界；主语、时态、动静独立保名，不借七选五分组。期末两首一尾来源不覆盖三化入口。
+    source_update_note: 按题干保积极阅读分支；比数绝重大只定位，中心思想受限于文本推断；记叙框架来源各保，不改三化产物和篇级依赖。
   cases:
     canonical: cases/R01/canonical/case.yaml
     counterexample: cases/R01/counterexamples/case.yaml
@@ -141,7 +141,7 @@ methods:
   method_type: method
   maturity_status: candidate
   practical_value: Useful
-  change_reason: ANSWER 70db6d6 显式来源差异复核；保留品牌动作和基础入口，异文分源，旧Case不自动获新纪元准入。
+  change_reason: ANSWER 9a872ba 显式来源差异复核；旧来源归档，保基础入口与实用优先，不自动授予Case或真人准入。
   affected_cases:
   - cases/R01/canonical/case.yaml
   - cases/R01/counterexamples/case.yaml
@@ -177,13 +177,13 @@ methods:
   entry_copy: 选项多说一截？先在原文和候选里划出确实说同一件事的那一段，再圈候选额外多说的词。这一步得到的是当前候选的保留、排除或待定判断；不能由剩余项自动定案。如果卡住，先停在已确认的词句位置；读不清决定性词义或核心关系时标缺口，不排选项。
   student_ready: false
   source_alignment:
-    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
     state: live_source_bound
-    source_content_changed: false
+    source_content_changed: true
     correction_profile_applied: false
     authored_first_contact_draft: true
     new_course_branches: preserved_in_full_contract_not_automatically_aliased
-    acceptance: 2026-10-30 explicit source delta review; learner/blind/release pending
+    acceptance: explicit source delta review; learner/blind/release pending
   static_design_review:
     status: source_bound_editorial_review
     source_section_ids: *id001
@@ -231,11 +231,11 @@ methods:
   - repository: https://github.com/rockpunkgod/ANSWER.git
     path: gaokao-english/references/reading-comprehension.md
     heading: 主客一致
-    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
   - repository: https://github.com/rockpunkgod/ANSWER.git
     path: gaokao-english/references/course-evidence.md
     heading: 主客一致
-    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
   can_follow:
   - 跳读定位
   - 代词指代
@@ -268,7 +268,7 @@ methods:
     - 主体未在候选里重复，但题干已明示共同对象；不能仅因候选没重复主体就判错。
     - 原文确实说某主体具有能力且表达意愿，两者同时成立，不得为了应用方法强行二分。
     section_ids: &id002
-    - 33abd2c12caeb924
+    - 6e31a465f1ce1768
     beginner_support:
       first_micro_action: 先并排圈两句的谁和完整动作，连希望、能够、已经一起圈，暂不要求画三格。
       prerequisite: 先读清题干所问对象，能说明当前这句谁做什么；挡住判断的词不认识，先标出求助，不用词面相似代替句意。
@@ -279,7 +279,7 @@ methods:
       short_stop: 无偷换停本法；共同主体省略不算偷换。
       legacy_entry_note: 旧称三槽位核对可帮助认出入口，不要求每题固定三格；只核本题主体、施受、愿望/事实或能力/意愿的实际差异。
     presentation_revision: 2026-10-28.2
-    source_update_note: 主客一致补观察/假设与语义施受边界；主语、时态、动静独立保名，不借七选五分组。期末两首一尾来源不覆盖三化入口。
+    source_update_note: 按题干保积极阅读分支；比数绝重大只定位，中心思想受限于文本推断；记叙框架来源各保，不改三化产物和篇级依赖。
   cases:
     canonical: cases/R02/canonical/case.yaml
     counterexample: cases/R02/counterexamples/case.yaml
@@ -328,7 +328,7 @@ methods:
   method_type: method
   maturity_status: candidate
   practical_value: Useful
-  change_reason: ANSWER 70db6d6 显式来源差异复核；保留品牌动作和基础入口，异文分源，旧Case不自动获新纪元准入。
+  change_reason: ANSWER 9a872ba 显式来源差异复核；旧来源归档，保基础入口与实用优先，不自动授予Case或真人准入。
   affected_cases:
   - cases/R02/canonical/case.yaml
   - cases/R02/counterexamples/case.yaml
@@ -364,13 +364,13 @@ methods:
   entry_copy: 词都认识还分不清？先并排圈两句的谁和完整动作，连希望、能够、已经一起圈，暂不要求画三格。这一步得到的是当前候选的保留、排除或待定判断；不能由剩余项自动定案。如果卡住，先停在已确认的词句位置；读不清决定性词义或核心关系时标缺口，不排选项。
   student_ready: false
   source_alignment:
-    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
     state: live_source_bound
-    source_content_changed: true
+    source_content_changed: false
     correction_profile_applied: true
     authored_first_contact_draft: true
     new_course_branches: preserved_in_full_contract_not_automatically_aliased
-    acceptance: 2026-10-30 explicit source delta review; learner/blind/release pending
+    acceptance: explicit source delta review; learner/blind/release pending
   static_design_review:
     status: source_bound_editorial_review
     source_section_ids: *id002
@@ -416,11 +416,11 @@ methods:
   - repository: https://github.com/rockpunkgod/ANSWER.git
     path: gaokao-english/references/reading-comprehension.md
     heading: mainly题与主旨大意
-    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
   - repository: https://github.com/rockpunkgod/ANSWER.git
     path: gaokao-english/references/course-evidence.md
     heading: 其他已激活阅读方法
-    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
   can_follow:
   - R09
   - mainly题与主旨大意
@@ -451,7 +451,7 @@ methods:
     - 没有已证核心关系先停；省略、近义或上位概念能覆盖时，不能因没原词判缺失。
     - 候选用省略、近义或上位概念准确覆盖所问核心，没重复每个原词也不能判缺失。
     section_ids: &id003
-    - 16b214507547840e
+    - d91aca6a13f190d4
     beginner_support:
       first_micro_action: 先在已核实框架旁写候选谈谁、说了什么；核心还没核实先不排项。
       prerequisite: 先读清题干所问对象，能说明当前这句谁做什么；挡住判断的词不认识，先标出求助，不用词面相似代替句意。
@@ -461,7 +461,7 @@ methods:
       micro_action_is_not_completion: 完成第一小步不等于完整方法成功；继续完成四步卡的判断与停止核验。
       short_stop: 核心未核好先停；不是缺原词就缺内容。
     presentation_revision: 2026-10-28.2
-    source_update_note: 主客一致补观察/假设与语义施受边界；主语、时态、动静独立保名，不借七选五分组。期末两首一尾来源不覆盖三化入口。
+    source_update_note: 按题干保积极阅读分支；比数绝重大只定位，中心思想受限于文本推断；记叙框架来源各保，不改三化产物和篇级依赖。
   cases:
     canonical: cases/R06/canonical/case.yaml
     counterexample: cases/R06/counterexamples/case.yaml
@@ -510,7 +510,7 @@ methods:
   method_type: internal_rule
   maturity_status: candidate
   practical_value: Useful
-  change_reason: ANSWER 70db6d6 显式来源差异复核；保留品牌动作和基础入口，异文分源，旧Case不自动获新纪元准入。
+  change_reason: ANSWER 9a872ba 显式来源差异复核；旧来源归档，保基础入口与实用优先，不自动授予Case或真人准入。
   affected_cases:
   - cases/R06/canonical/case.yaml
   - cases/R06/counterexamples/case.yaml
@@ -546,13 +546,13 @@ methods:
   entry_copy: 主旨项相关却不全？先在已核实框架旁写候选谈谁、说了什么；核心还没核实先不排项。这一步得到的是当前候选的保留、排除或待定判断；不能由剩余项自动定案。如果卡住，先停在已确认的词句位置；读不清决定性词义或核心关系时标缺口，不排选项。
   student_ready: false
   source_alignment:
-    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
     state: live_source_bound
-    source_content_changed: false
+    source_content_changed: true
     correction_profile_applied: true
     authored_first_contact_draft: true
     new_course_branches: preserved_in_full_contract_not_automatically_aliased
-    acceptance: 2026-10-30 explicit source delta review; learner/blind/release pending
+    acceptance: explicit source delta review; learner/blind/release pending
   static_design_review:
     status: source_bound_editorial_review
     source_section_ids: *id003
@@ -602,11 +602,11 @@ methods:
   - repository: https://github.com/rockpunkgod/ANSWER.git
     path: gaokao-english/references/reading-comprehension.md
     heading: 三化法
-    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
   - repository: https://github.com/rockpunkgod/ANSWER.git
     path: gaokao-english/references/course-evidence.md
     heading: 其他已激活阅读方法
-    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
   can_follow:
   - 题干与主旨选项假设
   usually_before:
@@ -638,7 +638,7 @@ methods:
     - 某词全文高频，但它只是背景对象，未表达核心判断；仅凭词频不能定主旨。
     - 首段只引入背景，真正判断在后文展开；不能把首段话题直接当全文任务。
     section_ids: &id004
-    - a2ef5fb5d00f213c
+    - ad0c2c73d03fd3f2
     beginner_support:
       first_micro_action: 先圈题干要全文还是某段，再看实际给出的相关选项；骨架三格后填，不倒改入口。
       prerequisite: 先读清题干所问对象，能说明当前这句谁做什么；挡住判断的词不认识，先标出求助，不用词面相似代替句意。
@@ -648,7 +648,7 @@ methods:
       micro_action_is_not_completion: 完成第一小步不等于完整方法成功；继续完成四步卡的判断与停止核验。
       short_stop: 缺主要段落或只问局部不启动；没重复词可跳过该线索。
     presentation_revision: 2026-10-28.2
-    source_update_note: 主客一致补观察/假设与语义施受边界；主语、时态、动静独立保名，不借七选五分组。期末两首一尾来源不覆盖三化入口。
+    source_update_note: 按题干保积极阅读分支；比数绝重大只定位，中心思想受限于文本推断；记叙框架来源各保，不改三化产物和篇级依赖。
   cases:
     canonical: cases/R09/canonical/case.yaml
     counterexample: cases/R09/counterexamples/case.yaml
@@ -697,7 +697,7 @@ methods:
   method_type: framework
   maturity_status: candidate
   practical_value: Useful
-  change_reason: ANSWER 70db6d6 显式来源差异复核；保留品牌动作和基础入口，异文分源，旧Case不自动获新纪元准入。
+  change_reason: ANSWER 9a872ba 显式来源差异复核；旧来源归档，保基础入口与实用优先，不自动授予Case或真人准入。
   affected_cases:
   - cases/R09/canonical/case.yaml
   - cases/R09/counterexamples/case.yaml
@@ -733,13 +733,13 @@ methods:
   entry_copy: 全文框架卡住？先圈题干要全文还是某段，再看实际给出的相关选项；骨架三格后填，不倒改入口。共同概念只作假设；再读有效首尾，最后看中间段首及必要回答或段尾，回全文核三格。这一步得到的只是全文骨架卡：对象、核心判断、结构任务；三格都须正文支持，不直接定答案。如果卡住，先停在已确认的词句位置；读不清决定性词义或核心关系时标缺口，不排选项。
   student_ready: false
   source_alignment:
-    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
     state: live_source_bound
     source_content_changed: false
     correction_profile_applied: true
     authored_first_contact_draft: true
     new_course_branches: preserved_in_full_contract_not_automatically_aliased
-    acceptance: 2026-10-30 explicit source delta review; learner/blind/release pending
+    acceptance: explicit source delta review; learner/blind/release pending
   static_design_review:
     status: source_bound_editorial_review
     source_section_ids: *id004
@@ -783,9 +783,9 @@ methods:
   - repository: https://github.com/rockpunkgod/ANSWER.git
     path: gaokao-english/references/reading-comprehension.md
     heading: 同源替换
-    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
   section_ids: &id005
-  - bfe663258883ee1a
+  - 45520a599da9cbf4
   can_follow: []
   usually_before: []
   usually_after: []
@@ -819,7 +819,7 @@ methods:
       micro_action_is_not_completion: 完成第一小步不等于完整方法成功；继续完成四步卡的判断与停止核验。
       short_stop: 词义或条件不清先补证，不凭对应词数量定案。
     presentation_revision: 2026-10-28.2
-    source_update_note: 主客一致补观察/假设与语义施受边界；主语、时态、动静独立保名，不借七选五分组。期末两首一尾来源不覆盖三化入口。
+    source_update_note: 按题干保积极阅读分支；比数绝重大只定位，中心思想受限于文本推断；记叙框架来源各保，不改三化产物和篇级依赖。
   cases:
     canonical: cases/reading/R03/canonical/case.yaml
   four_step_card:
@@ -862,7 +862,7 @@ methods:
   maturity_status: candidate
   practical_value: Useful
   version: 1.2.0
-  change_reason: ANSWER 70db6d6 显式来源差异复核；保留品牌动作和基础入口，异文分源，旧Case不自动获新纪元准入。
+  change_reason: ANSWER 9a872ba 显式来源差异复核；旧来源归档，保基础入口与实用优先，不自动授予Case或真人准入。
   affected_cases:
   - cases/reading/R03/canonical/case.yaml
   regression_result: pending_current_epoch_semantic_and_student_acceptance
@@ -874,13 +874,13 @@ methods:
     participant_validation: pending_real_participant_validation
     example_scope: 2026-10-28基础入口表达修订；保留原判据/Stop/课程绑定与语义版本，微动作和关系示意不是完整真题或真人实测。
   source_alignment:
-    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
     state: live_source_bound
     source_content_changed: false
     correction_profile_applied: true
     authored_first_contact_draft: true
     new_course_branches: preserved_in_full_contract_not_automatically_aliased
-    acceptance: 2026-10-30 explicit source delta review; learner/blind/release pending
+    acceptance: explicit source delta review; learner/blind/release pending
 - method_id: R04
   brand_name: 比较别偷换
   source_name: 比较级谨慎选
@@ -916,9 +916,9 @@ methods:
   - repository: https://github.com/rockpunkgod/ANSWER.git
     path: gaokao-english/references/reading-comprehension.md
     heading: 比较级谨慎选
-    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
   section_ids: &id006
-  - 12cbf7072ca95fcb
+  - 4bc822d6aa850525
   can_follow: []
   usually_before: []
   usually_after: []
@@ -953,7 +953,7 @@ methods:
       micro_action_is_not_completion: 完成第一小步不等于完整方法成功；继续完成四步卡的判断与停止核验。
       short_stop: 未定位不算证伪；最高级有充分支持就不能排。
     presentation_revision: 2026-10-28.2
-    source_update_note: 主客一致补观察/假设与语义施受边界；主语、时态、动静独立保名，不借七选五分组。期末两首一尾来源不覆盖三化入口。
+    source_update_note: 按题干保积极阅读分支；比数绝重大只定位，中心思想受限于文本推断；记叙框架来源各保，不改三化产物和篇级依赖。
   cases:
     canonical: cases/reading/R04/canonical/case.yaml
   four_step_card:
@@ -996,7 +996,7 @@ methods:
   maturity_status: candidate
   practical_value: Useful
   version: 1.2.0
-  change_reason: ANSWER 70db6d6 显式来源差异复核；保留品牌动作和基础入口，异文分源，旧Case不自动获新纪元准入。
+  change_reason: ANSWER 9a872ba 显式来源差异复核；旧来源归档，保基础入口与实用优先，不自动授予Case或真人准入。
   affected_cases:
   - cases/reading/R04/canonical/case.yaml
   regression_result: pending_current_epoch_semantic_and_student_acceptance
@@ -1008,13 +1008,13 @@ methods:
     participant_validation: pending_real_participant_validation
     example_scope: 2026-10-28基础入口表达修订；保留原判据/Stop/课程绑定与语义版本，微动作和关系示意不是完整真题或真人实测。
   source_alignment:
-    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
     state: live_source_bound
     source_content_changed: false
     correction_profile_applied: true
     authored_first_contact_draft: true
     new_course_branches: preserved_in_full_contract_not_automatically_aliased
-    acceptance: 2026-10-30 explicit source delta review; learner/blind/release pending
+    acceptance: explicit source delta review; learner/blind/release pending
 - method_id: R05
   brand_name: 因果别选反
   source_name: 因果选果
@@ -1055,9 +1055,9 @@ methods:
   - repository: https://github.com/rockpunkgod/ANSWER.git
     path: gaokao-english/references/reading-comprehension.md
     heading: 因果选果
-    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
   section_ids: &id007
-  - c94cc356316596b9
+  - 19a85fcf99b86580
   can_follow: []
   usually_before: []
   usually_after: []
@@ -1092,7 +1092,7 @@ methods:
       micro_action_is_not_completion: 完成第一小步不等于完整方法成功；继续完成四步卡的判断与停止核验。
       short_stop: 两项或链条缺依据就停，先后不证明因果。
     presentation_revision: 2026-10-28.2
-    source_update_note: 主客一致补观察/假设与语义施受边界；主语、时态、动静独立保名，不借七选五分组。期末两首一尾来源不覆盖三化入口。
+    source_update_note: 按题干保积极阅读分支；比数绝重大只定位，中心思想受限于文本推断；记叙框架来源各保，不改三化产物和篇级依赖。
   cases:
     canonical: cases/reading/R05/canonical/case.yaml
   four_step_card:
@@ -1135,7 +1135,7 @@ methods:
   maturity_status: candidate
   practical_value: Useful
   version: 1.2.0
-  change_reason: ANSWER 70db6d6 显式来源差异复核；保留品牌动作和基础入口，异文分源，旧Case不自动获新纪元准入。
+  change_reason: ANSWER 9a872ba 显式来源差异复核；旧来源归档，保基础入口与实用优先，不自动授予Case或真人准入。
   affected_cases:
   - cases/reading/R05/canonical/case.yaml
   regression_result: pending_current_epoch_semantic_and_student_acceptance
@@ -1147,13 +1147,13 @@ methods:
     participant_validation: pending_real_participant_validation
     example_scope: 2026-10-28基础入口表达修订；保留原判据/Stop/课程绑定与语义版本，微动作和关系示意不是完整真题或真人实测。
   source_alignment:
-    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
     state: live_source_bound
     source_content_changed: false
     correction_profile_applied: true
     authored_first_contact_draft: true
     new_course_branches: preserved_in_full_contract_not_automatically_aliased
-    acceptance: 2026-10-30 explicit source delta review; learner/blind/release pending
+    acceptance: explicit source delta review; learner/blind/release pending
 - method_id: R07
   brand_name: 并列打包
   source_name: 并列删除
@@ -1195,9 +1195,9 @@ methods:
   - repository: https://github.com/rockpunkgod/ANSWER.git
     path: gaokao-english/references/reading-comprehension.md
     heading: 并列删除
-    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
   section_ids: &id008
-  - 040991117a2ad80e
+  - 763aab279928f208
   can_follow: []
   usually_before: []
   usually_after: []
@@ -1230,7 +1230,7 @@ methods:
       micro_action_is_not_completion: 完成第一小步不等于完整方法成功；继续完成四步卡的判断与停止核验。
       short_stop: and不证明同层，也不能因位于转折前共同排除。
     presentation_revision: 2026-10-28.2
-    source_update_note: 主客一致补观察/假设与语义施受边界；主语、时态、动静独立保名，不借七选五分组。期末两首一尾来源不覆盖三化入口。
+    source_update_note: 按题干保积极阅读分支；比数绝重大只定位，中心思想受限于文本推断；记叙框架来源各保，不改三化产物和篇级依赖。
   cases:
     canonical: cases/reading/R07/canonical/case.yaml
   four_step_card:
@@ -1273,7 +1273,7 @@ methods:
   maturity_status: candidate
   practical_value: Useful
   version: 1.2.0
-  change_reason: ANSWER 70db6d6 显式来源差异复核；保留品牌动作和基础入口，异文分源，旧Case不自动获新纪元准入。
+  change_reason: ANSWER 9a872ba 显式来源差异复核；旧来源归档，保基础入口与实用优先，不自动授予Case或真人准入。
   affected_cases:
   - cases/reading/R07/canonical/case.yaml
   regression_result: pending_current_epoch_semantic_and_student_acceptance
@@ -1285,13 +1285,13 @@ methods:
     participant_validation: pending_real_participant_validation
     example_scope: 2026-10-28基础入口表达修订；保留原判据/Stop/课程绑定与语义版本，微动作和关系示意不是完整真题或真人实测。
   source_alignment:
-    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
     state: live_source_bound
     source_content_changed: false
     correction_profile_applied: false
     authored_first_contact_draft: true
     new_course_branches: preserved_in_full_contract_not_automatically_aliased
-    acceptance: 2026-10-30 explicit source delta review; learner/blind/release pending
+    acceptance: explicit source delta review; learner/blind/release pending
 - method_id: R08
   brand_name: 例子只作证
   source_name: 例子非答案
@@ -1326,9 +1326,9 @@ methods:
   - repository: https://github.com/rockpunkgod/ANSWER.git
     path: gaokao-english/references/reading-comprehension.md
     heading: 例子非答案
-    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
   section_ids: &id009
-  - e90601120d085c34
+  - e933e3962625a3b3
   can_follow: []
   usually_before: []
   usually_after: []
@@ -1362,7 +1362,7 @@ methods:
       micro_action_is_not_completion: 完成第一小步不等于完整方法成功；继续完成四步卡的判断与停止核验。
       short_stop: 直接问例中事实时不用本法排细节。
     presentation_revision: 2026-10-28.2
-    source_update_note: 主客一致补观察/假设与语义施受边界；主语、时态、动静独立保名，不借七选五分组。期末两首一尾来源不覆盖三化入口。
+    source_update_note: 按题干保积极阅读分支；比数绝重大只定位，中心思想受限于文本推断；记叙框架来源各保，不改三化产物和篇级依赖。
   cases:
     canonical: cases/reading/R08/canonical/case.yaml
   four_step_card:
@@ -1405,7 +1405,7 @@ methods:
   maturity_status: candidate
   practical_value: Useful
   version: 1.2.0
-  change_reason: ANSWER 70db6d6 显式来源差异复核；保留品牌动作和基础入口，异文分源，旧Case不自动获新纪元准入。
+  change_reason: ANSWER 9a872ba 显式来源差异复核；旧来源归档，保基础入口与实用优先，不自动授予Case或真人准入。
   affected_cases:
   - cases/reading/R08/canonical/case.yaml
   regression_result: pending_current_epoch_semantic_and_student_acceptance
@@ -1417,13 +1417,13 @@ methods:
     participant_validation: pending_real_participant_validation
     example_scope: 2026-10-28基础入口表达修订；保留原判据/Stop/课程绑定与语义版本，微动作和关系示意不是完整真题或真人实测。
   source_alignment:
-    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
     state: live_source_bound
     source_content_changed: false
     correction_profile_applied: true
     authored_first_contact_draft: true
     new_course_branches: preserved_in_full_contract_not_automatically_aliased
-    acceptance: 2026-10-30 explicit source delta review; learner/blind/release pending
+    acceptance: explicit source delta review; learner/blind/release pending
 - method_id: R10
   brand_name: 代词回填
   source_name: 代词指代
@@ -1459,9 +1459,9 @@ methods:
   - repository: https://github.com/rockpunkgod/ANSWER.git
     path: gaokao-english/references/reading-comprehension.md
     heading: 代词指代
-    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
   section_ids: &id010
-  - 688367aeb67f68ad
+  - 94831b83763e0ab5
   can_follow: []
   usually_before: []
   usually_after: []
@@ -1495,7 +1495,7 @@ methods:
       micro_action_is_not_completion: 完成第一小步不等于完整方法成功；继续完成四步卡的判断与停止核验。
       short_stop: 数一致不够；所指可能是一件事或状态，不硬找最近名词。
     presentation_revision: 2026-10-28.2
-    source_update_note: 主客一致补观察/假设与语义施受边界；主语、时态、动静独立保名，不借七选五分组。期末两首一尾来源不覆盖三化入口。
+    source_update_note: 按题干保积极阅读分支；比数绝重大只定位，中心思想受限于文本推断；记叙框架来源各保，不改三化产物和篇级依赖。
   cases:
     canonical: cases/reading/R10/canonical/case.yaml
   four_step_card:
@@ -1538,7 +1538,7 @@ methods:
   maturity_status: candidate
   practical_value: Useful
   version: 1.2.0
-  change_reason: ANSWER 70db6d6 显式来源差异复核；保留品牌动作和基础入口，异文分源，旧Case不自动获新纪元准入。
+  change_reason: ANSWER 9a872ba 显式来源差异复核；旧来源归档，保基础入口与实用优先，不自动授予Case或真人准入。
   affected_cases:
   - cases/reading/R10/canonical/case.yaml
   regression_result: pending_current_epoch_semantic_and_student_acceptance
@@ -1550,13 +1550,13 @@ methods:
     participant_validation: pending_real_participant_validation
     example_scope: 2026-10-28基础入口表达修订；保留原判据/Stop/课程绑定与语义版本，微动作和关系示意不是完整真题或真人实测。
   source_alignment:
-    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
     state: live_source_bound
     source_content_changed: false
     correction_profile_applied: true
     authored_first_contact_draft: true
     new_course_branches: preserved_in_full_contract_not_automatically_aliased
-    acceptance: 2026-10-30 explicit source delta review; learner/blind/release pending
+    acceptance: explicit source delta review; learner/blind/release pending
 - method_id: R11
   brand_name: 长句拆骨
   source_name: 逻辑简化
@@ -1591,9 +1591,9 @@ methods:
   - repository: https://github.com/rockpunkgod/ANSWER.git
     path: gaokao-english/references/reading-comprehension.md
     heading: 逻辑简化
-    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
   section_ids: &id011
-  - 4ce3be7428bf040a
+  - b3578e3977ddb97f
   can_follow: []
   usually_before: []
   usually_after: []
@@ -1627,7 +1627,7 @@ methods:
       micro_action_is_not_completion: 完成第一小步不等于完整方法成功；继续完成四步卡的判断与停止核验。
       short_stop: 否定、条件和范围不能删；含义不清不继续判项。
     presentation_revision: 2026-10-28.2
-    source_update_note: 主客一致补观察/假设与语义施受边界；主语、时态、动静独立保名，不借七选五分组。期末两首一尾来源不覆盖三化入口。
+    source_update_note: 按题干保积极阅读分支；比数绝重大只定位，中心思想受限于文本推断；记叙框架来源各保，不改三化产物和篇级依赖。
   cases:
     canonical: cases/reading/R11/canonical/case.yaml
   four_step_card:
@@ -1670,7 +1670,7 @@ methods:
   maturity_status: candidate
   practical_value: Useful
   version: 1.2.0
-  change_reason: ANSWER 70db6d6 显式来源差异复核；保留品牌动作和基础入口，异文分源，旧Case不自动获新纪元准入。
+  change_reason: ANSWER 9a872ba 显式来源差异复核；旧来源归档，保基础入口与实用优先，不自动授予Case或真人准入。
   affected_cases:
   - cases/reading/R11/canonical/case.yaml
   regression_result: pending_current_epoch_semantic_and_student_acceptance
@@ -1682,13 +1682,13 @@ methods:
     participant_validation: pending_real_participant_validation
     example_scope: 2026-10-28基础入口表达修订；保留原判据/Stop/课程绑定与语义版本，微动作和关系示意不是完整真题或真人实测。
   source_alignment:
-    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
     state: live_source_bound
     source_content_changed: true
     correction_profile_applied: true
     authored_first_contact_draft: true
     new_course_branches: preserved_in_full_contract_not_automatically_aliased
-    acceptance: 2026-10-30 explicit source delta review; learner/blind/release pending
+    acceptance: explicit source delta review; learner/blind/release pending
 - method_id: R12
   brand_name: 关键词追踪
   source_name: 跳读定位
@@ -1723,9 +1723,9 @@ methods:
   - repository: https://github.com/rockpunkgod/ANSWER.git
     path: gaokao-english/references/reading-comprehension.md
     heading: 跳读定位
-    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
   section_ids: &id012
-  - f8e5e07efbaef15c
+  - aaaddbacbd0aab5a
   can_follow: []
   usually_before: []
   usually_after: []
@@ -1759,7 +1759,7 @@ methods:
       micro_action_is_not_completion: 完成第一小步不等于完整方法成功；继续完成四步卡的判断与停止核验。
       short_stop: 特定跳读版须满足自身前提，不把同词或一题一段当证据。
     presentation_revision: 2026-10-28.2
-    source_update_note: 主客一致补观察/假设与语义施受边界；主语、时态、动静独立保名，不借七选五分组。期末两首一尾来源不覆盖三化入口。
+    source_update_note: 按题干保积极阅读分支；比数绝重大只定位，中心思想受限于文本推断；记叙框架来源各保，不改三化产物和篇级依赖。
   cases:
     canonical: cases/reading/R12/canonical/case.yaml
   four_step_card:
@@ -1802,7 +1802,7 @@ methods:
   maturity_status: candidate
   practical_value: Useful
   version: 1.2.0
-  change_reason: ANSWER 70db6d6 显式来源差异复核；保留品牌动作和基础入口，异文分源，旧Case不自动获新纪元准入。
+  change_reason: ANSWER 9a872ba 显式来源差异复核；旧来源归档，保基础入口与实用优先，不自动授予Case或真人准入。
   affected_cases:
   - cases/reading/R12/canonical/case.yaml
   regression_result: pending_current_epoch_semantic_and_student_acceptance
@@ -1814,13 +1814,13 @@ methods:
     participant_validation: pending_real_participant_validation
     example_scope: 2026-10-28基础入口表达修订；保留原判据/Stop/课程绑定与语义版本，微动作和关系示意不是完整真题或真人实测。
   source_alignment:
-    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
     state: live_source_bound
     source_content_changed: false
     correction_profile_applied: true
     authored_first_contact_draft: true
     new_course_branches: preserved_in_full_contract_not_automatically_aliased
-    acceptance: 2026-10-30 explicit source delta review; learner/blind/release pending
+    acceptance: explicit source delta review; learner/blind/release pending
 - method_id: R13
   brand_name: 名词追踪
   source_name: 名词定出处
@@ -1855,14 +1855,14 @@ methods:
   - repository: https://github.com/rockpunkgod/ANSWER.git
     path: gaokao-english/references/reading-comprehension.md
     heading: 按题型任务分流，不按文体硬套
-    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
   - repository: https://github.com/rockpunkgod/ANSWER.git
     path: gaokao-english/references/reading-comprehension.md
     heading: 跳读定位
-    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
   section_ids: &id013
-  - 3104f706064bf305
-  - f8e5e07efbaef15c
+  - f12a1a7fc40c8537
+  - aaaddbacbd0aab5a
   can_follow: []
   usually_before: []
   usually_after: []
@@ -1896,7 +1896,7 @@ methods:
       micro_action_is_not_completion: 完成第一小步不等于完整方法成功；继续完成四步卡的判断与停止核验。
       short_stop: 名词无区别就换动作线索，不按次数或最近位置选。
     presentation_revision: 2026-10-28.2
-    source_update_note: 主客一致补观察/假设与语义施受边界；主语、时态、动静独立保名，不借七选五分组。期末两首一尾来源不覆盖三化入口。
+    source_update_note: 按题干保积极阅读分支；比数绝重大只定位，中心思想受限于文本推断；记叙框架来源各保，不改三化产物和篇级依赖。
   cases:
     canonical: cases/reading/R13/canonical/case.yaml
   four_step_card:
@@ -1939,7 +1939,7 @@ methods:
   maturity_status: candidate
   practical_value: Useful
   version: 1.2.0
-  change_reason: ANSWER 70db6d6 显式来源差异复核；保留品牌动作和基础入口，异文分源，旧Case不自动获新纪元准入。
+  change_reason: ANSWER 9a872ba 显式来源差异复核；旧来源归档，保基础入口与实用优先，不自动授予Case或真人准入。
   affected_cases:
   - cases/reading/R13/canonical/case.yaml
   regression_result: pending_current_epoch_semantic_and_student_acceptance
@@ -1951,13 +1951,13 @@ methods:
     participant_validation: pending_real_participant_validation
     example_scope: 2026-10-28基础入口表达修订；保留原判据/Stop/课程绑定与语义版本，微动作和关系示意不是完整真题或真人实测。
   source_alignment:
-    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
     state: live_source_bound
-    source_content_changed: false
+    source_content_changed: true
     correction_profile_applied: true
     authored_first_contact_draft: true
     new_course_branches: preserved_in_full_contract_not_automatically_aliased
-    acceptance: 2026-10-30 explicit source delta review; learner/blind/release pending
+    acceptance: explicit source delta review; learner/blind/release pending
 - method_id: R14
   brand_name: 顺序锁区
   source_name: 题文同序
@@ -1998,14 +1998,14 @@ methods:
   - repository: https://github.com/rockpunkgod/ANSWER.git
     path: gaokao-english/references/reading-comprehension.md
     heading: 按题型任务分流，不按文体硬套
-    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
   - repository: https://github.com/rockpunkgod/ANSWER.git
     path: gaokao-english/references/reading-comprehension.md
     heading: 跳读定位
-    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
   section_ids: &id014
-  - 3104f706064bf305
-  - f8e5e07efbaef15c
+  - f12a1a7fc40c8537
+  - aaaddbacbd0aab5a
   can_follow: []
   usually_before: []
   usually_after: []
@@ -2039,7 +2039,7 @@ methods:
       micro_action_is_not_completion: 完成第一小步不等于完整方法成功；继续完成四步卡的判断与停止核验。
       short_stop: 插叙、共享出处或区间外证据出现就取消锁区。
     presentation_revision: 2026-10-28.2
-    source_update_note: 主客一致补观察/假设与语义施受边界；主语、时态、动静独立保名，不借七选五分组。期末两首一尾来源不覆盖三化入口。
+    source_update_note: 按题干保积极阅读分支；比数绝重大只定位，中心思想受限于文本推断；记叙框架来源各保，不改三化产物和篇级依赖。
   cases:
     canonical: cases/reading/R14/canonical/case.yaml
   four_step_card:
@@ -2082,7 +2082,7 @@ methods:
   maturity_status: candidate
   practical_value: Useful
   version: 1.2.0
-  change_reason: ANSWER 70db6d6 显式来源差异复核；保留品牌动作和基础入口，异文分源，旧Case不自动获新纪元准入。
+  change_reason: ANSWER 9a872ba 显式来源差异复核；旧来源归档，保基础入口与实用优先，不自动授予Case或真人准入。
   affected_cases:
   - cases/reading/R14/canonical/case.yaml
   regression_result: pending_current_epoch_semantic_and_student_acceptance
@@ -2094,13 +2094,13 @@ methods:
     participant_validation: pending_real_participant_validation
     example_scope: 2026-10-28基础入口表达修订；保留原判据/Stop/课程绑定与语义版本，微动作和关系示意不是完整真题或真人实测。
   source_alignment:
-    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
     state: live_source_bound
-    source_content_changed: false
+    source_content_changed: true
     correction_profile_applied: true
     authored_first_contact_draft: true
     new_course_branches: preserved_in_full_contract_not_automatically_aliased
-    acceptance: 2026-10-30 explicit source delta review; learner/blind/release pending
+    acceptance: explicit source delta review; learner/blind/release pending
 - method_id: R15
   brand_name: 动词定关系
   source_name: 动词定逻辑
@@ -2135,14 +2135,14 @@ methods:
   - repository: https://github.com/rockpunkgod/ANSWER.git
     path: gaokao-english/references/reading-comprehension.md
     heading: 按题型任务分流，不按文体硬套
-    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
   - repository: https://github.com/rockpunkgod/ANSWER.git
     path: gaokao-english/references/reading-comprehension.md
     heading: 跳读定位
-    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
   section_ids: &id015
-  - 3104f706064bf305
-  - f8e5e07efbaef15c
+  - f12a1a7fc40c8537
+  - aaaddbacbd0aab5a
   can_follow: []
   usually_before: []
   usually_after: []
@@ -2176,7 +2176,7 @@ methods:
       micro_action_is_not_completion: 完成第一小步不等于完整方法成功；继续完成四步卡的判断与停止核验。
       short_stop: 主体、对象或动作义不明先补证，关系一致不代表整项正确。
     presentation_revision: 2026-10-28.2
-    source_update_note: 主客一致补观察/假设与语义施受边界；主语、时态、动静独立保名，不借七选五分组。期末两首一尾来源不覆盖三化入口。
+    source_update_note: 按题干保积极阅读分支；比数绝重大只定位，中心思想受限于文本推断；记叙框架来源各保，不改三化产物和篇级依赖。
   cases:
     canonical: cases/reading/R15/canonical/case.yaml
   four_step_card:
@@ -2219,7 +2219,7 @@ methods:
   maturity_status: candidate
   practical_value: Useful
   version: 1.2.0
-  change_reason: ANSWER 70db6d6 显式来源差异复核；保留品牌动作和基础入口，异文分源，旧Case不自动获新纪元准入。
+  change_reason: ANSWER 9a872ba 显式来源差异复核；旧来源归档，保基础入口与实用优先，不自动授予Case或真人准入。
   affected_cases:
   - cases/reading/R15/canonical/case.yaml
   regression_result: pending_current_epoch_semantic_and_student_acceptance
@@ -2231,13 +2231,13 @@ methods:
     participant_validation: pending_real_participant_validation
     example_scope: 2026-10-28基础入口表达修订；保留原判据/Stop/课程绑定与语义版本，微动作和关系示意不是完整真题或真人实测。
   source_alignment:
-    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
     state: live_source_bound
-    source_content_changed: false
+    source_content_changed: true
     correction_profile_applied: true
     authored_first_contact_draft: true
     new_course_branches: preserved_in_full_contract_not_automatically_aliased
-    acceptance: 2026-10-30 explicit source delta review; learner/blind/release pending
+    acceptance: explicit source delta review; learner/blind/release pending
 - method_id: R16
   brand_name: 主题锁定
   source_name: mainly题与主旨大意
@@ -2272,9 +2272,9 @@ methods:
   - repository: https://github.com/rockpunkgod/ANSWER.git
     path: gaokao-english/references/reading-comprehension.md
     heading: mainly题与主旨大意
-    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
   section_ids: &id016
-  - 16b214507547840e
+  - d91aca6a13f190d4
   can_follow: []
   usually_before: []
   usually_after: []
@@ -2308,7 +2308,7 @@ methods:
       micro_action_is_not_completion: 完成第一小步不等于完整方法成功；继续完成四步卡的判断与停止核验。
       short_stop: 先分全文与段落，不凭词频、范围更大或剩一项选。
     presentation_revision: 2026-10-28.2
-    source_update_note: 主客一致补观察/假设与语义施受边界；主语、时态、动静独立保名，不借七选五分组。期末两首一尾来源不覆盖三化入口。
+    source_update_note: 按题干保积极阅读分支；比数绝重大只定位，中心思想受限于文本推断；记叙框架来源各保，不改三化产物和篇级依赖。
   cases:
     canonical: cases/reading/R16/canonical/case.yaml
   four_step_card:
@@ -2351,7 +2351,7 @@ methods:
   maturity_status: candidate
   practical_value: Useful
   version: 1.2.0
-  change_reason: ANSWER 70db6d6 显式来源差异复核；保留品牌动作和基础入口，异文分源，旧Case不自动获新纪元准入。
+  change_reason: ANSWER 9a872ba 显式来源差异复核；旧来源归档，保基础入口与实用优先，不自动授予Case或真人准入。
   affected_cases:
   - cases/reading/R16/canonical/case.yaml
   regression_result: pending_current_epoch_semantic_and_student_acceptance
@@ -2363,13 +2363,13 @@ methods:
     participant_validation: pending_real_participant_validation
     example_scope: 2026-10-28基础入口表达修订；保留原判据/Stop/课程绑定与语义版本，微动作和关系示意不是完整真题或真人实测。
   source_alignment:
-    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
     state: live_source_bound
-    source_content_changed: false
+    source_content_changed: true
     correction_profile_applied: true
     authored_first_contact_draft: true
     new_course_branches: preserved_in_full_contract_not_automatically_aliased
-    acceptance: 2026-10-30 explicit source delta review; learner/blind/release pending
+    acceptance: explicit source delta review; learner/blind/release pending
 - method_id: R17
   brand_name: 前后补证
   source_name: 定位后必要上下文核对（内部动作说明）
@@ -2405,19 +2405,19 @@ methods:
   - repository: https://github.com/rockpunkgod/ANSWER.git
     path: gaokao-english/references/reading-comprehension.md
     heading: 阅读方法适用边界
-    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
   - repository: https://github.com/rockpunkgod/ANSWER.git
     path: gaokao-english/references/reading-comprehension.md
     heading: 同源替换
-    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
   - repository: https://github.com/rockpunkgod/ANSWER.git
     path: gaokao-english/references/reading-comprehension.md
     heading: 代词指代
-    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
   section_ids: &id017
-  - fb9c5ef35a2a5763
-  - bfe663258883ee1a
-  - 688367aeb67f68ad
+  - 8e5cd3bae2f718fd
+  - 45520a599da9cbf4
+  - 94831b83763e0ab5
   can_follow: []
   usually_before: []
   usually_after: []
@@ -2451,7 +2451,7 @@ methods:
       micro_action_is_not_completion: 完成第一小步不等于完整方法成功；继续完成四步卡的判断与停止核验。
       short_stop: 已有证据够用就停扩读；材料仍缺就暂留，不编联系。
     presentation_revision: 2026-10-28.2
-    source_update_note: 主客一致补观察/假设与语义施受边界；主语、时态、动静独立保名，不借七选五分组。期末两首一尾来源不覆盖三化入口。
+    source_update_note: 按题干保积极阅读分支；比数绝重大只定位，中心思想受限于文本推断；记叙框架来源各保，不改三化产物和篇级依赖。
   cases:
     canonical: cases/reading/R17/canonical/case.yaml
   four_step_card:
@@ -2494,7 +2494,7 @@ methods:
   maturity_status: candidate
   practical_value: Useful
   version: 1.2.0
-  change_reason: ANSWER 70db6d6 显式来源差异复核；保留品牌动作和基础入口，异文分源，旧Case不自动获新纪元准入。
+  change_reason: ANSWER 9a872ba 显式来源差异复核；旧来源归档，保基础入口与实用优先，不自动授予Case或真人准入。
   affected_cases:
   - cases/reading/R17/canonical/case.yaml
   regression_result: pending_current_epoch_semantic_and_student_acceptance
@@ -2506,10 +2506,10 @@ methods:
     participant_validation: pending_real_participant_validation
     example_scope: 2026-10-28基础入口表达修订；保留原判据/Stop/课程绑定与语义版本，微动作和关系示意不是完整真题或真人实测。
   source_alignment:
-    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
     state: live_source_bound
     source_content_changed: false
     correction_profile_applied: true
     authored_first_contact_draft: true
     new_course_branches: preserved_in_full_contract_not_automatically_aliased
-    acceptance: 2026-10-30 explicit source delta review; learner/blind/release pending
+    acceptance: explicit source delta review; learner/blind/release pending

@@ -1,0 +1,89 @@
+schema_version: 1.0.0
+root: entry
+scope: 导航计划，不是自动句法求解；知识节点只引用Registry方法。
+source_sections:
+- 781c4478d621bf5c
+- be5c8b287ffa3745
+- 01b66e853d507205
+preparatory_methods:
+- G17
+postcheck_methods:
+- G18
+- G19
+nodes:
+  entry:
+    methods:
+    - G01
+    children:
+    - hint
+  hint:
+    methods:
+    - G02
+    children:
+    - without_hint
+    - with_hint
+  without_hint:
+    methods: []
+    children:
+    - article
+    - pronoun
+    - preposition
+    - clause
+    - discourse
+  with_hint:
+    methods:
+    - G08
+    children:
+    - noun
+    - modifier
+    - pronoun
+    - number
+    - verb
+  article:
+    methods:
+    - G03
+    children: []
+  pronoun:
+    methods:
+    - G04
+    children: []
+  preposition:
+    methods:
+    - G05
+    children: []
+  clause:
+    methods:
+    - G06
+    children: []
+  discourse:
+    methods:
+    - G07
+    children: []
+  noun:
+    methods:
+    - G09
+    children: []
+  modifier:
+    methods:
+    - G10
+    children: []
+  number:
+    methods:
+    - G11
+    children: []
+  verb:
+    methods:
+    - G12
+    children:
+    - predicate
+    - nonfinite
+  predicate:
+    methods:
+    - G13
+    - G14
+    children: []
+  nonfinite:
+    methods:
+    - G15
+    - G16
+    children: []

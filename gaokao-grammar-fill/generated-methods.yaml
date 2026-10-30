@@ -48,23 +48,23 @@ methods:
   - repository: https://github.com/rockpunkgod/ANSWER.git
     path: gaokao-grammar-fill/references/grammar-fill.md
     heading: 总路线
-    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
   - repository: https://github.com/rockpunkgod/ANSWER.git
     path: gaokao-grammar-fill/references/grammar-fill.md
     heading: 无提示词
-    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
   - repository: https://github.com/rockpunkgod/ANSWER.git
     path: gaokao-grammar-fill/references/grammar-fill.md
     heading: 有提示词
-    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
   - repository: https://github.com/rockpunkgod/ANSWER.git
     path: gaokao-grammar-fill/references/grammar-fill.md
     heading: 需要动词形式：先判谓语还是非谓语
-    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
   - repository: https://github.com/rockpunkgod/ANSWER.git
     path: gaokao-grammar-fill/references/course-evidence.md
     heading: 语法填空
-    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
   can_follow:
   - 意群划分
   - 劫匪插葱
@@ -151,7 +151,7 @@ methods:
       micro_action_is_not_completion: 完成第一小步不等于完整方法成功；继续完成四步卡的判断与停止核验。
       short_stop: 功能不明先补完整句；到节点后改用具体规则。
     presentation_revision: 2026-10-28.2
-    source_update_note: 一看二思保原名；反身回查不靠人称重复；why/how不按是否发生定词；非谓语按成分定主人，完成不定式不一律禁作后置修饰，逗号不独自定doing。
+    source_update_note: 特指不等于唯一；介词核中心词义项与补语，as/though核构式，cattle为复数；非谓语先后不机械对应形式，搭配清单不排他。
   cases:
     canonical: cases/G01/canonical/case.yaml
     counterexample: cases/G01/counterexamples/case.yaml
@@ -200,7 +200,7 @@ methods:
   method_type: framework
   maturity_status: candidate
   practical_value: Useful
-  change_reason: ANSWER 70db6d6 显式来源差异复核；保留品牌动作和基础入口，异文分源，旧Case不自动获新纪元准入。
+  change_reason: ANSWER 9a872ba 显式来源差异复核；旧来源归档，保基础入口与实用优先，不自动授予Case或真人准入。
   affected_cases:
   - cases/G01/canonical/case.yaml
   - cases/G01/counterexamples/case.yaml
@@ -236,13 +236,13 @@ methods:
   entry_copy: 看到空先别变词。先只标本空有没有括号提示词，再在未填句圈决定它功能的词，不开始变形。没有提示词去功能词路线；有提示词先判位置需要什么，确认要动词才分谓语与非谓语。这一步得到的只是下一知识节点；到节点后用具体句法、搭配和句意求证，不是词形答案。如果卡住，先标有无提示和空位所在结构；成分/词义不清停在节点前，不从答案倒贴功能。
   student_ready: false
   source_alignment:
-    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
     state: live_source_bound
     source_content_changed: true
     correction_profile_applied: false
     authored_first_contact_draft: true
     new_course_branches: preserved_in_full_contract_not_automatically_aliased
-    acceptance: 2026-10-30 explicit source delta review; learner/blind/release pending
+    acceptance: explicit source delta review; learner/blind/release pending
   static_design_review:
     status: source_bound_editorial_review
     source_section_ids: *id001
@@ -289,7 +289,7 @@ methods:
   - repository: https://github.com/rockpunkgod/ANSWER.git
     path: gaokao-grammar-fill/references/grammar-fill.md
     heading: 总路线
-    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
   section_ids: &id002
   - 781c4478d621bf5c
   can_follow: []
@@ -323,7 +323,7 @@ methods:
       micro_action_is_not_completion: 完成第一小步不等于完整方法成功；继续完成四步卡的判断与停止核验。
       short_stop: 无提示不锁死四类；未确认功能不开始变形。
     presentation_revision: 2026-10-28.2
-    source_update_note: 一看二思保原名；反身回查不靠人称重复；why/how不按是否发生定词；非谓语按成分定主人，完成不定式不一律禁作后置修饰，逗号不独自定doing。
+    source_update_note: 特指不等于唯一；介词核中心词义项与补语，as/though核构式，cattle为复数；非谓语先后不机械对应形式，搭配清单不排他。
   cases:
     canonical: cases/grammar/G02/canonical/case.yaml
   four_step_card:
@@ -366,7 +366,7 @@ methods:
   maturity_status: candidate
   practical_value: Useful
   version: 1.2.0
-  change_reason: ANSWER 70db6d6 显式来源差异复核；保留品牌动作和基础入口，异文分源，旧Case不自动获新纪元准入。
+  change_reason: ANSWER 9a872ba 显式来源差异复核；旧来源归档，保基础入口与实用优先，不自动授予Case或真人准入。
   affected_cases:
   - cases/grammar/G02/canonical/case.yaml
   regression_result: pending_current_epoch_semantic_and_student_acceptance
@@ -378,13 +378,13 @@ methods:
     participant_validation: pending_real_participant_validation
     example_scope: 2026-10-28基础入口表达修订；保留原判据/Stop/课程绑定与语义版本，微动作和关系示意不是完整真题或真人实测。
   source_alignment:
-    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
     state: live_source_bound
-    source_content_changed: true
+    source_content_changed: false
     correction_profile_applied: false
     authored_first_contact_draft: true
     new_course_branches: preserved_in_full_contract_not_automatically_aliased
-    acceptance: 2026-10-30 explicit source delta review; learner/blind/release pending
+    acceptance: explicit source delta review; learner/blind/release pending
 - method_id: G03
   brand_name: 限定词落位
   source_name: 冠词
@@ -403,12 +403,12 @@ methods:
   core_action: 圈中心名词、单复数和已有修饰，回语境核特指泛指再定冠词
   decision_rule: 确认名词中心、可数性和单复数，再核特指泛指、读音及具体结构；仅在冠词位置和所指关系均有据时确定a/an/the或相应零冠词结构。
   verification: 圈中心名词、单复数和已有修饰，回语境核特指泛指再定冠词。确认名词中心、可数性和单复数，再核特指泛指、读音及具体结构；仅在冠词位置和所指关系均有据时确定a/an/the或相应零冠词结构。
-    已有其他限定、中心名词未确认或所指是否唯一不清时停；of修饰或定语从句不能自动证明the，a/an按读音而非字母。
-  stop_rule: 已有其他限定、中心名词未确认或所指是否唯一不清时停；of修饰或定语从句不能自动证明the，a/an按读音而非字母。
+    已有其他限定、中心名词未确认或特指泛指及所指关系不清时停；of修饰或定语从句不能自动证明the，a/an按读音而非字母。
+  stop_rule: 已有其他限定、中心名词未确认或特指泛指及所指关系不清时停；of修饰或定语从句不能自动证明the，a/an按读音而非字母。
   common_wrong_instinct: 名词后有of或定语从句就一律填the，元音字母开头就填an。
   failure_cases:
   - 名词后有of或定语从句就一律填the，元音字母开头就填an。
-  - 已有其他限定、中心名词未确认或所指是否唯一不清时停；of修饰或定语从句不能自动证明the，a/an按读音而非字母。
+  - 已有其他限定、中心名词未确认或特指泛指及所指关系不清时停；of修饰或定语从句不能自动证明the，a/an按读音而非字母。
   counterexamples:
   - 名词有后置修饰，却仍在泛指某一个；不能单靠后面的修饰认定所指唯一。
   transfer_pattern: 换题仍先核名词形态和所指，不迁移后置修饰必特指的口诀。
@@ -426,7 +426,7 @@ methods:
   - repository: https://github.com/rockpunkgod/ANSWER.git
     path: gaokao-grammar-fill/references/grammar-fill.md
     heading: 冠词
-    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
   section_ids: &id003
   - dfb1dccd2a7f06e2
   can_follow: []
@@ -438,17 +438,17 @@ methods:
   levels:
     L1: 圈中心名词、单复数和已有修饰，回语境核特指泛指再定冠词
     L2: 确认名词中心、可数性和单复数，再核特指泛指、读音及具体结构；仅在冠词位置和所指关系均有据时确定a/an/the或相应零冠词结构。
-    L3: 已有其他限定、中心名词未确认或所指是否唯一不清时停；of修饰或定语从句不能自动证明the，a/an按读音而非字母。
+    L3: 已有其他限定、中心名词未确认或特指泛指及所指关系不清时停；of修饰或定语从句不能自动证明the，a/an按读音而非字母。
     L4: 换题仍先核名词形态和所指，不迁移后置修饰必特指的口诀。
   compact:
     10s: 冠词犹豫？圈名词中心，核数和所指；有后置修饰不自动填the。
     30s: 冠词犹豫？先圈空后名词中心和已有限定；未确认冠词位置就不选冠词。例如，后接of不等于所指唯一，仍须核特指泛指。已有其他限定或所指不清先停，a/an看读音。
-    90s: 冠词犹豫？圈中心名词、单复数和已有修饰，回语境核特指泛指再定冠词。这一步得到的是当前候选的保留、排除或待定判断；不能由剩余项自动定案。判断时，确认名词中心、可数性和单复数，再核特指泛指、读音及具体结构；仅在冠词位置和所指关系均有据时确定a/an/the或相应零冠词结构。什么时候停，已有其他限定、中心名词未确认或所指是否唯一不清时停；of修饰或定语从句不能自动证明the，a/an按读音而非字母。反例示意，名词有后置修饰，却仍在泛指某一个；不能单靠后面的修饰认定所指唯一。换题仍检查当前题面的对象和关系，不搬上一题结论。挑战，先不填冠词，圈中心名词，标可数性、单复数及特指/泛指的题面证据。
+    90s: 冠词犹豫？圈中心名词、单复数和已有修饰，回语境核特指泛指再定冠词。这一步得到的是当前候选的保留、排除或待定判断；不能由剩余项自动定案。判断时，确认名词中心、可数性和单复数，再核特指泛指、读音及具体结构；仅在冠词位置和所指关系均有据时确定a/an/the或相应零冠词结构。什么时候停，已有其他限定、中心名词未确认或特指泛指及所指关系不清时停；of修饰或定语从句不能自动证明the，a/an按读音而非字母。反例示意，名词有后置修饰，却仍在泛指某一个；不能单靠后面的修饰认定所指唯一。换题仍检查当前题面的对象和关系，不搬上一题结论。挑战，先不填冠词，圈中心名词，标可数性、单复数及特指/泛指的题面证据。
   full:
     summary: 圈中心名词、单复数和已有修饰，回语境核特指泛指再定冠词 确认名词中心、可数性和单复数，再核特指泛指、读音及具体结构；仅在冠词位置和所指关系均有据时确定a/an/the或相应零冠词结构。
-    source_boundary: 已有其他限定、中心名词未确认或所指是否唯一不清时停；of修饰或定语从句不能自动证明the，a/an按读音而非字母。
+    source_boundary: 已有其他限定、中心名词未确认或特指泛指及所指关系不清时停；of修饰或定语从句不能自动证明the，a/an按读音而非字母。
     boundaries:
-    - 已有其他限定、中心名词未确认或所指是否唯一不清时停；of修饰或定语从句不能自动证明the，a/an按读音而非字母。
+    - 已有其他限定、中心名词未确认或特指泛指及所指关系不清时停；of修饰或定语从句不能自动证明the，a/an按读音而非字母。
     - 名词有后置修饰，却仍在泛指某一个；不能单靠后面的修饰认定所指唯一。
     section_ids: *id003
     beginner_support:
@@ -459,21 +459,21 @@ methods:
       example_scope: 关系/结构示意，非完整试题，不计真题或已验案例。
       micro_action_is_not_completion: 完成第一小步不等于完整方法成功；继续完成四步卡的判断与停止核验。
       short_stop: 已有其他限定或所指不清先停，a/an看读音。
-    presentation_revision: 2026-10-28.2
-    source_update_note: 一看二思保原名；反身回查不靠人称重复；why/how不按是否发生定词；非谓语按成分定主人，完成不定式不一律禁作后置修饰，逗号不独自定doing。
+    presentation_revision: 2026-10-30.2
+    source_update_note: 特指不等于唯一；介词核中心词义项与补语，as/though核构式，cattle为复数；非谓语先后不机械对应形式，搭配清单不排他。
   cases:
     canonical: cases/grammar/G03/canonical/case.yaml
   four_step_card:
     start: 名词前缺限定且确认为冠词路线
     first_cut: 圈中心名词、单复数和已有修饰，回语境核特指泛指再定冠词
     judge: 确认名词中心、可数性和单复数，再核特指泛指、读音及具体结构；仅在冠词位置和所指关系均有据时确定a/an/the或相应零冠词结构。
-    stop: 已有其他限定、中心名词未确认或所指是否唯一不清时停；of修饰或定语从句不能自动证明the，a/an按读音而非字母。
+    stop: 已有其他限定、中心名词未确认或特指泛指及所指关系不清时停；of修饰或定语从句不能自动证明the，a/an按读音而非字母。
   practicality_gate:
     status: design_complete_empirical_pending
     trigger: 名词前缺限定且确认为冠词路线
     action: 圈中心名词、单复数和已有修饰，回语境核特指泛指再定冠词
     output: decide；确认名词中心、可数性和单复数，再核特指泛指、读音及具体结构；仅在冠词位置和所指关系均有据时确定a/an/the或相应零冠词结构。
-    stop: 已有其他限定、中心名词未确认或所指是否唯一不清时停；of修饰或定语从句不能自动证明the，a/an按读音而非字母。
+    stop: 已有其他限定、中心名词未确认或特指泛指及所指关系不清时停；of修饰或定语从句不能自动证明the，a/an按读音而非字母。
     transfer: 换题仍先核名词形态和所指，不迁移后置修饰必特指的口诀。
     efficiency: 将零散冠词记忆聚焦到中心名词与所指，主要降低误填，效率未测。
     misuse_cost: 未经实测；名词后有of或定语从句就一律填the，元音字母开头就填an。会导致误判；须先核触发、执行Stop，不允许辅助产物越级定案。
@@ -502,8 +502,8 @@ methods:
   status: candidate
   maturity_status: candidate
   practical_value: Useful
-  version: 1.2.0
-  change_reason: ANSWER 70db6d6 显式来源差异复核；保留品牌动作和基础入口，异文分源，旧Case不自动获新纪元准入。
+  version: 1.2.1
+  change_reason: ANSWER 9a872ba 显式来源差异复核；旧来源归档，保基础入口与实用优先，不自动授予Case或真人准入。
   affected_cases:
   - cases/grammar/G03/canonical/case.yaml
   regression_result: pending_current_epoch_semantic_and_student_acceptance
@@ -515,13 +515,13 @@ methods:
     participant_validation: pending_real_participant_validation
     example_scope: 2026-10-28基础入口表达修订；保留原判据/Stop/课程绑定与语义版本，微动作和关系示意不是完整真题或真人实测。
   source_alignment:
-    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
     state: live_source_bound
-    source_content_changed: false
+    source_content_changed: true
     correction_profile_applied: false
     authored_first_contact_draft: true
     new_course_branches: preserved_in_full_contract_not_automatically_aliased
-    acceptance: 2026-10-30 explicit source delta review; learner/blind/release pending
+    acceptance: explicit source delta review; learner/blind/release pending
 - method_id: G04
   brand_name: 指代落位
   source_name: 代词
@@ -563,7 +563,7 @@ methods:
   - repository: https://github.com/rockpunkgod/ANSWER.git
     path: gaokao-grammar-fill/references/grammar-fill.md
     heading: 代词
-    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
   section_ids: &id004
   - 0c267d2ed379a98a
   can_follow: []
@@ -598,7 +598,7 @@ methods:
       micro_action_is_not_completion: 完成第一小步不等于完整方法成功；继续完成四步卡的判断与停止核验。
       short_stop: 所指或省略不清就停，形式it不硬找实体所指。
     presentation_revision: 2026-10-28.2
-    source_update_note: 一看二思保原名；反身回查不靠人称重复；why/how不按是否发生定词；非谓语按成分定主人，完成不定式不一律禁作后置修饰，逗号不独自定doing。
+    source_update_note: 特指不等于唯一；介词核中心词义项与补语，as/though核构式，cattle为复数；非谓语先后不机械对应形式，搭配清单不排他。
   cases:
     canonical: cases/grammar/G04/canonical/case.yaml
   four_step_card:
@@ -641,7 +641,7 @@ methods:
   maturity_status: candidate
   practical_value: Useful
   version: 1.2.0
-  change_reason: ANSWER 70db6d6 显式来源差异复核；保留品牌动作和基础入口，异文分源，旧Case不自动获新纪元准入。
+  change_reason: ANSWER 9a872ba 显式来源差异复核；旧来源归档，保基础入口与实用优先，不自动授予Case或真人准入。
   affected_cases:
   - cases/grammar/G04/canonical/case.yaml
   regression_result: pending_current_epoch_semantic_and_student_acceptance
@@ -653,13 +653,13 @@ methods:
     participant_validation: pending_real_participant_validation
     example_scope: 2026-10-28基础入口表达修订；保留原判据/Stop/课程绑定与语义版本，微动作和关系示意不是完整真题或真人实测。
   source_alignment:
-    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
     state: live_source_bound
-    source_content_changed: true
+    source_content_changed: false
     correction_profile_applied: false
     authored_first_contact_draft: true
     new_course_branches: preserved_in_full_contract_not_automatically_aliased
-    acceptance: 2026-10-30 explicit source delta review; learner/blind/release pending
+    acceptance: explicit source delta review; learner/blind/release pending
 - method_id: G05
   brand_name: 介词看场景
   source_name: 介词
@@ -701,7 +701,7 @@ methods:
   - repository: https://github.com/rockpunkgod/ANSWER.git
     path: gaokao-grammar-fill/references/grammar-fill.md
     heading: 介词
-    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
   section_ids: &id005
   - c78012aeef62d5b9
   can_follow: []
@@ -735,7 +735,7 @@ methods:
       micro_action_is_not_completion: 完成第一小步不等于完整方法成功；继续完成四步卡的判断与停止核验。
       short_stop: 对象多不自动among，中文意思不能唯一决定介词。
     presentation_revision: 2026-10-28.2
-    source_update_note: 一看二思保原名；反身回查不靠人称重复；why/how不按是否发生定词；非谓语按成分定主人，完成不定式不一律禁作后置修饰，逗号不独自定doing。
+    source_update_note: 特指不等于唯一；介词核中心词义项与补语，as/though核构式，cattle为复数；非谓语先后不机械对应形式，搭配清单不排他。
   cases:
     canonical: cases/grammar/G05/canonical/case.yaml
   four_step_card:
@@ -778,7 +778,7 @@ methods:
   maturity_status: candidate
   practical_value: Useful
   version: 1.2.0
-  change_reason: ANSWER 70db6d6 显式来源差异复核；保留品牌动作和基础入口，异文分源，旧Case不自动获新纪元准入。
+  change_reason: ANSWER 9a872ba 显式来源差异复核；旧来源归档，保基础入口与实用优先，不自动授予Case或真人准入。
   affected_cases:
   - cases/grammar/G05/canonical/case.yaml
   regression_result: pending_current_epoch_semantic_and_student_acceptance
@@ -790,13 +790,13 @@ methods:
     participant_validation: pending_real_participant_validation
     example_scope: 2026-10-28基础入口表达修订；保留原判据/Stop/课程绑定与语义版本，微动作和关系示意不是完整真题或真人实测。
   source_alignment:
-    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
     state: live_source_bound
-    source_content_changed: false
+    source_content_changed: true
     correction_profile_applied: false
     authored_first_contact_draft: true
     new_course_branches: preserved_in_full_contract_not_automatically_aliased
-    acceptance: 2026-10-30 explicit source delta review; learner/blind/release pending
+    acceptance: explicit source delta review; learner/blind/release pending
 - method_id: G06
   brand_name: 从句找缺口
   source_name: 连词、关系词与名词性从句连接词
@@ -838,7 +838,7 @@ methods:
   - repository: https://github.com/rockpunkgod/ANSWER.git
     path: gaokao-grammar-fill/references/grammar-fill.md
     heading: 连词、关系词与名词性从句连接词
-    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
   section_ids: &id006
   - 1bc229eecb92ae3c
   can_follow: []
@@ -872,7 +872,7 @@ methods:
       micro_action_is_not_completion: 完成第一小步不等于完整方法成功；继续完成四步卡的判断与停止核验。
       short_stop: 类型、缺口或语义不清先停，不见完整句就填that。
     presentation_revision: 2026-10-28.2
-    source_update_note: 一看二思保原名；反身回查不靠人称重复；why/how不按是否发生定词；非谓语按成分定主人，完成不定式不一律禁作后置修饰，逗号不独自定doing。
+    source_update_note: 特指不等于唯一；介词核中心词义项与补语，as/though核构式，cattle为复数；非谓语先后不机械对应形式，搭配清单不排他。
   cases:
     canonical: cases/grammar/G06/canonical/case.yaml
   four_step_card:
@@ -915,7 +915,7 @@ methods:
   maturity_status: candidate
   practical_value: Useful
   version: 1.2.0
-  change_reason: ANSWER 70db6d6 显式来源差异复核；保留品牌动作和基础入口，异文分源，旧Case不自动获新纪元准入。
+  change_reason: ANSWER 9a872ba 显式来源差异复核；旧来源归档，保基础入口与实用优先，不自动授予Case或真人准入。
   affected_cases:
   - cases/grammar/G06/canonical/case.yaml
   regression_result: pending_current_epoch_semantic_and_student_acceptance
@@ -927,13 +927,13 @@ methods:
     participant_validation: pending_real_participant_validation
     example_scope: 2026-10-28基础入口表达修订；保留原判据/Stop/课程绑定与语义版本，微动作和关系示意不是完整真题或真人实测。
   source_alignment:
-    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
     state: live_source_bound
     source_content_changed: true
     correction_profile_applied: false
     authored_first_contact_draft: true
     new_course_branches: preserved_in_full_contract_not_automatically_aliased
-    acceptance: 2026-10-30 explicit source delta review; learner/blind/release pending
+    acceptance: explicit source delta review; learner/blind/release pending
 - method_id: G07
   brand_name: 句间搭桥
   source_name: 句间逻辑衔接
@@ -975,7 +975,7 @@ methods:
   - repository: https://github.com/rockpunkgod/ANSWER.git
     path: gaokao-grammar-fill/references/grammar-fill.md
     heading: 句间逻辑衔接
-    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
   section_ids: &id007
   - ccfc09a472cb85a6
   can_follow: []
@@ -1009,7 +1009,7 @@ methods:
       micro_action_is_not_completion: 完成第一小步不等于完整方法成功；继续完成四步卡的判断与停止核验。
       short_stop: 句子成分不完整先回从句判断，不能只凭中文转折选词。
     presentation_revision: 2026-10-28.2
-    source_update_note: 一看二思保原名；反身回查不靠人称重复；why/how不按是否发生定词；非谓语按成分定主人，完成不定式不一律禁作后置修饰，逗号不独自定doing。
+    source_update_note: 特指不等于唯一；介词核中心词义项与补语，as/though核构式，cattle为复数；非谓语先后不机械对应形式，搭配清单不排他。
   cases:
     canonical: cases/grammar/G07/canonical/case.yaml
   four_step_card:
@@ -1052,7 +1052,7 @@ methods:
   maturity_status: candidate
   practical_value: Useful
   version: 1.2.0
-  change_reason: ANSWER 70db6d6 显式来源差异复核；保留品牌动作和基础入口，异文分源，旧Case不自动获新纪元准入。
+  change_reason: ANSWER 9a872ba 显式来源差异复核；旧来源归档，保基础入口与实用优先，不自动授予Case或真人准入。
   affected_cases:
   - cases/grammar/G07/canonical/case.yaml
   regression_result: pending_current_epoch_semantic_and_student_acceptance
@@ -1064,13 +1064,13 @@ methods:
     participant_validation: pending_real_participant_validation
     example_scope: 2026-10-28基础入口表达修订；保留原判据/Stop/课程绑定与语义版本，微动作和关系示意不是完整真题或真人实测。
   source_alignment:
-    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
     state: live_source_bound
     source_content_changed: false
     correction_profile_applied: false
     authored_first_contact_draft: true
     new_course_branches: preserved_in_full_contract_not_automatically_aliased
-    acceptance: 2026-10-30 explicit source delta review; learner/blind/release pending
+    acceptance: explicit source delta review; learner/blind/release pending
 - method_id: G08
   brand_name: 词性落位
   source_name: 有提示词
@@ -1112,7 +1112,7 @@ methods:
   - repository: https://github.com/rockpunkgod/ANSWER.git
     path: gaokao-grammar-fill/references/grammar-fill.md
     heading: 有提示词
-    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
   section_ids: &id008
   - be5c8b287ffa3745
   can_follow: []
@@ -1147,7 +1147,7 @@ methods:
       micro_action_is_not_completion: 完成第一小步不等于完整方法成功；继续完成四步卡的判断与停止核验。
       short_stop: 主干不清先拆句，名词性位置也可能容纳动名词。
     presentation_revision: 2026-10-28.2
-    source_update_note: 一看二思保原名；反身回查不靠人称重复；why/how不按是否发生定词；非谓语按成分定主人，完成不定式不一律禁作后置修饰，逗号不独自定doing。
+    source_update_note: 特指不等于唯一；介词核中心词义项与补语，as/though核构式，cattle为复数；非谓语先后不机械对应形式，搭配清单不排他。
   cases:
     canonical: cases/grammar/G08/canonical/case.yaml
   four_step_card:
@@ -1190,7 +1190,7 @@ methods:
   maturity_status: candidate
   practical_value: Useful
   version: 1.2.0
-  change_reason: ANSWER 70db6d6 显式来源差异复核；保留品牌动作和基础入口，异文分源，旧Case不自动获新纪元准入。
+  change_reason: ANSWER 9a872ba 显式来源差异复核；旧来源归档，保基础入口与实用优先，不自动授予Case或真人准入。
   affected_cases:
   - cases/grammar/G08/canonical/case.yaml
   regression_result: pending_current_epoch_semantic_and_student_acceptance
@@ -1202,13 +1202,13 @@ methods:
     participant_validation: pending_real_participant_validation
     example_scope: 2026-10-28基础入口表达修订；保留原判据/Stop/课程绑定与语义版本，微动作和关系示意不是完整真题或真人实测。
   source_alignment:
-    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
     state: live_source_bound
     source_content_changed: false
     correction_profile_applied: false
     authored_first_contact_draft: true
     new_course_branches: preserved_in_full_contract_not_automatically_aliased
-    acceptance: 2026-10-30 explicit source delta review; learner/blind/release pending
+    acceptance: explicit source delta review; learner/blind/release pending
 - method_id: G09
   brand_name: 名词节点
   source_name: 名词及所有格
@@ -1250,7 +1250,7 @@ methods:
   - repository: https://github.com/rockpunkgod/ANSWER.git
     path: gaokao-grammar-fill/references/grammar-fill.md
     heading: 名词及所有格
-    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
   section_ids: &id009
   - ab42f9a3682492c6
   can_follow: []
@@ -1285,7 +1285,7 @@ methods:
       micro_action_is_not_completion: 完成第一小步不等于完整方法成功；继续完成四步卡的判断与停止核验。
       short_stop: 介词后不一律派生名词或doing，搭配不明先停。
     presentation_revision: 2026-10-28.2
-    source_update_note: 一看二思保原名；反身回查不靠人称重复；why/how不按是否发生定词；非谓语按成分定主人，完成不定式不一律禁作后置修饰，逗号不独自定doing。
+    source_update_note: 特指不等于唯一；介词核中心词义项与补语，as/though核构式，cattle为复数；非谓语先后不机械对应形式，搭配清单不排他。
   cases:
     canonical: cases/grammar/G09/canonical/case.yaml
   four_step_card:
@@ -1328,7 +1328,7 @@ methods:
   maturity_status: candidate
   practical_value: Useful
   version: 1.2.0
-  change_reason: ANSWER 70db6d6 显式来源差异复核；保留品牌动作和基础入口，异文分源，旧Case不自动获新纪元准入。
+  change_reason: ANSWER 9a872ba 显式来源差异复核；旧来源归档，保基础入口与实用优先，不自动授予Case或真人准入。
   affected_cases:
   - cases/grammar/G09/canonical/case.yaml
   regression_result: pending_current_epoch_semantic_and_student_acceptance
@@ -1340,13 +1340,13 @@ methods:
     participant_validation: pending_real_participant_validation
     example_scope: 2026-10-28基础入口表达修订；保留原判据/Stop/课程绑定与语义版本，微动作和关系示意不是完整真题或真人实测。
   source_alignment:
-    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
     state: live_source_bound
     source_content_changed: false
     correction_profile_applied: false
     authored_first_contact_draft: true
     new_course_branches: preserved_in_full_contract_not_automatically_aliased
-    acceptance: 2026-10-30 explicit source delta review; learner/blind/release pending
+    acceptance: explicit source delta review; learner/blind/release pending
 - method_id: G10
   brand_name: 形副节点
   source_name: 形容词、副词与比较等级
@@ -1388,7 +1388,7 @@ methods:
   - repository: https://github.com/rockpunkgod/ANSWER.git
     path: gaokao-grammar-fill/references/grammar-fill.md
     heading: 形容词、副词与比较等级
-    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
   section_ids: &id010
   - 3cc12c22579257d5
   can_follow: []
@@ -1422,7 +1422,7 @@ methods:
       micro_action_is_not_completion: 完成第一小步不等于完整方法成功；继续完成四步卡的判断与停止核验。
       short_stop: 无等级差异不造比较级，状态与搭配不明先核。
     presentation_revision: 2026-10-28.2
-    source_update_note: 一看二思保原名；反身回查不靠人称重复；why/how不按是否发生定词；非谓语按成分定主人，完成不定式不一律禁作后置修饰，逗号不独自定doing。
+    source_update_note: 特指不等于唯一；介词核中心词义项与补语，as/though核构式，cattle为复数；非谓语先后不机械对应形式，搭配清单不排他。
   cases:
     canonical: cases/grammar/G10/canonical/case.yaml
   four_step_card:
@@ -1465,7 +1465,7 @@ methods:
   maturity_status: candidate
   practical_value: Useful
   version: 1.2.0
-  change_reason: ANSWER 70db6d6 显式来源差异复核；保留品牌动作和基础入口，异文分源，旧Case不自动获新纪元准入。
+  change_reason: ANSWER 9a872ba 显式来源差异复核；旧来源归档，保基础入口与实用优先，不自动授予Case或真人准入。
   affected_cases:
   - cases/grammar/G10/canonical/case.yaml
   regression_result: pending_current_epoch_semantic_and_student_acceptance
@@ -1477,13 +1477,13 @@ methods:
     participant_validation: pending_real_participant_validation
     example_scope: 2026-10-28基础入口表达修订；保留原判据/Stop/课程绑定与语义版本，微动作和关系示意不是完整真题或真人实测。
   source_alignment:
-    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
     state: live_source_bound
     source_content_changed: false
     correction_profile_applied: false
     authored_first_contact_draft: true
     new_course_branches: preserved_in_full_contract_not_automatically_aliased
-    acceptance: 2026-10-30 explicit source delta review; learner/blind/release pending
+    acceptance: explicit source delta review; learner/blind/release pending
 - method_id: G11
   brand_name: 数词节点
   source_name: 数词
@@ -1525,7 +1525,7 @@ methods:
   - repository: https://github.com/rockpunkgod/ANSWER.git
     path: gaokao-grammar-fill/references/grammar-fill.md
     heading: 数词
-    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
   section_ids: &id011
   - b2282a270b8de478
   can_follow: []
@@ -1559,7 +1559,7 @@ methods:
       micro_action_is_not_completion: 完成第一小步不等于完整方法成功；继续完成四步卡的判断与停止核验。
       short_stop: 所指或功能不清先停，the也不能单独证明序数。
     presentation_revision: 2026-10-28.2
-    source_update_note: 一看二思保原名；反身回查不靠人称重复；why/how不按是否发生定词；非谓语按成分定主人，完成不定式不一律禁作后置修饰，逗号不独自定doing。
+    source_update_note: 特指不等于唯一；介词核中心词义项与补语，as/though核构式，cattle为复数；非谓语先后不机械对应形式，搭配清单不排他。
   cases:
     canonical: cases/grammar/G11/canonical/case.yaml
   four_step_card:
@@ -1602,7 +1602,7 @@ methods:
   maturity_status: candidate
   practical_value: Useful
   version: 1.2.0
-  change_reason: ANSWER 70db6d6 显式来源差异复核；保留品牌动作和基础入口，异文分源，旧Case不自动获新纪元准入。
+  change_reason: ANSWER 9a872ba 显式来源差异复核；旧来源归档，保基础入口与实用优先，不自动授予Case或真人准入。
   affected_cases:
   - cases/grammar/G11/canonical/case.yaml
   regression_result: pending_current_epoch_semantic_and_student_acceptance
@@ -1614,13 +1614,13 @@ methods:
     participant_validation: pending_real_participant_validation
     example_scope: 2026-10-28基础入口表达修订；保留原判据/Stop/课程绑定与语义版本，微动作和关系示意不是完整真题或真人实测。
   source_alignment:
-    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
     state: live_source_bound
     source_content_changed: false
     correction_profile_applied: false
     authored_first_contact_draft: true
     new_course_branches: preserved_in_full_contract_not_automatically_aliased
-    acceptance: 2026-10-30 explicit source delta review; learner/blind/release pending
+    acceptance: explicit source delta review; learner/blind/release pending
 - method_id: G12
   brand_name: 动词二分
   source_name: 第一步：数谓语、看连接
@@ -1666,7 +1666,7 @@ methods:
   - repository: https://github.com/rockpunkgod/ANSWER.git
     path: gaokao-grammar-fill/references/grammar-fill.md
     heading: 第一步：数谓语、看连接
-    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
   section_ids: &id012
   - 01b66e853d507205
   can_follow: []
@@ -1700,7 +1700,7 @@ methods:
       micro_action_is_not_completion: 完成第一小步不等于完整方法成功；继续完成四步卡的判断与停止核验。
       short_stop: 未判空位功能或分句边界先停，不只数全句动词。
     presentation_revision: 2026-10-28.2
-    source_update_note: 一看二思保原名；反身回查不靠人称重复；why/how不按是否发生定词；非谓语按成分定主人，完成不定式不一律禁作后置修饰，逗号不独自定doing。
+    source_update_note: 特指不等于唯一；介词核中心词义项与补语，as/though核构式，cattle为复数；非谓语先后不机械对应形式，搭配清单不排他。
   cases:
     canonical: cases/grammar/G12/canonical/case.yaml
   four_step_card:
@@ -1743,7 +1743,7 @@ methods:
   maturity_status: candidate
   practical_value: Useful
   version: 1.2.0
-  change_reason: ANSWER 70db6d6 显式来源差异复核；保留品牌动作和基础入口，异文分源，旧Case不自动获新纪元准入。
+  change_reason: ANSWER 9a872ba 显式来源差异复核；旧来源归档，保基础入口与实用优先，不自动授予Case或真人准入。
   affected_cases:
   - cases/grammar/G12/canonical/case.yaml
   regression_result: pending_current_epoch_semantic_and_student_acceptance
@@ -1755,13 +1755,13 @@ methods:
     participant_validation: pending_real_participant_validation
     example_scope: 2026-10-28基础入口表达修订；保留原判据/Stop/课程绑定与语义版本，微动作和关系示意不是完整真题或真人实测。
   source_alignment:
-    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
     state: live_source_bound
-    source_content_changed: true
+    source_content_changed: false
     correction_profile_applied: false
     authored_first_contact_draft: true
     new_course_branches: preserved_in_full_contract_not_automatically_aliased
-    acceptance: 2026-10-30 explicit source delta review; learner/blind/release pending
+    acceptance: explicit source delta review; learner/blind/release pending
 - method_id: G13
   brand_name: 时态三查
   source_name: 时态判定三步法
@@ -1806,7 +1806,7 @@ methods:
   - repository: https://github.com/rockpunkgod/ANSWER.git
     path: gaokao-grammar-fill/references/grammar-fill.md
     heading: 谓语：检查时态、语态、主谓一致
-    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
   section_ids: &id013
   - c6ee3d2de761c2d8
   can_follow: []
@@ -1840,7 +1840,7 @@ methods:
       micro_action_is_not_completion: 完成第一小步不等于完整方法成功；继续完成四步卡的判断与停止核验。
       short_stop: 角色或时间参照不明先停，不用有be无be口诀选形。
     presentation_revision: 2026-10-28.2
-    source_update_note: 一看二思保原名；反身回查不靠人称重复；why/how不按是否发生定词；非谓语按成分定主人，完成不定式不一律禁作后置修饰，逗号不独自定doing。
+    source_update_note: 特指不等于唯一；介词核中心词义项与补语，as/though核构式，cattle为复数；非谓语先后不机械对应形式，搭配清单不排他。
   cases:
     canonical: cases/grammar/G13/canonical/case.yaml
   four_step_card:
@@ -1883,7 +1883,7 @@ methods:
   maturity_status: candidate
   practical_value: Useful
   version: 1.2.0
-  change_reason: ANSWER 70db6d6 显式来源差异复核；保留品牌动作和基础入口，异文分源，旧Case不自动获新纪元准入。
+  change_reason: ANSWER 9a872ba 显式来源差异复核；旧来源归档，保基础入口与实用优先，不自动授予Case或真人准入。
   affected_cases:
   - cases/grammar/G13/canonical/case.yaml
   regression_result: pending_current_epoch_semantic_and_student_acceptance
@@ -1895,13 +1895,13 @@ methods:
     participant_validation: pending_real_participant_validation
     example_scope: 2026-10-28基础入口表达修订；保留原判据/Stop/课程绑定与语义版本，微动作和关系示意不是完整真题或真人实测。
   source_alignment:
-    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
     state: live_source_bound
     source_content_changed: true
     correction_profile_applied: false
     authored_first_contact_draft: true
     new_course_branches: preserved_in_full_contract_not_automatically_aliased
-    acceptance: 2026-10-30 explicit source delta review; learner/blind/release pending
+    acceptance: explicit source delta review; learner/blind/release pending
 - method_id: G14
   brand_name: 找真主语
   source_name: 谓语：检查时态、语态、主谓一致
@@ -1937,7 +1937,7 @@ methods:
   - repository: https://github.com/rockpunkgod/ANSWER.git
     path: gaokao-grammar-fill/references/grammar-fill.md
     heading: 谓语：检查时态、语态、主谓一致
-    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
   section_ids: &id014
   - c6ee3d2de761c2d8
   can_follow: []
@@ -1971,7 +1971,7 @@ methods:
       micro_action_is_not_completion: 完成第一小步不等于完整方法成功；继续完成四步卡的判断与停止核验。
       short_stop: 特殊数量或集合结构须另核，不能只按距离选主语。
     presentation_revision: 2026-10-28.2
-    source_update_note: 一看二思保原名；反身回查不靠人称重复；why/how不按是否发生定词；非谓语按成分定主人，完成不定式不一律禁作后置修饰，逗号不独自定doing。
+    source_update_note: 特指不等于唯一；介词核中心词义项与补语，as/though核构式，cattle为复数；非谓语先后不机械对应形式，搭配清单不排他。
   cases:
     canonical: cases/grammar/G14/canonical/case.yaml
   four_step_card:
@@ -2014,7 +2014,7 @@ methods:
   maturity_status: candidate
   practical_value: Useful
   version: 1.2.0
-  change_reason: ANSWER 70db6d6 显式来源差异复核；保留品牌动作和基础入口，异文分源，旧Case不自动获新纪元准入。
+  change_reason: ANSWER 9a872ba 显式来源差异复核；旧来源归档，保基础入口与实用优先，不自动授予Case或真人准入。
   affected_cases:
   - cases/grammar/G14/canonical/case.yaml
   regression_result: pending_current_epoch_semantic_and_student_acceptance
@@ -2026,13 +2026,13 @@ methods:
     participant_validation: pending_real_participant_validation
     example_scope: 2026-10-28基础入口表达修订；保留原判据/Stop/课程绑定与语义版本，微动作和关系示意不是完整真题或真人实测。
   source_alignment:
-    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
     state: live_source_bound
     source_content_changed: true
     correction_profile_applied: false
     authored_first_contact_draft: true
     new_course_branches: preserved_in_full_contract_not_automatically_aliased
-    acceptance: 2026-10-30 explicit source delta review; learner/blind/release pending
+    acceptance: explicit source delta review; learner/blind/release pending
 - method_id: G15
   brand_name: 非谓语三轴
   source_name: 非谓语：作用、主被动与先后
@@ -2078,7 +2078,7 @@ methods:
   - repository: https://github.com/rockpunkgod/ANSWER.git
     path: gaokao-grammar-fill/references/grammar-fill.md
     heading: 非谓语：作用、主被动与先后
-    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
   section_ids: &id015
   - 68c5400be79ea170
   can_follow: []
@@ -2112,7 +2112,7 @@ methods:
       micro_action_is_not_completion: 完成第一小步不等于完整方法成功；继续完成四步卡的判断与停止核验。
       short_stop: 一轴不明先停，相对时间不套绝对现在或过去。
     presentation_revision: 2026-10-28.2
-    source_update_note: 一看二思保原名；反身回查不靠人称重复；why/how不按是否发生定词；非谓语按成分定主人，完成不定式不一律禁作后置修饰，逗号不独自定doing。
+    source_update_note: 特指不等于唯一；介词核中心词义项与补语，as/though核构式，cattle为复数；非谓语先后不机械对应形式，搭配清单不排他。
   cases:
     canonical: cases/grammar/G15/canonical/case.yaml
   four_step_card:
@@ -2155,7 +2155,7 @@ methods:
   maturity_status: candidate
   practical_value: Useful
   version: 1.2.0
-  change_reason: ANSWER 70db6d6 显式来源差异复核；保留品牌动作和基础入口，异文分源，旧Case不自动获新纪元准入。
+  change_reason: ANSWER 9a872ba 显式来源差异复核；旧来源归档，保基础入口与实用优先，不自动授予Case或真人准入。
   affected_cases:
   - cases/grammar/G15/canonical/case.yaml
   regression_result: pending_current_epoch_semantic_and_student_acceptance
@@ -2167,13 +2167,13 @@ methods:
     participant_validation: pending_real_participant_validation
     example_scope: 2026-10-28基础入口表达修订；保留原判据/Stop/课程绑定与语义版本，微动作和关系示意不是完整真题或真人实测。
   source_alignment:
-    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
     state: live_source_bound
     source_content_changed: true
     correction_profile_applied: false
     authored_first_contact_draft: true
     new_course_branches: preserved_in_full_contract_not_automatically_aliased
-    acceptance: 2026-10-30 explicit source delta review; learner/blind/release pending
+    acceptance: explicit source delta review; learner/blind/release pending
 - method_id: G16
   brand_name: 找动作主人
   source_name: 26S春 补充（非谓语动词专项）
@@ -2217,7 +2217,7 @@ methods:
   - repository: https://github.com/rockpunkgod/ANSWER.git
     path: gaokao-grammar-fill/references/grammar-fill.md
     heading: 26S春 补充（非谓语动词专项）
-    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
   section_ids: &id016
   - 5d83575e1d881f91
   can_follow: []
@@ -2251,7 +2251,7 @@ methods:
       micro_action_is_not_completion: 完成第一小步不等于完整方法成功；继续完成四步卡的判断与停止核验。
       short_stop: 归属冲突先查独立结构，不自己补一个主人。
     presentation_revision: 2026-10-28.2
-    source_update_note: 一看二思保原名；反身回查不靠人称重复；why/how不按是否发生定词；非谓语按成分定主人，完成不定式不一律禁作后置修饰，逗号不独自定doing。
+    source_update_note: 特指不等于唯一；介词核中心词义项与补语，as/though核构式，cattle为复数；非谓语先后不机械对应形式，搭配清单不排他。
   cases:
     canonical: cases/grammar/G16/canonical/case.yaml
   four_step_card:
@@ -2294,7 +2294,7 @@ methods:
   maturity_status: candidate
   practical_value: Useful
   version: 1.2.0
-  change_reason: ANSWER 70db6d6 显式来源差异复核；保留品牌动作和基础入口，异文分源，旧Case不自动获新纪元准入。
+  change_reason: ANSWER 9a872ba 显式来源差异复核；旧来源归档，保基础入口与实用优先，不自动授予Case或真人准入。
   affected_cases:
   - cases/grammar/G16/canonical/case.yaml
   regression_result: pending_current_epoch_semantic_and_student_acceptance
@@ -2306,13 +2306,13 @@ methods:
     participant_validation: pending_real_participant_validation
     example_scope: 2026-10-28基础入口表达修订；保留原判据/Stop/课程绑定与语义版本，微动作和关系示意不是完整真题或真人实测。
   source_alignment:
-    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
     state: live_source_bound
     source_content_changed: true
     correction_profile_applied: false
     authored_first_contact_draft: true
     new_course_branches: preserved_in_full_contract_not_automatically_aliased
-    acceptance: 2026-10-30 explicit source delta review; learner/blind/release pending
+    acceptance: explicit source delta review; learner/blind/release pending
 - method_id: G17
   brand_name: 长句脱壳
   source_name: 总路线
@@ -2354,7 +2354,7 @@ methods:
   - repository: https://github.com/rockpunkgod/ANSWER.git
     path: gaokao-grammar-fill/references/grammar-fill.md
     heading: 总路线
-    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
   section_ids: &id017
   - 781c4478d621bf5c
   can_follow: []
@@ -2388,7 +2388,7 @@ methods:
       micro_action_is_not_completion: 完成第一小步不等于完整方法成功；继续完成四步卡的判断与停止核验。
       short_stop: 主干不足先恢复相关从句，不先填后倒贴成分。
     presentation_revision: 2026-10-28.2
-    source_update_note: 一看二思保原名；反身回查不靠人称重复；why/how不按是否发生定词；非谓语按成分定主人，完成不定式不一律禁作后置修饰，逗号不独自定doing。
+    source_update_note: 特指不等于唯一；介词核中心词义项与补语，as/though核构式，cattle为复数；非谓语先后不机械对应形式，搭配清单不排他。
   cases:
     canonical: cases/grammar/G17/canonical/case.yaml
   four_step_card:
@@ -2431,7 +2431,7 @@ methods:
   maturity_status: candidate
   practical_value: Useful
   version: 1.2.0
-  change_reason: ANSWER 70db6d6 显式来源差异复核；保留品牌动作和基础入口，异文分源，旧Case不自动获新纪元准入。
+  change_reason: ANSWER 9a872ba 显式来源差异复核；旧来源归档，保基础入口与实用优先，不自动授予Case或真人准入。
   affected_cases:
   - cases/grammar/G17/canonical/case.yaml
   regression_result: pending_current_epoch_semantic_and_student_acceptance
@@ -2443,13 +2443,13 @@ methods:
     participant_validation: pending_real_participant_validation
     example_scope: 2026-10-28基础入口表达修订；保留原判据/Stop/课程绑定与语义版本，微动作和关系示意不是完整真题或真人实测。
   source_alignment:
-    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
     state: live_source_bound
-    source_content_changed: true
+    source_content_changed: false
     correction_profile_applied: false
     authored_first_contact_draft: true
     new_course_branches: preserved_in_full_contract_not_automatically_aliased
-    acceptance: 2026-10-30 explicit source delta review; learner/blind/release pending
+    acceptance: explicit source delta review; learner/blind/release pending
 - method_id: G18
   brand_name: 考点重复反查
   source_name: 总路线
@@ -2491,7 +2491,7 @@ methods:
   - repository: https://github.com/rockpunkgod/ANSWER.git
     path: gaokao-grammar-fill/references/grammar-fill.md
     heading: 总路线
-    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
   section_ids: &id018
   - 781c4478d621bf5c
   can_follow: []
@@ -2525,7 +2525,7 @@ methods:
       micro_action_is_not_completion: 完成第一小步不等于完整方法成功；继续完成四步卡的判断与停止核验。
       short_stop: 重复只触发核验，不能推翻本句充分证据。
     presentation_revision: 2026-10-28.2
-    source_update_note: 一看二思保原名；反身回查不靠人称重复；why/how不按是否发生定词；非谓语按成分定主人，完成不定式不一律禁作后置修饰，逗号不独自定doing。
+    source_update_note: 特指不等于唯一；介词核中心词义项与补语，as/though核构式，cattle为复数；非谓语先后不机械对应形式，搭配清单不排他。
   cases:
     canonical: cases/grammar/G18/canonical/case.yaml
   four_step_card:
@@ -2568,7 +2568,7 @@ methods:
   maturity_status: candidate
   practical_value: Useful
   version: 1.2.0
-  change_reason: ANSWER 70db6d6 显式来源差异复核；保留品牌动作和基础入口，异文分源，旧Case不自动获新纪元准入。
+  change_reason: ANSWER 9a872ba 显式来源差异复核；旧来源归档，保基础入口与实用优先，不自动授予Case或真人准入。
   affected_cases:
   - cases/grammar/G18/canonical/case.yaml
   regression_result: pending_current_epoch_semantic_and_student_acceptance
@@ -2580,13 +2580,13 @@ methods:
     participant_validation: pending_real_participant_validation
     example_scope: 2026-10-28基础入口表达修订；保留原判据/Stop/课程绑定与语义版本，微动作和关系示意不是完整真题或真人实测。
   source_alignment:
-    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
     state: live_source_bound
-    source_content_changed: true
+    source_content_changed: false
     correction_profile_applied: false
     authored_first_contact_draft: true
     new_course_branches: preserved_in_full_contract_not_automatically_aliased
-    acceptance: 2026-10-30 explicit source delta review; learner/blind/release pending
+    acceptance: explicit source delta review; learner/blind/release pending
 - method_id: G19
   brand_name: 变形次数反查
   source_name: 总路线
@@ -2628,7 +2628,7 @@ methods:
   - repository: https://github.com/rockpunkgod/ANSWER.git
     path: gaokao-grammar-fill/references/grammar-fill.md
     heading: 总路线
-    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
   section_ids: &id019
   - 781c4478d621bf5c
   can_follow: []
@@ -2662,7 +2662,7 @@ methods:
       micro_action_is_not_completion: 完成第一小步不等于完整方法成功；继续完成四步卡的判断与停止核验。
       short_stop: 一般一次只是提示，不因次数撤销有据词形。
     presentation_revision: 2026-10-28.2
-    source_update_note: 一看二思保原名；反身回查不靠人称重复；why/how不按是否发生定词；非谓语按成分定主人，完成不定式不一律禁作后置修饰，逗号不独自定doing。
+    source_update_note: 特指不等于唯一；介词核中心词义项与补语，as/though核构式，cattle为复数；非谓语先后不机械对应形式，搭配清单不排他。
   cases:
     canonical: cases/grammar/G19/canonical/case.yaml
   four_step_card:
@@ -2705,7 +2705,7 @@ methods:
   maturity_status: candidate
   practical_value: Useful
   version: 1.2.0
-  change_reason: ANSWER 70db6d6 显式来源差异复核；保留品牌动作和基础入口，异文分源，旧Case不自动获新纪元准入。
+  change_reason: ANSWER 9a872ba 显式来源差异复核；旧来源归档，保基础入口与实用优先，不自动授予Case或真人准入。
   affected_cases:
   - cases/grammar/G19/canonical/case.yaml
   regression_result: pending_current_epoch_semantic_and_student_acceptance
@@ -2717,10 +2717,10 @@ methods:
     participant_validation: pending_real_participant_validation
     example_scope: 2026-10-28基础入口表达修订；保留原判据/Stop/课程绑定与语义版本，微动作和关系示意不是完整真题或真人实测。
   source_alignment:
-    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
     state: live_source_bound
-    source_content_changed: true
+    source_content_changed: false
     correction_profile_applied: false
     authored_first_contact_draft: true
     new_course_branches: preserved_in_full_contract_not_automatically_aliased
-    acceptance: 2026-10-30 explicit source delta review; learner/blind/release pending
+    acceptance: explicit source delta review; learner/blind/release pending

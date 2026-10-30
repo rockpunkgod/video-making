@@ -37,7 +37,7 @@ methods:
   - repository: https://github.com/rockpunkgod/ANSWER.git
     path: gaokao-writing/references/continuation-writing-and-correction.md
     heading: 开明致学五步法：跳定思提润
-    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
   section_ids: &id001
   - 40089c4aea5930c9
   - 1136f0ec086fab00
@@ -46,7 +46,7 @@ methods:
   - 9b52c2a999ab29a2
   - 0cf979fcaa4e9965
   - 7b4c299267a685c2
-  - fc2eb7086313fb80
+  - 857e1d373e70a863
   can_follow: []
   usually_before: []
   usually_after: []
@@ -80,7 +80,7 @@ methods:
       micro_action_is_not_completion: 完成第一小步不等于完整方法成功；继续完成四步卡的判断与停止核验。
       short_stop: 缺原文或首句先停完整构思，不拿升华补因果。
     presentation_revision: 2026-10-28.2
-    source_update_note: PTSD各来源槽位不混；动作面已证为描写概念而非自造公式；两简一复从与反向扩写分开；七句方案不取代十句五定，环境/升华须由当前故事支持。
+    source_update_note: PTSD先核已知再在约束内构思未给解决过程，不把留空误作禁止创造；十类、32素材按功能选，不强制前置、数量或负面结果。
   cases:
     canonical: cases/continuation-writing/W01/canonical/case.yaml
   four_step_card:
@@ -123,7 +123,7 @@ methods:
   maturity_status: candidate
   practical_value: Useful
   version: 1.2.0
-  change_reason: ANSWER 70db6d6 显式来源差异复核；保留品牌动作和基础入口，异文分源，旧Case不自动获新纪元准入。
+  change_reason: ANSWER 9a872ba 显式来源差异复核；旧来源归档，保基础入口与实用优先，不自动授予Case或真人准入。
   affected_cases:
   - cases/continuation-writing/W01/canonical/case.yaml
   regression_result: pending_current_epoch_semantic_and_student_acceptance
@@ -135,13 +135,13 @@ methods:
     participant_validation: pending_real_participant_validation
     example_scope: 2026-10-28基础入口表达修订；保留原判据/Stop/课程绑定与语义版本，微动作和关系示意不是完整真题或真人实测。
   source_alignment:
-    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
     state: live_source_bound
     source_content_changed: false
     correction_profile_applied: true
     authored_first_contact_draft: true
     new_course_branches: preserved_in_full_contract_not_automatically_aliased
-    acceptance: 2026-10-30 explicit source delta review; learner/blind/release pending
+    acceptance: explicit source delta review; learner/blind/release pending
 - method_id: W02
   brand_name: 十句五锚
   source_name: 十句五定法
@@ -187,12 +187,12 @@ methods:
   - repository: https://github.com/rockpunkgod/ANSWER.git
     path: gaokao-writing/references/continuation-writing-and-correction.md
     heading: 十句五定法
-    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
   section_ids: &id002
   - c7b254c23e9755d1
-  - 5f3815b7a4645e0d
+  - 341cf680de7695a4
   - 7b4c299267a685c2
-  - fc2eb7086313fb80
+  - 857e1d373e70a863
   can_follow: []
   usually_before: []
   usually_after: []
@@ -227,7 +227,7 @@ methods:
       micro_action_is_not_completion: 完成第一小步不等于完整方法成功；继续完成四步卡的判断与停止核验。
       short_stop: 不凑十句，给定首句不必抄，独立升华句非必需。
     presentation_revision: 2026-10-28.2
-    source_update_note: PTSD各来源槽位不混；动作面已证为描写概念而非自造公式；两简一复从与反向扩写分开；七句方案不取代十句五定，环境/升华须由当前故事支持。
+    source_update_note: PTSD先核已知再在约束内构思未给解决过程，不把留空误作禁止创造；十类、32素材按功能选，不强制前置、数量或负面结果。
   cases:
     canonical: cases/continuation-writing/W02/canonical/case.yaml
   four_step_card:
@@ -270,7 +270,7 @@ methods:
   maturity_status: candidate
   practical_value: Useful
   version: 1.3.0
-  change_reason: ANSWER 70db6d6 显式来源差异复核；保留品牌动作和基础入口，异文分源，旧Case不自动获新纪元准入。
+  change_reason: ANSWER 9a872ba 显式来源差异复核；旧来源归档，保基础入口与实用优先，不自动授予Case或真人准入。
   affected_cases:
   - cases/continuation-writing/W02/canonical/case.yaml
   regression_result: pending_current_epoch_semantic_and_student_acceptance
@@ -282,13 +282,13 @@ methods:
     participant_validation: pending_real_participant_validation
     example_scope: 2026-10-28基础入口表达修订；保留原判据/Stop/课程绑定与语义版本，微动作和关系示意不是完整真题或真人实测。
   source_alignment:
-    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
     state: live_source_bound
     source_content_changed: false
     correction_profile_applied: true
     authored_first_contact_draft: true
     new_course_branches: preserved_in_full_contract_not_automatically_aliased
-    acceptance: 2026-10-30 explicit source delta review; learner/blind/release pending
+    acceptance: explicit source delta review; learner/blind/release pending
 - method_id: W03
   brand_name: 剧情四格
   source_name: 情节构思：PTSD 四步法
@@ -306,12 +306,12 @@ methods:
   - 原文及两段首句齐备，需要按一个明确来源版本整理已知与未知情节槽。
   core_action: 先注明版本：寒8板书P目的/T方式/S苦难/D结局；同课表格P需求/T方法/S困难/D结局；逐槽填首句已知与原文约束。
   decision_rule: 产出该版本的已知/未知情节槽；寒14需求/波折/方案/结局及其分析表另留，旧高二PPT也不混用。
-  verification: 产出该版本的已知/未知情节槽；寒14需求/波折/方案/结局及其分析表另留，旧高二PPT也不混用。 未注明版本先停；未知槽留空，不凭口诀补事故或救场者；Needs/Difficulties/Solutions/Denouement不是PTSD英文展开。
-  stop_rule: 未注明版本先停；未知槽留空，不凭口诀补事故或救场者；Needs/Difficulties/Solutions/Denouement不是PTSD英文展开。
+  verification: 产出该版本的已知/未知情节槽；寒14需求/波折/方案/结局及其分析表另留，旧高二PPT也不混用。 未注明版本先停；核清原文与两首句前未知槽留空；核清后可在人物、矛盾与结果约束内构思未给的解决过程，不凭口诀补事故或救场者；Needs/Difficulties/Solutions/Denouement不是PTSD英文展开。
+  stop_rule: 未注明版本先停；核清原文与两首句前未知槽留空；核清后可在人物、矛盾与结果约束内构思未给的解决过程，不凭口诀补事故或救场者；Needs/Difficulties/Solutions/Denouement不是PTSD英文展开。
   common_wrong_instinct: 四格写满就以为剧情有逻辑，困难和行动其实是互相编出来的。
   failure_cases:
   - 四格写满就以为剧情有逻辑，困难和行动其实是互相编出来的。
-  - 未注明版本先停；未知槽留空，不凭口诀补事故或救场者；Needs/Difficulties/Solutions/Denouement不是PTSD英文展开。
+  - 未注明版本先停；核清原文与两首句前未知槽留空；核清后可在人物、矛盾与结果约束内构思未给的解决过程，不凭口诀补事故或救场者；Needs/Difficulties/Solutions/Denouement不是PTSD英文展开。
   counterexamples:
   - 把寒8的T方式与寒14的T波折当同一职责，或把分析表四个英文词当PTSD展开，都不能混用；填满也不证明情节有依据。
   transfer_pattern: 换故事仍选清来源版本，再由新原文和两首句约束本版槽位，不迁移旧题困难或解决者。
@@ -331,11 +331,11 @@ methods:
   - repository: https://github.com/rockpunkgod/ANSWER.git
     path: gaokao-writing/references/continuation-writing-and-correction.md
     heading: 情节构思：PTSD 四步法
-    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
   section_ids: &id003
   - 486a5ba8d06a5eb7
   - a9f982dcfec817d9
-  - 5e20d2f7b2a66be1
+  - 82315ec620228adf
   can_follow: []
   usually_before: []
   usually_after: []
@@ -343,21 +343,21 @@ methods:
   cannot_replace:
   - 完整题面验证
   levels:
-    L1: 只选需求→困难→行动→结局这一套四格，每格填原文约束，不混用另一版字母定义
-    L2: 只用需求/目标—困难—行动/方法—结果四格，每格写本题具体内容并核原文与首句限制；空格暴露待补因果，不自动生成新困难。
+    L1: 教师先固定本次版本；圈原文与两首句已知，每格填已知或标待核，不混字母定义。
+    L2: 先核人物、矛盾和结果约束，再为未给的解决过程提出相容方案；未知不冒充原文事实。
     L3: 两版PTSD字母定义不可混用；缺原文约束先停，未铺垫的困难或解决者不能靠填表成立。结果应顺承故事，独立升华句不强制。
-    L4: 换主人公仍用同一四格，具体目标和障碍由新文约束。
+    L4: 换题沿本次明确版本重核约束，不搬上一题的目标、障碍或解决过程。
   compact:
     line: 先注明版本：寒8板书P目的/T方式/S苦难/D结局；同课表格P需求/T方法/S困难/D结局；逐槽填首句已知与原文约束。
-    boundary: 未注明版本先停；未知槽留空，不凭口诀补事故或救场者；Needs/Difficulties/Solutions/Denouement不是PTSD英文展开。
+    boundary: 未注明版本先停；核清原文与两首句前未知槽留空；核清后可在人物、矛盾与结果约束内构思未给的解决过程，不凭口诀补事故或救场者；Needs/Difficulties/Solutions/Denouement不是PTSD英文展开。
     10s: 剧情整理不清？按本次固定四格填已知、留未知；四格只是约束，不是现成故事。
-    30s: 剧情整理不清？按教师为本次固定的目的、方式、困难、结局四格，先圈原文已经明示的一格，未知的留空。例如，原文说明想参加一项活动，没说明如何参加，目的格可填，方式格先留空。教师先定版本；无依据先空着，不凭口诀编事故。
-    90s: 剧情整理不清？按教师为本次固定的目的、方式、困难、结局四格，先圈原文已经明示的一格，未知的留空。这一步得到的是待核框架或计划，不是答案或分数。判断时，把原文或首句已经说明的目的、方式、困难、结局写进对应格；没说明的标未知，不把四格写满当成故事成立。什么时候停，本次用哪四格尚未给清就先确认；找不到依据先留空，不编事故或救场者。反例示意，为了把困难格填满而编一个事故，虽然格子齐了，却没有原文依据，不能据此推进故事。换题仍检查当前题面的对象和关系，不搬上一题结论。挑战，先不写故事。按本次已固定的四格，把两首句已知与原文约束填进去，未知处留空；给已填的一格指出原文依据。
+    30s: 剧情整理不清？先用教师为本次固定的四格，圈原文和两首句已知的信息，未知先留空。例如，目标已给、解决过程未给，先记目标，核清人物与结果约束后再构思解决过程。教师先定版本；无依据先空着，不凭口诀编事故。方案撞上原文或首句限制就停。
+    90s: 剧情整理不清？先注明本次四格版本，圈原文与两首句的已知信息，未知先标问号。这一步得到的是情节约束卡。核清人物关系、矛盾及两段必须接到的结果后，未给的解决过程可以合理构思；同一题可有多个方案，每个都要逐条接住约束。未定版本或方案冲突就停。反例：为了填满困难格硬编事故，或用无铺垫的新人物解决问题，格子齐了也不成立。换题重圈新文约束，不搬旧剧情。挑战：先不写全文，标出已知、待核和核清后可构思的解决过程，并给一条原文约束。
   full:
     summary: 先注明版本：寒8板书P目的/T方式/S苦难/D结局；同课表格P需求/T方法/S困难/D结局；逐槽填首句已知与原文约束。 产出该版本的已知/未知情节槽；寒14需求/波折/方案/结局及其分析表另留，旧高二PPT也不混用。
-    source_boundary: 未注明版本先停；未知槽留空，不凭口诀补事故或救场者；Needs/Difficulties/Solutions/Denouement不是PTSD英文展开。
+    source_boundary: 未注明版本先停；核清原文与两首句前未知槽留空；核清后可在人物、矛盾与结果约束内构思未给的解决过程，不凭口诀补事故或救场者；Needs/Difficulties/Solutions/Denouement不是PTSD英文展开。
     boundaries:
-    - 未注明版本先停；未知槽留空，不凭口诀补事故或救场者；Needs/Difficulties/Solutions/Denouement不是PTSD英文展开。
+    - 未注明版本先停；核清原文与两首句前未知槽留空；核清后可在人物、矛盾与结果约束内构思未给的解决过程，不凭口诀补事故或救场者；Needs/Difficulties/Solutions/Denouement不是PTSD英文展开。
     - 把寒8的T方式与寒14的T波折当同一职责，或把分析表四个英文词当PTSD展开，都不能混用；填满也不证明情节有依据。
     section_ids: *id003
     beginner_support:
@@ -383,21 +383,21 @@ methods:
         四格填满 ≠ 情节成立'
       student_counterexamples:
       - 为把困难格填满而编事故，四格虽然齐全，却没有原文依据，不能据此推进故事。
-    presentation_revision: 2026-10-28.2
-    source_update_note: PTSD各来源槽位不混；动作面已证为描写概念而非自造公式；两简一复从与反向扩写分开；七句方案不取代十句五定，环境/升华须由当前故事支持。
+    presentation_revision: 2026-10-30.2
+    source_update_note: PTSD先核已知再在约束内构思未给解决过程，不把留空误作禁止创造；十类、32素材按功能选，不强制前置、数量或负面结果。
   cases:
     canonical: cases/continuation-writing/W03/canonical/case.yaml
   four_step_card:
     start: 原文及两段首句齐备，需要按一个明确来源版本整理已知与未知情节槽。
     first_cut: 先注明版本：寒8板书P目的/T方式/S苦难/D结局；同课表格P需求/T方法/S困难/D结局；逐槽填首句已知与原文约束。
     judge: 产出该版本的已知/未知情节槽；寒14需求/波折/方案/结局及其分析表另留，旧高二PPT也不混用。
-    stop: 未注明版本先停；未知槽留空，不凭口诀补事故或救场者；Needs/Difficulties/Solutions/Denouement不是PTSD英文展开。
+    stop: 未注明版本先停；核清原文与两首句前未知槽留空；核清后可在人物、矛盾与结果约束内构思未给的解决过程，不凭口诀补事故或救场者；Needs/Difficulties/Solutions/Denouement不是PTSD英文展开。
   practicality_gate:
     status: design_complete_empirical_pending
     trigger: 原文及两段首句齐备，需要按一个明确来源版本整理已知与未知情节槽。
     action: 先注明版本：寒8板书P目的/T方式/S苦难/D结局；同课表格P需求/T方法/S困难/D结局；逐槽填首句已知与原文约束。
     output: interpret；产出该版本的已知/未知情节槽；寒14需求/波折/方案/结局及其分析表另留，旧高二PPT也不混用。
-    stop: 未注明版本先停；未知槽留空，不凭口诀补事故或救场者；Needs/Difficulties/Solutions/Denouement不是PTSD英文展开。
+    stop: 未注明版本先停；核清原文与两首句前未知槽留空；核清后可在人物、矛盾与结果约束内构思未给的解决过程，不凭口诀补事故或救场者；Needs/Difficulties/Solutions/Denouement不是PTSD英文展开。
     transfer: 换故事仍选清来源版本，再由新原文和两首句约束本版槽位，不迁移旧题困难或解决者。
     efficiency: 用固定四项降低构思同时处理的负担，价值在因果暴露而非自动答案。
     misuse_cost: 未经实测；四格写满就以为剧情有逻辑，困难和行动其实是互相编出来的。会导致误判；须先核触发、执行Stop，不允许辅助产物越级定案。
@@ -426,8 +426,8 @@ methods:
   status: candidate
   maturity_status: candidate
   practical_value: Useful
-  version: 1.2.0
-  change_reason: ANSWER 70db6d6 显式来源差异复核；保留品牌动作和基础入口，异文分源，旧Case不自动获新纪元准入。
+  version: 1.2.1
+  change_reason: ANSWER 9a872ba 显式来源差异复核；旧来源归档，保基础入口与实用优先，不自动授予Case或真人准入。
   affected_cases:
   - cases/continuation-writing/W03/canonical/case.yaml
   regression_result: pending_current_epoch_semantic_and_student_acceptance
@@ -440,13 +440,13 @@ methods:
     participant_validation: pending_real_participant_validation
     example_scope: 2026-10-28基础入口表达修订；保留原判据/Stop/课程绑定与语义版本，微动作和关系示意不是完整真题或真人实测。
   source_alignment:
-    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
     state: live_source_bound
     source_content_changed: true
     correction_profile_applied: true
     authored_first_contact_draft: true
     new_course_branches: preserved_in_full_contract_not_automatically_aliased
-    acceptance: 2026-10-30 explicit source delta review; learner/blind/release pending
+    acceptance: explicit source delta review; learner/blind/release pending
 - method_id: W04
   brand_name: 首句找缺口
   source_name: gap 读法与首句规则
@@ -485,9 +485,9 @@ methods:
   - repository: https://github.com/rockpunkgod/ANSWER.git
     path: gaokao-writing/references/continuation-writing-and-correction.md
     heading: gap 读法与首句规则
-    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
   section_ids: &id004
-  - 866388dfa1b014b3
+  - 9f6eaacc63fcefa0
   - a9f982dcfec817d9
   - 7b4c299267a685c2
   can_follow: []
@@ -523,7 +523,7 @@ methods:
       micro_action_is_not_completion: 完成第一小步不等于完整方法成功；继续完成四步卡的判断与停止核验。
       short_stop: 能自然衔接就不强补过程，不让每个名词各占一句。
     presentation_revision: 2026-10-28.2
-    source_update_note: PTSD各来源槽位不混；动作面已证为描写概念而非自造公式；两简一复从与反向扩写分开；七句方案不取代十句五定，环境/升华须由当前故事支持。
+    source_update_note: PTSD先核已知再在约束内构思未给解决过程，不把留空误作禁止创造；十类、32素材按功能选，不强制前置、数量或负面结果。
   cases:
     canonical: cases/continuation-writing/W04/canonical/case.yaml
   four_step_card:
@@ -566,7 +566,7 @@ methods:
   maturity_status: candidate
   practical_value: Useful
   version: 1.2.0
-  change_reason: ANSWER 70db6d6 显式来源差异复核；保留品牌动作和基础入口，异文分源，旧Case不自动获新纪元准入。
+  change_reason: ANSWER 9a872ba 显式来源差异复核；旧来源归档，保基础入口与实用优先，不自动授予Case或真人准入。
   affected_cases:
   - cases/continuation-writing/W04/canonical/case.yaml
   regression_result: pending_current_epoch_semantic_and_student_acceptance
@@ -578,13 +578,13 @@ methods:
     participant_validation: pending_real_participant_validation
     example_scope: 2026-10-28基础入口表达修订；保留原判据/Stop/课程绑定与语义版本，微动作和关系示意不是完整真题或真人实测。
   source_alignment:
-    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
     state: live_source_bound
     source_content_changed: false
     correction_profile_applied: true
     authored_first_contact_draft: true
     new_course_branches: preserved_in_full_contract_not_automatically_aliased
-    acceptance: 2026-10-30 explicit source delta review; learner/blind/release pending
+    acceptance: explicit source delta review; learner/blind/release pending
 - method_id: W05
   brand_name: 动作拆链
   source_name: 动作链
@@ -625,9 +625,9 @@ methods:
   - repository: https://github.com/rockpunkgod/ANSWER.git
     path: gaokao-writing/references/continuation-writing-and-correction.md
     heading: 动作链与动作面
-    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
   section_ids: &id005
-  - 314387087cce4dda
+  - 422eb235a87f72dc
   - 5391fbc041ed3f90
   can_follow: []
   usually_before: []
@@ -662,7 +662,7 @@ methods:
       micro_action_is_not_completion: 完成第一小步不等于完整方法成功；继续完成四步卡的判断与停止核验。
       short_stop: 原行动没成立不拆，能力或因果冲突先撤回。
     presentation_revision: 2026-10-30.1
-    source_update_note: PTSD各来源槽位不混；动作面已证为描写概念而非自造公式；两简一复从与反向扩写分开；七句方案不取代十句五定，环境/升华须由当前故事支持。
+    source_update_note: PTSD先核已知再在约束内构思未给解决过程，不把留空误作禁止创造；十类、32素材按功能选，不强制前置、数量或负面结果。
   cases:
     canonical: cases/continuation-writing/W05/canonical/case.yaml
   four_step_card:
@@ -705,7 +705,7 @@ methods:
   maturity_status: candidate
   practical_value: Useful
   version: 1.2.1
-  change_reason: ANSWER 70db6d6 显式来源差异复核；保留品牌动作和基础入口，异文分源，旧Case不自动获新纪元准入。
+  change_reason: ANSWER 9a872ba 显式来源差异复核；旧来源归档，保基础入口与实用优先，不自动授予Case或真人准入。
   affected_cases:
   - cases/continuation-writing/W05/canonical/case.yaml
   regression_result: pending_current_epoch_semantic_and_student_acceptance
@@ -717,13 +717,13 @@ methods:
     participant_validation: pending_real_participant_validation
     example_scope: 2026-10-28基础入口表达修订；保留原判据/Stop/课程绑定与语义版本，微动作和关系示意不是完整真题或真人实测。
   source_alignment:
-    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
     state: live_source_bound
-    source_content_changed: true
+    source_content_changed: false
     correction_profile_applied: true
     authored_first_contact_draft: true
     new_course_branches: preserved_in_full_contract_not_automatically_aliased
-    acceptance: 2026-10-30 explicit source delta review; learner/blind/release pending
+    acceptance: explicit source delta review; learner/blind/release pending
 - method_id: W06
   brand_name: 三点锁题
   source_name: 五档升级路径（训练用）
@@ -758,9 +758,9 @@ methods:
   - repository: https://github.com/rockpunkgod/ANSWER.git
     path: gaokao-writing/references/continuation-writing-and-correction.md
     heading: 五档升级路径（训练用）
-    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
   section_ids: &id006
-  - 65f20f86dc7c5210
+  - 25f82bfc8b1306a6
   - a9f982dcfec817d9
   can_follow: []
   usually_before: []
@@ -795,7 +795,7 @@ methods:
       micro_action_is_not_completion: 完成第一小步不等于完整方法成功；继续完成四步卡的判断与停止核验。
       short_stop: 找不到就留缺口，不编主角或事故补三点。
     presentation_revision: 2026-10-28.2
-    source_update_note: PTSD各来源槽位不混；动作面已证为描写概念而非自造公式；两简一复从与反向扩写分开；七句方案不取代十句五定，环境/升华须由当前故事支持。
+    source_update_note: PTSD先核已知再在约束内构思未给解决过程，不把留空误作禁止创造；十类、32素材按功能选，不强制前置、数量或负面结果。
   cases:
     canonical: cases/continuation-writing/W06/canonical/case.yaml
   four_step_card:
@@ -838,7 +838,7 @@ methods:
   maturity_status: candidate
   practical_value: Useful
   version: 1.2.0
-  change_reason: ANSWER 70db6d6 显式来源差异复核；保留品牌动作和基础入口，异文分源，旧Case不自动获新纪元准入。
+  change_reason: ANSWER 9a872ba 显式来源差异复核；旧来源归档，保基础入口与实用优先，不自动授予Case或真人准入。
   affected_cases:
   - cases/continuation-writing/W06/canonical/case.yaml
   regression_result: pending_current_epoch_semantic_and_student_acceptance
@@ -850,13 +850,13 @@ methods:
     participant_validation: pending_real_participant_validation
     example_scope: 2026-10-28基础入口表达修订；保留原判据/Stop/课程绑定与语义版本，微动作和关系示意不是完整真题或真人实测。
   source_alignment:
-    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
     state: live_source_bound
     source_content_changed: false
     correction_profile_applied: true
     authored_first_contact_draft: true
     new_course_branches: preserved_in_full_contract_not_automatically_aliased
-    acceptance: 2026-10-30 explicit source delta review; learner/blind/release pending
+    acceptance: explicit source delta review; learner/blind/release pending
 - method_id: W07
   brand_name: 伏笔回扣
   source_name: 五档升级路径（训练用）
@@ -895,10 +895,10 @@ methods:
   - repository: https://github.com/rockpunkgod/ANSWER.git
     path: gaokao-writing/references/continuation-writing-and-correction.md
     heading: 五档升级路径（训练用）
-    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
   section_ids: &id007
-  - 65f20f86dc7c5210
-  - 5e20d2f7b2a66be1
+  - 25f82bfc8b1306a6
+  - 82315ec620228adf
   - a9f982dcfec817d9
   can_follow: []
   usually_before: []
@@ -933,7 +933,7 @@ methods:
       micro_action_is_not_completion: 完成第一小步不等于完整方法成功；继续完成四步卡的判断与停止核验。
       short_stop: 不用每个物件，不为回扣添无据能力或人物。
     presentation_revision: 2026-10-28.2
-    source_update_note: PTSD各来源槽位不混；动作面已证为描写概念而非自造公式；两简一复从与反向扩写分开；七句方案不取代十句五定，环境/升华须由当前故事支持。
+    source_update_note: PTSD先核已知再在约束内构思未给解决过程，不把留空误作禁止创造；十类、32素材按功能选，不强制前置、数量或负面结果。
   cases:
     canonical: cases/continuation-writing/W07/canonical/case.yaml
   four_step_card:
@@ -976,7 +976,7 @@ methods:
   maturity_status: candidate
   practical_value: Useful
   version: 1.2.0
-  change_reason: ANSWER 70db6d6 显式来源差异复核；保留品牌动作和基础入口，异文分源，旧Case不自动获新纪元准入。
+  change_reason: ANSWER 9a872ba 显式来源差异复核；旧来源归档，保基础入口与实用优先，不自动授予Case或真人准入。
   affected_cases:
   - cases/continuation-writing/W07/canonical/case.yaml
   regression_result: pending_current_epoch_semantic_and_student_acceptance
@@ -988,13 +988,13 @@ methods:
     participant_validation: pending_real_participant_validation
     example_scope: 2026-10-28基础入口表达修订；保留原判据/Stop/课程绑定与语义版本，微动作和关系示意不是完整真题或真人实测。
   source_alignment:
-    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
     state: live_source_bound
-    source_content_changed: true
+    source_content_changed: false
     correction_profile_applied: true
     authored_first_contact_draft: true
     new_course_branches: preserved_in_full_contract_not_automatically_aliased
-    acceptance: 2026-10-30 explicit source delta review; learner/blind/release pending
+    acceptance: explicit source delta review; learner/blind/release pending
 - method_id: W08
   brand_name: 因果三连
   source_name: 五档升级路径（训练用）
@@ -1033,9 +1033,9 @@ methods:
   - repository: https://github.com/rockpunkgod/ANSWER.git
     path: gaokao-writing/references/continuation-writing-and-correction.md
     heading: 五档升级路径（训练用）
-    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
   section_ids: &id008
-  - 65f20f86dc7c5210
+  - 25f82bfc8b1306a6
   - a9f982dcfec817d9
   can_follow: []
   usually_before: []
@@ -1070,7 +1070,7 @@ methods:
       micro_action_is_not_completion: 完成第一小步不等于完整方法成功；继续完成四步卡的判断与停止核验。
       short_stop: 物理条件或动机不成立就停，不拿新结果证明旧猜测。
     presentation_revision: 2026-10-28.2
-    source_update_note: PTSD各来源槽位不混；动作面已证为描写概念而非自造公式；两简一复从与反向扩写分开；七句方案不取代十句五定，环境/升华须由当前故事支持。
+    source_update_note: PTSD先核已知再在约束内构思未给解决过程，不把留空误作禁止创造；十类、32素材按功能选，不强制前置、数量或负面结果。
   cases:
     canonical: cases/continuation-writing/W08/canonical/case.yaml
   four_step_card:
@@ -1113,7 +1113,7 @@ methods:
   maturity_status: candidate
   practical_value: Useful
   version: 1.2.0
-  change_reason: ANSWER 70db6d6 显式来源差异复核；保留品牌动作和基础入口，异文分源，旧Case不自动获新纪元准入。
+  change_reason: ANSWER 9a872ba 显式来源差异复核；旧来源归档，保基础入口与实用优先，不自动授予Case或真人准入。
   affected_cases:
   - cases/continuation-writing/W08/canonical/case.yaml
   regression_result: pending_current_epoch_semantic_and_student_acceptance
@@ -1125,13 +1125,13 @@ methods:
     participant_validation: pending_real_participant_validation
     example_scope: 2026-10-28基础入口表达修订；保留原判据/Stop/课程绑定与语义版本，微动作和关系示意不是完整真题或真人实测。
   source_alignment:
-    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
     state: live_source_bound
     source_content_changed: false
     correction_profile_applied: true
     authored_first_contact_draft: true
     new_course_branches: preserved_in_full_contract_not_automatically_aliased
-    acceptance: 2026-10-30 explicit source delta review; learner/blind/release pending
+    acceptance: explicit source delta review; learner/blind/release pending
 - method_id: W09
   brand_name: 细节三镜
   source_name: 五档升级路径（训练用）
@@ -1170,11 +1170,11 @@ methods:
   - repository: https://github.com/rockpunkgod/ANSWER.git
     path: gaokao-writing/references/continuation-writing-and-correction.md
     heading: 五档升级路径（训练用）
-    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
   section_ids: &id009
-  - 65f20f86dc7c5210
+  - 25f82bfc8b1306a6
   - 5391fbc041ed3f90
-  - 5e20d2f7b2a66be1
+  - 82315ec620228adf
   can_follow: []
   usually_before: []
   usually_after: []
@@ -1208,7 +1208,7 @@ methods:
       micro_action_is_not_completion: 完成第一小步不等于完整方法成功；继续完成四步卡的判断与停止核验。
       short_stop: 先修框架，不凑字数，不把专项模板位置当通用禁令。
     presentation_revision: 2026-10-28.2
-    source_update_note: PTSD各来源槽位不混；动作面已证为描写概念而非自造公式；两简一复从与反向扩写分开；七句方案不取代十句五定，环境/升华须由当前故事支持。
+    source_update_note: PTSD先核已知再在约束内构思未给解决过程，不把留空误作禁止创造；十类、32素材按功能选，不强制前置、数量或负面结果。
   cases:
     canonical: cases/continuation-writing/W09/canonical/case.yaml
   four_step_card:
@@ -1251,7 +1251,7 @@ methods:
   maturity_status: candidate
   practical_value: Useful
   version: 1.2.0
-  change_reason: ANSWER 70db6d6 显式来源差异复核；保留品牌动作和基础入口，异文分源，旧Case不自动获新纪元准入。
+  change_reason: ANSWER 9a872ba 显式来源差异复核；旧来源归档，保基础入口与实用优先，不自动授予Case或真人准入。
   affected_cases:
   - cases/continuation-writing/W09/canonical/case.yaml
   regression_result: pending_current_epoch_semantic_and_student_acceptance
@@ -1263,13 +1263,13 @@ methods:
     participant_validation: pending_real_participant_validation
     example_scope: 2026-10-28基础入口表达修订；保留原判据/Stop/课程绑定与语义版本，微动作和关系示意不是完整真题或真人实测。
   source_alignment:
-    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
     state: live_source_bound
-    source_content_changed: true
+    source_content_changed: false
     correction_profile_applied: true
     authored_first_contact_draft: true
     new_course_branches: preserved_in_full_contract_not_automatically_aliased
-    acceptance: 2026-10-30 explicit source delta review; learner/blind/release pending
+    acceptance: explicit source delta review; learner/blind/release pending
 - method_id: W10
   brand_name: 无痕衔接
   source_name: 五档升级路径（训练用）
@@ -1308,9 +1308,9 @@ methods:
   - repository: https://github.com/rockpunkgod/ANSWER.git
     path: gaokao-writing/references/continuation-writing-and-correction.md
     heading: 五档升级路径（训练用）
-    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
   section_ids: &id010
-  - 65f20f86dc7c5210
+  - 25f82bfc8b1306a6
   can_follow: []
   usually_before: []
   usually_after: []
@@ -1344,7 +1344,7 @@ methods:
       micro_action_is_not_completion: 完成第一小步不等于完整方法成功；继续完成四步卡的判断与停止核验。
       short_stop: 有歧义先明确，删词会改转折或因果就保留。
     presentation_revision: 2026-10-28.2
-    source_update_note: PTSD各来源槽位不混；动作面已证为描写概念而非自造公式；两简一复从与反向扩写分开；七句方案不取代十句五定，环境/升华须由当前故事支持。
+    source_update_note: PTSD先核已知再在约束内构思未给解决过程，不把留空误作禁止创造；十类、32素材按功能选，不强制前置、数量或负面结果。
   cases:
     canonical: cases/continuation-writing/W10/canonical/case.yaml
   four_step_card:
@@ -1387,7 +1387,7 @@ methods:
   maturity_status: candidate
   practical_value: Useful
   version: 1.2.0
-  change_reason: ANSWER 70db6d6 显式来源差异复核；保留品牌动作和基础入口，异文分源，旧Case不自动获新纪元准入。
+  change_reason: ANSWER 9a872ba 显式来源差异复核；旧来源归档，保基础入口与实用优先，不自动授予Case或真人准入。
   affected_cases:
   - cases/continuation-writing/W10/canonical/case.yaml
   regression_result: pending_current_epoch_semantic_and_student_acceptance
@@ -1399,13 +1399,13 @@ methods:
     participant_validation: pending_real_participant_validation
     example_scope: 2026-10-28基础入口表达修订；保留原判据/Stop/课程绑定与语义版本，微动作和关系示意不是完整真题或真人实测。
   source_alignment:
-    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
     state: live_source_bound
     source_content_changed: false
     correction_profile_applied: true
     authored_first_contact_draft: true
     new_course_branches: preserved_in_full_contract_not_automatically_aliased
-    acceptance: 2026-10-30 explicit source delta review; learner/blind/release pending
+    acceptance: explicit source delta review; learner/blind/release pending
 - method_id: W11
   brand_name: 小转折
   source_name: 五档升级路径（训练用）
@@ -1444,12 +1444,12 @@ methods:
   - repository: https://github.com/rockpunkgod/ANSWER.git
     path: gaokao-writing/references/continuation-writing-and-correction.md
     heading: 五档升级路径（训练用）
-    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
   section_ids: &id011
-  - 65f20f86dc7c5210
-  - 3251f3f539ab88d7
+  - 25f82bfc8b1306a6
+  - d5afd98a942355b0
   - a9f982dcfec817d9
-  - 5e20d2f7b2a66be1
+  - 82315ec620228adf
   can_follow: []
   usually_before: []
   usually_after: []
@@ -1483,7 +1483,7 @@ methods:
       micro_action_is_not_completion: 完成第一小步不等于完整方法成功；继续完成四步卡的判断与停止核验。
       short_stop: 基础框架未完整先停，波折不是每篇必写。
     presentation_revision: 2026-10-28.2
-    source_update_note: PTSD各来源槽位不混；动作面已证为描写概念而非自造公式；两简一复从与反向扩写分开；七句方案不取代十句五定，环境/升华须由当前故事支持。
+    source_update_note: PTSD先核已知再在约束内构思未给解决过程，不把留空误作禁止创造；十类、32素材按功能选，不强制前置、数量或负面结果。
   cases:
     canonical: cases/continuation-writing/W11/canonical/case.yaml
   four_step_card:
@@ -1526,7 +1526,7 @@ methods:
   maturity_status: candidate
   practical_value: Useful
   version: 1.2.0
-  change_reason: ANSWER 70db6d6 显式来源差异复核；保留品牌动作和基础入口，异文分源，旧Case不自动获新纪元准入。
+  change_reason: ANSWER 9a872ba 显式来源差异复核；旧来源归档，保基础入口与实用优先，不自动授予Case或真人准入。
   affected_cases:
   - cases/continuation-writing/W11/canonical/case.yaml
   regression_result: pending_current_epoch_semantic_and_student_acceptance
@@ -1538,13 +1538,13 @@ methods:
     participant_validation: pending_real_participant_validation
     example_scope: 2026-10-28基础入口表达修订；保留原判据/Stop/课程绑定与语义版本，微动作和关系示意不是完整真题或真人实测。
   source_alignment:
-    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
     state: live_source_bound
-    source_content_changed: true
+    source_content_changed: false
     correction_profile_applied: true
     authored_first_contact_draft: true
     new_course_branches: preserved_in_full_contract_not_automatically_aliased
-    acceptance: 2026-10-30 explicit source delta review; learner/blind/release pending
+    acceptance: explicit source delta review; learner/blind/release pending
 - method_id: W12
   brand_name: 精准换词
   source_name: 五档升级路径（训练用）
@@ -1583,10 +1583,10 @@ methods:
   - repository: https://github.com/rockpunkgod/ANSWER.git
     path: gaokao-writing/references/continuation-writing-and-correction.md
     heading: 五档升级路径（训练用）
-    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
   section_ids: &id012
-  - 65f20f86dc7c5210
-  - 4b1d65a04c19b519
+  - 25f82bfc8b1306a6
+  - c25f44791eb53257
   can_follow: []
   usually_before: []
   usually_after: []
@@ -1620,7 +1620,7 @@ methods:
       micro_action_is_not_completion: 完成第一小步不等于完整方法成功；继续完成四步卡的判断与停止核验。
       short_stop: 含义或搭配没把握保留原词，不按替换数量评分。
     presentation_revision: 2026-10-28.2
-    source_update_note: PTSD各来源槽位不混；动作面已证为描写概念而非自造公式；两简一复从与反向扩写分开；七句方案不取代十句五定，环境/升华须由当前故事支持。
+    source_update_note: PTSD先核已知再在约束内构思未给解决过程，不把留空误作禁止创造；十类、32素材按功能选，不强制前置、数量或负面结果。
   cases:
     canonical: cases/continuation-writing/W12/canonical/case.yaml
   four_step_card:
@@ -1663,7 +1663,7 @@ methods:
   maturity_status: candidate
   practical_value: Useful
   version: 1.2.0
-  change_reason: ANSWER 70db6d6 显式来源差异复核；保留品牌动作和基础入口，异文分源，旧Case不自动获新纪元准入。
+  change_reason: ANSWER 9a872ba 显式来源差异复核；旧来源归档，保基础入口与实用优先，不自动授予Case或真人准入。
   affected_cases:
   - cases/continuation-writing/W12/canonical/case.yaml
   regression_result: pending_current_epoch_semantic_and_student_acceptance
@@ -1675,13 +1675,13 @@ methods:
     participant_validation: pending_real_participant_validation
     example_scope: 2026-10-28基础入口表达修订；保留原判据/Stop/课程绑定与语义版本，微动作和关系示意不是完整真题或真人实测。
   source_alignment:
-    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
     state: live_source_bound
     source_content_changed: false
     correction_profile_applied: true
     authored_first_contact_draft: true
     new_course_branches: preserved_in_full_contract_not_automatically_aliased
-    acceptance: 2026-10-30 explicit source delta review; learner/blind/release pending
+    acceptance: explicit source delta review; learner/blind/release pending
 - method_id: W13
   brand_name: 结尾回扣
   source_name: 素材与考点
@@ -1720,11 +1720,11 @@ methods:
   - repository: https://github.com/rockpunkgod/ANSWER.git
     path: gaokao-writing/references/continuation-writing-and-correction.md
     heading: 素材与考点
-    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
   section_ids: &id013
-  - fc2eb7086313fb80
+  - 857e1d373e70a863
   - 0cf979fcaa4e9965
-  - 5e20d2f7b2a66be1
+  - 82315ec620228adf
   - a9f982dcfec817d9
   can_follow: []
   usually_before: []
@@ -1759,7 +1759,7 @@ methods:
       micro_action_is_not_completion: 完成第一小步不等于完整方法成功；继续完成四步卡的判断与停止核验。
       short_stop: 核心矛盾未解先修情节，不用口号代替结果。
     presentation_revision: 2026-10-28.2
-    source_update_note: PTSD各来源槽位不混；动作面已证为描写概念而非自造公式；两简一复从与反向扩写分开；七句方案不取代十句五定，环境/升华须由当前故事支持。
+    source_update_note: PTSD先核已知再在约束内构思未给解决过程，不把留空误作禁止创造；十类、32素材按功能选，不强制前置、数量或负面结果。
   cases:
     canonical: cases/continuation-writing/W13/canonical/case.yaml
   four_step_card:
@@ -1802,7 +1802,7 @@ methods:
   maturity_status: candidate
   practical_value: Useful
   version: 1.2.0
-  change_reason: ANSWER 70db6d6 显式来源差异复核；保留品牌动作和基础入口，异文分源，旧Case不自动获新纪元准入。
+  change_reason: ANSWER 9a872ba 显式来源差异复核；旧来源归档，保基础入口与实用优先，不自动授予Case或真人准入。
   affected_cases:
   - cases/continuation-writing/W13/canonical/case.yaml
   regression_result: pending_current_epoch_semantic_and_student_acceptance
@@ -1814,13 +1814,13 @@ methods:
     participant_validation: pending_real_participant_validation
     example_scope: 2026-10-28基础入口表达修订；保留原判据/Stop/课程绑定与语义版本，微动作和关系示意不是完整真题或真人实测。
   source_alignment:
-    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
     state: live_source_bound
-    source_content_changed: true
+    source_content_changed: false
     correction_profile_applied: true
     authored_first_contact_draft: true
     new_course_branches: preserved_in_full_contract_not_automatically_aliased
-    acceptance: 2026-10-30 explicit source delta review; learner/blind/release pending
+    acceptance: explicit source delta review; learner/blind/release pending
 - method_id: W14
   brand_name: 骨架句与肌肉句
   source_name: 肌肉句与骨架句
@@ -1859,11 +1859,11 @@ methods:
   - repository: https://github.com/rockpunkgod/ANSWER.git
     path: gaokao-writing/references/continuation-writing-and-correction.md
     heading: 肌肉句与骨架句
-    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
   section_ids: &id014
-  - 625feff688a4d50a
+  - 01e63cdd038968e7
   - c7b254c23e9755d1
-  - 5e20d2f7b2a66be1
+  - 82315ec620228adf
   - a9f982dcfec817d9
   can_follow: []
   usually_before: []
@@ -1898,7 +1898,7 @@ methods:
       micro_action_is_not_completion: 完成第一小步不等于完整方法成功；继续完成四步卡的判断与停止核验。
       short_stop: 骨架未接通先补功能，不按固定句数分好坏。
     presentation_revision: 2026-10-28.2
-    source_update_note: PTSD各来源槽位不混；动作面已证为描写概念而非自造公式；两简一复从与反向扩写分开；七句方案不取代十句五定，环境/升华须由当前故事支持。
+    source_update_note: PTSD先核已知再在约束内构思未给解决过程，不把留空误作禁止创造；十类、32素材按功能选，不强制前置、数量或负面结果。
   cases:
     canonical: cases/continuation-writing/W14/canonical/case.yaml
   four_step_card:
@@ -1941,7 +1941,7 @@ methods:
   maturity_status: candidate
   practical_value: Useful
   version: 1.2.0
-  change_reason: ANSWER 70db6d6 显式来源差异复核；保留品牌动作和基础入口，异文分源，旧Case不自动获新纪元准入。
+  change_reason: ANSWER 9a872ba 显式来源差异复核；旧来源归档，保基础入口与实用优先，不自动授予Case或真人准入。
   affected_cases:
   - cases/continuation-writing/W14/canonical/case.yaml
   regression_result: pending_current_epoch_semantic_and_student_acceptance
@@ -1953,13 +1953,13 @@ methods:
     participant_validation: pending_real_participant_validation
     example_scope: 2026-10-28基础入口表达修订；保留原判据/Stop/课程绑定与语义版本，微动作和关系示意不是完整真题或真人实测。
   source_alignment:
-    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
     state: live_source_bound
-    source_content_changed: true
+    source_content_changed: false
     correction_profile_applied: true
     authored_first_contact_draft: true
     new_course_branches: preserved_in_full_contract_not_automatically_aliased
-    acceptance: 2026-10-30 explicit source delta review; learner/blind/release pending
+    acceptance: explicit source delta review; learner/blind/release pending
 - method_id: W15
   brand_name: 续写评分
   source_name: 25 分评分规范
@@ -1998,12 +1998,12 @@ methods:
   - repository: https://github.com/rockpunkgod/ANSWER.git
     path: gaokao-writing/references/continuation-writing-and-correction.md
     heading: 25 分评分规范
-    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
   section_ids: &id015
   - d2dc77b78b7ce906
   - 7b4c299267a685c2
   - 09015032f4ec758b
-  - fc2eb7086313fb80
+  - 857e1d373e70a863
   can_follow: []
   usually_before: []
   usually_after: []
@@ -2037,7 +2037,7 @@ methods:
       micro_action_is_not_completion: 完成第一小步不等于完整方法成功；继续完成四步卡的判断与停止核验。
       short_stop: 缺材料不给完整分，限对应25分规范，不编固定扣分。
     presentation_revision: 2026-10-28.2
-    source_update_note: PTSD各来源槽位不混；动作面已证为描写概念而非自造公式；两简一复从与反向扩写分开；七句方案不取代十句五定，环境/升华须由当前故事支持。
+    source_update_note: PTSD先核已知再在约束内构思未给解决过程，不把留空误作禁止创造；十类、32素材按功能选，不强制前置、数量或负面结果。
   cases:
     canonical: cases/continuation-writing/W15/canonical/case.yaml
   four_step_card:
@@ -2080,7 +2080,7 @@ methods:
   maturity_status: candidate
   practical_value: Useful
   version: 1.2.0
-  change_reason: ANSWER 70db6d6 显式来源差异复核；保留品牌动作和基础入口，异文分源，旧Case不自动获新纪元准入。
+  change_reason: ANSWER 9a872ba 显式来源差异复核；旧来源归档，保基础入口与实用优先，不自动授予Case或真人准入。
   affected_cases:
   - cases/continuation-writing/W15/canonical/case.yaml
   regression_result: pending_current_epoch_semantic_and_student_acceptance
@@ -2092,13 +2092,13 @@ methods:
     participant_validation: pending_real_participant_validation
     example_scope: 2026-10-28基础入口表达修订；保留原判据/Stop/课程绑定与语义版本，微动作和关系示意不是完整真题或真人实测。
   source_alignment:
-    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
     state: live_source_bound
     source_content_changed: false
     correction_profile_applied: true
     authored_first_contact_draft: true
     new_course_branches: preserved_in_full_contract_not_automatically_aliased
-    acceptance: 2026-10-30 explicit source delta review; learner/blind/release pending
+    acceptance: explicit source delta review; learner/blind/release pending
 - method_id: W16
   brand_name: 五档训练升级
   source_name: 五档升级路径（训练用）
@@ -2137,9 +2137,9 @@ methods:
   - repository: https://github.com/rockpunkgod/ANSWER.git
     path: gaokao-writing/references/continuation-writing-and-correction.md
     heading: 五档升级路径（训练用）
-    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
   section_ids: &id016
-  - 65f20f86dc7c5210
+  - 25f82bfc8b1306a6
   - 7b4c299267a685c2
   can_follow: []
   usually_before: []
@@ -2174,7 +2174,7 @@ methods:
       micro_action_is_not_completion: 完成第一小步不等于完整方法成功；继续完成四步卡的判断与停止核验。
       short_stop: 基础未稳不跳升级，不强加转折、动作或升华配额。
     presentation_revision: 2026-10-28.2
-    source_update_note: PTSD各来源槽位不混；动作面已证为描写概念而非自造公式；两简一复从与反向扩写分开；七句方案不取代十句五定，环境/升华须由当前故事支持。
+    source_update_note: PTSD先核已知再在约束内构思未给解决过程，不把留空误作禁止创造；十类、32素材按功能选，不强制前置、数量或负面结果。
   cases:
     canonical: cases/continuation-writing/W16/canonical/case.yaml
   four_step_card:
@@ -2217,7 +2217,7 @@ methods:
   maturity_status: candidate
   practical_value: Useful
   version: 1.2.0
-  change_reason: ANSWER 70db6d6 显式来源差异复核；保留品牌动作和基础入口，异文分源，旧Case不自动获新纪元准入。
+  change_reason: ANSWER 9a872ba 显式来源差异复核；旧来源归档，保基础入口与实用优先，不自动授予Case或真人准入。
   affected_cases:
   - cases/continuation-writing/W16/canonical/case.yaml
   regression_result: pending_current_epoch_semantic_and_student_acceptance
@@ -2229,10 +2229,10 @@ methods:
     participant_validation: pending_real_participant_validation
     example_scope: 2026-10-28基础入口表达修订；保留原判据/Stop/课程绑定与语义版本，微动作和关系示意不是完整真题或真人实测。
   source_alignment:
-    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
     state: live_source_bound
     source_content_changed: false
     correction_profile_applied: true
     authored_first_contact_draft: true
     new_course_branches: preserved_in_full_contract_not_automatically_aliased
-    acceptance: 2026-10-30 explicit source delta review; learner/blind/release pending
+    acceptance: explicit source delta review; learner/blind/release pending

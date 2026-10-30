@@ -1,7 +1,7 @@
 registry_version: 2.0.0
 source_baseline:
   repository: https://github.com/rockpunkgod/ANSWER.git
-  commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+  commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
   captured_at: '2026-10-30'
 schema: schemas/method-card.json
 method_files:
@@ -210,7 +210,7 @@ methods:
   G03:
     brand_name: 限定词落位
     status: candidate
-    version: 1.2.0
+    version: 1.2.1
     file: method-registry/grammar.yaml
   G04:
     brand_name: 指代落位
@@ -315,7 +315,7 @@ methods:
   A05:
     brand_name: 长句重组
     status: candidate
-    version: 1.2.0
+    version: 1.2.1
     file: method-registry/application-writing.yaml
   A06:
     brand_name: 对照仿写
@@ -355,7 +355,7 @@ methods:
   W03:
     brand_name: 剧情四格
     status: candidate
-    version: 1.2.0
+    version: 1.2.1
     file: method-registry/continuation-writing.yaml
   W04:
     brand_name: 首句找缺口
@@ -437,7 +437,7 @@ cloze_order_policy: evidence_driven_visits
 cloze_order_source:
   path: gaokao-english/references/delivery-contract.md
   heading: 做题顺序
-  commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+  commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
   quote: 完形不强制固定空号顺序、两遍作答或先易后难
 course_identities:
 - source_heading: 定位阅读法（应用文阅读课程题名）
@@ -449,9 +449,9 @@ course_identities:
   source:
     path: gaokao-english/references/reading-comprehension.md
     heading: 定位阅读法（应用文阅读课程题名）
-    line_start: 260
-    line_end: 263
-    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+    line_start: 271
+    line_end: 274
+    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
 - source_heading: 顺藤摸瓜（记叙文细节的原命名）
   identity_kind: bounded_course_operation
   source_activation: true
@@ -462,9 +462,9 @@ course_identities:
   source:
     path: gaokao-english/references/reading-comprehension.md
     heading: 顺藤摸瓜（记叙文细节的原命名）
-    line_start: 274
-    line_end: 281
-    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+    line_start: 285
+    line_end: 292
+    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
 - source_heading: 左顾右盼（记叙文细节的原命名）
   identity_kind: bounded_course_operation
   source_activation: true
@@ -476,21 +476,22 @@ course_identities:
   source:
     path: gaokao-english/references/reading-comprehension.md
     heading: 左顾右盼（记叙文细节的原命名）
-    line_start: 298
-    line_end: 305
-    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
-- source_heading: 中心思想（8.7讲义原名，强版本未激活）
-  identity_kind: unactivated_strong_definition
-  source_activation: false
-  task_scope: []
+    line_start: 309
+    line_end: 316
+    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
+- source_heading: 中心思想（8.7讲义原名，受限记叙文本推断入口）
+  identity_kind: bounded_course_operation
+  source_activation: true
+  task_scope:
+  - text_supported_narrative_inference_not_common_sense_algorithm
   equivalent_to_existing_brand: false
   runtime_registration: not_created_by_this_plan
   source:
     path: gaokao-english/references/reading-comprehension.md
-    heading: 中心思想（8.7讲义原名，强版本未激活）
-    line_start: 306
-    line_end: 309
-    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+    heading: 中心思想（8.7讲义原名，受限记叙文本推断入口）
+    line_start: 317
+    line_end: 324
+    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
 - source_heading: 积极阅读法：重复定主旨
   identity_kind: bounded_course_operation
   source_activation: true
@@ -501,9 +502,9 @@ course_identities:
   source:
     path: gaokao-english/references/reading-comprehension.md
     heading: 积极阅读法：重复定主旨
-    line_start: 43
-    line_end: 50
-    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+    line_start: 49
+    line_end: 56
+    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
 - source_heading: 积极阅读法：褒贬定态度（受限作者评价观察）
   identity_kind: bounded_course_operation
   source_activation: true
@@ -514,9 +515,9 @@ course_identities:
   source:
     path: gaokao-english/references/reading-comprehension.md
     heading: 积极阅读法：褒贬定态度（受限作者评价观察）
-    line_start: 51
-    line_end: 60
-    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+    line_start: 57
+    line_end: 68
+    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
 - source_heading: 记叙文全文主旨／标题的受限操作
   identity_kind: bounded_operation_group
   source_activation: true
@@ -528,9 +529,9 @@ course_identities:
   source:
     path: gaokao-english/references/reading-comprehension.md
     heading: 记叙文全文主旨／标题的受限操作
-    line_start: 61
-    line_end: 76
-    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+    line_start: 69
+    line_end: 84
+    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
 - source_heading: 褒贬一致（阅读已验受限比较判据）
   identity_kind: comparison_criterion
   source_activation: true
@@ -545,9 +546,9 @@ course_identities:
   source:
     path: gaokao-english/references/reading-comprehension.md
     heading: 褒贬一致（阅读已验受限比较判据）
-    line_start: 158
-    line_end: 167
-    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+    line_start: 167
+    line_end: 176
+    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
 - source_heading: 分句结构法（原名；逻辑简化中的受限结构动作）
   identity_kind: bounded_structure_operation
   source_activation: true
@@ -558,9 +559,9 @@ course_identities:
   source:
     path: gaokao-english/references/reading-comprehension.md
     heading: 分句结构法（原名；逻辑简化中的受限结构动作）
-    line_start: 256
-    line_end: 259
-    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+    line_start: 267
+    line_end: 270
+    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
 - source_heading: 画蛇添足（判项诊断用语）
   identity_kind: candidate_diagnosis
   source_activation: false
@@ -570,9 +571,9 @@ course_identities:
   source:
     path: gaokao-english/references/reading-comprehension.md
     heading: 画蛇添足（判项诊断用语）
-    line_start: 184
-    line_end: 189
-    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+    line_start: 195
+    line_end: 200
+    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
 - source_heading: mainly题与主旨大意
   identity_kind: bounded_course_operation
   source_activation: true
@@ -584,9 +585,9 @@ course_identities:
   source:
     path: gaokao-english/references/reading-comprehension.md
     heading: mainly题与主旨大意
-    line_start: 310
-    line_end: 323
-    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+    line_start: 325
+    line_end: 338
+    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
 - source_heading: 行文结构（结构认识与已核操作）
   identity_kind: internal_framework
   source_activation: true
@@ -599,7 +600,7 @@ course_identities:
     heading: 行文结构（结构认识与已核操作）
     line_start: 15
     line_end: 31
-    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
 - source_heading: 应用文写作六步训练法通用梳理框架
   identity_kind: editorial_framework
   source_activation: false
@@ -611,7 +612,7 @@ course_identities:
     heading: 应用文写作六步训练法通用梳理框架
     line_start: 53
     line_end: 61
-    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
 - source_heading: 三种写作表达方法
   identity_kind: distinct_course_method_group
   source_activation: true
@@ -624,7 +625,7 @@ course_identities:
     heading: 三种写作表达方法
     line_start: 62
     line_end: 67
-    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
 - source_heading: 富兰克林写作法（寒4五步）
   identity_kind: course_training_sequence
   source_activation: true
@@ -637,7 +638,7 @@ course_identities:
     heading: 富兰克林写作法（寒4五步）
     line_start: 68
     line_end: 73
-    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
 - source_heading: 情节构思：PTSD 四步法
   identity_kind: source_version_group
   source_activation: true
@@ -649,8 +650,8 @@ course_identities:
     path: gaokao-writing/references/continuation-writing-and-correction.md
     heading: 情节构思：PTSD 四步法
     line_start: 198
-    line_end: 207
-    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+    line_end: 209
+    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
 - source_heading: 动作链与动作面
   identity_kind: mixed_activation_group
   source_activation: true
@@ -662,9 +663,9 @@ course_identities:
   source:
     path: gaokao-writing/references/continuation-writing-and-correction.md
     heading: 动作链与动作面
-    line_start: 242
-    line_end: 253
-    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+    line_start: 244
+    line_end: 255
+    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
 - source_heading: 主语一致
   identity_kind: bounded_course_operation
   source_activation: true
@@ -674,9 +675,9 @@ course_identities:
   source:
     path: gaokao-english/references/reading-comprehension.md
     heading: 主语一致
-    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
-    line_start: 136
-    line_end: 139
+    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
+    line_start: 145
+    line_end: 148
 - source_heading: 时态一致
   identity_kind: bounded_course_operation
   source_activation: true
@@ -686,9 +687,9 @@ course_identities:
   source:
     path: gaokao-english/references/reading-comprehension.md
     heading: 时态一致
-    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
-    line_start: 140
-    line_end: 143
+    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
+    line_start: 149
+    line_end: 152
 - source_heading: 动静一致
   identity_kind: bounded_course_operation
   source_activation: true
@@ -698,9 +699,9 @@ course_identities:
   source:
     path: gaokao-english/references/reading-comprehension.md
     heading: 动静一致
-    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
-    line_start: 144
-    line_end: 149
+    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
+    line_start: 153
+    line_end: 158
 - source_heading: 语言冰山理论（解释框架）
   identity_kind: explanatory_framework
   source_activation: false
@@ -710,9 +711,9 @@ course_identities:
   source:
     path: gaokao-english/references/reading-comprehension.md
     heading: 语言冰山理论（解释框架）
-    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
-    line_start: 35
-    line_end: 38
+    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
+    line_start: 41
+    line_end: 44
 - source_heading: 阅读理解基本流程／两首一尾定主题（期末规划来源）
   identity_kind: source_specific_framework
   source_activation: true
@@ -722,9 +723,9 @@ course_identities:
   source:
     path: gaokao-english/references/reading-comprehension.md
     heading: 阅读理解基本流程／两首一尾定主题（期末规划来源）
-    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
-    line_start: 39
-    line_end: 42
+    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
+    line_start: 45
+    line_end: 48
 - source_heading: 单复一致
   identity_kind: consistency_check
   source_activation: true
@@ -734,9 +735,9 @@ course_identities:
   source:
     path: gaokao-english/references/seven-five.md
     heading: 单复一致
-    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
-    line_start: 61
-    line_end: 64
+    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
+    line_start: 64
+    line_end: 67
 - source_heading: 逻辑判断内容关联
   identity_kind: bounded_course_operation
   source_activation: true
@@ -746,9 +747,9 @@ course_identities:
   source:
     path: gaokao-english/references/seven-five.md
     heading: 逻辑判断内容关联
-    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
-    line_start: 65
-    line_end: 75
+    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
+    line_start: 68
+    line_end: 78
 - source_heading: 句子升华三部曲
   identity_kind: sentence_training
   source_activation: true
@@ -758,9 +759,9 @@ course_identities:
   source:
     path: gaokao-writing/references/continuation-writing-and-correction.md
     heading: 句子升华三部曲
-    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
-    line_start: 310
-    line_end: 313
+    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
+    line_start: 314
+    line_end: 317
 - source_heading: 国庆续写的独立入口与提纲方案
   identity_kind: source_version_group
   source_activation: true
@@ -770,9 +771,9 @@ course_identities:
   source:
     path: gaokao-writing/references/continuation-writing-and-correction.md
     heading: 国庆续写的独立入口与提纲方案
-    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
-    line_start: 314
-    line_end: 327
+    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
+    line_start: 318
+    line_end: 331
 - source_heading: 国庆应用文：修改流程与表达训练
   identity_kind: source_version_group
   source_activation: true
@@ -782,12 +783,72 @@ course_identities:
   source:
     path: gaokao-writing/references/application-writing-and-correction.md
     heading: 国庆应用文：修改流程与表达训练
-    commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
-    line_start: 266
-    line_end: 281
+    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
+    line_start: 270
+    line_end: 291
+- source_heading: 十二字真言
+  identity_kind: source_specific_framework
+  source_activation: true
+  task_scope: []
+  equivalent_to_existing_brand: false
+  runtime_registration: not_created_by_this_plan
+  source:
+    path: gaokao-writing/references/application-writing-and-correction.md
+    heading: 十二字真言
+    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
+    line_start: 310
+    line_end: 313
+- source_heading: 大小三圈
+  identity_kind: bounded_operation_group
+  source_activation: true
+  task_scope: []
+  equivalent_to_existing_brand: false
+  runtime_registration: not_created_by_this_plan
+  source:
+    path: gaokao-writing/references/application-writing-and-correction.md
+    heading: 大小三圈
+    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
+    line_start: 314
+    line_end: 325
+- source_heading: 六类书信的本课职责
+  identity_kind: source_version_group
+  source_activation: true
+  task_scope: []
+  equivalent_to_existing_brand: false
+  runtime_registration: not_created_by_this_plan
+  source:
+    path: gaokao-writing/references/application-writing-and-correction.md
+    heading: 六类书信的本课职责
+    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
+    line_start: 326
+    line_end: 338
+- source_heading: 综合运用小结
+  identity_kind: source_specific_framework
+  source_activation: true
+  task_scope: []
+  equivalent_to_existing_brand: false
+  runtime_registration: not_created_by_this_plan
+  source:
+    path: gaokao-writing/references/application-writing-and-correction.md
+    heading: 综合运用小结
+    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
+    line_start: 339
+    line_end: 344
+- source_heading: 训练栏目与阶段
+  identity_kind: course_training_sequence
+  source_activation: true
+  task_scope: []
+  equivalent_to_existing_brand: false
+  runtime_registration: not_created_by_this_plan
+  source:
+    path: gaokao-writing/references/application-writing-and-correction.md
+    heading: 训练栏目与阶段
+    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
+    line_start: 345
+    line_end: 354
 reference_supersession:
   from_commit: 1c388a0596b13935ae7c6a1af00834915a8efa33
-  to_commit: 70db6d6f0423bc8da95c591ca1feda883c2865b1
+  to_commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
   sections:
   - path: agents/gaokao-grammar-fill.md
     heading: 入口契约
@@ -892,7 +953,7 @@ reference_supersession:
   - path: gaokao-english/references/cloze.md
     heading: 名词复现只是线索
     before_sha256: 7a543c89f57b33f6501e6f199fe80b7293b6a9e43d2a2ced2ce29464876d2295
-    after_sha256: 7a543c89f57b33f6501e6f199fe80b7293b6a9e43d2a2ced2ce29464876d2295
+    after_sha256: f3a24e78761f5583a0f28aff935c88e406725d5097bf29cd009a39c8069a2019
   - path: gaokao-english/references/cloze.md
     heading: 评价、结果与动作链
     before_sha256: 2e9d51d09ea52ede4b5e689faf239405b6eb5bf879eeb323156fc8890197361e
@@ -900,7 +961,7 @@ reference_supersession:
   - path: gaokao-english/references/cloze.md
     heading: 已核课程分支与称呼
     before_sha256: d3f24b5a8ff7af8662b71bdfe21e36f2c00e923f9b39c768e14169bb32dcbeb6
-    after_sha256: 088cba81756aaf1f3ca42ed64d81b62a9f24d804cf815f9f7fd23fbc0daea659
+    after_sha256: 4355e0638ac06c26ca4ee19202710e634e9fb4f3645e98fcced045543134d25b
   - path: gaokao-english/references/cloze.md
     heading: 整篇与现场输出
     before_sha256: 8a946a01bb39904fd526e5b7e3e5775bce30ae624d1873ba45d93f1a893a9e99
@@ -1144,7 +1205,7 @@ reference_supersession:
   - path: gaokao-english/references/evidence-gaps.md
     heading: 有课程说明、尚未独立激活
     before_sha256: 2f90ca3e0d1ef685e240734471bc1d7476a579925c601280bf2b379dddde60bb
-    after_sha256: 2f90ca3e0d1ef685e240734471bc1d7476a579925c601280bf2b379dddde60bb
+    after_sha256: 8d7062818ddd51f2aee8b61e31155689751a15aed91dd16349fd13fc983cf3ee
   - path: gaokao-english/references/evidence-gaps.md
     heading: 2026-10-13新视频局部状态
     before_sha256: 474a0540b088f8aeab7dfa4616520f6ee107475fb6ed03c87bccad4a38266a91
@@ -1160,7 +1221,7 @@ reference_supersession:
   - path: gaokao-english/references/listening.md
     heading: 听力
     before_sha256: d9fbddc03c8de0b7d9cb44d058a31c119f6c0b98c3e5b52dc36d52fce63fb127
-    after_sha256: 8545882abb21332f74fc278418e2d20a1674b6b8d78a3cb309bae559e6aa0246
+    after_sha256: e0d9f273533361043d4448bc6ec1e2902e3805c2b04fe9a8215cff3053b8526c
   - path: gaokao-english/references/listening.md
     heading: 交付与其他题型一致
     before_sha256: 3616d741614cdefd4ac069cec8ee9b3be2b451934095b16fae14b53d899b1dff
@@ -1172,11 +1233,11 @@ reference_supersession:
   - path: gaokao-english/references/reading-comprehension.md
     heading: 阅读理解
     before_sha256: dde26ecdbd6a655b81f71be102a208348edc357746b9570d0b4d0e71890e7887
-    after_sha256: 2199be71ae5d51f014f444caa0d43196cdc51aa9a46fb1b3dfc65c736138eee5
+    after_sha256: 1dce5a9b06390c6fd172124072703ce9b5e4c622b965c8afd3d922fdf035c9de
   - path: gaokao-english/references/reading-comprehension.md
     heading: 按题型任务分流，不按文体硬套
     before_sha256: c30f0f228b6d09f6dad43229ff50470d1a2cacfeedc378fa2d768fa561bd2a10
-    after_sha256: c30f0f228b6d09f6dad43229ff50470d1a2cacfeedc378fa2d768fa561bd2a10
+    after_sha256: b96e7da3f42734b25ee29a97b601c658cc4f1ba330734fcb19a9db6a436e8a6f
   - path: gaokao-english/references/reading-comprehension.md
     heading: 阅读方法适用边界
     before_sha256: b0b005e77f91273289fc365bbc316130c9d6b0716d056b4c6b0e92853ab390cc
@@ -1188,7 +1249,7 @@ reference_supersession:
   - path: gaokao-english/references/reading-comprehension.md
     heading: 积极阅读法：褒贬定态度（受限作者评价观察）
     before_sha256: a97d5ce857b80b5ebb268e04d735118068bb56693560539d38d77d4404647591
-    after_sha256: a97d5ce857b80b5ebb268e04d735118068bb56693560539d38d77d4404647591
+    after_sha256: ad3d0ed5d0052a4f34b9a7c9fe5dfef8c5619682f863349cd5b0135d7e7e02e1
   - path: gaokao-english/references/reading-comprehension.md
     heading: 记叙文全文主旨／标题的受限操作
     before_sha256: 92520482c611107afde112f1078e59108692f03fcd6186b59754a23ad107d4d8
@@ -1216,7 +1277,7 @@ reference_supersession:
   - path: gaokao-english/references/reading-comprehension.md
     heading: 已核课程称呼的补充入口
     before_sha256: 0be5ef10499708d756790b497073a005b791dd5467e6a9fd7d6d8a74bf86c3fb
-    after_sha256: 0be5ef10499708d756790b497073a005b791dd5467e6a9fd7d6d8a74bf86c3fb
+    after_sha256: 9380a414a798c5b115b584aaf796cf0bdef4b8935667a1fc9c67b53ee18495da
   - path: gaokao-english/references/reading-comprehension.md
     heading: 主客一致
     before_sha256: fef9ae93bea66d01668a7895ccd2b87726d70c5536dc505638de58ab9792f9ce
@@ -1236,7 +1297,7 @@ reference_supersession:
   - path: gaokao-english/references/reading-comprehension.md
     heading: 过度推测
     before_sha256: ad10e47908cbf2e4b1c1e3e71f7063d757dff8fb2434b13a74cd4a0b9cbfc2ef
-    after_sha256: ad10e47908cbf2e4b1c1e3e71f7063d757dff8fb2434b13a74cd4a0b9cbfc2ef
+    after_sha256: e5e25348079486eb329800b2ab3dfa8df292a04bace6107e086f8240d105d907
   - path: gaokao-english/references/reading-comprehension.md
     heading: 画蛇添足（判项诊断用语）
     before_sha256: 6091e6ccece904b1c822057a8c824443e3dca239e4fe36f63a7f829256563340
@@ -1272,7 +1333,7 @@ reference_supersession:
   - path: gaokao-english/references/reading-comprehension.md
     heading: 逻辑简化
     before_sha256: 6f195d01369b4f1ff8d4eaef1c6f9b0e6482199a1b192459fe3b300c87858d9c
-    after_sha256: 4a05a07e0356cafb622d8d1f38057c6edde26bf82e3d1f928dc68a1c178322a2
+    after_sha256: 2f812a843650e18ecbdf325638ea46963652e2cee755355f26217b25e42df744
   - path: gaokao-english/references/reading-comprehension.md
     heading: 分句结构法（原名；逻辑简化中的受限结构动作）
     before_sha256: 8035fff7cdc63b31403feba1a25f92f2c82a5544eedd1a7b86ca0c30c97042ee
@@ -1308,15 +1369,15 @@ reference_supersession:
   - path: gaokao-english/references/reading-comprehension.md
     heading: 中心思想（8.7讲义原名，强版本未激活）
     before_sha256: ee229b5f40f5073044b458ede2c40cd53823158ac0cb339f4ba541b5e302e00b
-    after_sha256: ee229b5f40f5073044b458ede2c40cd53823158ac0cb339f4ba541b5e302e00b
+    after_sha256: 34efa473ca90e6a251677db4f8de8bbef70644512a6f7c85205648d6e753908f
   - path: gaokao-english/references/reading-comprehension.md
     heading: mainly题与主旨大意
     before_sha256: f29cfc99fc537b353e4a37c9f2b74e22b077088bc0ec7d63c42b8695deb9cc71
-    after_sha256: f29cfc99fc537b353e4a37c9f2b74e22b077088bc0ec7d63c42b8695deb9cc71
+    after_sha256: bf4b19dd417969de028f8baa7755481978f52fe63b23abf9c769be5d431682a8
   - path: gaokao-english/references/reading-comprehension.md
     heading: 词义题的两项原职责
     before_sha256: cb4de2e3e482891c6cc690c8b3284aac7137c827a64c520bdf7b780ead498208
-    after_sha256: cb4de2e3e482891c6cc690c8b3284aac7137c827a64c520bdf7b780ead498208
+    after_sha256: aff92ce73fb0490c19ebd130aa372bc2ee0b14ba74dbdce5fd71727473a4f77e
   - path: gaokao-english/references/reading-comprehension.md
     heading: 现场与整篇输出
     before_sha256: f9da8d47ddf6a6b6f6835ab46b5ae17e2ecde856ed4dd89954403a5a1cdb0097
@@ -1340,11 +1401,11 @@ reference_supersession:
   - path: gaokao-english/references/seven-five.md
     heading: 总起句做题法
     before_sha256: 3ef9f2a8c3881d57403bff7001100d7b7a968e6dd846064a30282f0aad15957b
-    after_sha256: 3ef9f2a8c3881d57403bff7001100d7b7a968e6dd846064a30282f0aad15957b
+    after_sha256: 657bc007b2d296edc1acdce3ce8958ca7676e1c33c5d4a8d513ce006f443ce73
   - path: gaokao-english/references/seven-five.md
     heading: 结构一致
     before_sha256: 14dc9c5a86c3f7ed51e5e8368bc81b47cb3bf72e97f46d81ad8ae05a23bd862a
-    after_sha256: 14dc9c5a86c3f7ed51e5e8368bc81b47cb3bf72e97f46d81ad8ae05a23bd862a
+    after_sha256: 17d51f423a67ae6bda0367fb1bdbb7b7d8e0fa867333016059543de02b6e7d5c
   - path: gaokao-english/references/seven-five.md
     heading: 对应词法
     before_sha256: 4d1d5c4099c87a08fa7fb5fb64e818c8de8b3e2b4dcd6b75ab71c6cce4f23faa
@@ -1360,7 +1421,7 @@ reference_supersession:
   - path: gaokao-english/references/seven-five.md
     heading: 已核课堂用语
     before_sha256: 525d5f406742121a08c2c70ffcae467c58aa11dfbcb1d03d60fe17917e009641
-    after_sha256: 45513cc346c7a28d205ab565383bdb7ae6b01241c6fba55533c42ea8be80536b
+    after_sha256: 4677188f6b04395b66533f88127dafe0648635bf2c08333af39d039ded45ca7c
   - path: gaokao-english/references/seven-five.md
     heading: 主语一致
     before_sha256: 206a1bc88f197fcc9eface6cc52710450c84d27ede4203177acd32aa1c24fa40
@@ -1376,7 +1437,7 @@ reference_supersession:
   - path: gaokao-english/references/seven-five.md
     heading: 褒贬一致
     before_sha256: 01ff4a8631146aa8a735cb2fb27aad286a214d9a335cde5ce7dc40598d94b796
-    after_sha256: 01ff4a8631146aa8a735cb2fb27aad286a214d9a335cde5ce7dc40598d94b796
+    after_sha256: c20633049860d4e4c5a100ab624febfc1c221810fe6f4ecad45784651a20512a
   - path: gaokao-english/references/seven-five.md
     heading: 整篇与现场输出
     before_sha256: 39422ad3fae3dd48c3ceb723a8b213fe6b76217c9964ca0a8a62dabe600dff68
@@ -1460,7 +1521,7 @@ reference_supersession:
   - path: gaokao-grammar-fill/references/grammar-fill.md
     heading: 冠词
     before_sha256: c6b903e3de8ab2d86c540255985f675b054f2973968be1c17cca1c25ece098c6
-    after_sha256: c6b903e3de8ab2d86c540255985f675b054f2973968be1c17cca1c25ece098c6
+    after_sha256: 929fb8985541f3fc1cf0753fe14d3ae280ac9c7b10d3d6aabdcb04feee927a6c
   - path: gaokao-grammar-fill/references/grammar-fill.md
     heading: 代词
     before_sha256: 583e4414df246c597c898e28c519934450169610b73c6eccd167fff4f70a8c97
@@ -1468,11 +1529,11 @@ reference_supersession:
   - path: gaokao-grammar-fill/references/grammar-fill.md
     heading: 介词
     before_sha256: c80bdcfae52d1b8c00084757438dd84a5a2a0f5f8025d3416c64e20a2831d9ed
-    after_sha256: c80bdcfae52d1b8c00084757438dd84a5a2a0f5f8025d3416c64e20a2831d9ed
+    after_sha256: 97a08f3789d88a1aa9c6f7d33254657adb903030e1e9c1e4719bb9933944ea33
   - path: gaokao-grammar-fill/references/grammar-fill.md
     heading: 连词、关系词与名词性从句连接词
     before_sha256: 88b8cfd2f858851fcc0981dbfb89be1edbd80b0a101afad2c16e3097ff2237a1
-    after_sha256: 61f0a3d05b39ad107ae786c094b6073673c6809788e1fff7b2352a4b45bb00a7
+    after_sha256: 8f7e7a78e7ef835169afd8679ecd817278f81227e6135ec6b917b3ccb8b477c9
   - path: gaokao-grammar-fill/references/grammar-fill.md
     heading: 句间逻辑衔接
     before_sha256: d8a4e7a98ec141edace816f1d38d3c73d0df88d6582ca9a9f535cd004e11c8a6
@@ -1504,15 +1565,15 @@ reference_supersession:
   - path: gaokao-grammar-fill/references/grammar-fill.md
     heading: 谓语：检查时态、语态、主谓一致
     before_sha256: 055865a1bb91a05f8f86469a64be754f405f2287621986f47a4efae65b929d18
-    after_sha256: 9f3afe60a6b952492c81dfd85714d31fae80ef321fd2fb56ebf9ab1d3aad1fbf
+    after_sha256: 33dd115cc7a2712311bc6857f306452a098b2ffd76fe34b60adbefaccef89f49
   - path: gaokao-grammar-fill/references/grammar-fill.md
     heading: 非谓语：作用、主被动与先后
     before_sha256: 4bfd2823fd9d46c180ab03ae19f75c7f64db83ecfcee1dc3b8fa9216383018ef
-    after_sha256: bc84031b07e55604b06aa6ef8aa9150f9e325dea054532492dfffc6ae5003ff5
+    after_sha256: b259c4bb176b3c79769644e5dbde716c7e172510acf85b9ec0b6d4a19f889a7c
   - path: gaokao-grammar-fill/references/grammar-fill.md
     heading: 26S春 补充（非谓语动词专项）
     before_sha256: a7a04cd2d4ba72ad43a59469a90aaf0da875b2031258d21e9f00d4a284cd8784
-    after_sha256: e126a11c84f3f361f4950564a9f5f42d6d063b153c00544df0e685398098007f
+    after_sha256: 3806ed2188d0b799a250ccba74d89881619707e08992102bbff6b03d04b27297
   - path: gaokao-grammar-fill/references/grammar-fill.md
     heading: 口播讲解组织
     before_sha256: a51788b5638efea282696390bf11425e20a689df4bb0d16353ed22a312a899c9
@@ -1520,7 +1581,7 @@ reference_supersession:
   - path: gaokao-grammar-fill/references/grammar-fill.md
     heading: 学生直接问方法时
     before_sha256: 72e9e99e49b16c1d5e79ad3044b4f5550c60f9c354500b2e22809db43931b0c6
-    after_sha256: ea3a3dc9e341a6d0ff5c5e4d18279a56e0584bfce66763257e2c341ca9380011
+    after_sha256: a848832a7764ce4dd29b4d8de86169713515108771ef3e31a123017003a9562b
   - path: gaokao-grammar-fill/references/method-application-example.md
     heading: 指定方法审稿：对照示例
     before_sha256: c81df94320f8c57a3a52673fef5d309dab84fb7e83d41b1b06bfa18d364fb71a
@@ -1672,7 +1733,7 @@ reference_supersession:
   - path: gaokao-writing/references/application-writing-and-correction.md
     heading: 个人--家庭--学校--社会
     before_sha256: 0a9542b95f33d258dbe5f4b6926c0ed332c5a50ea3e33ff5a5af3a19ce7815a4
-    after_sha256: 0a9542b95f33d258dbe5f4b6926c0ed332c5a50ea3e33ff5a5af3a19ce7815a4
+    after_sha256: 72c08c55ab117eb7beab6b9b565cc293346557f179f52b5289c8f5c464703c5d
   - path: gaokao-writing/references/application-writing-and-correction.md
     heading: 总分总的呼应
     before_sha256: eccfebe0e89542ebb851f4e3bf1359b8866ca06378f60aee9f784860a410a512
@@ -1716,7 +1777,7 @@ reference_supersession:
   - path: gaokao-writing/references/application-writing-and-correction.md
     heading: 三种写作表达方法的细化
     before_sha256: f43a7725dccbd3e30366ec976ba21db1f6f3e8d23c9498c60540f4a8b5b8a38f
-    after_sha256: ceda437cfb0e9caf80b2554824ca88e538897fd64d009e1bdf6725c04aaab0b0
+    after_sha256: 0987965ecc27d903a56204d22e7f9dfe66412c5d579a6d0f8ffa570080255b65
   - path: gaokao-writing/references/application-writing-and-correction.md
     heading: 富兰克林写作法（五步）
     before_sha256: abb81ecf0a6dece1487d1b51a6f19505b04f131ab58e593b5c317c90810f11b9
@@ -1752,7 +1813,7 @@ reference_supersession:
   - path: gaokao-writing/references/application-writing-and-correction.md
     heading: 补充课程名称与材料身份
     before_sha256: 643cd35e2589a1dc2a6dbe32f84a3fc5ea7af50d2630f3ba0ec068437f2cebec
-    after_sha256: b8cc883b9d1a1aec4bda3a9e20f61c03b7a468de5ea7b09a4932d04ab0616e69
+    after_sha256: f9d99f8fd0db5ac45af410849314f66056bc34787dd4425a3f66f13d931cf16e
   - path: gaokao-writing/references/application-writing-and-correction.md
     heading: 批改交付格式
     before_sha256: 18d1f7227650b2ac48b47c50a64172c4054c25df95182cdf4d53b61df9855233
@@ -1832,7 +1893,7 @@ reference_supersession:
   - path: gaokao-writing/references/continuation-writing-and-correction.md
     heading: 情节构思：PTSD 四步法
     before_sha256: da04a047e4dd1415e026b653ade9cbd628b6b2b91f4ad385a27f7713605aa356
-    after_sha256: 2e7d75dcf0007602ea67b5f37d4bcdc70e61ea93bd421bf53c7e468192c2da70
+    after_sha256: cf722e8a96de68e49233516ed994ee7c461a55f03ddcab461c21db70fa0fce25
   - path: gaokao-writing/references/continuation-writing-and-correction.md
     heading: 解题四步骤
     before_sha256: b8b5ec6ad12895e56e484bd839dbc28a1bab76c1591a6c7caf9e137b16560562
@@ -1908,7 +1969,7 @@ reference_supersession:
   - path: gaokao-writing/references/continuation-writing-and-correction.md
     heading: 反向劫匪插葱
     before_sha256: e26726c25232729eeba90bc8aab60e4b39a6586d42ff0969b485b9afe1fb04e7
-    after_sha256: 673614ef8b4471736c9452d4a9750a7294a87e703b0520146b726b00ad2801f6
+    after_sha256: a7d5f2576175db469ff12f96601cfa4bdf0454bdb4bc906ad7077e49bdc503a7
   - path: gaokao-writing/references/continuation-writing-and-correction.md
     heading: 26S春 补充（人与自然专项）
     before_sha256: cd64b95a5da7829a644a32b9fef1108f50b9c26012379232f6902cbd4d7d5681
@@ -1916,7 +1977,7 @@ reference_supersession:
   - path: gaokao-writing/references/continuation-writing-and-correction.md
     heading: 补充原名与版本入口
     before_sha256: c55d1ab71b5819ebe8e16ab9d5716bd9d1251ea8135b36f6fd80845bac242a10
-    after_sha256: c55d1ab71b5819ebe8e16ab9d5716bd9d1251ea8135b36f6fd80845bac242a10
+    after_sha256: ba031b021542109f8964584bf28e8e581f088a5988e440a3f0923499ec37cd7c
   - path: gaokao-writing/references/continuation-writing-and-correction.md
     heading: 批改交付格式
     before_sha256: 13abe354911b292473fc95c0bad07a935ba242be2d1958bdfc2eb84ec72c50d7

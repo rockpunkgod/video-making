@@ -418,12 +418,23 @@ class FirstUseMaterialsTests(unittest.TestCase):
         new_sections=[self.registry.sources['sections'][sid] for sid in current['full']['section_ids']]
         self.assertEqual(len(new_sections),len(old_sections))
         for old,new in zip(old_sections,new_sections):
-            self.assertEqual({key:new[key] for key in ('path','heading','content')},
-                             {key:old[key] for key in ('path','heading','content')})
+            self.assertEqual({key:new[key] for key in ('path','heading')},
+                             {key:old[key] for key in ('path','heading')})
+            if old['content']!=new['content']:
+                # New source clarification needs an exact reviewed delta;
+                # the unchanged first-use method contract is checked above.
+                from scripts.rebind_question_corpus import approved_changes,digest_text
+                previous=Registry(snapshot_commit='70db6d6f0423bc8da95c591ca1feda883c2865b1')
+                approval=approved_changes(previous,self.registry)[(old['path'],old['heading'])]
+                self.assertEqual(approval['before_sha256'],digest_text(old['content']))
+                self.assertEqual(approval['after_sha256'],digest_text(new['content']))
         expected_full=deepcopy(original['full'])
         expected_full['section_ids']=list(current['full']['section_ids'])
         if self.registry.index['source_baseline']['commit']=='70db6d6f0423bc8da95c591ca1feda883c2865b1':
             from scripts.align_answer_20261030 import NOTES
+            expected_full['source_update_note']=NOTES['F']
+        elif self.registry.index['source_baseline']['commit']=='9a872ba0397910bd9350cff860c3b94fd061a3a8':
+            from scripts.align_answer_9a872ba import NOTES
             expected_full['source_update_note']=NOTES['F']
         # Optional presentation support cannot change any existing full-card
         # rule, boundary or source binding. Check additions separately rather

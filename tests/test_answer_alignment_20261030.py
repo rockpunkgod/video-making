@@ -13,7 +13,9 @@ class October30AlignmentTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         cls.old = Registry(snapshot_commit=PREVIOUS)
-        cls.current = Registry()
+        # This receipt tests the pinned October-30 first migration, even after
+        # a later source epoch becomes current.
+        cls.current = Registry(snapshot_commit=TARGET)
         cls.assets = build(cls.current)
 
     def test_current_and_historical_registries_validate(self):
@@ -52,7 +54,7 @@ class October30AlignmentTests(unittest.TestCase):
         manifest = self.current._load('provenance/manifest.yaml')
         self.assertEqual(len(manifest['files']), 22)
         for row in manifest['files']:
-            raw = (ROOT/'provenance/ANSWER'/row['path']).read_bytes()
+            raw = (self.current.asset_root/'provenance/ANSWER'/row['path']).read_bytes()
             self.assertEqual(hashlib.sha256(raw).hexdigest(), row['sha256'])
         self.assertTrue(all(s['commit'] == TARGET for s in self.current.sources['sections'].values()))
 

@@ -33,10 +33,10 @@
 先确认空后是否以单数可数名词为中心，再判断特指与泛指。
 
 - `a/an`：泛指“某一个/某一类”，也可表示“一种”；按读音而非首字母判断，如 `a university`、`an umbrella`。
-- `the`：双方共知、上文已提、被后置成分限定、序数词/最高级前或固定结构中使用。
+- `the`：双方共知、上文已提或在当前语境中可以确定所指等特指情形，以及相应序数词/最高级或固定结构。后置修饰须确实使所指明确，不能见修饰就填 `the`。
 - 零冠词：人名、一般国家/城市/地名、不可数或复数名词泛指等；仍须检查固定用法。
 - 课程重点：`of a/an + 名词` 可表达同一尺寸、年龄等；姓氏复数表一家人用 `the Greens`；`by the hour/day/week/year`，但 `by size/weight/time` 通常不用 `the`。
-- 判据补充：名词加 `of` 修饰时，看这个所指是否**唯一**，唯一才用 `the`；后接定语从句不一定就填 `the`。可数名词单数优先考虑冠词。
+- 判据补充：名词加 `of` 修饰时，连同上下文核所指是否明确、是否特指；原课“唯一”的提示不能改成唯一才用 `the`，也不能由 `of` 或定语从句直接定冠词。可数名词单数优先考虑冠词。
 
 讲解时必须说清三点：名词是否可数、单复数、特指还是泛指，不能只说“固定用法”。
 
@@ -65,8 +65,8 @@
 - 排除：`except` 排除同类成员，`except for` 常以异类细节修正整体评价。
 - 高频搭配：`attention/devotion/objection/similarity to`，`desire/reason/sympathy for`，`effect/influence on`，`interest in`，`thanks to`，`types of`。
 - 数量变化：`increase by` 是增加了多少，`increase to` 是增加到多少。
-- 内容判据：表示具体内容，尤其是具体所指的内容，用 `about`；没有内容、只表大致方向或概念，用 `to`。
-- 结果判据：`to` 只表方向，未必有具体行为；`on` 往往产生了影响、有后续结果，如 `impression`、`mercy`、`influence`。
+- 内容提示：本组 `sensitive/particular/enthusiastic about` 等搭配中的具体内容，与部分 `to` 搭配的指向意义可辅助理解；仍须核中心词、当前义项及补语关系，不能按具体或抽象二分所有介词。
+- 结果提示：本组 `impression/influence on` 等搭配可从影响对象理解；`to/on` 的选择不由有无后续结果单独决定，也不能把所有 `to` 限为只有方向。
 - `in` 表所处的状态；`with` 表伴随，常有两个动词分主次的特点。
 
 ### 连词、关系词与名词性从句连接词
@@ -80,8 +80,8 @@
    - 课堂“没有逗号优先 that”只是受限省错建议，不是无逗号一律 that；先核具体关系及从句所缺成分。`such...as` 的关系结构与 `such...that` 的结果结构不能只凭 such 或教师局部判项混为一类。
    - 时间状语：`when = on/in/during which`；地点或抽象情境状语：`where = in/at/on/under which`；原因状语：`why = for which`。要检查介词与先行词的实际搭配，如 `the day on which`。
    - 非限制性从句可见 `as is expected/reported/known...` 等固定结构。
-   - `as` 另有四类用法：介词“作为”（as a student）；连词“正如”；“当……的时候”；“因为”。表“正如”只能用 `as`，`like` 是介词、不能作连词。
-   - 让步倒装：`as` 必须倒装（Try as she might...、Poor as he is...），`though` 通常不倒装（Though she might try...、Though he is poor...）。
+   - `as` 另有介词“作为”（as a student），以及“正如”“当……的时候”“因为”等用法；词类按当前句法判断。当前表示“正如”的非限制性关系结构用 `as`，不以 `like` 替代关系词；这不能推广为 `like` 在任何用法中都不能作连词。
+   - 让步倒装：本课 `Try as she might...`、`Poor as he is...` 展示 `as` 的让步倒装构式，不是所有 `as` 从句必须倒装。`Though she might try...`、`Though he is poor...` 是正常语序的让步句；`though` 也可用于相应让步倒装，不能一律禁止。
 3. **名词性从句**：先确认从句作主语、宾语、表语还是同位语，再看从句是否缺成分或缺语义。
    - 缺主/宾/表语可考虑 `what/who` 等；结构完整但缺地点、选择或事实连接可考虑 `where/whether/if/that`。
    - 宾语从句不缺主宾时，课程局部口径先检查 `why`、再 `how`、再 `that`；分别核原因、方式／过程、陈述事实的实际需要。这不是封闭选词表，不能以事件已经发生或尚未达成独立定词，`how` 也可说明已发生事情的过程。
@@ -139,7 +139,7 @@
 3. **主谓一致**：按真正主语判断。`the number of + 复数名词` 用单数，`a number of + 复数名词` 用复数；定语从句谓语与先行词所指一致；并列谓语还要与前文时态呼应。
    - 倒装须先还原主语与动作关系，不能按句首或最近名词配数，也不能把倒装后的主语和分词误删成定语从句。整个主语从句与连词连接两个名词主语是不同结构，不因出现 `whether...or` 就套就近原则。
    - 两条术语：**就近原则**——`neither...nor`、`either...or`、`not only...but also` 与最近的主语一致；**就远原则**——`as well as`、`along with`、`rather than`、`together with` 与前面的主语一致。
-   - 其他细则：**单复同型**（cattle、sheep）；**集合名词**（The team are driving...）；`Many a + 单数`；`one half of the population are`；`every possible means is`；`the only one of the students who is`；`two thirds of the population live`；`a great deal of time is taken up`。
+   - 其他细则：**单复同型**（sheep，按实际所指核单复数）；`cattle` 是复数名词，不列为单复同型；**集合名词**（The team are driving...，仍按当前整体或成员含义核）；`Many a + 单数`；`one half of the population are`；`every possible means is`；`the only one of the students who is`；`two thirds of the population live`；`a great deal of time is taken up`。
 
 不能被动或常用主动表被动的边界：
 
@@ -170,7 +170,7 @@
 - 常接不定式：`decide/determine, learn, want, expect/hope, refuse, manage, wish, pretend, offer, promise, choose, plan, agree, ask/beg/arrange, afford, aim, claim, fail, threaten`。
 - 常接动名词：`consider, suggest/advise, admit, delay/put off, avoid, miss, keep, practise, deny, finish, enjoy/appreciate, forbid, imagine, risk, can't help, mind, allow/permit, escape`，以及 `look forward to, be used/accustomed to, devote...to, object to, get down to, pay attention to, insist on, give up, feel like, have difficulty/trouble in` 等。
 - `regret/forget/remember/mean/try/can't help + doing/to do` 含义不同，必须放回语境解释。
-- 例外：`practice` 变为被动 `be practiced` 后接 `to do`，此时意为“遵循、奉行”，`to do` 表目的；表“练习”时仍是 `practice doing`。
+- `practice` 表“练习”常接 `doing`。讲义 `are being practiced to prevent accidents` 中，`to prevent` 是目的状语，不是 `practice` 所选的宾语；不能据此推导变成被动后就改接不定式宾语。
 
 ### 26S春 补充（非谓语动词专项）
 
@@ -186,17 +186,17 @@
 
 **非谓语的完整形式清单**：不定式六式（to do、to be done、to be doing、to have done、to have been done、to have been doing）、动名词四式、现在分词四式、过去分词 done，每式标主动被动与时间。
 
-**非谓语没有绝对时态**：非谓语不能表示现在和过去，它的进行、将来、完成都是相对于谓语而言——与谓语同时是进行，在谓语之后是将来，在谓语之前是完成。
+**非谓语没有绝对时态**：非谓语本身不承担限定谓语的绝对时态变化，课程用与谓语的同时、之后、之前说明相对动作关系。执行时须连同成分、语态和上下文判断；同时不强制进行形式，现实先发生也不强制完成式，不能把三种先后关系与三类形式一一对应。
 
-**状语位的三分口径**：to do 主动、在谓语之后（目的）；doing 主动、与谓语同时（状态、方式）；done 被动，**不太考察时间先后**。
+**状语位的三分口径**：本课以 to do 表目的、doing 表主动状态或方式、done 表被动关系作概括。先核当前状语的实际功能及主被动，再核时间关系；目的、伴随或结果等不能只凭动作先后区分，done 也不能一概忽略时间关系。
 
-**逻辑主语按成分定**：作定语时是它所修饰的名词或代词；作状语时是句子主语；作宾补时是它前面的宾语。
+**逻辑主语按成分定**：作定语时看它所修饰的名词或代词；普通分词状语通常看主句主语，独立主格核自带主语；作宾补时看它前面的宾语。
 
 **独立主格**：普通分词状语通常与主句共用主语；动作另有自己的逻辑主语且结构需要时，保留该主语形成独立主格。定语、宾补等本来按各自成分确定逻辑主语，不因它们不同于主句主语就一律改为独立主格。
 
-**只接不定式作宾语的动词**：want、would like、wish、help、hope、learn、manage、offer、plan、afford、agree、arrange、ask、beg、care、choose、decide、demand、determine、expect、fear、prepare、pretend、promise、refuse。
+**常见不定式补语搭配清单**：want、would like、wish、help、hope、learn、manage、offer、plan、afford、agree、arrange、ask、beg、care、choose、decide、demand、determine、expect、fear、prepare、pretend、promise、refuse。原讲义“只接”标题不作为全部义项和构式的排他规则；`help` 可接 `(to) do`，`fear` 也有接 `doing` 的用法，须核当前意义及补语结构。
 
-**只接动名词作宾语的动词**：practice、consider、enjoy、finish、give up、imagine、keep、put off、risk、suggest、admit、advise、allow、appreciate、avoid、delay、deny、discuss、dislike、escape、excuse、fancy、forbid、mention、mind、miss、permit、prohibit。
+**常见动名词宾语搭配清单**：practice、consider、enjoy、finish、give up、imagine、keep、put off、risk、suggest、admit、advise、allow、appreciate、avoid、delay、deny、discuss、dislike、escape、excuse、fancy、forbid、mention、mind、miss、permit、prohibit。核当前词义与结构，不由清单排除其他合法构式；`allow/permit/advise/forbid + 人 + to do` 与直接接 `doing` 宾语分开判断。
 
 **含义随 to do 与 doing 改变的动词**：remember、forget、regret、stop（stop to do 停下来去做另一件事，stop doing 停下正在做的事）、try、mean、can't help。
 
@@ -240,13 +240,13 @@
 
 **劫匪插葱**（《总路线》第1条）：认作课程结构助记黑话，解释介词短语、非谓语、插入语、从句的暂略职责，并说明做内部空和取证时要恢复。不把机器同音转写另立为新名。
 
-**冠词**（《无提示词》冠词节）：①确认空后是不是以单数可数名词为中心 ②判断特指还是泛指 ③按读音判 a/an，按共知、已提、被限定、序数最高级判 the，人名地名国家名前零冠词。讲清名词可不可数、单复数、特指泛指三点，不能只说“固定用法”。
+**冠词**（《无提示词》冠词节）：①确认空后是不是以单数可数名词为中心 ②判断特指还是泛指 ③按读音判 a/an，核当前语境是否共知、已提或可确定所指，再核序数、最高级及固定结构；后置修饰不自动定 the，人名地名等也须核具体固定用法。讲清名词可不可数、单复数、特指泛指三点，不能只说“固定用法”。
 
 **代词**（《无提示词》代词节）：①还原所指 ②判断人称、数、格 ③看空后有没有名词 ④据此选形容词性或名词性物主代词、宾格或反身代词。说清 it 可能作形式主语或形式宾语，要指出真实指代。
 
 **介词**（《无提示词》介词节）：①先查搭配 ②再看时空、工具方式和逻辑关系 ③分别判 by 与 before、across 与 through 与 past 与 over 与 along、between 与 among ④数量变化分 increase by 与 increase to。
 
-**连词与关系词**（《无提示词》连词、关系词与名词性从句连接词节）：①看空两侧是否各有完整主谓 ②判断需要并列连接、从属连接，还是从句内部缺成分 ③定语从句先找先行词再看缺主语宾语定语还是状语，记只用 that 的三种情形和关系副词等于介词加 which ④名词性从句先确认作主语、宾语、表语还是同位语，再看缺不缺成分。
+**连词与关系词**（《无提示词》连词、关系词与名词性从句连接词节）：①看空两侧是否各有完整主谓 ②判断需要并列连接、从属连接，还是从句内部缺成分 ③定语从句先找先行词，再看缺主语宾语定语还是状语；核正文所列 that 优先情形的具体结构，不按无逗号、such或局部偏好一律定词，关系副词的介词加 which 改写也须核搭配 ④名词性从句先确认作主语、宾语、表语还是同位语，再看缺不缺成分。
 
 **词性转换**（《总路线》第 4 条、《有提示词》开头）：①定空位需要什么成分 ②判断提示词原词性等不等于答案词性 ③决定转换方向。说清规范搭配与结构要落到本句。
 

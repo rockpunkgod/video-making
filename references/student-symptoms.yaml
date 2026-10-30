@@ -353,7 +353,7 @@ routes:
   method_id: G03
   role: decider
   first_action: 圈中心名词、单复数和已有修饰，回语境核特指泛指再定冠词
-  stop_rule: 已有其他限定、中心名词未确认或所指是否唯一不清时停；of修饰或定语从句不能自动证明the，a/an按读音而非字母。
+  stop_rule: 已有其他限定、中心名词未确认或特指泛指及所指关系不清时停；of修饰或定语从句不能自动证明the，a/an按读音而非字母。
 - question_type: 语法填空
   symptoms:
   - 空位需要代词或所有格功能
@@ -525,7 +525,7 @@ routes:
   method_id: A05
   role: interpreter
   first_action: 拆核心与修饰信息，按主体→核心动作→场景重组，再校时态、词性、单复数和衔接风格。
-  stop_rule: 核心不清先停重排；否定、时间、数量、条件不能当枝叶删；不宣称缺连续口述或新完整例的分支已全面验收。
+  stop_rule: 核心不清先停重排；否定、时间、数量、条件不能当枝叶删；已补核两独立单句重构；不把例题完成分词固定到新题，准确简单句可以保留。
 - question_type: 应用文
   symptoms:
   - 课后需积累准确可迁移表达
@@ -589,7 +589,7 @@ routes:
   method_id: W03
   role: framework
   first_action: 先注明版本：寒8板书P目的/T方式/S苦难/D结局；同课表格P需求/T方法/S困难/D结局；逐槽填首句已知与原文约束。
-  stop_rule: 未注明版本先停；未知槽留空，不凭口诀补事故或救场者；Needs/Difficulties/Solutions/Denouement不是PTSD英文展开。
+  stop_rule: 未注明版本先停；核清原文与两首句前未知槽留空；核清后可在人物、矛盾与结果约束内构思未给的解决过程，不凭口诀补事故或救场者；Needs/Difficulties/Solutions/Denouement不是PTSD英文展开。
 - question_type: 读后续写
   symptoms:
   - 两段开头语对人物或行动有约束

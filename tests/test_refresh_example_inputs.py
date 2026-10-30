@@ -100,11 +100,16 @@ class ExampleRefreshTests(unittest.TestCase):
 
     def test_actual_reused_historical_offset_has_different_meaning(self):
         original=Registry(snapshot_commit='b04ebc26d7fa096404111a0bb12f6c77cc8525b9')
-        previous=Registry(snapshot_commit=OLD); current=Registry()
+        previous=Registry(snapshot_commit=OLD)
+        current=Registry(snapshot_commit='70db6d6f0423bc8da95c591ca1feda883c2865b1')
         sid='dfb7dd8dc0c2e8a1'
         self.assertNotEqual(original.sources['sections'][sid]['heading'],previous.sources['sections'][sid]['heading'])
         bound=rebind_example({'source_section_ids':[sid]},previous,current)['source_section_ids'][0]
         self.assertEqual(current.sources['sections'][bound]['heading'],'过度推测')
+        # A later source clarification must still stop the generic mechanical
+        # rebinder; only the explicitly reviewed editable fixture may advance.
+        with self.assertRaisesRegex(ValueError,'semantic reauthoring'):
+            rebind_example({'source_section_ids':[sid]},previous,Registry())
 
     def test_checked_in_synthetic_lesson_is_current_and_both_actual_cli_renderers_run(self):
         updates,report=prepare_refresh()

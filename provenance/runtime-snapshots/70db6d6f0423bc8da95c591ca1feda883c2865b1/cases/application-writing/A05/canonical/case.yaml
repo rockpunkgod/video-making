@@ -1,0 +1,21 @@
+case_id: A05-canonical
+method_id: A05
+question_type: 应用文
+source:
+  repository: https://github.com/rockpunkgod/ANSWER.git
+  commit: b04ebc26d7fa096404111a0bb12f6c77cc8525b9
+  path: gaokao-writing/references/application-writing-and-correction.md
+  heading: 三种句子生成法
+question: null
+answer: null
+trigger: 中文长句信息和修饰混杂
+evidence: []
+method_role: interpreter
+expected_action: 拆核心与修饰，按主体→动作→场景重组，再校时态词性单复数与风格
+expected_output: interpret
+stop_rule: 核心与修饰还分不清先停重排；否定、时间、数量或条件不能当枝叶丢掉。改写改变身份、动作或因果时退回原意。
+case_type: canonical
+status: evidence_gap
+notes: 源方法可核；尚未逐题核验案例，不可当成功样例
+method_version: 1.1.0
+source_commit: b04ebc26d7fa096404111a0bb12f6c77cc8525b9

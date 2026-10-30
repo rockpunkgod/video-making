@@ -1,0 +1,144 @@
+{
+  "date": "2026-10-30",
+  "source_commit": "9a872ba0397910bd9350cff860c3b94fd061a3a8",
+  "previous_source_commit": "70db6d6f0423bc8da95c591ca1feda883c2865b1",
+  "status": "ENGINEERING_AND_COMPATIBILITY_PASS_TEACHING_PARTIAL",
+  "scope": "isolated tracked candidate engineering checks and prior input compatibility; no fresh independent English, learner or publishing certification",
+  "source_alignment": {
+    "method_count": 82,
+    "changed_source_methods": 25,
+    "bounded_card_revisions": [
+      "G03",
+      "A05",
+      "W03"
+    ],
+    "captured_documents": 57,
+    "runtime_source_files": 22,
+    "upstream_git_comparison": "all 57 match after universal newline normalization only; local checkout CRLF bytes preserved in capture",
+    "ANSWER_modified": false,
+    "original_case_files_plus_index_unchanged": 107
+  },
+  "engineering": {
+    "tested_candidate_commit": "2193928e38570887bdd6b7bdcb4e5b3f7f0178ec",
+    "tested_tree": "988e6f2838f4e69ee7b59afa5b3311ce6bc272cf",
+    "result": "PASS",
+    "tests": {
+      "tests_run": 2272,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 1,
+      "successful": true,
+      "skipped_tests": [
+        {
+          "test": "test_real_known_paper_counts (test_organized_question_cases.OrganizedQuestionCaseTests.test_real_known_paper_counts)",
+          "reason": "Private user-supplied PDFs are not part of the public repository"
+        }
+      ],
+      "material_stable": true,
+      "validation": {
+        "methods": 82,
+        "source_documents": 21,
+        "status": "PASS",
+        "generated_assets": "PASS"
+      },
+      "registry": {
+        "methods": 82,
+        "source_documents": 21,
+        "status": "PASS"
+      },
+      "generated": {
+        "generated_assets": "PASS"
+      },
+      "validation_error": null,
+      "cli_commands_run": 19,
+      "cli_failures": 0
+    },
+    "duration_seconds": 413.03113,
+    "matched_staged_runtime_files": 305,
+    "semantic_registry_and_cases_digests_equal": true,
+    "runner_optimization": {
+      "scope": "process-local identical JSON Schema validator reuse; no modified engine, schemas or validation results",
+      "validation_cache_sha256": "518a5b00735bb7c8fa7d51e03a9f8dbe53626d494e4b2ef62eb63a25b189f114",
+      "parity_receipt": "E:\\自媒体\\video-making\\local-data\\question-alignment-70db6d6-20261030\\cache-parity.json",
+      "negative_instance_and_schema_controls": "PASS",
+      "CLI_subprocesses": "ordinary uncached Python",
+      "Registry_YAML_reuse": "identical immutable input text only; deep copy per load; original file/hash guards retained",
+      "YAML_mutation_and_invalid_input_controls": "PASS",
+      "C_drive_full_workaround": "temporary files redirected to E drive only"
+    },
+    "runner_wrapper_sha256": "339fae246e818fce0d84ed956fe2c1412a3abb4acb118ddd4a3646ac368b721a",
+    "private_run": "local-data/acceptance-candidate-9a872ba-20261030/local-data/acceptance-runs/9a872ba-full-20261030-r4"
+  },
+  "prior_attempts": [
+    {
+      "run": "r1",
+      "status": "interrupted",
+      "successful_tests": 714,
+      "observed_failure_markers": 1,
+      "errors": 0,
+      "reason": "local parser reuse preparation; later diagnosis identified a temp path inside a registered worktree"
+    },
+    {
+      "run": "r2",
+      "status": "interrupted",
+      "successful_tests": 509,
+      "observed_failure_markers": 1,
+      "errors": 0,
+      "reason": "temp path invalidated the unscoped-folder fixture; moved temp outside registered repositories, no test or production-guard relaxation"
+    },
+    {
+      "run": "r3",
+      "tests_run": 2272,
+      "failures": 0,
+      "errors": 3,
+      "skipped": 1,
+      "duration_seconds": 345.535244,
+      "reason": "editable synthetic example epoch manifest stale and historical collision test incorrectly targeting changed live source; exact manifest and historical snapshot fixed, strict rejection retained"
+    }
+  ],
+  "corpus": {
+    "processed_records": 273,
+    "executed_records": 271,
+    "exact_input_duplicates_reused": 2,
+    "replayed_entries_not_unique_questions": 5486,
+    "answer_or_semantic_projection_changes": 0,
+    "current_pack_papers": 7,
+    "current_pack_entries": 322,
+    "objective_lessons": 290,
+    "prewriting_guides": 13,
+    "historical_external_explanations_preserved": 19,
+    "student_display_changes": 0,
+    "G03_explicit_boundary_reviews": 6,
+    "Wuhan_Q64_remains_unresolved": true,
+    "normal_uncached_CLI_cached_API_exact_parity_papers": [
+      "T8",
+      "湖北圆创"
+    ],
+    "source_only_subsets_are_not_whole_paper_English_certification": true
+  },
+  "historical_formal_catalog": {
+    "records": 38,
+    "historical_validation": "PASS",
+    "current_admission_rejected": 38,
+    "new_registration_count": 0
+  },
+  "private_pdf_count_supplement": {
+    "status": "PASS",
+    "scope": "three frozen extraction records only, not fresh raw PDF/visual verification",
+    "original_full_suite_skip_preserved": true
+  },
+  "focused_checks": {
+    "final_tests": 77,
+    "failures": 0,
+    "errors": 0,
+    "synthetic_manifest_after_fix_tests": 9
+  },
+  "student_ready_count": 0,
+  "new_independent_English_reviews": 0,
+  "new_cases": 0,
+  "new_blind_samples": 0,
+  "new_learner_records": 0,
+  "all_uploaded_complete": false,
+  "current_pack": "local-data/当前可用案例讲解_20261030_9a872ba_r1",
+  "private_corpus_receipt": "local-data/answer-alignment-20261030-latest/CORPUS_RECEIPT.json"
+}

@@ -1,0 +1,719 @@
+{
+  "repository": "https://github.com/rockpunkgod/ANSWER.git",
+  "source_commit": "70db6d6f0423bc8da95c591ca1feda883c2865b1",
+  "captured_at": "2026-10-30",
+  "runtime_assets": [
+    {
+      "path": "cases/F01/boundary/case.yaml",
+      "sha256": "67933685f2e73864725826f04b21dc726c7b129ffa698957596818538d729abd",
+      "byte_count": 1224
+    },
+    {
+      "path": "cases/F01/canonical/case.yaml",
+      "sha256": "e3da7efcb30c1890f9dafef213cbf2e86c7d46b84bfdd185fe52f1bc338a4568",
+      "byte_count": 1371
+    },
+    {
+      "path": "cases/F01/counterexamples/case.yaml",
+      "sha256": "589c3082a5c48ebceae0471a775aaa1086d6d12109becfa172d756d6f76e212e",
+      "byte_count": 1257
+    },
+    {
+      "path": "cases/F01/hard/case.yaml",
+      "sha256": "65bf481678e6266c9c70e9ec6b8d464d963ed0da5ed0d515c7feaf9f93ef6030",
+      "byte_count": 1089
+    },
+    {
+      "path": "cases/F01/transfer/case.yaml",
+      "sha256": "e2fe813d77003540cb942d79bf5c20724514c292f7e9fbf8bdb10e9de909eea6",
+      "byte_count": 1293
+    },
+    {
+      "path": "cases/G01/boundary/case.yaml",
+      "sha256": "3022f55ac307aff010633f1cdc7fa01565e9e66a57a73e34e5a22b6bcfb13c5d",
+      "byte_count": 1052
+    },
+    {
+      "path": "cases/G01/canonical/case.yaml",
+      "sha256": "9573334f055f12c71789d20cca0b66edab19bd71e8ba38c388469840b90380e5",
+      "byte_count": 1126
+    },
+    {
+      "path": "cases/G01/counterexamples/case.yaml",
+      "sha256": "f5b2de3c9687db72a1b7b7283e0f6e21341b60b904930e60187ddddc8b67d985",
+      "byte_count": 1192
+    },
+    {
+      "path": "cases/G01/hard/case.yaml",
+      "sha256": "7380a0df2f97584d36183d16e66a978a64b6f995bbd80f9175e4ca7d6226b7f3",
+      "byte_count": 1013
+    },
+    {
+      "path": "cases/G01/transfer/case.yaml",
+      "sha256": "c398c216b7144256c208d1c0eb3782becd7ebad02089ab8a960457e253bfb4e1",
+      "byte_count": 1145
+    },
+    {
+      "path": "cases/R01/boundary/case.yaml",
+      "sha256": "c2bace0fb2861712f7d29f01a7774963b91e267c6dc6ed402527f3b7da02d6d6",
+      "byte_count": 1051
+    },
+    {
+      "path": "cases/R01/canonical/case.yaml",
+      "sha256": "6b737e8c0ff32ab8cda4cb9bb826218190fb1dbab16a621ff15b6516556fe3f3",
+      "byte_count": 1241
+    },
+    {
+      "path": "cases/R01/counterexamples/case.yaml",
+      "sha256": "827eee0b45136e7fd03628cfaac248a366357c2ee9486b39726ac7b7c4c5008f",
+      "byte_count": 1148
+    },
+    {
+      "path": "cases/R01/hard/case.yaml",
+      "sha256": "41581d7bef41f232d1f27e57caff2d88b475db7e127c16a0f9587d8d4d50c986",
+      "byte_count": 990
+    },
+    {
+      "path": "cases/R01/transfer/case.yaml",
+      "sha256": "7722dcf8ae39491a929e893c7115df5265a1efd0a1a63983b0e854a88e401926",
+      "byte_count": 1058
+    },
+    {
+      "path": "cases/R02/boundary/case.yaml",
+      "sha256": "7f2d1d9fc906d7beb0b192c5ed03b1bca5456da9f37a2358d7521d9b6ed88197",
+      "byte_count": 991
+    },
+    {
+      "path": "cases/R02/canonical/case.yaml",
+      "sha256": "18a112e102fc9328f202e598620c3bcddeeb791c287171ab62c460ec5476356b",
+      "byte_count": 1098
+    },
+    {
+      "path": "cases/R02/counterexamples/case.yaml",
+      "sha256": "1777b28e3af0a4508a998f28f9a5baeb4425b5b6d3e764964d52e4378ac2fe40",
+      "byte_count": 967
+    },
+    {
+      "path": "cases/R02/hard/case.yaml",
+      "sha256": "21279ebb73d8a8b1c5fb52a7ebcef11a0732a45a798a1d77f2bde9271ef0412f",
+      "byte_count": 947
+    },
+    {
+      "path": "cases/R02/transfer/case.yaml",
+      "sha256": "17fea79ed645e9c16c82f0f3682518b6062bac68343874bd163023c8ce878889",
+      "byte_count": 933
+    },
+    {
+      "path": "cases/R06/boundary/case.yaml",
+      "sha256": "387eaa341bd50f7cfca8171e98dff3d47254ca5eedd52fc6aa772514a034b757",
+      "byte_count": 941
+    },
+    {
+      "path": "cases/R06/canonical/case.yaml",
+      "sha256": "cd571c26e245fa1c285b2286fbb3a66885563a6da4ba5f7e720abcf74c8d7dc9",
+      "byte_count": 1171
+    },
+    {
+      "path": "cases/R06/counterexamples/case.yaml",
+      "sha256": "bacf51b2de0b0b2cf10443949f6632105b823493f271ed9247890942eda63572",
+      "byte_count": 1013
+    },
+    {
+      "path": "cases/R06/hard/case.yaml",
+      "sha256": "e99f1edae40e3ab01460f2af50a2e9ec6b3b226ac834679de26b756061fec504",
+      "byte_count": 947
+    },
+    {
+      "path": "cases/R06/transfer/case.yaml",
+      "sha256": "1ee864ec8ffbc27dbb5e08def8274a1632841bac380cf732c4638c47f905b783",
+      "byte_count": 964
+    },
+    {
+      "path": "cases/R09/boundary/case.yaml",
+      "sha256": "0d48b5d9abe313a2bf90517b976bac9f44eb36b86c7fc0cb7fa7f6ff276a9b25",
+      "byte_count": 1017
+    },
+    {
+      "path": "cases/R09/canonical/case.yaml",
+      "sha256": "be3fd2a6e574eac85d8a4c1d147e57f9ad997a15d782818dd2b349ed1035ab6a",
+      "byte_count": 1191
+    },
+    {
+      "path": "cases/R09/counterexamples/case.yaml",
+      "sha256": "e75252a5394e7fce8e70583e026901669414a5c90a2da9db170259482d087bc3",
+      "byte_count": 1062
+    },
+    {
+      "path": "cases/R09/hard/case.yaml",
+      "sha256": "3e7c3b1370da675a0b6994a6ece8369b5512075ec7c804a4a5161ce6e8721344",
+      "byte_count": 972
+    },
+    {
+      "path": "cases/R09/transfer/case.yaml",
+      "sha256": "3f765308910d09da2e7e5e2abc13db61036c81e9415de6b0d39b93fc2da9eee3",
+      "byte_count": 1040
+    },
+    {
+      "path": "cases/application-writing/A01/canonical/case.yaml",
+      "sha256": "098b4b314d458460d9e2de69c731223392e98903bee307f0b9555b6e1cf7a44f",
+      "byte_count": 938
+    },
+    {
+      "path": "cases/application-writing/A02/canonical/case.yaml",
+      "sha256": "ab7c8e932344e6eaa68af9ded2da9ebbcb74755962c4f54fe65a4e510f124a94",
+      "byte_count": 911
+    },
+    {
+      "path": "cases/application-writing/A03/canonical/case.yaml",
+      "sha256": "c0bf534f1d6175e410ede1c5c46c65106dd175414476d123e879073e48825450",
+      "byte_count": 886
+    },
+    {
+      "path": "cases/application-writing/A04/canonical/case.yaml",
+      "sha256": "7458bb119286f895d51375dd36bbdb6f9bc3e009d38b40a0850cb93ae56b5725",
+      "byte_count": 907
+    },
+    {
+      "path": "cases/application-writing/A05/canonical/case.yaml",
+      "sha256": "99387d33aef4721f28eecabd9610ee9640a23d2278f1b112cff5bc5b10655bfb",
+      "byte_count": 910
+    },
+    {
+      "path": "cases/application-writing/A06/canonical/case.yaml",
+      "sha256": "9862b63c893f40c98c9177e154136390cab7f1112e1d4f2759515ee049da63e2",
+      "byte_count": 928
+    },
+    {
+      "path": "cases/application-writing/A07/canonical/case.yaml",
+      "sha256": "1a955bbec9e9ddb1a43693584f2c8f615966e84bfcf242331a2901fb2cd717dc",
+      "byte_count": 949
+    },
+    {
+      "path": "cases/application-writing/A08/canonical/case.yaml",
+      "sha256": "28e02f4b02fddf6df9280cd98db4004607bc4b5872d7f97470fe35c1e9962f24",
+      "byte_count": 926
+    },
+    {
+      "path": "cases/application-writing/A09/canonical/case.yaml",
+      "sha256": "b5f9471edd798ef6c961c55c4ef8ae0f2c793d8eb02d61e1529d7084f07295d7",
+      "byte_count": 975
+    },
+    {
+      "path": "cases/application-writing/A10/canonical/case.yaml",
+      "sha256": "59b121f461adfac66b03b75bb4ed8cac00933484e9b24835ac4e8dd07a49e486",
+      "byte_count": 936
+    },
+    {
+      "path": "cases/cloze/C01/canonical/case.yaml",
+      "sha256": "f6320376b987cf3ac5f44eb7bc8289639dc971a5f725057193e80a68bd8dde59",
+      "byte_count": 962
+    },
+    {
+      "path": "cases/cloze/C02/canonical/case.yaml",
+      "sha256": "738cb55a807195f602984c61da94abf3c5d2fbf9959751e963da2462a070f979",
+      "byte_count": 923
+    },
+    {
+      "path": "cases/cloze/C03/canonical/case.yaml",
+      "sha256": "baeeea503cca89549953ae710943de49fdaf3dc031860a3fd855fa8d739abdce",
+      "byte_count": 902
+    },
+    {
+      "path": "cases/cloze/C04/canonical/case.yaml",
+      "sha256": "d1184f81680064b723f11dc5cbce844d6071705e1946bc88cb691b986ef2b7cb",
+      "byte_count": 898
+    },
+    {
+      "path": "cases/cloze/C05/canonical/case.yaml",
+      "sha256": "a1695aeab76dcea6a795f094c38ccc83052679059123b07b566e19938e2cd852",
+      "byte_count": 881
+    },
+    {
+      "path": "cases/cloze/C06/canonical/case.yaml",
+      "sha256": "2d504859a39e497085293a5425568529d301ddd4c9a329ee0b932c43af4b1d26",
+      "byte_count": 896
+    },
+    {
+      "path": "cases/cloze/C07/canonical/case.yaml",
+      "sha256": "aa4780f3f236a4f4151a612eaf48acfd1d372c2f1fce1c6c3126a06ea625b50d",
+      "byte_count": 894
+    },
+    {
+      "path": "cases/cloze/C08/canonical/case.yaml",
+      "sha256": "c6cfdf04fc5ac0bcb5f8765c26b848ea4e4c9574bfd4f71c4682e36a7001eb08",
+      "byte_count": 923
+    },
+    {
+      "path": "cases/cloze/C09/canonical/case.yaml",
+      "sha256": "b5b8501eeb5f72d95c8fd6ca6f2f3b52ceef96bec98b6508ffd1a4513086313c",
+      "byte_count": 914
+    },
+    {
+      "path": "cases/continuation-writing/W01/canonical/case.yaml",
+      "sha256": "9e74c5712ae31373ad157ad56113f90aff0310a799969ce3f7da4e5f52817076",
+      "byte_count": 987
+    },
+    {
+      "path": "cases/continuation-writing/W02/canonical/case.yaml",
+      "sha256": "67e86f77375f9fca8f669448286b6464ea8bc610313dc742efa0b05a88403309",
+      "byte_count": 964
+    },
+    {
+      "path": "cases/continuation-writing/W03/canonical/case.yaml",
+      "sha256": "90c1404f86ecb8702f963add8cc9f0043b60b536a11b4ce65616ef7579d486f1",
+      "byte_count": 954
+    },
+    {
+      "path": "cases/continuation-writing/W04/canonical/case.yaml",
+      "sha256": "cde0ff06752511b9fb51f3b3729f0f4cec4b9f060f5310f1cceb1fb295b618d2",
+      "byte_count": 935
+    },
+    {
+      "path": "cases/continuation-writing/W05/canonical/case.yaml",
+      "sha256": "3baa69e8483197ff8782d00cf18e9582dec7fc3d79b7f72a456e4cab0cef0ac9",
+      "byte_count": 950
+    },
+    {
+      "path": "cases/continuation-writing/W06/canonical/case.yaml",
+      "sha256": "505be2ba59de1dfe7a44cecc1b1c4a53f5bcea460a50d68d13d03ce27244ae27",
+      "byte_count": 880
+    },
+    {
+      "path": "cases/continuation-writing/W07/canonical/case.yaml",
+      "sha256": "7a3edd73c127695e4b27ea61cd9efe5744dff89a5750e53867c3ffa8c05f45fc",
+      "byte_count": 920
+    },
+    {
+      "path": "cases/continuation-writing/W08/canonical/case.yaml",
+      "sha256": "02d85d793a761b957089e640fd5c608fcad755fe642b9617ed74884cc3aa235e",
+      "byte_count": 915
+    },
+    {
+      "path": "cases/continuation-writing/W09/canonical/case.yaml",
+      "sha256": "f1b9aee9a9e86cf2a672cc1c8f20ecefd914c2671b30555b9957b4a14b75a044",
+      "byte_count": 1010
+    },
+    {
+      "path": "cases/continuation-writing/W10/canonical/case.yaml",
+      "sha256": "c7b5a75900d01458045038e87e54c3e9015f7c6c722e23709e047ca6ba19edaa",
+      "byte_count": 926
+    },
+    {
+      "path": "cases/continuation-writing/W11/canonical/case.yaml",
+      "sha256": "95157296479feae1df35d530f98fbb651e7aab339b890b33bf444cd9db747720",
+      "byte_count": 953
+    },
+    {
+      "path": "cases/continuation-writing/W12/canonical/case.yaml",
+      "sha256": "a82efbde332a63b98cda583cb46f18722c0b9a77752dff297dde92bcbfdcec39",
+      "byte_count": 935
+    },
+    {
+      "path": "cases/continuation-writing/W13/canonical/case.yaml",
+      "sha256": "83ecc5e2bd9e003269812d5208b3f3d9d53a8d24dedf5be3c8595e2999b5a08f",
+      "byte_count": 929
+    },
+    {
+      "path": "cases/continuation-writing/W14/canonical/case.yaml",
+      "sha256": "a3a6b2fd65a497c5a26eaaa37860ea717acc4545788fdcd558df0d423df6edb8",
+      "byte_count": 936
+    },
+    {
+      "path": "cases/continuation-writing/W15/canonical/case.yaml",
+      "sha256": "518b56451661762fb88f028b3986b44f0fec63774cb69688d4edfb6602a0c46f",
+      "byte_count": 1021
+    },
+    {
+      "path": "cases/continuation-writing/W16/canonical/case.yaml",
+      "sha256": "3a2debb7fb4d9f6fbd68b2b1db158907a656d640df2c953d8bcb92e02734842c",
+      "byte_count": 950
+    },
+    {
+      "path": "cases/grammar/G02/canonical/case.yaml",
+      "sha256": "5ac8c01ecf95f25792aac168f02781d6c12ae0d2c61f8e9d9d03db8a7edd5459",
+      "byte_count": 859
+    },
+    {
+      "path": "cases/grammar/G03/canonical/case.yaml",
+      "sha256": "4a4445f69082772673b5795f56afe00de9ab7edfdd350184564e11191d9f1c51",
+      "byte_count": 871
+    },
+    {
+      "path": "cases/grammar/G04/canonical/case.yaml",
+      "sha256": "3aa729ae6ba241e04c34811c0afbd0f95e58bbe9cb38b1ba35e42f8868767584",
+      "byte_count": 871
+    },
+    {
+      "path": "cases/grammar/G05/canonical/case.yaml",
+      "sha256": "0ceb6b9dd76966c5b25c68e3c199283c4380e974b61c92ef40d8f6ac74893965",
+      "byte_count": 882
+    },
+    {
+      "path": "cases/grammar/G06/canonical/case.yaml",
+      "sha256": "661c5a51a41f77a7edc3f5bde0ff2345f32a255217f55a99d57946e2e6df3acc",
+      "byte_count": 965
+    },
+    {
+      "path": "cases/grammar/G07/canonical/case.yaml",
+      "sha256": "b0ab96f480c58f118a85644fc24b1afca38f7f12991960609cbe83559012726e",
+      "byte_count": 907
+    },
+    {
+      "path": "cases/grammar/G08/canonical/case.yaml",
+      "sha256": "3ea2f5b79431d2fad713ed8889e1edf4fd66a6130771f228db980cdf528af1dd",
+      "byte_count": 900
+    },
+    {
+      "path": "cases/grammar/G09/canonical/case.yaml",
+      "sha256": "c64955146746fac591f2decdecbe8bf1c5f27416d5f844320c5bb7062d7fec2e",
+      "byte_count": 917
+    },
+    {
+      "path": "cases/grammar/G10/canonical/case.yaml",
+      "sha256": "c0c43f336edac0950fdfdb006d024b4ce36975314b8f03be0ce31a950db316b1",
+      "byte_count": 887
+    },
+    {
+      "path": "cases/grammar/G11/canonical/case.yaml",
+      "sha256": "28e4f00aec1eb89390f85abbe707fd1a2a29045b5c92303ba7d54891a7b27b17",
+      "byte_count": 842
+    },
+    {
+      "path": "cases/grammar/G12/canonical/case.yaml",
+      "sha256": "e8b1be047c477b737ac6384d094e0b13c2b0ae55df28f93a1c21a94a73c80137",
+      "byte_count": 902
+    },
+    {
+      "path": "cases/grammar/G13/canonical/case.yaml",
+      "sha256": "130916e7934d347839ccba231f9253087a1e490384cde60a895bb1e163d60301",
+      "byte_count": 902
+    },
+    {
+      "path": "cases/grammar/G14/canonical/case.yaml",
+      "sha256": "899d2933d78dd45af44be8f70bf1c17b877d360948f382b2b39f1480c936ea6e",
+      "byte_count": 913
+    },
+    {
+      "path": "cases/grammar/G15/canonical/case.yaml",
+      "sha256": "5beee76b5d6c872a20f4c800c10a0e2a0ef930d74296f30db5ab44a129da48fa",
+      "byte_count": 935
+    },
+    {
+      "path": "cases/grammar/G16/canonical/case.yaml",
+      "sha256": "99ed9be186a8b6e38a4e17d1b69200115035ee2716c39693765b597b8407e721",
+      "byte_count": 906
+    },
+    {
+      "path": "cases/grammar/G17/canonical/case.yaml",
+      "sha256": "4ddb5b9c04352878c6c1af992dd757109336bab415fc15384fbbb394513637da",
+      "byte_count": 932
+    },
+    {
+      "path": "cases/grammar/G18/canonical/case.yaml",
+      "sha256": "a6f8306a4154a6be7ee68a6af8f340bdffd7969c309580e74ceb637aac4e2e4c",
+      "byte_count": 875
+    },
+    {
+      "path": "cases/grammar/G19/canonical/case.yaml",
+      "sha256": "4bbd5418c9eff14950a43924c34bb60bc584f35bad271810d5006cf4f743aa19",
+      "byte_count": 902
+    },
+    {
+      "path": "cases/reading/R03/canonical/case.yaml",
+      "sha256": "cb9d5b5108ae50fa22480c61df1432747c5262348a76a4aa1151e38f508c0e19",
+      "byte_count": 879
+    },
+    {
+      "path": "cases/reading/R04/canonical/case.yaml",
+      "sha256": "b4ccf9fe24e04c140fe8d09fd531a9374df6cd0943aa8b1a0015d0647428414c",
+      "byte_count": 887
+    },
+    {
+      "path": "cases/reading/R05/canonical/case.yaml",
+      "sha256": "d2555d4454d2dc2659dfcfd1cba13be607cc59623fbc8ac2319328f5f9ca444e",
+      "byte_count": 890
+    },
+    {
+      "path": "cases/reading/R07/canonical/case.yaml",
+      "sha256": "c6fef20a8341c24014cc7ffddc912e023b753ed80fe958e852dae8c06791d5a8",
+      "byte_count": 875
+    },
+    {
+      "path": "cases/reading/R08/canonical/case.yaml",
+      "sha256": "04a9676945aba56ee820813e4a9f90ad2693f29b505cb9571bff50823b7aae77",
+      "byte_count": 891
+    },
+    {
+      "path": "cases/reading/R10/canonical/case.yaml",
+      "sha256": "8e94f5be18bb52221e582ac07007b54c171e0a0dfd7d674553c8c12e414896ab",
+      "byte_count": 888
+    },
+    {
+      "path": "cases/reading/R11/canonical/case.yaml",
+      "sha256": "4409535029f01305233671193f0bf36168ad0366fc5d7a3b656a85fa9d7e6f69",
+      "byte_count": 897
+    },
+    {
+      "path": "cases/reading/R12/canonical/case.yaml",
+      "sha256": "01349fc6110f8b0ec0369c0e103afe9357da2999310f3a1bca4ee8667ba0a834",
+      "byte_count": 914
+    },
+    {
+      "path": "cases/reading/R13/canonical/case.yaml",
+      "sha256": "86a4464c86afd469fea49828964670c7bb8236d42d634f0c077224f73c76cea8",
+      "byte_count": 917
+    },
+    {
+      "path": "cases/reading/R14/canonical/case.yaml",
+      "sha256": "5e7be45d1930a69919e2fe770694ef35c05d14b87a2b30cf967c6c5b6ff7f6cd",
+      "byte_count": 944
+    },
+    {
+      "path": "cases/reading/R15/canonical/case.yaml",
+      "sha256": "3a419c7b3e4c0a0ea44cc11c6fd8863c738757704f1f51184caf15b97fe71c20",
+      "byte_count": 900
+    },
+    {
+      "path": "cases/reading/R16/canonical/case.yaml",
+      "sha256": "4973d5e26d6c79b41e3a616861adc7ee9a0abf595064618f1e0baceca1278f49",
+      "byte_count": 941
+    },
+    {
+      "path": "cases/reading/R17/canonical/case.yaml",
+      "sha256": "9a51c006c06f89e1f5e4baf222f23a4fc7dcfb69be20e8550a0d5569c47db017",
+      "byte_count": 933
+    },
+    {
+      "path": "cases/registry.yaml",
+      "sha256": "61a7671384a42a5c4503fea7352b14d6a7811a7f296df7e849a33b962f9cac7d",
+      "byte_count": 4453
+    },
+    {
+      "path": "cases/seven-five/F02/canonical/case.yaml",
+      "sha256": "fe5f89e641991ca35f11b158a9438955f01ac1992c44659eb8d07e4bd3567b69",
+      "byte_count": 873
+    },
+    {
+      "path": "cases/seven-five/F03/canonical/case.yaml",
+      "sha256": "c5f19aaa847d6fbc3ca21e561ed2427b9e37cf08ba78e0449a907b6e62c7d413",
+      "byte_count": 897
+    },
+    {
+      "path": "cases/seven-five/F04/canonical/case.yaml",
+      "sha256": "b65c1c98f201fc94c2bbc89722ab9eccfc8b5e1f91bad873cf59f47fe52a7bcb",
+      "byte_count": 894
+    },
+    {
+      "path": "cases/seven-five/F05/canonical/case.yaml",
+      "sha256": "9ca6224e334b5a0616e6ace0d30240c158837b1d52791bb0978c7cbf4603918e",
+      "byte_count": 933
+    },
+    {
+      "path": "cases/seven-five/F06/canonical/case.yaml",
+      "sha256": "315f17408d07a713d957950b12b9968d71be38c91b991ee103c24d37ff9605a9",
+      "byte_count": 930
+    },
+    {
+      "path": "cases/seven-five/F07/canonical/case.yaml",
+      "sha256": "8cc2219b1c562a41cb23ef3007dc30f08943ebad37938de1a1be1fd60ea7d060",
+      "byte_count": 886
+    },
+    {
+      "path": "cases/seven-five/F08/canonical/case.yaml",
+      "sha256": "8bf5a6e0d2036f0fd30ce0fb4259875615a9879176187db4fbd5f0be12f52a7e",
+      "byte_count": 885
+    },
+    {
+      "path": "cases/seven-five/F09/canonical/case.yaml",
+      "sha256": "e38613b6fa45fa44290807869f75f22e3b3b5ba60730d3efbf29701bc26f54e3",
+      "byte_count": 874
+    },
+    {
+      "path": "cases/seven-five/F10/canonical/case.yaml",
+      "sha256": "2bf1f8a5920fffba8e36cffd6ad9da1d3354f5749113728cb9974f1f0388caff",
+      "byte_count": 904
+    },
+    {
+      "path": "cases/seven-five/F11/canonical/case.yaml",
+      "sha256": "f45e697e0a88738c94df45d1cb6f694b4e9d1b0e55ee3ad66a52bd494d430d08",
+      "byte_count": 927
+    },
+    {
+      "path": "method-registry/anti-rules.yaml",
+      "sha256": "72c4bba5e9a3687aa81ae47a70eebcf6af2ee8b772524d4f83ac6f28163e7500",
+      "byte_count": 2790
+    },
+    {
+      "path": "method-registry/application-writing.yaml",
+      "sha256": "0d7cc017dc8678d806127099a92df0a7d3be50a9a4041609bcd589de59c2814c",
+      "byte_count": 103871
+    },
+    {
+      "path": "method-registry/cloze.yaml",
+      "sha256": "9f6315bd992c9fc92a4e077e4694da57e2f6478db52da6ac1f1e62b1f44d1431",
+      "byte_count": 92635
+    },
+    {
+      "path": "method-registry/continuation-writing.yaml",
+      "sha256": "5948a2334adcfaec524dc60fb900b3fd2eea045c817dd72e62fcdac5a1beeabc",
+      "byte_count": 168721
+    },
+    {
+      "path": "method-registry/grammar-tree.yaml",
+      "sha256": "e377e175f9f7d181d4fca9304ccedffe94f51ff8ea2cc0004efb01fdab77c291",
+      "byte_count": 1246
+    },
+    {
+      "path": "method-registry/grammar.yaml",
+      "sha256": "0fb0cffda7a09b16fe306b9f35dfd50f51bc88715b401d367ef7bc1395e7f083",
+      "byte_count": 198042
+    },
+    {
+      "path": "method-registry/reading.yaml",
+      "sha256": "a16cd4d7372490c12e648be98c06c176553dfc93e5058b4b51bd35df2b73d349",
+      "byte_count": 181707
+    },
+    {
+      "path": "method-registry/registry.yaml",
+      "sha256": "51ec2d21afa5101f2fd6e0c6258479227b79389f3a827efbb82dd26279d48bb1",
+      "byte_count": 99709
+    },
+    {
+      "path": "method-registry/seven-five.yaml",
+      "sha256": "fbd7cabe137c655482045b5ac708852263893d6537f2fa74e9744d73cdd07847",
+      "byte_count": 116584
+    },
+    {
+      "path": "method-registry/source-risks.yaml",
+      "sha256": "b120115faf385ec8c16282628b5117aa122b8b37193d49370448b0efe20ca6df",
+      "byte_count": 2088
+    },
+    {
+      "path": "method-registry/source-sections.yaml",
+      "sha256": "109f47e2e6ac573c0ad11c00a43af033a42b3acc191a10f66a6a069a356ddd09",
+      "byte_count": 554094
+    },
+    {
+      "path": "method-registry/symptom-cues.yaml",
+      "sha256": "b0a5d220ef4239aa30562093fdb279f34419b47ba7fa10a9106fae58064a897b",
+      "byte_count": 1210
+    },
+    {
+      "path": "provenance/ANSWER/agents/gaokao-grammar-fill.md",
+      "sha256": "1c0436e2d4fda0fe07d5e5c56161710269db4d1200c9f60c1db04ffb4f6df878",
+      "byte_count": 1659
+    },
+    {
+      "path": "provenance/ANSWER/agents/gaokao-objective.md",
+      "sha256": "299428eeba7526f22dae564905b24de5d4b586bde5703b4aed518ca34721bedf",
+      "byte_count": 2183
+    },
+    {
+      "path": "provenance/ANSWER/agents/gaokao-writing.md",
+      "sha256": "de5f81ec944e59b5342c219eb9bb9c1cbf35d1994a812d59d75dd0a177a91c9e",
+      "byte_count": 1846
+    },
+    {
+      "path": "provenance/ANSWER/gaokao-english/SKILL.md",
+      "sha256": "acc8ae141d6de841c2c961bc6db5f8d4a77febfba405af5c121c08b11acda4e9",
+      "byte_count": 13270
+    },
+    {
+      "path": "provenance/ANSWER/gaokao-english/references/cloze.md",
+      "sha256": "687760ad2bd5a6a13f6fc2a34e0225f6f26adc1035d1ea24bf4df98bd490a795",
+      "byte_count": 15593
+    },
+    {
+      "path": "provenance/ANSWER/gaokao-english/references/course-evidence.md",
+      "sha256": "c595ab9572e33ba4724da9eeed6974b888848e7d5040b0933c73f69d4ae2702c",
+      "byte_count": 143612
+    },
+    {
+      "path": "provenance/ANSWER/gaokao-english/references/delivery-contract.md",
+      "sha256": "05f48808abf662a83b50c38b342e1db3f9ce5b84edd8fde7de387059ef0c44d2",
+      "byte_count": 7551
+    },
+    {
+      "path": "provenance/ANSWER/gaokao-english/references/evidence-gaps.md",
+      "sha256": "75c679c8dc681e0fdd79f26938150b06aeaf483db32ab976d4f70f12fd3ef9b6",
+      "byte_count": 27680
+    },
+    {
+      "path": "provenance/ANSWER/gaokao-english/references/listening.md",
+      "sha256": "27f7e98ee1ac53093e7d10d736250673658f454baa7287b891b27a99bbf72a6a",
+      "byte_count": 4144
+    },
+    {
+      "path": "provenance/ANSWER/gaokao-english/references/reading-comprehension.md",
+      "sha256": "a2602e02e0684709ece9d2ce12d71d6ed08ddf31da82b381f961aee12c8a5fc0",
+      "byte_count": 51377
+    },
+    {
+      "path": "provenance/ANSWER/gaokao-english/references/router.md",
+      "sha256": "48a81d2c3bbb92649ae292f7972173cf18309ff83c97a0edc79e4f7c3a11f58f",
+      "byte_count": 9246
+    },
+    {
+      "path": "provenance/ANSWER/gaokao-english/references/seven-five.md",
+      "sha256": "a2db0f374b04f4733788b9e3819eb5c66bee64ffc8a9484f5edc6ccbefe025d9",
+      "byte_count": 14494
+    },
+    {
+      "path": "provenance/ANSWER/gaokao-grammar-fill/SKILL.md",
+      "sha256": "4d7d0e26e6007efba8fb3aca0dbe3bc75b8b78d15b14757fa4a80a7e6460b048",
+      "byte_count": 18838
+    },
+    {
+      "path": "provenance/ANSWER/gaokao-grammar-fill/references/course-evidence.md",
+      "sha256": "ed119899d3302f11a2587ce93050ccfbeeb1ffd88d8a5521a193bdaf77a86102",
+      "byte_count": 21982
+    },
+    {
+      "path": "provenance/ANSWER/gaokao-grammar-fill/references/grammar-fill.md",
+      "sha256": "e007cf58c44800c3251c21e9ebae8e1191aae0988a5a14e5e2380e74cc866ef9",
+      "byte_count": 31273
+    },
+    {
+      "path": "provenance/ANSWER/gaokao-grammar-fill/references/method-application-example.md",
+      "sha256": "b31cc2459f048403875a2d4c1912849c6008928e515f7ebddfea76e5c5155753",
+      "byte_count": 4900
+    },
+    {
+      "path": "provenance/ANSWER/gaokao-grammar-fill/references/objective-revision.md",
+      "sha256": "135f45929404a3f77aa29336b2df8a1d7dd81ee3595c4d98029fbbea0a1345fa",
+      "byte_count": 3980
+    },
+    {
+      "path": "provenance/ANSWER/gaokao-grammar-fill/scripts/check_lesson.py",
+      "sha256": "751a00d9e663603a9478aa1f52bcfa37db909f8d705b6652c6a53931f477e7a2",
+      "byte_count": 20277
+    },
+    {
+      "path": "provenance/ANSWER/gaokao-writing/SKILL.md",
+      "sha256": "f0a2317d58a9ebbe64d37ef95c1e3f3a1a1b531fdcfdcb0aa92a1b5721cbe65f",
+      "byte_count": 4326
+    },
+    {
+      "path": "provenance/ANSWER/gaokao-writing/references/application-writing-and-correction.md",
+      "sha256": "826908c617bb8d186032e86013bf8e9e8834521d37c389a9455b0a241bb26526",
+      "byte_count": 34684
+    },
+    {
+      "path": "provenance/ANSWER/gaokao-writing/references/continuation-writing-and-correction.md",
+      "sha256": "033e1fddb44bc1cc6d458befff009b887be3b4688b350cb910f7e70599f44029",
+      "byte_count": 41420
+    },
+    {
+      "path": "provenance/ANSWER/gaokao-writing/references/course-evidence.md",
+      "sha256": "6d15b96265cb49f07e2b8bb6fcf6c75970e29b6af5d7525e0b0ca3142a03bbd6",
+      "byte_count": 9736
+    },
+    {
+      "path": "provenance/manifest.yaml",
+      "sha256": "d0889f107235852eb39c0afea8044129b66ceb17423a7991a7572451f3fde180",
+      "byte_count": 2860
+    }
+  ],
+  "purpose": "historical review replay; not current course activation",
+  "private_cases_copied_or_modified": false
+}
