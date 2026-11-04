@@ -100,6 +100,31 @@ class TestEP01V3NaturalAudio(unittest.TestCase):
         self.assertEqual(len(provenance["archive_sha256"]), 64)
         self.assertEqual(paths["paper"].read_bytes(), b"\x01\x02\x03")
 
+    def test_v2_video_is_used_but_v2_audio_is_discarded(self):
+        """FFmpeg input 0 provides picture only; input 1 provides original audio."""
+        picture = self.root / "v2.mp4"
+        clean = self.root / "clean.mp4"
+        foley = self.root / "bookFlip1.ogg"
+        result = self.root / "v3.mp4"
+        cues = [{"at": 3.0, "material": "paper", "gain_db": -30.0}]
+        seen = {}
+
+        def capture(cmd, **kwargs):
+            seen["cmd"] = cmd
+
+        with mock.patch.object(v3, "command", side_effect=capture):
+            v3.render(picture, clean, {"paper": foley}, cues, result, 25.0)
+
+        cmd = seen["cmd"]
+        self.assertEqual(cmd[cmd.index("-i") + 1], str(picture))
+        self.assertEqual(cmd[cmd.index("-i", cmd.index("-i") + 1) + 1], str(clean))
+        fg = cmd[cmd.index("-filter_complex") + 1]
+        self.assertIn("[1:a:0]aresample", fg)
+        self.assertNotIn("[0:a:0]", fg)
+        self.assertIn("-c:v", cmd)
+        self.assertEqual(cmd[cmd.index("-c:v") + 1], "copy")
+        self.assertIn("0:v:0", cmd)
+
     def test_final_receipt_must_not_claim_publication_approval(self):
         before = {
             "format": {"duration": "20.0"},
@@ -110,7 +135,7 @@ class TestEP01V3NaturalAudio(unittest.TestCase):
             ],
         }
         after = json.loads(json.dumps(before))
-        metadata = v3.verify_output(before, after, 20.0)
+        metadata = v3.verify_output(before, before, after, 20.0)
         self.assertEqual(metadata["video_stream_policy"],
                          "ffmpeg -c:v copy; video not recompressed")
 
