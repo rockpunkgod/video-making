@@ -1,6 +1,6 @@
 """Real FFmpeg smoke: V2 video packets stay, V2 audio is excluded.
 
-Uses synthetic 2-second sources only. Does not imply that a user's actual 4K film
+Uses synthetic 2-second sources only, including newly sourced music with voice ducking. Does not imply that a user's actual 4K film
 has been encoded or listened to. Set EP01_V3_INTEGRATION=1 to opt in.
 """
 from __future__ import annotations
@@ -69,6 +69,7 @@ class V3FFmpegIntegration(unittest.TestCase):
             clean = root / "original.mp4"
             picture = root / "v2.mp4"
             effect = root / "soft.ogg"
+            independent_music = root / "new_licensed_music.wav"
             output = root / "v3.mp4"
             wav = root / "audio.wav"
             make_mp4(clean, "black", 440)
@@ -76,11 +77,15 @@ class V3FFmpegIntegration(unittest.TestCase):
             ff("-f", "lavfi", "-i",
                "sine=frequency=160:sample_rate=48000:duration=0.15",
                "-c:a", "libvorbis", effect)
+            ff("-f", "lavfi", "-i",
+               "sine=frequency=330:sample_rate=48000:duration=2",
+               "-c:a", "pcm_s16le", independent_music)
             original_metadata = v3.inspect(clean)
             picture_metadata = v3.inspect(picture)
             _, _, duration = v3.video_spec(picture_metadata)
             cues = [{"at": 1.0, "material": "paper", "gain_db": -30.0}]
-            v3.render(picture, clean, {"paper": effect}, cues, output, duration)
+            v3.render(picture, clean, {"paper": effect}, cues, output, duration,
+                      music=independent_music)
             receipt = v3.verify_output(
                 picture_metadata, original_metadata, v3.inspect(output), duration)
             self.assertEqual(receipt["video_stream_policy"],
