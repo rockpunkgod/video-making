@@ -9,6 +9,7 @@
 #>
 param(
     [string] $Original = "",
+    [string] $Picture = "",
     [string] $OutputDir = "",
     [string] $CueSheet = "",
     [string] $FoleyZip = "",
@@ -67,6 +68,20 @@ if ([string]::IsNullOrWhiteSpace($Original)) {
 if (-not (Test-Path -LiteralPath $Original -PathType Leaf)) {
     throw "Original 4K file not found: $Original"
 }
+if ([string]::IsNullOrWhiteSpace($Picture)) {
+    $v2 = @(
+        Get-ChildItem -LiteralPath (Join-Path $env:USERPROFILE "Downloads") -File -Filter "*.mp4" -ErrorAction SilentlyContinue |
+            Where-Object { $_.Name -match "(?i)EP01.*V2.*4K24" } |
+            Sort-Object FullName
+    )
+    if ($v2.Count -eq 1) { $Picture = $v2[0].FullName }
+    elseif ($v2.Count -gt 1) { throw "Multiple V2 files found. Pass -Picture FULL_PATH." }
+}
+if (-not [string]::IsNullOrWhiteSpace($Picture)) {
+    if (-not (Test-Path -LiteralPath $Picture -PathType Leaf)) {
+        throw "V2 picture MP4 not found: $Picture"
+    }
+}
 if ([string]::IsNullOrWhiteSpace($OutputDir)) {
     $OutputDir = Join-Path (Join-Path $env:USERPROFILE "Videos") "EP01_V3"
 }
@@ -77,9 +92,16 @@ if (Test-Path -LiteralPath $out) {
 }
 
 $argsList = @($script, "--original", $Original, "--out", $out)
+if (-not [string]::IsNullOrWhiteSpace($Picture)) { $argsList += @("--picture", $Picture) }
 if (-not [string]::IsNullOrWhiteSpace($CueSheet)) { $argsList += @("--cues", $CueSheet) }
 if (-not [string]::IsNullOrWhiteSpace($FoleyZip)) { $argsList += @("--foley-zip", $FoleyZip) }
-Write-Host "Input original: $Original"
+Write-Host "Clean audio source: $Original"
+if (-not [string]::IsNullOrWhiteSpace($Picture)) {
+    Write-Host "Video stream from existing V2: $Picture"
+    Write-Host "V2 audio will be completely discarded."
+} else {
+    Write-Host "Video stream from original MP4 (no V2 file was selected)."
+}
 Write-Host "Output 4K: $out"
 & $python @argsList
 if ($LASTEXITCODE -ne 0) { throw "V3 encode failed (exit code $LASTEXITCODE)." }
