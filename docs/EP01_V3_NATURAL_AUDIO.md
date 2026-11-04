@@ -2,8 +2,8 @@
 
 ## 当前状态与范围
 
-- 本分支只处理现有 3840×2160 / 24fps MP4 音轨；原始画面码流用 FFmpeg copy，不重编码。
-- 只使用原始 4K MP4 的声音作为底层。绝不混入 V2 电子音效混合 stem；这一原则不能自动保证原片本身没有电子杂声。
+- 本分支保留现有 V2 3840×2160 / 24fps 视频画面码流（FFmpeg copy，不重编码），但不使用 V2 的旧混合音轨。
+- 使用首发候选原始 4K MP4 的声音作为干净基底，完全丢弃 V2 的音频；原片声源文件是音轨供体，不是最终画面。不能自动保证原片本身没有电子杂声。
 - 新增自然声只来自 Kenney RPG Audio 官方授权的 CC0 素材，保存声源链接、样本名和压缩包 SHA256。
 - 不修改已有 Adobe/生产入口及受保护媒体指针，不改文案、教学和镜头。
 - 自动镜头变化的时间位置只是音效草稿，未看实片，不能假装与提取、排除和结算精准同步。
@@ -13,6 +13,8 @@
 
 将 ChatGPT 文件库中的原始视频「英语有画说_EP01_首发候选_4K24.mp4」放在 Windows Downloads。不要用 V2 MP4 替代。需要 Python 3.10+、FFmpeg 和 ffprobe 在 PATH。
 
+将 V2 文件 EP01_拟物音效重混_V2_4K24.mp4 放在 Downloads 文件夹；本脚本会自动以它作为 V3 的画面。原片仍需下载到电脑用作干净口播声轨。
+
 在对应工作分支仓库根目录运行：
 
     powershell -ExecutionPolicy Bypass -File scripts\ep01_v3_run_windows.ps1 -Preview720
@@ -20,6 +22,10 @@
 如原片存放在其他路径：
 
     powershell -ExecutionPolicy Bypass -File scripts\ep01_v3_run_windows.ps1 -Original "D:\影片\英语有画说_EP01_首发候选_4K24.mp4" -Preview720
+
+如需显式指定 V2 画面，可传入 -Picture 参数，原片用于 -Original（音频来源）：
+
+    powershell -ExecutionPolicy Bypass -File scripts\ep01_v3_run_windows.ps1 -Picture "C:\Users\ASUS\Downloads\EP01_拟物音效重混_V2_4K24.mp4" -Original "C:\Users\ASUS\Downloads\EP01_original_4K24.mp4" -Preview720
 
 脚本自动下载 Kenney RPG Audio 音效 ZIP。网络下载失败时，可手动从 https://opengameart.org/content/50-rpg-sound-effects 下载 RPGsounds_Kenney.zip 后传入 -FoleyZip 参数。
 
@@ -57,6 +63,6 @@
 
 ## 修改文件
 
-- scripts/ep01_v3_soft_audio.py — 完整音频重混与授权声源核验
+- scripts/ep01_v3_soft_audio.py — V2 画面和原片声音拆轨重组、完整音频重混与授权声源核验
 - scripts/ep01_v3_run_windows.ps1 — 一条命令生成4K和可选手机试听
 - tests/test_ep01_v3_natural_audio.py — 离线代码回归，不是主观试听
