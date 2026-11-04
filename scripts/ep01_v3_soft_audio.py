@@ -196,21 +196,20 @@ def prepare_foley(zip_source: Path | None, folder: Path) -> tuple[dict[str, Path
     }
 
 
-def render(original: Path, bank: dict[str, Path], cues: list[dict],
-           output: Path, duration: float) -> None:
-    # Always start from the original pre-V2 film, NOT the V2 composite audio stem.
-    inputs = ["-i", str(original)]
+def render(picture: Path, original: Path, bank: dict[str, Path],
+           cues: list[dict], output: Path, duration: float) -> None:
+    """Use V2 picture unchanged and clean pre-V2 audio; discard ALL V2 audio."""
+    inputs = ["-i", str(picture), "-i", str(original)]
     for cue in cues:
         inputs += ["-i", str(bank[cue["material"]])]
 
-    source = f"[0:a:0]aresample=48000,aformat=channel_layouts=stereo,apad," \
-             f"atrim=duration={duration:.6f},asetpts=N/SR/TB[original]"
+    source = (f"[1:a:0]aresample=48000,aformat=channel_layouts=stereo,apad,"
+              f"atrim=duration={duration:.6f},asetpts=N/SR/TB[original]")
     filters = [source]
     labels = ["[original]"]
-    for i, cue in enumerate(cues, 1):
+    for i, cue in enumerate(cues, 2):
         delay = round(cue["at"] * 1000)
         label = f"[fx{i}]"
-        # Cap high frequencies and level; preserve actual recorded texture.
         filters.append(
             f"[{i}:a:0]aresample=48000,aformat=channel_layouts=stereo,"
             f"highpass=f=75,lowpass=f=5300,volume={cue['gain_db']:.2f}dB,"
@@ -237,8 +236,9 @@ def render(original: Path, bank: dict[str, Path], cues: list[dict],
     ], timeout=1800)
 
 
-def verify_output(original: dict, final: dict, duration: float) -> dict:
-    ov, oa, _ = video_spec(original)
+def verify_output(picture_meta: dict, original_meta: dict, final: dict, duration: float) -> dict:
+    ov, _, _ = video_spec(picture_meta)
+    _, oa, _ = video_spec(original_meta)
     fv, fa, actual_duration = video_spec(final)
     if fv.get("codec_name") != ov.get("codec_name"):
         raise RuntimeError("Video codec changed unexpectedly.")
@@ -262,7 +262,8 @@ def verify_output(original: dict, final: dict, duration: float) -> dict:
 
 def main() -> None:
     p = argparse.ArgumentParser(description="EP01 V3 authentic Foley 4K sound rebuild")
-    p.add_argument("--original", required=True, type=Path)
+    p.add_argument("--original", required=True, type=Path, help="Clean original MP4 for audio only")
+    p.add_argument("--picture", type=Path, help="Existing V2 MP4, VIDEO ONLY; its audio is discarded")
     p.add_argument("--out", required=True, type=Path)
     p.add_argument("--cues", type=Path, help="Explicit cue timings; otherwise scene-change draft")
     p.add_argument("--foley-zip", type=Path, help="Offline Kenney CC0 RPG pack")
@@ -270,33 +271,44 @@ def main() -> None:
     args = p.parse_args()
 
     original = args.original.resolve()
+    picture = args.picture.resolve() if args.picture else original
     output = args.out.resolve()
     if not original.is_file():
         p.error("Original MP4 not found.")
-    if output.exists() or output == original:
-        p.error("Output already exists or equals input; no files will be overwritten.")
+    if not picture.is_file():
+        p.error("Picture MP4 not found.")
+    if output.exists() or output in (original, picture):
+        p.error("Output already exists or equals an input; no files will be overwritten.")
     if args.foley_zip and not args.foley_zip.is_file():
         p.error("--foley-zip file not found.")
     if args.stem:
         print("SAFETY: ignoring --stem. V2's processed music/FX track is NOT used.", file=sys.stderr)
 
     before = inspect(original)
-    _, _, duration = video_spec(before)
-    cues, mode = cue_sheet(args.cues.resolve() if args.cues else None, original, duration)
+    _, _, clean_audio_duration = video_spec(before)
+    picture_before = inspect(picture)
+    _, _, duration = video_spec(picture_before)
+    if abs(clean_audio_duration - duration) > 0.50:
+        raise RuntimeError(
+            f"Original audio and V2 video timelines differ too much: "
+            f"{clean_audio_duration:.3f}s vs {duration:.3f}s; cannot safely re-sync."
+        )
+    cues, mode = cue_sheet(args.cues.resolve() if args.cues else None, picture, duration)
     if not cues:
         raise RuntimeError("Empty cue sheet; V3 must contain natural Foley cues.")
     output.parent.mkdir(parents=True, exist_ok=True)
 
     with tempfile.TemporaryDirectory(prefix="ep01-v3-natural-") as d:
         bank, provenance = prepare_foley(args.foley_zip, Path(d))
-        render(original, bank, cues, output, duration)
+        render(picture, original, bank, cues, output, duration)
 
-    validation = verify_output(before, inspect(output), duration)
+    validation = verify_output(picture_before, before, inspect(output), duration)
     receipt = {
         "status": "ENCODED_NOT_LISTENED_NOT_RELEASE_APPROVED",
         "output": str(output),
         "original": str(original),
-        "source_audio": "original 4K MP4 only — V2 composite stem excluded",
+        "picture_source": str(picture),
+        "source_audio": "clean original MP4 only — V2 audio explicitly excluded",
         "foley_source": provenance,
         "cue_mode": mode,
         "cue_count": len(cues),
