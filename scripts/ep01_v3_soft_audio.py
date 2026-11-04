@@ -1,8 +1,9 @@
 """EP01 V3 — natural/soft audio remaster; no recycled V2 synthetic-FX stem.
 
 One-shot script on the isolated ep01-v3-soft-sound-20261103 branch.
-- Original MP4 audio is the ONLY baseline soundtrack (voice + original music).
-- Natural Kenney RPG Audio CC0 recordings replace V2 electronic FX.
+- An independent clean narration stem is mandatory for an OPUS-free candidate.
+- V2 video is copied, V2 audio excluded; independently licensed music is optional.
+- Kenney RPG Audio CC0 recordings replace old effects.
 - Cue timing is read from an explicit manifest, or conservatively inferred
   from scene changes for a DRAFT; inferred cue placement needs review.
 - The original 4K/24fps video bitstream is copied without re-encoding.
@@ -10,7 +11,7 @@ One-shot script on the isolated ep01-v3-soft-sound-20261103 branch.
 - A successful encoding is NOT a listening review or publication approval.
 
 Requires: Python 3.10+, FFmpeg/ffprobe on PATH. No pip dependencies.
-    python scripts/ep01_v3_soft_audio.py --original "英语有画说_EP01_首发候选_4K24.mp4" --out "EP01_V3_自然拟物_4K24.mp4"
+    python scripts/ep01_v3_soft_audio.py --picture "V2.mp4" --clean-voice "voice_only.flac" --out "V3.mp4"
 
 To use an already-downloaded CC0 archive:
     ... --foley-zip "RPGsounds_Kenney.zip"
@@ -197,17 +198,42 @@ def prepare_foley(zip_source: Path | None, folder: Path) -> tuple[dict[str, Path
 
 
 def render(picture: Path, original: Path, bank: dict[str, Path],
-           cues: list[dict], output: Path, duration: float) -> None:
-    """Use V2 picture unchanged and clean pre-V2 audio; discard ALL V2 audio."""
+           cues: list[dict], output: Path, duration: float,
+           *, music: Path | None = None) -> None:
+    """Copy V2 picture; mix separate narration, optional new music and CC0 Foley.
+
+    Input 0's audio is not mapped. The caller must ensure that input 1 is an
+    independent, effect-free narration stem for a purported OPUS-free version.
+    """
     inputs = ["-i", str(picture), "-i", str(original)]
+    fx_start = 2
+    if music is not None:
+        inputs += ["-i", str(music)]
+        fx_start = 3
     for cue in cues:
         inputs += ["-i", str(bank[cue["material"]])]
 
-    source = (f"[1:a:0]aresample=48000,aformat=channel_layouts=stereo,apad,"
-              f"atrim=duration={duration:.6f},asetpts=N/SR/TB[original]")
-    filters = [source]
-    labels = ["[original]"]
-    for i, cue in enumerate(cues, 2):
+    filters = [
+        f"[1:a:0]aresample=48000,aformat=channel_layouts=stereo,"
+        f"asetpts=PTS-STARTPTS,apad,atrim=duration={duration:.6f},"
+        "asetpts=N/SR/TB[vo]"
+    ]
+    labels = ["[vo]"]
+    if music is not None:
+        # Keep music separate and duck it beneath the full-length voice track.
+        filters += [
+            "[vo]asplit=2[voice][key]",
+            f"[2:a:0]aresample=48000,aformat=channel_layouts=stereo,"
+            f"asetpts=PTS-STARTPTS,highpass=f=65,lowpass=f=7500,"
+            f"volume=-20dB,apad,atrim=duration={duration:.6f},"
+            f"afade=t=in:st=0:d=1.8,"
+            f"afade=t=out:st={max(0.0, duration - 2.5):.3f}:d=2.5[bed]",
+            "[bed][key]sidechaincompress=threshold=0.04:ratio=4:"
+            "attack=25:release=350[duck]"
+        ]
+        labels = ["[voice]", "[duck]"]
+
+    for i, cue in enumerate(cues, fx_start):
         delay = round(cue["at"] * 1000)
         label = f"[fx{i}]"
         filters.append(
@@ -218,8 +244,8 @@ def render(picture: Path, original: Path, bank: dict[str, Path],
         labels.append(label)
 
     filters.append(
-        "".join(labels) +
-        f"amix=inputs={len(labels)}:duration=first:normalize=0:dropout_transition=0,"
+        "".join(labels)
+        + f"amix=inputs={len(labels)}:duration=first:normalize=0:dropout_transition=0,"
         f"atrim=duration={duration:.6f},"
         "loudnorm=I=-14:TP=-1.5:LRA=9[mix]"
     )
@@ -238,7 +264,9 @@ def render(picture: Path, original: Path, bank: dict[str, Path],
 
 def verify_output(picture_meta: dict, original_meta: dict, final: dict, duration: float) -> dict:
     ov, _, _ = video_spec(picture_meta)
-    _, oa, _ = video_spec(original_meta)
+    oa = next((s for s in original_meta["streams"] if s["codec_type"] == "audio"), None)
+    if oa is None:
+        raise RuntimeError("Narration stem has no audio stream.")
     fv, fa, actual_duration = video_spec(final)
     if fv.get("codec_name") != ov.get("codec_name"):
         raise RuntimeError("Video codec changed unexpectedly.")
