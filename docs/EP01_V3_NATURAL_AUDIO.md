@@ -1,68 +1,71 @@
-# EP01 V3 自然拟物声重混：执行说明
+# EP01 V3：OPUS 旧音效全替换，4K 画面不重渲
 
-## 当前状态与范围
+## 核心约束
 
-- 本分支保留现有 V2 3840×2160 / 24fps 视频画面码流（FFmpeg copy，不重编码），但不使用 V2 的旧混合音轨。
-- 使用首发候选原始 4K MP4 的声音作为干净基底，完全丢弃 V2 的音频；原片声源文件是音轨供体，不是最终画面。不能自动保证原片本身没有电子杂声。
-- 新增自然声只来自 Kenney RPG Audio 官方授权的 CC0 素材，保存声源链接、样本名和压缩包 SHA256。
-- 不修改已有 Adobe/生产入口及受保护媒体指针，不改文案、教学和镜头。
-- 自动镜头变化的时间位置只是音效草稿，未看实片，不能假装与提取、排除和结算精准同步。
-- 目前代码已提交；真实编码/听审和发布批准均未完成。
+1. **画面仅取自** V2 的 EP01_拟物音效重混_V2_4K24.mp4，3840×2160/24fps，FFmpeg 使用 -map 0:v:0 -c:v copy，**完全不取 V2 音频**。
+2. **人声必须来自独立、未经 OPUS 音效混合的整片 VO 音轨**。例如从原始配音 takes 按真实时间戳重建的全长 WAV/FLAC。必须与 V2 画面完整对齐。
+3. **所有旧 OPUS 音效必须被排除**：不复用 V2 音轨、旧效果 stem 或任何可能含旧效果的原始整轨。只混入新获得的 Kenney CC0 实录拟物音效，音乐为独立的、经过授权的单独音轨。
+4. 具体文字定位、提取、选项排除和结算音效，须按真实画面逐个核对；自动镜头变化时间只可用于草稿。
+5. GitHub 代码合并、媒体编码、主观听审与发行权利属于独立阶段，不得混为一谈。
 
-## Windows 本机一条命令
+### 原始 MP4 不等于干净 VO
 
-将 ChatGPT 文件库中的原始视频「英语有画说_EP01_首发候选_4K24.mp4」放在 Windows Downloads。不要用 V2 MP4 替代。需要 Python 3.10+、FFmpeg 和 ffprobe 在 PATH。
+原始 MP4 的混合声轨可能已经含 OPUS 曾添加的音效。直接用它替换 V2 的声音仍会保留这些效果，FFmpeg 无法从普通混合音轨无损提取绝对纯净的人声。严格模式因此要求独立声源；**没有独立干净 VO，就不能声称 OPUS 音效已全部消除**。
 
-将 V2 文件 EP01_拟物音效重混_V2_4K24.mp4 放在 Downloads 文件夹；本脚本会自动以它作为 V3 的画面。原片仍需下载到电脑用作干净口播声轨。
+## Windows 一条命令
 
-在对应工作分支仓库根目录运行：
+已知 V2 MP4 在 Downloads。请先从源工程的原始配音文件里重建**带正确时间轴、完整时长**的纯人声音轨。安装 Python 3.10+、FFmpeg 和 ffprobe，并切到分支 ep01-v3-soft-sound-20261103：
 
-    powershell -ExecutionPolicy Bypass -File scripts\ep01_v3_run_windows.ps1 -Preview720
+    powershell -ExecutionPolicy Bypass -File .\scripts\ep01_v3_run_windows.ps1 -CleanVoice "D:\EP01\clean_voice_full_length.flac" -Music "D:\EP01\approved_new_music.flac" -CueSheet "D:\EP01\V3_reviewed_cues.json" -Preview720
 
-如原片存放在其他路径：
+- -CleanVoice：必需；来源必须是真正独立、无旧 OPUS 效果的人声，时长误差不超过 0.5 秒。
+- -Picture：可选指定 V2 画面完整路径；否则自动搜索 Downloads 中唯一的 EP01...V2...4K24.mp4。
+- -Music：可选独立有授权的新配乐；**绝不把旧混合音轨改名当作配乐**。
+- -CueSheet：可选已核对真实时间戳；省略时仅为镜头变化自动猜位的待审草稿。
+- -FoleyZip：网络无法下载 Kenney 官方 CC0 素材时指定预先取得的音效包。
 
-    powershell -ExecutionPolicy Bypass -File scripts\ep01_v3_run_windows.ps1 -Original "D:\影片\英语有画说_EP01_首发候选_4K24.mp4" -Preview720
+默认导出到 用户 Videos/EP01_V3：
+- EP01_V3_clean_source_4K24.mp4 — 原 V2 4K 视频比特流 copy，新 AAC 320k 声轨
+- EP01_V3_clean_source_preview_720p.mp4 — 可选小体积试听文件
+- EP01_V3_clean_source_4K24.v3_receipt.json — 声源、许可证、时间点和编码验证收据
 
-如需显式指定 V2 画面，可传入 -Picture 参数，原片用于 -Original（音频来源）：
+### 仅用于排查问题的旧混音草稿，不能发布
 
-    powershell -ExecutionPolicy Bypass -File scripts\ep01_v3_run_windows.ps1 -Picture "C:\Users\ASUS\Downloads\EP01_拟物音效重混_V2_4K24.mp4" -Original "C:\Users\ASUS\Downloads\EP01_original_4K24.mp4" -Preview720
+如尚未取得干净 VO，允许通过下述显式开关预览技术流程：
 
-脚本自动下载 Kenney RPG Audio 音效 ZIP。网络下载失败时，可手动从 https://opengameart.org/content/50-rpg-sound-effects 下载 RPGsounds_Kenney.zip 后传入 -FoleyZip 参数。
+    powershell -ExecutionPolicy Bypass -File .\scripts\ep01_v3_run_windows.ps1 -DraftUseOriginalAudio -Original "D:\EP01\EP01_original_4K24.mp4" -Preview720
 
-输出目录为 用户 Videos/EP01_V3：
+此时生成带 DRAFT_unverified_audio 的文件；收据注明 DRAFT_OLD_OPUS_EFFECTS_MAY_REMAIN。**不得用它验证“OPUS 全部删除”，不得作为发布版。**
 
-- 英语有画说_EP01_V3_自然拟物_4K24.mp4 — 4K 全片，原画面 copy 与 320 kbps AAC 新音轨
-- 英语有画说_EP01_V3_试听_720p.mp4 — 可选小体积手机试听
-- 英语有画说_EP01_V3_自然拟物_4K24.v3_receipt.json — 编码和音效来源收据
+## 真实音效对齐
 
-## 真实镜头时间对齐
-
-素材含 paper（翻书）、swish（柔和布料摩擦）、tap（轻放书本）、settle（合书）。
-
-自动 cue 只根据低分辨率画面变化生成稀疏草稿；正式使用应通过实际视频的真实时间戳编写 cues.json，示例结构如下（**例子里的时间是假设值，禁止直接当成影片真实时间点发布**）：
+Foley 音源：Kenney RPG Audio CC0；paper（翻书）、swish（布料摩擦）、tap（书本轻放）、settle（合书）。仅示例 JSON 结构如下：
 
     {
       "cues": [
         {"at": 12.5, "material": "paper", "gain_db": -30},
-        {"at": 35.0, "material": "swish", "gain_db": -31},
-        {"at": 55.0, "material": "tap", "gain_db": -27},
-        {"at": 77.0, "material": "settle", "gain_db": -30}
+        {"at": 35.0, "material": "swish", "gain_db": -31}
       ]
     }
 
-使用准确时间表：
+**上述时间是格式示例，不是本片的已验证镜头时间，禁止直接作为发布版本。**
 
-    powershell -ExecutionPolicy Bypass -File scripts\ep01_v3_run_windows.ps1 -CueSheet "D:\制作\V3_cues.json" -Preview720
+## 验收 / 合并的边界
 
-## 交付检查与权限
+- 实际比对 V2 视频流、帧数和时长，核对原始 4K 画面未改变。
+- 在耳机和手机上从头到尾试听：确认没有任何旧 OPUS 音效、滋滋电子音、卡顿、爆音、过度静音、人声被音乐覆盖。
+- 逐帧或逐镜头检查新音效与提取、排除、答案揭晓的同步；重新修正误放的 cue。
+- 检查原始配音、独立新音乐、Kenney Foley 的真实授权。肖邦演奏录音的权利需要独立确认。
+- 未实际完成编码和人类感官检查，不得声称可发布。编码收据只是程序检查，不是创意验收。
 
-- 先完整听 4K/720p，包括耳机与手机；关键画面对应的音效时间要逐个检查，整片口播清晰，无突兀或电子滋滋声。
-- 程序自动检查 4K 分辨率、24fps、时长、音频存在和输出编码；这些不构成听感/视觉验收。
-- 本次确认的 CC0 许可只覆盖新加的 Kenney Foley，不代表原片配乐及其他来源已具备公开上传权利。仓库原有肖邦录音属内部 scratch，公开发布前仍须确认录音版权或替换。
-- 未完成真实输出、全片审阅和用户验收前，公开发布状态始终为否。
+### 仓库交接
 
-## 修改文件
+PR #7：ep01-v3-soft-sound-20261103 → main。隔离脚本不得改动原有 Adobe/PR/AE 当前生产入口和媒体指针。
 
-- scripts/ep01_v3_soft_audio.py — V2 画面和原片声音拆轨重组、完整音频重混与授权声源核验
-- scripts/ep01_v3_run_windows.ps1 — 一条命令生成4K和可选手机试听
-- tests/test_ep01_v3_natural_audio.py — 离线代码回归，不是主观试听
+- scripts/ep01_v3_soft_audio.py：音频重新混合、干净人声强制验证
+- scripts/ep01_v3_run_windows.ps1：Windows 一条命令和 720p 预览
+- tests/test_ep01_v3_natural_audio.py：结构与声源安全测试
+- tests/test_ep01_v3_ffmpeg_integration.py：合成素材真实 FFmpeg 测试（不等于本片导出）
+- .github/workflows/ep01-v3-audio.yml：隔离 CI
+
+另一个 Agent 在合并前须复核当前 PR 的最新提交和专用 CI，执行本机真实媒体 QA；代码合并不授权公开发布。
