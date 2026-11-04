@@ -6,6 +6,7 @@ on:
       - 'scripts/ep01_v3_soft_audio.py'
       - 'scripts/ep01_v3_run_windows.ps1'
       - 'tests/test_ep01_v3_natural_audio.py'
+      - 'tests/test_ep01_v3_ffmpeg_integration.py'
       - '.github/workflows/ep01-v3-audio.yml'
   workflow_dispatch:
 jobs:
@@ -21,6 +22,14 @@ jobs:
         run: python -m py_compile scripts/ep01_v3_soft_audio.py
       - name: V3 isolated tests (no video export)
         run: python -m unittest discover -s tests -p 'test_ep01_v3_natural_audio.py' -v
+      - name: FFmpeg binary and codec availability
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq ffmpeg
+      - name: V3 real FFmpeg integration with synthetic 4K film
+        env:
+          EP01_V3_INTEGRATION: '1'
+        run: python -m unittest discover -s tests -p 'test_ep01_v3_ffmpeg_integration.py' -v
       - name: Check PowerShell syntax
         shell: pwsh
         run: |
