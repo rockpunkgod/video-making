@@ -261,68 +261,102 @@ def verify_output(picture_meta: dict, original_meta: dict, final: dict, duration
 
 
 def main() -> None:
-    p = argparse.ArgumentParser(description="EP01 V3 authentic Foley 4K sound rebuild")
-    p.add_argument("--original", required=True, type=Path, help="Clean original MP4 for audio only")
-    p.add_argument("--picture", type=Path, help="Existing V2 MP4, VIDEO ONLY; its audio is discarded")
+    p = argparse.ArgumentParser(description="EP01 V3: preserve V2 4K video; rebuild all audio")
+    p.add_argument("--picture", required=True, type=Path, help="Existing V2 video; its audio is never mapped")
+    p.add_argument("--clean-voice", type=Path,
+                   help="Independent clean narration stem covering full timeline; for OPUS-free candidate")
+    p.add_argument("--music", type=Path, help="Optional independently licensed new music, NOT older mixed bed")
+    p.add_argument("--original", type=Path, help="Previous mixed MP4 for explicit UNSAFE preview only")
+    p.add_argument("--draft-use-original-audio", action="store_true",
+                   help="Preview only: older original mix could contain OPUS sound effects")
     p.add_argument("--out", required=True, type=Path)
-    p.add_argument("--cues", type=Path, help="Explicit cue timings; otherwise scene-change draft")
-    p.add_argument("--foley-zip", type=Path, help="Offline Kenney CC0 RPG pack")
-    p.add_argument("--stem", type=Path, help="Legacy flag; never used to avoid V2 zaps")
+    p.add_argument("--cues", type=Path, help="Reviewed cue timings; otherwise auto unreviewed draft")
+    p.add_argument("--foley-zip", type=Path, help="Offline Kenney CC0 RPG audio pack")
+    p.add_argument("--stem", type=Path, help="Deprecated/ignored; never reuse V2 mixed stem")
     args = p.parse_args()
 
-    original = args.original.resolve()
-    picture = args.picture.resolve() if args.picture else original
+    picture = args.picture.resolve()
     output = args.out.resolve()
-    if not original.is_file():
-        p.error("Original MP4 not found.")
     if not picture.is_file():
-        p.error("Picture MP4 not found.")
-    if output.exists() or output in (original, picture):
-        p.error("Output already exists or equals an input; no files will be overwritten.")
+        p.error("V2 picture file not found: " + str(picture))
+    if args.clean_voice is not None and args.draft_use_original_audio:
+        p.error("Choose --clean-voice OR --draft-use-original-audio, not both.")
+    if args.clean_voice is not None:
+        soundtrack = args.clean_voice.resolve()
+        soundtrack_policy = "INDEPENDENT_CLEAN_NARRATION_ASSERTED__LISTENING_REQUIRED"
+        draft_audio = False
+    elif args.draft_use_original_audio and args.original is not None:
+        soundtrack = args.original.resolve()
+        soundtrack_policy = "UNSAFE_MIXED_ORIGINAL__OLD_OPUS_EFFECTS_MAY_REMAIN"
+        draft_audio = True
+    else:
+        p.error(
+            "Cannot guarantee removal of OPUS effects from a mixed audio track. "
+            "Supply --clean-voice FULL_LENGTH_CLEAN_VOICE.wav, or for a NON-PUBLISHABLE "
+            "draft only, --draft-use-original-audio --original ORIGINAL.mp4."
+        )
+    if not soundtrack.is_file():
+        p.error("Narration source not found: " + str(soundtrack))
+    if soundtrack == picture:
+        p.error("Narration cannot be the same file as the V2 picture.")
+    if output.exists() or output in (picture, soundtrack):
+        p.error("Output already exists or equals an input; no original media is overwritten.")
+    music = args.music.resolve() if args.music else None
+    if music is not None:
+        if not music.is_file() or music in (picture, soundtrack, output):
+            p.error("Music must be an existing independent file, not V2/narration/output.")
     if args.foley_zip and not args.foley_zip.is_file():
-        p.error("--foley-zip file not found.")
+        p.error("--foley-zip does not point to a file.")
     if args.stem:
-        print("SAFETY: ignoring --stem. V2's processed music/FX track is NOT used.", file=sys.stderr)
+        print("SAFETY: ignored --stem; neither V2 nor older OPUS mixed stems are used.",
+              file=sys.stderr)
 
-    before = inspect(original)
-    _, _, clean_audio_duration = video_spec(before)
-    picture_before = inspect(picture)
-    _, _, duration = video_spec(picture_before)
-    if abs(clean_audio_duration - duration) > 0.50:
+    before = inspect(picture)
+    _, _, duration = video_spec(before)
+    source_meta = inspect(soundtrack)
+    if not any(s["codec_type"] == "audio" for s in source_meta["streams"]):
+        p.error("Narration source has no audio stream.")
+    voice_duration = float(source_meta["format"]["duration"])
+    if abs(voice_duration - duration) > 0.50:
         raise RuntimeError(
-            f"Original audio and V2 video timelines differ too much: "
-            f"{clean_audio_duration:.3f}s vs {duration:.3f}s; cannot safely re-sync."
+            f"Voice and V2 timeline differ: {voice_duration:.3f}s versus "
+            f"{duration:.3f}s. Rebuild full-duration timeline-aligned voice."
         )
     cues, mode = cue_sheet(args.cues.resolve() if args.cues else None, picture, duration)
     if not cues:
-        raise RuntimeError("Empty cue sheet; V3 must contain natural Foley cues.")
+        raise RuntimeError("No natural Foley cues. Supply --cues with true timestamps.")
     output.parent.mkdir(parents=True, exist_ok=True)
 
     with tempfile.TemporaryDirectory(prefix="ep01-v3-natural-") as d:
         bank, provenance = prepare_foley(args.foley_zip, Path(d))
-        render(picture, original, bank, cues, output, duration)
+        render(picture, soundtrack, bank, cues, output, duration, music=music)
 
-    validation = verify_output(picture_before, before, inspect(output), duration)
+    validation = verify_output(before, source_meta, inspect(output), duration)
+    status = ("DRAFT_OLD_OPUS_EFFECTS_MAY_REMAIN" if draft_audio
+              else "ENCODED_CLEAN_SOURCE_UNLISTENED")
     receipt = {
-        "status": "ENCODED_NOT_LISTENED_NOT_RELEASE_APPROVED",
+        "status": status,
         "output": str(output),
-        "original": str(original),
         "picture_source": str(picture),
-        "source_audio": "clean original MP4 only — V2 audio explicitly excluded",
+        "audio_source": str(soundtrack),
+        "audio_source_policy": soundtrack_policy,
+        "v2_audio": "EXCLUDED",
+        "opus_sound_effects_absent_verified": False,
+        "music_source": str(music) if music is not None else None,
+        "music_rights_review": "REQUIRED" if music is not None else "NO_EXTERNAL_MUSIC",
         "foley_source": provenance,
         "cue_mode": mode,
         "cue_count": len(cues),
         "cues": cues,
         "validation": validation,
-        "subjective_review": "REQUIRED: listen with headphones; approve any auto cues.",
-        "visual_review": "REQUIRED: original encoded film still needs scene review.",
+        "listening_and_sync_review": "REQUIRED: full real EP01 film, headphones and phone",
         "publication_approval": False,
     }
     report = output.with_suffix(".v3_receipt.json")
     report.write_text(json.dumps(receipt, ensure_ascii=False, indent=2), encoding="utf-8")
     print(json.dumps({"output": str(output), "receipt": str(report),
-                      "cue_mode": mode, "cue_count": len(cues),
-                      "status": receipt["status"]}, ensure_ascii=False, indent=2))
+                      "cue_mode": mode, "cue_count": len(cues), "status": status},
+                     ensure_ascii=False, indent=2))
 
 
 if __name__ == "__main__":
