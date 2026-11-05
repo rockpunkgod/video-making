@@ -25,6 +25,29 @@ V2 只作为**视频输入**。原始 MP4 的声音不一定干净：其中可�
 3. 新拟物音效采用 Kenney RPG Audio CC0，按真实画面精确补充 cue JSON；自动选帧只可用作初步草稿。
 4. 如果找不到独立干净人声，就只可生成标为 DRAFT 的技术试听，不能宣称全部旧 OPUS 音效消除，也不能发布。
 
+## 新增用户指令（2026-11-05）：通过 Sound Skill 制作 V3 全套音效
+
+**必须使用** https://github.com/vibe-motion/sound 的官方开源 sound Skill 做音效素材搜索、评估与下载；不是继续用旧 OPUS 混合音轨，也不是机械套用固定的 Kenney 声音。该 Skill 当前公开版的功能是 Freesound 检索、来源/下载量/评分/描述/许可证筛选与 MP3 预览文件下载；**它不是自动生成配乐、自动精准卡帧或自动完成混音的工具**。由 Agent 自行利用 FFmpeg 和实际画面完成整片声音设计、对齐与导出。
+
+Claude Code 工作区安装（先检查是否已安装，避免重复嵌套 clone）：
+
+    git clone https://github.com/vibe-motion/sound.git .claude/skills/sound
+
+先阅读该目录 SKILL.md，严格按其公开命令执行。常见用法：
+
+    python .claude/skills/sound/scripts/sfx.py freesound "soft paper sliding" --license cc0 --urls
+    python .claude/skills/sound/scripts/sfx.py freesound "subtle cloth swish" --license cc0 --urls
+    python .claude/skills/sound/scripts/sfx.py freesound "gentle wooden tap" --license cc0 --urls
+    python .claude/skills/sound/scripts/sfx.py get sfx/ fs:<REAL_SEARCH_ID>
+
+不得照抄 fs:<REAL_SEARCH_ID> 占位符；先搜索，从真实结果取得 ID 后再下载。公共版当前下载 Freesound MP3 预览，须检查音质是否适合最终片。优先 CC0；对 BY 音效需保留真实署名与来源，禁止采用不适合商用的 BY-NC。每个音效保留选材说明、许可证、作者/来源、试听网址、文件路径、时间码，并在最终出片后审听。
+
+音效审美：自然、温和、低存在感，有电影感；不要电子滋滋、游戏 UI 点击、尖锐提示音。把镜头动作（文字定位、提取、排除、答案结算）变成英语检索词，多款候选比较，听审后选择真正匹配动作的声音。素材筛选的下载量和评分不能代替试听。避免堆满全片，适当留下静默和呼吸感。
+
+**实现要求**：当前 V3 Python 脚本以 Kenney 固定素材为默认实现；Agent 应扩展为接受 Sound Skill 已下载、许可证核验通过的外部音效文件和真实时间戳 cue sheet，或建立独立的下游混音流程；只动 V3 声音链、保留 V2 4K 视频码流与原生项目。无论走哪条路径，都不得重新混入 V2 旧音轨或旧 OPUS 音效。最终导出 4K24 和 720p 试听，逐处核对同步、听感及授权。
+
+PR #7 已在 main 合并；这是合并后的**新增执行指示**，不要反复合并旧 PR。完成音效与媒体交付后报告实际文件位置及听审结果。
+
 ## 代码测试
 
 先确认 PR #7 仅改独立 V3 相关脚本、PowerShell 导出入口、测试、文档和专用 GitHub Actions。禁止覆盖主生产链。
