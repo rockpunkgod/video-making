@@ -38,7 +38,7 @@ methods:
   - repository: https://github.com/rockpunkgod/ANSWER.git
     path: gaokao-writing/references/application-writing-and-correction.md
     heading: 批改顺序：先五审法
-    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
+    commit: 59190489abd3e0fb6543c9a04e137881ae98cd88
   section_ids: &id001
   - dac147e9a947370c
   - f8cfb194a81aad6e
@@ -117,7 +117,7 @@ methods:
   maturity_status: candidate
   practical_value: Useful
   version: 1.2.0
-  change_reason: ANSWER 9a872ba 显式来源差异复核；旧来源归档，保基础入口与实用优先，不自动授予Case或真人准入。
+  change_reason: ANSWER 5919048 明确已核内容判据与有界副职责；不新增算法，不虚构暂定，不重复无疑点回文，旧审阅不自动升级。
   affected_cases:
   - cases/application-writing/A01/canonical/case.yaml
   regression_result: pending_current_epoch_semantic_and_student_acceptance
@@ -129,7 +129,7 @@ methods:
     participant_validation: pending_real_participant_validation
     example_scope: 2026-10-28基础入口表达修订；保留原判据/Stop/课程绑定与语义版本，微动作和关系示意不是完整真题或真人实测。
   source_alignment:
-    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
+    commit: 59190489abd3e0fb6543c9a04e137881ae98cd88
     state: live_source_bound
     source_content_changed: false
     correction_profile_applied: false
@@ -172,7 +172,7 @@ methods:
   - repository: https://github.com/rockpunkgod/ANSWER.git
     path: gaokao-writing/references/application-writing-and-correction.md
     heading: 应用文写作六步训练法通用梳理框架
-    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
+    commit: 59190489abd3e0fb6543c9a04e137881ae98cd88
   section_ids: &id002
   - 0a6f5b5594a41dd6
   can_follow: []
@@ -251,7 +251,7 @@ methods:
   maturity_status: candidate
   practical_value: Useful
   version: 1.2.0
-  change_reason: ANSWER 9a872ba 显式来源差异复核；旧来源归档，保基础入口与实用优先，不自动授予Case或真人准入。
+  change_reason: ANSWER 5919048 明确已核内容判据与有界副职责；不新增算法，不虚构暂定，不重复无疑点回文，旧审阅不自动升级。
   affected_cases:
   - cases/application-writing/A02/canonical/case.yaml
   regression_result: pending_current_epoch_semantic_and_student_acceptance
@@ -263,7 +263,7 @@ methods:
     participant_validation: pending_real_participant_validation
     example_scope: 2026-10-28基础入口表达修订；保留原判据/Stop/课程绑定与语义版本，微动作和关系示意不是完整真题或真人实测。
   source_alignment:
-    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
+    commit: 59190489abd3e0fb6543c9a04e137881ae98cd88
     state: live_source_bound
     source_content_changed: false
     correction_profile_applied: true
@@ -306,7 +306,7 @@ methods:
   - repository: https://github.com/rockpunkgod/ANSWER.git
     path: gaokao-writing/references/application-writing-and-correction.md
     heading: 三种写作表达方法
-    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
+    commit: 59190489abd3e0fb6543c9a04e137881ae98cd88
   section_ids: &id003
   - 15e18423e3364f72
   - 2e057c9f98c9de93
@@ -386,7 +386,7 @@ methods:
   maturity_status: candidate
   practical_value: Useful
   version: 1.2.0
-  change_reason: ANSWER 9a872ba 显式来源差异复核；旧来源归档，保基础入口与实用优先，不自动授予Case或真人准入。
+  change_reason: ANSWER 5919048 明确已核内容判据与有界副职责；不新增算法，不虚构暂定，不重复无疑点回文，旧审阅不自动升级。
   affected_cases:
   - cases/application-writing/A03/canonical/case.yaml
   regression_result: pending_current_epoch_semantic_and_student_acceptance
@@ -398,9 +398,9 @@ methods:
     participant_validation: pending_real_participant_validation
     example_scope: 2026-10-28基础入口表达修订；保留原判据/Stop/课程绑定与语义版本，微动作和关系示意不是完整真题或真人实测。
   source_alignment:
-    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
+    commit: 59190489abd3e0fb6543c9a04e137881ae98cd88
     state: live_source_bound
-    source_content_changed: true
+    source_content_changed: false
     correction_profile_applied: true
     authored_first_contact_draft: true
     new_course_branches: preserved_in_full_contract_not_automatically_aliased
@@ -443,7 +443,7 @@ methods:
   - repository: https://github.com/rockpunkgod/ANSWER.git
     path: gaokao-writing/references/application-writing-and-correction.md
     heading: 三种写作表达方法
-    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
+    commit: 59190489abd3e0fb6543c9a04e137881ae98cd88
   section_ids: &id004
   - 15e18423e3364f72
   - 2e057c9f98c9de93
@@ -523,7 +523,7 @@ methods:
   maturity_status: candidate
   practical_value: Useful
   version: 1.2.0
-  change_reason: ANSWER 9a872ba 显式来源差异复核；旧来源归档，保基础入口与实用优先，不自动授予Case或真人准入。
+  change_reason: ANSWER 5919048 明确已核内容判据与有界副职责；不新增算法，不虚构暂定，不重复无疑点回文，旧审阅不自动升级。
   affected_cases:
   - cases/application-writing/A04/canonical/case.yaml
   regression_result: pending_current_epoch_semantic_and_student_acceptance
@@ -535,9 +535,9 @@ methods:
     participant_validation: pending_real_participant_validation
     example_scope: 2026-10-28基础入口表达修订；保留原判据/Stop/课程绑定与语义版本，微动作和关系示意不是完整真题或真人实测。
   source_alignment:
-    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
+    commit: 59190489abd3e0fb6543c9a04e137881ae98cd88
     state: live_source_bound
-    source_content_changed: true
+    source_content_changed: false
     correction_profile_applied: true
     authored_first_contact_draft: true
     new_course_branches: preserved_in_full_contract_not_automatically_aliased
@@ -580,7 +580,7 @@ methods:
   - repository: https://github.com/rockpunkgod/ANSWER.git
     path: gaokao-writing/references/application-writing-and-correction.md
     heading: 三种写作表达方法
-    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
+    commit: 59190489abd3e0fb6543c9a04e137881ae98cd88
   section_ids: &id005
   - 15e18423e3364f72
   - 2e057c9f98c9de93
@@ -660,7 +660,7 @@ methods:
   maturity_status: candidate
   practical_value: Useful
   version: 1.2.1
-  change_reason: ANSWER 9a872ba 显式来源差异复核；旧来源归档，保基础入口与实用优先，不自动授予Case或真人准入。
+  change_reason: ANSWER 5919048 明确已核内容判据与有界副职责；不新增算法，不虚构暂定，不重复无疑点回文，旧审阅不自动升级。
   affected_cases:
   - cases/application-writing/A05/canonical/case.yaml
   regression_result: pending_current_epoch_semantic_and_student_acceptance
@@ -672,9 +672,9 @@ methods:
     participant_validation: pending_real_participant_validation
     example_scope: 2026-10-28基础入口表达修订；保留原判据/Stop/课程绑定与语义版本，微动作和关系示意不是完整真题或真人实测。
   source_alignment:
-    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
+    commit: 59190489abd3e0fb6543c9a04e137881ae98cd88
     state: live_source_bound
-    source_content_changed: true
+    source_content_changed: false
     correction_profile_applied: true
     authored_first_contact_draft: true
     new_course_branches: preserved_in_full_contract_not_automatically_aliased
@@ -719,7 +719,7 @@ methods:
   - repository: https://github.com/rockpunkgod/ANSWER.git
     path: gaokao-writing/references/application-writing-and-correction.md
     heading: 富兰克林写作法（五步）
-    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
+    commit: 59190489abd3e0fb6543c9a04e137881ae98cd88
   section_ids: &id006
   - 826bddb7694b0a21
   - 1b1197e2fa02ee07
@@ -799,7 +799,7 @@ methods:
   maturity_status: candidate
   practical_value: Useful
   version: 1.2.1
-  change_reason: ANSWER 9a872ba 显式来源差异复核；旧来源归档，保基础入口与实用优先，不自动授予Case或真人准入。
+  change_reason: ANSWER 5919048 明确已核内容判据与有界副职责；不新增算法，不虚构暂定，不重复无疑点回文，旧审阅不自动升级。
   affected_cases:
   - cases/application-writing/A06/canonical/case.yaml
   regression_result: pending_current_epoch_semantic_and_student_acceptance
@@ -811,7 +811,7 @@ methods:
     participant_validation: pending_real_participant_validation
     example_scope: 2026-10-28基础入口表达修订；保留原判据/Stop/课程绑定与语义版本，微动作和关系示意不是完整真题或真人实测。
   source_alignment:
-    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
+    commit: 59190489abd3e0fb6543c9a04e137881ae98cd88
     state: live_source_bound
     source_content_changed: false
     correction_profile_applied: true
@@ -858,7 +858,7 @@ methods:
   - repository: https://github.com/rockpunkgod/ANSWER.git
     path: gaokao-writing/references/application-writing-and-correction.md
     heading: 反向劫匪插葱
-    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
+    commit: 59190489abd3e0fb6543c9a04e137881ae98cd88
   section_ids: &id007
   - 7022e0285ab88322
   - 29cd6d21efc72a19
@@ -938,7 +938,7 @@ methods:
   maturity_status: candidate
   practical_value: Useful
   version: 1.2.1
-  change_reason: ANSWER 9a872ba 显式来源差异复核；旧来源归档，保基础入口与实用优先，不自动授予Case或真人准入。
+  change_reason: ANSWER 5919048 明确已核内容判据与有界副职责；不新增算法，不虚构暂定，不重复无疑点回文，旧审阅不自动升级。
   affected_cases:
   - cases/application-writing/A07/canonical/case.yaml
   regression_result: pending_current_epoch_semantic_and_student_acceptance
@@ -950,7 +950,7 @@ methods:
     participant_validation: pending_real_participant_validation
     example_scope: 2026-10-28基础入口表达修订；保留原判据/Stop/课程绑定与语义版本，微动作和关系示意不是完整真题或真人实测。
   source_alignment:
-    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
+    commit: 59190489abd3e0fb6543c9a04e137881ae98cd88
     state: live_source_bound
     source_content_changed: false
     correction_profile_applied: true
@@ -995,7 +995,7 @@ methods:
   - repository: https://github.com/rockpunkgod/ANSWER.git
     path: gaokao-writing/references/application-writing-and-correction.md
     heading: 常见文体骨架
-    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
+    commit: 59190489abd3e0fb6543c9a04e137881ae98cd88
   section_ids: &id008
   - b8a5f303a3cb65a5
   - abce8d08d57b4059
@@ -1075,7 +1075,7 @@ methods:
   maturity_status: candidate
   practical_value: Useful
   version: 1.2.0
-  change_reason: ANSWER 9a872ba 显式来源差异复核；旧来源归档，保基础入口与实用优先，不自动授予Case或真人准入。
+  change_reason: ANSWER 5919048 明确已核内容判据与有界副职责；不新增算法，不虚构暂定，不重复无疑点回文，旧审阅不自动升级。
   affected_cases:
   - cases/application-writing/A08/canonical/case.yaml
   regression_result: pending_current_epoch_semantic_and_student_acceptance
@@ -1087,7 +1087,7 @@ methods:
     participant_validation: pending_real_participant_validation
     example_scope: 2026-10-28基础入口表达修订；保留原判据/Stop/课程绑定与语义版本，微动作和关系示意不是完整真题或真人实测。
   source_alignment:
-    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
+    commit: 59190489abd3e0fb6543c9a04e137881ae98cd88
     state: live_source_bound
     source_content_changed: false
     correction_profile_applied: true
@@ -1133,7 +1133,7 @@ methods:
   - repository: https://github.com/rockpunkgod/ANSWER.git
     path: gaokao-writing/references/application-writing-and-correction.md
     heading: 15 分评分规范
-    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
+    commit: 59190489abd3e0fb6543c9a04e137881ae98cd88
   section_ids: &id009
   - 254fa3adfb42db4e
   - f8cfb194a81aad6e
@@ -1212,7 +1212,7 @@ methods:
   maturity_status: candidate
   practical_value: Useful
   version: 1.2.0
-  change_reason: ANSWER 9a872ba 显式来源差异复核；旧来源归档，保基础入口与实用优先，不自动授予Case或真人准入。
+  change_reason: ANSWER 5919048 明确已核内容判据与有界副职责；不新增算法，不虚构暂定，不重复无疑点回文，旧审阅不自动升级。
   affected_cases:
   - cases/application-writing/A09/canonical/case.yaml
   regression_result: pending_current_epoch_semantic_and_student_acceptance
@@ -1224,7 +1224,7 @@ methods:
     participant_validation: pending_real_participant_validation
     example_scope: 2026-10-28基础入口表达修订；保留原判据/Stop/课程绑定与语义版本，微动作和关系示意不是完整真题或真人实测。
   source_alignment:
-    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
+    commit: 59190489abd3e0fb6543c9a04e137881ae98cd88
     state: live_source_bound
     source_content_changed: false
     correction_profile_applied: false
@@ -1269,7 +1269,7 @@ methods:
   - repository: https://github.com/rockpunkgod/ANSWER.git
     path: gaokao-writing/references/application-writing-and-correction.md
     heading: 复习路径与分数锚定
-    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
+    commit: 59190489abd3e0fb6543c9a04e137881ae98cd88
   section_ids: &id010
   - 437acb5cb81ccc4e
   - 0a6f5b5594a41dd6
@@ -1349,7 +1349,7 @@ methods:
   maturity_status: candidate
   practical_value: Useful
   version: 1.2.0
-  change_reason: ANSWER 9a872ba 显式来源差异复核；旧来源归档，保基础入口与实用优先，不自动授予Case或真人准入。
+  change_reason: ANSWER 5919048 明确已核内容判据与有界副职责；不新增算法，不虚构暂定，不重复无疑点回文，旧审阅不自动升级。
   affected_cases:
   - cases/application-writing/A10/canonical/case.yaml
   regression_result: pending_current_epoch_semantic_and_student_acceptance
@@ -1361,7 +1361,7 @@ methods:
     participant_validation: pending_real_participant_validation
     example_scope: 2026-10-28基础入口表达修订；保留原判据/Stop/课程绑定与语义版本，微动作和关系示意不是完整真题或真人实测。
   source_alignment:
-    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
+    commit: 59190489abd3e0fb6543c9a04e137881ae98cd88
     state: live_source_bound
     source_content_changed: false
     correction_profile_applied: true

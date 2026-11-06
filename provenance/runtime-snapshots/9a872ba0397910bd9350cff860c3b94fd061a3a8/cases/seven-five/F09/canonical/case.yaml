@@ -1,0 +1,21 @@
+case_id: F09-canonical
+method_id: F09
+question_type: 七选五
+source:
+  repository: https://github.com/rockpunkgod/ANSWER.git
+  commit: b04ebc26d7fa096404111a0bb12f6c77cc8525b9
+  path: gaokao-english/references/seven-five.md
+  heading: 结构一致
+question: null
+answer: null
+trigger: 空位与选项是需要拼接的半句
+evidence: []
+method_role: interpreter
+expected_action: 把候选接到现有半句，标主语谓语与连接位置，再检验完整语义
+expected_output: interpret
+stop_rule: 结构都可补全时必须比对象、动作和段落任务；不能凭大小写或半句长度选。接成句却与前后内容冲突时停止初判。
+case_type: canonical
+status: evidence_gap
+notes: 源方法可核；尚未逐题核验案例，不可当成功样例
+method_version: 1.1.0
+source_commit: b04ebc26d7fa096404111a0bb12f6c77cc8525b9

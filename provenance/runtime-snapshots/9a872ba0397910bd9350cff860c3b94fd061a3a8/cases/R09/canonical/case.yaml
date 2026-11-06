@@ -1,0 +1,23 @@
+method_id: R09
+case_type: canonical
+status: source_pattern_only
+objective: 从完整长文产出对象+核心判断+全文任务的骨架卡。
+prompt_excerpt: null
+documented_pattern: 课程两组全文材料从重复概念形成待验框架，再核对象、动作、属性、范围、设问后回答、展开、结尾和全文覆盖。
+expected_action: 先提假设，再用首尾、段首和必要展开填三格。
+pass_condition: 三格均有全文证据，且不将取证入口当最终产物。
+gap: 完整材料未在 ANSWER 运行层发布。
+source_reference: ANSWER@b04ebc26:gaokao-english/references/course-evidence.md#例题复核补充
+case_id: R09-canonical
+question_type: 阅读理解
+source: ANSWER@b04ebc26:gaokao-english/references/course-evidence.md#例题复核补充
+question: null
+answer: null
+trigger: 主要段落齐备，任务是全文主题、态度、主体结构、最佳标题或长文框架。
+evidence: []
+method_role: framework
+expected_output: interpret
+stop_rule: 词频高，不等于主题完整。
+notes: 完整材料未在 ANSWER 运行层发布。
+method_version: 1.1.0
+source_commit: b04ebc26d7fa096404111a0bb12f6c77cc8525b9

@@ -42,11 +42,11 @@ methods:
   - repository: https://github.com/rockpunkgod/ANSWER.git
     path: gaokao-english/references/cloze.md
     heading: 行文结构（结构认识与已核操作）
-    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
+    commit: 59190489abd3e0fb6543c9a04e137881ae98cd88
   - repository: https://github.com/rockpunkgod/ANSWER.git
     path: gaokao-english/references/cloze.md
     heading: 完形填空
-    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
+    commit: 59190489abd3e0fb6543c9a04e137881ae98cd88
   section_ids: &id001
   - c84135f2763c6806
   - 3f36ea92a4769ee5
@@ -83,7 +83,7 @@ methods:
       micro_action_is_not_completion: 完成第一小步不等于完整方法成功；继续完成四步卡的判断与停止核验。
       short_stop: 词义或关系没闭合先留空，找到独立提示再返回。
     presentation_revision: 2026-10-28.2
-    source_update_note: 同根可作暂选后的独立回证，不能以初选反证词义；配平只提醒回题核证，不按字母配额改答案。
+    source_update_note: 点明方法、当前决定性证据与选排结论；定位或形式初筛不定案，完整对应/指代/覆盖/逻辑满足判据后可用显式副职责选排；缺证、竞争或冲突才继续，不造暂定或重复回文。
   cases:
     canonical: cases/cloze/C01/canonical/case.yaml
   four_step_card:
@@ -126,7 +126,7 @@ methods:
   maturity_status: candidate
   practical_value: Useful
   version: 1.2.1
-  change_reason: ANSWER 9a872ba 显式来源差异复核；旧来源归档，保基础入口与实用优先，不自动授予Case或真人准入。
+  change_reason: ANSWER 5919048 明确已核内容判据与有界副职责；不新增算法，不虚构暂定，不重复无疑点回文，旧审阅不自动升级。
   affected_cases:
   - cases/cloze/C01/canonical/case.yaml
   regression_result: pending_current_epoch_semantic_and_student_acceptance
@@ -139,9 +139,9 @@ methods:
     participant_validation: pending_real_participant_validation
     example_scope: 2026-10-28基础入口表达修订；保留原判据/Stop/课程绑定与语义版本，微动作和关系示意不是完整真题或真人实测。
   source_alignment:
-    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
+    commit: 59190489abd3e0fb6543c9a04e137881ae98cd88
     state: live_source_bound
-    source_content_changed: false
+    source_content_changed: true
     correction_profile_applied: true
     authored_first_contact_draft: true
     new_course_branches: preserved_in_full_contract_not_automatically_aliased
@@ -181,11 +181,11 @@ methods:
   - repository: https://github.com/rockpunkgod/ANSWER.git
     path: gaokao-english/references/cloze.md
     heading: 瞻前顾后法
-    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
+    commit: 59190489abd3e0fb6543c9a04e137881ae98cd88
   - repository: https://github.com/rockpunkgod/ANSWER.git
     path: gaokao-english/references/cloze.md
     heading: 完形填空
-    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
+    commit: 59190489abd3e0fb6543c9a04e137881ae98cd88
   section_ids: &id002
   - 7ff85814d7d04b1a
   - 3f36ea92a4769ee5
@@ -222,7 +222,7 @@ methods:
       micro_action_is_not_completion: 完成第一小步不等于完整方法成功；继续完成四步卡的判断与停止核验。
       short_stop: 线索冲突或仍缺证据先暂留，不截取只支持初选的一句。
     presentation_revision: 2026-10-28.2
-    source_update_note: 同根可作暂选后的独立回证，不能以初选反证词义；配平只提醒回题核证，不按字母配额改答案。
+    source_update_note: 点明方法、当前决定性证据与选排结论；定位或形式初筛不定案，完整对应/指代/覆盖/逻辑满足判据后可用显式副职责选排；缺证、竞争或冲突才继续，不造暂定或重复回文。
   cases:
     canonical: cases/cloze/C02/canonical/case.yaml
   four_step_card:
@@ -265,7 +265,7 @@ methods:
   maturity_status: candidate
   practical_value: Useful
   version: 1.2.1
-  change_reason: ANSWER 9a872ba 显式来源差异复核；旧来源归档，保基础入口与实用优先，不自动授予Case或真人准入。
+  change_reason: ANSWER 5919048 明确已核内容判据与有界副职责；不新增算法，不虚构暂定，不重复无疑点回文，旧审阅不自动升级。
   affected_cases:
   - cases/cloze/C02/canonical/case.yaml
   regression_result: pending_current_epoch_semantic_and_student_acceptance
@@ -277,9 +277,9 @@ methods:
     participant_validation: pending_real_participant_validation
     example_scope: 2026-10-28基础入口表达修订；保留原判据/Stop/课程绑定与语义版本，微动作和关系示意不是完整真题或真人实测。
   source_alignment:
-    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
+    commit: 59190489abd3e0fb6543c9a04e137881ae98cd88
     state: live_source_bound
-    source_content_changed: false
+    source_content_changed: true
     correction_profile_applied: true
     authored_first_contact_draft: true
     new_course_branches: preserved_in_full_contract_not_automatically_aliased
@@ -319,7 +319,7 @@ methods:
   - repository: https://github.com/rockpunkgod/ANSWER.git
     path: gaokao-english/references/cloze.md
     heading: 行文结构（结构认识与已核操作）
-    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
+    commit: 59190489abd3e0fb6543c9a04e137881ae98cd88
   section_ids: &id003
   - c84135f2763c6806
   can_follow: []
@@ -355,7 +355,7 @@ methods:
       micro_action_is_not_completion: 完成第一小步不等于完整方法成功；继续完成四步卡的判断与停止核验。
       short_stop: 首句没说的不编；局部已闭合不必每空重讲首句。
     presentation_revision: 2026-10-28.2
-    source_update_note: 同根可作暂选后的独立回证，不能以初选反证词义；配平只提醒回题核证，不按字母配额改答案。
+    source_update_note: 点明方法、当前决定性证据与选排结论；定位或形式初筛不定案，完整对应/指代/覆盖/逻辑满足判据后可用显式副职责选排；缺证、竞争或冲突才继续，不造暂定或重复回文。
   cases:
     canonical: cases/cloze/C03/canonical/case.yaml
   four_step_card:
@@ -398,7 +398,7 @@ methods:
   maturity_status: candidate
   practical_value: Useful
   version: 1.2.0
-  change_reason: ANSWER 9a872ba 显式来源差异复核；旧来源归档，保基础入口与实用优先，不自动授予Case或真人准入。
+  change_reason: ANSWER 5919048 明确已核内容判据与有界副职责；不新增算法，不虚构暂定，不重复无疑点回文，旧审阅不自动升级。
   affected_cases:
   - cases/cloze/C03/canonical/case.yaml
   regression_result: pending_current_epoch_semantic_and_student_acceptance
@@ -410,7 +410,7 @@ methods:
     participant_validation: pending_real_participant_validation
     example_scope: 2026-10-28基础入口表达修订；保留原判据/Stop/课程绑定与语义版本，微动作和关系示意不是完整真题或真人实测。
   source_alignment:
-    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
+    commit: 59190489abd3e0fb6543c9a04e137881ae98cd88
     state: live_source_bound
     source_content_changed: false
     correction_profile_applied: true
@@ -457,7 +457,7 @@ methods:
   - repository: https://github.com/rockpunkgod/ANSWER.git
     path: gaokao-english/references/cloze.md
     heading: 词性只引导找线索
-    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
+    commit: 59190489abd3e0fb6543c9a04e137881ae98cd88
   section_ids: &id004
   - 32023d73e6038aee
   can_follow: []
@@ -493,7 +493,7 @@ methods:
       micro_action_is_not_completion: 完成第一小步不等于完整方法成功；继续完成四步卡的判断与停止核验。
       short_stop: 修饰对象、动作归属或具体词义不明先停。
     presentation_revision: 2026-10-28.2
-    source_update_note: 同根可作暂选后的独立回证，不能以初选反证词义；配平只提醒回题核证，不按字母配额改答案。
+    source_update_note: 点明方法、当前决定性证据与选排结论；定位或形式初筛不定案，完整对应/指代/覆盖/逻辑满足判据后可用显式副职责选排；缺证、竞争或冲突才继续，不造暂定或重复回文。
   cases:
     canonical: cases/cloze/C04/canonical/case.yaml
   four_step_card:
@@ -536,7 +536,7 @@ methods:
   maturity_status: candidate
   practical_value: Useful
   version: 1.2.0
-  change_reason: ANSWER 9a872ba 显式来源差异复核；旧来源归档，保基础入口与实用优先，不自动授予Case或真人准入。
+  change_reason: ANSWER 5919048 明确已核内容判据与有界副职责；不新增算法，不虚构暂定，不重复无疑点回文，旧审阅不自动升级。
   affected_cases:
   - cases/cloze/C04/canonical/case.yaml
   regression_result: pending_current_epoch_semantic_and_student_acceptance
@@ -548,7 +548,7 @@ methods:
     participant_validation: pending_real_participant_validation
     example_scope: 2026-10-28基础入口表达修订；保留原判据/Stop/课程绑定与语义版本，微动作和关系示意不是完整真题或真人实测。
   source_alignment:
-    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
+    commit: 59190489abd3e0fb6543c9a04e137881ae98cd88
     state: live_source_bound
     source_content_changed: false
     correction_profile_applied: true
@@ -591,7 +591,7 @@ methods:
   - repository: https://github.com/rockpunkgod/ANSWER.git
     path: gaokao-english/references/cloze.md
     heading: 近义项要落到具体语义
-    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
+    commit: 59190489abd3e0fb6543c9a04e137881ae98cd88
   section_ids: &id005
   - 98c2c157b45f185a
   can_follow: []
@@ -625,7 +625,7 @@ methods:
       micro_action_is_not_completion: 完成第一小步不等于完整方法成功；继续完成四步卡的判断与停止核验。
       short_stop: 词义或搭配不明先留缺口，不凭主旨强选。
     presentation_revision: 2026-10-28.2
-    source_update_note: 同根可作暂选后的独立回证，不能以初选反证词义；配平只提醒回题核证，不按字母配额改答案。
+    source_update_note: 点明方法、当前决定性证据与选排结论；定位或形式初筛不定案，完整对应/指代/覆盖/逻辑满足判据后可用显式副职责选排；缺证、竞争或冲突才继续，不造暂定或重复回文。
   cases:
     canonical: cases/cloze/C05/canonical/case.yaml
   four_step_card:
@@ -668,7 +668,7 @@ methods:
   maturity_status: candidate
   practical_value: Useful
   version: 1.2.0
-  change_reason: ANSWER 9a872ba 显式来源差异复核；旧来源归档，保基础入口与实用优先，不自动授予Case或真人准入。
+  change_reason: ANSWER 5919048 明确已核内容判据与有界副职责；不新增算法，不虚构暂定，不重复无疑点回文，旧审阅不自动升级。
   affected_cases:
   - cases/cloze/C05/canonical/case.yaml
   regression_result: pending_current_epoch_semantic_and_student_acceptance
@@ -680,7 +680,7 @@ methods:
     participant_validation: pending_real_participant_validation
     example_scope: 2026-10-28基础入口表达修订；保留原判据/Stop/课程绑定与语义版本，微动作和关系示意不是完整真题或真人实测。
   source_alignment:
-    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
+    commit: 59190489abd3e0fb6543c9a04e137881ae98cd88
     state: live_source_bound
     source_content_changed: false
     correction_profile_applied: false
@@ -722,7 +722,7 @@ methods:
   - repository: https://github.com/rockpunkgod/ANSWER.git
     path: gaokao-english/references/cloze.md
     heading: 逻辑与时间要看真实内容
-    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
+    commit: 59190489abd3e0fb6543c9a04e137881ae98cd88
   section_ids: &id006
   - 7f0f15f40c83b385
   can_follow: []
@@ -756,7 +756,7 @@ methods:
       micro_action_is_not_completion: 完成第一小步不等于完整方法成功；继续完成四步卡的判断与停止核验。
       short_stop: 没给时间就标未知，不补时长或原因。
     presentation_revision: 2026-10-28.2
-    source_update_note: 同根可作暂选后的独立回证，不能以初选反证词义；配平只提醒回题核证，不按字母配额改答案。
+    source_update_note: 点明方法、当前决定性证据与选排结论；定位或形式初筛不定案，完整对应/指代/覆盖/逻辑满足判据后可用显式副职责选排；缺证、竞争或冲突才继续，不造暂定或重复回文。
   cases:
     canonical: cases/cloze/C06/canonical/case.yaml
   four_step_card:
@@ -799,7 +799,7 @@ methods:
   maturity_status: candidate
   practical_value: Useful
   version: 1.2.0
-  change_reason: ANSWER 9a872ba 显式来源差异复核；旧来源归档，保基础入口与实用优先，不自动授予Case或真人准入。
+  change_reason: ANSWER 5919048 明确已核内容判据与有界副职责；不新增算法，不虚构暂定，不重复无疑点回文，旧审阅不自动升级。
   affected_cases:
   - cases/cloze/C06/canonical/case.yaml
   regression_result: pending_current_epoch_semantic_and_student_acceptance
@@ -811,7 +811,7 @@ methods:
     participant_validation: pending_real_participant_validation
     example_scope: 2026-10-28基础入口表达修订；保留原判据/Stop/课程绑定与语义版本，微动作和关系示意不是完整真题或真人实测。
   source_alignment:
-    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
+    commit: 59190489abd3e0fb6543c9a04e137881ae98cd88
     state: live_source_bound
     source_content_changed: false
     correction_profile_applied: false
@@ -827,15 +827,17 @@ methods:
   method_type: sub_action
   role: locator
   primary_role: locator
-  secondary_roles: []
+  secondary_roles:
+  - decider
   output_type: locate
   student_symptoms:
   - 名词空需要同一人物物件或事件线索
   trigger_cues:
   - 名词空有可确认原词、近义、同源复现或真实语义对照线索。
   core_action: 圈相关表达及其内容，确认仍指同一人物、状态或事件；已知派生关系再核词义，必要时向后找并回填。
-  decision_rule: 只产出词汇呼应的对象线索；对照需同一语义维度，后续仍核句意、推进和主线。
-  verification: 只产出词汇呼应的对象线索；对照需同一语义维度，后续仍核句意、推进和主线。 未知词根不拆猜，共同后缀或形近不当同根；and不强定同向，复现、类别或次数不定案；同指或词义不明暂留。
+  decision_rule: 先产出同一人物、状态或事件的词汇呼应及所在内容；完整核清身份、行为、候选词义与回填关系后，可据该内容选排。只有字面重复时仍只是定位线索，不能从词形直接定案。
+  verification: 先产出同一人物、状态或事件的词汇呼应及所在内容；完整核清身份、行为、候选词义与回填关系后，可据该内容选排。只有字面重复时仍只是定位线索，不能从词形直接定案。
+    未知词根不拆猜，共同后缀或形近不当同根；and不强定同向，复现、类别或次数不定案；同指或词义不明暂留。
   stop_rule: 未知词根不拆猜，共同后缀或形近不当同根；and不强定同向，复现、类别或次数不定案；同指或词义不明暂留。
   common_wrong_instinct: 某个名词重复就直接填它，不核是否还是同一对象或同一次事件。
   failure_cases:
@@ -852,8 +854,8 @@ methods:
   source_references:
   - repository: https://github.com/rockpunkgod/ANSWER.git
     path: gaokao-english/references/cloze.md
-    heading: 名词复现只是线索
-    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
+    heading: 名词复现：找呼应并核当前空
+    commit: 59190489abd3e0fb6543c9a04e137881ae98cd88
   section_ids: &id007
   - 91f59a59fd1b5610
   can_follow: []
@@ -871,10 +873,10 @@ methods:
     line: 圈相关表达及其内容，确认仍指同一人物、状态或事件；已知派生关系再核词义，必要时向后找并回填。
     boundary: 未知词根不拆猜，共同后缀或形近不当同根；and不强定同向，复现、类别或次数不定案；同指或词义不明暂留。
     10s: 看见重复词就想填？先核两处是否仍指同一对象；复现只给线索。
-    30s: 看见重复词就想填？先圈上下文一个复现表达，核它是否仍指同一对象。例如，相同名词可能指不同事件，不是同一件事重现。未知词根不拆猜，同词或同后缀不能单独定案。
-    90s: 看见重复词就想填？圈相关表达及其内容，确认仍指同一人物、状态或事件；已知派生关系再核词义，必要时向后找并回填。这一步得到的是待查位置，不直接得答案。判断时，只产出词汇呼应的对象线索；对照需同一语义维度，后续仍核句意、推进和主线。什么时候停，未知词根不拆猜，共同后缀或形近不当同根；and不强定同向，复现、类别或次数不定案；同指或词义不明暂留。反例示意，两个地方用了同一个名词，但指不同事件或对象；重复词形不能证明本空需要该含义。换题仍检查当前题面的对象和关系，不搬上一题结论。挑战，不填名词，只连出两处复现表达，分别标对象或事件；说清为什么是同一对象，而不只指出词一样。
+    30s: 看见重复词就想填？先圈上下文一个复现表达，核它是否仍指同一对象。例如，相同名词可能指不同事件，不是同一件事重现。未知词根不拆猜，同词或同后缀不能单独定案。完整内容已核清并区分竞争项，就说明选排证据；只有形式线索则继续。
+    90s: 看见重复词就想填？圈相关表达及其内容，确认仍指同一人物、状态或事件；已知派生关系再核词义，必要时向后找并回填。这一步得到的是待查位置，不直接得答案。判断时，先产出同一人物、状态或事件的词汇呼应及所在内容；完整核清身份、行为、候选词义与回填关系后，可据该内容选排。只有字面重复时仍只是定位线索，不能从词形直接定案。什么时候停，未知词根不拆猜，共同后缀或形近不当同根；and不强定同向，复现、类别或次数不定案；同指或词义不明暂留。反例示意，两个地方用了同一个名词，但指不同事件或对象；重复词形不能证明本空需要该含义。换题仍检查当前题面的对象和关系，不搬上一题结论。挑战，不填名词，只连出两处复现表达，分别标对象或事件；说清为什么是同一对象，而不只指出词一样。
   full:
-    summary: 圈相关表达及其内容，确认仍指同一人物、状态或事件；已知派生关系再核词义，必要时向后找并回填。 只产出词汇呼应的对象线索；对照需同一语义维度，后续仍核句意、推进和主线。
+    summary: 圈相关表达及其内容，确认仍指同一人物、状态或事件；已知派生关系再核词义，必要时向后找并回填。 先产出同一人物、状态或事件的词汇呼应及所在内容；完整核清身份、行为、候选词义与回填关系后，可据该内容选排。只有字面重复时仍只是定位线索，不能从词形直接定案。
     source_boundary: 未知词根不拆猜，共同后缀或形近不当同根；and不强定同向，复现、类别或次数不定案；同指或词义不明暂留。
     boundaries:
     - 未知词根不拆猜，共同后缀或形近不当同根；and不强定同向，复现、类别或次数不定案；同指或词义不明暂留。
@@ -888,20 +890,21 @@ methods:
       example_scope: 关系/结构示意，非完整试题，不计真题或已验案例。
       micro_action_is_not_completion: 完成第一小步不等于完整方法成功；继续完成四步卡的判断与停止核验。
       short_stop: 未知词根不拆猜，同词或同后缀不能单独定案。
-    presentation_revision: 2026-10-28.2
-    source_update_note: 同根可作暂选后的独立回证，不能以初选反证词义；配平只提醒回题核证，不按字母配额改答案。
+    presentation_revision: 2026-11-06.1
+    source_update_note: 点明方法、当前决定性证据与选排结论；定位或形式初筛不定案，完整对应/指代/覆盖/逻辑满足判据后可用显式副职责选排；缺证、竞争或冲突才继续，不造暂定或重复回文。
+    decision_boundary: 主要职责和首个产物保持；副职责须显式声明decider并提供已审阅的具体候选差异、题面证据、停止与回填检查。不是分组、词面、好坏方向或排剩一项自动升级。
   cases:
     canonical: cases/cloze/C07/canonical/case.yaml
   four_step_card:
     start: 名词空有可确认原词、近义、同源复现或真实语义对照线索。
     first_cut: 圈相关表达及其内容，确认仍指同一人物、状态或事件；已知派生关系再核词义，必要时向后找并回填。
-    judge: 只产出词汇呼应的对象线索；对照需同一语义维度，后续仍核句意、推进和主线。
+    judge: 先产出同一人物、状态或事件的词汇呼应及所在内容；完整核清身份、行为、候选词义与回填关系后，可据该内容选排。只有字面重复时仍只是定位线索，不能从词形直接定案。
     stop: 未知词根不拆猜，共同后缀或形近不当同根；and不强定同向，复现、类别或次数不定案；同指或词义不明暂留。
   practicality_gate:
     status: design_complete_empirical_pending
     trigger: 名词空有可确认原词、近义、同源复现或真实语义对照线索。
     action: 圈相关表达及其内容，确认仍指同一人物、状态或事件；已知派生关系再核词义，必要时向后找并回填。
-    output: locate；只产出词汇呼应的对象线索；对照需同一语义维度，后续仍核句意、推进和主线。
+    output: locate；先产出同一人物、状态或事件的词汇呼应及所在内容；完整核清身份、行为、候选词义与回填关系后，可据该内容选排。只有字面重复时仍只是定位线索，不能从词形直接定案。
     stop: 未知词根不拆猜，共同后缀或形近不当同根；and不强定同向，复现、类别或次数不定案；同指或词义不明暂留。
     transfer: 换文仍证明同指后使用复现，不迁移上篇词对或固定比例说法。
     efficiency: 复现确实同指时缩小阅读区域；主动剔除不同指线索可减少无效判断，效果未测。
@@ -931,8 +934,8 @@ methods:
   status: candidate
   maturity_status: candidate
   practical_value: Useful
-  version: 1.2.0
-  change_reason: ANSWER 9a872ba 显式来源差异复核；旧来源归档，保基础入口与实用优先，不自动授予Case或真人准入。
+  version: 1.2.1
+  change_reason: ANSWER 5919048 明确已核内容判据与有界副职责；不新增算法，不虚构暂定，不重复无疑点回文，旧审阅不自动升级。
   affected_cases:
   - cases/cloze/C07/canonical/case.yaml
   regression_result: pending_current_epoch_semantic_and_student_acceptance
@@ -944,13 +947,14 @@ methods:
     participant_validation: pending_real_participant_validation
     example_scope: 2026-10-28基础入口表达修订；保留原判据/Stop/课程绑定与语义版本，微动作和关系示意不是完整真题或真人实测。
   source_alignment:
-    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
+    commit: 59190489abd3e0fb6543c9a04e137881ae98cd88
     state: live_source_bound
     source_content_changed: true
     correction_profile_applied: true
     authored_first_contact_draft: true
     new_course_branches: preserved_in_full_contract_not_automatically_aliased
     acceptance: explicit source delta review; learner/blind/release pending
+  secondary_role_gate: 主要职责和首个产物保持；副职责须显式声明decider并提供已审阅的具体候选差异、题面证据、停止与回填检查。不是分组、词面、好坏方向或排剩一项自动升级。
 - method_id: C08
   brand_name: 结果反推
   source_name: 评价、结果与动作链
@@ -987,9 +991,9 @@ methods:
   - repository: https://github.com/rockpunkgod/ANSWER.git
     path: gaokao-english/references/cloze.md
     heading: 评价、结果与动作链
-    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
+    commit: 59190489abd3e0fb6543c9a04e137881ae98cd88
   section_ids: &id008
-  - f7cd71358324b06d
+  - cfadf921b2f43458
   can_follow: []
   usually_before: []
   usually_after: []
@@ -1021,7 +1025,7 @@ methods:
       micro_action_is_not_completion: 完成第一小步不等于完整方法成功；继续完成四步卡的判断与停止核验。
       short_stop: 评价对象或桥接不清先停，不用猜定空作证据。
     presentation_revision: 2026-10-28.2
-    source_update_note: 同根可作暂选后的独立回证，不能以初选反证词义；配平只提醒回题核证，不按字母配额改答案。
+    source_update_note: 点明方法、当前决定性证据与选排结论；定位或形式初筛不定案，完整对应/指代/覆盖/逻辑满足判据后可用显式副职责选排；缺证、竞争或冲突才继续，不造暂定或重复回文。
   cases:
     canonical: cases/cloze/C08/canonical/case.yaml
   four_step_card:
@@ -1064,7 +1068,7 @@ methods:
   maturity_status: candidate
   practical_value: Useful
   version: 1.2.0
-  change_reason: ANSWER 9a872ba 显式来源差异复核；旧来源归档，保基础入口与实用优先，不自动授予Case或真人准入。
+  change_reason: ANSWER 5919048 明确已核内容判据与有界副职责；不新增算法，不虚构暂定，不重复无疑点回文，旧审阅不自动升级。
   affected_cases:
   - cases/cloze/C08/canonical/case.yaml
   regression_result: pending_current_epoch_semantic_and_student_acceptance
@@ -1076,7 +1080,7 @@ methods:
     participant_validation: pending_real_participant_validation
     example_scope: 2026-10-28基础入口表达修订；保留原判据/Stop/课程绑定与语义版本，微动作和关系示意不是完整真题或真人实测。
   source_alignment:
-    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
+    commit: 59190489abd3e0fb6543c9a04e137881ae98cd88
     state: live_source_bound
     source_content_changed: false
     correction_profile_applied: false
@@ -1124,9 +1128,9 @@ methods:
   - repository: https://github.com/rockpunkgod/ANSWER.git
     path: gaokao-english/references/cloze.md
     heading: 评价、结果与动作链
-    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
+    commit: 59190489abd3e0fb6543c9a04e137881ae98cd88
   section_ids: &id009
-  - f7cd71358324b06d
+  - cfadf921b2f43458
   can_follow: []
   usually_before: []
   usually_after: []
@@ -1158,7 +1162,7 @@ methods:
       micro_action_is_not_completion: 完成第一小步不等于完整方法成功；继续完成四步卡的判断与停止核验。
       short_stop: 没有依据的边留空，不补动作、时长或因果。
     presentation_revision: 2026-10-28.2
-    source_update_note: 同根可作暂选后的独立回证，不能以初选反证词义；配平只提醒回题核证，不按字母配额改答案。
+    source_update_note: 点明方法、当前决定性证据与选排结论；定位或形式初筛不定案，完整对应/指代/覆盖/逻辑满足判据后可用显式副职责选排；缺证、竞争或冲突才继续，不造暂定或重复回文。
   cases:
     canonical: cases/cloze/C09/canonical/case.yaml
   four_step_card:
@@ -1201,7 +1205,7 @@ methods:
   maturity_status: candidate
   practical_value: Useful
   version: 1.2.0
-  change_reason: ANSWER 9a872ba 显式来源差异复核；旧来源归档，保基础入口与实用优先，不自动授予Case或真人准入。
+  change_reason: ANSWER 5919048 明确已核内容判据与有界副职责；不新增算法，不虚构暂定，不重复无疑点回文，旧审阅不自动升级。
   affected_cases:
   - cases/cloze/C09/canonical/case.yaml
   regression_result: pending_current_epoch_semantic_and_student_acceptance
@@ -1213,7 +1217,7 @@ methods:
     participant_validation: pending_real_participant_validation
     example_scope: 2026-10-28基础入口表达修订；保留原判据/Stop/课程绑定与语义版本，微动作和关系示意不是完整真题或真人实测。
   source_alignment:
-    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
+    commit: 59190489abd3e0fb6543c9a04e137881ae98cd88
     state: live_source_bound
     source_content_changed: false
     correction_profile_applied: false

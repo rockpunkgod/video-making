@@ -80,7 +80,7 @@
           "reviewer": "synthetic-program-fixture-not-a-teacher-study",
           "source_section_ids": [
             "dba42e053595968b",
-            "7b525972f9c7ba5d"
+            "a027c2d052029633"
           ],
           "segments": [
             {
@@ -242,7 +242,7 @@
           "reviewer": "synthetic-program-fixture-not-a-teacher-study",
           "source_section_ids": [
             "dba42e053595968b",
-            "7b525972f9c7ba5d"
+            "a027c2d052029633"
           ],
           "segments": [
             {
@@ -404,7 +404,7 @@
           "reviewer": "synthetic-program-fixture-not-a-teacher-study",
           "source_section_ids": [
             "dba42e053595968b",
-            "7b525972f9c7ba5d"
+            "a027c2d052029633"
           ],
           "segments": [
             {
@@ -495,7 +495,7 @@
     "reviewer": "synthetic-program-fixture-not-participant",
     "review_status": "reviewed",
     "source_section_ids": [
-      "e58abd179eadaaff"
+      "5818b32593e6cc4f"
     ],
     "reading_mode": "central_task",
     "steps": [

@@ -410,12 +410,15 @@ class FirstUseMaterialsTests(unittest.TestCase):
         from copy import deepcopy
         from core.registry import ROOT
         original=json.loads((ROOT/'provenance/student-entry-revisions/F01-1.2.0-before-conditional-challenge.json').read_text(encoding='utf-8'))['method']
-        current=self.registry.methods['F01']
+        # This tests the frozen conditional-challenge revision. Later source
+        # clarifications are covered by their own current-epoch regressions.
+        registry=Registry(snapshot_commit='9a872ba0397910bd9350cff860c3b94fd061a3a8')
+        current=registry.methods['F01']
         for key in ('version','core_action','trigger_cues','decision_rule','stop_rule','primary_role','four_step_card'):
             self.assertEqual(current[key],original[key],key)
         history=Registry(snapshot_commit=original['source_alignment']['commit'])
         old_sections=[history.sources['sections'][sid] for sid in original['full']['section_ids']]
-        new_sections=[self.registry.sources['sections'][sid] for sid in current['full']['section_ids']]
+        new_sections=[registry.sources['sections'][sid] for sid in current['full']['section_ids']]
         self.assertEqual(len(new_sections),len(old_sections))
         for old,new in zip(old_sections,new_sections):
             self.assertEqual({key:new[key] for key in ('path','heading')},
@@ -425,15 +428,15 @@ class FirstUseMaterialsTests(unittest.TestCase):
                 # the unchanged first-use method contract is checked above.
                 from scripts.rebind_question_corpus import approved_changes,digest_text
                 previous=Registry(snapshot_commit='70db6d6f0423bc8da95c591ca1feda883c2865b1')
-                approval=approved_changes(previous,self.registry)[(old['path'],old['heading'])]
+                approval=approved_changes(previous,registry)[(old['path'],old['heading'])]
                 self.assertEqual(approval['before_sha256'],digest_text(old['content']))
                 self.assertEqual(approval['after_sha256'],digest_text(new['content']))
         expected_full=deepcopy(original['full'])
         expected_full['section_ids']=list(current['full']['section_ids'])
-        if self.registry.index['source_baseline']['commit']=='70db6d6f0423bc8da95c591ca1feda883c2865b1':
+        if registry.index['source_baseline']['commit']=='70db6d6f0423bc8da95c591ca1feda883c2865b1':
             from scripts.align_answer_20261030 import NOTES
             expected_full['source_update_note']=NOTES['F']
-        elif self.registry.index['source_baseline']['commit']=='9a872ba0397910bd9350cff860c3b94fd061a3a8':
+        elif registry.index['source_baseline']['commit']=='9a872ba0397910bd9350cff860c3b94fd061a3a8':
             from scripts.align_answer_9a872ba import NOTES
             expected_full['source_update_note']=NOTES['F']
         # Optional presentation support cannot change any existing full-card

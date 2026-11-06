@@ -29,6 +29,16 @@ def approved_changes(previous, current):
             report['to_commit'] != commit or report['status'] != 'applied'):
         raise ValueError('Explicit applied source-delta review required')
     result = {}
+    for change in report.get('source_sections_reviewed', []):
+        candidates=[s for s in previous.sources['sections'].values()
+                    if (s['path'],s['heading'])==(change['path'],change['old_heading'])]
+        targets=[s for s in current.sources['sections'].values()
+                 if (s['path'],s['heading'])==(change['path'],change['new_heading'])]
+        if (len(candidates)!=1 or len(targets)!=1 or
+                digest_text(candidates[0]['content'])!=change['before_sha256'] or
+                digest_text(targets[0]['content'])!=change['after_sha256']):
+            raise ValueError('Common source delta must match exact before/after content')
+        result[(change['path'],change['old_heading'])]={k:v for k,v in change.items() if k!='path'}
     for row in report['methods_reviewed']:
         old = previous.methods[row['method_id']]
         for change in row['source_deltas']:

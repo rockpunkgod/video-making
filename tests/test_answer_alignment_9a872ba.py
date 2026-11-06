@@ -12,7 +12,7 @@ class LatestAnswerAlignmentTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         cls.old=Registry(snapshot_commit=PREVIOUS)
-        cls.current=Registry()
+        cls.current=Registry(snapshot_commit=TARGET)
         cls.assets=build(cls.current)
 
     def test_both_epochs_validate_and_no_promotion(self):
@@ -36,7 +36,7 @@ class LatestAnswerAlignmentTests(unittest.TestCase):
     def test_all_source_bytes_are_exact_and_no_old_supplement_returns(self):
         manifest=self.current._load('provenance/manifest.yaml')
         for row in manifest['files']:
-            self.assertEqual(hashlib.sha256((ROOT/'provenance/ANSWER'/row['path']).read_bytes()).hexdigest(),row['sha256'])
+            self.assertEqual(hashlib.sha256((self.current.asset_root/'provenance/ANSWER'/row['path']).read_bytes()).hexdigest(),row['sha256'])
         for path in ('gaokao-english/references/reading-comprehension.md','gaokao-writing/references/application-writing-and-correction.md'):
             self.assertEqual(self.assets[path],self.current.document(path))
         catalog=json.loads((ROOT/'creative/method-choreography/course-method-mapping.json').read_bytes())

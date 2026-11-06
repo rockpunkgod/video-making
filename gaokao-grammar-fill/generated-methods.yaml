@@ -48,23 +48,23 @@ methods:
   - repository: https://github.com/rockpunkgod/ANSWER.git
     path: gaokao-grammar-fill/references/grammar-fill.md
     heading: 总路线
-    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
+    commit: 59190489abd3e0fb6543c9a04e137881ae98cd88
   - repository: https://github.com/rockpunkgod/ANSWER.git
     path: gaokao-grammar-fill/references/grammar-fill.md
     heading: 无提示词
-    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
+    commit: 59190489abd3e0fb6543c9a04e137881ae98cd88
   - repository: https://github.com/rockpunkgod/ANSWER.git
     path: gaokao-grammar-fill/references/grammar-fill.md
     heading: 有提示词
-    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
+    commit: 59190489abd3e0fb6543c9a04e137881ae98cd88
   - repository: https://github.com/rockpunkgod/ANSWER.git
     path: gaokao-grammar-fill/references/grammar-fill.md
     heading: 需要动词形式：先判谓语还是非谓语
-    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
+    commit: 59190489abd3e0fb6543c9a04e137881ae98cd88
   - repository: https://github.com/rockpunkgod/ANSWER.git
     path: gaokao-grammar-fill/references/course-evidence.md
     heading: 语法填空
-    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
+    commit: 59190489abd3e0fb6543c9a04e137881ae98cd88
   can_follow:
   - 意群划分
   - 劫匪插葱
@@ -200,7 +200,7 @@ methods:
   method_type: framework
   maturity_status: candidate
   practical_value: Useful
-  change_reason: ANSWER 9a872ba 显式来源差异复核；旧来源归档，保基础入口与实用优先，不自动授予Case或真人准入。
+  change_reason: ANSWER 5919048 明确已核内容判据与有界副职责；不新增算法，不虚构暂定，不重复无疑点回文，旧审阅不自动升级。
   affected_cases:
   - cases/G01/canonical/case.yaml
   - cases/G01/counterexamples/case.yaml
@@ -236,9 +236,9 @@ methods:
   entry_copy: 看到空先别变词。先只标本空有没有括号提示词，再在未填句圈决定它功能的词，不开始变形。没有提示词去功能词路线；有提示词先判位置需要什么，确认要动词才分谓语与非谓语。这一步得到的只是下一知识节点；到节点后用具体句法、搭配和句意求证，不是词形答案。如果卡住，先标有无提示和空位所在结构；成分/词义不清停在节点前，不从答案倒贴功能。
   student_ready: false
   source_alignment:
-    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
+    commit: 59190489abd3e0fb6543c9a04e137881ae98cd88
     state: live_source_bound
-    source_content_changed: true
+    source_content_changed: false
     correction_profile_applied: false
     authored_first_contact_draft: true
     new_course_branches: preserved_in_full_contract_not_automatically_aliased
@@ -289,7 +289,7 @@ methods:
   - repository: https://github.com/rockpunkgod/ANSWER.git
     path: gaokao-grammar-fill/references/grammar-fill.md
     heading: 总路线
-    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
+    commit: 59190489abd3e0fb6543c9a04e137881ae98cd88
   section_ids: &id002
   - 781c4478d621bf5c
   can_follow: []
@@ -366,7 +366,7 @@ methods:
   maturity_status: candidate
   practical_value: Useful
   version: 1.2.0
-  change_reason: ANSWER 9a872ba 显式来源差异复核；旧来源归档，保基础入口与实用优先，不自动授予Case或真人准入。
+  change_reason: ANSWER 5919048 明确已核内容判据与有界副职责；不新增算法，不虚构暂定，不重复无疑点回文，旧审阅不自动升级。
   affected_cases:
   - cases/grammar/G02/canonical/case.yaml
   regression_result: pending_current_epoch_semantic_and_student_acceptance
@@ -378,7 +378,7 @@ methods:
     participant_validation: pending_real_participant_validation
     example_scope: 2026-10-28基础入口表达修订；保留原判据/Stop/课程绑定与语义版本，微动作和关系示意不是完整真题或真人实测。
   source_alignment:
-    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
+    commit: 59190489abd3e0fb6543c9a04e137881ae98cd88
     state: live_source_bound
     source_content_changed: false
     correction_profile_applied: false
@@ -426,7 +426,7 @@ methods:
   - repository: https://github.com/rockpunkgod/ANSWER.git
     path: gaokao-grammar-fill/references/grammar-fill.md
     heading: 冠词
-    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
+    commit: 59190489abd3e0fb6543c9a04e137881ae98cd88
   section_ids: &id003
   - dfb1dccd2a7f06e2
   can_follow: []
@@ -503,7 +503,7 @@ methods:
   maturity_status: candidate
   practical_value: Useful
   version: 1.2.1
-  change_reason: ANSWER 9a872ba 显式来源差异复核；旧来源归档，保基础入口与实用优先，不自动授予Case或真人准入。
+  change_reason: ANSWER 5919048 明确已核内容判据与有界副职责；不新增算法，不虚构暂定，不重复无疑点回文，旧审阅不自动升级。
   affected_cases:
   - cases/grammar/G03/canonical/case.yaml
   regression_result: pending_current_epoch_semantic_and_student_acceptance
@@ -515,9 +515,9 @@ methods:
     participant_validation: pending_real_participant_validation
     example_scope: 2026-10-28基础入口表达修订；保留原判据/Stop/课程绑定与语义版本，微动作和关系示意不是完整真题或真人实测。
   source_alignment:
-    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
+    commit: 59190489abd3e0fb6543c9a04e137881ae98cd88
     state: live_source_bound
-    source_content_changed: true
+    source_content_changed: false
     correction_profile_applied: false
     authored_first_contact_draft: true
     new_course_branches: preserved_in_full_contract_not_automatically_aliased
@@ -563,7 +563,7 @@ methods:
   - repository: https://github.com/rockpunkgod/ANSWER.git
     path: gaokao-grammar-fill/references/grammar-fill.md
     heading: 代词
-    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
+    commit: 59190489abd3e0fb6543c9a04e137881ae98cd88
   section_ids: &id004
   - 0c267d2ed379a98a
   can_follow: []
@@ -641,7 +641,7 @@ methods:
   maturity_status: candidate
   practical_value: Useful
   version: 1.2.0
-  change_reason: ANSWER 9a872ba 显式来源差异复核；旧来源归档，保基础入口与实用优先，不自动授予Case或真人准入。
+  change_reason: ANSWER 5919048 明确已核内容判据与有界副职责；不新增算法，不虚构暂定，不重复无疑点回文，旧审阅不自动升级。
   affected_cases:
   - cases/grammar/G04/canonical/case.yaml
   regression_result: pending_current_epoch_semantic_and_student_acceptance
@@ -653,7 +653,7 @@ methods:
     participant_validation: pending_real_participant_validation
     example_scope: 2026-10-28基础入口表达修订；保留原判据/Stop/课程绑定与语义版本，微动作和关系示意不是完整真题或真人实测。
   source_alignment:
-    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
+    commit: 59190489abd3e0fb6543c9a04e137881ae98cd88
     state: live_source_bound
     source_content_changed: false
     correction_profile_applied: false
@@ -701,7 +701,7 @@ methods:
   - repository: https://github.com/rockpunkgod/ANSWER.git
     path: gaokao-grammar-fill/references/grammar-fill.md
     heading: 介词
-    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
+    commit: 59190489abd3e0fb6543c9a04e137881ae98cd88
   section_ids: &id005
   - c78012aeef62d5b9
   can_follow: []
@@ -778,7 +778,7 @@ methods:
   maturity_status: candidate
   practical_value: Useful
   version: 1.2.0
-  change_reason: ANSWER 9a872ba 显式来源差异复核；旧来源归档，保基础入口与实用优先，不自动授予Case或真人准入。
+  change_reason: ANSWER 5919048 明确已核内容判据与有界副职责；不新增算法，不虚构暂定，不重复无疑点回文，旧审阅不自动升级。
   affected_cases:
   - cases/grammar/G05/canonical/case.yaml
   regression_result: pending_current_epoch_semantic_and_student_acceptance
@@ -790,9 +790,9 @@ methods:
     participant_validation: pending_real_participant_validation
     example_scope: 2026-10-28基础入口表达修订；保留原判据/Stop/课程绑定与语义版本，微动作和关系示意不是完整真题或真人实测。
   source_alignment:
-    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
+    commit: 59190489abd3e0fb6543c9a04e137881ae98cd88
     state: live_source_bound
-    source_content_changed: true
+    source_content_changed: false
     correction_profile_applied: false
     authored_first_contact_draft: true
     new_course_branches: preserved_in_full_contract_not_automatically_aliased
@@ -838,7 +838,7 @@ methods:
   - repository: https://github.com/rockpunkgod/ANSWER.git
     path: gaokao-grammar-fill/references/grammar-fill.md
     heading: 连词、关系词与名词性从句连接词
-    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
+    commit: 59190489abd3e0fb6543c9a04e137881ae98cd88
   section_ids: &id006
   - 1bc229eecb92ae3c
   can_follow: []
@@ -915,7 +915,7 @@ methods:
   maturity_status: candidate
   practical_value: Useful
   version: 1.2.0
-  change_reason: ANSWER 9a872ba 显式来源差异复核；旧来源归档，保基础入口与实用优先，不自动授予Case或真人准入。
+  change_reason: ANSWER 5919048 明确已核内容判据与有界副职责；不新增算法，不虚构暂定，不重复无疑点回文，旧审阅不自动升级。
   affected_cases:
   - cases/grammar/G06/canonical/case.yaml
   regression_result: pending_current_epoch_semantic_and_student_acceptance
@@ -927,9 +927,9 @@ methods:
     participant_validation: pending_real_participant_validation
     example_scope: 2026-10-28基础入口表达修订；保留原判据/Stop/课程绑定与语义版本，微动作和关系示意不是完整真题或真人实测。
   source_alignment:
-    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
+    commit: 59190489abd3e0fb6543c9a04e137881ae98cd88
     state: live_source_bound
-    source_content_changed: true
+    source_content_changed: false
     correction_profile_applied: false
     authored_first_contact_draft: true
     new_course_branches: preserved_in_full_contract_not_automatically_aliased
@@ -975,7 +975,7 @@ methods:
   - repository: https://github.com/rockpunkgod/ANSWER.git
     path: gaokao-grammar-fill/references/grammar-fill.md
     heading: 句间逻辑衔接
-    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
+    commit: 59190489abd3e0fb6543c9a04e137881ae98cd88
   section_ids: &id007
   - ccfc09a472cb85a6
   can_follow: []
@@ -1052,7 +1052,7 @@ methods:
   maturity_status: candidate
   practical_value: Useful
   version: 1.2.0
-  change_reason: ANSWER 9a872ba 显式来源差异复核；旧来源归档，保基础入口与实用优先，不自动授予Case或真人准入。
+  change_reason: ANSWER 5919048 明确已核内容判据与有界副职责；不新增算法，不虚构暂定，不重复无疑点回文，旧审阅不自动升级。
   affected_cases:
   - cases/grammar/G07/canonical/case.yaml
   regression_result: pending_current_epoch_semantic_and_student_acceptance
@@ -1064,7 +1064,7 @@ methods:
     participant_validation: pending_real_participant_validation
     example_scope: 2026-10-28基础入口表达修订；保留原判据/Stop/课程绑定与语义版本，微动作和关系示意不是完整真题或真人实测。
   source_alignment:
-    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
+    commit: 59190489abd3e0fb6543c9a04e137881ae98cd88
     state: live_source_bound
     source_content_changed: false
     correction_profile_applied: false
@@ -1112,7 +1112,7 @@ methods:
   - repository: https://github.com/rockpunkgod/ANSWER.git
     path: gaokao-grammar-fill/references/grammar-fill.md
     heading: 有提示词
-    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
+    commit: 59190489abd3e0fb6543c9a04e137881ae98cd88
   section_ids: &id008
   - be5c8b287ffa3745
   can_follow: []
@@ -1190,7 +1190,7 @@ methods:
   maturity_status: candidate
   practical_value: Useful
   version: 1.2.0
-  change_reason: ANSWER 9a872ba 显式来源差异复核；旧来源归档，保基础入口与实用优先，不自动授予Case或真人准入。
+  change_reason: ANSWER 5919048 明确已核内容判据与有界副职责；不新增算法，不虚构暂定，不重复无疑点回文，旧审阅不自动升级。
   affected_cases:
   - cases/grammar/G08/canonical/case.yaml
   regression_result: pending_current_epoch_semantic_and_student_acceptance
@@ -1202,7 +1202,7 @@ methods:
     participant_validation: pending_real_participant_validation
     example_scope: 2026-10-28基础入口表达修订；保留原判据/Stop/课程绑定与语义版本，微动作和关系示意不是完整真题或真人实测。
   source_alignment:
-    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
+    commit: 59190489abd3e0fb6543c9a04e137881ae98cd88
     state: live_source_bound
     source_content_changed: false
     correction_profile_applied: false
@@ -1250,7 +1250,7 @@ methods:
   - repository: https://github.com/rockpunkgod/ANSWER.git
     path: gaokao-grammar-fill/references/grammar-fill.md
     heading: 名词及所有格
-    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
+    commit: 59190489abd3e0fb6543c9a04e137881ae98cd88
   section_ids: &id009
   - ab42f9a3682492c6
   can_follow: []
@@ -1328,7 +1328,7 @@ methods:
   maturity_status: candidate
   practical_value: Useful
   version: 1.2.0
-  change_reason: ANSWER 9a872ba 显式来源差异复核；旧来源归档，保基础入口与实用优先，不自动授予Case或真人准入。
+  change_reason: ANSWER 5919048 明确已核内容判据与有界副职责；不新增算法，不虚构暂定，不重复无疑点回文，旧审阅不自动升级。
   affected_cases:
   - cases/grammar/G09/canonical/case.yaml
   regression_result: pending_current_epoch_semantic_and_student_acceptance
@@ -1340,7 +1340,7 @@ methods:
     participant_validation: pending_real_participant_validation
     example_scope: 2026-10-28基础入口表达修订；保留原判据/Stop/课程绑定与语义版本，微动作和关系示意不是完整真题或真人实测。
   source_alignment:
-    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
+    commit: 59190489abd3e0fb6543c9a04e137881ae98cd88
     state: live_source_bound
     source_content_changed: false
     correction_profile_applied: false
@@ -1388,7 +1388,7 @@ methods:
   - repository: https://github.com/rockpunkgod/ANSWER.git
     path: gaokao-grammar-fill/references/grammar-fill.md
     heading: 形容词、副词与比较等级
-    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
+    commit: 59190489abd3e0fb6543c9a04e137881ae98cd88
   section_ids: &id010
   - 3cc12c22579257d5
   can_follow: []
@@ -1465,7 +1465,7 @@ methods:
   maturity_status: candidate
   practical_value: Useful
   version: 1.2.0
-  change_reason: ANSWER 9a872ba 显式来源差异复核；旧来源归档，保基础入口与实用优先，不自动授予Case或真人准入。
+  change_reason: ANSWER 5919048 明确已核内容判据与有界副职责；不新增算法，不虚构暂定，不重复无疑点回文，旧审阅不自动升级。
   affected_cases:
   - cases/grammar/G10/canonical/case.yaml
   regression_result: pending_current_epoch_semantic_and_student_acceptance
@@ -1477,7 +1477,7 @@ methods:
     participant_validation: pending_real_participant_validation
     example_scope: 2026-10-28基础入口表达修订；保留原判据/Stop/课程绑定与语义版本，微动作和关系示意不是完整真题或真人实测。
   source_alignment:
-    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
+    commit: 59190489abd3e0fb6543c9a04e137881ae98cd88
     state: live_source_bound
     source_content_changed: false
     correction_profile_applied: false
@@ -1525,7 +1525,7 @@ methods:
   - repository: https://github.com/rockpunkgod/ANSWER.git
     path: gaokao-grammar-fill/references/grammar-fill.md
     heading: 数词
-    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
+    commit: 59190489abd3e0fb6543c9a04e137881ae98cd88
   section_ids: &id011
   - b2282a270b8de478
   can_follow: []
@@ -1602,7 +1602,7 @@ methods:
   maturity_status: candidate
   practical_value: Useful
   version: 1.2.0
-  change_reason: ANSWER 9a872ba 显式来源差异复核；旧来源归档，保基础入口与实用优先，不自动授予Case或真人准入。
+  change_reason: ANSWER 5919048 明确已核内容判据与有界副职责；不新增算法，不虚构暂定，不重复无疑点回文，旧审阅不自动升级。
   affected_cases:
   - cases/grammar/G11/canonical/case.yaml
   regression_result: pending_current_epoch_semantic_and_student_acceptance
@@ -1614,7 +1614,7 @@ methods:
     participant_validation: pending_real_participant_validation
     example_scope: 2026-10-28基础入口表达修订；保留原判据/Stop/课程绑定与语义版本，微动作和关系示意不是完整真题或真人实测。
   source_alignment:
-    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
+    commit: 59190489abd3e0fb6543c9a04e137881ae98cd88
     state: live_source_bound
     source_content_changed: false
     correction_profile_applied: false
@@ -1666,7 +1666,7 @@ methods:
   - repository: https://github.com/rockpunkgod/ANSWER.git
     path: gaokao-grammar-fill/references/grammar-fill.md
     heading: 第一步：数谓语、看连接
-    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
+    commit: 59190489abd3e0fb6543c9a04e137881ae98cd88
   section_ids: &id012
   - 01b66e853d507205
   can_follow: []
@@ -1743,7 +1743,7 @@ methods:
   maturity_status: candidate
   practical_value: Useful
   version: 1.2.0
-  change_reason: ANSWER 9a872ba 显式来源差异复核；旧来源归档，保基础入口与实用优先，不自动授予Case或真人准入。
+  change_reason: ANSWER 5919048 明确已核内容判据与有界副职责；不新增算法，不虚构暂定，不重复无疑点回文，旧审阅不自动升级。
   affected_cases:
   - cases/grammar/G12/canonical/case.yaml
   regression_result: pending_current_epoch_semantic_and_student_acceptance
@@ -1755,7 +1755,7 @@ methods:
     participant_validation: pending_real_participant_validation
     example_scope: 2026-10-28基础入口表达修订；保留原判据/Stop/课程绑定与语义版本，微动作和关系示意不是完整真题或真人实测。
   source_alignment:
-    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
+    commit: 59190489abd3e0fb6543c9a04e137881ae98cd88
     state: live_source_bound
     source_content_changed: false
     correction_profile_applied: false
@@ -1806,7 +1806,7 @@ methods:
   - repository: https://github.com/rockpunkgod/ANSWER.git
     path: gaokao-grammar-fill/references/grammar-fill.md
     heading: 谓语：检查时态、语态、主谓一致
-    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
+    commit: 59190489abd3e0fb6543c9a04e137881ae98cd88
   section_ids: &id013
   - c6ee3d2de761c2d8
   can_follow: []
@@ -1883,7 +1883,7 @@ methods:
   maturity_status: candidate
   practical_value: Useful
   version: 1.2.0
-  change_reason: ANSWER 9a872ba 显式来源差异复核；旧来源归档，保基础入口与实用优先，不自动授予Case或真人准入。
+  change_reason: ANSWER 5919048 明确已核内容判据与有界副职责；不新增算法，不虚构暂定，不重复无疑点回文，旧审阅不自动升级。
   affected_cases:
   - cases/grammar/G13/canonical/case.yaml
   regression_result: pending_current_epoch_semantic_and_student_acceptance
@@ -1895,9 +1895,9 @@ methods:
     participant_validation: pending_real_participant_validation
     example_scope: 2026-10-28基础入口表达修订；保留原判据/Stop/课程绑定与语义版本，微动作和关系示意不是完整真题或真人实测。
   source_alignment:
-    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
+    commit: 59190489abd3e0fb6543c9a04e137881ae98cd88
     state: live_source_bound
-    source_content_changed: true
+    source_content_changed: false
     correction_profile_applied: false
     authored_first_contact_draft: true
     new_course_branches: preserved_in_full_contract_not_automatically_aliased
@@ -1937,7 +1937,7 @@ methods:
   - repository: https://github.com/rockpunkgod/ANSWER.git
     path: gaokao-grammar-fill/references/grammar-fill.md
     heading: 谓语：检查时态、语态、主谓一致
-    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
+    commit: 59190489abd3e0fb6543c9a04e137881ae98cd88
   section_ids: &id014
   - c6ee3d2de761c2d8
   can_follow: []
@@ -2014,7 +2014,7 @@ methods:
   maturity_status: candidate
   practical_value: Useful
   version: 1.2.0
-  change_reason: ANSWER 9a872ba 显式来源差异复核；旧来源归档，保基础入口与实用优先，不自动授予Case或真人准入。
+  change_reason: ANSWER 5919048 明确已核内容判据与有界副职责；不新增算法，不虚构暂定，不重复无疑点回文，旧审阅不自动升级。
   affected_cases:
   - cases/grammar/G14/canonical/case.yaml
   regression_result: pending_current_epoch_semantic_and_student_acceptance
@@ -2026,9 +2026,9 @@ methods:
     participant_validation: pending_real_participant_validation
     example_scope: 2026-10-28基础入口表达修订；保留原判据/Stop/课程绑定与语义版本，微动作和关系示意不是完整真题或真人实测。
   source_alignment:
-    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
+    commit: 59190489abd3e0fb6543c9a04e137881ae98cd88
     state: live_source_bound
-    source_content_changed: true
+    source_content_changed: false
     correction_profile_applied: false
     authored_first_contact_draft: true
     new_course_branches: preserved_in_full_contract_not_automatically_aliased
@@ -2078,7 +2078,7 @@ methods:
   - repository: https://github.com/rockpunkgod/ANSWER.git
     path: gaokao-grammar-fill/references/grammar-fill.md
     heading: 非谓语：作用、主被动与先后
-    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
+    commit: 59190489abd3e0fb6543c9a04e137881ae98cd88
   section_ids: &id015
   - 68c5400be79ea170
   can_follow: []
@@ -2155,7 +2155,7 @@ methods:
   maturity_status: candidate
   practical_value: Useful
   version: 1.2.0
-  change_reason: ANSWER 9a872ba 显式来源差异复核；旧来源归档，保基础入口与实用优先，不自动授予Case或真人准入。
+  change_reason: ANSWER 5919048 明确已核内容判据与有界副职责；不新增算法，不虚构暂定，不重复无疑点回文，旧审阅不自动升级。
   affected_cases:
   - cases/grammar/G15/canonical/case.yaml
   regression_result: pending_current_epoch_semantic_and_student_acceptance
@@ -2167,9 +2167,9 @@ methods:
     participant_validation: pending_real_participant_validation
     example_scope: 2026-10-28基础入口表达修订；保留原判据/Stop/课程绑定与语义版本，微动作和关系示意不是完整真题或真人实测。
   source_alignment:
-    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
+    commit: 59190489abd3e0fb6543c9a04e137881ae98cd88
     state: live_source_bound
-    source_content_changed: true
+    source_content_changed: false
     correction_profile_applied: false
     authored_first_contact_draft: true
     new_course_branches: preserved_in_full_contract_not_automatically_aliased
@@ -2217,7 +2217,7 @@ methods:
   - repository: https://github.com/rockpunkgod/ANSWER.git
     path: gaokao-grammar-fill/references/grammar-fill.md
     heading: 26S春 补充（非谓语动词专项）
-    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
+    commit: 59190489abd3e0fb6543c9a04e137881ae98cd88
   section_ids: &id016
   - 5d83575e1d881f91
   can_follow: []
@@ -2294,7 +2294,7 @@ methods:
   maturity_status: candidate
   practical_value: Useful
   version: 1.2.0
-  change_reason: ANSWER 9a872ba 显式来源差异复核；旧来源归档，保基础入口与实用优先，不自动授予Case或真人准入。
+  change_reason: ANSWER 5919048 明确已核内容判据与有界副职责；不新增算法，不虚构暂定，不重复无疑点回文，旧审阅不自动升级。
   affected_cases:
   - cases/grammar/G16/canonical/case.yaml
   regression_result: pending_current_epoch_semantic_and_student_acceptance
@@ -2306,9 +2306,9 @@ methods:
     participant_validation: pending_real_participant_validation
     example_scope: 2026-10-28基础入口表达修订；保留原判据/Stop/课程绑定与语义版本，微动作和关系示意不是完整真题或真人实测。
   source_alignment:
-    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
+    commit: 59190489abd3e0fb6543c9a04e137881ae98cd88
     state: live_source_bound
-    source_content_changed: true
+    source_content_changed: false
     correction_profile_applied: false
     authored_first_contact_draft: true
     new_course_branches: preserved_in_full_contract_not_automatically_aliased
@@ -2354,7 +2354,7 @@ methods:
   - repository: https://github.com/rockpunkgod/ANSWER.git
     path: gaokao-grammar-fill/references/grammar-fill.md
     heading: 总路线
-    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
+    commit: 59190489abd3e0fb6543c9a04e137881ae98cd88
   section_ids: &id017
   - 781c4478d621bf5c
   can_follow: []
@@ -2431,7 +2431,7 @@ methods:
   maturity_status: candidate
   practical_value: Useful
   version: 1.2.0
-  change_reason: ANSWER 9a872ba 显式来源差异复核；旧来源归档，保基础入口与实用优先，不自动授予Case或真人准入。
+  change_reason: ANSWER 5919048 明确已核内容判据与有界副职责；不新增算法，不虚构暂定，不重复无疑点回文，旧审阅不自动升级。
   affected_cases:
   - cases/grammar/G17/canonical/case.yaml
   regression_result: pending_current_epoch_semantic_and_student_acceptance
@@ -2443,7 +2443,7 @@ methods:
     participant_validation: pending_real_participant_validation
     example_scope: 2026-10-28基础入口表达修订；保留原判据/Stop/课程绑定与语义版本，微动作和关系示意不是完整真题或真人实测。
   source_alignment:
-    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
+    commit: 59190489abd3e0fb6543c9a04e137881ae98cd88
     state: live_source_bound
     source_content_changed: false
     correction_profile_applied: false
@@ -2491,7 +2491,7 @@ methods:
   - repository: https://github.com/rockpunkgod/ANSWER.git
     path: gaokao-grammar-fill/references/grammar-fill.md
     heading: 总路线
-    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
+    commit: 59190489abd3e0fb6543c9a04e137881ae98cd88
   section_ids: &id018
   - 781c4478d621bf5c
   can_follow: []
@@ -2568,7 +2568,7 @@ methods:
   maturity_status: candidate
   practical_value: Useful
   version: 1.2.0
-  change_reason: ANSWER 9a872ba 显式来源差异复核；旧来源归档，保基础入口与实用优先，不自动授予Case或真人准入。
+  change_reason: ANSWER 5919048 明确已核内容判据与有界副职责；不新增算法，不虚构暂定，不重复无疑点回文，旧审阅不自动升级。
   affected_cases:
   - cases/grammar/G18/canonical/case.yaml
   regression_result: pending_current_epoch_semantic_and_student_acceptance
@@ -2580,7 +2580,7 @@ methods:
     participant_validation: pending_real_participant_validation
     example_scope: 2026-10-28基础入口表达修订；保留原判据/Stop/课程绑定与语义版本，微动作和关系示意不是完整真题或真人实测。
   source_alignment:
-    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
+    commit: 59190489abd3e0fb6543c9a04e137881ae98cd88
     state: live_source_bound
     source_content_changed: false
     correction_profile_applied: false
@@ -2628,7 +2628,7 @@ methods:
   - repository: https://github.com/rockpunkgod/ANSWER.git
     path: gaokao-grammar-fill/references/grammar-fill.md
     heading: 总路线
-    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
+    commit: 59190489abd3e0fb6543c9a04e137881ae98cd88
   section_ids: &id019
   - 781c4478d621bf5c
   can_follow: []
@@ -2705,7 +2705,7 @@ methods:
   maturity_status: candidate
   practical_value: Useful
   version: 1.2.0
-  change_reason: ANSWER 9a872ba 显式来源差异复核；旧来源归档，保基础入口与实用优先，不自动授予Case或真人准入。
+  change_reason: ANSWER 5919048 明确已核内容判据与有界副职责；不新增算法，不虚构暂定，不重复无疑点回文，旧审阅不自动升级。
   affected_cases:
   - cases/grammar/G19/canonical/case.yaml
   regression_result: pending_current_epoch_semantic_and_student_acceptance
@@ -2717,7 +2717,7 @@ methods:
     participant_validation: pending_real_participant_validation
     example_scope: 2026-10-28基础入口表达修订；保留原判据/Stop/课程绑定与语义版本，微动作和关系示意不是完整真题或真人实测。
   source_alignment:
-    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
+    commit: 59190489abd3e0fb6543c9a04e137881ae98cd88
     state: live_source_bound
     source_content_changed: false
     correction_profile_applied: false

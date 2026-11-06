@@ -43,11 +43,11 @@ methods:
   - repository: https://github.com/rockpunkgod/ANSWER.git
     path: gaokao-english/references/reading-comprehension.md
     heading: 过度推测
-    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
+    commit: 59190489abd3e0fb6543c9a04e137881ae98cd88
   - repository: https://github.com/rockpunkgod/ANSWER.git
     path: gaokao-english/references/course-evidence.md
     heading: 其他已激活阅读方法
-    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
+    commit: 59190489abd3e0fb6543c9a04e137881ae98cd88
   can_follow:
   - 跳读定位
   - 同源替换
@@ -82,7 +82,7 @@ methods:
     - 候选虽未逐字出现，但原文事实或数量关系已对 B 构成充分间接支持，不得以加戏排除。
     - 候选含绝对词，但原文的确给出全称或必然关系，绝对词本身不构成错误。
     section_ids: &id001
-    - 7b525972f9c7ba5d
+    - a027c2d052029633
     beginner_support:
       first_micro_action: 先在原文和候选里划出确实说同一件事的那一段，再圈候选额外多说的词。
       prerequisite: 先读清题干所问对象，能说明当前这句谁做什么；挡住判断的词不认识，先标出求助，不用词面相似代替句意。
@@ -92,7 +92,7 @@ methods:
       micro_action_is_not_completion: 完成第一小步不等于完整方法成功；继续完成四步卡的判断与停止核验。
       short_stop: A没核实先不拆；B有支持不能排，排一项不证明另一项。
     presentation_revision: 2026-10-28.2
-    source_update_note: 按题干保积极阅读分支；比数绝重大只定位，中心思想受限于文本推断；记叙框架来源各保，不改三化产物和篇级依赖。
+    source_update_note: 点明方法、当前决定性证据与选排结论；定位或形式初筛不定案，完整对应/指代/覆盖/逻辑满足判据后可用显式副职责选排；缺证、竞争或冲突才继续，不造暂定或重复回文。
   cases:
     canonical: cases/R01/canonical/case.yaml
     counterexample: cases/R01/counterexamples/case.yaml
@@ -141,7 +141,7 @@ methods:
   method_type: method
   maturity_status: candidate
   practical_value: Useful
-  change_reason: ANSWER 9a872ba 显式来源差异复核；旧来源归档，保基础入口与实用优先，不自动授予Case或真人准入。
+  change_reason: ANSWER 5919048 明确已核内容判据与有界副职责；不新增算法，不虚构暂定，不重复无疑点回文，旧审阅不自动升级。
   affected_cases:
   - cases/R01/canonical/case.yaml
   - cases/R01/counterexamples/case.yaml
@@ -177,9 +177,9 @@ methods:
   entry_copy: 选项多说一截？先在原文和候选里划出确实说同一件事的那一段，再圈候选额外多说的词。这一步得到的是当前候选的保留、排除或待定判断；不能由剩余项自动定案。如果卡住，先停在已确认的词句位置；读不清决定性词义或核心关系时标缺口，不排选项。
   student_ready: false
   source_alignment:
-    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
+    commit: 59190489abd3e0fb6543c9a04e137881ae98cd88
     state: live_source_bound
-    source_content_changed: true
+    source_content_changed: false
     correction_profile_applied: false
     authored_first_contact_draft: true
     new_course_branches: preserved_in_full_contract_not_automatically_aliased
@@ -231,11 +231,11 @@ methods:
   - repository: https://github.com/rockpunkgod/ANSWER.git
     path: gaokao-english/references/reading-comprehension.md
     heading: 主客一致
-    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
+    commit: 59190489abd3e0fb6543c9a04e137881ae98cd88
   - repository: https://github.com/rockpunkgod/ANSWER.git
     path: gaokao-english/references/course-evidence.md
     heading: 主客一致
-    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
+    commit: 59190489abd3e0fb6543c9a04e137881ae98cd88
   can_follow:
   - 跳读定位
   - 代词指代
@@ -268,7 +268,7 @@ methods:
     - 主体未在候选里重复，但题干已明示共同对象；不能仅因候选没重复主体就判错。
     - 原文确实说某主体具有能力且表达意愿，两者同时成立，不得为了应用方法强行二分。
     section_ids: &id002
-    - 6e31a465f1ce1768
+    - 9f5952ba46e2e61c
     beginner_support:
       first_micro_action: 先并排圈两句的谁和完整动作，连希望、能够、已经一起圈，暂不要求画三格。
       prerequisite: 先读清题干所问对象，能说明当前这句谁做什么；挡住判断的词不认识，先标出求助，不用词面相似代替句意。
@@ -279,7 +279,7 @@ methods:
       short_stop: 无偷换停本法；共同主体省略不算偷换。
       legacy_entry_note: 旧称三槽位核对可帮助认出入口，不要求每题固定三格；只核本题主体、施受、愿望/事实或能力/意愿的实际差异。
     presentation_revision: 2026-10-28.2
-    source_update_note: 按题干保积极阅读分支；比数绝重大只定位，中心思想受限于文本推断；记叙框架来源各保，不改三化产物和篇级依赖。
+    source_update_note: 点明方法、当前决定性证据与选排结论；定位或形式初筛不定案，完整对应/指代/覆盖/逻辑满足判据后可用显式副职责选排；缺证、竞争或冲突才继续，不造暂定或重复回文。
   cases:
     canonical: cases/R02/canonical/case.yaml
     counterexample: cases/R02/counterexamples/case.yaml
@@ -328,7 +328,7 @@ methods:
   method_type: method
   maturity_status: candidate
   practical_value: Useful
-  change_reason: ANSWER 9a872ba 显式来源差异复核；旧来源归档，保基础入口与实用优先，不自动授予Case或真人准入。
+  change_reason: ANSWER 5919048 明确已核内容判据与有界副职责；不新增算法，不虚构暂定，不重复无疑点回文，旧审阅不自动升级。
   affected_cases:
   - cases/R02/canonical/case.yaml
   - cases/R02/counterexamples/case.yaml
@@ -364,7 +364,7 @@ methods:
   entry_copy: 词都认识还分不清？先并排圈两句的谁和完整动作，连希望、能够、已经一起圈，暂不要求画三格。这一步得到的是当前候选的保留、排除或待定判断；不能由剩余项自动定案。如果卡住，先停在已确认的词句位置；读不清决定性词义或核心关系时标缺口，不排选项。
   student_ready: false
   source_alignment:
-    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
+    commit: 59190489abd3e0fb6543c9a04e137881ae98cd88
     state: live_source_bound
     source_content_changed: false
     correction_profile_applied: true
@@ -416,11 +416,11 @@ methods:
   - repository: https://github.com/rockpunkgod/ANSWER.git
     path: gaokao-english/references/reading-comprehension.md
     heading: mainly题与主旨大意
-    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
+    commit: 59190489abd3e0fb6543c9a04e137881ae98cd88
   - repository: https://github.com/rockpunkgod/ANSWER.git
     path: gaokao-english/references/course-evidence.md
     heading: 其他已激活阅读方法
-    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
+    commit: 59190489abd3e0fb6543c9a04e137881ae98cd88
   can_follow:
   - R09
   - mainly题与主旨大意
@@ -451,7 +451,7 @@ methods:
     - 没有已证核心关系先停；省略、近义或上位概念能覆盖时，不能因没原词判缺失。
     - 候选用省略、近义或上位概念准确覆盖所问核心，没重复每个原词也不能判缺失。
     section_ids: &id003
-    - d91aca6a13f190d4
+    - 2b8474f8e9dab1d7
     beginner_support:
       first_micro_action: 先在已核实框架旁写候选谈谁、说了什么；核心还没核实先不排项。
       prerequisite: 先读清题干所问对象，能说明当前这句谁做什么；挡住判断的词不认识，先标出求助，不用词面相似代替句意。
@@ -461,7 +461,7 @@ methods:
       micro_action_is_not_completion: 完成第一小步不等于完整方法成功；继续完成四步卡的判断与停止核验。
       short_stop: 核心未核好先停；不是缺原词就缺内容。
     presentation_revision: 2026-10-28.2
-    source_update_note: 按题干保积极阅读分支；比数绝重大只定位，中心思想受限于文本推断；记叙框架来源各保，不改三化产物和篇级依赖。
+    source_update_note: 点明方法、当前决定性证据与选排结论；定位或形式初筛不定案，完整对应/指代/覆盖/逻辑满足判据后可用显式副职责选排；缺证、竞争或冲突才继续，不造暂定或重复回文。
   cases:
     canonical: cases/R06/canonical/case.yaml
     counterexample: cases/R06/counterexamples/case.yaml
@@ -510,7 +510,7 @@ methods:
   method_type: internal_rule
   maturity_status: candidate
   practical_value: Useful
-  change_reason: ANSWER 9a872ba 显式来源差异复核；旧来源归档，保基础入口与实用优先，不自动授予Case或真人准入。
+  change_reason: ANSWER 5919048 明确已核内容判据与有界副职责；不新增算法，不虚构暂定，不重复无疑点回文，旧审阅不自动升级。
   affected_cases:
   - cases/R06/canonical/case.yaml
   - cases/R06/counterexamples/case.yaml
@@ -546,7 +546,7 @@ methods:
   entry_copy: 主旨项相关却不全？先在已核实框架旁写候选谈谁、说了什么；核心还没核实先不排项。这一步得到的是当前候选的保留、排除或待定判断；不能由剩余项自动定案。如果卡住，先停在已确认的词句位置；读不清决定性词义或核心关系时标缺口，不排选项。
   student_ready: false
   source_alignment:
-    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
+    commit: 59190489abd3e0fb6543c9a04e137881ae98cd88
     state: live_source_bound
     source_content_changed: true
     correction_profile_applied: true
@@ -602,11 +602,11 @@ methods:
   - repository: https://github.com/rockpunkgod/ANSWER.git
     path: gaokao-english/references/reading-comprehension.md
     heading: 三化法
-    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
+    commit: 59190489abd3e0fb6543c9a04e137881ae98cd88
   - repository: https://github.com/rockpunkgod/ANSWER.git
     path: gaokao-english/references/course-evidence.md
     heading: 其他已激活阅读方法
-    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
+    commit: 59190489abd3e0fb6543c9a04e137881ae98cd88
   can_follow:
   - 题干与主旨选项假设
   usually_before:
@@ -638,7 +638,7 @@ methods:
     - 某词全文高频，但它只是背景对象，未表达核心判断；仅凭词频不能定主旨。
     - 首段只引入背景，真正判断在后文展开；不能把首段话题直接当全文任务。
     section_ids: &id004
-    - ad0c2c73d03fd3f2
+    - 12e818c750c33d45
     beginner_support:
       first_micro_action: 先圈题干要全文还是某段，再看实际给出的相关选项；骨架三格后填，不倒改入口。
       prerequisite: 先读清题干所问对象，能说明当前这句谁做什么；挡住判断的词不认识，先标出求助，不用词面相似代替句意。
@@ -648,7 +648,7 @@ methods:
       micro_action_is_not_completion: 完成第一小步不等于完整方法成功；继续完成四步卡的判断与停止核验。
       short_stop: 缺主要段落或只问局部不启动；没重复词可跳过该线索。
     presentation_revision: 2026-10-28.2
-    source_update_note: 按题干保积极阅读分支；比数绝重大只定位，中心思想受限于文本推断；记叙框架来源各保，不改三化产物和篇级依赖。
+    source_update_note: 点明方法、当前决定性证据与选排结论；定位或形式初筛不定案，完整对应/指代/覆盖/逻辑满足判据后可用显式副职责选排；缺证、竞争或冲突才继续，不造暂定或重复回文。
   cases:
     canonical: cases/R09/canonical/case.yaml
     counterexample: cases/R09/counterexamples/case.yaml
@@ -697,7 +697,7 @@ methods:
   method_type: framework
   maturity_status: candidate
   practical_value: Useful
-  change_reason: ANSWER 9a872ba 显式来源差异复核；旧来源归档，保基础入口与实用优先，不自动授予Case或真人准入。
+  change_reason: ANSWER 5919048 明确已核内容判据与有界副职责；不新增算法，不虚构暂定，不重复无疑点回文，旧审阅不自动升级。
   affected_cases:
   - cases/R09/canonical/case.yaml
   - cases/R09/counterexamples/case.yaml
@@ -733,7 +733,7 @@ methods:
   entry_copy: 全文框架卡住？先圈题干要全文还是某段，再看实际给出的相关选项；骨架三格后填，不倒改入口。共同概念只作假设；再读有效首尾，最后看中间段首及必要回答或段尾，回全文核三格。这一步得到的只是全文骨架卡：对象、核心判断、结构任务；三格都须正文支持，不直接定答案。如果卡住，先停在已确认的词句位置；读不清决定性词义或核心关系时标缺口，不排选项。
   student_ready: false
   source_alignment:
-    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
+    commit: 59190489abd3e0fb6543c9a04e137881ae98cd88
     state: live_source_bound
     source_content_changed: false
     correction_profile_applied: true
@@ -783,9 +783,9 @@ methods:
   - repository: https://github.com/rockpunkgod/ANSWER.git
     path: gaokao-english/references/reading-comprehension.md
     heading: 同源替换
-    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
+    commit: 59190489abd3e0fb6543c9a04e137881ae98cd88
   section_ids: &id005
-  - 45520a599da9cbf4
+  - cad93ba752127bd4
   can_follow: []
   usually_before: []
   usually_after: []
@@ -819,7 +819,7 @@ methods:
       micro_action_is_not_completion: 完成第一小步不等于完整方法成功；继续完成四步卡的判断与停止核验。
       short_stop: 词义或条件不清先补证，不凭对应词数量定案。
     presentation_revision: 2026-10-28.2
-    source_update_note: 按题干保积极阅读分支；比数绝重大只定位，中心思想受限于文本推断；记叙框架来源各保，不改三化产物和篇级依赖。
+    source_update_note: 点明方法、当前决定性证据与选排结论；定位或形式初筛不定案，完整对应/指代/覆盖/逻辑满足判据后可用显式副职责选排；缺证、竞争或冲突才继续，不造暂定或重复回文。
   cases:
     canonical: cases/reading/R03/canonical/case.yaml
   four_step_card:
@@ -862,7 +862,7 @@ methods:
   maturity_status: candidate
   practical_value: Useful
   version: 1.2.0
-  change_reason: ANSWER 9a872ba 显式来源差异复核；旧来源归档，保基础入口与实用优先，不自动授予Case或真人准入。
+  change_reason: ANSWER 5919048 明确已核内容判据与有界副职责；不新增算法，不虚构暂定，不重复无疑点回文，旧审阅不自动升级。
   affected_cases:
   - cases/reading/R03/canonical/case.yaml
   regression_result: pending_current_epoch_semantic_and_student_acceptance
@@ -874,7 +874,7 @@ methods:
     participant_validation: pending_real_participant_validation
     example_scope: 2026-10-28基础入口表达修订；保留原判据/Stop/课程绑定与语义版本，微动作和关系示意不是完整真题或真人实测。
   source_alignment:
-    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
+    commit: 59190489abd3e0fb6543c9a04e137881ae98cd88
     state: live_source_bound
     source_content_changed: false
     correction_profile_applied: true
@@ -916,9 +916,9 @@ methods:
   - repository: https://github.com/rockpunkgod/ANSWER.git
     path: gaokao-english/references/reading-comprehension.md
     heading: 比较级谨慎选
-    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
+    commit: 59190489abd3e0fb6543c9a04e137881ae98cd88
   section_ids: &id006
-  - 4bc822d6aa850525
+  - 2133d859abb3f016
   can_follow: []
   usually_before: []
   usually_after: []
@@ -953,7 +953,7 @@ methods:
       micro_action_is_not_completion: 完成第一小步不等于完整方法成功；继续完成四步卡的判断与停止核验。
       short_stop: 未定位不算证伪；最高级有充分支持就不能排。
     presentation_revision: 2026-10-28.2
-    source_update_note: 按题干保积极阅读分支；比数绝重大只定位，中心思想受限于文本推断；记叙框架来源各保，不改三化产物和篇级依赖。
+    source_update_note: 点明方法、当前决定性证据与选排结论；定位或形式初筛不定案，完整对应/指代/覆盖/逻辑满足判据后可用显式副职责选排；缺证、竞争或冲突才继续，不造暂定或重复回文。
   cases:
     canonical: cases/reading/R04/canonical/case.yaml
   four_step_card:
@@ -996,7 +996,7 @@ methods:
   maturity_status: candidate
   practical_value: Useful
   version: 1.2.0
-  change_reason: ANSWER 9a872ba 显式来源差异复核；旧来源归档，保基础入口与实用优先，不自动授予Case或真人准入。
+  change_reason: ANSWER 5919048 明确已核内容判据与有界副职责；不新增算法，不虚构暂定，不重复无疑点回文，旧审阅不自动升级。
   affected_cases:
   - cases/reading/R04/canonical/case.yaml
   regression_result: pending_current_epoch_semantic_and_student_acceptance
@@ -1008,7 +1008,7 @@ methods:
     participant_validation: pending_real_participant_validation
     example_scope: 2026-10-28基础入口表达修订；保留原判据/Stop/课程绑定与语义版本，微动作和关系示意不是完整真题或真人实测。
   source_alignment:
-    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
+    commit: 59190489abd3e0fb6543c9a04e137881ae98cd88
     state: live_source_bound
     source_content_changed: false
     correction_profile_applied: true
@@ -1055,9 +1055,9 @@ methods:
   - repository: https://github.com/rockpunkgod/ANSWER.git
     path: gaokao-english/references/reading-comprehension.md
     heading: 因果选果
-    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
+    commit: 59190489abd3e0fb6543c9a04e137881ae98cd88
   section_ids: &id007
-  - 19a85fcf99b86580
+  - 67ea7893cf903d1d
   can_follow: []
   usually_before: []
   usually_after: []
@@ -1092,7 +1092,7 @@ methods:
       micro_action_is_not_completion: 完成第一小步不等于完整方法成功；继续完成四步卡的判断与停止核验。
       short_stop: 两项或链条缺依据就停，先后不证明因果。
     presentation_revision: 2026-10-28.2
-    source_update_note: 按题干保积极阅读分支；比数绝重大只定位，中心思想受限于文本推断；记叙框架来源各保，不改三化产物和篇级依赖。
+    source_update_note: 点明方法、当前决定性证据与选排结论；定位或形式初筛不定案，完整对应/指代/覆盖/逻辑满足判据后可用显式副职责选排；缺证、竞争或冲突才继续，不造暂定或重复回文。
   cases:
     canonical: cases/reading/R05/canonical/case.yaml
   four_step_card:
@@ -1135,7 +1135,7 @@ methods:
   maturity_status: candidate
   practical_value: Useful
   version: 1.2.0
-  change_reason: ANSWER 9a872ba 显式来源差异复核；旧来源归档，保基础入口与实用优先，不自动授予Case或真人准入。
+  change_reason: ANSWER 5919048 明确已核内容判据与有界副职责；不新增算法，不虚构暂定，不重复无疑点回文，旧审阅不自动升级。
   affected_cases:
   - cases/reading/R05/canonical/case.yaml
   regression_result: pending_current_epoch_semantic_and_student_acceptance
@@ -1147,7 +1147,7 @@ methods:
     participant_validation: pending_real_participant_validation
     example_scope: 2026-10-28基础入口表达修订；保留原判据/Stop/课程绑定与语义版本，微动作和关系示意不是完整真题或真人实测。
   source_alignment:
-    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
+    commit: 59190489abd3e0fb6543c9a04e137881ae98cd88
     state: live_source_bound
     source_content_changed: false
     correction_profile_applied: true
@@ -1195,9 +1195,9 @@ methods:
   - repository: https://github.com/rockpunkgod/ANSWER.git
     path: gaokao-english/references/reading-comprehension.md
     heading: 并列删除
-    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
+    commit: 59190489abd3e0fb6543c9a04e137881ae98cd88
   section_ids: &id008
-  - 763aab279928f208
+  - 6d6dc9772e8aa3a8
   can_follow: []
   usually_before: []
   usually_after: []
@@ -1230,7 +1230,7 @@ methods:
       micro_action_is_not_completion: 完成第一小步不等于完整方法成功；继续完成四步卡的判断与停止核验。
       short_stop: and不证明同层，也不能因位于转折前共同排除。
     presentation_revision: 2026-10-28.2
-    source_update_note: 按题干保积极阅读分支；比数绝重大只定位，中心思想受限于文本推断；记叙框架来源各保，不改三化产物和篇级依赖。
+    source_update_note: 点明方法、当前决定性证据与选排结论；定位或形式初筛不定案，完整对应/指代/覆盖/逻辑满足判据后可用显式副职责选排；缺证、竞争或冲突才继续，不造暂定或重复回文。
   cases:
     canonical: cases/reading/R07/canonical/case.yaml
   four_step_card:
@@ -1273,7 +1273,7 @@ methods:
   maturity_status: candidate
   practical_value: Useful
   version: 1.2.0
-  change_reason: ANSWER 9a872ba 显式来源差异复核；旧来源归档，保基础入口与实用优先，不自动授予Case或真人准入。
+  change_reason: ANSWER 5919048 明确已核内容判据与有界副职责；不新增算法，不虚构暂定，不重复无疑点回文，旧审阅不自动升级。
   affected_cases:
   - cases/reading/R07/canonical/case.yaml
   regression_result: pending_current_epoch_semantic_and_student_acceptance
@@ -1285,7 +1285,7 @@ methods:
     participant_validation: pending_real_participant_validation
     example_scope: 2026-10-28基础入口表达修订；保留原判据/Stop/课程绑定与语义版本，微动作和关系示意不是完整真题或真人实测。
   source_alignment:
-    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
+    commit: 59190489abd3e0fb6543c9a04e137881ae98cd88
     state: live_source_bound
     source_content_changed: false
     correction_profile_applied: false
@@ -1326,9 +1326,9 @@ methods:
   - repository: https://github.com/rockpunkgod/ANSWER.git
     path: gaokao-english/references/reading-comprehension.md
     heading: 例子非答案
-    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
+    commit: 59190489abd3e0fb6543c9a04e137881ae98cd88
   section_ids: &id009
-  - e933e3962625a3b3
+  - 57aafc0f10b3364a
   can_follow: []
   usually_before: []
   usually_after: []
@@ -1362,7 +1362,7 @@ methods:
       micro_action_is_not_completion: 完成第一小步不等于完整方法成功；继续完成四步卡的判断与停止核验。
       short_stop: 直接问例中事实时不用本法排细节。
     presentation_revision: 2026-10-28.2
-    source_update_note: 按题干保积极阅读分支；比数绝重大只定位，中心思想受限于文本推断；记叙框架来源各保，不改三化产物和篇级依赖。
+    source_update_note: 点明方法、当前决定性证据与选排结论；定位或形式初筛不定案，完整对应/指代/覆盖/逻辑满足判据后可用显式副职责选排；缺证、竞争或冲突才继续，不造暂定或重复回文。
   cases:
     canonical: cases/reading/R08/canonical/case.yaml
   four_step_card:
@@ -1405,7 +1405,7 @@ methods:
   maturity_status: candidate
   practical_value: Useful
   version: 1.2.0
-  change_reason: ANSWER 9a872ba 显式来源差异复核；旧来源归档，保基础入口与实用优先，不自动授予Case或真人准入。
+  change_reason: ANSWER 5919048 明确已核内容判据与有界副职责；不新增算法，不虚构暂定，不重复无疑点回文，旧审阅不自动升级。
   affected_cases:
   - cases/reading/R08/canonical/case.yaml
   regression_result: pending_current_epoch_semantic_and_student_acceptance
@@ -1417,7 +1417,7 @@ methods:
     participant_validation: pending_real_participant_validation
     example_scope: 2026-10-28基础入口表达修订；保留原判据/Stop/课程绑定与语义版本，微动作和关系示意不是完整真题或真人实测。
   source_alignment:
-    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
+    commit: 59190489abd3e0fb6543c9a04e137881ae98cd88
     state: live_source_bound
     source_content_changed: false
     correction_profile_applied: true
@@ -1459,9 +1459,9 @@ methods:
   - repository: https://github.com/rockpunkgod/ANSWER.git
     path: gaokao-english/references/reading-comprehension.md
     heading: 代词指代
-    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
+    commit: 59190489abd3e0fb6543c9a04e137881ae98cd88
   section_ids: &id010
-  - 94831b83763e0ab5
+  - 14624b4caf4b3c96
   can_follow: []
   usually_before: []
   usually_after: []
@@ -1495,7 +1495,7 @@ methods:
       micro_action_is_not_completion: 完成第一小步不等于完整方法成功；继续完成四步卡的判断与停止核验。
       short_stop: 数一致不够；所指可能是一件事或状态，不硬找最近名词。
     presentation_revision: 2026-10-28.2
-    source_update_note: 按题干保积极阅读分支；比数绝重大只定位，中心思想受限于文本推断；记叙框架来源各保，不改三化产物和篇级依赖。
+    source_update_note: 点明方法、当前决定性证据与选排结论；定位或形式初筛不定案，完整对应/指代/覆盖/逻辑满足判据后可用显式副职责选排；缺证、竞争或冲突才继续，不造暂定或重复回文。
   cases:
     canonical: cases/reading/R10/canonical/case.yaml
   four_step_card:
@@ -1538,7 +1538,7 @@ methods:
   maturity_status: candidate
   practical_value: Useful
   version: 1.2.0
-  change_reason: ANSWER 9a872ba 显式来源差异复核；旧来源归档，保基础入口与实用优先，不自动授予Case或真人准入。
+  change_reason: ANSWER 5919048 明确已核内容判据与有界副职责；不新增算法，不虚构暂定，不重复无疑点回文，旧审阅不自动升级。
   affected_cases:
   - cases/reading/R10/canonical/case.yaml
   regression_result: pending_current_epoch_semantic_and_student_acceptance
@@ -1550,7 +1550,7 @@ methods:
     participant_validation: pending_real_participant_validation
     example_scope: 2026-10-28基础入口表达修订；保留原判据/Stop/课程绑定与语义版本，微动作和关系示意不是完整真题或真人实测。
   source_alignment:
-    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
+    commit: 59190489abd3e0fb6543c9a04e137881ae98cd88
     state: live_source_bound
     source_content_changed: false
     correction_profile_applied: true
@@ -1591,9 +1591,9 @@ methods:
   - repository: https://github.com/rockpunkgod/ANSWER.git
     path: gaokao-english/references/reading-comprehension.md
     heading: 逻辑简化
-    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
+    commit: 59190489abd3e0fb6543c9a04e137881ae98cd88
   section_ids: &id011
-  - b3578e3977ddb97f
+  - ea9d5e34bfb47e38
   can_follow: []
   usually_before: []
   usually_after: []
@@ -1627,7 +1627,7 @@ methods:
       micro_action_is_not_completion: 完成第一小步不等于完整方法成功；继续完成四步卡的判断与停止核验。
       short_stop: 否定、条件和范围不能删；含义不清不继续判项。
     presentation_revision: 2026-10-28.2
-    source_update_note: 按题干保积极阅读分支；比数绝重大只定位，中心思想受限于文本推断；记叙框架来源各保，不改三化产物和篇级依赖。
+    source_update_note: 点明方法、当前决定性证据与选排结论；定位或形式初筛不定案，完整对应/指代/覆盖/逻辑满足判据后可用显式副职责选排；缺证、竞争或冲突才继续，不造暂定或重复回文。
   cases:
     canonical: cases/reading/R11/canonical/case.yaml
   four_step_card:
@@ -1670,7 +1670,7 @@ methods:
   maturity_status: candidate
   practical_value: Useful
   version: 1.2.0
-  change_reason: ANSWER 9a872ba 显式来源差异复核；旧来源归档，保基础入口与实用优先，不自动授予Case或真人准入。
+  change_reason: ANSWER 5919048 明确已核内容判据与有界副职责；不新增算法，不虚构暂定，不重复无疑点回文，旧审阅不自动升级。
   affected_cases:
   - cases/reading/R11/canonical/case.yaml
   regression_result: pending_current_epoch_semantic_and_student_acceptance
@@ -1682,9 +1682,9 @@ methods:
     participant_validation: pending_real_participant_validation
     example_scope: 2026-10-28基础入口表达修订；保留原判据/Stop/课程绑定与语义版本，微动作和关系示意不是完整真题或真人实测。
   source_alignment:
-    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
+    commit: 59190489abd3e0fb6543c9a04e137881ae98cd88
     state: live_source_bound
-    source_content_changed: true
+    source_content_changed: false
     correction_profile_applied: true
     authored_first_contact_draft: true
     new_course_branches: preserved_in_full_contract_not_automatically_aliased
@@ -1723,9 +1723,9 @@ methods:
   - repository: https://github.com/rockpunkgod/ANSWER.git
     path: gaokao-english/references/reading-comprehension.md
     heading: 跳读定位
-    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
+    commit: 59190489abd3e0fb6543c9a04e137881ae98cd88
   section_ids: &id012
-  - aaaddbacbd0aab5a
+  - 4502eba7f4984078
   can_follow: []
   usually_before: []
   usually_after: []
@@ -1759,7 +1759,7 @@ methods:
       micro_action_is_not_completion: 完成第一小步不等于完整方法成功；继续完成四步卡的判断与停止核验。
       short_stop: 特定跳读版须满足自身前提，不把同词或一题一段当证据。
     presentation_revision: 2026-10-28.2
-    source_update_note: 按题干保积极阅读分支；比数绝重大只定位，中心思想受限于文本推断；记叙框架来源各保，不改三化产物和篇级依赖。
+    source_update_note: 点明方法、当前决定性证据与选排结论；定位或形式初筛不定案，完整对应/指代/覆盖/逻辑满足判据后可用显式副职责选排；缺证、竞争或冲突才继续，不造暂定或重复回文。
   cases:
     canonical: cases/reading/R12/canonical/case.yaml
   four_step_card:
@@ -1802,7 +1802,7 @@ methods:
   maturity_status: candidate
   practical_value: Useful
   version: 1.2.0
-  change_reason: ANSWER 9a872ba 显式来源差异复核；旧来源归档，保基础入口与实用优先，不自动授予Case或真人准入。
+  change_reason: ANSWER 5919048 明确已核内容判据与有界副职责；不新增算法，不虚构暂定，不重复无疑点回文，旧审阅不自动升级。
   affected_cases:
   - cases/reading/R12/canonical/case.yaml
   regression_result: pending_current_epoch_semantic_and_student_acceptance
@@ -1814,7 +1814,7 @@ methods:
     participant_validation: pending_real_participant_validation
     example_scope: 2026-10-28基础入口表达修订；保留原判据/Stop/课程绑定与语义版本，微动作和关系示意不是完整真题或真人实测。
   source_alignment:
-    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
+    commit: 59190489abd3e0fb6543c9a04e137881ae98cd88
     state: live_source_bound
     source_content_changed: false
     correction_profile_applied: true
@@ -1855,14 +1855,14 @@ methods:
   - repository: https://github.com/rockpunkgod/ANSWER.git
     path: gaokao-english/references/reading-comprehension.md
     heading: 按题型任务分流，不按文体硬套
-    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
+    commit: 59190489abd3e0fb6543c9a04e137881ae98cd88
   - repository: https://github.com/rockpunkgod/ANSWER.git
     path: gaokao-english/references/reading-comprehension.md
     heading: 跳读定位
-    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
+    commit: 59190489abd3e0fb6543c9a04e137881ae98cd88
   section_ids: &id013
   - f12a1a7fc40c8537
-  - aaaddbacbd0aab5a
+  - 4502eba7f4984078
   can_follow: []
   usually_before: []
   usually_after: []
@@ -1896,7 +1896,7 @@ methods:
       micro_action_is_not_completion: 完成第一小步不等于完整方法成功；继续完成四步卡的判断与停止核验。
       short_stop: 名词无区别就换动作线索，不按次数或最近位置选。
     presentation_revision: 2026-10-28.2
-    source_update_note: 按题干保积极阅读分支；比数绝重大只定位，中心思想受限于文本推断；记叙框架来源各保，不改三化产物和篇级依赖。
+    source_update_note: 点明方法、当前决定性证据与选排结论；定位或形式初筛不定案，完整对应/指代/覆盖/逻辑满足判据后可用显式副职责选排；缺证、竞争或冲突才继续，不造暂定或重复回文。
   cases:
     canonical: cases/reading/R13/canonical/case.yaml
   four_step_card:
@@ -1939,7 +1939,7 @@ methods:
   maturity_status: candidate
   practical_value: Useful
   version: 1.2.0
-  change_reason: ANSWER 9a872ba 显式来源差异复核；旧来源归档，保基础入口与实用优先，不自动授予Case或真人准入。
+  change_reason: ANSWER 5919048 明确已核内容判据与有界副职责；不新增算法，不虚构暂定，不重复无疑点回文，旧审阅不自动升级。
   affected_cases:
   - cases/reading/R13/canonical/case.yaml
   regression_result: pending_current_epoch_semantic_and_student_acceptance
@@ -1951,9 +1951,9 @@ methods:
     participant_validation: pending_real_participant_validation
     example_scope: 2026-10-28基础入口表达修订；保留原判据/Stop/课程绑定与语义版本，微动作和关系示意不是完整真题或真人实测。
   source_alignment:
-    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
+    commit: 59190489abd3e0fb6543c9a04e137881ae98cd88
     state: live_source_bound
-    source_content_changed: true
+    source_content_changed: false
     correction_profile_applied: true
     authored_first_contact_draft: true
     new_course_branches: preserved_in_full_contract_not_automatically_aliased
@@ -1998,14 +1998,14 @@ methods:
   - repository: https://github.com/rockpunkgod/ANSWER.git
     path: gaokao-english/references/reading-comprehension.md
     heading: 按题型任务分流，不按文体硬套
-    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
+    commit: 59190489abd3e0fb6543c9a04e137881ae98cd88
   - repository: https://github.com/rockpunkgod/ANSWER.git
     path: gaokao-english/references/reading-comprehension.md
     heading: 跳读定位
-    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
+    commit: 59190489abd3e0fb6543c9a04e137881ae98cd88
   section_ids: &id014
   - f12a1a7fc40c8537
-  - aaaddbacbd0aab5a
+  - 4502eba7f4984078
   can_follow: []
   usually_before: []
   usually_after: []
@@ -2039,7 +2039,7 @@ methods:
       micro_action_is_not_completion: 完成第一小步不等于完整方法成功；继续完成四步卡的判断与停止核验。
       short_stop: 插叙、共享出处或区间外证据出现就取消锁区。
     presentation_revision: 2026-10-28.2
-    source_update_note: 按题干保积极阅读分支；比数绝重大只定位，中心思想受限于文本推断；记叙框架来源各保，不改三化产物和篇级依赖。
+    source_update_note: 点明方法、当前决定性证据与选排结论；定位或形式初筛不定案，完整对应/指代/覆盖/逻辑满足判据后可用显式副职责选排；缺证、竞争或冲突才继续，不造暂定或重复回文。
   cases:
     canonical: cases/reading/R14/canonical/case.yaml
   four_step_card:
@@ -2082,7 +2082,7 @@ methods:
   maturity_status: candidate
   practical_value: Useful
   version: 1.2.0
-  change_reason: ANSWER 9a872ba 显式来源差异复核；旧来源归档，保基础入口与实用优先，不自动授予Case或真人准入。
+  change_reason: ANSWER 5919048 明确已核内容判据与有界副职责；不新增算法，不虚构暂定，不重复无疑点回文，旧审阅不自动升级。
   affected_cases:
   - cases/reading/R14/canonical/case.yaml
   regression_result: pending_current_epoch_semantic_and_student_acceptance
@@ -2094,9 +2094,9 @@ methods:
     participant_validation: pending_real_participant_validation
     example_scope: 2026-10-28基础入口表达修订；保留原判据/Stop/课程绑定与语义版本，微动作和关系示意不是完整真题或真人实测。
   source_alignment:
-    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
+    commit: 59190489abd3e0fb6543c9a04e137881ae98cd88
     state: live_source_bound
-    source_content_changed: true
+    source_content_changed: false
     correction_profile_applied: true
     authored_first_contact_draft: true
     new_course_branches: preserved_in_full_contract_not_automatically_aliased
@@ -2135,14 +2135,14 @@ methods:
   - repository: https://github.com/rockpunkgod/ANSWER.git
     path: gaokao-english/references/reading-comprehension.md
     heading: 按题型任务分流，不按文体硬套
-    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
+    commit: 59190489abd3e0fb6543c9a04e137881ae98cd88
   - repository: https://github.com/rockpunkgod/ANSWER.git
     path: gaokao-english/references/reading-comprehension.md
     heading: 跳读定位
-    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
+    commit: 59190489abd3e0fb6543c9a04e137881ae98cd88
   section_ids: &id015
   - f12a1a7fc40c8537
-  - aaaddbacbd0aab5a
+  - 4502eba7f4984078
   can_follow: []
   usually_before: []
   usually_after: []
@@ -2176,7 +2176,7 @@ methods:
       micro_action_is_not_completion: 完成第一小步不等于完整方法成功；继续完成四步卡的判断与停止核验。
       short_stop: 主体、对象或动作义不明先补证，关系一致不代表整项正确。
     presentation_revision: 2026-10-28.2
-    source_update_note: 按题干保积极阅读分支；比数绝重大只定位，中心思想受限于文本推断；记叙框架来源各保，不改三化产物和篇级依赖。
+    source_update_note: 点明方法、当前决定性证据与选排结论；定位或形式初筛不定案，完整对应/指代/覆盖/逻辑满足判据后可用显式副职责选排；缺证、竞争或冲突才继续，不造暂定或重复回文。
   cases:
     canonical: cases/reading/R15/canonical/case.yaml
   four_step_card:
@@ -2219,7 +2219,7 @@ methods:
   maturity_status: candidate
   practical_value: Useful
   version: 1.2.0
-  change_reason: ANSWER 9a872ba 显式来源差异复核；旧来源归档，保基础入口与实用优先，不自动授予Case或真人准入。
+  change_reason: ANSWER 5919048 明确已核内容判据与有界副职责；不新增算法，不虚构暂定，不重复无疑点回文，旧审阅不自动升级。
   affected_cases:
   - cases/reading/R15/canonical/case.yaml
   regression_result: pending_current_epoch_semantic_and_student_acceptance
@@ -2231,9 +2231,9 @@ methods:
     participant_validation: pending_real_participant_validation
     example_scope: 2026-10-28基础入口表达修订；保留原判据/Stop/课程绑定与语义版本，微动作和关系示意不是完整真题或真人实测。
   source_alignment:
-    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
+    commit: 59190489abd3e0fb6543c9a04e137881ae98cd88
     state: live_source_bound
-    source_content_changed: true
+    source_content_changed: false
     correction_profile_applied: true
     authored_first_contact_draft: true
     new_course_branches: preserved_in_full_contract_not_automatically_aliased
@@ -2247,15 +2247,17 @@ methods:
   method_type: framework
   role: framework
   primary_role: framework
-  secondary_roles: []
+  secondary_roles:
+  - decider
   output_type: interpret
   student_symptoms:
   - 题干问全文或指定段主旨
   trigger_cues:
   - 题干问全文或段落主要内容、中心论点、主题或主要讨论对象。
   core_action: 先圈所问全文/段落范围，扫候选共同对象并去同求异，带不同判断回该范围核贯穿内容及覆盖。
-  decision_rule: 产出对象—完整判断框架供候选核查；选项倒推和妖项助攻只是待验预期，正文实际内容才支持概括。
-  verification: 产出对象—完整判断框架供候选核查；选项倒推和妖项助攻只是待验预期，正文实际内容才支持概括。 局部事实、泛推理或人物品质不套主旨；不并为中心思想；共同词、较宽范围、动态词形或剩余项不定案，段意清楚不机械压全文。
+  decision_rule: 产出对象—完整判断框架；选项倒推或妖项助攻提供核查入口，所问范围真实展开支持完整判断与覆盖时据此选排。已核正文可直接使用，不强制助攻先于回文或事后再读一次。
+  verification: 产出对象—完整判断框架；选项倒推或妖项助攻提供核查入口，所问范围真实展开支持完整判断与覆盖时据此选排。已核正文可直接使用，不强制助攻先于回文或事后再读一次。
+    局部事实、泛推理或人物品质不套主旨；不并为中心思想；共同词、较宽范围、动态词形或剩余项不定案，段意清楚不机械压全文。
   stop_rule: 局部事实、泛推理或人物品质不套主旨；不并为中心思想；共同词、较宽范围、动态词形或剩余项不定案，段意清楚不机械压全文。
   common_wrong_instinct: 不分问段落还是全文，看到选项都有同一个名词就选最抽象或范围最大的项。
   failure_cases:
@@ -2272,9 +2274,9 @@ methods:
   - repository: https://github.com/rockpunkgod/ANSWER.git
     path: gaokao-english/references/reading-comprehension.md
     heading: mainly题与主旨大意
-    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
+    commit: 59190489abd3e0fb6543c9a04e137881ae98cd88
   section_ids: &id016
-  - d91aca6a13f190d4
+  - 2b8474f8e9dab1d7
   can_follow: []
   usually_before: []
   usually_after: []
@@ -2290,10 +2292,10 @@ methods:
     line: 先圈所问全文/段落范围，扫候选共同对象并去同求异，带不同判断回该范围核贯穿内容及覆盖。
     boundary: 局部事实、泛推理或人物品质不套主旨；不并为中心思想；共同词、较宽范围、动态词形或剩余项不定案，段意清楚不机械压全文。
     10s: 主旨选项都谈同一件事？先圈所问范围，再比各项不同判断；共同话题不等于主旨。
-    30s: 主旨选项都谈同一件事？先圈题干问全文还是一段，再标候选都谈的对象与不同判断。例如，题干问一段，全文概括再广也未必概括了这一段。先分全文与段落，不凭词频、范围更大或剩一项选。
-    90s: 主旨选项都谈同一件事？先圈所问全文/段落范围，扫候选共同对象并去同求异，带不同判断回该范围核贯穿内容及覆盖。这一步得到的是待核框架或计划，不是答案或分数。判断时，产出对象—完整判断框架供候选核查；选项倒推和妖项助攻只是待验预期，正文实际内容才支持概括。什么时候停，局部事实、泛推理或人物品质不套主旨；不并为中心思想；共同词、较宽范围、动态词形或剩余项不定案，段意清楚不机械压全文。反例示意，题干只问一段主要内容，候选概括全文但没有概括该段任务；不能因更广或更抽象而保留为该段主旨。换题仍检查当前题面的对象和关系，不搬上一题结论。挑战，不选答案，圈题干问全文还是单段，再划掉候选共同对象，仅写各项剩下的不同判断。
+    30s: 主旨选项都谈同一件事？先圈题干问全文还是一段，再标候选都谈的对象与不同判断。例如，题干问一段，全文概括再广也未必概括了这一段。先分全文与段落，不凭词频、范围更大或剩一项选。完整内容已核清并区分竞争项，就说明选排证据；只有形式线索则继续。
+    90s: 主旨选项都谈同一件事？先圈所问全文/段落范围，扫候选共同对象并去同求异，带不同判断回该范围核贯穿内容及覆盖。这一步得到的是待核框架或计划，不是答案或分数。判断时，产出对象—完整判断框架；选项倒推或妖项助攻提供核查入口，所问范围真实展开支持完整判断与覆盖时据此选排。已核正文可直接使用，不强制助攻先于回文或事后再读一次。什么时候停，局部事实、泛推理或人物品质不套主旨；不并为中心思想；共同词、较宽范围、动态词形或剩余项不定案，段意清楚不机械压全文。反例示意，题干只问一段主要内容，候选概括全文但没有概括该段任务；不能因更广或更抽象而保留为该段主旨。换题仍检查当前题面的对象和关系，不搬上一题结论。挑战，不选答案，圈题干问全文还是单段，再划掉候选共同对象，仅写各项剩下的不同判断。
   full:
-    summary: 先圈所问全文/段落范围，扫候选共同对象并去同求异，带不同判断回该范围核贯穿内容及覆盖。 产出对象—完整判断框架供候选核查；选项倒推和妖项助攻只是待验预期，正文实际内容才支持概括。
+    summary: 先圈所问全文/段落范围，扫候选共同对象并去同求异，带不同判断回该范围核贯穿内容及覆盖。 产出对象—完整判断框架；选项倒推或妖项助攻提供核查入口，所问范围真实展开支持完整判断与覆盖时据此选排。已核正文可直接使用，不强制助攻先于回文或事后再读一次。
     source_boundary: 局部事实、泛推理或人物品质不套主旨；不并为中心思想；共同词、较宽范围、动态词形或剩余项不定案，段意清楚不机械压全文。
     boundaries:
     - 局部事实、泛推理或人物品质不套主旨；不并为中心思想；共同词、较宽范围、动态词形或剩余项不定案，段意清楚不机械压全文。
@@ -2307,20 +2309,21 @@ methods:
       example_scope: 关系/结构示意，非完整试题，不计真题或已验案例。
       micro_action_is_not_completion: 完成第一小步不等于完整方法成功；继续完成四步卡的判断与停止核验。
       short_stop: 先分全文与段落，不凭词频、范围更大或剩一项选。
-    presentation_revision: 2026-10-28.2
-    source_update_note: 按题干保积极阅读分支；比数绝重大只定位，中心思想受限于文本推断；记叙框架来源各保，不改三化产物和篇级依赖。
+    presentation_revision: 2026-11-06.1
+    source_update_note: 点明方法、当前决定性证据与选排结论；定位或形式初筛不定案，完整对应/指代/覆盖/逻辑满足判据后可用显式副职责选排；缺证、竞争或冲突才继续，不造暂定或重复回文。
+    decision_boundary: 主要职责和首个产物保持；副职责须显式声明decider并提供已审阅的具体候选差异、题面证据、停止与回填检查。不是分组、词面、好坏方向或排剩一项自动升级。
   cases:
     canonical: cases/reading/R16/canonical/case.yaml
   four_step_card:
     start: 题干问全文或段落主要内容、中心论点、主题或主要讨论对象。
     first_cut: 先圈所问全文/段落范围，扫候选共同对象并去同求异，带不同判断回该范围核贯穿内容及覆盖。
-    judge: 产出对象—完整判断框架供候选核查；选项倒推和妖项助攻只是待验预期，正文实际内容才支持概括。
+    judge: 产出对象—完整判断框架；选项倒推或妖项助攻提供核查入口，所问范围真实展开支持完整判断与覆盖时据此选排。已核正文可直接使用，不强制助攻先于回文或事后再读一次。
     stop: 局部事实、泛推理或人物品质不套主旨；不并为中心思想；共同词、较宽范围、动态词形或剩余项不定案，段意清楚不机械压全文。
   practicality_gate:
     status: design_complete_empirical_pending
     trigger: 题干问全文或段落主要内容、中心论点、主题或主要讨论对象。
     action: 先圈所问全文/段落范围，扫候选共同对象并去同求异，带不同判断回该范围核贯穿内容及覆盖。
-    output: interpret；产出对象—完整判断框架供候选核查；选项倒推和妖项助攻只是待验预期，正文实际内容才支持概括。
+    output: interpret；产出对象—完整判断框架；选项倒推或妖项助攻提供核查入口，所问范围真实展开支持完整判断与覆盖时据此选排。已核正文可直接使用，不强制助攻先于回文或事后再读一次。
     stop: 局部事实、泛推理或人物品质不套主旨；不并为中心思想；共同词、较宽范围、动态词形或剩余项不定案，段意清楚不机械压全文。
     transfer: 换文章仍先确定所问范围，再提取对象与不同判断，不固定首尾阅读清单。
     efficiency: 先固定范围并去同求异，预期减少在共同主题词上的无效比较；效率未测。
@@ -2350,8 +2353,8 @@ methods:
   status: candidate
   maturity_status: candidate
   practical_value: Useful
-  version: 1.2.0
-  change_reason: ANSWER 9a872ba 显式来源差异复核；旧来源归档，保基础入口与实用优先，不自动授予Case或真人准入。
+  version: 1.2.1
+  change_reason: ANSWER 5919048 明确已核内容判据与有界副职责；不新增算法，不虚构暂定，不重复无疑点回文，旧审阅不自动升级。
   affected_cases:
   - cases/reading/R16/canonical/case.yaml
   regression_result: pending_current_epoch_semantic_and_student_acceptance
@@ -2363,13 +2366,14 @@ methods:
     participant_validation: pending_real_participant_validation
     example_scope: 2026-10-28基础入口表达修订；保留原判据/Stop/课程绑定与语义版本，微动作和关系示意不是完整真题或真人实测。
   source_alignment:
-    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
+    commit: 59190489abd3e0fb6543c9a04e137881ae98cd88
     state: live_source_bound
     source_content_changed: true
     correction_profile_applied: true
     authored_first_contact_draft: true
     new_course_branches: preserved_in_full_contract_not_automatically_aliased
     acceptance: explicit source delta review; learner/blind/release pending
+  secondary_role_gate: 主要职责和首个产物保持；副职责须显式声明decider并提供已审阅的具体候选差异、题面证据、停止与回填检查。不是分组、词面、好坏方向或排剩一项自动升级。
 - method_id: R17
   brand_name: 前后补证
   source_name: 定位后必要上下文核对（内部动作说明）
@@ -2405,19 +2409,19 @@ methods:
   - repository: https://github.com/rockpunkgod/ANSWER.git
     path: gaokao-english/references/reading-comprehension.md
     heading: 阅读方法适用边界
-    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
+    commit: 59190489abd3e0fb6543c9a04e137881ae98cd88
   - repository: https://github.com/rockpunkgod/ANSWER.git
     path: gaokao-english/references/reading-comprehension.md
     heading: 同源替换
-    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
+    commit: 59190489abd3e0fb6543c9a04e137881ae98cd88
   - repository: https://github.com/rockpunkgod/ANSWER.git
     path: gaokao-english/references/reading-comprehension.md
     heading: 代词指代
-    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
+    commit: 59190489abd3e0fb6543c9a04e137881ae98cd88
   section_ids: &id017
   - 8e5cd3bae2f718fd
-  - 45520a599da9cbf4
-  - 94831b83763e0ab5
+  - cad93ba752127bd4
+  - 14624b4caf4b3c96
   can_follow: []
   usually_before: []
   usually_after: []
@@ -2451,7 +2455,7 @@ methods:
       micro_action_is_not_completion: 完成第一小步不等于完整方法成功；继续完成四步卡的判断与停止核验。
       short_stop: 已有证据够用就停扩读；材料仍缺就暂留，不编联系。
     presentation_revision: 2026-10-28.2
-    source_update_note: 按题干保积极阅读分支；比数绝重大只定位，中心思想受限于文本推断；记叙框架来源各保，不改三化产物和篇级依赖。
+    source_update_note: 点明方法、当前决定性证据与选排结论；定位或形式初筛不定案，完整对应/指代/覆盖/逻辑满足判据后可用显式副职责选排；缺证、竞争或冲突才继续，不造暂定或重复回文。
   cases:
     canonical: cases/reading/R17/canonical/case.yaml
   four_step_card:
@@ -2494,7 +2498,7 @@ methods:
   maturity_status: candidate
   practical_value: Useful
   version: 1.2.0
-  change_reason: ANSWER 9a872ba 显式来源差异复核；旧来源归档，保基础入口与实用优先，不自动授予Case或真人准入。
+  change_reason: ANSWER 5919048 明确已核内容判据与有界副职责；不新增算法，不虚构暂定，不重复无疑点回文，旧审阅不自动升级。
   affected_cases:
   - cases/reading/R17/canonical/case.yaml
   regression_result: pending_current_epoch_semantic_and_student_acceptance
@@ -2506,7 +2510,7 @@ methods:
     participant_validation: pending_real_participant_validation
     example_scope: 2026-10-28基础入口表达修订；保留原判据/Stop/课程绑定与语义版本，微动作和关系示意不是完整真题或真人实测。
   source_alignment:
-    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
+    commit: 59190489abd3e0fb6543c9a04e137881ae98cd88
     state: live_source_bound
     source_content_changed: false
     correction_profile_applied: true
@@ -2550,31 +2554,31 @@ methods:
   - repository: https://github.com/rockpunkgod/ANSWER.git
     path: gaokao-english/references/seven-five.md
     heading: 结构一致
-    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
+    commit: 59190489abd3e0fb6543c9a04e137881ae98cd88
   - repository: https://github.com/rockpunkgod/ANSWER.git
     path: gaokao-english/references/seven-five.md
     heading: 主语一致
-    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
+    commit: 59190489abd3e0fb6543c9a04e137881ae98cd88
   - repository: https://github.com/rockpunkgod/ANSWER.git
     path: gaokao-english/references/seven-five.md
     heading: 时态一致
-    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
+    commit: 59190489abd3e0fb6543c9a04e137881ae98cd88
   - repository: https://github.com/rockpunkgod/ANSWER.git
     path: gaokao-english/references/course-evidence.md
     heading: 结构一致
-    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
+    commit: 59190489abd3e0fb6543c9a04e137881ae98cd88
   - repository: https://github.com/rockpunkgod/ANSWER.git
     path: gaokao-english/references/course-evidence.md
     heading: 七选五主语一致
-    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
+    commit: 59190489abd3e0fb6543c9a04e137881ae98cd88
   - repository: https://github.com/rockpunkgod/ANSWER.git
     path: gaokao-english/references/course-evidence.md
     heading: 七选五时态一致
-    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
+    commit: 59190489abd3e0fb6543c9a04e137881ae98cd88
   - repository: https://github.com/rockpunkgod/ANSWER.git
     path: gaokao-grammar-fill/references/course-evidence.md
     heading: 七选五
-    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
+    commit: 59190489abd3e0fb6543c9a04e137881ae98cd88
   can_follow: []
   usually_before:
   - 总起句做题法
@@ -2606,9 +2610,9 @@ methods:
     - 两个选项都是祈使句且行动者相同，但一项针对的对象与本段任务不符；同组不等于同时成立。
     - 段中出现过去时事件，但当前空转向一般感悟；不能因最近动词是过去时就只留过去时组。
     section_ids: &id018
-    - a8f0c4ae44ae61ff
-    - 94c1255b4334ece4
-    - b24e557dbb06cb98
+    - df4955404fb8bc0d
+    - d0712481989e18ee
+    - 259507a0de426ea3
     beginner_support:
       first_micro_action: 先在A-G旁标完整句、半句或祈使等真实句型，先不填空。
       prerequisite: 先分清一句是否说完整，再找句中实际谈谁。真谓语就是承担本句时间的动词；-ed或-ing词尾本身不能证明它是谓语。
@@ -2618,7 +2622,7 @@ methods:
       micro_action_is_not_completion: 完成第一小步不等于完整方法成功；继续完成四步卡的判断与停止核验。
       short_stop: 无区别不编组；新证据可纠错，不重演三分或靠占用选。
     presentation_revision: 2026-10-28.2
-    source_update_note: 总起以真实统领触发，不加非典型位置人为门槛；比较关联句只初筛，褒贬核完整断言与安抚功能，不靠另一空占用定案。
+    source_update_note: 点明方法、当前决定性证据与选排结论；定位或形式初筛不定案，完整对应/指代/覆盖/逻辑满足判据后可用显式副职责选排；缺证、竞争或冲突才继续，不造暂定或重复回文。
   cases:
     canonical: cases/F01/canonical/case.yaml
     counterexample: cases/F01/counterexamples/case.yaml
@@ -2667,7 +2671,7 @@ methods:
   method_type: method
   maturity_status: candidate
   practical_value: Useful
-  change_reason: ANSWER 9a872ba 显式来源差异复核；旧来源归档，保基础入口与实用优先，不自动授予Case或真人准入。
+  change_reason: ANSWER 5919048 明确已核内容判据与有界副职责；不新增算法，不虚构暂定，不重复无疑点回文，旧审阅不自动升级。
   affected_cases:
   - cases/F01/canonical/case.yaml
   - cases/F01/counterexamples/case.yaml
@@ -2703,7 +2707,7 @@ methods:
   entry_copy: 七项乱试？先在A-G旁标完整句、半句或祈使等真实句型，先不填空。接着核主角和真谓语时间，三维各一次，无区别也标无区分度；分完回正文。这一步得到的是优先核查的范围，不直接得答案。如果卡住，先记录暂定分组或一侧真实内容；关系不清回正文或暂留，不靠占用、组小或剩余定案。
   student_ready: false
   source_alignment:
-    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
+    commit: 59190489abd3e0fb6543c9a04e137881ae98cd88
     state: live_source_bound
     source_content_changed: true
     correction_profile_applied: true
@@ -2761,9 +2765,9 @@ methods:
   - repository: https://github.com/rockpunkgod/ANSWER.git
     path: gaokao-english/references/seven-five.md
     heading: 结构一致
-    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
+    commit: 59190489abd3e0fb6543c9a04e137881ae98cd88
   section_ids: &id019
-  - a8f0c4ae44ae61ff
+  - df4955404fb8bc0d
   can_follow: []
   usually_before: []
   usually_after: []
@@ -2795,7 +2799,7 @@ methods:
       micro_action_is_not_completion: 完成第一小步不等于完整方法成功；继续完成四步卡的判断与停止核验。
       short_stop: 大小写仅辅助；同句型不证明内容接通。
     presentation_revision: 2026-10-28.2
-    source_update_note: 总起以真实统领触发，不加非典型位置人为门槛；比较关联句只初筛，褒贬核完整断言与安抚功能，不靠另一空占用定案。
+    source_update_note: 点明方法、当前决定性证据与选排结论；定位或形式初筛不定案，完整对应/指代/覆盖/逻辑满足判据后可用显式副职责选排；缺证、竞争或冲突才继续，不造暂定或重复回文。
   cases:
     canonical: cases/seven-five/F02/canonical/case.yaml
   four_step_card:
@@ -2838,7 +2842,7 @@ methods:
   maturity_status: candidate
   practical_value: Useful
   version: 1.2.0
-  change_reason: ANSWER 9a872ba 显式来源差异复核；旧来源归档，保基础入口与实用优先，不自动授予Case或真人准入。
+  change_reason: ANSWER 5919048 明确已核内容判据与有界副职责；不新增算法，不虚构暂定，不重复无疑点回文，旧审阅不自动升级。
   affected_cases:
   - cases/seven-five/F02/canonical/case.yaml
   regression_result: pending_current_epoch_semantic_and_student_acceptance
@@ -2850,7 +2854,7 @@ methods:
     participant_validation: pending_real_participant_validation
     example_scope: 2026-10-28基础入口表达修订；保留原判据/Stop/课程绑定与语义版本，微动作和关系示意不是完整真题或真人实测。
   source_alignment:
-    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
+    commit: 59190489abd3e0fb6543c9a04e137881ae98cd88
     state: live_source_bound
     source_content_changed: true
     correction_profile_applied: false
@@ -2897,9 +2901,9 @@ methods:
   - repository: https://github.com/rockpunkgod/ANSWER.git
     path: gaokao-english/references/seven-five.md
     heading: 主语一致
-    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
+    commit: 59190489abd3e0fb6543c9a04e137881ae98cd88
   section_ids: &id020
-  - 94c1255b4334ece4
+  - d0712481989e18ee
   can_follow: []
   usually_before: []
   usually_after: []
@@ -2933,7 +2937,7 @@ methods:
       micro_action_is_not_completion: 完成第一小步不等于完整方法成功；继续完成四步卡的判断与停止核验。
       short_stop: 代词所指不明暂留；可更正初筛，不重复整套分组。
     presentation_revision: 2026-10-28.2
-    source_update_note: 总起以真实统领触发，不加非典型位置人为门槛；比较关联句只初筛，褒贬核完整断言与安抚功能，不靠另一空占用定案。
+    source_update_note: 点明方法、当前决定性证据与选排结论；定位或形式初筛不定案，完整对应/指代/覆盖/逻辑满足判据后可用显式副职责选排；缺证、竞争或冲突才继续，不造暂定或重复回文。
   cases:
     canonical: cases/seven-five/F03/canonical/case.yaml
   four_step_card:
@@ -2976,7 +2980,7 @@ methods:
   maturity_status: candidate
   practical_value: Useful
   version: 1.2.0
-  change_reason: ANSWER 9a872ba 显式来源差异复核；旧来源归档，保基础入口与实用优先，不自动授予Case或真人准入。
+  change_reason: ANSWER 5919048 明确已核内容判据与有界副职责；不新增算法，不虚构暂定，不重复无疑点回文，旧审阅不自动升级。
   affected_cases:
   - cases/seven-five/F03/canonical/case.yaml
   regression_result: pending_current_epoch_semantic_and_student_acceptance
@@ -2988,7 +2992,7 @@ methods:
     participant_validation: pending_real_participant_validation
     example_scope: 2026-10-28基础入口表达修订；保留原判据/Stop/课程绑定与语义版本，微动作和关系示意不是完整真题或真人实测。
   source_alignment:
-    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
+    commit: 59190489abd3e0fb6543c9a04e137881ae98cd88
     state: live_source_bound
     source_content_changed: false
     correction_profile_applied: true
@@ -3035,9 +3039,9 @@ methods:
   - repository: https://github.com/rockpunkgod/ANSWER.git
     path: gaokao-english/references/seven-five.md
     heading: 时态一致
-    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
+    commit: 59190489abd3e0fb6543c9a04e137881ae98cd88
   section_ids: &id021
-  - b24e557dbb06cb98
+  - 259507a0de426ea3
   can_follow: []
   usually_before: []
   usually_after: []
@@ -3071,7 +3075,7 @@ methods:
       micro_action_is_not_completion: 完成第一小步不等于完整方法成功；继续完成四步卡的判断与停止核验。
       short_stop: 分词不承担句子时态；无差异如实记，不凭同组定案。
     presentation_revision: 2026-10-28.2
-    source_update_note: 总起以真实统领触发，不加非典型位置人为门槛；比较关联句只初筛，褒贬核完整断言与安抚功能，不靠另一空占用定案。
+    source_update_note: 点明方法、当前决定性证据与选排结论；定位或形式初筛不定案，完整对应/指代/覆盖/逻辑满足判据后可用显式副职责选排；缺证、竞争或冲突才继续，不造暂定或重复回文。
   cases:
     canonical: cases/seven-five/F04/canonical/case.yaml
   four_step_card:
@@ -3114,7 +3118,7 @@ methods:
   maturity_status: candidate
   practical_value: Useful
   version: 1.2.0
-  change_reason: ANSWER 9a872ba 显式来源差异复核；旧来源归档，保基础入口与实用优先，不自动授予Case或真人准入。
+  change_reason: ANSWER 5919048 明确已核内容判据与有界副职责；不新增算法，不虚构暂定，不重复无疑点回文，旧审阅不自动升级。
   affected_cases:
   - cases/seven-five/F04/canonical/case.yaml
   regression_result: pending_current_epoch_semantic_and_student_acceptance
@@ -3126,7 +3130,7 @@ methods:
     participant_validation: pending_real_participant_validation
     example_scope: 2026-10-28基础入口表达修订；保留原判据/Stop/课程绑定与语义版本，微动作和关系示意不是完整真题或真人实测。
   source_alignment:
-    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
+    commit: 59190489abd3e0fb6543c9a04e137881ae98cd88
     state: live_source_bound
     source_content_changed: false
     correction_profile_applied: true
@@ -3142,15 +3146,17 @@ methods:
   method_type: method
   role: interpreter
   primary_role: interpreter
-  secondary_roles: []
+  secondary_roles:
+  - decider
   output_type: interpret
   student_symptoms:
   - 空位在段首或第一段段尾附近，且后文围绕共同主题展开
   trigger_cues:
   - 段首或第一段段尾常提示统领关系，但仍需候选概括并引出实际后续展开。
   core_action: 先标候选管一个段还是后续若干分项，概括全部管辖内容的共同对象和展开方向，再核代词承接与实际展开。
-  decision_rule: 产出统领范围及段落任务解释；候选既要覆盖全部管辖范围，也要能引出实际展开。
-  verification: 产出统领范围及段落任务解释；候选既要覆盖全部管辖范围，也要能引出实际展开。 位置或Here are不定案；只对应一个例子、数据或步骤就撤回初判；不把较概括项推广到任意位置，竞争未闭合继续核。
+  decision_rule: 产出统领范围及段落任务解释；候选覆盖全部管辖内容、引出实际展开且承接成立时，据完整覆盖选排，不再为辅助标签额外复证。
+  verification: 产出统领范围及段落任务解释；候选覆盖全部管辖内容、引出实际展开且承接成立时，据完整覆盖选排，不再为辅助标签额外复证。 位置或Here
+    are不定案；只对应一个例子、数据或步骤就撤回初判；不把较概括项推广到任意位置，竞争未闭合继续核。
   stop_rule: 位置或Here are不定案；只对应一个例子、数据或步骤就撤回初判；不把较概括项推广到任意位置，竞争未闭合继续核。
   common_wrong_instinct: 只读段首位置或提示词，就选最宽泛的句子，没看后文各分项在做什么。
   failure_cases:
@@ -3173,9 +3179,9 @@ methods:
   - repository: https://github.com/rockpunkgod/ANSWER.git
     path: gaokao-english/references/seven-five.md
     heading: 总起句做题法
-    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
+    commit: 59190489abd3e0fb6543c9a04e137881ae98cd88
   section_ids: &id022
-  - 1fcc9966ce085922
+  - d0e7aaf468eeece7
   can_follow: []
   usually_before: []
   usually_after: []
@@ -3191,11 +3197,11 @@ methods:
     line: 先标候选管一个段还是后续若干分项，概括全部管辖内容的共同对象和展开方向，再核代词承接与实际展开。
     boundary: 位置或Here are不定案；只对应一个例子、数据或步骤就撤回初判；不把较概括项推广到任意位置，竞争未闭合继续核。
     10s: 段首空不知选谁？先标它管哪些内容，再核是否都能统领；概括大不自动对。
-    30s: 段首空不知选谁？先用括号标这句要统领哪个段或哪些分项，再看共同内容。例如，一项只概括一个例子，不能统领后面所有分项。段首位置和Here are不定案，局部匹配不够。
-    90s: 段首空不知选谁？先标候选管一个段还是后续若干分项，概括全部管辖内容的共同对象和展开方向，再核代词承接与实际展开。这一步得到的是对当前关系或表达的解释，还要核完整题目。判断时，产出统领范围及段落任务解释；候选既要覆盖全部管辖范围，也要能引出实际展开。什么时候停，位置或Here
+    30s: 段首空不知选谁？先用括号标这句要统领哪个段或哪些分项，再看共同内容。例如，一项只概括一个例子，不能统领后面所有分项。段首位置和Here are不定案，局部匹配不够。完整内容已核清并区分竞争项，就说明选排证据；只有形式线索则继续。
+    90s: 段首空不知选谁？先标候选管一个段还是后续若干分项，概括全部管辖内容的共同对象和展开方向，再核代词承接与实际展开。这一步得到的是对当前关系或表达的解释，还要核完整题目。判断时，产出统领范围及段落任务解释；候选覆盖全部管辖内容、引出实际展开且承接成立时，据完整覆盖选排，不再为辅助标签额外复证。什么时候停，位置或Here
       are不定案；只对应一个例子、数据或步骤就撤回初判；不把较概括项推广到任意位置，竞争未闭合继续核。反例示意，候选正好概括下文一个例子，但后面其他分项处理的是另一共同问题；局部匹配不能统领整个管辖范围。换题仍检查当前题面的对象和关系，不搬上一题结论。挑战，先不填，把候选应该管的段落或分项框出来，各写一个任务短语，再写共同方向。
   full:
-    summary: 先标候选管一个段还是后续若干分项，概括全部管辖内容的共同对象和展开方向，再核代词承接与实际展开。 产出统领范围及段落任务解释；候选既要覆盖全部管辖范围，也要能引出实际展开。
+    summary: 先标候选管一个段还是后续若干分项，概括全部管辖内容的共同对象和展开方向，再核代词承接与实际展开。 产出统领范围及段落任务解释；候选覆盖全部管辖内容、引出实际展开且承接成立时，据完整覆盖选排，不再为辅助标签额外复证。
     source_boundary: 位置或Here are不定案；只对应一个例子、数据或步骤就撤回初判；不把较概括项推广到任意位置，竞争未闭合继续核。
     boundaries:
     - 位置或Here are不定案；只对应一个例子、数据或步骤就撤回初判；不把较概括项推广到任意位置，竞争未闭合继续核。
@@ -3209,20 +3215,21 @@ methods:
       example_scope: 关系/结构示意，非完整试题，不计真题或已验案例。
       micro_action_is_not_completion: 完成第一小步不等于完整方法成功；继续完成四步卡的判断与停止核验。
       short_stop: 段首位置和Here are不定案，局部匹配不够。
-    presentation_revision: 2026-10-28.2
-    source_update_note: 总起以真实统领触发，不加非典型位置人为门槛；比较关联句只初筛，褒贬核完整断言与安抚功能，不靠另一空占用定案。
+    presentation_revision: 2026-11-06.1
+    source_update_note: 点明方法、当前决定性证据与选排结论；定位或形式初筛不定案，完整对应/指代/覆盖/逻辑满足判据后可用显式副职责选排；缺证、竞争或冲突才继续，不造暂定或重复回文。
+    decision_boundary: 主要职责和首个产物保持；副职责须显式声明decider并提供已审阅的具体候选差异、题面证据、停止与回填检查。不是分组、词面、好坏方向或排剩一项自动升级。
   cases:
     canonical: cases/seven-five/F05/canonical/case.yaml
   four_step_card:
     start: 段首或第一段段尾常提示统领关系，但仍需候选概括并引出实际后续展开。
     first_cut: 先标候选管一个段还是后续若干分项，概括全部管辖内容的共同对象和展开方向，再核代词承接与实际展开。
-    judge: 产出统领范围及段落任务解释；候选既要覆盖全部管辖范围，也要能引出实际展开。
+    judge: 产出统领范围及段落任务解释；候选覆盖全部管辖内容、引出实际展开且承接成立时，据完整覆盖选排，不再为辅助标签额外复证。
     stop: 位置或Here are不定案；只对应一个例子、数据或步骤就撤回初判；不把较概括项推广到任意位置，竞争未闭合继续核。
   practicality_gate:
     status: design_complete_empirical_pending
     trigger: 段首或第一段段尾常提示统领关系，但仍需候选概括并引出实际后续展开。
     action: 先标候选管一个段还是后续若干分项，概括全部管辖内容的共同对象和展开方向，再核代词承接与实际展开。
-    output: interpret；产出统领范围及段落任务解释；候选既要覆盖全部管辖范围，也要能引出实际展开。
+    output: interpret；产出统领范围及段落任务解释；候选覆盖全部管辖内容、引出实际展开且承接成立时，据完整覆盖选排，不再为辅助标签额外复证。
     stop: 位置或Here are不定案；只对应一个例子、数据或步骤就撤回初判；不把较概括项推广到任意位置，竞争未闭合继续核。
     transfer: 新文章仍先画管辖范围，再核全部分项，不把段首位置当中心证明。
     efficiency: 以共同任务筛掉局部概括的干扰方向，预期减少漫无目的试填；速度未测。
@@ -3252,8 +3259,8 @@ methods:
   status: candidate
   maturity_status: candidate
   practical_value: Useful
-  version: 1.3.0
-  change_reason: ANSWER 9a872ba 显式来源差异复核；旧来源归档，保基础入口与实用优先，不自动授予Case或真人准入。
+  version: 1.3.1
+  change_reason: ANSWER 5919048 明确已核内容判据与有界副职责；不新增算法，不虚构暂定，不重复无疑点回文，旧审阅不自动升级。
   affected_cases:
   - cases/seven-five/F05/canonical/case.yaml
   regression_result: pending_current_epoch_semantic_and_student_acceptance
@@ -3265,13 +3272,14 @@ methods:
     participant_validation: pending_real_participant_validation
     example_scope: 2026-10-28基础入口表达修订；保留原判据/Stop/课程绑定与语义版本，微动作和关系示意不是完整真题或真人实测。
   source_alignment:
-    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
+    commit: 59190489abd3e0fb6543c9a04e137881ae98cd88
     state: live_source_bound
     source_content_changed: true
     correction_profile_applied: true
     authored_first_contact_draft: true
     new_course_branches: preserved_in_full_contract_not_automatically_aliased
     acceptance: explicit source delta review; learner/blind/release pending
+  secondary_role_gate: 主要职责和首个产物保持；副职责须显式声明decider并提供已审阅的具体候选差异、题面证据、停止与回填检查。不是分组、词面、好坏方向或排剩一项自动升级。
 - method_id: F06
   brand_name: 前后呼应
   source_name: 对应词法
@@ -3281,15 +3289,17 @@ methods:
   method_type: method
   role: verifier
   primary_role: verifier
-  secondary_roles: []
+  secondary_roles:
+  - decider
   output_type: verify
   student_symptoms:
   - 候选与上下句有对象或词义复现
   trigger_cues:
   - 候选与正文有可确认词语、指代或整句内容呼应，而非只是同一主题。
   core_action: 圈呼应表达并写它承接哪个对象、事件或整句内容，回填两侧；需要时由空后代词反查候选提供的前提。
-  decision_rule: 产出实际呼应的核验；同词多项局部接通时比空前条件、空后结果与全段任务，不数重词定案。
-  verification: 产出实际呼应的核验；同词多项局部接通时比空前条件、空后结果与全段任务，不数重词定案。 无明确呼应不命名本法；形式it不强找名词，latter要有真实成对对象；前提未引出不提前放，段界连下段起句核。
+  decision_rule: 产出具体呼应的核验：候选提供所指对象、概括前述内容或承接同一动作，并与两侧及段落任务相接时，据此选排；只有同词命中不能定案，多项成立再比真实差异。
+  verification: 产出具体呼应的核验：候选提供所指对象、概括前述内容或承接同一动作，并与两侧及段落任务相接时，据此选排；只有同词命中不能定案，多项成立再比真实差异。
+    无明确呼应不命名本法；形式it不强找名词，latter要有真实成对对象；前提未引出不提前放，段界连下段起句核。
   stop_rule: 无明确呼应不命名本法；形式it不强找名词，latter要有真实成对对象；前提未引出不提前放，段界连下段起句核。
   common_wrong_instinct: 每找到一个重复词就增加信心，却没有说明它到底承接谁或哪件事。
   failure_cases:
@@ -3306,9 +3316,9 @@ methods:
   - repository: https://github.com/rockpunkgod/ANSWER.git
     path: gaokao-english/references/seven-five.md
     heading: 对应词法
-    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
+    commit: 59190489abd3e0fb6543c9a04e137881ae98cd88
   section_ids: &id023
-  - cc84214ff851b635
+  - f931d39c32eb6ae2
   can_follow: []
   usually_before: []
   usually_after: []
@@ -3324,10 +3334,10 @@ methods:
     line: 圈呼应表达并写它承接哪个对象、事件或整句内容，回填两侧；需要时由空后代词反查候选提供的前提。
     boundary: 无明确呼应不命名本法；形式it不强找名词，latter要有真实成对对象；前提未引出不提前放，段界连下段起句核。
     10s: 看到同词就想选？连出两处呼应并写清指什么，再放回两侧；重词不等于答案。
-    30s: 看到同词就想选？先把候选和正文疑似呼应的两个表达连线，写它们具体指哪件事。例如，两个候选都提同一词，但只有一个动作接住空前条件。没有具体呼应不硬套；同词多项仍要比完整关系。
-    90s: 看到同词就想选？圈呼应表达并写它承接哪个对象、事件或整句内容，回填两侧；需要时由空后代词反查候选提供的前提。这一步得到的是对已有候选或稿件的核验，不替代独立证据。判断时，产出实际呼应的核验；同词多项局部接通时比空前条件、空后结果与全段任务，不数重词定案。什么时候停，无明确呼应不命名本法；形式it不强找名词，latter要有真实成对对象；前提未引出不提前放，段界连下段起句核。反例示意，两个候选都重复同一个主题词，但其中一项的动作不能承接空前条件；重词再多也不证明闭环。换题仍检查当前题面的对象和关系，不搬上一题结论。挑战，不选答案，只连一对呼应表达，写明它们对应哪个对象或事件，再标还需核的前后联系。
+    30s: 看到同词就想选？先把候选和正文疑似呼应的两个表达连线，写它们具体指哪件事。例如，两个候选都提同一词，但只有一个动作接住空前条件。没有具体呼应不硬套；同词多项仍要比完整关系。完整内容已核清并区分竞争项，就说明选排证据；只有形式线索则继续。
+    90s: 看到同词就想选？圈呼应表达并写它承接哪个对象、事件或整句内容，回填两侧；需要时由空后代词反查候选提供的前提。这一步得到的是对已有候选或稿件的核验，不替代独立证据。判断时，产出具体呼应的核验：候选提供所指对象、概括前述内容或承接同一动作，并与两侧及段落任务相接时，据此选排；只有同词命中不能定案，多项成立再比真实差异。什么时候停，无明确呼应不命名本法；形式it不强找名词，latter要有真实成对对象；前提未引出不提前放，段界连下段起句核。反例示意，两个候选都重复同一个主题词，但其中一项的动作不能承接空前条件；重词再多也不证明闭环。换题仍检查当前题面的对象和关系，不搬上一题结论。挑战，不选答案，只连一对呼应表达，写明它们对应哪个对象或事件，再标还需核的前后联系。
   full:
-    summary: 圈呼应表达并写它承接哪个对象、事件或整句内容，回填两侧；需要时由空后代词反查候选提供的前提。 产出实际呼应的核验；同词多项局部接通时比空前条件、空后结果与全段任务，不数重词定案。
+    summary: 圈呼应表达并写它承接哪个对象、事件或整句内容，回填两侧；需要时由空后代词反查候选提供的前提。 产出具体呼应的核验：候选提供所指对象、概括前述内容或承接同一动作，并与两侧及段落任务相接时，据此选排；只有同词命中不能定案，多项成立再比真实差异。
     source_boundary: 无明确呼应不命名本法；形式it不强找名词，latter要有真实成对对象；前提未引出不提前放，段界连下段起句核。
     boundaries:
     - 无明确呼应不命名本法；形式it不强找名词，latter要有真实成对对象；前提未引出不提前放，段界连下段起句核。
@@ -3341,20 +3351,21 @@ methods:
       example_scope: 关系/结构示意，非完整试题，不计真题或已验案例。
       micro_action_is_not_completion: 完成第一小步不等于完整方法成功；继续完成四步卡的判断与停止核验。
       short_stop: 没有具体呼应不硬套；同词多项仍要比完整关系。
-    presentation_revision: 2026-10-28.2
-    source_update_note: 总起以真实统领触发，不加非典型位置人为门槛；比较关联句只初筛，褒贬核完整断言与安抚功能，不靠另一空占用定案。
+    presentation_revision: 2026-11-06.1
+    source_update_note: 点明方法、当前决定性证据与选排结论；定位或形式初筛不定案，完整对应/指代/覆盖/逻辑满足判据后可用显式副职责选排；缺证、竞争或冲突才继续，不造暂定或重复回文。
+    decision_boundary: 主要职责和首个产物保持；副职责须显式声明decider并提供已审阅的具体候选差异、题面证据、停止与回填检查。不是分组、词面、好坏方向或排剩一项自动升级。
   cases:
     canonical: cases/seven-five/F06/canonical/case.yaml
   four_step_card:
     start: 候选与正文有可确认词语、指代或整句内容呼应，而非只是同一主题。
     first_cut: 圈呼应表达并写它承接哪个对象、事件或整句内容，回填两侧；需要时由空后代词反查候选提供的前提。
-    judge: 产出实际呼应的核验；同词多项局部接通时比空前条件、空后结果与全段任务，不数重词定案。
+    judge: 产出具体呼应的核验：候选提供所指对象、概括前述内容或承接同一动作，并与两侧及段落任务相接时，据此选排；只有同词命中不能定案，多项成立再比真实差异。
     stop: 无明确呼应不命名本法；形式it不强找名词，latter要有真实成对对象；前提未引出不提前放，段界连下段起句核。
   practicality_gate:
     status: design_complete_empirical_pending
     trigger: 候选与正文有可确认词语、指代或整句内容呼应，而非只是同一主题。
     action: 圈呼应表达并写它承接哪个对象、事件或整句内容，回填两侧；需要时由空后代词反查候选提供的前提。
-    output: verify；产出实际呼应的核验；同词多项局部接通时比空前条件、空后结果与全段任务，不数重词定案。
+    output: verify；产出具体呼应的核验：候选提供所指对象、概括前述内容或承接同一动作，并与两侧及段落任务相接时，据此选排；只有同词命中不能定案，多项成立再比真实差异。
     stop: 无明确呼应不命名本法；形式it不强找名词，latter要有真实成对对象；前提未引出不提前放，段界连下段起句核。
     transfer: 换文章仍核同指或同义的实际对象及前后联系，不迁移固定对应词对。
     efficiency: 把找词变为对象/事件连线，可减少无效罗列并暴露指代缺口；效率未测。
@@ -3384,8 +3395,8 @@ methods:
   status: candidate
   maturity_status: candidate
   practical_value: Useful
-  version: 1.2.0
-  change_reason: ANSWER 9a872ba 显式来源差异复核；旧来源归档，保基础入口与实用优先，不自动授予Case或真人准入。
+  version: 1.2.1
+  change_reason: ANSWER 5919048 明确已核内容判据与有界副职责；不新增算法，不虚构暂定，不重复无疑点回文，旧审阅不自动升级。
   affected_cases:
   - cases/seven-five/F06/canonical/case.yaml
   regression_result: pending_current_epoch_semantic_and_student_acceptance
@@ -3397,13 +3408,14 @@ methods:
     participant_validation: pending_real_participant_validation
     example_scope: 2026-10-28基础入口表达修订；保留原判据/Stop/课程绑定与语义版本，微动作和关系示意不是完整真题或真人实测。
   source_alignment:
-    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
+    commit: 59190489abd3e0fb6543c9a04e137881ae98cd88
     state: live_source_bound
-    source_content_changed: false
+    source_content_changed: true
     correction_profile_applied: true
     authored_first_contact_draft: true
     new_course_branches: preserved_in_full_contract_not_automatically_aliased
     acceptance: explicit source delta review; learner/blind/release pending
+  secondary_role_gate: 主要职责和首个产物保持；副职责须显式声明decider并提供已审阅的具体候选差异、题面证据、停止与回填检查。不是分组、词面、好坏方向或排剩一项自动升级。
 - method_id: F07
   brand_name: 关系拼接
   source_name: 逻辑关系法
@@ -3413,15 +3425,16 @@ methods:
   method_type: method
   role: verifier
   primary_role: verifier
-  secondary_roles: []
+  secondary_roles:
+  - decider
   output_type: verify
   student_symptoms:
   - 空前后显示转折、因果、解释等关系
   trigger_cues:
   - 空前后显示转折、因果、解释等关系
   core_action: 写出两侧完整内容，指出实际关系，再核候选连接后是否成立
-  decision_rule: 把两侧完整内容写成关系方向，回填核转折、因果、递进、例证或措施的实际联系；两侧与段落任务共同成立才通过这一项核验。
-  verification: 写出两侧完整内容，指出实际关系，再核候选连接后是否成立。把两侧完整内容写成关系方向，回填核转折、因果、递进、例证或措施的实际联系；两侧与段落任务共同成立才通过这一项核验。
+  decision_rule: 把两侧完整内容与当前段落任务一起核清；说明候选怎样接出所需关系、竞争项哪处不成立，据此选排。证据已足够不另排一轮无疑点回文，冲突或仍有竞争才继续。
+  verification: 写出两侧完整内容，指出实际关系，再核候选连接后是否成立。把两侧完整内容与当前段落任务一起核清；说明候选怎样接出所需关系、竞争项哪处不成立，据此选排。证据已足够不另排一轮无疑点回文，冲突或仍有竞争才继续。
     仅连接词同类、只接前句却冲突后句或措施时点错误时不能通过；否定只做某事不是完全禁止，例子也必须真的支持观点。
   stop_rule: 仅连接词同类、只接前句却冲突后句或措施时点错误时不能通过；否定只做某事不是完全禁止，例子也必须真的支持观点。
   common_wrong_instinct: 一看到however就找反义词，一看到因果词就选像原因的项，不读两侧完整内容。
@@ -3440,9 +3453,9 @@ methods:
   - repository: https://github.com/rockpunkgod/ANSWER.git
     path: gaokao-english/references/seven-five.md
     heading: 逻辑关系法
-    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
+    commit: 59190489abd3e0fb6543c9a04e137881ae98cd88
   section_ids: &id024
-  - 4fce3a1049d74715
+  - e34d4b3ae6d40f4e
   can_follow: []
   usually_before: []
   usually_after: []
@@ -3451,15 +3464,15 @@ methods:
   - 完整题面验证
   levels:
     L1: 写出两侧完整内容，指出实际关系，再核候选连接后是否成立
-    L2: 把两侧完整内容写成关系方向，回填核转折、因果、递进、例证或措施的实际联系；两侧与段落任务共同成立才通过这一项核验。
+    L2: 把两侧完整内容与当前段落任务一起核清；说明候选怎样接出所需关系、竞争项哪处不成立，据此选排。证据已足够不另排一轮无疑点回文，冲突或仍有竞争才继续。
     L3: 仅连接词同类、只接前句却冲突后句或措施时点错误时不能通过；否定只做某事不是完全禁止，例子也必须真的支持观点。
     L4: 新题仍用两侧完整命题证明箭头，不把连接词或负面词机械对应成答案。
   compact:
     10s: 连接词看懂仍犹豫？写两侧在说什么，再核真实关系；只接前句不算通过。
-    30s: 连接词看懂仍犹豫？先用一句中文各写空前和空后在说什么，再标真实关系。例如，事后补救不能代替空位所需的事前准备。前后任一侧冲突就停；不能只凭连接词定关系。
-    90s: 连接词看懂仍犹豫？写出两侧完整内容，指出实际关系，再核候选连接后是否成立。这一步得到的是对已有候选或稿件的核验，不替代独立证据。判断时，把两侧完整内容写成关系方向，回填核转折、因果、递进、例证或措施的实际联系；两侧与段落任务共同成立才通过这一项核验。什么时候停，仅连接词同类、只接前句却冲突后句或措施时点错误时不能通过；否定只做某事不是完全禁止，例子也必须真的支持观点。反例示意，候选能接前句的问题，却提出事后补救，而空位要求事前准备；措施主题相同也不能通过时间关系核验。换题仍检查当前题面的对象和关系，不搬上一题结论。挑战，先不填，写空前和空后各说什么，再画一条有方向的关系箭头；给箭头指出内容依据而非只抄连接词。
+    30s: 连接词看懂仍犹豫？先用一句中文各写空前和空后在说什么，再标真实关系。例如，事后补救不能代替空位所需的事前准备。前后任一侧冲突就停；不能只凭连接词定关系。完整内容已核清并区分竞争项，就说明选排证据；只有形式线索则继续。
+    90s: 连接词看懂仍犹豫？写出两侧完整内容，指出实际关系，再核候选连接后是否成立。这一步得到的是对已有候选或稿件的核验，不替代独立证据。判断时，把两侧完整内容与当前段落任务一起核清；说明候选怎样接出所需关系、竞争项哪处不成立，据此选排。证据已足够不另排一轮无疑点回文，冲突或仍有竞争才继续。什么时候停，仅连接词同类、只接前句却冲突后句或措施时点错误时不能通过；否定只做某事不是完全禁止，例子也必须真的支持观点。反例示意，候选能接前句的问题，却提出事后补救，而空位要求事前准备；措施主题相同也不能通过时间关系核验。换题仍检查当前题面的对象和关系，不搬上一题结论。挑战，先不填，写空前和空后各说什么，再画一条有方向的关系箭头；给箭头指出内容依据而非只抄连接词。
   full:
-    summary: 写出两侧完整内容，指出实际关系，再核候选连接后是否成立 把两侧完整内容写成关系方向，回填核转折、因果、递进、例证或措施的实际联系；两侧与段落任务共同成立才通过这一项核验。
+    summary: 写出两侧完整内容，指出实际关系，再核候选连接后是否成立 把两侧完整内容与当前段落任务一起核清；说明候选怎样接出所需关系、竞争项哪处不成立，据此选排。证据已足够不另排一轮无疑点回文，冲突或仍有竞争才继续。
     source_boundary: 仅连接词同类、只接前句却冲突后句或措施时点错误时不能通过；否定只做某事不是完全禁止，例子也必须真的支持观点。
     boundaries:
     - 仅连接词同类、只接前句却冲突后句或措施时点错误时不能通过；否定只做某事不是完全禁止，例子也必须真的支持观点。
@@ -3473,20 +3486,21 @@ methods:
       example_scope: 关系/结构示意，非完整试题，不计真题或已验案例。
       micro_action_is_not_completion: 完成第一小步不等于完整方法成功；继续完成四步卡的判断与停止核验。
       short_stop: 前后任一侧冲突就停；不能只凭连接词定关系。
-    presentation_revision: 2026-10-28.2
-    source_update_note: 总起以真实统领触发，不加非典型位置人为门槛；比较关联句只初筛，褒贬核完整断言与安抚功能，不靠另一空占用定案。
+    presentation_revision: 2026-11-06.1
+    source_update_note: 点明方法、当前决定性证据与选排结论；定位或形式初筛不定案，完整对应/指代/覆盖/逻辑满足判据后可用显式副职责选排；缺证、竞争或冲突才继续，不造暂定或重复回文。
+    decision_boundary: 主要职责和首个产物保持；副职责须显式声明decider并提供已审阅的具体候选差异、题面证据、停止与回填检查。不是分组、词面、好坏方向或排剩一项自动升级。
   cases:
     canonical: cases/seven-five/F07/canonical/case.yaml
   four_step_card:
     start: 空前后显示转折、因果、解释等关系
     first_cut: 写出两侧完整内容，指出实际关系，再核候选连接后是否成立
-    judge: 把两侧完整内容写成关系方向，回填核转折、因果、递进、例证或措施的实际联系；两侧与段落任务共同成立才通过这一项核验。
+    judge: 把两侧完整内容与当前段落任务一起核清；说明候选怎样接出所需关系、竞争项哪处不成立，据此选排。证据已足够不另排一轮无疑点回文，冲突或仍有竞争才继续。
     stop: 仅连接词同类、只接前句却冲突后句或措施时点错误时不能通过；否定只做某事不是完全禁止，例子也必须真的支持观点。
   practicality_gate:
     status: design_complete_empirical_pending
     trigger: 空前后显示转折、因果、解释等关系
     action: 写出两侧完整内容，指出实际关系，再核候选连接后是否成立
-    output: verify；把两侧完整内容写成关系方向，回填核转折、因果、递进、例证或措施的实际联系；两侧与段落任务共同成立才通过这一项核验。
+    output: verify；把两侧完整内容与当前段落任务一起核清；说明候选怎样接出所需关系、竞争项哪处不成立，据此选排。证据已足够不另排一轮无疑点回文，冲突或仍有竞争才继续。
     stop: 仅连接词同类、只接前句却冲突后句或措施时点错误时不能通过；否定只做某事不是完全禁止，例子也必须真的支持观点。
     transfer: 新题仍用两侧完整命题证明箭头，不把连接词或负面词机械对应成答案。
     efficiency: 把标志词猜测改为可核的双侧联系，预期降低方向和行动时点混淆；效率未测。
@@ -3516,8 +3530,8 @@ methods:
   status: candidate
   maturity_status: candidate
   practical_value: Useful
-  version: 1.2.0
-  change_reason: ANSWER 9a872ba 显式来源差异复核；旧来源归档，保基础入口与实用优先，不自动授予Case或真人准入。
+  version: 1.2.1
+  change_reason: ANSWER 5919048 明确已核内容判据与有界副职责；不新增算法，不虚构暂定，不重复无疑点回文，旧审阅不自动升级。
   affected_cases:
   - cases/seven-five/F07/canonical/case.yaml
   regression_result: pending_current_epoch_semantic_and_student_acceptance
@@ -3529,13 +3543,14 @@ methods:
     participant_validation: pending_real_participant_validation
     example_scope: 2026-10-28基础入口表达修订；保留原判据/Stop/课程绑定与语义版本，微动作和关系示意不是完整真题或真人实测。
   source_alignment:
-    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
+    commit: 59190489abd3e0fb6543c9a04e137881ae98cd88
     state: live_source_bound
-    source_content_changed: false
+    source_content_changed: true
     correction_profile_applied: false
     authored_first_contact_draft: true
     new_course_branches: preserved_in_full_contract_not_automatically_aliased
     acceptance: explicit source delta review; learner/blind/release pending
+  secondary_role_gate: 主要职责和首个产物保持；副职责须显式声明decider并提供已审阅的具体候选差异、题面证据、停止与回填检查。不是分组、词面、好坏方向或排剩一项自动升级。
 - method_id: F08
   brand_name: 情绪同向
   source_name: 褒贬一致
@@ -3545,15 +3560,16 @@ methods:
   method_type: sub_action
   role: reducer
   primary_role: reducer
-  secondary_roles: []
+  secondary_roles:
+  - decider
   output_type: reduce
   student_symptoms:
   - 同一对象有可确认的评价方向
   trigger_cues:
   - 同一对象有可确认的评价方向
   core_action: 圈评价词及它评价的对象，比较候选评价维度，不因同为积极词就定案
-  decision_rule: 先读完整命题与否定范围，圈评价对象和实际功能；同维同向只形成优先候选，继续比处境、措施与句间任务。
-  verification: 圈评价词及它评价的对象，比较候选评价维度，不因同为积极词就定案。先读完整命题与否定范围，圈评价对象和实际功能；同维同向只形成优先候选，继续比处境、措施与句间任务。
+  decision_rule: 完整命题、否定范围、评价对象及安抚或改善功能共同支持时，据具体评价差异选排；只有同维同向仍仅初筛，不能凭好坏词或另一空占用定案。
+  verification: 圈评价词及它评价的对象，比较候选评价维度，不因同为积极词就定案。完整命题、否定范围、评价对象及安抚或改善功能共同支持时，据具体评价差异选排；只有同维同向仍仅初筛，不能凭好坏词或另一空占用定案。
     中性句不强分褒贬；负面处境可能引出改善，否定形式可能表达肯定。方向相同仍不能定案，更不能靠另一空占用来证明。
   stop_rule: 中性句不强分褒贬；负面处境可能引出改善，否定形式可能表达肯定。方向相同仍不能定案，更不能靠另一空占用来证明。
   common_wrong_instinct: 把困难词一律归负面、帮助词一律归正面，以为同方向就能填。
@@ -3577,9 +3593,9 @@ methods:
   - repository: https://github.com/rockpunkgod/ANSWER.git
     path: gaokao-english/references/seven-five.md
     heading: 褒贬一致
-    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
+    commit: 59190489abd3e0fb6543c9a04e137881ae98cd88
   section_ids: &id025
-  - d69a141bb1ba81ef
+  - e823a290d9285ed2
   can_follow: []
   usually_before: []
   usually_after: []
@@ -3588,15 +3604,15 @@ methods:
   - 完整题面验证
   levels:
     L1: 圈评价词及它评价的对象，比较候选评价维度，不因同为积极词就定案
-    L2: 先读完整命题与否定范围，圈评价对象和实际功能；同维同向只形成优先候选，继续比处境、措施与句间任务。
+    L2: 完整命题、否定范围、评价对象及安抚或改善功能共同支持时，据具体评价差异选排；只有同维同向仍仅初筛，不能凭好坏词或另一空占用定案。
     L3: 中性句不强分褒贬；负面处境可能引出改善，否定形式可能表达肯定。方向相同仍不能定案，更不能靠另一空占用来证明。
     L4: 新材料仍读完整评价和否定范围，不沿用积极词必选或负面词必排。
   compact:
     10s: 褒贬词让你想直接选？圈评价谁和否定范围，只暂分方向；同向不算答案。
-    30s: 褒贬词让你想直接选？先圈评价谁及否定到哪里，中性句先不贴好坏标签。例如，说困难可能是为了给帮助，不是在否定对象价值。中性不强分，方向相同仍要比具体措施和功能。
-    90s: 褒贬词让你想直接选？圈评价词及它评价的对象，比较候选评价维度，不因同为积极词就定案。这一步得到的是优先核查的范围，不直接得答案。判断时，先读完整命题与否定范围，圈评价对象和实际功能；同维同向只形成优先候选，继续比处境、措施与句间任务。什么时候停，中性句不强分褒贬；负面处境可能引出改善，否定形式可能表达肯定。方向相同仍不能定案，更不能靠另一空占用来证明。反例示意，候选描述困难是为了提出帮助，并非否定对象价值；只按负面词分组会把功能分错。换题仍检查当前题面的对象和关系，不搬上一题结论。挑战，先不填，圈评价对象和否定范围，给候选标陈述困难、提出帮助或评价结果；中性项注明不分褒贬。
+    30s: 褒贬词让你想直接选？先圈评价谁及否定到哪里，中性句先不贴好坏标签。例如，说困难可能是为了给帮助，不是在否定对象价值。中性不强分，方向相同仍要比具体措施和功能。完整内容已核清并区分竞争项，就说明选排证据；只有形式线索则继续。
+    90s: 褒贬词让你想直接选？圈评价词及它评价的对象，比较候选评价维度，不因同为积极词就定案。这一步得到的是优先核查的范围，不直接得答案。判断时，完整命题、否定范围、评价对象及安抚或改善功能共同支持时，据具体评价差异选排；只有同维同向仍仅初筛，不能凭好坏词或另一空占用定案。什么时候停，中性句不强分褒贬；负面处境可能引出改善，否定形式可能表达肯定。方向相同仍不能定案，更不能靠另一空占用来证明。反例示意，候选描述困难是为了提出帮助，并非否定对象价值；只按负面词分组会把功能分错。换题仍检查当前题面的对象和关系，不搬上一题结论。挑战，先不填，圈评价对象和否定范围，给候选标陈述困难、提出帮助或评价结果；中性项注明不分褒贬。
   full:
-    summary: 圈评价词及它评价的对象，比较候选评价维度，不因同为积极词就定案 先读完整命题与否定范围，圈评价对象和实际功能；同维同向只形成优先候选，继续比处境、措施与句间任务。
+    summary: 圈评价词及它评价的对象，比较候选评价维度，不因同为积极词就定案 完整命题、否定范围、评价对象及安抚或改善功能共同支持时，据具体评价差异选排；只有同维同向仍仅初筛，不能凭好坏词或另一空占用定案。
     source_boundary: 中性句不强分褒贬；负面处境可能引出改善，否定形式可能表达肯定。方向相同仍不能定案，更不能靠另一空占用来证明。
     boundaries:
     - 中性句不强分褒贬；负面处境可能引出改善，否定形式可能表达肯定。方向相同仍不能定案，更不能靠另一空占用来证明。
@@ -3610,20 +3626,21 @@ methods:
       example_scope: 关系/结构示意，非完整试题，不计真题或已验案例。
       micro_action_is_not_completion: 完成第一小步不等于完整方法成功；继续完成四步卡的判断与停止核验。
       short_stop: 中性不强分，方向相同仍要比具体措施和功能。
-    presentation_revision: 2026-10-28.2
-    source_update_note: 总起以真实统领触发，不加非典型位置人为门槛；比较关联句只初筛，褒贬核完整断言与安抚功能，不靠另一空占用定案。
+    presentation_revision: 2026-11-06.1
+    source_update_note: 点明方法、当前决定性证据与选排结论；定位或形式初筛不定案，完整对应/指代/覆盖/逻辑满足判据后可用显式副职责选排；缺证、竞争或冲突才继续，不造暂定或重复回文。
+    decision_boundary: 主要职责和首个产物保持；副职责须显式声明decider并提供已审阅的具体候选差异、题面证据、停止与回填检查。不是分组、词面、好坏方向或排剩一项自动升级。
   cases:
     canonical: cases/seven-five/F08/canonical/case.yaml
   four_step_card:
     start: 同一对象有可确认的评价方向
     first_cut: 圈评价词及它评价的对象，比较候选评价维度，不因同为积极词就定案
-    judge: 先读完整命题与否定范围，圈评价对象和实际功能；同维同向只形成优先候选，继续比处境、措施与句间任务。
+    judge: 完整命题、否定范围、评价对象及安抚或改善功能共同支持时，据具体评价差异选排；只有同维同向仍仅初筛，不能凭好坏词或另一空占用定案。
     stop: 中性句不强分褒贬；负面处境可能引出改善，否定形式可能表达肯定。方向相同仍不能定案，更不能靠另一空占用来证明。
   practicality_gate:
     status: design_complete_empirical_pending
     trigger: 同一对象有可确认的评价方向
     action: 圈评价词及它评价的对象，比较候选评价维度，不因同为积极词就定案
-    output: reduce；先读完整命题与否定范围，圈评价对象和实际功能；同维同向只形成优先候选，继续比处境、措施与句间任务。
+    output: reduce；完整命题、否定范围、评价对象及安抚或改善功能共同支持时，据具体评价差异选排；只有同维同向仍仅初筛，不能凭好坏词或另一空占用定案。
     stop: 中性句不强分褒贬；负面处境可能引出改善，否定形式可能表达肯定。方向相同仍不能定案，更不能靠另一空占用来证明。
     transfer: 新材料仍读完整评价和否定范围，不沿用积极词必选或负面词必排。
     efficiency: 减少凭单词情绪误排，并在实际评价差异下减少优先候选；效果未测。
@@ -3653,8 +3670,8 @@ methods:
   status: candidate
   maturity_status: candidate
   practical_value: Useful
-  version: 1.2.0
-  change_reason: ANSWER 9a872ba 显式来源差异复核；旧来源归档，保基础入口与实用优先，不自动授予Case或真人准入。
+  version: 1.2.1
+  change_reason: ANSWER 5919048 明确已核内容判据与有界副职责；不新增算法，不虚构暂定，不重复无疑点回文，旧审阅不自动升级。
   affected_cases:
   - cases/seven-five/F08/canonical/case.yaml
   regression_result: pending_current_epoch_semantic_and_student_acceptance
@@ -3666,13 +3683,14 @@ methods:
     participant_validation: pending_real_participant_validation
     example_scope: 2026-10-28基础入口表达修订；保留原判据/Stop/课程绑定与语义版本，微动作和关系示意不是完整真题或真人实测。
   source_alignment:
-    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
+    commit: 59190489abd3e0fb6543c9a04e137881ae98cd88
     state: live_source_bound
     source_content_changed: true
     correction_profile_applied: false
     authored_first_contact_draft: true
     new_course_branches: preserved_in_full_contract_not_automatically_aliased
     acceptance: explicit source delta review; learner/blind/release pending
+  secondary_role_gate: 主要职责和首个产物保持；副职责须显式声明decider并提供已审阅的具体候选差异、题面证据、停止与回填检查。不是分组、词面、好坏方向或排剩一项自动升级。
 - method_id: F09
   brand_name: 半句补全
   source_name: 结构一致
@@ -3708,9 +3726,9 @@ methods:
   - repository: https://github.com/rockpunkgod/ANSWER.git
     path: gaokao-english/references/seven-five.md
     heading: 结构一致
-    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
+    commit: 59190489abd3e0fb6543c9a04e137881ae98cd88
   section_ids: &id026
-  - a8f0c4ae44ae61ff
+  - df4955404fb8bc0d
   can_follow: []
   usually_before: []
   usually_after: []
@@ -3742,7 +3760,7 @@ methods:
       micro_action_is_not_completion: 完成第一小步不等于完整方法成功；继续完成四步卡的判断与停止核验。
       short_stop: 大小写或句长不定案；都能补句就停结构筛选。
     presentation_revision: 2026-10-28.2
-    source_update_note: 总起以真实统领触发，不加非典型位置人为门槛；比较关联句只初筛，褒贬核完整断言与安抚功能，不靠另一空占用定案。
+    source_update_note: 点明方法、当前决定性证据与选排结论；定位或形式初筛不定案，完整对应/指代/覆盖/逻辑满足判据后可用显式副职责选排；缺证、竞争或冲突才继续，不造暂定或重复回文。
   cases:
     canonical: cases/seven-five/F09/canonical/case.yaml
   four_step_card:
@@ -3785,7 +3803,7 @@ methods:
   maturity_status: candidate
   practical_value: Useful
   version: 1.2.0
-  change_reason: ANSWER 9a872ba 显式来源差异复核；旧来源归档，保基础入口与实用优先，不自动授予Case或真人准入。
+  change_reason: ANSWER 5919048 明确已核内容判据与有界副职责；不新增算法，不虚构暂定，不重复无疑点回文，旧审阅不自动升级。
   affected_cases:
   - cases/seven-five/F09/canonical/case.yaml
   regression_result: pending_current_epoch_semantic_and_student_acceptance
@@ -3797,7 +3815,7 @@ methods:
     participant_validation: pending_real_participant_validation
     example_scope: 2026-10-28基础入口表达修订；保留原判据/Stop/课程绑定与语义版本，微动作和关系示意不是完整真题或真人实测。
   source_alignment:
-    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
+    commit: 59190489abd3e0fb6543c9a04e137881ae98cd88
     state: live_source_bound
     source_content_changed: true
     correction_profile_applied: false
@@ -3839,9 +3857,9 @@ methods:
   - repository: https://github.com/rockpunkgod/ANSWER.git
     path: gaokao-english/references/seven-five.md
     heading: 定案与输出
-    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
+    commit: 59190489abd3e0fb6543c9a04e137881ae98cd88
   section_ids: &id027
-  - 1b963395bb1e4f14
+  - 6e98588f5dfd785a
   can_follow: []
   usually_before: []
   usually_after: []
@@ -3875,7 +3893,7 @@ methods:
       micro_action_is_not_completion: 完成第一小步不等于完整方法成功；继续完成四步卡的判断与停止核验。
       short_stop: 内容仍多项成立就暂留，不能拿占用或剩余作证据。
     presentation_revision: 2026-10-28.2
-    source_update_note: 总起以真实统领触发，不加非典型位置人为门槛；比较关联句只初筛，褒贬核完整断言与安抚功能，不靠另一空占用定案。
+    source_update_note: 点明方法、当前决定性证据与选排结论；定位或形式初筛不定案，完整对应/指代/覆盖/逻辑满足判据后可用显式副职责选排；缺证、竞争或冲突才继续，不造暂定或重复回文。
   cases:
     canonical: cases/seven-five/F10/canonical/case.yaml
   four_step_card:
@@ -3918,7 +3936,7 @@ methods:
   maturity_status: candidate
   practical_value: Useful
   version: 1.2.0
-  change_reason: ANSWER 9a872ba 显式来源差异复核；旧来源归档，保基础入口与实用优先，不自动授予Case或真人准入。
+  change_reason: ANSWER 5919048 明确已核内容判据与有界副职责；不新增算法，不虚构暂定，不重复无疑点回文，旧审阅不自动升级。
   affected_cases:
   - cases/seven-five/F10/canonical/case.yaml
   regression_result: pending_current_epoch_semantic_and_student_acceptance
@@ -3930,7 +3948,7 @@ methods:
     participant_validation: pending_real_participant_validation
     example_scope: 2026-10-28基础入口表达修订；保留原判据/Stop/课程绑定与语义版本，微动作和关系示意不是完整真题或真人实测。
   source_alignment:
-    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
+    commit: 59190489abd3e0fb6543c9a04e137881ae98cd88
     state: live_source_bound
     source_content_changed: false
     correction_profile_applied: true
@@ -3972,9 +3990,9 @@ methods:
   - repository: https://github.com/rockpunkgod/ANSWER.git
     path: gaokao-english/references/seven-five.md
     heading: 定案与输出
-    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
+    commit: 59190489abd3e0fb6543c9a04e137881ae98cd88
   section_ids: &id028
-  - 1b963395bb1e4f14
+  - 6e98588f5dfd785a
   can_follow: []
   usually_before: []
   usually_after: []
@@ -4008,7 +4026,7 @@ methods:
       micro_action_is_not_completion: 完成第一小步不等于完整方法成功；继续完成四步卡的判断与停止核验。
       short_stop: 两项仍成立就留缺口，不凭更像原因或剩一项选。
     presentation_revision: 2026-10-28.2
-    source_update_note: 总起以真实统领触发，不加非典型位置人为门槛；比较关联句只初筛，褒贬核完整断言与安抚功能，不靠另一空占用定案。
+    source_update_note: 点明方法、当前决定性证据与选排结论；定位或形式初筛不定案，完整对应/指代/覆盖/逻辑满足判据后可用显式副职责选排；缺证、竞争或冲突才继续，不造暂定或重复回文。
   cases:
     canonical: cases/seven-five/F11/canonical/case.yaml
   four_step_card:
@@ -4051,7 +4069,7 @@ methods:
   maturity_status: candidate
   practical_value: Useful
   version: 1.2.0
-  change_reason: ANSWER 9a872ba 显式来源差异复核；旧来源归档，保基础入口与实用优先，不自动授予Case或真人准入。
+  change_reason: ANSWER 5919048 明确已核内容判据与有界副职责；不新增算法，不虚构暂定，不重复无疑点回文，旧审阅不自动升级。
   affected_cases:
   - cases/seven-five/F11/canonical/case.yaml
   regression_result: pending_current_epoch_semantic_and_student_acceptance
@@ -4063,7 +4081,7 @@ methods:
     participant_validation: pending_real_participant_validation
     example_scope: 2026-10-28基础入口表达修订；保留原判据/Stop/课程绑定与语义版本，微动作和关系示意不是完整真题或真人实测。
   source_alignment:
-    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
+    commit: 59190489abd3e0fb6543c9a04e137881ae98cd88
     state: live_source_bound
     source_content_changed: false
     correction_profile_applied: true
@@ -4113,11 +4131,11 @@ methods:
   - repository: https://github.com/rockpunkgod/ANSWER.git
     path: gaokao-english/references/cloze.md
     heading: 行文结构（结构认识与已核操作）
-    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
+    commit: 59190489abd3e0fb6543c9a04e137881ae98cd88
   - repository: https://github.com/rockpunkgod/ANSWER.git
     path: gaokao-english/references/cloze.md
     heading: 完形填空
-    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
+    commit: 59190489abd3e0fb6543c9a04e137881ae98cd88
   section_ids: &id029
   - c84135f2763c6806
   - 3f36ea92a4769ee5
@@ -4154,7 +4172,7 @@ methods:
       micro_action_is_not_completion: 完成第一小步不等于完整方法成功；继续完成四步卡的判断与停止核验。
       short_stop: 词义或关系没闭合先留空，找到独立提示再返回。
     presentation_revision: 2026-10-28.2
-    source_update_note: 同根可作暂选后的独立回证，不能以初选反证词义；配平只提醒回题核证，不按字母配额改答案。
+    source_update_note: 点明方法、当前决定性证据与选排结论；定位或形式初筛不定案，完整对应/指代/覆盖/逻辑满足判据后可用显式副职责选排；缺证、竞争或冲突才继续，不造暂定或重复回文。
   cases:
     canonical: cases/cloze/C01/canonical/case.yaml
   four_step_card:
@@ -4197,7 +4215,7 @@ methods:
   maturity_status: candidate
   practical_value: Useful
   version: 1.2.1
-  change_reason: ANSWER 9a872ba 显式来源差异复核；旧来源归档，保基础入口与实用优先，不自动授予Case或真人准入。
+  change_reason: ANSWER 5919048 明确已核内容判据与有界副职责；不新增算法，不虚构暂定，不重复无疑点回文，旧审阅不自动升级。
   affected_cases:
   - cases/cloze/C01/canonical/case.yaml
   regression_result: pending_current_epoch_semantic_and_student_acceptance
@@ -4210,9 +4228,9 @@ methods:
     participant_validation: pending_real_participant_validation
     example_scope: 2026-10-28基础入口表达修订；保留原判据/Stop/课程绑定与语义版本，微动作和关系示意不是完整真题或真人实测。
   source_alignment:
-    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
+    commit: 59190489abd3e0fb6543c9a04e137881ae98cd88
     state: live_source_bound
-    source_content_changed: false
+    source_content_changed: true
     correction_profile_applied: true
     authored_first_contact_draft: true
     new_course_branches: preserved_in_full_contract_not_automatically_aliased
@@ -4252,11 +4270,11 @@ methods:
   - repository: https://github.com/rockpunkgod/ANSWER.git
     path: gaokao-english/references/cloze.md
     heading: 瞻前顾后法
-    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
+    commit: 59190489abd3e0fb6543c9a04e137881ae98cd88
   - repository: https://github.com/rockpunkgod/ANSWER.git
     path: gaokao-english/references/cloze.md
     heading: 完形填空
-    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
+    commit: 59190489abd3e0fb6543c9a04e137881ae98cd88
   section_ids: &id030
   - 7ff85814d7d04b1a
   - 3f36ea92a4769ee5
@@ -4293,7 +4311,7 @@ methods:
       micro_action_is_not_completion: 完成第一小步不等于完整方法成功；继续完成四步卡的判断与停止核验。
       short_stop: 线索冲突或仍缺证据先暂留，不截取只支持初选的一句。
     presentation_revision: 2026-10-28.2
-    source_update_note: 同根可作暂选后的独立回证，不能以初选反证词义；配平只提醒回题核证，不按字母配额改答案。
+    source_update_note: 点明方法、当前决定性证据与选排结论；定位或形式初筛不定案，完整对应/指代/覆盖/逻辑满足判据后可用显式副职责选排；缺证、竞争或冲突才继续，不造暂定或重复回文。
   cases:
     canonical: cases/cloze/C02/canonical/case.yaml
   four_step_card:
@@ -4336,7 +4354,7 @@ methods:
   maturity_status: candidate
   practical_value: Useful
   version: 1.2.1
-  change_reason: ANSWER 9a872ba 显式来源差异复核；旧来源归档，保基础入口与实用优先，不自动授予Case或真人准入。
+  change_reason: ANSWER 5919048 明确已核内容判据与有界副职责；不新增算法，不虚构暂定，不重复无疑点回文，旧审阅不自动升级。
   affected_cases:
   - cases/cloze/C02/canonical/case.yaml
   regression_result: pending_current_epoch_semantic_and_student_acceptance
@@ -4348,9 +4366,9 @@ methods:
     participant_validation: pending_real_participant_validation
     example_scope: 2026-10-28基础入口表达修订；保留原判据/Stop/课程绑定与语义版本，微动作和关系示意不是完整真题或真人实测。
   source_alignment:
-    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
+    commit: 59190489abd3e0fb6543c9a04e137881ae98cd88
     state: live_source_bound
-    source_content_changed: false
+    source_content_changed: true
     correction_profile_applied: true
     authored_first_contact_draft: true
     new_course_branches: preserved_in_full_contract_not_automatically_aliased
@@ -4390,7 +4408,7 @@ methods:
   - repository: https://github.com/rockpunkgod/ANSWER.git
     path: gaokao-english/references/cloze.md
     heading: 行文结构（结构认识与已核操作）
-    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
+    commit: 59190489abd3e0fb6543c9a04e137881ae98cd88
   section_ids: &id031
   - c84135f2763c6806
   can_follow: []
@@ -4426,7 +4444,7 @@ methods:
       micro_action_is_not_completion: 完成第一小步不等于完整方法成功；继续完成四步卡的判断与停止核验。
       short_stop: 首句没说的不编；局部已闭合不必每空重讲首句。
     presentation_revision: 2026-10-28.2
-    source_update_note: 同根可作暂选后的独立回证，不能以初选反证词义；配平只提醒回题核证，不按字母配额改答案。
+    source_update_note: 点明方法、当前决定性证据与选排结论；定位或形式初筛不定案，完整对应/指代/覆盖/逻辑满足判据后可用显式副职责选排；缺证、竞争或冲突才继续，不造暂定或重复回文。
   cases:
     canonical: cases/cloze/C03/canonical/case.yaml
   four_step_card:
@@ -4469,7 +4487,7 @@ methods:
   maturity_status: candidate
   practical_value: Useful
   version: 1.2.0
-  change_reason: ANSWER 9a872ba 显式来源差异复核；旧来源归档，保基础入口与实用优先，不自动授予Case或真人准入。
+  change_reason: ANSWER 5919048 明确已核内容判据与有界副职责；不新增算法，不虚构暂定，不重复无疑点回文，旧审阅不自动升级。
   affected_cases:
   - cases/cloze/C03/canonical/case.yaml
   regression_result: pending_current_epoch_semantic_and_student_acceptance
@@ -4481,7 +4499,7 @@ methods:
     participant_validation: pending_real_participant_validation
     example_scope: 2026-10-28基础入口表达修订；保留原判据/Stop/课程绑定与语义版本，微动作和关系示意不是完整真题或真人实测。
   source_alignment:
-    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
+    commit: 59190489abd3e0fb6543c9a04e137881ae98cd88
     state: live_source_bound
     source_content_changed: false
     correction_profile_applied: true
@@ -4528,7 +4546,7 @@ methods:
   - repository: https://github.com/rockpunkgod/ANSWER.git
     path: gaokao-english/references/cloze.md
     heading: 词性只引导找线索
-    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
+    commit: 59190489abd3e0fb6543c9a04e137881ae98cd88
   section_ids: &id032
   - 32023d73e6038aee
   can_follow: []
@@ -4564,7 +4582,7 @@ methods:
       micro_action_is_not_completion: 完成第一小步不等于完整方法成功；继续完成四步卡的判断与停止核验。
       short_stop: 修饰对象、动作归属或具体词义不明先停。
     presentation_revision: 2026-10-28.2
-    source_update_note: 同根可作暂选后的独立回证，不能以初选反证词义；配平只提醒回题核证，不按字母配额改答案。
+    source_update_note: 点明方法、当前决定性证据与选排结论；定位或形式初筛不定案，完整对应/指代/覆盖/逻辑满足判据后可用显式副职责选排；缺证、竞争或冲突才继续，不造暂定或重复回文。
   cases:
     canonical: cases/cloze/C04/canonical/case.yaml
   four_step_card:
@@ -4607,7 +4625,7 @@ methods:
   maturity_status: candidate
   practical_value: Useful
   version: 1.2.0
-  change_reason: ANSWER 9a872ba 显式来源差异复核；旧来源归档，保基础入口与实用优先，不自动授予Case或真人准入。
+  change_reason: ANSWER 5919048 明确已核内容判据与有界副职责；不新增算法，不虚构暂定，不重复无疑点回文，旧审阅不自动升级。
   affected_cases:
   - cases/cloze/C04/canonical/case.yaml
   regression_result: pending_current_epoch_semantic_and_student_acceptance
@@ -4619,7 +4637,7 @@ methods:
     participant_validation: pending_real_participant_validation
     example_scope: 2026-10-28基础入口表达修订；保留原判据/Stop/课程绑定与语义版本，微动作和关系示意不是完整真题或真人实测。
   source_alignment:
-    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
+    commit: 59190489abd3e0fb6543c9a04e137881ae98cd88
     state: live_source_bound
     source_content_changed: false
     correction_profile_applied: true
@@ -4662,7 +4680,7 @@ methods:
   - repository: https://github.com/rockpunkgod/ANSWER.git
     path: gaokao-english/references/cloze.md
     heading: 近义项要落到具体语义
-    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
+    commit: 59190489abd3e0fb6543c9a04e137881ae98cd88
   section_ids: &id033
   - 98c2c157b45f185a
   can_follow: []
@@ -4696,7 +4714,7 @@ methods:
       micro_action_is_not_completion: 完成第一小步不等于完整方法成功；继续完成四步卡的判断与停止核验。
       short_stop: 词义或搭配不明先留缺口，不凭主旨强选。
     presentation_revision: 2026-10-28.2
-    source_update_note: 同根可作暂选后的独立回证，不能以初选反证词义；配平只提醒回题核证，不按字母配额改答案。
+    source_update_note: 点明方法、当前决定性证据与选排结论；定位或形式初筛不定案，完整对应/指代/覆盖/逻辑满足判据后可用显式副职责选排；缺证、竞争或冲突才继续，不造暂定或重复回文。
   cases:
     canonical: cases/cloze/C05/canonical/case.yaml
   four_step_card:
@@ -4739,7 +4757,7 @@ methods:
   maturity_status: candidate
   practical_value: Useful
   version: 1.2.0
-  change_reason: ANSWER 9a872ba 显式来源差异复核；旧来源归档，保基础入口与实用优先，不自动授予Case或真人准入。
+  change_reason: ANSWER 5919048 明确已核内容判据与有界副职责；不新增算法，不虚构暂定，不重复无疑点回文，旧审阅不自动升级。
   affected_cases:
   - cases/cloze/C05/canonical/case.yaml
   regression_result: pending_current_epoch_semantic_and_student_acceptance
@@ -4751,7 +4769,7 @@ methods:
     participant_validation: pending_real_participant_validation
     example_scope: 2026-10-28基础入口表达修订；保留原判据/Stop/课程绑定与语义版本，微动作和关系示意不是完整真题或真人实测。
   source_alignment:
-    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
+    commit: 59190489abd3e0fb6543c9a04e137881ae98cd88
     state: live_source_bound
     source_content_changed: false
     correction_profile_applied: false
@@ -4793,7 +4811,7 @@ methods:
   - repository: https://github.com/rockpunkgod/ANSWER.git
     path: gaokao-english/references/cloze.md
     heading: 逻辑与时间要看真实内容
-    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
+    commit: 59190489abd3e0fb6543c9a04e137881ae98cd88
   section_ids: &id034
   - 7f0f15f40c83b385
   can_follow: []
@@ -4827,7 +4845,7 @@ methods:
       micro_action_is_not_completion: 完成第一小步不等于完整方法成功；继续完成四步卡的判断与停止核验。
       short_stop: 没给时间就标未知，不补时长或原因。
     presentation_revision: 2026-10-28.2
-    source_update_note: 同根可作暂选后的独立回证，不能以初选反证词义；配平只提醒回题核证，不按字母配额改答案。
+    source_update_note: 点明方法、当前决定性证据与选排结论；定位或形式初筛不定案，完整对应/指代/覆盖/逻辑满足判据后可用显式副职责选排；缺证、竞争或冲突才继续，不造暂定或重复回文。
   cases:
     canonical: cases/cloze/C06/canonical/case.yaml
   four_step_card:
@@ -4870,7 +4888,7 @@ methods:
   maturity_status: candidate
   practical_value: Useful
   version: 1.2.0
-  change_reason: ANSWER 9a872ba 显式来源差异复核；旧来源归档，保基础入口与实用优先，不自动授予Case或真人准入。
+  change_reason: ANSWER 5919048 明确已核内容判据与有界副职责；不新增算法，不虚构暂定，不重复无疑点回文，旧审阅不自动升级。
   affected_cases:
   - cases/cloze/C06/canonical/case.yaml
   regression_result: pending_current_epoch_semantic_and_student_acceptance
@@ -4882,7 +4900,7 @@ methods:
     participant_validation: pending_real_participant_validation
     example_scope: 2026-10-28基础入口表达修订；保留原判据/Stop/课程绑定与语义版本，微动作和关系示意不是完整真题或真人实测。
   source_alignment:
-    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
+    commit: 59190489abd3e0fb6543c9a04e137881ae98cd88
     state: live_source_bound
     source_content_changed: false
     correction_profile_applied: false
@@ -4898,15 +4916,17 @@ methods:
   method_type: sub_action
   role: locator
   primary_role: locator
-  secondary_roles: []
+  secondary_roles:
+  - decider
   output_type: locate
   student_symptoms:
   - 名词空需要同一人物物件或事件线索
   trigger_cues:
   - 名词空有可确认原词、近义、同源复现或真实语义对照线索。
   core_action: 圈相关表达及其内容，确认仍指同一人物、状态或事件；已知派生关系再核词义，必要时向后找并回填。
-  decision_rule: 只产出词汇呼应的对象线索；对照需同一语义维度，后续仍核句意、推进和主线。
-  verification: 只产出词汇呼应的对象线索；对照需同一语义维度，后续仍核句意、推进和主线。 未知词根不拆猜，共同后缀或形近不当同根；and不强定同向，复现、类别或次数不定案；同指或词义不明暂留。
+  decision_rule: 先产出同一人物、状态或事件的词汇呼应及所在内容；完整核清身份、行为、候选词义与回填关系后，可据该内容选排。只有字面重复时仍只是定位线索，不能从词形直接定案。
+  verification: 先产出同一人物、状态或事件的词汇呼应及所在内容；完整核清身份、行为、候选词义与回填关系后，可据该内容选排。只有字面重复时仍只是定位线索，不能从词形直接定案。
+    未知词根不拆猜，共同后缀或形近不当同根；and不强定同向，复现、类别或次数不定案；同指或词义不明暂留。
   stop_rule: 未知词根不拆猜，共同后缀或形近不当同根；and不强定同向，复现、类别或次数不定案；同指或词义不明暂留。
   common_wrong_instinct: 某个名词重复就直接填它，不核是否还是同一对象或同一次事件。
   failure_cases:
@@ -4923,8 +4943,8 @@ methods:
   source_references:
   - repository: https://github.com/rockpunkgod/ANSWER.git
     path: gaokao-english/references/cloze.md
-    heading: 名词复现只是线索
-    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
+    heading: 名词复现：找呼应并核当前空
+    commit: 59190489abd3e0fb6543c9a04e137881ae98cd88
   section_ids: &id035
   - 91f59a59fd1b5610
   can_follow: []
@@ -4942,10 +4962,10 @@ methods:
     line: 圈相关表达及其内容，确认仍指同一人物、状态或事件；已知派生关系再核词义，必要时向后找并回填。
     boundary: 未知词根不拆猜，共同后缀或形近不当同根；and不强定同向，复现、类别或次数不定案；同指或词义不明暂留。
     10s: 看见重复词就想填？先核两处是否仍指同一对象；复现只给线索。
-    30s: 看见重复词就想填？先圈上下文一个复现表达，核它是否仍指同一对象。例如，相同名词可能指不同事件，不是同一件事重现。未知词根不拆猜，同词或同后缀不能单独定案。
-    90s: 看见重复词就想填？圈相关表达及其内容，确认仍指同一人物、状态或事件；已知派生关系再核词义，必要时向后找并回填。这一步得到的是待查位置，不直接得答案。判断时，只产出词汇呼应的对象线索；对照需同一语义维度，后续仍核句意、推进和主线。什么时候停，未知词根不拆猜，共同后缀或形近不当同根；and不强定同向，复现、类别或次数不定案；同指或词义不明暂留。反例示意，两个地方用了同一个名词，但指不同事件或对象；重复词形不能证明本空需要该含义。换题仍检查当前题面的对象和关系，不搬上一题结论。挑战，不填名词，只连出两处复现表达，分别标对象或事件；说清为什么是同一对象，而不只指出词一样。
+    30s: 看见重复词就想填？先圈上下文一个复现表达，核它是否仍指同一对象。例如，相同名词可能指不同事件，不是同一件事重现。未知词根不拆猜，同词或同后缀不能单独定案。完整内容已核清并区分竞争项，就说明选排证据；只有形式线索则继续。
+    90s: 看见重复词就想填？圈相关表达及其内容，确认仍指同一人物、状态或事件；已知派生关系再核词义，必要时向后找并回填。这一步得到的是待查位置，不直接得答案。判断时，先产出同一人物、状态或事件的词汇呼应及所在内容；完整核清身份、行为、候选词义与回填关系后，可据该内容选排。只有字面重复时仍只是定位线索，不能从词形直接定案。什么时候停，未知词根不拆猜，共同后缀或形近不当同根；and不强定同向，复现、类别或次数不定案；同指或词义不明暂留。反例示意，两个地方用了同一个名词，但指不同事件或对象；重复词形不能证明本空需要该含义。换题仍检查当前题面的对象和关系，不搬上一题结论。挑战，不填名词，只连出两处复现表达，分别标对象或事件；说清为什么是同一对象，而不只指出词一样。
   full:
-    summary: 圈相关表达及其内容，确认仍指同一人物、状态或事件；已知派生关系再核词义，必要时向后找并回填。 只产出词汇呼应的对象线索；对照需同一语义维度，后续仍核句意、推进和主线。
+    summary: 圈相关表达及其内容，确认仍指同一人物、状态或事件；已知派生关系再核词义，必要时向后找并回填。 先产出同一人物、状态或事件的词汇呼应及所在内容；完整核清身份、行为、候选词义与回填关系后，可据该内容选排。只有字面重复时仍只是定位线索，不能从词形直接定案。
     source_boundary: 未知词根不拆猜，共同后缀或形近不当同根；and不强定同向，复现、类别或次数不定案；同指或词义不明暂留。
     boundaries:
     - 未知词根不拆猜，共同后缀或形近不当同根；and不强定同向，复现、类别或次数不定案；同指或词义不明暂留。
@@ -4959,20 +4979,21 @@ methods:
       example_scope: 关系/结构示意，非完整试题，不计真题或已验案例。
       micro_action_is_not_completion: 完成第一小步不等于完整方法成功；继续完成四步卡的判断与停止核验。
       short_stop: 未知词根不拆猜，同词或同后缀不能单独定案。
-    presentation_revision: 2026-10-28.2
-    source_update_note: 同根可作暂选后的独立回证，不能以初选反证词义；配平只提醒回题核证，不按字母配额改答案。
+    presentation_revision: 2026-11-06.1
+    source_update_note: 点明方法、当前决定性证据与选排结论；定位或形式初筛不定案，完整对应/指代/覆盖/逻辑满足判据后可用显式副职责选排；缺证、竞争或冲突才继续，不造暂定或重复回文。
+    decision_boundary: 主要职责和首个产物保持；副职责须显式声明decider并提供已审阅的具体候选差异、题面证据、停止与回填检查。不是分组、词面、好坏方向或排剩一项自动升级。
   cases:
     canonical: cases/cloze/C07/canonical/case.yaml
   four_step_card:
     start: 名词空有可确认原词、近义、同源复现或真实语义对照线索。
     first_cut: 圈相关表达及其内容，确认仍指同一人物、状态或事件；已知派生关系再核词义，必要时向后找并回填。
-    judge: 只产出词汇呼应的对象线索；对照需同一语义维度，后续仍核句意、推进和主线。
+    judge: 先产出同一人物、状态或事件的词汇呼应及所在内容；完整核清身份、行为、候选词义与回填关系后，可据该内容选排。只有字面重复时仍只是定位线索，不能从词形直接定案。
     stop: 未知词根不拆猜，共同后缀或形近不当同根；and不强定同向，复现、类别或次数不定案；同指或词义不明暂留。
   practicality_gate:
     status: design_complete_empirical_pending
     trigger: 名词空有可确认原词、近义、同源复现或真实语义对照线索。
     action: 圈相关表达及其内容，确认仍指同一人物、状态或事件；已知派生关系再核词义，必要时向后找并回填。
-    output: locate；只产出词汇呼应的对象线索；对照需同一语义维度，后续仍核句意、推进和主线。
+    output: locate；先产出同一人物、状态或事件的词汇呼应及所在内容；完整核清身份、行为、候选词义与回填关系后，可据该内容选排。只有字面重复时仍只是定位线索，不能从词形直接定案。
     stop: 未知词根不拆猜，共同后缀或形近不当同根；and不强定同向，复现、类别或次数不定案；同指或词义不明暂留。
     transfer: 换文仍证明同指后使用复现，不迁移上篇词对或固定比例说法。
     efficiency: 复现确实同指时缩小阅读区域；主动剔除不同指线索可减少无效判断，效果未测。
@@ -5002,8 +5023,8 @@ methods:
   status: candidate
   maturity_status: candidate
   practical_value: Useful
-  version: 1.2.0
-  change_reason: ANSWER 9a872ba 显式来源差异复核；旧来源归档，保基础入口与实用优先，不自动授予Case或真人准入。
+  version: 1.2.1
+  change_reason: ANSWER 5919048 明确已核内容判据与有界副职责；不新增算法，不虚构暂定，不重复无疑点回文，旧审阅不自动升级。
   affected_cases:
   - cases/cloze/C07/canonical/case.yaml
   regression_result: pending_current_epoch_semantic_and_student_acceptance
@@ -5015,13 +5036,14 @@ methods:
     participant_validation: pending_real_participant_validation
     example_scope: 2026-10-28基础入口表达修订；保留原判据/Stop/课程绑定与语义版本，微动作和关系示意不是完整真题或真人实测。
   source_alignment:
-    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
+    commit: 59190489abd3e0fb6543c9a04e137881ae98cd88
     state: live_source_bound
     source_content_changed: true
     correction_profile_applied: true
     authored_first_contact_draft: true
     new_course_branches: preserved_in_full_contract_not_automatically_aliased
     acceptance: explicit source delta review; learner/blind/release pending
+  secondary_role_gate: 主要职责和首个产物保持；副职责须显式声明decider并提供已审阅的具体候选差异、题面证据、停止与回填检查。不是分组、词面、好坏方向或排剩一项自动升级。
 - method_id: C08
   brand_name: 结果反推
   source_name: 评价、结果与动作链
@@ -5058,9 +5080,9 @@ methods:
   - repository: https://github.com/rockpunkgod/ANSWER.git
     path: gaokao-english/references/cloze.md
     heading: 评价、结果与动作链
-    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
+    commit: 59190489abd3e0fb6543c9a04e137881ae98cd88
   section_ids: &id036
-  - f7cd71358324b06d
+  - cfadf921b2f43458
   can_follow: []
   usually_before: []
   usually_after: []
@@ -5092,7 +5114,7 @@ methods:
       micro_action_is_not_completion: 完成第一小步不等于完整方法成功；继续完成四步卡的判断与停止核验。
       short_stop: 评价对象或桥接不清先停，不用猜定空作证据。
     presentation_revision: 2026-10-28.2
-    source_update_note: 同根可作暂选后的独立回证，不能以初选反证词义；配平只提醒回题核证，不按字母配额改答案。
+    source_update_note: 点明方法、当前决定性证据与选排结论；定位或形式初筛不定案，完整对应/指代/覆盖/逻辑满足判据后可用显式副职责选排；缺证、竞争或冲突才继续，不造暂定或重复回文。
   cases:
     canonical: cases/cloze/C08/canonical/case.yaml
   four_step_card:
@@ -5135,7 +5157,7 @@ methods:
   maturity_status: candidate
   practical_value: Useful
   version: 1.2.0
-  change_reason: ANSWER 9a872ba 显式来源差异复核；旧来源归档，保基础入口与实用优先，不自动授予Case或真人准入。
+  change_reason: ANSWER 5919048 明确已核内容判据与有界副职责；不新增算法，不虚构暂定，不重复无疑点回文，旧审阅不自动升级。
   affected_cases:
   - cases/cloze/C08/canonical/case.yaml
   regression_result: pending_current_epoch_semantic_and_student_acceptance
@@ -5147,7 +5169,7 @@ methods:
     participant_validation: pending_real_participant_validation
     example_scope: 2026-10-28基础入口表达修订；保留原判据/Stop/课程绑定与语义版本，微动作和关系示意不是完整真题或真人实测。
   source_alignment:
-    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
+    commit: 59190489abd3e0fb6543c9a04e137881ae98cd88
     state: live_source_bound
     source_content_changed: false
     correction_profile_applied: false
@@ -5195,9 +5217,9 @@ methods:
   - repository: https://github.com/rockpunkgod/ANSWER.git
     path: gaokao-english/references/cloze.md
     heading: 评价、结果与动作链
-    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
+    commit: 59190489abd3e0fb6543c9a04e137881ae98cd88
   section_ids: &id037
-  - f7cd71358324b06d
+  - cfadf921b2f43458
   can_follow: []
   usually_before: []
   usually_after: []
@@ -5229,7 +5251,7 @@ methods:
       micro_action_is_not_completion: 完成第一小步不等于完整方法成功；继续完成四步卡的判断与停止核验。
       short_stop: 没有依据的边留空，不补动作、时长或因果。
     presentation_revision: 2026-10-28.2
-    source_update_note: 同根可作暂选后的独立回证，不能以初选反证词义；配平只提醒回题核证，不按字母配额改答案。
+    source_update_note: 点明方法、当前决定性证据与选排结论；定位或形式初筛不定案，完整对应/指代/覆盖/逻辑满足判据后可用显式副职责选排；缺证、竞争或冲突才继续，不造暂定或重复回文。
   cases:
     canonical: cases/cloze/C09/canonical/case.yaml
   four_step_card:
@@ -5272,7 +5294,7 @@ methods:
   maturity_status: candidate
   practical_value: Useful
   version: 1.2.0
-  change_reason: ANSWER 9a872ba 显式来源差异复核；旧来源归档，保基础入口与实用优先，不自动授予Case或真人准入。
+  change_reason: ANSWER 5919048 明确已核内容判据与有界副职责；不新增算法，不虚构暂定，不重复无疑点回文，旧审阅不自动升级。
   affected_cases:
   - cases/cloze/C09/canonical/case.yaml
   regression_result: pending_current_epoch_semantic_and_student_acceptance
@@ -5284,7 +5306,7 @@ methods:
     participant_validation: pending_real_participant_validation
     example_scope: 2026-10-28基础入口表达修订；保留原判据/Stop/课程绑定与语义版本，微动作和关系示意不是完整真题或真人实测。
   source_alignment:
-    commit: 9a872ba0397910bd9350cff860c3b94fd061a3a8
+    commit: 59190489abd3e0fb6543c9a04e137881ae98cd88
     state: live_source_bound
     source_content_changed: false
     correction_profile_applied: false

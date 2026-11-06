@@ -1,6 +1,6 @@
 {
   "scope": "current-epoch structural evidence only; not semantic, learner or release certification",
-  "source_commit": "9a872ba0397910bd9350cff860c3b94fd061a3a8",
+  "source_commit": "59190489abd3e0fb6543c9a04e137881ae98cd88",
   "historical_registry": false,
   "method_count": 82,
   "entry_counts": {
@@ -15,7 +15,7 @@
       "primary_role": "decider",
       "output_role": "decide",
       "source_section_ids": [
-        "7b525972f9c7ba5d"
+        "a027c2d052029633"
       ],
       "guide_path": "student-guides/R01-选项加戏.md",
       "entry_state": "draft",
@@ -51,7 +51,7 @@
       "primary_role": "decider",
       "output_role": "decide",
       "source_section_ids": [
-        "6e31a465f1ce1768"
+        "9f5952ba46e2e61c"
       ],
       "guide_path": "student-guides/R02-谁干的陷阱.md",
       "entry_state": "draft",
@@ -87,7 +87,7 @@
       "primary_role": "decider",
       "output_role": "decide",
       "source_section_ids": [
-        "d91aca6a13f190d4"
+        "2b8474f8e9dab1d7"
       ],
       "guide_path": "student-guides/R06-主旨缺块.md",
       "entry_state": "draft",
@@ -123,7 +123,7 @@
       "primary_role": "framework",
       "output_role": "interpret",
       "source_section_ids": [
-        "ad0c2c73d03fd3f2"
+        "12e818c750c33d45"
       ],
       "guide_path": "student-guides/R09-三步压文.md",
       "entry_state": "draft",
@@ -159,9 +159,9 @@
       "primary_role": "reducer",
       "output_role": "reduce",
       "source_section_ids": [
-        "a8f0c4ae44ae61ff",
-        "94c1255b4334ece4",
-        "b24e557dbb06cb98"
+        "df4955404fb8bc0d",
+        "d0712481989e18ee",
+        "259507a0de426ea3"
       ],
       "guide_path": "student-guides/F01-选项三分.md",
       "entry_state": "draft",
@@ -254,7 +254,7 @@
       "primary_role": "decider",
       "output_role": "decide",
       "source_section_ids": [
-        "7b525972f9c7ba5d"
+        "a027c2d052029633"
       ],
       "guide_path": "student-guides/R01-选项加戏.md",
       "entry_state": "draft",
@@ -290,7 +290,7 @@
       "primary_role": "decider",
       "output_role": "decide",
       "source_section_ids": [
-        "6e31a465f1ce1768"
+        "9f5952ba46e2e61c"
       ],
       "guide_path": "student-guides/R02-谁干的陷阱.md",
       "entry_state": "draft",
@@ -326,7 +326,7 @@
       "primary_role": "decider",
       "output_role": "decide",
       "source_section_ids": [
-        "d91aca6a13f190d4"
+        "2b8474f8e9dab1d7"
       ],
       "guide_path": "student-guides/R06-主旨缺块.md",
       "entry_state": "draft",
@@ -362,7 +362,7 @@
       "primary_role": "framework",
       "output_role": "interpret",
       "source_section_ids": [
-        "ad0c2c73d03fd3f2"
+        "12e818c750c33d45"
       ],
       "guide_path": "student-guides/R09-三步压文.md",
       "entry_state": "draft",
@@ -398,7 +398,7 @@
       "primary_role": "interpreter",
       "output_role": "interpret",
       "source_section_ids": [
-        "45520a599da9cbf4"
+        "cad93ba752127bd4"
       ],
       "guide_path": "student-guides/R03-换词不换义.md",
       "entry_state": "draft",
@@ -434,7 +434,7 @@
       "primary_role": "decider",
       "output_role": "decide",
       "source_section_ids": [
-        "4bc822d6aa850525"
+        "2133d859abb3f016"
       ],
       "guide_path": "student-guides/R04-比较别偷换.md",
       "entry_state": "draft",
@@ -470,7 +470,7 @@
       "primary_role": "decider",
       "output_role": "decide",
       "source_section_ids": [
-        "19a85fcf99b86580"
+        "67ea7893cf903d1d"
       ],
       "guide_path": "student-guides/R05-因果别选反.md",
       "entry_state": "draft",
@@ -506,7 +506,7 @@
       "primary_role": "reducer",
       "output_role": "reduce",
       "source_section_ids": [
-        "763aab279928f208"
+        "6d6dc9772e8aa3a8"
       ],
       "guide_path": "student-guides/R07-并列打包.md",
       "entry_state": "draft",
@@ -542,7 +542,7 @@
       "primary_role": "interpreter",
       "output_role": "interpret",
       "source_section_ids": [
-        "e933e3962625a3b3"
+        "57aafc0f10b3364a"
       ],
       "guide_path": "student-guides/R08-例子只作证.md",
       "entry_state": "draft",
@@ -578,7 +578,7 @@
       "primary_role": "interpreter",
       "output_role": "interpret",
       "source_section_ids": [
-        "94831b83763e0ab5"
+        "14624b4caf4b3c96"
       ],
       "guide_path": "student-guides/R10-代词回填.md",
       "entry_state": "draft",
@@ -614,7 +614,7 @@
       "primary_role": "interpreter",
       "output_role": "interpret",
       "source_section_ids": [
-        "b3578e3977ddb97f"
+        "ea9d5e34bfb47e38"
       ],
       "guide_path": "student-guides/R11-长句拆骨.md",
       "entry_state": "draft",
@@ -650,7 +650,7 @@
       "primary_role": "locator",
       "output_role": "locate",
       "source_section_ids": [
-        "aaaddbacbd0aab5a"
+        "4502eba7f4984078"
       ],
       "guide_path": "student-guides/R12-关键词追踪.md",
       "entry_state": "draft",
@@ -687,7 +687,7 @@
       "output_role": "locate",
       "source_section_ids": [
         "f12a1a7fc40c8537",
-        "aaaddbacbd0aab5a"
+        "4502eba7f4984078"
       ],
       "guide_path": "student-guides/R13-名词追踪.md",
       "entry_state": "draft",
@@ -724,7 +724,7 @@
       "output_role": "locate",
       "source_section_ids": [
         "f12a1a7fc40c8537",
-        "aaaddbacbd0aab5a"
+        "4502eba7f4984078"
       ],
       "guide_path": "student-guides/R14-顺序锁区.md",
       "entry_state": "draft",
@@ -761,7 +761,7 @@
       "output_role": "interpret",
       "source_section_ids": [
         "f12a1a7fc40c8537",
-        "aaaddbacbd0aab5a"
+        "4502eba7f4984078"
       ],
       "guide_path": "student-guides/R15-动词定关系.md",
       "entry_state": "draft",
@@ -791,13 +791,13 @@
     },
     {
       "method_id": "R16",
-      "method_version": "1.2.0",
+      "method_version": "1.2.1",
       "question_type": "阅读理解",
       "method_type": "framework",
       "primary_role": "framework",
       "output_role": "interpret",
       "source_section_ids": [
-        "d91aca6a13f190d4"
+        "2b8474f8e9dab1d7"
       ],
       "guide_path": "student-guides/R16-主题锁定.md",
       "entry_state": "draft",
@@ -834,8 +834,8 @@
       "output_role": "verify",
       "source_section_ids": [
         "8e5cd3bae2f718fd",
-        "45520a599da9cbf4",
-        "94831b83763e0ab5"
+        "cad93ba752127bd4",
+        "14624b4caf4b3c96"
       ],
       "guide_path": "student-guides/R17-前后补证.md",
       "entry_state": "draft",
@@ -871,9 +871,9 @@
       "primary_role": "reducer",
       "output_role": "reduce",
       "source_section_ids": [
-        "a8f0c4ae44ae61ff",
-        "94c1255b4334ece4",
-        "b24e557dbb06cb98"
+        "df4955404fb8bc0d",
+        "d0712481989e18ee",
+        "259507a0de426ea3"
       ],
       "guide_path": "student-guides/F01-选项三分.md",
       "entry_state": "draft",
@@ -909,7 +909,7 @@
       "primary_role": "reducer",
       "output_role": "reduce",
       "source_section_ids": [
-        "a8f0c4ae44ae61ff"
+        "df4955404fb8bc0d"
       ],
       "guide_path": "student-guides/F02-句型分组.md",
       "entry_state": "draft",
@@ -945,7 +945,7 @@
       "primary_role": "reducer",
       "output_role": "reduce",
       "source_section_ids": [
-        "94c1255b4334ece4"
+        "d0712481989e18ee"
       ],
       "guide_path": "student-guides/F03-主角分组.md",
       "entry_state": "draft",
@@ -981,7 +981,7 @@
       "primary_role": "reducer",
       "output_role": "reduce",
       "source_section_ids": [
-        "b24e557dbb06cb98"
+        "259507a0de426ea3"
       ],
       "guide_path": "student-guides/F04-时间分组.md",
       "entry_state": "draft",
@@ -1011,13 +1011,13 @@
     },
     {
       "method_id": "F05",
-      "method_version": "1.3.0",
+      "method_version": "1.3.1",
       "question_type": "七选五",
       "method_type": "method",
       "primary_role": "interpreter",
       "output_role": "interpret",
       "source_section_ids": [
-        "1fcc9966ce085922"
+        "d0e7aaf468eeece7"
       ],
       "guide_path": "student-guides/F05-段首统领.md",
       "entry_state": "draft",
@@ -1047,13 +1047,13 @@
     },
     {
       "method_id": "F06",
-      "method_version": "1.2.0",
+      "method_version": "1.2.1",
       "question_type": "七选五",
       "method_type": "method",
       "primary_role": "verifier",
       "output_role": "verify",
       "source_section_ids": [
-        "cc84214ff851b635"
+        "f931d39c32eb6ae2"
       ],
       "guide_path": "student-guides/F06-前后呼应.md",
       "entry_state": "draft",
@@ -1083,13 +1083,13 @@
     },
     {
       "method_id": "F07",
-      "method_version": "1.2.0",
+      "method_version": "1.2.1",
       "question_type": "七选五",
       "method_type": "method",
       "primary_role": "verifier",
       "output_role": "verify",
       "source_section_ids": [
-        "4fce3a1049d74715"
+        "e34d4b3ae6d40f4e"
       ],
       "guide_path": "student-guides/F07-关系拼接.md",
       "entry_state": "draft",
@@ -1119,13 +1119,13 @@
     },
     {
       "method_id": "F08",
-      "method_version": "1.2.0",
+      "method_version": "1.2.1",
       "question_type": "七选五",
       "method_type": "sub_action",
       "primary_role": "reducer",
       "output_role": "reduce",
       "source_section_ids": [
-        "d69a141bb1ba81ef"
+        "e823a290d9285ed2"
       ],
       "guide_path": "student-guides/F08-情绪同向.md",
       "entry_state": "draft",
@@ -1161,7 +1161,7 @@
       "primary_role": "interpreter",
       "output_role": "interpret",
       "source_section_ids": [
-        "a8f0c4ae44ae61ff"
+        "df4955404fb8bc0d"
       ],
       "guide_path": "student-guides/F09-半句补全.md",
       "entry_state": "draft",
@@ -1197,7 +1197,7 @@
       "primary_role": "verifier",
       "output_role": "verify",
       "source_section_ids": [
-        "1b963395bb1e4f14"
+        "6e98588f5dfd785a"
       ],
       "guide_path": "student-guides/F10-末轮反查.md",
       "entry_state": "draft",
@@ -1233,7 +1233,7 @@
       "primary_role": "decider",
       "output_role": "decide",
       "source_section_ids": [
-        "1b963395bb1e4f14"
+        "6e98588f5dfd785a"
       ],
       "guide_path": "student-guides/F11-正文闭环.md",
       "entry_state": "draft",
@@ -1481,7 +1481,7 @@
     },
     {
       "method_id": "C07",
-      "method_version": "1.2.0",
+      "method_version": "1.2.1",
       "question_type": "完形填空",
       "method_type": "sub_action",
       "primary_role": "locator",
@@ -1523,7 +1523,7 @@
       "primary_role": "verifier",
       "output_role": "verify",
       "source_section_ids": [
-        "f7cd71358324b06d"
+        "cfadf921b2f43458"
       ],
       "guide_path": "student-guides/C08-结果反推.md",
       "entry_state": "draft",
@@ -1559,7 +1559,7 @@
       "primary_role": "interpreter",
       "output_role": "interpret",
       "source_section_ids": [
-        "f7cd71358324b06d"
+        "cfadf921b2f43458"
       ],
       "guide_path": "student-guides/C09-动作串联.md",
       "entry_state": "draft",

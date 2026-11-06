@@ -125,7 +125,11 @@ class QuestionAnalyzer:
                 for step in chain:
                     if step['method_id']==mid: step['state']='reviewed'
                 if execution_role != method['primary_role'] and not any(x['method_id']==mid and x['role']==execution_role for x in chain):
-                    chain.append(bind_contract({'method_id':mid,'role':execution_role,'input':'当前空具体候选差异与独立关系证据；不是框架本身','output':'decide','action':'逐项核具体词义与当前空决定性关系，再回填闭合；'+method['secondary_role_gate'],'stop_rule':method['stop_rule'],'state':'reviewed'}))
+                    secondary_input=('当前空具体候选差异与独立关系证据；不是框架本身' if mid=='C01'
+                        else '当前候选差异与独立题文依据；不是定位、形式分组或主要职责自动升级')
+                    secondary_action=('逐项核具体词义与当前空决定性关系，再回填闭合；' if mid=='C01'
+                        else '把当前方法的完整内容核对、候选差异与选排结论接起来；')
+                    chain.append(bind_contract({'method_id':mid,'role':execution_role,'input':secondary_input,'output':'decide','action':secondary_action+method['secondary_role_gate'],'stop_rule':method['stop_rule'],'state':'reviewed'}))
             candidate_analysis.append({'candidate':rel['candidate'],'effect':effect,'claim':rel['claim'],'method_id':mid,'reviewer':rel['reviewer'],'evidence_ids':evidence_ids})
         if retained & eliminated: raise ValueError('Contradictory reviewed candidate effects')
         # A supported candidate is not automatically the best/only answer.

@@ -1,0 +1,122 @@
+{
+  "source_commit": "59190489abd3e0fb6543c9a04e137881ae98cd88",
+  "previous_source_commit": "9a872ba0397910bd9350cff860c3b94fd061a3a8",
+  "date": "2026-11-06",
+  "status": "ENGINEERING_AND_EXISTING_ROLE_COMPATIBILITY_PASS_TEACHING_PARTIAL",
+  "scope": "source criteria and delivery tightening; not new English/learner/publishing certification",
+  "source_alignment": {
+    "captured_documents": 57,
+    "changed_source_files": 7,
+    "affected_methods": 12,
+    "reviewed_complete_section_deltas": 23,
+    "method_count": 82,
+    "corrected_cards": [
+      "C07",
+      "F05",
+      "F06",
+      "F07",
+      "F08",
+      "R16"
+    ],
+    "primary_roles_preserved": true,
+    "bounded_secondary_role": "explicit decider only after reviewed concrete content comparison; no automatic promotion from primary locator/reducer/verifier/framework",
+    "F01_decider_added": false,
+    "ANSWER_modified": false
+  },
+  "engineering": {
+    "tested_candidate_commit": "00ec791bd6e83203e796ea96424c953346407690",
+    "tested_tree": "2a919f2220f7ad81e1f844b3f3b6c22f19593f4b",
+    "tests": {
+      "tests_run": 2293,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 2,
+      "successful": true,
+      "skipped_tests": [
+        {
+          "test": "test_replaces_v2_audio_but_preserves_v2_picture (test_ep01_v3_ffmpeg_integration.V3FFmpegIntegration.test_replaces_v2_audio_but_preserves_v2_picture)",
+          "reason": "Integration smoke enabled only in dedicated FFmpeg workflow"
+        },
+        {
+          "test": "test_real_known_paper_counts (test_organized_question_cases.OrganizedQuestionCaseTests.test_real_known_paper_counts)",
+          "reason": "Private user-supplied PDFs are not part of the public repository"
+        }
+      ],
+      "material_stable": true,
+      "validation": {
+        "methods": 82,
+        "source_documents": 21,
+        "status": "PASS",
+        "generated_assets": "PASS"
+      },
+      "registry": {
+        "methods": 82,
+        "source_documents": 21,
+        "status": "PASS"
+      },
+      "generated": {
+        "generated_assets": "PASS"
+      },
+      "validation_error": null,
+      "cli_commands_run": 19,
+      "cli_failures": 0
+    },
+    "duration_seconds": 348.615758,
+    "matched_staged_runtime_files": 310,
+    "semantic_registry_and_cases_equal": true,
+    "runner_reuse": "identical schema validators and Registry YAML parse results only, fresh objects and original file/hash/validation guards; CLI ordinary independent Python",
+    "private_run": "local-data/acceptance-candidate-5919048-20261106/local-data/acceptance-runs/5919048-full-20261106-r1"
+  },
+  "corpus": {
+    "input_records": 271,
+    "replayed_entries_not_unique_questions": 5486,
+    "answers_changed": 0,
+    "old_roles_unchanged": true,
+    "old_reviews_use_new_secondary_roles": false,
+    "current_teaching_papers": 7,
+    "current_teaching_entries": 322,
+    "objective_lessons": 290,
+    "prewriting_guides": 13,
+    "external_dispute_explanations_preserved": 19,
+    "student_display_changes": 0,
+    "uncached_CLI_parity_papers": [
+      "T8",
+      "湖北圆创"
+    ],
+    "new_secondary_role_real_English_trials": 0
+  },
+  "historical_formal_catalog": {
+    "records": 38,
+    "historical_validation": "PASS",
+    "current_admission_rejected": 38,
+    "new_registered_cases": 0
+  },
+  "skip_supplement": {
+    "private_pdf_count": "PASS on three archived frozen extraction records only; original suite skip retained",
+    "ffmpeg_integration": "not run; dedicated FFmpeg workflow opt-in outside this teaching change"
+  },
+  "prechecks": {
+    "initial_focused_tests": 25,
+    "initial_failures": 1,
+    "initial_errors": 7,
+    "corrections": [
+      "fill existing secondary_role_gate field",
+      "give R16 synthetic fixture an actual supported main-idea task",
+      "record common delivery sections with exact before/after content hashes",
+      "normalize editable-example manifest line endings"
+    ],
+    "final_focused_tests": 19,
+    "final_failures": 0,
+    "final_errors": 0,
+    "initial_corpus_records_held_for_missing_common_delta_review": 5,
+    "final_corpus_held": 0
+  },
+  "new_cases": 0,
+  "new_independent_English_peers": 0,
+  "new_blind_records": 0,
+  "new_learner_records": 0,
+  "student_ready_count": 0,
+  "all_uploaded_complete": false,
+  "current_pack": "local-data/当前可用案例讲解_20261106_5919048_r1",
+  "private_receipt_root": "local-data/answer-alignment-20261106"
+}

@@ -1,0 +1,21 @@
+case_id: W16-canonical
+method_id: W16
+question_type: 读后续写
+source:
+  repository: https://github.com/rockpunkgod/ANSWER.git
+  commit: b04ebc26d7fa096404111a0bb12f6c77cc8525b9
+  path: gaokao-writing/references/continuation-writing-and-correction.md
+  heading: 五档升级路径（训练用）
+question: null
+answer: null
+trigger: 课后需确定下一档训练缺口
+evidence: []
+method_role: framework
+expected_action: 按现稿证据选对应升级动作，不把训练模板直接当官方独立扣分项
+expected_output: interpret
+stop_rule: 训练路径不代替25分定档，缺当前稿不能精确诊断；基础逻辑语言未稳不跳到华丽表达。每项练习都受原文约束，不机械追加转折或升华。
+case_type: canonical
+status: evidence_gap
+notes: 源方法可核；尚未逐题核验案例，不可当成功样例
+method_version: 1.1.0
+source_commit: b04ebc26d7fa096404111a0bb12f6c77cc8525b9
