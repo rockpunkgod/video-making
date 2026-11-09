@@ -1,0 +1,22 @@
+{
+  "date": "2026-11-09",
+  "status": "ARCHIVE_INTEGRITY_PASS",
+  "source_commit": "59190489abd3e0fb6543c9a04e137881ae98cd88",
+  "manifest_sha256": "b3b901c47952cb5dfbc50987594db20e8203617f08be0fff58432608d8655370",
+  "logical_files": 32920,
+  "unique_objects": 19860,
+  "stored_bytes": 1242604580,
+  "verification": {
+    "all_objects_decompressed_and_original_sha256_checked": "PASS",
+    "selected_source_path_coverage": "32920/32920",
+    "active_export_restored_and_original_sha256_checked": "339/339",
+    "existing_different_file_rejected_before_any_write": "PASS",
+    "largest_object_below_100_MiB": true
+  },
+  "all_uploaded_complete": false,
+  "new_case_admissions": 0,
+  "new_blind_tests": 0,
+  "new_learner_approvals": 0,
+  "ANSWER_modified": false,
+  "scope": "Archive and restore checks only. Existing disputes, source limits and historic acceptance statuses preserved; no full teaching regression rerun."
+}
